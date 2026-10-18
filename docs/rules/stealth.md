@@ -44,8 +44,36 @@ starts its fight at once, and that fight surprises no one. Foes marked `surprise
 
 ## Sneaking
 
-Sneaking (V) has each member roll Stealth once, keeping the total until the party stops sneaking (as the Hide action
-keeps its total).
+Sneaking (V) has each member roll Stealth, keeping the total as the Hide action keeps its total: one roll a visit.
+Stopping and starting again keeps the totals (no free reroll). They stand until the party leaves the place or an hour
+has passed on the clock since they were rolled (a Short or Long Rest passes it, and so does any Wait, which is an hour
+at least), and then the next look at one rolls again. A member without a total (a guest who just joined) rolls when one is asked for.
+Nothing about the roll is saved: a load in the middle of a visit rolls again.
+
+A party that walks out through an exit to another place while sneaking arrives there sneaking and crouched, with fresh
+rolls (a new place, new rolls). Only the ways between places carry it: the travel map, a cutscene and a load start the
+party walking normally. A fight whose area the party arrives inside starts as it always did, when the place is built,
+before the party sneaks, so it surprises no one.
+
+**The totals on the portraits.** While the party sneaks, each member's portrait on the exploring HUD (guests too) wears
+their kept total, coloured by the moods of the sight overlay's eyes, for the foes in plain view (shown waiting foes that
+can act, not ones asleep, `surprise: enemies`):
+
+- **red** when some foe would notice that member even in dim light (its passive Perception minus 5 is at least the
+  total);
+- **amber** when only bright light would give them away (its passive Perception is at least the total);
+- **plain** when none would.
+
+Hovering the badge says what it means ("Stealth 7: the Wolf would notice them in any light"), and the controls card
+(F1, the pad's Show controls) says it for the pad. Members who are down wear none.
+
+## Waiting and resting in sight
+
+Wait (H) and the Short Rest both refuse while foes are in sight, and both ask who can see the party now
+(`LocationStealth.foes_in_sight`): a waiting foe the party saw once keeps its figure, but it blocks nothing once no one
+in the party can see it. While the party sneaks, a foe in sight that would notice none of the party (the same notice
+rule, with each member's kept total) doesn't block either. A fight that waits only by night (a `when` of `night`) goes
+with the dark: waiting through dawn drops its foes, as coming back by day does.
 
 ## Opening a fight
 

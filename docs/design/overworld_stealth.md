@@ -52,6 +52,12 @@ These are small, cost no fight its band, and make the stealth roll something the
 Moves: test_wait (a case for a seen foe out of sight), test_sight_cones, test_rest_rules; docs/rules/stealth.md, the
 deviations "Sneaking up" row; the wiki's hand-written Rules/Sneaking, Stealing and the Watch page. No fight series.
 
+**Built (branch `stealth`, piece 1):** all four. One roll per visit is `LocationStealth.kept` (a roll stands 60 minutes
+of the clock, so a rest or a long Wait rerolls on the next look); the exit carry is `GameRoot.enter_location`'s
+`sneaking` argument, applied after the arrival's own area checks; the totals are `ExploreHud` badges
+(`LocationStealth.exposure`, coloured as `SightOverlay.eye_mood`); Wait and the Short Rest share `foes_in_sight`.
+Tests: test_stealth_visit, test_pad_explore, test_layout.
+
 ## Option A: Slip past (skip a guarded room, or rob it)
 
 **Rule.** A `waiting` fight starts when one of its foes notices a party member, when the party attacks, or when the

@@ -97,7 +97,7 @@ glow and hint, and the mark follows the party as it walks until the player picks
 | Y | Everything that can be done with it (the right-click menu) |
 | X | Search |
 | LB / RB | Who leads: the one before / the next, round the party |
-| L3 | Sneak |
+| L3 | Sneak (each portrait wears the hero's Stealth total, red or amber when a foe in view would notice them; the controls card says which) |
 | R3 | Turn-based exploring; RT ends its round |
 | LT (hold) | Names of everything usable, and what foes in sight can see |
 | D-pad up | Step into the HUD's bar (Character, Inventory, Journal, Party, Map, Rest, Wait ...): D-pad along it, A presses, B or D-pad down leaves |

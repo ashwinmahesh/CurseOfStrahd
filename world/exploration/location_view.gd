@@ -82,9 +82,11 @@ var trap_marks: Dictionary = {}
 var lantern: OmniLight3D
 
 var sneaking := false
-## Sneaking and foes in plain view (LocationStealth, F7): each member's Stealth total while sneaking, and the foes of
-## `waiting` fights standing where their fight puts them [{encounter, foe: Combatant, token, low}].
+## Sneaking and foes in plain view (LocationStealth, F7): each member's Stealth total while sneaking (rolled once a
+## visit, kept for an hour of the clock), and the foes of `waiting` fights standing where their fight puts them
+## [{encounter, foe: Combatant, token, low}]. Not saved: a load rolls again.
 var sneak_totals: Dictionary = {}    ## Creature -> int
+var sneak_rolled: Dictionary = {}    ## Creature -> the game minute its total was rolled (StoryState.total_minutes)
 var waiting: Array[Dictionary] = []
 var _waiting_key := ""                ## what the party could see from when the waiting foes were last looked for
 ## A foe noticed the party: the fight it starts surprises no one (LocationStealth).

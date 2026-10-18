@@ -220,6 +220,31 @@ func test_the_exploring_hud() -> void:
 	await _check("the exploring HUD", func() -> Variant: return root.get("hud"))
 
 
+## The exploring HUD while the party sneaks: a Stealth total on every portrait, a guest's too (the widest totals, a
+## negative one), and the controls card that says what the colours mean.
+func test_the_exploring_hud_while_sneaking() -> void:
+	if not await _game(LATE):
+		return
+	assert_true(GameState.story.add_guest("ireena"))
+	var view := root.get("view") as LocationView
+	view.place_guests()
+	view.set_sneaking(true)
+	var widest := [28, -1, 100, 7]
+	for m: Combatant in view.members + view.guest_members:
+		view.sneak_totals[m.creature] = int(widest[(view.members + view.guest_members).find(m) % widest.size()])
+	root.call("_refresh")
+	await _frames(2)
+	var badges := (root.get("hud") as ExploreHud).find_children("StealthBadge", "PanelContainer", true, false)
+	assert_eq(badges.size(), GameState.story.party.size() + 1, "a total on each portrait and on the guest's")
+	for b in badges:
+		assert_true((b as Control).visible, "sneaking: shown")
+	await _check("the exploring HUD, sneaking", func() -> Variant: return root.get("hud"))
+	(root.get("hud") as ExploreHud).toggle_controls()
+	await _check("the exploring controls", func() -> Variant: return (root.get("hud") as ExploreHud).get("_controls"))
+	(root.get("hud") as ExploreHud).toggle_controls()
+	GameState.story.remove_guest("ireena")
+
+
 ## Four item notices (ItemNotices) at once, with the longest item names in the game, magic and not.
 func test_item_notices_with_the_longest_names() -> void:
 	if not await _game(LATE):
@@ -445,6 +470,12 @@ func test_the_play_screen_at_the_largest_sizes() -> void:
 	if await _game(LATE):
 		assert_true(is_equal_approx(get_tree().root.content_scale_factor, GameSettings.ui_scale()), "the game takes the size")
 		await _check("the exploring HUD, largest", func() -> Variant: return root.get("hud"))
+		var sneaking := root.get("view") as LocationView
+		sneaking.set_sneaking(true)
+		root.call("_refresh")
+		await _check("the exploring HUD, sneaking, largest", func() -> Variant: return root.get("hud"))
+		sneaking.set_sneaking(false)
+		root.call("_refresh")
 		var options := longest_options(6)
 		await _check("a conversation, largest", func() -> Variant:
 			var d := DialogueUI.new()

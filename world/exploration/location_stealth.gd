@@ -2,14 +2,16 @@ class_name LocationStealth
 extends RefCounted
 ## Sneaking in a location (LocationView), and who notices whom before a fight (F7, docs/rules/stealth.md).
 ##
-## The party crouches while it sneaks, and each of them keeps the Stealth total they rolled on starting (as the Hide
-## action notes its total). Foes waiting in plain view (an encounter marked `waiting`) stand where their fight puts
-## them and show once the party can see them; a foe marked `unseen` waits out of view and appears with the fight. A waiting foe notices a party member it can see clearly within
-## NOTICE_FT, if the member is inside its sight cone (CONE_DEG of the way it faces), or hears them within HEAR_FT
-## whatever way it faces: at once if the party isn't sneaking, else when its passive Perception (5 lower when that
-## member is in dim light to it, for sight) is at least the member's total. Being noticed starts the fight, and nobody
-## is surprised. The cones hold only before a fight (owner, 2026-10-07, after Baldur's Gate 3); fights keep the 2024
-## rules, which have no facing.
+## The party crouches while it sneaks, and each of them keeps the Stealth total they rolled (as the Hide action notes
+## its total): one roll a visit, kept while the party stops and starts sneaking, until it leaves the place or an hour of
+## the clock has passed (a Short or Long Rest takes one). A party that walks out through an exit sneaking arrives
+## sneaking, with fresh rolls (GameRoot.enter_location). Foes waiting in plain view (an encounter marked `waiting`)
+## stand where their fight puts them and show once the party can see them; a foe marked `unseen` waits out of view and
+## appears with the fight. A waiting foe notices a party member it can see clearly within NOTICE_FT, if the member is
+## inside its sight cone (CONE_DEG of the way it faces), or hears them within HEAR_FT whatever way it faces: at once if
+## the party isn't sneaking, else when its passive Perception (5 lower when that member is in dim light to it, for
+## sight) is at least the member's total. Being noticed starts the fight, and nobody is surprised. The cones hold only
+## before a fight (owner, 2026-10-07, after Baldur's Gate 3); fights keep the 2024 rules, which have no facing.
 ##
 ## When the party opens a fight (striking a waiting foe, or stepping into a fight's area) while sneaking, every foe
 ## that notices none of them is surprised (2024: Disadvantage on Initiative), and a member nobody noticed, with a
@@ -25,6 +27,8 @@ const HIDE_DC := 15
 ## HEAR_FT (owner, 2026-10-07: Baldur's Gate 3's sight cones, outside fights only).
 const CONE_DEG := 120.0
 const HEAR_FT := 10
+## How long a Stealth roll stands, in minutes of the clock (the visit's one roll; see set_sneaking).
+const ROLL_MINUTES := 60
 ## Directions a location's data can give a figure's `facing` (grid x right, y down: north is up the map).
 const DIRECTIONS := {"north": Vector2(0, -1), "south": Vector2(0, 1), "east": Vector2(1, 0), "west": Vector2(-1, 0),
 	"northeast": Vector2(1, -1), "northwest": Vector2(-1, -1), "southeast": Vector2(1, 1), "southwest": Vector2(-1, 1)}
@@ -41,13 +45,13 @@ static func show_crouch(view: LocationView) -> void:
 			(view.tokens[m.id] as CombatToken).refresh()
 
 
-## Starts or stops sneaking. Starting rolls each member's Stealth (foes check it as the party moves); stopping in a
-## waiting foe's sight gets the party noticed at once.
+## Starts or stops sneaking. Starting rolls Stealth for each member without a total kept from earlier in this visit
+## (ROLL_MINUTES), so stopping and starting again is no free reroll; foes check the totals as the party moves. Stopping
+## in a waiting foe's sight gets the party noticed at once.
 static func set_sneaking(view: LocationView, on: bool) -> void:
 	if view.in_combat or view.sneaking == on:
 		return
 	view.sneaking = on
-	view.sneak_totals.clear()
 	if on:
 		_roll_totals(view)
 		refresh_waiting(view)
@@ -55,22 +59,32 @@ static func set_sneaking(view: LocationView, on: bool) -> void:
 		after_step(view)
 
 
-## Each member's Stealth total while sneaking (rolled now for anyone without one, such as a guest who just joined).
+## Each member's Stealth total while sneaking (rolled now for anyone without a kept one, such as a guest who just
+## joined, or whose roll is an hour old).
 static func total_for(view: LocationView, cr: Creature) -> int:
-	if not view.sneak_totals.has(cr):
+	if not kept(view, cr):
 		_roll_one(view, cr)
 	return int(view.sneak_totals[cr])
 
 
+## Whether `cr` has a Stealth total from this visit that still stands: rolled less than ROLL_MINUTES ago on the clock
+## (a total set without a time, by a test or a capture, stands).
+static func kept(view: LocationView, cr: Creature) -> bool:
+	if not view.sneak_totals.has(cr):
+		return false
+	return not view.sneak_rolled.has(cr) or view.st.total_minutes() - int(view.sneak_rolled[cr]) < ROLL_MINUTES
+
+
 static func _roll_totals(view: LocationView) -> void:
 	for m: Combatant in view.members + view.guest_members:
-		if m.creature.hp > 0:
+		if m.creature.hp > 0 and not kept(view, m.creature):
 			_roll_one(view, m.creature)
 
 
 static func _roll_one(view: LocationView, cr: Creature) -> void:
 	var t := cr.roll_check(view.dice, &"stealth", 0, CheckAids.before_check(cr, &"stealth"), [], "Stealth (%s)" % cr.name)
 	view.sneak_totals[cr] = t.total
+	view.sneak_rolled[cr] = view.st.total_minutes()
 	view.check_rolled.emit(t.describe())
 
 
@@ -309,9 +323,11 @@ static func watch(view: LocationView) -> Encounter:
 	return e
 
 
-## The waiting foes awake and in plain view of the party now, by name (a Short Rest needs an hour out of their sight;
-## RestRules.short_rest_refusals): any a party member or guest who is up can see, not hidden away (HiddenAreas), the
-## nearest first. A foe waiting out of view (`unseen`) isn't among them.
+## The waiting foes awake and in plain view of the party now, by name (Wait and a Short Rest need the party out of
+## their sight; WaitScreen.why_not, RestRules.short_rest_refusals): any a party member or guest who is up can see, not
+## hidden away (HiddenAreas), the nearest first. A foe waiting out of view (`unseen`) isn't among them, and neither is
+## one the party saw once and has left behind. While the party sneaks, a foe that would notice none of them (the notice
+## rule, with each member's kept total) doesn't count.
 static func foes_in_sight(view: LocationView) -> Array[String]:
 	var out: Array[String] = []
 	if view == null or view.in_combat or view.waiting.is_empty() or view.members.is_empty():
@@ -324,16 +340,22 @@ static func foes_in_sight(view: LocationView) -> Array[String]:
 			continue
 		for m: Combatant in _watchers(view):
 			if sees(e, m, foe):
-				seen.append(foe)
+				if not view.sneaking or noticed_by(view, e, foe) != null:
+					seen.append(foe)
 				break
 	var lead := view.leader().cell
 	seen.sort_custom(func(a: Combatant, b: Combatant) -> bool:
 		return view.grid.distance_ft(lead, 1, a.cell, a.size_cells) < view.grid.distance_ft(lead, 1, b.cell, b.size_cells))
 	for foe in seen:
-		var what := str((foe.creature as Monster).data.get("name", foe.name())) if foe.creature is Monster else foe.name()
+		var what := foe_label(foe)
 		if not what in out:
 			out.append(what)
 	return out
+
+
+## A foe by the name of its kind ("Wolf", not "Wolf 2").
+static func foe_label(foe: Combatant) -> String:
+	return str((foe.creature as Monster).data.get("name", foe.name())) if foe.creature is Monster else foe.name()
 
 
 ## Party members and guests who are up (only they can be seen moving, or look).
@@ -449,6 +471,43 @@ static func hover_warning(view: LocationView, cell: Vector2i) -> String:
 			break
 	who.cell = was
 	return out
+
+
+## What the foes in plain view make of party member `cr` sneaking at their kept Stealth total, for the badge on their
+## portrait: {total, mood, foes}. `mood` is the sight overlay's for the worst foe (SightOverlay.eye_mood): "notices" (a
+## foe would notice them even in dim light), "bright" (only in bright light) or "beaten" (none would), and `foes` are
+## the kinds behind a "notices" or "bright". Only waiting foes shown and able to notice count, not ones asleep
+## (`surprise: enemies`).
+static func exposure(view: LocationView, cr: Creature) -> Dictionary:
+	var total := total_for(view, cr)
+	var named := {"notices": [] as Array[String], "bright": [] as Array[String]}
+	for w in view.waiting:
+		var foe := w["foe"] as Combatant
+		if not is_shown(w) or not foe.can_act() or str(LocationFights.spec_for(view, str(w["encounter"])).get("surprise", "")) == "enemies":
+			continue
+		var mood := SightOverlay.eye_mood(foe, total, true)
+		if mood != "beaten" and not foe_label(foe) in (named[mood] as Array[String]):
+			(named[mood] as Array[String]).append(foe_label(foe))
+	var worst := "notices" if not (named["notices"] as Array).is_empty() else ("bright" if not (named["bright"] as Array).is_empty() else "beaten")
+	return {"total": total, "mood": worst, "foes": named.get(worst, [] as Array[String])}
+
+
+## What an exposure says, as the badge's hint: "Stealth 7: the Wolf would notice them in any light".
+static func exposure_text(ex: Dictionary) -> String:
+	var foes := ex["foes"] as Array
+	var who := ""
+	if foes.size() == 1:
+		who = "the %s" % foes[0]
+	elif foes.size() == 2:
+		who = "the %s and the %s" % [foes[0], foes[1]]
+	elif foes.size() > 2:
+		who = "the %s, the %s and others" % [foes[0], foes[1]]
+	match str(ex["mood"]):
+		"notices":
+			return "Stealth %d: %s would notice them in any light" % [int(ex["total"]), who]
+		"bright":
+			return "Stealth %d: %s would notice them in bright light" % [int(ex["total"]), who]
+	return "Stealth %d: no foe in view would notice them" % int(ex["total"])
 
 
 ## The party opens the fight with this waiting foe (a strike from plan mode or the right-click menu).

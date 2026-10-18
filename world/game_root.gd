@@ -114,7 +114,10 @@ func _new_pregen_party() -> void:
 	st.gold = 10.0
 
 
-func enter_location(location_id: String, spawn: String) -> void:
+## Shows `location_id` with the party at `spawn`. `sneaking`: the party walked out of the last place through an exit while
+## sneaking, so it arrives sneaking too, with fresh Stealth rolls (LocationStealth); any other way in (the travel map, a
+## cutscene, a load) starts it walking normally.
+func enter_location(location_id: String, spawn: String, sneaking: bool = false) -> void:
 	_fade_from_black()
 	glow.clear()
 	if view != null:
@@ -139,7 +142,9 @@ func enter_location(location_id: String, spawn: String) -> void:
 			_banter_waiting = lines
 		else:
 			_show_banter(lines))
-	view.exit_requested.connect(func(to: String, sp: String) -> void: _covered.call_deferred(to, enter_location.bind(to, sp)))
+	var leaving := view
+	view.exit_requested.connect(func(to: String, sp: String) -> void:
+		_covered.call_deferred(to, enter_location.bind(to, sp, leaving.sneaking)))
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
@@ -173,6 +178,8 @@ func enter_location(location_id: String, spawn: String) -> void:
 				open_screen("sheet", st.party.find(who))))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
+	if sneaking:
+		view.set_sneaking(true)   # after the arrival's own checks: a fight its area starts is begun as it always was
 	PlacePreload.keep_foes(view)   # the foes of its fights read on worker threads while the party is here
 	plan_bar.view = view
 	hud.show_location(view)
