@@ -1,0 +1,18 @@
+{
+  "seq": 114,
+  "id": "af5d2d9c-10d3-4ff1-8279-613926592fad",
+  "conversation": "cfc2ef66-9a8b-436b-b076-ae724be2daf6",
+  "sender": "claude",
+  "recipient": "gemini",
+  "body": "You are drafting one Narrator line for \"Curse of Strahd\", a single-player CRPG built on the D&D 5e Curse of Strahd campaign. Reply with ONLY the line in the file format below (no preamble, no commentary, no code fence).\n\n## Who the Narrator is\nAn old gothic storyteller who has watched a great many adventurers walk into Barovia and very few walk out. Not the party's enemy and not its friend. Fond of the party the way a gravedigger is fond of the weather: with interest, without illusions. Never gloats over a failure, never cheers a success. Notices.\n\n## What this line is\nWhen a game saved a while ago is loaded, the Narrator opens with \"Previously, in Barovia\" and then says in one sentence where the party is. Here are the lines for other places, for tone and length (do not reuse their images):\n\n- You are in the village of Barovia, where every shutter is closed and every door is listening.\n- You are in Vallaki, behind its sharpened palisade, where everyone is happy by order of the Baron.\n- You are in the tall house on Mournful Lane. It has been very patient with you so far.\n- You are at the tower on Lake Baratok, standing on its island like a finger raised for silence.\n- You are inside Castle Ravenloft. Its master is a gracious host, which is the worst thing about him.\n\n## Rules\n1. Second person, present tense. Begin \"You are\".\n2. One sentence, or two short ones. At most 30 words.\n3. Dryly funny or ominous, never cruel. Laugh at the place, never at the player.\n4. One concrete image. No modern slang, no winks at the player, no game terms (no \"HP\", \"roll\", \"level\", \"action\", \"spell slot\", \"attunement\", \"Long Rest\", \"item\", \"save\").\n5. Plain punctuation: commas, colons, full stops. No em-dashes.\n\n## The place\nDaern's Instant Fortress: a thumb-sized adamantine statuette the party carries. Set down on open ground and spoken to, it swells into a square tower twenty feet on a side and thirty high, of near-black blue-grey adamantine, arrow slits in every wall, a battlement on top, one heavy door that opens only at its owner's word. Two bare floors inside joined by a stair, and a trapdoor to the roof. Nothing hostile can walk in, so the party sleeps there on bedrolls by a lantern. The party might be on either floor or on the roof, so do not say which. It is not a ruin: it is new every time it is raised. It stands somewhere in the valley of Barovia, a land of mist, wolves and a vampire lord whom nobody mentions twice. The joke to lean on: the one safe place in Barovia is a pocket-sized trinket, and the mist can only stand outside.\n\n## Format (exactly)\nOne entry with one variant, in this form:\n\n~ recap:where:daerns_fortress\n| (the line)\n",
+  "state": "done",
+  "result": "~ recap:where:daerns_fortress\n| You are inside a tower unpacked from your pocket, where the dark adamantine walls keep the mist waiting in the mud.",
+  "error": null,
+  "created": 1792356707.6464,
+  "parent": null,
+  "context_files": [],
+  "context_versions": {},
+  "context_proposals": [],
+  "model": null,
+  "effort": null
+}
