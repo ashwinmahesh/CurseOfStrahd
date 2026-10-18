@@ -50,7 +50,8 @@ func test_a_map_that_falls_away_has_a_drop_past_its_empty_squares() -> void:
 
 ## Owner report (2026-10-13): "The Abbey walls start high in the air." On every map with natural ground, what a wall
 ## square draws stands on that square's ground: the Abbey's and Argynvostholt's walls on their shelves, Barovia's yard
-## walls, the Amber Temple's walls by its doors (all lifted onto their hills twice), not floating over it or sunk in it.
+## walls, the Amber Temple's walls by its doors (all lifted onto their hills twice), not floating over it or sunk in it;
+## and the faces and copings along those walls stand on them.
 func test_walls_stand_on_raised_ground() -> void:
 	var problems: Array[String] = []
 	for loc: String in (Compendium.shared().tables["locations"] as Dictionary).keys():
@@ -85,6 +86,18 @@ func test_walls_stand_on_raised_ground() -> void:
 					sample = "%s %+.1f" % [c, d]
 		if off > 0:
 			problems.append("%s: %d wall pieces off their ground (%s)" % [loc, off, sample])
+		# The faces and copings along a wall's top stand on the wall, not a hill's height over it (the Amber Temple's
+		# doors, owner 2026-10-17: "weird long floating pillars").
+		var floating := 0
+		for g: Node in v.board.find_children("KitFaces", "MeshInstance3D", true, false):
+			var box := (g as MeshInstance3D).global_transform * (g as MeshInstance3D).get_aabb()
+			var ground := v.board.cell_center(v.grid.cell_at(box.get_center())).y
+			# (On a slope a face stands on its floor, up to a few feet over the wall's own square.)
+			if box.end.y - ground > float(InteriorWalls.HEIGHTS["castle"]) + 1.2 or box.position.y - ground < -1.2:
+				floating += 1
+				sample = "%s %+.1f" % [v.grid.cell_at(box.get_center()), box.end.y - ground]
+		if floating > 0:
+			problems.append("%s: %d walls' faces off their wall (%s)" % [loc, floating, sample])
 		v.queue_free()
 		await get_tree().process_frame
 	assert_eq(problems, [] as Array[String], "walls on their ground")
