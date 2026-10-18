@@ -59,6 +59,17 @@ the pair its condition names. The bubbles hide during a fight and go with the ca
 next camp, or the rest screen after a Long Rest elsewhere, for as long as its condition holds. Anyone else says what they're doing, in the Narrator's words: `camp:<id>`,
 `camp:guest:<npc>`, or `camp:someone` and `camp:guest` for everyone else.
 
+**Guests ask too.** A story ally travelling with the party (a `guest:<npc>` in the conditions, `StoryState.guests`) sits
+at the fire with the company, and a talk whose opening condition names `guest:<npc>` is offered while that ally is
+along: the same bubble over her, "Ireena wants a word", one word each evening and morning, and the rest screen's button
+after a Long Rest taken somewhere that keeps it. `CampTalk.who_asks` reads the condition for the first `name:<companion>`
+or `guest:<npc>` it names who is here, in the order it names them, so a talk written for two people puts the one who
+asks first; `CampSite.asker` gives the id the camp seats that person by, which is a companion's character id and a
+guest's creature id, `guest_<npc>` (the key of `LocationCamp.people`, so the mark and the click find her). A guest's
+talks go in `narrative/camp/<npc>.dialogue` like a companion's (at least two `talk_` nodes to a file, each opening with its
+`if`). Approval stays the companions': a guest has none, and an `approve` line in her talk moves the companions who
+watch, as in any scene. A guest who isn't along asks nothing, and her talks wait.
+
 ## The night
 
 The camp's panel (ui/exploration/camp_bar.gd) and the rest screen both offer **Sleep (8 hours)**, which is the Long

@@ -1,0 +1,28 @@
+{
+  "$id": "ally_visits.schema.json",
+  "title": "One character's visits across the campaign: a courier's letter, a road meeting (docs/regions/strahd_presence.md, Ally visits)",
+  "type": "object",
+  "required": [
+    "id",
+    "summary",
+    "visits"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id",
+      "description": "The character's NPC id; the file is data/visits/<id>.json."
+    },
+    "summary": {
+      "type": "string"
+    },
+    "visits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "strahd_visits.schema.json#/$defs/visit"
+      },
+      "description": "The same visits as data/strahd/visits.json (trigger, when, once / cooldown_hours / max, steps); the game marks each as an ally visit when it loads the file."
+    }
+  }
+}

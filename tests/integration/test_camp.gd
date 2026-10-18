@@ -145,6 +145,40 @@ func test_walking_up_to_someone_who_wants_a_word_starts_their_talk() -> void:
 	assert_true(said[0].contains("Liriel"), said[0])
 
 
+## A story ally travelling with the party sits at the fire with the company (docs/story/camp.md). Her word is asked by
+## the id she is seated under, which is her creature's (CampSite.asker), and walking up to her says what she is about.
+func test_a_guest_sits_by_the_fire_under_the_id_her_word_is_asked_by() -> void:
+	assert_true(GameState.story.add_guest("ireena"), "Ireena joins")
+	_view().place_guests()
+	var camp := await _make_camp()
+	assert_true(camp != null, "camp is made")
+	if camp == null:
+		return
+	assert_true(camp.people.has("guest_ireena"), "Ireena is by the fire: %s" % [camp.people.keys()])
+	var p := camp.people["guest_ireena"] as Dictionary
+	assert_eq(str(p["kind"]), "guest")
+	assert_eq(str(p["npc"]), "ireena")
+	var df := DialogueFile.parse("~ talk_word
+if guest:ireena
+Ireena: A word.
+endif
+", "test/camp_guest_view")
+	DialogueFile.register(df)
+	assert_eq(CampSite.asker(GameState.story, "test/camp_guest_view:talk_word"), "guest_ireena", "the key her talk is waiting under")
+	assert_eq(str((p["character"] as Creature).id), "guest_ireena")
+	_assert_everyone_has_a_square(camp)
+	var view := _view()
+	var thing := view.thing_at(((p["token"]) as CombatToken).combatant.cell)
+	assert_eq(str(thing.get("kind", "")), "camper", "she can be walked up to")
+	assert_eq(str(thing.get("id", "")), "guest_ireena")
+	assert_eq(str(thing.get("label", "")), "Talk to Ireena", "with nothing particular to ask, there is only her company")
+	var said: Array[String] = []
+	view.narration.connect(func(t: String) -> void: said.append(t))
+	camp.talk("guest_ireena")
+	assert_eq(said.size(), 1, "the Narrator says what she is about")
+	assert_true(said[0].contains("Ireena"), said[0])
+
+
 ## Thistle walks with the party, so her mark hangs on the view's own figure, which outlives the camp (owner,
 ## 2026-10-13: it stayed over her after camp was broken).
 func test_breaking_camp_without_a_word_takes_the_mark_down_and_the_word_waits() -> void:

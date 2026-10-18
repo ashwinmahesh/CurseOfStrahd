@@ -14,6 +14,9 @@ var avoid: Array[String] = []
 var trace: Array[String] = []
 var fights: Array[Dictionary] = []
 var conversations: Array[String] = []
+## The ids of the ally visits whose conversations the bot answered by their exit (AllyVisitAnswer).
+var ally_visits: Array[String] = []
+var _ally_ref := ""
 var _chosen := {}
 var defeated := false
 ## How many times a lost fight is played in all (TRIES); a test that expects the party to lose sets 1.
@@ -237,7 +240,8 @@ static func _adopt(story: StoryState) -> void:
 	GameState.story = story
 
 
-## Answers the open conversation: preferred options first, then options not taken yet, then the last one.
+## Answers the open conversation: preferred options first, then options not taken yet, then the last one. A letter or a
+## road meeting an ally's visit brought (data/visits/, StrahdPresence) is answered by its exit instead (AllyVisitAnswer).
 func converse() -> void:
 	var d := root.get("dialogue") as DialogueUI
 	conversations.append("%s:%s" % [d.runner.file.key if d.runner.file != null else "", d.runner.node])
@@ -253,6 +257,11 @@ func converse() -> void:
 			elif n is ServicesScreen:
 				(n as ServicesScreen).call("_close")
 				await frames(1)
+		var ref := str(root.get("_dialogue_ref"))
+		var ally := StrahdPresence.ally_playing(st(), ref)
+		if not ally.is_empty() and ref != _ally_ref:
+			_ally_ref = ref
+			ally_visits.append(str(ally["id"]))
 		if bool(d.get("_waiting_continue")):
 			d.call("_advance")
 			await frames(1)
@@ -262,6 +271,10 @@ func converse() -> void:
 			await frames(1)
 			continue
 		var pick := _pick(opts)
+		if not ally.is_empty():
+			var way_out := AllyVisitAnswer.exit_option(d.runner, opts)
+			if way_out >= 0:
+				pick = way_out
 		# Captives after a fight (F13, story/captives.gd): let them go, which rolls nothing, so the run's later dice
 		# don't move with whether a foe gave up.
 		if d.runner.file != null and d.runner.file.key.begins_with("captives/"):

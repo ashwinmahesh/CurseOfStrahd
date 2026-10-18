@@ -182,3 +182,68 @@ func test_night_visitors_fit_the_place() -> void:
 			for g: Dictionary in groups:
 				if where == CampSite.INDOORS:
 					assert_false("wolf" in g["monsters"] or "dire_wolf" in g["monsters"], "no wolf pack inside a house: %s" % g["id"])
+
+
+## A story ally travelling with the party asks for a word like a companion does (docs/story/camp.md): the talk's
+## condition names `guest:<npc>`, and the camp seats her by her creature's id.
+const GUEST_TALKS := """
+~ talk_first
+if guest:ireena
+Ireena: A first word.
+endif
+
+~ talk_second
+if guest:ireena
+Ireena: A second.
+endif
+"""
+
+
+func _with_ireena() -> StoryState:
+	var st := StoryState.new()
+	st.party.append(Pregens.build("godrick_pendlebrook", 3))
+	st.party.append(Pregens.build("thistle", 3))
+	assert_true(st.add_guest("ireena"), "Ireena joins")
+	return st
+
+
+func test_a_guest_is_named_by_the_talks_condition() -> void:
+	var st := StoryState.new()
+	st.party.append(Pregens.build("godrick_pendlebrook", 3))
+	assert_true(CampTalk.who_asks("guest:ireena", st).is_empty(), "Ireena isn't along, so nobody asks")
+	assert_eq(CampTalk.label_for("guest:ireena", st), "Someone wants a word")
+	assert_true(st.add_guest("ireena"))
+	var who := CampTalk.who_asks("guest:ireena and flag.ireena_met", st)
+	assert_eq(str(who["id"]), "guest_ireena", "the camp seats a guest by her creature's id (LocationCamp.people)")
+	assert_eq(str(who["id"]), st.guests[0].id)
+	assert_eq(CampTalk.label_for("guest:ireena", st), "Ireena wants a word", "by her first name")
+	st.remove_guest("ireena")
+	assert_true(CampTalk.who_asks("guest:ireena", st).is_empty(), "sent home, she asks no more")
+
+
+func test_the_first_one_a_condition_names_who_is_here_asks() -> void:
+	var st := _with_ireena()
+	assert_eq(str(CampTalk.who_asks("name:thistle and guest:ireena", st)["id"]), "thistle", "the one named first")
+	assert_eq(str(CampTalk.who_asks("guest:ireena and name:thistle", st)["id"]), "guest_ireena", "so write the asker first")
+	assert_eq(str(CampTalk.who_asks("name:kip_smudgewick or guest:ireena", st)["id"]), "guest_ireena", "one who isn't here is passed over")
+	assert_eq(str(CampTalk.who_asks("guest:ismark and name:thistle", st)["id"]), "thistle", "so is a guest who isn't along")
+	assert_eq(CampTalk.label_for("name:thistle and guest:ireena", st), "Thistle wants a word")
+
+
+func test_a_talk_naming_a_guest_is_offered_while_she_is_along() -> void:
+	var df := DialogueFile.parse(GUEST_TALKS, "test/camp_guest")
+	assert_true(df.errors.is_empty(), "the fixture parses: %s" % [df.errors])
+	DialogueFile.register(df)
+	var st := StoryState.new()
+	st.party.append(Pregens.build("godrick_pendlebrook", 3))
+	assert_true(CampTalk.offered(df, st).is_empty(), "no Ireena, no word")
+	assert_eq(CampSite.asker(st, "test/camp_guest:talk_first"), "", "nobody here to ask it")
+	assert_true(st.add_guest("ireena"))
+	var talk := CampTalk.offered(df, st)
+	assert_eq(str(talk["ref"]), "test/camp_guest:talk_first")
+	assert_eq(str(talk["label"]), "Ireena wants a word")
+	assert_eq(CampSite.asker(st, str(talk["ref"])), "guest_ireena", "she is the one to walk up to")
+	CampTalk.mark(st, str(talk["ref"]))
+	assert_eq(str(CampTalk.offered(df, st)["ref"]), "test/camp_guest:talk_second", "a talk plays once; the next waits its turn")
+	CampTalk.mark(st, "test/camp_guest:talk_second")
+	assert_true(CampTalk.offered(df, st).is_empty(), "and when they have all been had, she has nothing more to say")
