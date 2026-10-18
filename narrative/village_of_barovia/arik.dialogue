@@ -70,6 +70,9 @@ endif
 -> menu
 
 ~ rumors
+if quest.the_fourth_rumour == planted and not flag.fourth_rumour_echoed
+-> village_of_barovia/the_fourth_rumour:arik_echo
+endif
 if not quest.cut_after_noon
 set luca_rumor
 quest cut_after_noon rumored
@@ -85,7 +88,15 @@ Arik: Mihail. Digs early.
 elif level >= 2 and not quest.the_roadhouse_lantern
 -> svalich_road/the_roadhouse_lantern:arik
 else
+set arik_nothing += 1
+if flag.arik_nothing == 1
+Arik: Nothing.
+elif flag.arik_nothing == 2
+Arik: Quiet.
+else
 Arik: No.
+Narrator: He sets down the dry pewter cup and picks up another that is just as dry. His thumb goes round the rim without hurry.
+endif
 endif
 -> menu
 

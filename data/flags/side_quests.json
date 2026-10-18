@@ -1490,6 +1490,176 @@
       "id": "grandfather_heart_kept",
       "type": "bool",
       "summary": "The Mountain's Heart: the party kept the mountain's heart."
+    },
+    {
+      "id": "gossip_asked",
+      "type": "bool",
+      "summary": "Vasile and Petre have been asked 'Heard anything interesting?' at least once (the first answer carries their preamble)."
+    },
+    {
+      "id": "gossip_spoke",
+      "type": "int",
+      "summary": "Scratch counter inside the gossip node: how many new things Vasile and Petre said on this ask; zero sends them to 'nothing new'."
+    },
+    {
+      "id": "gossip_nothing",
+      "type": "int",
+      "summary": "How many times Vasile and Petre have had nothing new to say (1: a crow; 2: the talking dog; 3: Old Mihail's spade; then the quiet)."
+    },
+    {
+      "id": "gossip_told_teodor",
+      "type": "bool",
+      "summary": "Vasile and Petre have told how Widow Ileana's vigil ended (The Polite Caller), once."
+    },
+    {
+      "id": "gossip_told_luca",
+      "type": "bool",
+      "summary": "Vasile and Petre have told that Grigore's lad Luca is up and about (Cut After Noon), once."
+    },
+    {
+      "id": "gossip_told_muster",
+      "type": "bool",
+      "summary": "Vasile and Petre have told that the riders at the gates are gone (The Last Muster), once."
+    },
+    {
+      "id": "gossip_told_sarnov",
+      "type": "bool",
+      "summary": "Vasile and Petre have told that the Sarnovs have three children again (The Fourth Sister), once."
+    },
+    {
+      "id": "gossip_told_heart",
+      "type": "bool",
+      "summary": "Vasile and Petre have told the party the burgomaster's death was 'heart' (and Petre's 'it wasn't his heart')."
+    },
+    {
+      "id": "gossip_told_burial",
+      "type": "bool",
+      "summary": "Vasile and Petre have told the party the burgomaster was buried, once."
+    },
+    {
+      "id": "vasile_wrong_heard",
+      "type": "bool",
+      "summary": "Vasile told the party the burgomaster's wolfhound has learned to talk (it says 'Woof', meaningfully); Goodwife Petra puts it right."
+    },
+    {
+      "id": "petre_coat_known",
+      "type": "bool",
+      "summary": "Petre told the party the coat was Ireena's, given the first hard frost after his roof gave in."
+    },
+    {
+      "id": "anca_letters",
+      "type": "bool",
+      "summary": "The party wrote Anca's name in the dirt and she learned her four letters; she scratched them on her broom handle."
+    },
+    {
+      "id": "anca_secret_known",
+      "type": "bool",
+      "summary": "Anca told the party she tells the cellar the weather every morning, for Doru, who nobody else talks to."
+    },
+    {
+      "id": "arik_nothing",
+      "type": "int",
+      "summary": "How many times Arik has been asked for a rumour with none to give (1: Nothing; 2: Quiet; then No)."
+    },
+    {
+      "id": "bildrath_ledger_known",
+      "type": "bool",
+      "summary": "The party read Bildrath's ledger: half the village owes him and beside every sum he has written 'lost, wolves'."
+    },
+    {
+      "id": "bildrath_tuesday_done",
+      "type": "bool",
+      "summary": "Bildrath honoured the Tuesday rumour with his 10% discount, once, out of spite (The Fourth Rumour)."
+    },
+    {
+      "id": "parriwimple_book_shown",
+      "type": "bool",
+      "summary": "Parriwimple told the party he reads his uncle's debt ledger at night, and asked whether never collecting is kind."
+    },
+    {
+      "id": "viorica_candle",
+      "type": "bool",
+      "summary": "The party paid for Goodwife Viorica's candle for her son's name-day."
+    },
+    {
+      "id": "viorica_secret_known",
+      "type": "bool",
+      "summary": "Goodwife Viorica told the party the coppers she counts came off her husband's eyes."
+    },
+    {
+      "id": "sorina_doru_known",
+      "type": "bool",
+      "summary": "Goodwife Sorina told the party she prays for Doru, whom she liked, who went up the castle road."
+    },
+    {
+      "id": "fourth_rumour_seed",
+      "type": "string",
+      "summary": "Which rumour the party planted for Vasile and Petre: baron (bald under his wig), lupu (the dog can count) or tuesday (Bildrath's discount)."
+    },
+    {
+      "id": "fourth_rumour_echoed",
+      "type": "bool",
+      "summary": "The planted rumour came back to the party garbled, in Arik's one word or Goodwife Petra's version (The Fourth Rumour)."
+    },
+    {
+      "id": "oat_room_seen",
+      "type": "bool",
+      "summary": "Bildrath showed the party the back room where the oats go missing (The Oat Thief)."
+    },
+    {
+      "id": "oat_clue_dust",
+      "type": "bool",
+      "summary": "The party found the oat husks leading to the back door."
+    },
+    {
+      "id": "oat_clue_print",
+      "type": "bool",
+      "summary": "The party found the enormous boot print with the dragging left heel, and the key hung high."
+    },
+    {
+      "id": "oat_clue_bildrath",
+      "type": "bool",
+      "summary": "The party saw that Bildrath talks of the thief like a relative."
+    },
+    {
+      "id": "oat_clues",
+      "type": "int",
+      "summary": "How many clues the party has found in the back room (two moves The Oat Thief to 'suspect')."
+    },
+    {
+      "id": "oat_wrong",
+      "type": "int",
+      "summary": "How many wrong thieves the party has named to Bildrath (at two he names Parriwimple himself)."
+    },
+    {
+      "id": "oat_wrong_arik",
+      "type": "bool",
+      "summary": "The party blamed Arik for the oats."
+    },
+    {
+      "id": "oat_wrong_goat",
+      "type": "bool",
+      "summary": "The party blamed the village goat for the oats."
+    },
+    {
+      "id": "oat_wrong_raven",
+      "type": "bool",
+      "summary": "The party blamed the raven on the roof for the oats."
+    },
+    {
+      "id": "oat_trail_cleared",
+      "type": "bool",
+      "summary": "The party laid a false trail to the river and the pack's hunters went the wrong way: the fight at Agafia's hollow never happens."
+    },
+    {
+      "id": "goat_strays",
+      "type": "int",
+      "summary": "Goats lost to the fog while the party gets the flock in (The Goatherd's Count): two or more bring the mist-wolves."
+    },
+    {
+      "id": "pasture_flock_safe",
+      "type": "bool",
+      "summary": "The flock and the old nanny were got in before dark and the mist found nothing to push at: no wolves came (The Goatherd's Count)."
     }
   ]
 }

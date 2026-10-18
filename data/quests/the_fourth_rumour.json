@@ -1,0 +1,33 @@
+{
+  "id": "the_fourth_rumour",
+  "name": "The Fourth Rumour",
+  "summary": "Vasile and Petre have traded the same three rumours since the mist came down. They might take a fourth, if somebody made one.",
+  "giver": "barovia_vasile",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "offered",
+      "journal": "Vasile and Petre have traded the same three rumours outside the Blood of the Vine for years, in turns. Neither thinks a rumour can be made; they think it happens to you. They might be talked round.",
+      "objectives": [
+        "Sell Vasile and Petre a fourth rumour"
+      ],
+      "hint": "Talk to Vasile and Petre outside the Blood of the Vine in the village and offer them a fourth rumour.",
+      "ends": ""
+    },
+    {
+      "id": "planted",
+      "journal": "The village has a fourth rumour now, and we made it. It will go round, and come back wrong; that is how a rumour is known to be working.",
+      "objectives": [
+        "Ask around the village what people have heard"
+      ],
+      "hint": "Ask Arik at the Blood of the Vine, or Goodwife Petra at the well in the village, what they have heard lately.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The rumour went round the village in a single morning and came back garbled. Vasile and Petre say that is how you know it is a good one, and claim it as theirs.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

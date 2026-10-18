@@ -1,0 +1,42 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. The village people are tired, frightened, poor and wry; they are never silly and never wink at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Erno: Twenty-one, twenty-two, twenty-three. (A long pause.) Twenty-four.
+Agafia: Oats don't teach anything. If they never learn, maybe they'll grow up to be people who change, not wolves who pretend.
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+Vasile: Interesting? In Barovia? We've had the same three rumours since the mist came down. We take turns.
+Petre: Strangers. Haven't had strangers since the last strangers. They didn't stay long either. Nobody does, except us.
+Bildrath: Welcome to Bildrath's Mercantile. Prices are posted. They are ten times what you're used to. You are used to the wrong place.
+Parriwimple: Uncle says I'm a good lifter. That's nearly the same. Thank you. I'll remember you.
+Arik: Wine.
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS: Erno is a ten-year-old goatherd in a coat too big for him, who minds the village's goats on the high pasture for a copper a head. He can count, whatever the goats say. Every evening for a week he has counted one goat too many: an old nanny goat with a cracked bell and a collar scratched SNOWDROP, who walked out of the mists fifty years after she walked into them. Wolves made of mist come out of the white after her at dusk. The sheepdog will not go near her.
+
+THE SCENE (a race against dusk): to keep the wolves from coming, the party helps Erno get the whole flock and the old nanny into the dry-stone fold before the light goes. There are three beats (stragglers on the slope, a gap in the wall, the cracked bell). Each beat is a tense little moment where something goes right or a goat gets away. Two goats getting away is what brings the wolves; with fewer, the flock is in and the white finds nothing to push at. Keep it kind and quick: a child, a hill, a flock, evening coming.
+
+LABELS AND BEATS:
+== flock_start (4 lines: Narrator describes the light going orange and the flock beginning to drift toward the fog at the top of the pasture; Erno, very quickly, says get them in before dark)
+== r1_intro (2 lines, Narrator: a knot of stragglers has wandered up the slope toward the white wall, bells clinking)
+== r1_ok_animal (2 lines, Narrator: the party calls them with the old goat-calls and they come down like a tide)
+== r1_ok_athletics (2 lines, Narrator: the party herds them downhill at a run, laughing despite themselves)
+== r1_fail (2 lines, Narrator: a goat gets away over the top of the slope and into the fog)
+== r1_noroll (2 lines, Narrator: the party waves and shouts; the stragglers look at them and go the other way)
+== r2_intro (2 lines, Narrator: the flock is nearly in, but a gap has opened in the dry-stone wall where the fold meets the pasture)
+== r2_ok_survival (2 lines, Narrator: the party finds the gap by the flattened grass and plugs it)
+== r2_ok_investigation (2 lines, Narrator: the party counts the fallen stones and puts them back in the right order)
+== r2_fail (2 lines, Narrator: a goat squeezes through the gap the party did not find in time)
+== r2_noroll (2 lines, Narrator: the party shoves a pack against the gap; a goat looks at the pack, then goes round it)
+== r3_intro (3 lines: Narrator describes the old nanny goat standing at the gate, her cracked bell ringing; Erno whispers that the bell is what the white follows)
+== r3_ok_hands (2 lines, Narrator: the party stuffs the bell with Erno's scarf and it falls quiet at once)
+== r3_ok_calm (2 lines, Narrator: the party talks the old nanny into the fold; she walks in like someone who has done this before, fifty years ago)
+== r3_fail (2 lines, Narrator: the bell clangs once, loud, in the quiet, and the whole pasture seems to hear it)
+== r3_noroll (2 lines, Narrator: the party leaves the bell alone; it goes on ringing)
+== flock_in (5 lines: Narrator: the flock is in and the gate is shut; up at the top of the pasture the white wall bulges, hesitates, and goes flat; Erno counts again, quietly, under his breath; Erno says twenty-four, and that she is not a wolf-goat, she is Snowdrop, and he wants her to stay)
+== wolves_bridge (3 lines: Narrator: too many goats got away and the white wall bulges; Erno says the fold, get them in the fold; the party turns to face what is coming)

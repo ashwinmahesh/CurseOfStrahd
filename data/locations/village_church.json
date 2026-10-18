@@ -498,6 +498,15 @@
         17
       ],
       "work": "gesture"
+    },
+    {
+      "npc": "barovia_goat",
+      "cell": [
+        6,
+        11
+      ],
+      "dialogue": "village_of_barovia/townsfolk:goat_church",
+      "facing": "east"
     }
   ],
   "encounters": [

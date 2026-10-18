@@ -134,6 +134,17 @@ hunters come up the trail of oats; spotting it (Survival DC 12) catches them una
   level 3. The sharp autopilot wins 5 of 8 in each (2026-10-13).
 - Reward: Agafia's grandmother's bag, a Bag of Tricks (Tan) (uncommon), whose fuzzy balls get up as beasts that fight
   for the party until dawn; and Bildrath decides it's charity.
+- **Reshaped (NPC plan batch 1, 2026-10-18):** the quest can be played by day as a small detective story. "Your stock"
+  now offers the back room (Bildrath's storeroom): three clues, each a roll (Investigation DC 10 for the husks leading
+  to the back door, Perception DC 11 for the enormous boot with the dragging left heel and the key hung high, Insight
+  DC 12 for Bildrath talking about the thief like a relative; two clues move the journal to the new `suspect` stage),
+  then "Name the thief": Arik, the village goat or the raven on the roof each cost ten minutes (and the Arik guess a
+  little approval) and are spent; after two wrong guesses Bildrath names Parriwimple himself, and naming him needs no
+  roll at all. Parriwimple confesses in the back room (Persuasion DC 10 asks Bildrath to go easy; failing it or saying
+  nothing only docks his pay) and the hollow opens by day. At Agafia's door, once the trail is read (Survival DC 12),
+  the fight can be avoided by laying a false trail to the river (Survival or Stealth DC 12): no fight (`xp fight`
+  pays it), the same Bag of Tricks, a different thanks. A failed false trail, a missed trail or standing in the door
+  is the fight, as before. The night meeting with Parriwimple on the north path is unchanged.
 
 ### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
 
@@ -185,6 +196,29 @@ wolves come out of the fog after her.
   8); level 2 and up two dire wolves and four wolves.
 - Snowdrop goes down to Petra's kitchen (with `ilarion_home`, to her father by the fire), or back into the mists. A
   Potion of Animal Friendship (uncommon) and 25 gp either way.
+- **Reshaped (NPC plan batch 1, 2026-10-18):** reading the bell now starts a race against the dusk instead of the
+  fight: three beats (stragglers up the slope: Animal Handling or Athletics DC 10; a gap in the wall: Survival or
+  Investigation DC 10; the cracked bell: Sleight of Hand DC 10 with Erno's scarf, or Animal Handling DC 12), each also
+  open with no roll at all. Every miss or shrug loses a goat to the fog (`goat_strays`). Two lost and the mist sends
+  the wolves, the fight as before; fewer and the flock is in, the white finds nothing to push at, no fight (`xp fight`
+  pays it), and the choice for Snowdrop is the same. One goat lost is Erno's quiet line about the fog giving back
+  what it likes.
+
+### The Fourth Rumour (`the_fourth_rumour`, narrative/village_of_barovia/the_fourth_rumour.dialogue; NPC plan batch 1, level 1 on)
+
+Vasile and Petre, who trade the same three rumours outside the Blood of the Vine "in turns", have never thought a
+rumour could be made; they think it happens to you. The party offers them a fourth: the Baron of Vallaki is bald under
+his wig, the burgomaster's old dog Lupu can count, or Bildrath gives discounts on Tuesdays. Sell it with a straight
+face (Deception DC 11) or as a story (Performance DC 11), or just say it plainly (half-believed, no roll). A rumour
+that isn't believed gets Vasile's own instead (the well has a bottom) and the party can try again. **Twist:** it
+comes back wrong. Arik says it in one word (Wig. Counting dog. Tuesday.) and Goodwife Petra has it garbled (two
+wigs, one to keep the other warm; the hound counts the dead in the churchyard; Tuesday only for those christened on one).
+Back at Vasile and Petre the quest is done.
+
+- No fight. Reward: 10 gp, Heroic Inspiration for the party, and a nod from Kip and Wren.
+- The Tuesday rumour makes Bildrath honour it once, out of spite (`bildrath_discount`: the same 10% as haggling him
+  down, for good), unless the party already has it.
+- Later batches let the rumour come back from other regions.
 
 ## The Tser Pool camp (level 4)
 
@@ -1174,4 +1208,10 @@ and a kind interject) and narrator/barovia_high_pasture.dialogue. Batch 10,
 Van Richten's Tower and Lake Baratok: the_drowned_library.dialogue in full (new speaker Xaver; also Mordenkainen,
 the Narrator and a blunt interject) and narrator/drowned_library.dialogue. Batch 10,
 Mount Ghakis and Yester Hill: the_mountains_heart.dialogue in full (new speaker the Mountain Captive; also Freydis,
-the Narrator and a blunt interject) and narrator/ghakis_quarry.dialogue.
+the Narrator and a blunt interject) and narrator/ghakis_quarry.dialogue. NPC plan batch 1 (2026-10-18), the Village of
+Barovia: the_fourth_rumour.dialogue in full (Vasile, Petre, Arik, Goodwife Petra, Bildrath); in townsfolk.dialogue the
+gossip's nothing-new nodes and the wrong rumour, petra_correction, Petre's coat, Anca's letters and secret, and the
+goat in the shop, the church and at the gate; indoor_folk.dialogue's Goodwife Viorica (candle, secret) and Goodwife
+Sorina; customers.dialogue's Iulian and Lucia; arik.dialogue's three nothings; bildrath.dialogue's ledger;
+parriwimple.dialogue's book; vistani.dialogue's nicknames; and the new back-room, confession, false-trail and
+getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue.

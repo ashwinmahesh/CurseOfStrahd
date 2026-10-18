@@ -3,13 +3,48 @@
 # church. Unvoiced until the voice thread casts them.
 
 ~ shopper
+if flag.viorica_candle
+Goodwife Viorica: The tallow burned clean all the way down, without a drop of grease spilled.
+Goodwife Viorica [smile]: For a whole hour the corner by the Morninglord's window was warmer than the street.
+-> shopper_menu
+endif
 Goodwife Viorica [afraid]: Three coppers for a candle. Three. It was one, last spring. He says the roads are bad. The roads have always been bad.
+-> shopper_menu
+
+~ shopper_menu
 * Do you need help? -> shopper_help
+* [if not flag.viorica_secret_known] [Insight DC 12] (She keeps counting the same few coppers. Read her.) -> viorica_secret | viorica_secret_miss
 * We'll leave you to it. -> END
 
 ~ shopper_help
 Goodwife Viorica: Help? No. Nobody's ever helped by being seen helping in this village. Buy something, if you're buying. He watches who talks to whom.
--> END
+if not flag.viorica_candle
+Goodwife Viorica: Tallow was one copper in the spring, and now the board says three, though the sheep haven't grown any dearer.
+* (Put a gold piece on the counter for the candle.) -> viorica_pay
+endif
+* Never mind. -> shopper_menu
+
+~ viorica_pay
+gold -1
+set viorica_candle
+Narrator: You set a gold piece on the scarred counter and nod toward the shelf of tallow dips.
+Narrator: Bildrath does not look up from his ledger, writes a figure in the margin, and draws a single dry line through it.
+Goodwife Viorica [afraid]: That is too much coin to leave on wood in this village. Put the rest back in your purse.
+Goodwife Viorica: I only wanted the one, and perhaps a second in case the draught by the door blows the wick out.
+Goodwife Viorica [sad]: Tomorrow is my boy's name-day. Eight years since he was christened, and two since the fever.
+approve liriel_dawnsong +1 godrick_pendlebrook +1: You paid for a mother's candle
+-> shopper_menu
+
+~ viorica_secret
+set viorica_secret_known
+Goodwife Viorica [sad]: You have quiet eyes. Most folk who come through the gates look at us as if we are already ghosts.
+Goodwife Viorica: These two coppers are what we took off my husband's eyelids before the sexton closed the box.
+Goodwife Viorica [weary]: I cannot give them to Bildrath. I only bring them in to hear them clink on the counter, so I know what two sounds like.
+-> shopper_menu
+
+~ viorica_secret_miss
+Narrator: Her expression gives nothing away at all. She slides the same few coppers back into a neat pile and counts them again.
+-> shopper_menu
 
 ~ mihai
 if flag.burgomaster_buried
@@ -27,7 +62,29 @@ Old Florin: The roof keeps the rain off and the Morninglord keeps His opinions t
 ~ sorina
 if flag.doru_destroyed or flag.doru_freed
 Goodwife Sorina: It's quiet under the floor now. Father Donavich says to give thanks. I'm giving them. I'm also keeping one eye on the door.
--> END
+-> sorina_menu
 endif
 Goodwife Sorina: Shh. Father Donavich is praying, and when he stops the noise starts again from under the floor. Pray if you're staying. Or go, quietly.
--> END
+-> sorina_menu
+
+~ sorina_menu
+* [if not flag.sorina_doru_known] Who do you pray for, besides the priest? -> sorina_ask
+* Goodbye. -> END
+
+~ sorina_ask
+Goodwife Sorina [weary]: The usual list. The dead, the missing, the roof, the cabbages, and Father Donavich's knees. Not in that order.
+Goodwife Sorina: When you have been on the bench an hour, you start throwing in the neighbours' goats just to fill the quiet.
+* [Persuasion DC 11] You said the list was usual. Is anyone on it who isn't? -> sorina_told | sorina_shy
+* Of course. -> sorina_menu
+
+~ sorina_told
+set sorina_doru_known
+Goodwife Sorina [sad]: His boy, Doru. He had good hands for mending latches, and he used to whistle by our gate when he had no business on our lane.
+Goodwife Sorina [weary]: He went up the castle road with a poker and a prayer, to put an end to it.
+Goodwife Sorina [sad]: I think he wanted someone to watch him go. I watched. I've been praying ever since that it was enough.
+-> sorina_menu
+
+~ sorina_shy
+Goodwife Sorina [weary]: Best I keep to my knees while the candle holds, stranger.
+Goodwife Sorina: If the frost takes the cabbages tonight, there won't be enough left to boil on Sunday.
+-> sorina_menu

@@ -439,3 +439,14 @@ nothing else spends. Every recording waits for Ashwin's typed yes in this thread
 ## What I need from Ashwin
 
 1. Go or changes on this plan; then I build batch 1 only.
+
+## Batch 1 status (2026-10-18)
+
+Built on `npc-plan`: the village. The failed-roll check is in `make validate` (tools/data/fail_routes.py); The Oat Thief
+and The Goatherd's Count are reshaped (a back-room whodunit and a false trail; a race to get the flock in), The Fourth
+Rumour is a new quest, Vasile and Petre have nothing new to say (and one wrong rumour), and the village got its flavour
+lines and hooks (Petre's coat, Anca's letters, Goodwife Viorica's candle, Parriwimple's book, Bildrath's ledger, Mirabel's
+nicknames, Sorina, Iulian, Lucia) and the goat's first three sightings. Every new line was drafted by Gemini through the
+ai-bridge; the briefs and raw replies are in docs/plans/gemini_batch1/. Left for later batches: Ismark's counted fights
+(a roster row; not touched, he is in two book quests), the Anca letter's answer from Father Lucian (batch 3), and the
+Fourth Rumour's echoes from other regions.

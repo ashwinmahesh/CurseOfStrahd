@@ -14,6 +14,7 @@ endif
 * What's the pastry woman like? -> pie_lady
 * [if flag.burial_agreed and not flag.parriwimple_pallbearer and not flag.burgomaster_buried] Could you help carry the burgomaster's coffin? -> coffin
 * [if not flag.parriwimple_befriended] Say something kind to him. -> befriend
+* [if flag.parriwimple_befriended and not flag.parriwimple_book_shown] What do you do at night, when the shop is shut? -> book
 * [if tarokka.ally.npc == parriwimple and not guest:parriwimple] Madam Eva's cards named you, Parriwimple. Come with us. -> ally
 * Goodbye. -> END
 
@@ -36,6 +37,32 @@ Parriwimple [smile]: I can carry that. I'll bring the shovel too, and dig. Uncle
 else
 Parriwimple: Uncle says my time costs money. Five gold an hour. You'd have to ask Uncle. He likes being asked.
 endif
+-> menu
+
+~ book
+Parriwimple: At night, when Uncle bolts the shutters and goes up the stairs, I take the big book down from the desk.
+Parriwimple [sly]: Uncle thinks I only know the numbers on the sacks. I can read. I read his book.
+Parriwimple: The big book has everyone in the village in it, and beside every name is what they took home without paying.
+Parriwimple: Goodwife Viorica owes for salt since the winter before last, and Old Florin owes for three yards of wool.
+Parriwimple [weary]: Nobody has paid a copper against the book in four years, and Uncle writes the new sums in every week.
+Parriwimple: He never asks them for it when they come in. He only shouts about the price of rope so they look at the floor.
+Parriwimple: Is it wicked, to keep a book of debts you never ask for? Or is that what kind looks like, when you're also frightened of waste?
+* It's kind. -> book_kind
+* It's bad business. -> book_business
+
+~ book_kind
+set parriwimple_book_shown
+Parriwimple [smile]: I thought it might be kind. It feels heavy like kindness when I put it back on the shelf.
+Parriwimple: Though if Uncle is a good man, I must be very careful not to let him find out.
+Parriwimple [weary]: It would upset him terribly, and he has enough to oil and count as it is.
+approve liriel_dawnsong +1 wren_featherfoot +1: You told Parriwimple his uncle's book was kind
+-> menu
+
+~ book_business
+set parriwimple_book_shown
+Parriwimple: Yes. Uncle says it is ruinous business every night while he scrapes the mud off his boots.
+Parriwimple: He says it very loud when the door is open, so the whole street hears that Bildrath is a hard man.
+Parriwimple [sad]: I think if he did not say it was bad business out loud, he would have to say that everyone is hungry.
 -> menu
 
 ~ befriend

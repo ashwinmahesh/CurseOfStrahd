@@ -4,8 +4,22 @@
 ~ man
 Iulian: You're waiting too? No? Then step aside. They open when they open. The old woman knows I'm here. She always knows.
 Iulian: One bite and I'm home, and my wife is alive, and the sun is out. Don't look at me like that. You'd come too.
+* What else do you dream about? -> man_dream
+* Goodbye. -> END
+
+~ man_dream
+Iulian [smile]: I have an oven with a red brick arch. The flour is dry and white, no weevils in it, and the loaves come out singing.
+Iulian [sad]: People queue down the street with clean cloths over their arms. They call me Master Iulian and ask for the crusty heel.
+Iulian [afraid]: Tell me truly, you've walked the lanes today. Does anyone down there still eat bread, if a man were to bake it?
 -> END
 
 ~ woman
 Lucia: Just one for my husband. He can't sleep without them any more. Maybe two. Maybe I'll try one. Only to know what he sees.
+* Why two? -> woman_second
+* Goodbye. -> END
+
+~ woman_second
+Lucia [weary]: One husband, yes. Petrica has a bad chest and hasn't slept since the frost, so I told him I would fetch one.
+Lucia [sad]: Then I got to the door and my hand brought out the silver for two. It was already on the stone before I looked at it.
+Lucia: You don't have to say what that makes me. I'll eat mine in the ditch by the milestones so he doesn't smell the sugar on my shawl.
 -> END
