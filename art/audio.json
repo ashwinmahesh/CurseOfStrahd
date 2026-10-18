@@ -1,5 +1,5 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). region_turns: a region's theme once the story has moved on there (the first entry whose StoryConditions `when` holds), for every place in the region, kept themes too (the Wizard of Wines once Yester Hill is broken). boss_music: a foe whose fight has its own mood (Strahd's). talk_moods: per place mood, the mood a conversation plays (mood) while one of these NPCs (npcs) is spoken to or speaks; the place's music returns when it ends (GameRoot._talk_music). scenes: a cutscene whose scene has its own music (cutscene id: mood), played from its picture to the end of the conversation over whoever speaks (GameRoot._scene_music; docs/assets/music_audit.md). A mood with several recordings plays each once in a shuffled round and never the same twice in a row (Audio._pick_entry); a mood with one recording repeats it. steps, loops, water, containers: the world sounds (WorldSounds, A3).",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). region_turns: a region's theme once the story has moved on there (the first entry whose StoryConditions `when` holds), for every place in the region, kept themes too (the Wizard of Wines once Yester Hill is broken). boss_music: a foe whose fight has its own mood (Strahd's). talk_moods: per place mood, the mood a conversation plays (mood) while one of these NPCs (npcs) is spoken to or speaks; the place's music returns when it ends (GameRoot._talk_music). scenes: a cutscene whose scene has its own music (cutscene id: mood), played from its picture to the end of the conversation over whoever speaks (GameRoot._scene_music; docs/assets/music_audit.md). place_scenes: the same for a place cutscene's pictures (the Tome of Strahd's reading), played until it closes and then the place's own music comes back (GameRoot._cutscene_music). A mood with several recordings plays each once in a shuffled round and never the same twice in a row (Audio._pick_entry); a mood with one recording repeats it. steps, loops, water, containers: the world sounds (WorldSounds, A3).",
   "themes": {
     "svalich_road": "wilds",
     "forest": "wilds",
@@ -1711,5 +1711,13 @@
     "arabelle_shore": "camp",
     "amber_pact": "somber",
     "pact_two_books": "somber"
+  },
+  "place_scenes": {
+    "tome_conqueror": "sorrow",
+    "tome_brothers": "sorrow",
+    "tome_wedding": "sorrow",
+    "tome_wall": "sorrow",
+    "tome_refused": "sorrow",
+    "tome_again": "sorrow"
   }
 }

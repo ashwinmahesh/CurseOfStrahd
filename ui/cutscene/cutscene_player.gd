@@ -7,6 +7,8 @@ extends CanvasLayer
 ## box's own layer instead (DialogueUI).
 
 signal finished
+## A scene's picture came up (its cutscene id): the game's music can turn for it (Audio.scene_mood, GameRoot.play_cutscene).
+signal scene_shown(cutscene_id: String)
 
 var view: CutsceneView
 ## The cutscene that was triggered (its first scene); `scene_id` is the picture on screen now.
@@ -70,6 +72,7 @@ func _enter_scene(i: int) -> void:
 	captions = scenes[i]["lines"] as Array[String]
 	index = 0
 	view.show_image(Cutscenes.image(scene_id, _st), Cutscenes.focus(scene_id))
+	scene_shown.emit(scene_id)
 	_show_caption()
 
 

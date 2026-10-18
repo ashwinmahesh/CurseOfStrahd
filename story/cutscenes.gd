@@ -81,12 +81,21 @@ static func caption_key(id: String) -> String:
 	return str(get_cutscene(id).get("caption", ""))
 
 
+## The Narrator keys whose lines read over `id`'s picture after its first caption (data `more`), in order.
+static func more_keys(id: String) -> Array[String]:
+	var out: Array[String] = []
+	for k: Variant in get_cutscene(id).get("more", []):
+		out.append(str(k))
+	return out
+
+
 ## What a trigger plays, in order (owner rule, 2026-10-14: every cutscene is at least two scenes): `id` with
 ## `first_caption` over it, then each scene that follows it (data `then`, chained) that has a picture for this story now
-## and a Narrator line to read over it. Each is {id, lines}. A follow-on with no picture or no line ends the chain, so
-## without a Narrator (tests, tools) it is the first scene alone.
+## and a Narrator line to read over it. Each is {id, lines}: a scene's `lines` are its caption and then any further
+## captions over the same picture (data `more`: the Tome's four pictures read three each). A follow-on with no picture or
+## no line ends the chain, so without a Narrator (tests, tools) it is the first scene alone.
 static func scenes(id: String, first_caption: String, st: StoryState, narrator: Narrator, actor: Character = null) -> Array[Dictionary]:
-	var out: Array[Dictionary] = [{"id": id, "lines": [first_caption] as Array[String]}]
+	var out: Array[Dictionary] = [{"id": id, "lines": _with_more(id, [first_caption] as Array[String], st, narrator, actor)}]
 	var seen := {id: true}
 	var next := then_of(id)
 	while next != "" and not seen.has(next) and narrator != null:
@@ -97,9 +106,20 @@ static func scenes(id: String, first_caption: String, st: StoryState, narrator: 
 		var text := narrator.line(key, st, actor)
 		if text == "":
 			break
-		out.append({"id": next, "lines": [text] as Array[String]})
+		out.append({"id": next, "lines": _with_more(next, [text] as Array[String], st, narrator, actor)})
 		next = then_of(next)
 	return out
+
+
+## `lines` and then the scene's further captions (data `more`) that have a Narrator line now.
+static func _with_more(id: String, lines: Array[String], st: StoryState, narrator: Narrator, actor: Character) -> Array[String]:
+	if narrator == null:
+		return lines
+	for key in more_keys(id):
+		var text := narrator.line(key, st, actor)
+		if text != "":
+			lines.append(text)
+	return lines
 
 
 ## The caption under a treasure's picture (`find:<item>`), in our own words.
