@@ -705,7 +705,7 @@
       "search_dc": 14,
       "label": "a sack under the hovel's step",
       "model": "sack",
-      "item": "handy_haversack"
+      "item": "armor_plus_1__leather_armor"
     },
     {
       "id": "market_herb_stall",

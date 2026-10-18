@@ -259,7 +259,7 @@ once
 | Coins, ribbons, buttons and a child's tooth. Every token here was somebody's whole heart, and none of them is yours.
 
 ~ search:ribbon_tree_cache
-| The roots of the ribbon tree have been dug under and packed back. In the hollow, wrapped in a Vistani shawl, a pair of boots with springs worked into the heels.
+| The roots of the ribbon tree have been dug under and packed back. In the hollow, wrapped in a Vistani shawl, a short bow of dark yew that strings sweeter than any bow should.
 once
 
 ~ check:investigation:ribbon_tree_cache:failure
@@ -270,7 +270,7 @@ once
 once
 
 ~ search:trunk_hollow
-| The fallen trunk is hollow at one end. Inside, a small bag of rust-coloured cloth, and at the bottom something soft and warm, like fur.
+| The fallen trunk is hollow at one end. Inside lies a staff carved with scales, and when you lift it, it is warm and heavy as a living snake.
 once
 
 ~ search:milestone_hollow

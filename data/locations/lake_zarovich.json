@@ -342,7 +342,7 @@
       "search_dc": 14,
       "label": "something under the jetty's boards",
       "model": "broken_boards",
-      "item": "ring_of_water_walking"
+      "item": "armor_plus_1__breastplate"
     },
     {
       "id": "hut_hearthstone",
@@ -367,7 +367,7 @@
       "search_dc": 13,
       "label": "something behind the fishers' shrine",
       "model": "sword_leaning",
-      "item": "trident_of_fish_command__trident"
+      "item": "weapon_plus_2__trident"
     },
     {
       "id": "lz_racks",

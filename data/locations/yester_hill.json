@@ -329,7 +329,7 @@
       "search_dc": 15,
       "label": "a sword under the cage floor",
       "model": "bone_scatter",
-      "item": "sword_of_life_stealing__longsword"
+      "item": "sword_of_life_stealing__rapier"
     },
     {
       "id": "gully_cache",
@@ -466,7 +466,7 @@
       "label": "something in the barrow mound",
       "model": "rubble",
       "search_dc": 14,
-      "item": "amulet_of_the_devout_plus_2"
+      "item": "armor_of_resistance_necrotic__scale_mail"
     },
     {
       "id": "barrow_watch_cairn",

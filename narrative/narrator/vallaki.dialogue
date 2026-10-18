@@ -490,7 +490,7 @@ once
 | Letters, invitations and accounts, all in a neat, cold hand. If the desk keeps secrets, it keeps them from you.
 
 ~ search:circle_loose_board
-| Under the chalk circle, one board lifts. Victor hid his best tool where his father would never kneel: a wand of polished bone, warm from the floor.
+| Under the chalk circle, one board lifts. Victor hid his worst idea where his father would never kneel: a black rod ending in three rubbery tentacles, which curl toward your hand.
 once
 
 ~ check:investigation:circle_loose_board:failure
@@ -522,7 +522,7 @@ once
 once
 
 ~ search:hovel_step_sack
-| Under the hovel's step, someone keeps a scuffed leather haversack. It holds far more than it should and somehow always has the thing you reach for on top.
+| Under the hovel's step, someone keeps a sack. In it, a jerkin of supple black leather, oiled and patched, that turns a knife better than it has any right to.
 once
 
 ~ search:shrine_tithe

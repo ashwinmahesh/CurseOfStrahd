@@ -47,7 +47,7 @@ func test_the_riders_stand_down_and_the_marshal_asks_for_his_duel() -> void:
 			SideQuestPlay.play(copy, "into_the_mists/last_muster:after")
 			assert_eq(copy.quest_stage("last_muster"), "released")
 			assert_eq(roundi(copy.gold), 200)
-			assert_true(copy.party_has_item("weapon_plus_2") or copy.party.any(func(c: Character) -> bool: return c.carries("weapon_plus_2__longsword")))
+			assert_true(copy.party.any(func(c: Character) -> bool: return c.carries("weapon_plus_2__scimitar")), "the marshal's sabre")
 			SideQuestPlay.play(copy, "into_the_mists/last_muster:after")
 			assert_eq(roundi(copy.gold), 200, "the chest is empty the second time")
 			break

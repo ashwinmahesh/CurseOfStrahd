@@ -731,9 +731,9 @@
       "kind": "search",
       "search_dc": 16,
       "skill": "investigation",
-      "label": "a wand hidden in the conjurer's bier",
+      "label": "a staff hidden in the conjurer's bier",
       "model": "scattered_notes",
-      "item": "wand_of_the_war_mage_plus_2"
+      "item": "staff_of_thunder_and_lightning__quarterstaff"
     },
     {
       "id": "jester_cape",

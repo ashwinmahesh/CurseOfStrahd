@@ -37,7 +37,7 @@ static func for_fight(st: StoryState, monsters: Array, key: String) -> Dictionar
 	var budget := float(MODERATE_XP[clampi(level, 1, 20) - 1] * maxi(1, st.party.size()))
 	var chance := clampf(0.1 + 0.3 * float(xp) / budget, 0.1, 0.75)
 	if rng.roll_one(100, "Road spoils: a magic item") <= roundi(chance * 100.0):
-		var it := Treasure.roll_item(rng, level)
+		var it := Treasure.roll_item(rng, level, Treasure.taken_kinds(st))
 		if not it.is_empty():
 			items.append(it)
 	return {"gold": maxi(gold, 1), "items": items}
@@ -79,7 +79,7 @@ static func for_event(st: StoryState, key: String) -> Dictionary:
 	var gold := _dice(rng, 2, 6) * level
 	var items: Array[Dictionary] = [find(rng, level, true)]
 	if rng.roll_one(100, "Road spoils: a magic item") <= 10:
-		var it := Treasure.roll_item(rng, level)
+		var it := Treasure.roll_item(rng, level, Treasure.taken_kinds(st))
 		if not it.is_empty():
 			items.append(it)
 	return {"gold": gold, "items": items}

@@ -36,7 +36,11 @@ func test_chests_hold_more_magic_items_and_potions() -> void:
 						healing += 1
 				else:
 					magic += 1
-	assert_true(float(magic) / runs >= 1.4, "about 1.4 magic items a place, more with many chests: %.2f" % (float(magic) / runs))
+	# About 1.4 random magic items a place, more with many chests, and a potion besides. Since each lasting item turns
+	# up once (Ashwin, 2026-10-17: Treasure.taken_kinds), a roll that would repeat one the story places is something
+	# else, so more of those magic items are potions and scrolls than before.
+	assert_true(float(magic + potions) / runs >= 2.2, "about 1.4 magic items and a potion a place: %.2f" % (float(magic + potions) / runs))
+	assert_true(float(magic) / runs >= 0.9, "most of them lasting items or scrolls: %.2f" % (float(magic) / runs))
 	assert_true(float(potions) / runs >= 0.8, "about one potion a place: %.2f" % (float(potions) / runs))
 	assert_true(healing > potions / 3, "most of them healing: %d of %d" % [healing, potions])
 
