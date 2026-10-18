@@ -312,7 +312,7 @@
       "search_dc": 14,
       "label": "an old priest in the burial niches",
       "model": "bone_scatter",
-      "item": "periapt_of_health"
+      "item": "weapon_plus_1__mace"
     },
     {
       "id": "pew_loose_stone",
@@ -323,9 +323,9 @@
       "kind": "search",
       "search_dc": 14,
       "skill": "investigation",
-      "label": "a loose stone under the front pew",
+      "label": "a hollow under the front pew",
       "model": "floor_crack",
-      "item": "amulet_of_the_devout_plus_1"
+      "item": "staff_of_the_adder__quarterstaff"
     },
     {
       "id": "church_sunburst",

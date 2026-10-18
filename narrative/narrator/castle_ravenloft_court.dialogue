@@ -276,7 +276,7 @@ cooldown 1
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:count_desk_ball
-| The count's desk has a drawer no servant was meant to find. In it, on a cushion of black velvet, a crystal sphere with a mist moving slowly inside it.
+| The count's desk has a drawer no servant was meant to find. In it, on a cushion of black velvet, a brass bottle stoppered with lead and warm to the touch.
 once
 
 ~ check:investigation:count_desk_ball:failure
@@ -295,7 +295,7 @@ once
 | The mirror shows an empty room. You don't like what that says about the room.
 
 ~ search:ludmilla_grimoire
-| Among Ludmilla's books is a grimoire bound in grey leather, its margins full of her notes. The spells in it feel stronger just for being read.
+| Among Ludmilla's books is a thick manual bound in red leather, all exercises and drawings of the body. Leafing through it, you feel your heartbeat slow and steady.
 once
 
 # ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
@@ -307,7 +307,7 @@ once
 | The organ groans like a house in a storm. Somewhere above, someone winces.
 
 ~ check:religion:dark_chapel_pray:success
-| You pray in the dead chapel anyway, and under the altar's dust something holy answers.
+| You pray in the dead chapel anyway, and under the altar's dust something still answers.
 
 ~ check:religion:dark_chapel_pray:failure
 | The chapel hears your prayer and answers it, coldly, with its own.

@@ -39,7 +39,7 @@ cooldown 20
 once
 
 ~ enter:spires_lamp_closet
-| A narrow closet that smells of lamp oil. Lamps hang in rows on hooks, every one of them cold.
+| A narrow closet that smells of lamp oil. Lamps hang in rows on hooks, every one of them cold. Whoever kept this closet hidden kept more than lamps in it.
 once
 
 ~ enter:spires_lower_stair

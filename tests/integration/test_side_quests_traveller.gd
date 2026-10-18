@@ -24,7 +24,7 @@ func test_one_night_and_fifty_years() -> void:
 	beats = SideQuestPlay.play(st, "into_the_mists/the_last_traveller:well")
 	assert_true(SideQuestPlay.text(beats).contains("Fifty years, Tata"))
 	assert_eq(st.quest_stage("the_last_traveller"), "done")
-	assert_true(st.party_has_item("winged_boots"))
+	assert_true(st.party_has_item("boots_of_striding_and_springing"))
 	beats = SideQuestPlay.play(st, "into_the_mists/the_last_traveller:well")
 	assert_true(SideQuestPlay.text(beats).contains("I carry the water now"), "the boots once")
 	beats = SideQuestPlay.play(st, "village_of_barovia/townsfolk:gravedigger")
