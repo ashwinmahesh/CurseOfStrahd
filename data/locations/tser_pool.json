@@ -852,6 +852,30 @@
       "item": "bag_of_holding"
     },
     {
+      "id": "tser_stage_empty",
+      "cell": [
+        30,
+        16
+      ],
+      "kind": "examine",
+      "label": "The plank stage, bare",
+      "model": "lantern_stand",
+      "dialogue": "svalich_road/the_dancing_bear:stage_empty",
+      "when": "quest.the_dancing_bear == found and (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)"
+    },
+    {
+      "id": "tser_pen_empty",
+      "cell": [
+        13,
+        19
+      ],
+      "kind": "examine",
+      "label": "The empty horse pen",
+      "model": "hay_bale",
+      "dialogue": "svalich_road/grey_mare:pen_empty",
+      "when": "quest.the_grey_mare == carriage_beaten and (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)"
+    },
+    {
       "id": "tser_dinte",
       "cell": [
         14,

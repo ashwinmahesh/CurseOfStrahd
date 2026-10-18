@@ -38,10 +38,24 @@ endif
 ~ arrigal_menu
 * Why isn't anyone out looking for the headman's daughter? -> arabelle_q
 * What news on the roads? -> roads
+* [if (quest.the_hanged_vistana == buried or quest.the_hanged_vistana == risen) and flag.tser_pool_brawl_won] Tell him what became of Nicu at the crossroads gallows. -> nicu_news
 * [if guest:ireena] [Insight DC 15] What does he want with Ireena? -> insight_ok | insight_fail
 * [if flag.arrigal_suspected] You'd sell her to the castle. -> accuse
 * [name:tamsin_tealeaf] [if flag.locket_coach_known and not flag.locket_arrigal_confirmed] Ask about the black carriage that drives itself. -> companions/locket:arrigal
 * Goodbye. -> END
+
+# Nicu's news, when the pool camp that should have heard it is gone (Side Quest Failure Plan, T1): the lake camp takes it, and the
+# hanged man's quest ends as it does at Luminita's, without her potion or her thanks (svalich_road/luminita:told).
+~ nicu_news
+set nicu_kin_told
+quest the_hanged_vistana told
+Narrator: Arrigal listens with his hands folded over the silver buttons of his waistcoat, while the lake wind pulls the smoke sideways.
+Arrigal: A boy on the crossroads rope with a thief's board around his neck, and strangers to put him in the dirt when the crows were done.
+Arrigal: You did not owe him a spade, and you did not owe me the story. Our people remember who brings word when the roads go bad.
+Arrigal: I carry messages, my friend. This one will find his sister and his blood, wherever the wagons have stopped tonight.
+Arrigal [weary]: What they do with their grief is their own affair, and none of yours, I think. Sit by the fire; the lake wind will tire itself out.
+approve wren_featherfoot +1 liriel_dawnsong +1: You brought word of Nicu to the Vistani by the lake
+-> arrigal_menu
 
 ~ arabelle_q
 Arrigal: Luvash's girl wandered off. Children do. My brother drinks, which is how he looks for things. The lake will give her back, or it won't. That's the way of lakes.

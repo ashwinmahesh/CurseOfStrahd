@@ -595,6 +595,16 @@
       "when": "flag.arabelle_rescued and not guest:arabelle"
     },
     {
+      "npc": "tser_nelu",
+      "cell": [
+        16,
+        14
+      ],
+      "dialogue": "svalich_road/called_by_name:nelu_away",
+      "facing": "south",
+      "when": "(quest.called_by_name == nelu_found or quest.called_by_name == no_fire) and (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)"
+    },
+    {
       "npc": "kasimir_velikov",
       "cell": [
         25,

@@ -30,7 +30,7 @@
       "objectives": [
         "Tell his people at Tser Pool"
       ],
-      "hint": "Go back to the Tser Pool camp and tell Luminita, or Stanimir.",
+      "hint": "Go back to the Tser Pool camp and tell Luminita, or Stanimir. If the camp has turned on you, tell Arrigal at the Vistani camp outside Vallaki's west gate.",
       "ends": ""
     },
     {
@@ -39,12 +39,12 @@
       "objectives": [
         "Tell his people at Tser Pool"
       ],
-      "hint": "Go back to the Tser Pool camp and tell Luminita, or Stanimir.",
+      "hint": "Go back to the Tser Pool camp and tell Luminita, or Stanimir. If the camp has turned on you, tell Arrigal at the Vistani camp outside Vallaki's west gate.",
       "ends": ""
     },
     {
       "id": "told",
-      "journal": "We told Luminita and Stanimir what became of Nicu at the crossroads. The Tser Pool camp will remember who brought him home.",
+      "journal": "We told Nicu's people what became of him at the crossroads. They will remember who brought the news.",
       "objectives": [],
       "ends": "success"
     }

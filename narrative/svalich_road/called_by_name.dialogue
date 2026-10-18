@@ -55,6 +55,25 @@ approve thistle +2 godrick_pendlebrook +2 kip_smudgewick +1 wren_featherfoot +1:
 Big Tobar: Nelu sits with his back to the falls now, and sings over anything that calls. Badly. It works.
 -> END
 
+# --- Nelu among the Vallaki Vistani when the pool camp has turned on the party (Side Quest Failure Plan, T1) ---
+# Tobar is hidden with the rest of the camp, so nobody at the pool can take the boy home: he waits at the lake camp outside
+# Vallaki's west gate (data/locations/vallaki_vistani_camp.json) and the quest closes there, without Tobar's money or quiver.
+
+~ nelu_away
+if quest.called_by_name == no_fire
+Nelu [weary]: I sit with my back to the lake now, because water sounds the same everywhere once the sun goes down.
+Nelu: I do not ask after the pool camp anymore, and if anything calls my name from the reeds, I sing over it until it gives up.
+-> END
+endif
+quest called_by_name no_fire
+Narrator: A woman by the lake fire puts a bowl of hot mutton broth into Nelu's hands and pulls a dry wool blanket around his thin shoulders.
+Nelu [weary]: They gave me bread and fat, and a coat that smells like somebody else's horse, and they told me the road back to the pool is shut.
+Nelu [sad]: Nobody here says why I cannot go home. Have you seen my Da on the road, or is he only looking for me in the wrong part of the trees?
+Narrator: The mist off the lake is cold on your face, and the fire snaps in the quiet while the boy waits for an answer you do not have.
+Nelu [sad]: That is all right. You pulled me off the wet rock when the water was loud, and that was work enough for one week.
+Nelu: When the mist comes up from the water tonight, I am going to sing every song I know until the dark has no room left to talk.
+-> END
+
 # --- At the falls after dark (prop gorge_voices) ---
 
 ~ falls

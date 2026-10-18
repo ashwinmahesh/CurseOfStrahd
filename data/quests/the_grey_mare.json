@@ -56,7 +56,7 @@
       "objectives": [
         "Go back to Radu at the Tser Pool camp"
       ],
-      "hint": "Radu keeps the horses at the Tser Pool camp, west of the crossroads on the Old Svalich Road. Tell him what happened.",
+      "hint": "Radu keeps the horses at the Tser Pool camp, west of the crossroads on the Old Svalich Road. Tell him what happened. If the camp has turned on you, look in its empty horse pen.",
       "ends": ""
     },
     {
@@ -70,6 +70,12 @@
       "journal": "We told Radu what the castle made of his mare. He tied a black ribbon to the pen gate and would not say anything else.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "empty_pen",
+      "journal": "The Tser Pool camp turned on us before we could tell Radu what the castle made of his mare. The pen is empty, the carriage has its black horse, and nobody is left to tell.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

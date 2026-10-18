@@ -232,6 +232,28 @@ endif
 Narrator: The carriage door opens on nothing. Something gets out anyway. Several somethings.
 combat carriage_escort
 
+# --- The empty pen (prop tser_pen_empty): the carriage is beaten and Radu is gone with his camp (Failure Plan, T1) ---
+# A mare saved is found grey in the pen, with the castle's purse still on the gatepost; Radu's bride-price rod went with
+# him. A mare lost leaves an empty place at the end of the pen and no one to tell: the quest closes as a failure.
+
+~ pen_empty
+set mare_resolved
+if flag.mare_saved
+quest the_grey_mare home
+Narrator: Steaua stands alone in the mud of the empty pen, grey and cross, methodically stripping the bark from the top rail.
+Narrator: A wet leather purse still hangs from the gatepost where the castle carriage left it, heavy with old gold coins.
+Narrator: The mare flattens one ear as you lift the purse from the post, then goes back to chewing the fence.
+gold +120
+Narrator: Around you the wagons stand open to the damp air, with nobody left to say whose horse she is now.
+approve thistle +1: You found Steaua grey in an empty pen
+-> END
+endif
+quest the_grey_mare empty_pen
+Narrator: The rail pen stands open to the mist, with hoof-prints filling with grey water at the far end where Steaua used to wait.
+Narrator: Dead needles float in the wooden trough, and the cold smell of the wet mud is all that is left of the night.
+Narrator: There is no one left by the wagons to hear what the black carriage took, or what the castle made of her.
+-> END
+
 # --- A decoy instead of a fight: the camp's Winter Horse, blackened with lamp soot (NPC plan batch 2) ---
 
 ~ decoy_ask

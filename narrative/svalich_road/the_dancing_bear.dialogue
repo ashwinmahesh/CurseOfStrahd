@@ -159,8 +159,14 @@ interject name:thistle: They come for whatever's crying. Not this one. Stand in 
 combat den_blights
 
 ~ choose
+# With the pool camp turned on the party there is nobody at the stage to lead him home to (Failure Plan, T1): only the den.
+if (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)
+Narrator: With the iron off the cub's leg, Bujor stands in the bruised fern and looks down the deer path toward the pool.
+Narrator: Nothing comes up through the wet pines to meet him: no fiddle, no woodsmoke, and no dancer on the planks to take his chain.
+else
 Narrator: The cub is out of the trap, limping, pressed hard against Bujor's side. Bujor looks at you, and down the deer path toward the camp, and up at the dark of the den in the rocks.
-* (Lead him home to Lavinia, and the cub with him.) -> home
+endif
+* [if not (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)] (Lead him home to Lavinia, and the cub with him.) -> home
 * (Let them go into the den together.) -> let_go
 
 ~ home
@@ -171,8 +177,16 @@ Narrator: You walk down the deer path, and he follows you like a very large dog,
 
 ~ let_go
 set bujor_free
+if (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)
+quest the_dancing_bear no_stage
+else
 quest the_dancing_bear found
+endif
 Narrator: You unbuckle the collar. He doesn't wait to be told. He noses the cub up over the stones and into the dark under the rocks, and he doesn't look back, not once.
+if (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)
+Narrator: You walk back down the deer path through the cold smell of pine and turned earth, leaving the rocks and the dark behind you.
+Narrator: Below the trees, the plank stage by the pool stands bare to the drizzle, and nobody dances on it now.
+endif
 -> END
 
 # --- The iron trap (prop cub_trap) ---
@@ -184,6 +198,15 @@ set bear_trap_marked
 -> END
 endif
 Narrator: An iron trap in the leaves, with a bear cub in it, and a bear standing over it.
+-> END
+
+# --- The plank stage in the empty camp (prop tser_stage_empty): Bujor was freed or led home, and Lavinia is gone ---
+
+~ stage_empty
+quest the_dancing_bear no_stage
+Narrator: Rain sits in the nail-holes of the plank stage, and the cold tin lamp on the post smells of dead tallow.
+Narrator: Dead leaves have drifted across the boards where a bear used to turn slow circles.
+Narrator: The wind moves through the alders by the water, and there is no one left in the clearing to hear that the bear got away whole.
 -> END
 
 # --- Bujor on the plank stage at the camp, once he's home (npc bujor, tser_pool) ---
