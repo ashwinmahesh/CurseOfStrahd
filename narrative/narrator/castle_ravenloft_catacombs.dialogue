@@ -235,7 +235,7 @@ cooldown 0
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:conjurer_wand
-| The conjurer's bier has a hollow at its head. In it lies a wand of black wood capped in silver, the last thing he would have let go of.
+| The conjurer's bier has a hollow along its length. In it lies a staff of dark ash bound in copper, and the air around it smells of a coming storm.
 once
 
 ~ search:jester_cape

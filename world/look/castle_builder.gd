@@ -491,6 +491,21 @@ static func _tower(board: ArenaBoard, t: Dictionary, group: int) -> void:
 		cap.height = 0.08
 		stub.append([cap, Transform3D(Basis(), p + Vector3(0, CUT + 0.04, 0)), COPING])
 	_finish(b, parts, stub)
+	if from <= 0.0:
+		# A floor inside the shaft at the ground the party walks, dark like a wall's top: what shows where the window
+		# round the party opens the tower (SeeThrough), instead of the drop beneath one rising out of it. On the board,
+		# not the tower, so it never opens itself.
+		var inside := CylinderMesh.new()
+		inside.top_radius = r * 0.97
+		inside.bottom_radius = r * 0.97
+		inside.height = 0.04
+		var floor := MeshInstance3D.new()
+		floor.name = "TowerFloor"
+		floor.mesh = inside
+		floor.position = p + Vector3(0, 0.02, 0)
+		floor.material_override = Look.cel(ArenaBoard.CUT_FACE)
+		floor.set_meta("on_floor", true)
+		board.add_child(floor)
 	if spire_id != "":
 		var mi := BuildingKit.merge([[spire_id, Transform3D(Basis.from_scale(Vector3(r, r, r)), p + Vector3(0, h + 0.55, 0))]])
 		if mi != null:

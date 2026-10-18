@@ -22,6 +22,10 @@ Rules for this list:
 - Random treasure (story/treasure.gd) still rolls on top of this: one location in five now rolls nothing, down
   from about one in three, and nearly a third roll two items. Random rolls (chests and the road's spoils) never give a common item either: the
   DMG's common share goes to uncommon (data/treasure/levels.json).
+- **Each lasting item once** (Ashwin, 2026-10-17; docs/story/magic_item_audit.md): no kind of item (a +1 and a +3 of
+  one item are one kind, a +1 Longsword and a +1 Rapier two) is placed in two places, and random treasure never
+  rolls one the story places, one already rolled, or one the party has. Potions, scrolls and ammunition repeat.
+  tests/unit/test_loot_distinct.gd checks it. Finds lean to combat; items with no use in a fight roll a quarter as often.
 
 Status: ✅ built · ○ planned
 
@@ -30,15 +34,15 @@ Status: ✅ built · ○ planned
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | Old Svalich Road, by the headless statues | Longsword of Warning (uncommon) | Search (Perception DC 13): a gate guard's sword in the weeds |
-| ✅ | Old Svalich Road, the wayside shrine | Ring of Mind Shielding (uncommon) | Search (Investigation DC 12): a loose board at the back of the shrine |
+| ✅ | Old Svalich Road, the wayside shrine | +1 Quarterstaff (uncommon) | Search (Investigation DC 12): a pilgrim's staff under a loose board at the back of the shrine (was a Ring of Mind Shielding, which did nothing; (magic item audit, 2026-10-17)) |
 | ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass; or a Tip from the crow at the village edge (Speak with Animals) |
-| ✅ | Ilarion, at the village well | Winged Boots (uncommon) | Gift: once he's home with his children (The Last Traveller, docs/story/side_quests.md) |
+| ✅ | Ilarion, at the village well | Boots of Striding and Springing (uncommon) | Gift: once he's home with his children (The Last Traveller, docs/story/side_quests.md); Winged Boots are Mother's gift (magic item audit, 2026-10-17) |
 
 ## The Gates of Barovia (side quest, levels 6 and up)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | The vanguard's pay chest, the Gates | +2 Longsword (rare) | Hoard: Marshal Dragomir's blade, once he's beaten (The Last Muster, docs/story/side_quests.md) |
+| ✅ | The vanguard's pay chest, the Gates | +2 Scimitar (rare) | Hoard: Marshal Dragomir's sabre, once he's beaten (The Last Muster, docs/story/side_quests.md); was a +2 Longsword, as Godrick's knighting sword is (magic item audit, 2026-10-17) |
 
 ## Death House (level 2)
 
@@ -52,8 +56,8 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Upper floor, conservatory | Instrument of the Bards, Doss Lute (uncommon) | Search (Investigation DC 13): a lute case behind the harp |
 | ✅ | Upper floor, servants' room | Gloves of Missile Snaring (uncommon) | Search (Perception DC 14): under a servant's bed |
 | ✅ | Third floor, master suite | Circlet of Blasting (uncommon) | Search (Investigation DC 13): a false bottom in Elisabeth's dressing-table drawer |
-| ✅ | Third floor, nursemaid's room | Cloak of Elvenkind (uncommon) | Search (Perception DC 14): folded under the mattress, a gift from Gustav |
-| ✅ | Attic, children's room | Bag of Tricks, Gray (uncommon) | Search (Investigation DC 12): Thorn's secret drawer in the toy chest |
+| ✅ | Third floor, nursemaid's room | +1 Shortsword (uncommon) | Search (Perception DC 14): wrapped under the mattress, a gift from Gustav (the Cloak of Elvenkind is Fen's; (magic item audit, 2026-10-17)) |
+| ✅ | Attic, children's room | +1 Sling (uncommon) | Search (Investigation DC 12): Thorn's secret drawer in the toy chest (the Bag of Tricks is Agafia's; (magic item audit, 2026-10-17)) |
 | ✅ | Dungeon, the cult's dormitory | Elemental Gem, Red Corundum (uncommon) | Search (Perception DC 13): under a straw pallet |
 | ✅ | Dungeon, the cult's shrine | Dust of Disappearance (uncommon) | Search (Perception DC 14): a hollow in the painted statue's base |
 | ✅ | Dungeon, lower level | Pipes of Haunting (uncommon) | Search (Investigation DC 14): one relic in the niches that isn't bone |
@@ -66,11 +70,11 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Village, the churchyard | Wand of Secrets (uncommon) | Search (Perception DC 14): a grave dug up and filled in again |
 | ✅ | Village, behind a rain barrel | Oil of Slipperiness (uncommon) | Search (Perception DC 12): a flask kept dry (lane 28's spot) |
 | ✅ | Burgomaster's mansion, study | Brooch of Shielding (uncommon) | Search (Investigation DC 13): behind the study desk; or a Tip from Kolyan himself (Speak with Dead) |
-| ✅ | Ismark | +1 Longsword (uncommon) | Gift: his father's sword, after the burial |
-| ✅ | Blood of the Vine | Eyes of Minute Seeing (uncommon) | Search (Investigation DC 14): sewn into the lining of the scholar's satchel |
+| ✅ | Ismark | +1 Rapier (uncommon) | Gift: his father's sword, after the burial (a rapier since the +N Longsword is Godrick's; (magic item audit, 2026-10-17)) |
+| ✅ | Blood of the Vine | Headband of Intellect (uncommon) | Search (Investigation DC 14): sewn into the lining of the scholar's satchel (the Eyes are in Death House; (magic item audit, 2026-10-17)) |
 | ✅ | Blood of the Vine, the Vistani women | Deck of Illusions (uncommon) | Gift: win them over with a song (Performance DC 13) |
-| ✅ | Church nave | Amulet of the Devout +1 (uncommon) | Search (Investigation DC 14): a loose stone under the front pew |
-| ✅ | Church undercroft | Periapt of Health (uncommon) | Search (Perception DC 14): on an old priest in the burial niches |
+| ✅ | Church nave | Staff of the Adder (uncommon) | Search (Investigation DC 14): a hollow under the front pew (the one Amulet of the Devout is Liriel's sunburst; (magic item audit, 2026-10-17)) |
+| ✅ | Church undercroft | +1 Mace (uncommon) | Search (Perception DC 14): in an old priest's hands in the burial niches (the Periapt of Health is Kip's charm; (magic item audit, 2026-10-17)) |
 | ✅ | Father Donavich | Gem of Brightness (uncommon) | Gift: if Doru is given rest |
 | ✅ | Mad Mary | Necklace of Prayer Beads (rare) | Gift: when Gertruda comes home (late in the game) |
 | ✅ | Teodor's empty grave, the churchyard | Shield, +1 (uncommon) | Tip: Teodor tells you at dawn (The Polite Caller, docs/story/side_quests.md) |
@@ -87,13 +91,13 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Tser Pool, the broken cart | Bag of Holding (uncommon) | Search (Investigation DC 12): a false floor in the cart (from the open road, 2026-10-09) |
 | ✅ | Crossroads, the field wall by the falls track | Gauntlets of Ogre Power (uncommon) | Search (Perception DC 14): a farmer's cache behind the wall (from the open road, 2026-10-09); or a Tip from Nicu on the gallows (Speak with Dead) |
 | ✅ | Tser Falls, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches (from the Svalich Woods road, 2026-10-09) |
-| ✅ | Tser Falls, the fallen trunk | Bag of Tricks, Rust (uncommon) | Search (Investigation DC 12): a hollow in the trunk (from the Svalich Woods road, 2026-10-09) |
+| ✅ | Tser Falls, the fallen trunk | Staff of the Python (uncommon) | Search (Investigation DC 12): a hollow in the trunk (from the Svalich Woods road, 2026-10-09; was a second Bag of Tricks, (magic item audit, 2026-10-17)) |
 | ✅ | Tser Falls, a woodcutter's stump | +1 Handaxe (uncommon) | Search (Perception DC 12): an axe left in the stump (lane 28's spot, from the Svalich Woods road, 2026-10-09) |
 | ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others; or a Tip from the raven on the fencepost (Speak with Animals) |
 | ✅ | Crossroads, the carved milestone | Wand of Web (uncommon) | Search (Investigation DC 14): a hollow behind the stone; or a Tip from Steaua, tied to it (Speak with Animals) |
 | ✅ | Tser Falls, the stone of tokens | Pearl of Power (uncommon) | Search (Perception DC 13): one token among the many that hums |
 | ✅ | Tser Falls, the cairn of names | Necklace of Adaptation (uncommon) | Search (Perception DC 13) |
-| ✅ | Tser Pool, the ribbon tree | Boots of Striding and Springing (uncommon) | Search (Investigation DC 14): a Vistani cache in the roots |
+| ✅ | Tser Pool, the ribbon tree | +1 Shortbow (uncommon) | Search (Investigation DC 14): a Vistani cache in the roots (the boots went to Ilarion; (magic item audit, 2026-10-17)) |
 | ✅ | Tser Pool, in the reeds | Elemental Gem, Yellow Diamond (uncommon) | Search (Perception DC 12): a gambler's stake in a bag of dice (lane 28's spot; was a Stone of Good Luck, now Veta's in The Nursemaid's Grave) |
 | ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot); or a Tip from the camp dog (Speak with Animals) |
 | ✅ | Big Tobar, Tser Pool | Efficient Quiver (uncommon) | Gift: once his son is home (Called by Name, docs/story/side_quests.md) |
@@ -137,10 +141,10 @@ leaves a smaller purse and one find.
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | Town, by the stocks | Ring of Protection (rare) | Search (Perception DC 13): trodden into the mud; or a Tip from the big dog in the square (Speak with Animals) |
-| ✅ | Lower town, the leaning hovel | Handy Haversack (rare) | Search (Perception DC 14): a sack under the step |
+| ✅ | Lower town, the leaning hovel | +1 Leather Armor (rare) | Search (Perception DC 14): a sack under the step (was a Handy Haversack, a third carry-all; (magic item audit, 2026-10-17)) |
 | ✅ | Wachterhaus, Lady Wachter's desk | Eyes of Charming (uncommon) | Search (Investigation DC 15): a hidden drawer |
 | ✅ | Wachterhaus cellar, the dark shrine | Rod of Rulership (rare) | Search (Perception DC 15): the cult's tithe under the shrine |
-| ✅ | Burgomaster's mansion, Victor's attic | +1 Wand of the War Mage (uncommon) | Search (Investigation DC 15): under the chalk circle's loose board |
+| ✅ | Burgomaster's mansion, Victor's attic | Tentacle Rod (rare) | Search (Investigation DC 15): under the chalk circle's loose board (the one Wand of the War Mage is Khazan's +3; (magic item audit, 2026-10-17)) |
 | ✅ | Burgomaster's mansion, the Baron's study | Necklace of Fireballs (rare) | Search (Investigation DC 15): behind the festival ledger |
 | ✅ | Burgomaster's mansion, Izek's chest | Potion of Hill Giant Strength (uncommon) | Hoard |
 | ✅ | Burgomaster's mansion, Izek's chest | Potion of Fire Giant Strength (rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
@@ -163,9 +167,9 @@ leaves a smaller purse and one find.
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | The rotten jetty | Ring of Water Walking (uncommon) | Search (Perception DC 14): under the boards |
+| ✅ | The rotten jetty | +1 Breastplate (rare) | Search (Perception DC 14): under the boards (was a Ring of Water Walking, which did nothing; (magic item audit, 2026-10-17)) |
 | ✅ | An empty hut | Folding Boat (rare) | Search (Investigation DC 14): a loose hearthstone |
-| ✅ | The fishers' shrine | Trident of Fish Command (uncommon) | Search (Perception DC 13) |
+| ✅ | The fishers' shrine | +2 Trident (rare) | Search (Perception DC 13) (was a Trident of Fish Command; (magic item audit, 2026-10-17)) |
 | ✅ | The drowned chapel under the lake | Staff of Healing (rare) | Gift: once the bell is silenced (The Bell Under the Lake, docs/story/side_quests.md) |
 
 ## Old Bonegrinder (level 6)
@@ -189,8 +193,8 @@ leaves a smaller purse and one find.
 | ✅ | The yard, behind the casks | Eversmoking Bottle (uncommon) | Search (Perception DC 13): a bottle set aside (lane 28's spot) |
 | ✅ | The vineyard, between the rows | +1 Moon Sickle (uncommon) | Search (Perception DC 12): dropped by a druid (lane 28's spot); or a Tip from the last green row (Speak with Plants) |
 | ✅ | The vineyard's dead tree | Ring of Feather Falling (rare) | Search (Perception DC 15): the ravens' hoard; or a Tip from the winery's ravens (Speak with Animals) |
-| ✅ | Cellar, the founder's cask | Alchemy Jug (uncommon) | Search (Investigation DC 14) |
-| ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
+| ✅ | Cellar, the founder's cask | +2 Hand Crossbow (rare) | Search (Investigation DC 14) (was an Alchemy Jug; (magic item audit, 2026-10-17)) |
+| ✅ | Press house, the wizard's casks | Rhythm-Maker's Drum, +2 (rare) | Search (Perception DC 14) (was a Decanter of Endless Water; (magic item audit, 2026-10-17)) |
 | ✅ | Winery, the pried-up floorboards | Elemental Gem, Emerald (uncommon) | Search (Perception DC 15): what the druids missed |
 | ✅ | Stefania Martikov | Periapt of Wound Closure (uncommon) | Gift: once the winery is reclaimed |
 | ✅ | Davian Martikov | Wand of Fireballs (rare) | Gift: the Wizard of Wines' wand from the press-house rack, once the Black Row is cut out (The Black Row, docs/story/side_quests.md) |
@@ -200,9 +204,9 @@ leaves a smaller purse and one find.
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | The hill, a cairn of bones | Bracers of Archery (uncommon) | Search (Perception DC 15) |
-| ✅ | The hill, the wicker cages | Sword of Life Stealing (rare) | Search (Perception DC 15): a prisoner's sword under the cage floor |
+| ✅ | The hill, the wicker cages | Rapier of Life Stealing (rare) | Search (Perception DC 15): a prisoner's sword under the cage floor (a rapier for a rogue, (magic item audit, 2026-10-17)) |
 | ✅ | The back gully | Wand of Paralysis (rare) | Search (Investigation DC 15): a druid's cache |
-| ✅ | The hill, a barrow mound | Amulet of the Devout +2 (rare) | Search (Perception DC 14): buried with a believer (lane 28's spot) |
+| ✅ | The hill, a barrow mound | Scale Mail of Necrotic Resistance (rare) | Search (Perception DC 14): buried with a warrior (lane 28's spot; (magic item audit, 2026-10-17)) |
 | ✅ | Gulthias Tree, the splintered heartwood | Staff of Withering (rare) | Search (Investigation DC 16) |
 | ✅ | The wardens' hoard | Berserker Axe (rare, cursed) | Hoard |
 | ✅ | Gulthias Tree, the druids' offerings | Staff of the Woodlands (rare), two Potions of Healing (Superior) (rare) | Hoard: Ruxandra's, at the crown (Hoard upgrades, Ashwin 2026-10-15) |
@@ -219,13 +223,13 @@ leaves a smaller purse and one find.
 |---|---|---|---|
 | ✅ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14); or a Tip from Krezk's goats (Speak with Animals) |
 | ✅ | Krezk, the watch fire | Sentinel Shield (uncommon) | Search (Perception DC 14): under the woodpile |
-| ✅ | Krezk, a loose stone in the wall | +1 Sling (uncommon) | Search (Perception DC 14): a boy's treasure (lane 28's spot) |
-| ✅ | Krezk, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13): a tin of salve left for whoever needs it (from the miller's lane, 2026-10-09) |
+| ✅ | Krezk, a loose stone in the wall | Belt of Dwarvenkind (rare) | Search (Perception DC 14): rolled up behind the stone (lane 28's spot; the sling is Thorn's now, (magic item audit, 2026-10-17)) |
+| ✅ | Krezk, the wayside shrine | Potion of Invulnerability (rare) | Search (Perception DC 13): a tin left for whoever needs it (from the miller's lane, 2026-10-09; Keoghtom's Ointment is Smaranda's in Vallaki, (magic item audit, 2026-10-17)) |
 | ✅ | Krezk, the square by the shrine | Ring of the Ram (rare) | Gift: Old Pavel's father's ring, after Clovin's show (Clovin's Audience, docs/story/side_quests.md) |
 | ✅ | Krezk, the watch house | Iron Bands of Bilarro (rare) | Gift: Krezk's bounty from Dmitri, once the Grandsire is dead (The Pack's Runt, docs/story/side_quests.md) |
 | ✅ | Burgomaster's house, the eldest son's room | Ioun Stone of Awareness (rare) | Search (Investigation DC 15): a box under the bed |
 | ✅ | Pool of the White Sun, the candle box | Scroll of Protection from Undead (rare) | Search (Investigation DC 14) |
-| ✅ | Pool of the White Sun, the pool's edge | Amulet of the Devout +1 (uncommon) | Search (Perception DC 13): a mourner's offering (lane 28's spot) |
+| ✅ | Pool of the White Sun, the pool's edge | Bloodwell Vial, +2 (rare) | Search (Perception DC 13): a mourner's offering (lane 28's spot; (magic item audit, 2026-10-17)) |
 | ✅ | Anna Krezkova | Amulet of Health (rare) | Gift: once Ilya is well |
 | ✅ | Dmitri Krezkov | Armor, +1 (rare; chain mail) | Gift: his grandfather's mail, once Sorin is found (Lighter Than It Should Be, docs/story/side_quests.md) |
 
@@ -249,11 +253,11 @@ leaves a smaller purse and one find.
 |---|---|---|---|
 | ✅ | Courtyard, the well | Cube of Force (rare) | Search (Perception DC 15) |
 | ✅ | Hall, the armour stands | Flame Tongue Longsword (rare) | Search (Perception DC 15) |
-| ✅ | Hall, the chapel altar | Amulet of the Devout +2 (rare) | Search (Investigation DC 15): a reliquary behind the altar |
+| ✅ | Hall, the chapel altar | Bowl of Commanding Water Elementals (rare) | Search (Investigation DC 15): a reliquary behind the altar ((magic item audit, 2026-10-17)) |
 | ✅ | Upper floor, the empty plinth | Ring of Resistance, Cold (rare) | Search (Investigation DC 16) |
-| ✅ | Upper floor, the dragon's desk | Wand of Enemy Detection (rare) | Search (Investigation DC 16) |
+| ✅ | Upper floor, the dragon's desk | Figurine of Wondrous Power, Bronze Griffon (rare) | Search (Investigation DC 16) (was a Wand of Enemy Detection; (magic item audit, 2026-10-17)) |
 | ✅ | Beacon | Lantern of Revealing (uncommon) | Search (Perception DC 14): the lamp-keeper's niche |
-| ✅ | Argynvost's mausoleum | +2 Shield (rare) | Tip: once the beacon is lit, a niche at the bier opens |
+| ✅ | Argynvost's mausoleum | Dragonhide Belt, +2 (rare) | Tip: once the beacon is lit, a niche at the bier opens (the +N Shield is Teodor's; (magic item audit, 2026-10-17)) |
 | ✅ | Sir Godfrey | +1 Plate Armor (rare) | Gift: if he takes up the Order's oath again |
 | ✅ | Sir Godfrey, at the squires' graves | Arrow-Catching Shield (rare) | Gift: Ioan's shield, once Cosmin stands the vigil (The Squire, docs/story/side_quests.md) |
 | ✅ | Upper floor, the commander's strongbox | Ioun Stone (Leadership) (very rare), Potion of Heroism (rare) | Hoard: Vladimir's (lock 18) (Hoard upgrades, Ashwin 2026-10-15) |
@@ -268,12 +272,12 @@ leaves a smaller purse and one find.
 | ✅ | Ezmerelda | Glamoured Studded Leather (rare) | Gift: once she trusts you |
 | ✅ | Van Richten's tower, his strongbox | Arrow of Undead Slaying, two (very rare) | Hoard: the hunter's own (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots; or a Tip from Mircea, whose they were, in the bone midden (Speak with Dead) |
-| ✅ | Werewolf caves, Kiril's trophies | Sword of Wounding (rare) | Search (Perception DC 15) |
-| ✅ | Werewolf caves, the shrine of Mother Night | +2 Moon Sickle (rare) | Search (Perception DC 15): an offering hidden under the shrine |
+| ✅ | Werewolf caves, Kiril's trophies | Shortsword of Wounding (rare) | Search (Perception DC 15) (a shortsword for a rogue, (magic item audit, 2026-10-17)) |
+| ✅ | Werewolf caves, the shrine of Mother Night | Figurine of Wondrous Power, Marble Elephant (rare) | Search (Perception DC 15): an offering hidden under the shrine (the Moon Sickle is the vineyard's; (magic item audit, 2026-10-17)) |
 | ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14); or a Tip from the wolfsbane at the den's door (Speak with Plants) |
 | ✅ | Zuleika | Ring of Free Action (rare) | Gift: once Emil is free of his chains |
 | ✅ | Zuleika | Potion of Healing (Supreme), two (very rare) | Gift: if Emil stays with his pack after the pack challenge (Ashwin, 2026-10-14: Supreme, not plain Healing) |
-| ✅ | Kiril's hoard (locked chest, DC 15) | Ring of Regeneration (very rare), Wand of Enemy Detection (rare), Ring of Animal Influence (rare) | Hoard: a pack leader's spoils from the Krezk road (Ashwin, 2026-10-14: replaces the two Potions of Healing) |
+| ✅ | Kiril's hoard (locked chest, DC 15) | Ring of Regeneration (very rare), +2 Longbow (rare), +1 Splint Armor (rare; both were a wand and a ring found elsewhere, (magic item audit, 2026-10-17)) | Hoard: a pack leader's spoils from the Krezk road (Ashwin, 2026-10-14: replaces the two Potions of Healing) |
 
 ## Under Van Richten's Tower (side quest, level 10)
 
@@ -295,7 +299,7 @@ leaves a smaller purse and one find.
 | ✅ | The Tsolenka Pass, under the roc's nest | Belt of Hill Giant Strength (rare) | Hoard: in the bones under the nest, once the falconer is beaten (The Last Egg, docs/story/side_quests.md) |
 | ✅ | Mordenkainen, in his hut | Ring of Telekinesis (very rare) | Gift: Corvina's first ring, once her letters are brought back (The Mage's Lost Pages, docs/story/side_quests.md) |
 | ✅ | Berez, the scarecrow | Staff of Swarming Insects (rare) | Search (Perception DC 15): its arm is a staff |
-| ✅ | Berez, under a fallen beam | Immovable Rod (uncommon) | Search (Perception DC 14): a drowned tinker's roll (lane 28's spot) |
+| ✅ | Berez, under a fallen beam | Dwarven Thrower (very rare) | Search (Perception DC 14): a drowned tinker's roll (lane 28's spot; was an Immovable Rod, (magic item audit, 2026-10-17)) |
 | ✅ | Marina's monument, the dowry chest | Robe of Scintillating Colors (very rare) | Hoard: Strahd's gift to her |
 | ✅ | Mount Baratok, the ring of glass | Wand of Lightning Bolts (rare) | Search (Perception DC 15): fused into the glass |
 | ✅ | Mount Baratok, the opened cairn | Ioun Stone of Intellect (very rare) | Search (Perception DC 16) |
@@ -305,9 +309,9 @@ leaves a smaller purse and one find.
 | ✅ | Mordenkainen | Ring of Spell Storing (rare) | Gift: once he remembers who he is |
 | ✅ | Tsolenka Pass, the bones on the shelf | Wings of Flying (rare) | Search (Perception DC 15): a traveller the roc dropped |
 | ✅ | Tsolenka Pass, the landing | Feather Token, Bird (rare) | Search (Perception DC 12): tucked in a roc's quill (lane 28's spot) |
-| ✅ | Tsolenka Pass, a frozen traveller on the climb | Rope of Climbing (uncommon) | Search (Perception DC 12): in his pack (lane 28's spot, from the Amber Temple road, 2026-10-09) |
+| ✅ | Tsolenka Pass, a frozen traveller on the climb | Cloak of Arachnida (very rare) | Search (Perception DC 12): in his pack (lane 28's spot, from the Amber Temple road, 2026-10-09; the Rope of Climbing is the winery well's, (magic item audit, 2026-10-17)) |
 | ✅ | Tsolenka Pass, the roc's nest | +2 Greatsword (rare) | Hoard |
-| ✅ | Tsolenka guard tower, the rack of old mail | +2 Chain Mail (very rare) | Search (Investigation DC 16): a hauberk that never rusted |
+| ✅ | Tsolenka guard tower, the rack of old mail | +2 Half Plate (very rare) | Search (Investigation DC 16): armour that never rusted (Dmitri's +1 is the chain mail; (magic item audit, 2026-10-17)) |
 | ✅ | Tsolenka guard tower | Horn of Blasting (rare) | Search (Perception DC 14): the watch horn behind the winch |
 | ✅ | Baba Lysaga's hut, the shelf of humming jars | Potion of Flying (very rare), Potion of Invulnerability (rare) | Hoard: once she's dead, bargained with or broken (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | The Mad Mage's hut, his travelling satchel | Spell Scroll of Mordenkainen's Sword (very rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
@@ -347,28 +351,29 @@ leaves a smaller purse and one find.
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | Gates, the dry well | Rope of Entanglement (rare) | Search (Perception DC 15) |
-| ✅ | Dining hall, the organ | Instrument of the Bards, Anstruth Harp (very rare) | Search (Investigation DC 16): a stop that opens a compartment |
-| ✅ | Chapel, under the altar's dust | Amulet of the Devout +3 (very rare) | Search (Investigation DC 17) |
-| ✅ | Court, the count's desk | Crystal Ball (very rare) | Search (Investigation DC 17) |
-| ✅ | Court, the trophy room | Longsword of Sharpness (very rare) | Search (Perception DC 15): the sword that took the dragon's head, above its skull (was a Dragon Slayer; The Warm Snow has that one) |
+| ✅ | Dining hall, the organ | Staff of Striking (very rare) | Search (Investigation DC 16): a stop that opens a compartment (the Instrument of the Bards is Death House's lute; (magic item audit, 2026-10-17)) |
+| ✅ | Chapel, under the altar's dust | Ioun Stone (Fortitude) (very rare) | Search (Investigation DC 17) ((magic item audit, 2026-10-17)) |
+| ✅ | Court, the count's desk | Efreeti Bottle (very rare) | Search (Investigation DC 17) (was a Crystal Ball; (magic item audit, 2026-10-17)) |
+| ✅ | Court, the trophy room | Scimitar of Sharpness (very rare) | Search (Perception DC 15): the sword that took the dragon's head, above its skull (was a Dragon Slayer; The Warm Snow has that one) |
 | ✅ | Blinsky Toys, Vallaki, once Pidlwick II is brought down from the high tower | Figurine of Wondrous Power, Obsidian Steed (very rare) | Gift: Blinsky's masterwork (The Toymaker's Masterpiece, docs/story/side_quests.md) |
 | ✅ | Treasury | Manual of Gainful Exercise (very rare) | Hoard |
 | ✅ | Treasury, the iron strongbox | Rod of Lordly Might (legendary) | Hoard: the von Zarovich kings' sceptre (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Treasury, the casket of gems | Ioun Stone (Absorption) (very rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Count's floor, Strahd's jewel box | Ring of Shooting Stars (very rare) | Hoard (lock 17) (Hoard upgrades, Ashwin 2026-10-15) |
-| ✅ | Count's floor, Rahadin's footlocker | Scimitar of Speed (very rare), Ring of X-ray Vision (rare) | Hoard (lock 17, or Stealth while his back is turned) (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Count's floor, Rahadin's footlocker | Scimitar of Speed (very rare), +3 Heavy Crossbow (very rare; was a Ring of X-ray Vision, (magic item audit, 2026-10-17)) | Hoard (lock 17, or Stealth while his back is turned) (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Count's floor, the brides' things | Mace of Terror (rare; Volenta's chest), Figurine of Wondrous Power, Onyx Dog (rare; Anastrasya's trunk), Ioun Stone (Reserve) (rare; Ludmilla's books) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
-| ✅ | Tower rooms, Escher's dressing table | Boots of Levitation (rare), Philter of Love (uncommon) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Tower rooms, Escher's dressing table | +2 Studded Leather Armor (very rare; was Boots of Levitation, (magic item audit, 2026-10-17)), Philter of Love (uncommon) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Main floor, the hidden vault behind the hearth | Animated Shield (very rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Strahd's tomb, the chest at the dais | Nine Lives Stealer longsword (very rare) | Hoard: the sword he carried when he took the valley (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
-| ✅ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |
+| ✅ | Count's floor, Ludmilla's books | Manual of Bodily Health (very rare) | Search (Investigation DC 17) (the one Arcane Grimoire is Dobre's +2; (magic item audit, 2026-10-17)) |
 | ✅ | Tower rooms, the witches' cauldron | Wand of Fear (rare) | Search (Perception DC 15) |
 | ✅ | The roost, a glint of brass | Ring of Evasion (rare) | Search (Perception DC 15): a raven's nest; or a Tip from the roost's oldest raven (Speak with Animals) |
-| ✅ | Catacombs, the conjurer's bier | +2 Wand of the War Mage (rare) | Search (Investigation DC 16) |
+| ✅ | Catacombs, the conjurer's bier | Staff of Thunder and Lightning (very rare) | Search (Investigation DC 16) ((magic item audit, 2026-10-17)) |
 | ✅ | Catacombs, the jester's sarcophagus | Cape of the Mountebank (rare) | Search (Investigation DC 15); or a Tip from the first Pidlwick (Speak with Dead) |
+| ✅ | The high tower, the lamplighters' closet behind the tapestry | Staff of Fire (very rare), Potion of Supreme Healing, three diamonds, 450 gp | Hoard: the closet the tapestry's tower plan shows (Investigation DC 14), a late-game secret worth finding (Ashwin, magic item audit, 2026-10-17) |
 | ✅ | Strahd's tomb, the chest at the dais | Potion of Supreme Healing, two (very rare) | Hoard |
-| ✅ | Dungeon, the throne of bones | Ring of Regeneration (very rare) | Search (Perception DC 16) |
+| ✅ | Dungeon, the throne of bones | Ioun Stone (Strength) (very rare) | Search (Perception DC 16) (the Ring of Regeneration is Kiril's; (magic item audit, 2026-10-17)) |
 | ✅ | Cyrus Belview | Ioun Stone of Sustenance (rare) | Gift: when you bring news of his family |
 | ✅ | Pidlwick II | Figurine of Wondrous Power, Ebony Fly (rare) | Gift: when you bring back his key |
 | ✅ | The catacombs, the crypt with no name | Rod of Absorption (very rare) | Hoard: in Corvina's crypt, once she's at rest (The Unnamed Crypt, docs/story/side_quests.md) |
@@ -384,5 +389,5 @@ leaves a smaller purse and one find.
 | ✅ | The Village of Barovia, the high pasture | Potion of Animal Friendship (uncommon) | Gift: from Goodwife Petra or Erno, once Snowdrop's fate is settled (The Goatherd's Count, docs/story/side_quests.md) |
 | ✅ | The Tser Pool camp, the plank stage | Wind Fan (uncommon) | Gift: from Lavinia, once she knows where Bujor is (The Dancing Bear, docs/story/side_quests.md) |
 | ✅ | Yester Hill, the foot of the hill | Blood Amulet (rare) | Gift: from Freydis, once Silverjaw is back in her mound (The Barrow on Yester Hill, docs/story/side_quests.md) |
-| ✅ | Mount Ghakis, the count's quarry | Belt of Giant Strength (Stone Giant) (very rare) | Gift: from the mountain captive, once Grandfather's heart is back in the mountain (The Mountain's Heart, docs/story/side_quests.md) |
+| ✅ | Mount Ghakis, the count's quarry | Dwarven Plate (very rare) | Gift: from the mountain captive, once Grandfather's heart is back in the mountain (The Mountain's Heart, docs/story/side_quests.md) |
 | ✅ | Mount Ghakis, the count's quarry | Stone of Controlling Earth Elementals (rare) | Hoard: Grandfather's heart, kept, cooled to a fist of red stone (The Mountain's Heart, docs/story/side_quests.md) |

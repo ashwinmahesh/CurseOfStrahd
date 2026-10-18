@@ -431,14 +431,14 @@ once
 | A burgomaster's study: ledgers, complaints and a chair worn to his shape. Nothing more that you can see.
 
 ~ search:satchel_lining
-| The satchel's lining was slit and sewn shut again. Inside: a pair of crystal lenses in a wire frame, a scholar's best tool and best-kept secret.
+| The satchel's lining was slit and sewn shut again. Inside: a thin silver headband set with one blue stone, a scholar's best tool and best-kept secret.
 once
 
 ~ check:investigation:satchel_lining:failure
 | Paper, ink and a pen chewed at the end. Whatever else the scholar carried, he took it with him.
 
 ~ search:undercroft_priest
-| In the oldest niche lies an old priest in rotted vestments. Round his neck, on a chain gone green, hangs a periapt of red stone that is still warm.
+| In the oldest niche lies an old priest in rotted vestments, his hands folded on the haft of an iron mace. The rust stops where his fingers held it.
 once
 
 ~ check:perception:undercroft_priest:failure
@@ -452,7 +452,7 @@ once
 | Old graves and older names. If one of them has been disturbed, it's hiding it well.
 
 ~ search:pew_loose_stone
-| The stone under the front pew rocks when you press it. Beneath it, a small silver sunburst on a chain, hidden from someone a long time ago.
+| Under the front pew, a board lifts on a hollow as long as a man is tall. In it lies a black staff whose head is carved as a snake, its eyes polished bright, hidden from someone a long time ago.
 once
 
 ~ check:investigation:pew_loose_stone:failure

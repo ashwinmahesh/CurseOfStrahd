@@ -7,7 +7,7 @@
   },
   "category": "weapon",
   "weight_lb": 0,
-  "cost_gp": 16000,
+  "cost_gp": 90000,
   "magic": {
     "rarity": "legendary",
     "attunement": true,

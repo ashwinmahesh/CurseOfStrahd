@@ -74,7 +74,7 @@ cooldown 20
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:jetty_boards
-| Under the jetty's last boards, tied to a post below the waterline, a ring on a string. It is dry when you pull it up, though the string is soaked.
+| Under the jetty's last boards, tied to a post below the waterline, an oilskin sack. In it is a breastplate, dry and bright, though the sack is soaked.
 once
 
 ~ check:perception:jetty_boards:failure
@@ -88,7 +88,7 @@ once
 | Cold ashes and a stone that won't move. The fishers who lived here took everything with them.
 
 ~ search:shrine_trident
-| Propped behind the fishers' shrine, a trident with a shaft of green coral. The fish in the shallows turn, all together, to look at it.
+| Propped behind the fishers' shrine, a trident with a shaft of green coral and barbs like new silver. It sits in your hands as if it was made for them.
 once
 
 # ---------------------------------------------------------------- Lane 28 (2026-10-08): the empty landing.

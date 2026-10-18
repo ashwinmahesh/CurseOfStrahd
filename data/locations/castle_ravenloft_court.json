@@ -604,7 +604,7 @@
       "skill": "investigation",
       "label": "a hidden drawer in the count's desk",
       "model": "glass_vessels",
-      "item": "crystal_ball"
+      "item": "efreeti_bottle"
     },
     {
       "id": "trophy_dragon_slayer",
@@ -616,7 +616,7 @@
       "search_dc": 15,
       "label": "a sword hung high among the trophies",
       "model": "sword_leaning",
-      "item": "sword_of_sharpness__longsword"
+      "item": "sword_of_sharpness__scimitar"
     },
     {
       "label": "A stag's head",

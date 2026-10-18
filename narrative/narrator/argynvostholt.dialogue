@@ -334,18 +334,18 @@ once
 | Empty armour, dented and patient. If any of it is hiding something, it's better at standing guard than you are at looking.
 
 ~ search:altar_reliquary
-| Behind the chapel altar, a small silver reliquary in the shape of a dragon's claw. Inside lies a holy amulet, its chain still bright after four hundred years.
+| Behind the chapel altar, a small silver reliquary in the shape of a dragon's claw. Inside lies a wide silver bowl for holy water, and the water in it is still moving.
 once
 
 ~ search:plinth_ring
-| The empty plinth isn't solid. In a hollow under its top lies a silver ring, cold as frost. The dragon's hoard was carried off; this one piece, someone saved.
+| The empty plinth isn't solid. In a hollow under its top lies a single silver feather, cold as frost. The dragon's hoard was carried off; this one piece, someone saved.
 once
 
 ~ check:investigation:plinth_ring:failure
 | Stone, and the outline in the dust of whatever stood here. Nothing else.
 
 ~ search:dragon_desk_wand
-| The dragon's desk has a drawer a human hand would never find. In it, a wand of pale wood that twitches toward the door when you hold it.
+| The dragon's desk has a drawer a human hand would never find. In it, a bronze griffon no bigger than your thumb, wings half spread, waiting to be told to fly.
 once
 
 ~ search:lampkeeper_niche
@@ -353,7 +353,7 @@ once
 once
 
 ~ open:dragon_gift_niche
-| With the beacon burning, a niche you never noticed stands open at the foot of the bier. In it lies a shield worked with silver scales, left by the dragon for whoever would finish what his knights began.
+| With the beacon burning, a niche you never noticed stands open at the foot of the bier. In it lies a belt of silver dragonhide, left by the dragon for whoever would finish what his knights began.
 once
 
 # ---------------------------------------------------------------- Lane 28 (2026-10-08): the stables, the scar, the squires.

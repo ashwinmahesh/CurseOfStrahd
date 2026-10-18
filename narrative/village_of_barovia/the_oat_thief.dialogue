@@ -322,12 +322,15 @@ if flag.oat_trail_cleared
 Agafia [weary]: The hunters went down by the river before dawn and never looked back this way. I can put the knife down now.
 Agafia: Take this. It was my grandmother's, soft tan cloth, still shines a bit if you hold it to the light.
 Agafia: Throw it on the ground when you're in trouble and a beast comes out to fight for you till morning. We have teeth enough in this house.
-give bag_of_tricks_tan
-Agafia [smile]: When you go back down to the village, tell Bildrath thank you from me.
 else
 Agafia: They came up the oats. Of course they did. And you were here. (She puts the knife away at last, and takes a little bag of tan cloth from her apron, gone soft and shiny at the neck.)
 Agafia: My grandmother's. Feel inside and there's always something soft at the bottom. Throw it, and it gets up on four legs and fights for you till morning. Take it. We've teeth enough in this house.
+endif
+# One grant for both routes (item audit: a lasting item is placed once; tests/unit/test_loot_distinct.gd).
 give bag_of_tricks_tan
+if flag.oat_trail_cleared
+Agafia [smile]: When you go back down to the village, tell Bildrath thank you from me.
+else
 Agafia: Tell Bildrath. Tell him the truth or tell him wolves. Either way, tell him thank you.
 endif
 approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You stood at a hiding mother's door
