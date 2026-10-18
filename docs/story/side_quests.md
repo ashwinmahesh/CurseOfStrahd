@@ -1065,6 +1065,31 @@ unawares.
 - Escher's suite, banter and narration follow him: once he's seen the dawn his chair is empty and his coats hang in
   the wardrobe without the red velvet one.
 
+### The Boyar's Petition (`boyars_petition`, narrative/castle_ravenloft/boyars_petition.dialogue; NPC plan batch 6)
+
+Boyar Vintila Crainic has waited 206 years in the audience hall to present a petition about a boundary stone. Ask him what a
+petition needs and he explains the form: four seals of the household. Each of the four ghost servants lends theirs for one
+small thing the wedding night stopped: Ghenadie the Valet (sit on the edge of the master's bed), Anghel Daskal (write the line he
+dictates), Nicodim the Verger (stand witness at the chapel door) and Vlaicu the Lamplighter (count the tower stair with him,
+to two hundred and nine). With the four seals the petition goes to the Steward in the dining hall, who receives it, and the
+Boyar learns his stone is under Lake Zarovich now and is entirely satisfied.
+
+- No fight, no roll. Reward: 120 gp and the companions' approval.
+
+### Gogu (`castle_ravenloft/gogu`; NPC plan batch 6, comedy)
+
+A living gargoyle (new NPC) on the keep roof, afraid of heights, who wants a lower ledge and drops things on guests when the wind
+rises, blaming the ravens (Insight DC 12 sees the loose slate in his claw). The party can carry him down to the Gates (Athletics
+DC 14; a failed lift drops him two feet and can be tried again); there he sits on a low ledge, and the ravens blame him.
+
+Small additions in the castle, all in the same files as the household: Lord Thale sold his horses for cards the first night;
+Sir Lothar Brandt is glad his priest lies in the crypts (Insight DC 13; the plan had the priest escaping, which the book's
+Brandt line contradicts); the Steward once laid a place for himself and was punished (Insight DC 13); Helga wants a mirror that
+works and sells the brides what guests say (Insight DC 13); Lady Celestine never was beautiful, she made the others laugh; and
+Lief Lipsiege saved a coin a year for the gate (Insight DC 12), then gives the party the forty coppers, which the Dead
+Halberdier takes. The village goat is eating a tapestry in the great entry while the Hall Broom sweeps round it, and Ambrose
+Fennimore, once his first chapter is done, is on the cliff road outside the gates rating the castle: the last chapter of his guide.
+
 ## Mount Ghakis (level 10)
 
 ### The Warm Snow (`the_warm_snow`, narrative/mount_ghakis/the_warm_snow.dialogue; batch 5, an owner-asked boss)
@@ -1356,7 +1381,10 @@ gossip's nothing-new nodes and the wrong rumour, petra_correction, Petre's coat,
 goat in the shop, the church and at the gate; indoor_folk.dialogue's Goodwife Viorica (candle, secret) and Goodwife
 Sorina; customers.dialogue's Iulian and Lucia; arik.dialogue's three nothings; bildrath.dialogue's ledger;
 parriwimple.dialogue's book; vistani.dialogue's nicknames; and the new back-room, confession, false-trail and
-getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 5 (2026-10-18), Argynvostholt, the Tsolenka watch and the Amber Temple:
+getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 6 (2026-10-18), Castle Ravenloft: boyars_petition.dialogue, gogu.dialogue and last_chapters.dialogue in full (new
+speaker Gogu; also the Boyar, the four ghost servants, the Steward, Fennimore and the Narrator); the wants and secrets of Lord
+Thale, Sir Lothar Brandt, Lady Celestine, Helga Ruvak, the Steward and Lief Lipsiege; and the Dead Halberdier's toll. NPC plan
+batch 5 (2026-10-18), Argynvostholt, the Tsolenka watch and the Amber Temple:
 ottokar.dialogue and exethanters_notes.dialogue in full (new speaker Sir Ottokar the Late; also Exethanter, Vladimir Horngaard,
 Sir Godfrey Gwilym, Cosmin, the Phantom Warden, the Phantom Watchman and the Narrator); the hearing nodes of the_squire.dialogue;
 the Warden's reasons in mausoleum.dialogue and the Watchman's watchword in watch.dialogue. NPC plan batch 4 (2026-10-18), Krezk and

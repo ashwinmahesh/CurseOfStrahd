@@ -1,0 +1,63 @@
+== form
+Boyar Vintila Crainic: A petition to the count is not a tavern bill. It cannot simply be thrust under his nose.
+Boyar Vintila Crainic: By the ordinance of the elder house, it requires the four lesser seals of the domestic offices.
+Boyar Vintila Crainic: One from Ghenadie the Valet, who keeps the upper bedchamber, and one from Anghel Daskal in the chancery.
+Boyar Vintila Crainic: One from Nicodim the Verger at the chapel door, and the fourth from Vlaicu, who keeps the high tower lamps.
+Boyar Vintila Crainic [weary]: They have been otherwise occupied since the night I arrived. A matter of a wedding, I believe.
+== valet_ask
+Ghenadie the Valet: My seal? It is in my waistcoat pocket, where it belongs. I do not give it out to callers.
+Ghenadie the Valet [weary]: Have you seen the master's bed? I have turned the linen down three hundred times, and never a crease in the bolster.
+Ghenadie the Valet: Lie down upon it for a moment, just enough to warm the counterpane, and you may have the wax and the ring.
+== valet_done
+Narrator: You sit on the edge of the great tester bed and let the pale valet draw the cold velvet coverlet over your knees.
+Ghenadie the Valet [smile]: There now. A house is not a house until someone has rumpled the sheets.
+Ghenadie the Valet: I shall have to remake it before midnight, of course, if the master comes up. That is a comfort.
+Ghenadie the Valet: Here is the valet's seal, pressed clean. Do not let the Boyar smudge the tallow.
+== secretary_ask
+Anghel Daskal: The chancery seal is for correspondence that has been properly drafted and entered into the ledger.
+Anghel Daskal [sad]: I laid my pen down when the music stopped in the hall below, and my fingers have not closed upon it since.
+Anghel Daskal: Take the quill and write one fair line at my dictation. Then the office will have done its day's work.
+== secretary_done
+Narrator: You dip the dry quill into ink that smells of iron and clove, and write a brief, stately line commending the Boyar's grievance.
+Anghel Daskal: "And let the stone of Crainic be looked to in the spring." Very neat. A little heavy on the downstroke.
+Anghel Daskal [smile]: There is the red wax, and there is the crow's-foot impression. It dries quickly in this draught.
+Anghel Daskal: Leave the blotter square with the inkstand when you go. Thank you.
+== verger_ask
+Nicodim the Verger: A seal for a boundary dispute, when the tapers are already sweating in the nave? Have you no sense of occasion?
+Nicodim the Verger [weary]: Still, the preliminary blessing cannot be read without two witnesses at the porch, and the guests are all downstairs.
+Nicodim the Verger: Stand by the font and give me the response in a decent voice, and I will stamp your parchment.
+== verger_done
+Narrator: You stand beside the cold stone font while the verger murmurs a brief nuptial prayer to the empty benches, and you answer amen.
+Nicodim the Verger [sad]: "Amen." I had almost forgotten the weight of the word when it comes back from living throats.
+Nicodim the Verger: Everything is in order at the door, then. They may come up whenever the music finishes.
+Nicodim the Verger: There is the chapel seal, in the white wax. Mind your sleeves on the candelabra.
+== lamp_ask
+Vlaicu the Lamplighter: You want the tower seal? It is at the top of the stair, and I have never reached the top.
+Vlaicu the Lamplighter [weary]: Two hundred and nine steps to the high lantern, and on the last one my heart gave out and spilled the oil.
+Vlaicu the Lamplighter: Walk up beside me and count them out loud, every one, so I know when my feet have got there.
+== lamp_done
+Narrator: You climb the winding stone stair beside him, counting each worn tread aloud until your boots rest together on the two hundred and ninth step.
+Vlaicu the Lamplighter [smile]: Two hundred and nine. Is that all it was? It felt much further in the dark.
+Vlaicu the Lamplighter: Look at the mist over the roofs. A man could stand here a long while and not mind the cold.
+Vlaicu the Lamplighter: Take the brass stamp from my belt. The soot on it will mark the paper well enough.
+== seals_have
+Boyar Vintila Crainic: Let me see it. Hold it to the light, do not thumb the margin.
+Boyar Vintila Crainic: Tallow, red wax, white wax, and lampblack. Irregular in the tincture, but the impressions are unimpeachable.
+Boyar Vintila Crainic [smile]: For two centuries they told me the offices were closed for the evening. One merely requires persistence.
+Boyar Vintila Crainic: Carry it to the Steward in the dining hall. Once he has marked it received, the count is bound to take cognizance.
+== received
+Narrator: The Steward takes the heavy parchment in two gloved fingers, reads it from top to bottom, and presses an iron stamp into the dust on the sideboard.
+The Steward: Boyar Vintila of the lower orchards. Concerning eleven paces of stony pasture and a granite marker.
+The Steward: The seals are in order. I have entered the petition upon the sideboard, as the ledger is downstairs.
+The Steward [weary]: You may inform the Boyar that the house has received his complaint, and that it lies before the master.
+The Steward: Tell him also that the dinner is not yet concluded, so he need not wait on the stairs.
+== done
+Boyar Vintila Crainic [smile]: Received. Entered and received. You hear that, you painted idlers by the wainscot?
+Boyar Vintila Crainic: A man of substance does not abandon his boundary for a little delay in the anteroom.
+Boyar Vintila Crainic: Tell me, since you have come up from the valley: how does the south orchard look? Does the stone still lean toward the ditch?
+Boyar Vintila Crainic [sad]: Under the lake? The whole of the lower slope, under the water?
+Narrator: You tell him that Lake Zarovich rose over the old road and the orchards generations ago, and that twenty fathoms of black water cover both farms.
+Boyar Vintila Crainic [smile]: Well. Then my neighbour's cellar is flooded too, and the stone has not moved an inch since. That is entirely satisfactory.
+== after
+Boyar Vintila Crainic [smile]: Good evening to you. I am only taking a turn about the hall before I go down to my carriage.
+Boyar Vintila Crainic: Twenty fathoms of cold water over his turnips. One cannot fault the count's thoroughness.

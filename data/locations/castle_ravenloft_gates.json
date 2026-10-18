@@ -964,6 +964,26 @@
   "rest": "risky",
   "npcs": [
     {
+      "npc": "gogu",
+      "cell": [
+        9,
+        17
+      ],
+      "dialogue": "castle_ravenloft/gogu:low",
+      "facing": "south",
+      "when": "flag.gogu_lowered"
+    },
+    {
+      "npc": "fennimore",
+      "cell": [
+        37,
+        31
+      ],
+      "dialogue": "castle_ravenloft/last_chapters:fennimore",
+      "facing": "west",
+      "when": "quest.fennimores_guide == done and level >= 10"
+    },
+    {
       "npc": "castle_dead_guard_1",
       "cell": [
         9,

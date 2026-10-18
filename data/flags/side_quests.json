@@ -2040,6 +2040,121 @@
       "id": "notes_step",
       "type": "int",
       "summary": "Exethanter's Notes: scratch counter for which scrap the party is placing (one to four)."
+    },
+    {
+      "id": "petition_seals",
+      "type": "int",
+      "summary": "The Boyar's Petition: how many of the four household seals the party has (valet, secretary, verger, lamplighter)."
+    },
+    {
+      "id": "seal_valet",
+      "type": "bool",
+      "summary": "The Boyar's Petition: Ghenadie the Valet lent his seal (the party sat on the master's bed)."
+    },
+    {
+      "id": "seal_secretary",
+      "type": "bool",
+      "summary": "The Boyar's Petition: Anghel Daskal lent his seal (the party wrote his dictated line)."
+    },
+    {
+      "id": "seal_verger",
+      "type": "bool",
+      "summary": "The Boyar's Petition: Nicodim the Verger lent his seal (the party witnessed his blessing)."
+    },
+    {
+      "id": "seal_lamp",
+      "type": "bool",
+      "summary": "The Boyar's Petition: Vlaicu the Lamplighter lent his seal (the party counted the stair with him)."
+    },
+    {
+      "id": "gogu_met",
+      "type": "bool",
+      "summary": "The party has met Gogu, the gargoyle afraid of heights, on the keep roof."
+    },
+    {
+      "id": "gogu_want_heard",
+      "type": "bool",
+      "summary": "Gogu said he wants a lower ledge; carrying him down is then open to offer."
+    },
+    {
+      "id": "gogu_ravens_heard",
+      "type": "bool",
+      "summary": "Gogu blamed the ravens for what falls on guests; his secret is then open to an Insight roll."
+    },
+    {
+      "id": "gogu_secret_known",
+      "type": "bool",
+      "summary": "Gogu admitted he lets go of things when the wind rises."
+    },
+    {
+      "id": "gogu_lowered",
+      "type": "bool",
+      "summary": "The party carried Gogu down to the low ledge by the gatehouse; he leaves the roof."
+    },
+    {
+      "id": "thale_carriage_known",
+      "type": "bool",
+      "summary": "The party heard Lord Thale's carriage is still in the carriage house; his horses are then open to ask about."
+    },
+    {
+      "id": "celestine_described_heard",
+      "type": "bool",
+      "summary": "The party described Lady Celestine's face to her; her secret is then open to a kind word."
+    },
+    {
+      "id": "celestine_secret_known",
+      "type": "bool",
+      "summary": "Lady Celestine admitted she was the one who made the others laugh."
+    },
+    {
+      "id": "brandt_who_heard",
+      "type": "bool",
+      "summary": "Sir Lothar Brandt told the party about his priest in the crypts; his secret is then open to an Insight roll."
+    },
+    {
+      "id": "brandt_priest_known",
+      "type": "bool",
+      "summary": "Sir Lothar admitted he is glad his priest is in the crypts and not in the court."
+    },
+    {
+      "id": "steward_staff_asked",
+      "type": "bool",
+      "summary": "The party asked the Steward about the staff; his secret is then open to an Insight roll."
+    },
+    {
+      "id": "steward_place_known",
+      "type": "bool",
+      "summary": "The Steward admitted he once laid a place for himself and was punished."
+    },
+    {
+      "id": "helga_want_heard",
+      "type": "bool",
+      "summary": "Helga Ruvak said she wants a mirror that works; her price is then open to an Insight roll."
+    },
+    {
+      "id": "helga_price_known",
+      "type": "bool",
+      "summary": "Helga admitted she tells the brides what the guests say, for a price."
+    },
+    {
+      "id": "lief_inkwell_known",
+      "type": "bool",
+      "summary": "Lief Lipsiege admitted the forty-one coins under his inkwell, saved for the gate."
+    },
+    {
+      "id": "lief_toll_given",
+      "type": "bool",
+      "summary": "Lief gave the party the forty coppers for the gate's toll."
+    },
+    {
+      "id": "lief_toll_paid",
+      "type": "bool",
+      "summary": "The party paid the Dead Halberdier the toll Lief had saved."
+    },
+    {
+      "id": "fennimore_castle_done",
+      "type": "bool",
+      "summary": "The party said goodbye to Ambrose Fennimore on the cliff road, the last chapter of his guide."
     }
   ]
 }

@@ -1,0 +1,45 @@
+== thale_horses
+Lord Aubrey Thale [weary]: Well, if we are to be strictly accurate about the matter, there are no horses.
+Lord Aubrey Thale: I lost the pair to a gentleman in a plum-coloured coat on the very first evening, over cards.
+Lord Aubrey Thale [sad]: I was quite certain my luck would turn before breakfast, and then morning never came.
+== brandt_priest_ok
+Narrator: When he speaks of the crypts, the hard edge leaves his voice. It is the closest he comes to a prayer.
+Sir Lothar Brandt: Brother Toma went down to the stone in the first hour, and he has stayed down ever since.
+Sir Lothar Brandt [weary]: I used to grieve for him, before I understood what it meant to be invited upstairs.
+Sir Lothar Brandt [sad]: Better the dark and a clean end than three hundred years of bowing when the doors open.
+== brandt_priest_miss
+Narrator: He turns his shoulder to you and studies the empty gallery, giving you nothing more than his profile.
+== steward_place_ok
+Narrator: His hands return to a chair that is already straight, squaring it a second time against the carpet.
+The Steward [weary]: A servant does not sit, of course. One knows that before one knows the spoons.
+The Steward: After the first hundred years, I laid a quiet place for myself at the far end, only to rest my feet.
+The Steward [sad]: The master had the chair burned and my hands nailed to the sideboard until the next winter.
+== steward_place_miss
+Narrator: He reaches past you to straighten a fork by the width of a thumbnail, his face as blank as the silver.
+== helga_want
+Helga Ruvak: Only a little looking-glass that keeps an image, if such a thing can still be had in the valley.
+Helga Ruvak [weary]: The ones in this house were turned to the wall or scraped clean long before I came.
+== helga_price_ok
+Narrator: Her eyes stay on the floor, yet her head tilts whenever you speak of the women upstairs.
+Helga Ruvak [sly]: The ladies in the silk rooms grow terrible bored of their own company, and the master rarely visits.
+Helga Ruvak: They like to hear what the living say of their hair and their gowns when the doors are shut.
+Helga Ruvak [smile]: A ribbon, a silver pin, a cold supper with salt in it: a girl must keep her pockets lined somehow.
+== helga_price_miss
+Narrator: You see only a shivering girl in thin grey wool, her knuckles red from cold water and lye.
+== celestine_secret
+Narrator: Her hand drops from the carved stone, and the practiced tilt of her chin gives way all at once.
+Lady Celestine Morrow [sad]: How unkind of you to notice, after I have spent two centuries learning how to stand in the light.
+Lady Celestine Morrow: The others had the bones and the eyes, you see. I had a loud voice and a knack for the harpsichord.
+Lady Celestine Morrow [weary]: He kept me because the brides grew dreary in the winter, and someone had to make them laugh.
+== lief_inkwell_ok
+Narrator: Even with the chain off his ankle, his fingers keep straying to the base of the heavy lead inkwell.
+Lief Lipsiege [afraid]: Forty-one years at this desk, and once every winter I slipped a single copper piece underneath the lead.
+Lief Lipsiege: There was a two-penny toll on the south road when I was a boy, and more for a cart.
+Lief Lipsiege [weary]: It would be a poor thing to reach the gates at last and be turned back for want of the fare.
+== lief_inkwell_miss
+Narrator: He shifts the inkwell a single inch to the left and squares the stacked ledgers with both thumbs.
+== lief_toll
+Lief Lipsiege: Take them, if you please, and give them to the man at the gate when you pass through.
+Lief Lipsiege [weary]: My knees are not what they were, and I will be some time behind you on the road.
+Lief Lipsiege [smile]: I shall keep the forty-first in my waistcoat, only so I do not walk out of this house a beggar.
+Narrator: He counts forty dull coppers into your palm, each one worn smooth by decades of secret checking.
