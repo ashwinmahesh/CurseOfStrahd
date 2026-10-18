@@ -1,0 +1,65 @@
+{
+  "id": "daerns_fortress_roof",
+  "name": "Daern's Instant Fortress, the Battlement",
+  "region": "daerns_fortress",
+  "summary": "The roof: a square of flat adamantine inside a toothed parapet, thirty feet above the ground, with the trapdoor in one corner.",
+  "map": {
+    "rows": [
+      "        ",
+      " ###### ",
+      " #....# ",
+      " #....# ",
+      " #....# ",
+      " #....# ",
+      " ###### ",
+      "        "
+    ],
+    "theme": "dungeon",
+    "light": "bright",
+    "outdoors": true,
+    "drop_ft": 30
+  },
+  "areas": [
+    {
+      "id": "fortress_roof",
+      "name": "Daern's Instant Fortress, the battlement",
+      "cells": [
+        [
+          2,
+          2
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "light": "bright"
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      3
+    ],
+    "from_upper": [
+      3,
+      2
+    ]
+  },
+  "exits": [
+    {
+      "id": "fortress_roof_hatch",
+      "cell": [
+        2,
+        2
+      ],
+      "to": "daerns_fortress_upper",
+      "spawn": "from_roof",
+      "label": "A hatch down to the second floor"
+    }
+  ],
+  "props": [],
+  "lights": [],
+  "rest": "no",
+  "rest_text": "The wind on the battlement would take the blankets and the sleepers in them. The floors below are the place to sleep."
+}

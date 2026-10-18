@@ -9,7 +9,8 @@ extends RefCounted
 ##   their exits. Enemies remain while one of its fights would still start on its own (entering an area, opening a door
 ##   or a chest, examining something) or one was begun and not won; a fight only a conversation can start doesn't
 ##   count. Towns, inns, camps and the open road are unaffected, and so are the magic items that make a safe place to
-##   sleep (Daern's Instant Fortress, the Rod of Security), which still keep the 16 hours.
+##   sleep (the Rod of Security; Daern's Instant Fortress's floors are `safe` places, a building of their own), which still
+##   keep the 16 hours.
 ## Leomund's Tiny Hut and Guards and Wards let a Long Rest start with enemies still in the building (story/wards.gd).
 ## A Short Rest (owner, 2026-10-12) is taken anywhere outside a fight, a dungeon and a place that allows no sleep
 ## included, unless a fight on this map was begun and not won (the party ran) or foes awake and in plain view of the
@@ -71,7 +72,7 @@ static func unfinished_fights(st: StoryState) -> Array[String]:
 	return out
 
 
-## Why an item's safe Long Rest (Daern's Instant Fortress, the Rod of Security) can't start yet, or "".
+## Why an item's safe Long Rest (the Rod of Security) can't start yet, or "".
 static func item_rest_refusal(st: StoryState) -> String:
 	var wait := minutes_until_long_rest(st)
 	return "" if wait <= 0 else "The last Long Rest ended less than 16 hours ago: the next can start in %s." % duration(wait)

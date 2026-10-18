@@ -25,8 +25,21 @@ An encounter marked `waiting` (started by stepping into an area) has foes standi
 it starts. Each shows once a party member can see its square (the fight's own sight rules: walls and closed doors,
 the light of the hour and the map, lamps and the lantern, Darkvision), and stays shown. Nobody walks through them.
 
-A waiting foe faces a way, and its figure shows it: its entry's `facing`, else toward the middle of its group
-(gathered round a fire, a cauldron, a dig), else toward the middle of its fight's area. Before a fight it notices a
+Seventeen fights wait in plain view. Nine always did: the frozen watch at the Amber Temple's doors, the catacombs' sleepers
+by night, the coven at its cauldron, Ghakis's keepers, the Wachters' cellar cult, the tower's night visitors, the village's
+dead at night, the werewolf den's guards and the wine cellar's dig. Eight were walk-in fights before overworld stealth: the
+Abbey garden's scarecrows (`garden_sentry`), Castle Ravenloft's guardroom (`court_post_watch`), the east turret post
+(`crg_turret_guard`), the jailers' guardroom (`larders_jailers`), the gargoyles of the champion's tomb
+(`cat_gargoyle_watch`), of the north tower peak (`peak_guardians`) and of the front courtyard by night
+(`crg_courtyard_gargoyles`), and Baba Lysaga's scarecrows (`berez_scarecrows`). Only the foes that stand in plain view show:
+a foe marked `unseen` (what bursts out when the fight starts, and the extras a fight brings that are spread about the
+place) has no figure, notices no one and comes when the fight starts. Yester Hill's wardens' camp and the winery's druids
+stay walk-in fights: they waited once, and a party on the summit path or at the winery door was noticed from outside,
+which forced fights nobody had walked into.
+
+A waiting foe faces a way, and its figure shows it: its entry's `facing` (every foe in view of a fight that waits since
+overworld stealth has one: `make validate` asks for it), else toward the middle of its group (gathered round a fire, a
+cauldron, a dig), else toward the middle of its fight's area. Before a fight it notices a
 party member within 30 ft (the maps are compact; at 60 ft foes noticed parties walking past) in one of two ways
 (owner, 2026-10-07, after Baldur's Gate 3's sight cones):
 
@@ -41,11 +54,75 @@ A foe that turns, or walks a route, turns its cone with it. Fights keep the 2024
 
 Foes check after every square the party moves, and when it starts or stops sneaking. A foe that notices someone
 starts its fight at once, and that fight surprises no one. Foes marked `surprise: enemies` (asleep, say) never notice.
+Stepping into the fight's area starts it too, unless the party is sneaking and none of its foes notices it: see Slipping
+past a waiting fight, below.
 
 ## Sneaking
 
-Sneaking (V) has each member roll Stealth once, keeping the total until the party stops sneaking (as the Hide action
-keeps its total).
+Sneaking (V) has each member roll Stealth, keeping the total as the Hide action keeps its total: one roll a visit.
+Stopping and starting again keeps the totals (no free reroll). They stand until the party leaves the place or an hour
+has passed on the clock since they were rolled (a Short or Long Rest passes it, and so does any Wait, which is an hour
+at least), and then the next look at one rolls again. A member without a total (a guest who just joined) rolls when one is asked for.
+Nothing about the roll is saved: a load in the middle of a visit rolls again.
+
+A party that walks out through an exit to another place while sneaking arrives there sneaking and crouched, with fresh
+rolls (a new place, new rolls). Only the ways between places carry it: the travel map, a cutscene and a load start the
+party walking normally. A fight whose area the party arrives inside starts as it always did, when the place is built,
+before the party sneaks, so it surprises no one.
+
+**The totals on the portraits.** While the party sneaks, each member's portrait on the exploring HUD (guests too) wears
+their kept total, coloured by the moods of the sight overlay's eyes, for the foes in plain view (shown waiting foes that
+can act, not ones asleep, `surprise: enemies`):
+
+- **red** when some foe would notice that member even in dim light (its passive Perception minus 5 is at least the
+  total);
+- **amber** when only bright light would give them away (its passive Perception is at least the total);
+- **plain** when none would.
+
+Hovering the badge says what it means ("Stealth 7: the Wolf would notice them in any light"), and the controls card
+(F1, the pad's Show controls) says it for the pad. Members who are down wear none.
+
+## Slipping past a waiting fight
+
+A fight that waits in plain view (a `waiting` encounter started by stepping into an area, with at least one foe that
+isn't `unseen`) is a guarded room the party may fight, rob or pass by. It starts when the leader steps into its area,
+unless the party is sneaking and no foe notices it:
+
+- **Stepping in sneaking.** Each of the fight's foes that isn't asleep checks whether it notices any member, by the rule
+  of every step (its sight cone, the 10 ft ring, light and cover, its passive Perception against the member's kept
+  Stealth total). If one does, it starts the fight ("Wolf spots Ilse"), and nobody is surprised. If none does, nothing
+  starts: "Unnoticed: the Wolf hasn't seen you". The foes stay where they are and keep checking every step.
+- **Stepping in without sneaking** starts the fight as it always did. So does **stopping sneaking** while the leader
+  stands in the area, whether or not a foe would have noticed them there. A fight whose foes are all `unseen` has no one
+  to slip past: it starts on the step, however the party moves.
+- **Slipping past.** When every member and guest who is up has left the area again, with the fight not started, the
+  party has slipped past it ("Slipped past the Wolf"). In Experience mode that pays what winning the version the party
+  would have met pays, once a fight (`Xp.talked_away`, `_xp/fight/<id>`: the 2024 DMG counts foes cleverly avoided as
+  overcome), so fighting it later pays nothing more; in Milestone mode there is only the toast. Slipping past sets no
+  flag and marks nothing done: the fight is still there, and starts when the party next steps in openly. A slip in
+  progress isn't saved; a load forgets it.
+- **Sleepers.** A foe asleep (`surprise: enemies`) notices nobody: a sneaking party steps in beside it and starts
+  nothing, and a party that isn't sneaking starts the fight with the sleepers surprised, as the fight says.
+- **Arriving.** A party that comes through an exit sneaking is sneaking when the new place looks at its areas, so it may
+  slip into a fight's area where it arrives (the village square at night, the den's mouth), and a foe that notices it at
+  the spawn starts its fight at once.
+- **Guarded containers.** A container inside a waiting fight's area says so on its hover hint ("Guarded: taking from it
+  where they'd see starts the fight"). Opening it asks the same notice rule of the leader (the kept total while
+  sneaking, none when not): a foe that would notice them starts the fight and nothing is taken; if none would, the
+  take goes through and the fight doesn't start. A sneaking party that slipped in can rob a chest the foes don't face.
+- **Hover.** While the party isn't sneaking, a square inside the area of a waiting fight whose foes it can see says
+  "Stepping in starts the fight; sneak to pass unseen". A fight the party hasn't seen gives nothing away.
+
+Code: `LocationStealth.step_in`, `_check_slipped`, `start_guarded_here`, `guard_take`, `guarded_hint`;
+`LocationFights._trigger_encounter` asks `step_in` before it starts an area's fight.
+
+## Waiting and resting in sight
+
+Wait (H) and the Short Rest both refuse while foes are in sight, and both ask who can see the party now
+(`LocationStealth.foes_in_sight`): a waiting foe the party saw once keeps its figure, but it blocks nothing once no one
+in the party can see it. While the party sneaks, a foe in sight that would notice none of the party (the same notice
+rule, with each member's kept total) doesn't block either. A fight that waits only by night (a `when` of `night`) goes
+with the dark: waiting through dawn drops its foes, as coming back by day does.
 
 ## Opening a fight
 

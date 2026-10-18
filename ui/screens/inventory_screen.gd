@@ -899,7 +899,7 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 				out.append({"label": "Set II (%s)" % slot_name(s2).to_lower(), "call": redraw.call(func() -> void: _set_weapon_2(ch, id, s2))})
 	# Using it here and now: a scroll's Cast, a potion's Drink, a wand's power (story/field_items.gd); one that can't be
 	# used now shows greyed with why.
-	for opt in FieldItems.options(st.party, ch, id, Dice.roller):
+	for opt in FieldItems.options(st.party, ch, id, Dice.roller, st):
 		if opt.has("store") or not (opt.get("choices", []) as Array).is_empty():
 			continue   # a pick to make first: the item card's buttons
 		var pid := str(opt["power_id"])
@@ -1410,7 +1410,7 @@ func _draw_card() -> void:
 			_draw(), 14))
 	# Using it outside a fight: a potion's drink, a wand's Detect Magic, a manual's study (story/field_items.gd).
 	var disguised := MagicItems.is_disguised(data, entry)
-	for opt in FieldItems.options(st.party, ch, selected, Dice.roller):
+	for opt in FieldItems.options(st.party, ch, selected, Dice.roller, st):
 		var label := InventoryScreen.power_label(opt)
 		var choices := opt.get("choices", []) as Array
 		var pid := str(opt["power_id"])
@@ -1887,6 +1887,10 @@ func _use_on_guest(power_id: String, gu: Dictionary) -> void:
 ## Uses a magic item's power outside a fight (story/field_items.gd) and shows what happened.
 func _use_power(power_id: String, opts: Dictionary) -> void:
 	var ch := _ch()
+	# Daern's Instant Fortress: the plot the live map has room for (FortressSite.plot_in).
+	if selected == FortressSite.ITEM and root != null and root.get("view") != null and not (root.get("view") as LocationView).in_combat \
+			and not (root.get("view") as LocationView).members.is_empty():
+		opts["plot"] = LocationFortress.plot_in(root.get("view") as LocationView)
 	var res := FieldItems.use(st, ch, selected, power_id, ch, Dice.roller, opts)
 	if bool(res.get("ok", false)) and str(res.get("effect", "")) == "long_rest":
 		# The same night as any other Long Rest's: its morning (the rest screen keeps the companions' words and the

@@ -82,10 +82,18 @@ var trap_marks: Dictionary = {}
 var lantern: OmniLight3D
 
 var sneaking := false
-## Sneaking and foes in plain view (LocationStealth, F7): each member's Stealth total while sneaking, and the foes of
-## `waiting` fights standing where their fight puts them [{encounter, foe: Combatant, token, low}].
+## Sneaking and foes in plain view (LocationStealth, F7): each member's Stealth total while sneaking (rolled once a
+## visit, kept for an hour of the clock), and the foes of `waiting` fights standing where their fight puts them
+## [{encounter, foe: Combatant, token, low}]. Not saved: a load rolls again.
 var sneak_totals: Dictionary = {}    ## Creature -> int
+var sneak_rolled: Dictionary = {}    ## Creature -> the game minute its total was rolled (StoryState.total_minutes)
 var waiting: Array[Dictionary] = []
+## The waiting fights whose area the party stepped into unnoticed while sneaking and has not left yet (LocationStealth.
+## step_in): encounter id -> true. Not saved: a load forgets them.
+var _slipping: Dictionary = {}
+## The party walked out of the last place through an exit sneaking (GameRoot.enter_location): sneaking from the first
+## look at its areas, with this place's own Stealth rolls.
+var arrive_sneaking := false
 var _waiting_key := ""                ## what the party could see from when the waiting foes were last looked for
 ## A foe noticed the party: the fight it starts surprises no one (LocationStealth).
 var _foes_alerted := false
@@ -134,6 +142,7 @@ static func create(location_id: String, state: StoryState, narrator_: Narrator, 
 	v.loc_id = location_id
 	# A copy: random encounters on the road add fights to it for the length of a visit.
 	v.loc = Compendium.shared().get_entry("locations", location_id).duplicate(true)
+	FortressSite.overlay(v.loc, state)   # Daern's Instant Fortress, if one stands here or this is the tower's inside
 	v.st = state
 	v.narrator = narrator_
 	v.dice = dice_
@@ -148,6 +157,7 @@ func _ready() -> void:
 	add_child(board)
 	LocationBuilder._build_environment(self)
 	LocationBuilder._build_doors(self)
+	LocationFortress.stand(self)   # the tower, if one stands on this map: walls to walk and sight, and drawn over its squares
 	LocationBuilder._build_props(self)
 	LocationBuilder.open_small_decor(self)
 	LocationBuilder._build_lights(self)
@@ -180,10 +190,14 @@ func _ready() -> void:
 	add_child(FoundGlow.create(self))   # what a Search or a check turns up glows orange until it's used
 	add_child(SightOverlay.create(self))   # who can see the party while it sneaks or plans (U10)
 	add_child(WorldSounds.create(self))   # footsteps, fires and running water heard from where they are (A3)
+	if arrive_sneaking:
+		LocationStealth.set_sneaking(self, true)   # before the areas are looked at: it may slip into a fight's area
 	LocationWalk._check_areas(self)
 	if LocationPlan.wanted() and not in_combat:
 		LocationPlan.start(self)
 	LocationStealth.refresh_waiting(self)
+	if arrive_sneaking and not in_combat:
+		LocationStealth.after_step(self)   # a foe that notices them where they arrive starts its fight at once
 
 
 func _process(delta: float) -> void:

@@ -2,9 +2,11 @@ class_name WaitScreen
 extends CanvasLayer
 ## Wait (owner, 2026-10-08): pass 1 to 24 hours where the party stands, from the exploring bar's Wait button or H. The
 ## clock moves and everything that runs on it with it: the day's scheduled events and who stands where (LocationClock),
-## the weather, the daylight, spells running out. Waiting isn't resting: no Hit Points, Hit Point Dice, spell slots or
-## features come back. It can't be done in a fight, a conversation or a cutscene, or with foes in sight; then the screen
-## says why and offers only Back. Left/Right (or the slider, or − and +) pick the hours, Enter waits, Esc goes back.
+## the weather, the daylight, spells running out, and the foes that wait only by night. Waiting isn't resting: no Hit
+## Points, Hit Point Dice, spell slots or features come back. It can't be done in a fight, a conversation or a cutscene,
+## or with foes in sight (those who can see the party now, not every foe it has ever seen; a sneaking party isn't
+## stopped by foes who would notice none of it); then the screen says why and offers only Back. Left/Right (or the
+## slider, or − and +) pick the hours, Enter waits, Esc goes back.
 
 const MIN_HOURS := 1
 const MAX_HOURS := 24
@@ -73,7 +75,8 @@ func build(root_: Node, state: StoryState, reason: String) -> void:
 	set_hours(hours)
 
 
-## Why the party can't wait now, or "": in a fight, a conversation or a cutscene, or with foes in sight.
+## Why the party can't wait now, or "": in a fight, a conversation or a cutscene, or with foes in sight
+## (LocationStealth.foes_in_sight, as for a Short Rest).
 static func why_not(root_: Node, state: StoryState) -> String:
 	var view := root_.get("view") as LocationView if root_ != null else null
 	if view != null and view.in_combat:
@@ -82,7 +85,7 @@ static func why_not(root_: Node, state: StoryState) -> String:
 		return "Not in the middle of a conversation."
 	if root_ != null and root_.get("screen") is CutscenePlayer:
 		return "Not while a scene is playing."
-	if view != null and LocationStealth.nearest_waiting(view) != "":
+	if view != null and not LocationStealth.foes_in_sight(view).is_empty():
 		return "Not with foes in sight. Deal with them, or get out of their sight first."
 	if state == null or state.party.is_empty():
 		return "There is no one to wait."
@@ -116,6 +119,9 @@ func wait() -> void:
 	var minutes := hours * 60
 	root.call("close_screen")
 	st.advance_minutes(minutes)
+	var view := root.get("view") as LocationView
+	if view != null:
+		LocationStealth.refresh_waiting(view)   # a fight that waits only by night goes with the dark
 	if root.has_method("_refresh"):
 		root.call("_refresh")
 

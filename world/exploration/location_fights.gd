@@ -5,7 +5,8 @@ extends RefCounted
 ## begins and resuming from it, the switch into combat without a jump, and what a won fight leaves.
 
 
-## Starts any encounter of this location whose trigger matches and whose condition holds. True if one started.
+## Starts any encounter of this location whose trigger matches and whose condition holds. True if one started. (Not a
+## fight waiting in plain view that a sneaking party steps into unnoticed: LocationStealth.step_in.)
 static func _trigger_encounter(view: LocationView, trigger: String) -> bool:
 	for en: Variant in view.loc.get("encounters", []):
 		var spec := en as Dictionary
@@ -20,6 +21,14 @@ static func _trigger_encounter(view: LocationView, trigger: String) -> bool:
 			continue
 		if str(spec.get("final_battle", "")) != "":
 			return _begin_final_battle(view, str(spec["id"]))
+		# A sneaking party that steps into the area of a fight waiting in plain view slips in unless a foe notices it
+		# (LocationStealth.step_in); any other step in starts the fight.
+		if trigger.begins_with("enter_area:"):
+			match LocationStealth.step_in(view, spec):
+				"spotted":
+					return true
+				"slipped":
+					return false
 		start_encounter(view, str(spec["id"]), spec)
 		return true
 	return false

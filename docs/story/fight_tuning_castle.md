@@ -22,36 +22,51 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 
 | Fight | Where | Version | Level | Was | Now | Wins |
 |---|---|---|---|---|---|---|
-| `cat_gargoyle_watch` | catacombs | L10v0 | 10 | 6 gargoyle | 16 gargoyle (134 HP) | 5 |
+| `cat_gargoyle_watch` | catacombs | L10v0 | 10 | 6 gargoyle | 16 gargoyle (110 HP) | 6 |
 | `cat_sleepers` | catacombs | L10v0 | 10 | 3 vampire spawn | 10 vampire spawn | 4 |
 | `cat_sleepers` | catacombs | L10v1 | 10 | 2 vampire spawn | 10 vampire spawn | 4 |
 | `cat_guardians` | catacombs_tombs | L10v0 | 10 | strahds animated armor, 2 helmed horror | 2 strahds animated armor, 4 helmed horror | 5 |
 | `court_accountant_rug` | court | L10v0 | 10 | rug of smothering, 3 crawling claw | rug of smothering (57 HP), 3 crawling claw (4 HP), 3 strahds animated armor (235 HP) | 5 |
 | `court_post_watch` | court | L10v0 | 10 | strahds animated armor, 3 helmed horror | strahds animated armor (190 HP), 4 helmed horror (102 HP) | 5 |
-| `crg_courtyard_gargoyles` | gates | L10v0 | 10 | 6 gargoyle | 16 gargoyle (77 HP) | 4 |
-| `crg_courtyard_gargoyles` | gates | L9v1 | 9 | 4 gargoyle | 14 gargoyle (84 HP) | 5 |
+| `crg_courtyard_gargoyles` | gates | L10v0 | 10 | 6 gargoyle | 16 gargoyle (64 HP) | 5 |
+| `crg_courtyard_gargoyles` | gates | L9v1 | 9 | 4 gargoyle | 14 gargoyle (68 HP) | 5 |
 | `larders_guardroom` | larders | L10v0 | 10 | 2 wight, 2 helmed horror, 4 strahd zombie | 4 wight, 4 helmed horror, 6 ghast, strahd zombie | 5 |
 | `larders_watch_alarm` | larders | L10v0 | 10 | 2 wight, 2 helmed horror, 4 strahd zombie | 4 wight (102 HP), 3 helmed horror (75 HP), strahd zombie (38 HP), 5 ghast (45 HP) | 5 |
 | `larders_furnace` | larders_dungeon | L10v0 | 10 | 2 flameskull, fire elemental | 3 flameskull, fire elemental | 4 |
-| `larders_jailers` | larders_dungeon | L10v0 | 10 | 3 helmed horror | 8 helmed horror | 4 |
+| `larders_jailers` | larders_dungeon | L10v0 | 10 | 3 helmed horror | 8 helmed horror (135 HP) | 5 |
 | `larders_questioner` | larders_dungeon | L10v0 | 10 | wight, 2 black pudding, 6 crawling claw | 3 wraith (151 HP), 5 black pudding (153 HP), 9 crawling claw (4 HP) | 5 |
 | `crg_kestrel_cellar` | main_floor | L10v0 | 10 | 3 vampire spawn | 7 vampire spawn (126 HP) | 6 |
 | `crg_kestrel_cellar` | main_floor | L10v1 | 10 | 3 vampire spawn | 7 vampire spawn (144 HP) | 5 |
 | `crg_kestrel_table` | main_floor | L10v0 | 10 | 5 vampire spawn (110 HP) | 5 vampire spawn (162 HP) | 5 |
-| `crg_turret_guard` | main_floor | L10v0 | 10 | 2 strahds animated armor | 4 strahds animated armor (118 HP) | 5 |
-| `crg_turret_guard` | main_floor | L9v1 | 9 | strahds animated armor | 4 strahds animated armor | 4 |
+| `crg_turret_guard` | main_floor | L10v0 | 10 | 2 strahds animated armor | 4 strahds animated armor (118 HP) | 6 |
+| `crg_turret_guard` | main_floor | L9v1 | 9 | strahds animated armor | 4 strahds animated armor | 6 |
 | `spires_stair_watch` | spires | L10v1 | 10 | 3 vampire spawn, 3 swarm of bats | 8 vampire spawn, 8 swarm of bats | 6 |
 | `spires_stair_watch` | spires | L11v0 | 11 | 4 vampire spawn, 3 swarm of bats | 9 vampire spawn, 7 swarm of bats | 5 |
 | `spires_stair_watch` | spires | L9v2 | 9 | 2 vampire spawn, swarm of bats | 6 vampire spawn, 5 swarm of bats | 5 |
 | `heart_guardians` | spires_heart | L10v1 | 10 | 2 strahds animated armor, helmed horror | 3 strahds animated armor (140 HP), 2 helmed horror (75 HP) | 5 |
 | `heart_guardians` | spires_heart | L11v0 | 11 | 2 strahds animated armor, 2 helmed horror | 3 strahds animated armor, 3 helmed horror | 6 |
 | `heart_guardians` | spires_heart | L9v2 | 9 | strahds animated armor, helmed horror | 3 strahds animated armor, 2 helmed horror | 6 |
-| `peak_guardians` | spires_roofs | L10v1 | 10 | 6 gargoyle | 16 gargoyle (87 HP) | 6 |
-| `peak_guardians` | spires_roofs | L11v0 | 11 | 8 gargoyle | 16 gargoyle (100 HP) | 5 |
-| `peak_guardians` | spires_roofs | L9v2 | 9 | 4 gargoyle | 16 gargoyle (77 HP) | 5 |
+| `peak_guardians` | spires_roofs | L10v1 | 10 | 6 gargoyle | 16 gargoyle (70 HP) | 4 |
+| `peak_guardians` | spires_roofs | L11v0 | 11 | 8 gargoyle | 16 gargoyle (55 HP) | 5 |
+| `peak_guardians` | spires_roofs | L9v2 | 9 | 4 gargoyle | 16 gargoyle (58 HP) | 5 |
 | `cauldron_coven` | spires_rooms | L10v1 | 10 | 6 barovian witch, black pudding | 11 barovian witch (74 HP), 8 black pudding (313 HP) | 6 |
 | `cauldron_coven` | spires_rooms | L11v0 | 11 | 8 barovian witch, black pudding | 12 barovian witch (64 HP), 5 black pudding (272 HP) | 5 |
 | `cauldron_coven` | spires_rooms | L9v2 | 9 | 4 barovian witch, black pudding | 10 barovian witch (36 HP), 6 black pudding (153 HP) | 5 |
 | `escher_fight` | spires_rooms | L10v0 | 10 | vampire spawn, 2 swarm of bats | 7 vampire spawn, 7 swarm of bats | 5 |
 | `roost_swarm` | spires_roost | L10v0 | 10 | 6 swarm of ravens | 6 swarm of ravens (11 HP), 10 wereraven (55 HP) | 5 |
 | `roost_swarm_roused` | spires_roost | L10v0 | 10 | 6 swarm of ravens | 6 swarm of ravens (13 HP), 8 wereraven (65 HP) | 5 |
+
+## Waiting fights: which start each series holds (overworld stealth, piece 3)
+
+A fight that waits in plain view starts where its foes first notice a party walking in, not only inside its area, so each
+series starts there (the squares read off by walking from the spawn the story uses, with the doors opened on the way), and
+the foes' Hit Points and squares are tuned from it. Where a place has a second real way in the series holds that start too
+when one tuning can hold both: the courtyard's gate, yard middle and main-floor arrivals (the gate's column on the bridge
+was 1 and 2 in 8 at the old 77 and 84 Hit Points, the yard's middle 4 and 5; now 5 and 5, 6 and 6, 5 and 6 with the six
+foes standing by the portcullis moved to the yard's north half and 64 and 68 Hit Points), the jailers' west door and the
+lift (the three horrors along the lift's corridor moved into the west hall, 135 Hit Points: 5 and 5), the champion's gate
+from the north corridor and from the tombs (110 Hit Points: 6 and 5). Starts no tuning holds with the first-time way, as
+measured (wins over seeds 1-8): the courtyard's side gate from the overlook 8 and 8 at levels 10 and 9 (6 and 6 at the old
+data), the east turret's back door 8 and 7 (as at the old data), and Berez's field (docs/story/fight_tuning.md): from the
+vault 5 and 4 at levels 7 and 8 hold but level 9 is 8 (6 at the old data, where the road was 7: the level 9 version's third
+more Hit Points bring the road to 6), and from the hut 2, 2 and 3 (2, 2 and 6 at the old data).

@@ -15,8 +15,8 @@ screen (ui/screens/rest_screen.gd) keeps the plain Long Rest where:
   house, the Mad Mage's hut, Van Richten's tower, the Tser Pool encampment and the Pool of the White Sun;
 - a room is booked for the night here (Services, the `_room` flag);
 - in the tutorial, and for a capture's own party (RestScreen._view);
-- `rest: no` places allow no rest at all, and the magic items' rests (Daern's Instant Fortress, the Rod of Security)
-  are taken from the inventory, as before.
+- `rest: no` places allow no rest at all, and the Rod of Security's rest is taken from the inventory, as before. Daern's Instant Fortress is a place now (docs/story/fortress.md):
+  its ground floor and sleeping floor are `rest: safe` (the plain rest screen) and its roof is `rest: no`.
 
 `CampSite.setting` says what kind of camp it is: **indoors** (the map isn't outdoors, or its theme is dungeon),
 **wild** (an outdoor map whose theme is forest, riverside, road, svalich_road, wilderness, shrine_yard or camp), else
@@ -117,5 +117,5 @@ hour after any Long Rest (`LongRest.MORNING_MINUTES`, `StoryState.morning`, not 
 still offers the companions' words and the change of prepared spells, counted from the list the night ended with.
 Strahd's night visit waits until the rest screen, or a talk started from it, is closed (game root `_strahd_holds`),
 instead of closing it and taking the morning with it. Closing the screen with a word still waiting puts up a hint
-("Thistle wants a word: open Rest (R) to talk"). Daern's Instant Fortress and the Rod of Security take the same Long
+("Thistle wants a word: open Rest (R) to talk"). The Rod of Security (from the inventory) and a night on Daern's Instant Fortress's floors take the same Long
 Rest (the guests, the miles walked, the spells cast on waking), with the night's lines, the hint and Strahd's chance.

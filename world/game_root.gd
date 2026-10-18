@@ -114,7 +114,11 @@ func _new_pregen_party() -> void:
 	st.gold = 10.0
 
 
-func enter_location(location_id: String, spawn: String) -> void:
+## Shows `location_id` with the party at `spawn`. `sneaking`: the party walked out of the last place through an exit while
+## sneaking, so it arrives sneaking too, with fresh Stealth rolls (LocationStealth), sneaking when the place first looks at
+## its areas (a fight waiting there may be slipped into, or be set off by a foe that notices them); any other way in (the
+## travel map, a cutscene, a load) starts it walking normally.
+func enter_location(location_id: String, spawn: String, sneaking: bool = false) -> void:
 	_fade_from_black()
 	glow.clear()
 	if view != null:
@@ -139,7 +143,9 @@ func enter_location(location_id: String, spawn: String) -> void:
 			_banter_waiting = lines
 		else:
 			_show_banter(lines))
-	view.exit_requested.connect(func(to: String, sp: String) -> void: _covered.call_deferred(to, enter_location.bind(to, sp)))
+	var leaving := view
+	view.exit_requested.connect(func(to: String, sp: String) -> void:
+		_covered.call_deferred(to, enter_location.bind(to, sp, leaving.sneaking)))
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
@@ -172,6 +178,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 			if st.party.has(who):
 				open_screen("sheet", st.party.find(who))))
 	view.combat_ended.connect(_after_combat)
+	view.arrive_sneaking = sneaking
 	add_child(view)
 	PlacePreload.keep_foes(view)   # the foes of its fights read on worker threads while the party is here
 	plan_bar.view = view
@@ -253,8 +260,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var label := str(thing.get("label", ""))
 		if thing.is_empty() and view.planning:
 			label = LocationPlan.hover_text(view, pick)
-		elif thing.is_empty() and view.sneaking and pick.x >= 0:
-			label = LocationStealth.hover_warning(view, pick)   # who can see you (U10)
+		elif thing.is_empty() and pick.x >= 0:
+			label = LocationStealth.hover_warning(view, pick) if view.sneaking else LocationStealth.guarded_hint(view, pick)   # who can see you (U10)
 		LocationPlan.preview(view, pick if thing.is_empty() else Vector2i(-1, -1))
 		hud.hint(label, (event as InputEventMouseMotion).position)
 		Cursors.show(Cursors.for_thing(thing))

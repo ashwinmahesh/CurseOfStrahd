@@ -45,6 +45,8 @@
     "werewolf_den_caves": "den_caves",
     "abbey_of_st_markovia_wards": "asylum",
     "tsolenka_pass_guard_tower": "frozen_tower",
+    "daerns_fortress": "adamantine_ground",
+    "daerns_fortress_upper": "adamantine_upper",
     "wizard_of_wines_cellar": "wine_cellar",
     "blood_of_the_vine": "sour_tavern",
     "vallaki_blue_water_inn": "warm_inn",
@@ -3066,6 +3068,76 @@
         "flame_tint": {
           "colour": "frost",
           "mix": 0.45,
+          "energy": 1.0
+        }
+      }
+    },
+    "adamantine_ground": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "night_deep",
+          "amount": 0.5,
+          "ambient_tint": "mist_blue",
+          "ambient_mix": 0.6,
+          "ambient": 1.15
+        },
+        "times": {
+          "any": {
+            "ambient": "moon_blue",
+            "ambient_energy": 0.9,
+            "key": "moonlight",
+            "key_energy": 0.4
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "moonlight",
+            "rim": "frost",
+            "amount": 45
+          }
+        ],
+        "flame_tint": {
+          "colour": "frost",
+          "mix": 0.55,
+          "energy": 1.0
+        }
+      }
+    },
+    "adamantine_upper": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "ash_violet",
+          "amount": 0.4,
+          "ambient_tint": "candle",
+          "ambient_mix": 0.3,
+          "ambient": 1.1
+        },
+        "times": {
+          "any": {
+            "ambient": "mist_blue",
+            "ambient_energy": 0.8,
+            "key": "moonlight",
+            "key_energy": 0.3
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "parchment",
+            "rim": "bone",
+            "amount": 40
+          }
+        ],
+        "flame_tint": {
+          "colour": "candle",
+          "mix": 0.2,
           "energy": 1.0
         }
       }

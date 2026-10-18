@@ -125,6 +125,32 @@ func test_shoulders_sticks_back_and_start() -> void:
 	await _frames(2)
 
 
+func test_sneaking_on_a_pad_shows_the_totals_and_the_controls_card_says_what_they_mean() -> void:
+	await _start()
+	var hud := root.get("hud") as ExploreHud
+	var focus := get_viewport().gui_get_focus_owner()
+	await _press(JOY_BUTTON_LEFT_STICK)
+	assert_true(_view().sneaking, "L3 sneaks")
+	await _frames(2)
+	var badges := hud.find_children("StealthBadge", "PanelContainer", true, false)
+	assert_eq(badges.size(), (root.get("st") as StoryState).party.size(), "a total on each portrait, with no pointer needed")
+	for b in badges:
+		assert_true((b as Control).visible and (b as Control).focus_mode == Control.FOCUS_NONE, "shown, and nothing for the pad to land on")
+		assert_true((b as Control).tooltip_text.begins_with("Stealth "), (b as Control).tooltip_text)
+	assert_eq(get_viewport().gui_get_focus_owner(), focus, "the pad's focus is where it was")
+	await _press(JOY_BUTTON_DPAD_DOWN)
+	assert_true(hud.controls_showing(), "D-pad down shows the controls")
+	var words := ""
+	for l: Label in hud.get("_control_lines") as Array[Label]:
+		words += l.text
+	assert_true(words.contains("Stealth total"), "and they say what the colours on the portraits mean")
+	await _press(JOY_BUTTON_B)
+	await _press(JOY_BUTTON_LEFT_STICK)
+	await _frames(2)
+	for b in hud.find_children("StealthBadge", "PanelContainer", true, false):
+		assert_false((b as Control).visible, "L3 again: gone")
+
+
 func test_the_hud_bar_on_a_pad() -> void:
 	await _start()
 	var hud := root.get("hud") as ExploreHud

@@ -190,12 +190,12 @@ func capture_shots(tool: Node, out: String) -> void:
 		await _shoot(tool, "%s_prepare_anytime_sheet.png" % out)
 		root.call("close_screen")
 	if _wants("item_rest"):
-		# Daern's Instant Fortress gives a Long Rest from the inventory, which then offers Change prepared spells.
-		ilse.add_item("daerns_instant_fortress")
+		# The Rod of Security gives a Long Rest from the inventory, which then offers Change prepared spells.
+		ilse.add_item("rod_of_security")
 		root.call("open_screen", "inventory", 0)
 		var inv := root.get("screen") as InventoryScreen
-		inv.selected = "daerns_instant_fortress"
-		inv.call("_use_power", "fortress", {})
+		inv.selected = "rod_of_security"
+		inv.call("_use_power", "paradise", {})
 		await tool.call("wait_frames", 150)   # the "8 hours later" fade
 		await _shoot(tool, "%s_item_rest.png" % out)
 		inv.call("_open_prepare")

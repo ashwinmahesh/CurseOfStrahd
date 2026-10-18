@@ -21,6 +21,11 @@ var _goal: Label
 var _toast_queue: Array[String] = []
 ## The command bar's buttons by command, so Sneak and Split can light up while they're on.
 var _bar_buttons: Dictionary = {}
+## The location shown (show_location), for the Stealth totals on the portraits while its party sneaks.
+var _view: LocationView
+## Creature -> [badge panel, its label, its style]: the Stealth badge on each party card's portrait (_stealth_badge).
+var _badges: Dictionary = {}
+var _stealth_key := ""
 var _narr: RichTextLabel
 var _narr_time := 0.0
 var _narr_face: Control
@@ -48,7 +53,7 @@ var thing_labels: ThingLabels
 ## The exploring controls card (F1), like the one in fights. {action} reads as the player's key for it (InputActions.fill).
 const CONTROLS: Array[String] = [
 	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
-	"Hold {show_names} to see the names of everything you can use nearby. Hold {show_sight} to see what each foe in sight can see (always shown while sneaking).",
+	"Hold {show_names} to see the names of everything you can use nearby. Hold {show_sight} to see what each foe in sight can see (always shown while sneaking). While sneaking, each portrait wears that hero's Stealth total: red when a foe in view would notice them even in dim light, amber when only bright light would give them away.",
 	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {wait} wait some hours · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
 	"Controller: left stick walks · right stick turns and zooms the camera · {@mark_prev} / {@mark_next} mark the thing before or next · {@use_marked} uses it · {@marked_menu} everything you can do with it · {@search} searches · {@leader_prev} / {@leader_next} who leads · {@sneak} sneak · {@plan_mode} turn-based ({@plan_round} ends the round) · hold {@show_names} for names and what foes see · {@hud_bar}: the bar's buttons · {@show_controls}: these controls · {@open_map} map · {start} menu. Settings, Keys, Controller moves them.",
@@ -298,6 +303,7 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		return
 	for c in _party_box.get_children():
 		c.queue_free()
+	_badges.clear()
 	for i in st.party.size():
 		var ch := st.party[i]
 		var lead := i == 0
@@ -314,7 +320,9 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		row.add_theme_constant_override("separation", 8)
 		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.add_child(row)
-		row.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 58.0, ch.hp <= 0, ch.dead))
+		var portrait := UiParts.framed_portrait(CombatToken.art_for(ch), 58.0, ch.hp <= 0, ch.dead)
+		portrait.add_child(_stealth_badge(ch, 58.0, i))
+		row.add_child(portrait)
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 3)
 		v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -367,7 +375,9 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		grow.add_theme_constant_override("separation", 8)
 		gcard.add_child(grow)
 		var npc := Compendium.shared().get_entry("npcs", st.guest_ids[gi])
-		grow.add_child(UiParts.framed_portrait(NpcLooks.portrait(npc, st) if not npc.is_empty() else st.guest_ids[gi], 42.0, g.hp <= 0))
+		var gportrait := UiParts.framed_portrait(NpcLooks.portrait(npc, st) if not npc.is_empty() else st.guest_ids[gi], 42.0, g.hp <= 0)
+		gportrait.add_child(_stealth_badge(g, 42.0, -1))
+		grow.add_child(gportrait)
 		var gv := VBoxContainer.new()
 		gv.add_theme_constant_override("separation", 3)
 		var ghead := HBoxContainer.new()
@@ -386,6 +396,7 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		if b != null:
 			b.modulate = Color(1.25, 1.12, 0.8) if bool(pair[1]) else Color.WHITE
 	_show_keys({"sneak": sneaking, "split": solo, "plan": planning})
+	update_stealth(true)
 	# Turn-based exploring's panel takes the top of the screen: toasts drop below it.
 	_toast_panel.offset_top = 136 if planning else 70
 	_goal.text = _objective()
@@ -411,13 +422,102 @@ func _card_button(ch: Character, idx: int) -> Button:
 	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 	btn.tooltip_text = "%s · %s\n%s · Right-click: sheet" % [ch.name, ch.class_summary(), "Dead: can't lead" if ch.dead else ("Down: can't lead" if ch.hp <= 0 else "Click: lead")]
-	btn.gui_input.connect(func(ev: InputEvent) -> void:
-		if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed:
-			if (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-				leader_picked.emit(idx)
-			elif (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
-				sheet_requested.emit(idx))
+	btn.gui_input.connect(_card_clicked.bind(idx))
 	return btn
+
+
+func _card_clicked(ev: InputEvent, idx: int) -> void:
+	if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed:
+		if (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+			leader_picked.emit(idx)
+		elif (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
+			sheet_requested.emit(idx)
+
+
+## The Stealth total a sneaking member keeps, on the lower right corner of their portrait (`side` px square, which a
+## tall card stretches the holder beyond); hidden until update_stealth shows it. It takes the card's clicks (`idx`, the
+## card's place in the party, or -1 for a guest's card, which has none), so the corner of the portrait still leads or
+## opens the sheet.
+func _stealth_badge(who: Creature, side: float, idx: int) -> Control:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(Look.color("ui_black"), 0.92)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(5)
+	style.corner_detail = 1
+	style.content_margin_left = 4
+	style.content_margin_right = 4
+	style.content_margin_top = 0
+	style.content_margin_bottom = 0
+	var badge := PanelContainer.new()
+	badge.name = "StealthBadge"
+	badge.add_theme_stylebox_override("panel", style)
+	badge.anchor_left = 1.0
+	badge.anchor_right = 1.0
+	badge.offset_left = -3
+	badge.offset_right = -3
+	badge.offset_top = side - 3.0   # from the top: the holder is as tall as the card, the portrait only `side`
+	badge.offset_bottom = side - 3.0
+	badge.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	badge.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	badge.mouse_filter = Control.MOUSE_FILTER_PASS   # for its hint; the card's clicks go on through it
+	badge.focus_mode = Control.FOCUS_NONE
+	badge.visible = false
+	if idx >= 0:
+		badge.gui_input.connect(_card_clicked.bind(idx))
+	var label := _label("", 13 if side > 50.0 else 11, "vellum")
+	label.add_theme_constant_override("outline_size", 3)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	badge.add_child(label)
+	_badges[who] = [badge, label, style]
+	return badge
+
+
+## Colours of a Stealth badge by the sight overlay's moods (SightOverlay.eye_mood): red when a foe in plain view would
+## notice that member even in dim light, amber when only bright light would give them away, else the plain colour. The
+## red is the HUD's own (the overlay's crimson is too dark to read as text on the card).
+const STEALTH_COLOURS := {"notices": "vampire_red", "bright": "candle", "beaten": "vellum"}
+
+
+## Shows the Stealth totals on the portraits while the party sneaks, in the sight overlay's colours, and keeps them
+## true as foes come into view, the clock moves or a total is rolled; gone when it doesn't sneak. Cheap enough for every
+## frame: nothing is redone unless something it depends on changed (`force`: redo it anyway).
+func update_stealth(force: bool = false) -> void:
+	var key := _stealth_state()
+	if key == _stealth_key and not force:
+		return
+	var v: LocationView = _view if is_instance_valid(_view) else null
+	var on := key != "off"
+	for cr: Creature in _badges:
+		var parts := _badges[cr] as Array
+		var badge := parts[0] as Control
+		if not on or cr.hp <= 0:
+			badge.visible = false
+			continue
+		var ex := LocationStealth.exposure(v, cr)
+		var colour := Look.color(str(STEALTH_COLOURS[str(ex["mood"])]))
+		(parts[1] as Label).text = str(int(ex["total"]))
+		(parts[1] as Label).add_theme_color_override("font_color", colour)
+		(parts[2] as StyleBoxFlat).border_color = Color(colour, 0.85)
+		badge.tooltip_text = LocationStealth.exposure_text(ex)
+		badge.set_meta(&"mood", str(ex["mood"]))
+		badge.visible = true
+	_stealth_key = _stealth_state()   # after: a total rolled just now (a guest who just joined) is among them
+
+
+## What the badges depend on, or "off" when they don't show: the totals, the foes in view, who is up and the clock (a
+## total an hour old is rolled again).
+func _stealth_state() -> String:
+	var v: LocationView = _view if is_instance_valid(_view) else null
+	if v == null or not v.sneaking or v.in_combat or st == null:
+		return "off"
+	var shown: Array[String] = []
+	for w in v.waiting:
+		if LocationStealth.is_shown(w):
+			shown.append(str((w["foe"] as Combatant).id))
+	var up: Array[bool] = []
+	for cr: Creature in _badges:
+		up.append(cr.hp > 0)
+	return str([v.sneak_totals.values(), shown, up, st.total_minutes(), _badges.size()])
 
 
 ## Bloodied, conditions and exhaustion as small tags; the rules words among them open their cards (U1). Null when
@@ -532,6 +632,8 @@ func _fit_where(text: String) -> void:
 
 ## A new location: the minimap and the signs at its ways out.
 func show_location(view: LocationView) -> void:
+	_view = view
+	_stealth_key = ""
 	minimap.show_location(view)
 	exit_signs.show_location(view)
 	thing_labels.show_location(view, exit_signs.signs)
@@ -709,6 +811,7 @@ func _process(delta: float) -> void:
 		_roll_time -= delta
 		_roll_panel.modulate.a = clampf(_roll_time, 0.0, 1.0)
 		_roll_panel.visible = _roll_time > 0.0
+	update_stealth()
 	_keep_panels_apart()
 
 
