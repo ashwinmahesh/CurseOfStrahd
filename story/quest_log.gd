@@ -5,11 +5,11 @@ extends RefCounted
 
 
 ## [{id, name, summary, entries: [text], objectives: [text], hint, status: active|success|failure, kind: main|other,
-## tracked, at}]: active first, each part in the order the quests last moved (oldest first, so the HUD's newest
+## region, tracked, at}]: active first, each part in the order the quests last moved (oldest first, so the HUD's newest
 ## objective is the last open one), never the dictionary's order: a save writes its keys sorted, so after a load that
 ## was alphabetical (Storyline QA, 2026-10-08). `hint` is the current stage's what-to-do-next, for an open quest only.
-## `kind` is the journal tab it's under; `tracked` is true for the open quest the party follows (track); `at` is when
-## it last moved.
+## `kind` is the journal tab it's under; `region` is the heading the Other tab files it under (QuestRegions); `tracked` is
+## true for the open quest the party follows (track); `at` is when it last moved.
 static func journal(st: StoryState) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for qid: String in st.quests:
@@ -34,7 +34,7 @@ static func journal(st: StoryState) -> Array[Dictionary]:
 					status = str(stage["ends"])
 		out.append({"id": qid, "name": str(q["name"]), "summary": str(q.get("summary", "")), "entries": entries,
 			"objectives": objectives, "hint": hint if status == "active" else "", "status": status,
-			"kind": kind(qid), "tracked": status == "active" and bool(entry.get("tracked", false)),
+			"kind": kind(qid), "region": QuestRegions.of(qid), "tracked": status == "active" and bool(entry.get("tracked", false)),
 			"at": float(entry.get("at", 0))})
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		var a_open := str(a["status"]) == "active"
