@@ -25,9 +25,15 @@
     },
     {
       "id": "done",
-      "journal": "Fennimore has rewritten the Tser Pool entry: three stars, and the stew is plum, onion, hare and sixty years. Ask for the bottom. He has paid ten gold and is off to Vallaki next.",
+      "journal": "Fennimore has rewritten the Tser Pool entry: three stars, and the stew is plum, onion, hare and sixty years. Ask for the bottom. He has paid ten gold and is starting the next chapter at his signpost.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "unverified",
+      "journal": "The Tser Pool camp turned on us before we could ask Old Dorina what is in the pot. Fennimore will print his guess, \"plum?\", paid nothing, and has noted that the camp is closed to inquiries.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

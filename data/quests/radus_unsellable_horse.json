@@ -28,6 +28,12 @@
       "journal": "Dinte has a home. Radu is stunned and delighted, has paid his fifteen gold, and says he will tell this story for the rest of his life, and in it we are very tall.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "unpaid",
+      "journal": "Dinte has a home, but the Tser Pool camp has turned on us and Radu is gone with it. There is nobody left to pay the fifteen gold, or to tell the story.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

@@ -28,6 +28,12 @@
       "journal": "The cake is baked and the Baron has declared it a triumph. Leontina has made something that isn't round, or very nearly, and has a scar on her thumb to prove she once trained somewhere good.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "failed",
+      "journal": "Vadoma shut her painted box on us after the Tser Pool, and there is no other saffron in the valley. Leontina baked the four hundred and fourteenth sun, round as ever, and paid us nothing.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

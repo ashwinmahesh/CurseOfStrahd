@@ -50,6 +50,9 @@ Narrator: Her expression gives nothing away at all. She slides the same few copp
 if quest.florins_grandson == done and flag.florin_told != "lie"
 -> vallaki/florins_grandson:florin_after
 endif
+if quest.florins_grandson == done
+-> vallaki/florins_grandson:florin_after_lie
+endif
 if flag.burgomaster_buried
 Old Florin: They buried Kolyan properly. I prayed for him too. I'd not have, a year ago. You find the list gets longer as you get older, and less fussy.
 -> mihai_menu

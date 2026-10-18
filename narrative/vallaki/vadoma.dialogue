@@ -4,6 +4,9 @@
 ~ start
 if flag.tser_pool_brawl_won
 Vadoma [angry]: No. Not today, not for your gold. Every wagon in the valley knows what you did. Walk on.
+if quest.the_sun_cake == asked and not flag.cake_saffron
+-> vallaki/the_sun_cake:vadoma_no_saffron
+endif
 -> END
 endif
 if not flag.vadoma_met

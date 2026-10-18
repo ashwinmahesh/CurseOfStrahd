@@ -1032,7 +1032,11 @@
       "dialogue": "krezk/dumitrus_visitor:fennimore_visit",
       "facing": "east",
       "approach": 4,
-      "when": "flag.krezk_gate_open and flag.fennimore_to_krezk and quest.dumitrus_visitor == fennimore"
+      "hours": [
+        9,
+        17
+      ],
+      "when": "flag.krezk_gate_open and flag.fennimore_to_krezk and quest.dumitrus_visitor == fennimore and not weather == storm"
     },
     {
       "npc": "madam_profira",

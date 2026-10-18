@@ -70,11 +70,18 @@ Costica [weary]: I only have three gold pieces saved from my lunch money. And my
 Narrator: Dinte steps forward, sniffs Costica's threadbare collar, and lays his heavy head gently on the highwayman's shoulder.
 Costica [smile]: Oh. Hello, sir. I think he likes my coat.
 gold +3
-quest radus_unsellable_horse buyer_found
 set dinte_sold
+if (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)
+quest radus_unsellable_horse unpaid
+else
+quest radus_unsellable_horse buyer_found
+endif
 Costica [smile]: Thank you. Thank you very much. I will brush him every evening, and if he is unhappy I promise I will bring him straight back.
 Narrator: Costica takes the rope in both hands and leads Dinte down the road with enormous, breathless care.
 Narrator: Dinte walks beside him like a lamb and does not bite a single thing.
+if (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)
+-> camp_gone
+endif
 Radu: I have owned that horse for three years. He has never once done that.
 -> END
 
@@ -92,12 +99,32 @@ Fennimore: Now then, let us have a look at the fellow. Good breeding shows in th
 Narrator: Fennimore approaches the gelding with the brisk, cheerful confidence of a man who has never been bitten by a horse.
 Narrator: Dinte bites him on the waistcoat at once.
 gold +25
-quest radus_unsellable_horse buyer_found
 set dinte_sold
+if (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)
+quest radus_unsellable_horse unpaid
+else
+quest radus_unsellable_horse buyer_found
+endif
 Fennimore [weary]: Well. A spirited animal. Very forward in his manners. Here is your twenty-five gold, as promised.
 Fennimore: I shall give him four stars in the book. Handsome coat, lively temperament, somewhat abrupt greeting.
 Narrator: Fennimore climbs into the saddle with great effort and very little grace, settling himself the wrong way round before correcting it.
 Narrator: Dinte allows this with an air of tremendous patience, having already established who is in charge.
+if (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)
+-> camp_gone
+endif
+-> END
+
+# --- The camp is gone before Radu is told (sq-stuck, finding 126): the horse has a home and nobody left to pay for it ---
+
+# From the buyer's menu, when the camp turned hostile after the sale.
+~ camp_unpaid
+quest radus_unsellable_horse unpaid
+-> camp_gone
+
+~ camp_gone
+Narrator: A cold wind smells of wet wool and road mud, and you think of Radu's promised fifteen gold with an empty palm.
+Narrator: The road back to Tser Pool is closed to you now, with no one waiting by the wagons to hear the news or count out the coin.
+Narrator: Dinte, at least, has a home, which makes him the only soul to profit from the bargain.
 -> END
 
 # --- Radu pays, back at the camp (tser_camp:radu jumps here once a buyer has him) ---

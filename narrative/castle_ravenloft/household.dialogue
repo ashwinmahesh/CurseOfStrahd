@@ -145,7 +145,7 @@ endif
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Is it safe to walk the house tonight? -> crainic_truce
 * We could put your petition to the count for you. -> crainic_offer
 * [if not quest.boyars_petition] What does a petition need, to be presented in the proper form? -> crainic_form
-* [if quest.boyars_petition == asked] Which seals do we still lack? -> castle_ravenloft/boyars_petition:form
+* [if quest.boyars_petition == asked and flag.petition_seals < 4] Which seals do we still lack? -> castle_ravenloft/boyars_petition:seals_lack
 * [if quest.boyars_petition == asked and flag.petition_seals >= 4] We have the four seals. -> castle_ravenloft/boyars_petition:seals_have
 * [if quest.boyars_petition == received] The Steward has received your petition. -> castle_ravenloft/boyars_petition:done
 * (Leave him to his waiting.) -> END

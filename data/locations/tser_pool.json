@@ -862,7 +862,7 @@
       "model": "horse",
       "facing": "south",
       "dialogue": "svalich_road/radus_horse:dinte",
-      "when": "not flag.dinte_sold"
+      "when": "not flag.dinte_sold and not flag.dinte_led and (quest.radus_unsellable_horse or (not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile))"
     }
   ],
   "containers": [

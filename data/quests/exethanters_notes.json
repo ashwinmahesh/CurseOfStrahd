@@ -19,6 +19,12 @@
       "journal": "Put in order, the notes said what he was doing this morning: making tea. Exethanter made us a cup.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "lost",
+      "journal": "We smashed Exethanter's phylactery and let him go before his loose notes were in order. The five scraps lie where they fell, and whatever he was doing this morning stays out of order for good.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

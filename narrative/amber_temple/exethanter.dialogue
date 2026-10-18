@@ -147,11 +147,20 @@ Narrator: The jar bursts on the flagstones. Among the wax and the shards, a dull
 Exethanter: Oh.
 Narrator: For a long moment he says nothing. Then he looks down at his hands as if they belonged to someone else.
 Exethanter: I think I've been waiting for that for a very long time. Thank you. I think. Would you go away now, please? Gently.
+# The notes do not outlive him (sq-stuck, finding 129): an open Exethanter's Notes is lost, never stuck.
+if quest.exethanters_notes == asked
+quest exethanters_notes lost
+Narrator: As the long sigh passes through the cold library, the five loose scraps in his lap slide silently to the stone floor.
+Narrator: He does not bend to gather them, and the small morning they might have explained remains out of order for good.
+endif
 approve liriel_dawnsong +2 thistle +1: You smashed Exethanter's phylactery and let him go
 -> END
 
 ~ smashed_after
 Narrator: Exethanter sits very still at his desk, unpinning his notes one at a time and reading each before he lets it fall.
+if quest.exethanters_notes == lost
+Exethanter [weary]: Leave those five on the stones, my dears, for I suspect whatever they were about has gone quite cold by now.
+endif
 Exethanter: I'm sorting. Deciding what to forget on purpose, for once. It's quite pleasant. Did you want something?
 * [if not flag.warden_word_known] The wardens' word, for the doors. -> word_smashed
 * Goodbye, warden. -> END

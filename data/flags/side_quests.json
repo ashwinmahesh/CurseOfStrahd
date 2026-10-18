@@ -1907,6 +1907,11 @@
       "summary": "Ambrose Fennimore agreed to walk up to Krezk and visit Dumitru; he stands at Krezk's gate until the visit is done."
     },
     {
+      "id": "fennimore_visited_krezk",
+      "type": "bool",
+      "summary": "Fennimore's visit to Dumitru at Krezk's gate really happened (set in fennimore_visit), so Dumitru's later greeting can tell it from the friends story that closed the quest first."
+    },
+    {
       "id": "waystone_tracked",
       "type": "bool",
       "summary": "The party followed the tracks off the Krezk road to Yanko's lair (The Waystone, by day)."

@@ -27,7 +27,9 @@ Fennimore: Tell me, have you by any chance come up from the Vistani camp at Tser
 ~ menu
 * [if not quest.fennimores_guide] May we see the book? -> book
 * [if quest.fennimores_guide == known] We found out what is in the stew. -> report
+* [if quest.fennimores_guide == asked and (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)] The Tser Pool camp has turned on us; we cannot get near Old Dorina's pot. -> scrap
 * [if quest.radus_unsellable_horse == offered] There is a horse for sale at the Tser Pool camp. -> svalich_road/radus_horse:fennimore_horse
+* [if quest.radus_unsellable_horse == buyer_found and (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)] Radu's camp has turned on us, so there is no one left to pay his fifteen gold. -> svalich_road/radus_horse:camp_unpaid
 * [if quest.dumitrus_visitor == asked] A boy at Krezk's gate would like a visitor. -> krezk/dumitrus_visitor:fennimore_ask
 * Goodbye. -> END
 
@@ -37,7 +39,7 @@ Fennimore: "The Crossroads Signpost: one star. Points faithfully toward two plac
 Fennimore: "The Crossroads Gallows: one star. Serviceable timber, poor view, no seating."
 Fennimore: "The Blue Water Inn, Vallaki: two stars. Wolves." And beneath that, "Tser Pool Camp: three stars. The plum stew is excellent."
 Fennimore [weary]: Only I have underlined "plum" twice in pencil. My tongue says onion, hare, woodsmoke, and something considerably older than a fruit.
-* Can we find out about the stew? -> ask
+* [if not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile] Can we find out about the stew? -> ask
 * Another time. -> menu
 
 ~ ask
@@ -45,6 +47,8 @@ Fennimore: A guidebook that guesses at its soups is no better than a rumor, and 
 Fennimore: I would go back and ask Old Dorina myself, but she looks at my notebook the way a butcher looks at a stray dog.
 Fennimore: If your road takes you past her fire, find out what is truly at the bottom of that iron pot.
 Fennimore: I will pay ten gold pieces for the verified recipe. An unconfirmed fact is a blemish on the page.
+Fennimore: Do mind your manners by the wagons, though: Stanimir's people have a brisk way with guests who forget themselves.
+Fennimore [weary]: If the camp closes its curtains to you, I cannot pay a copper for a recipe no living soul can confirm.
 quest fennimores_guide asked
 Fennimore [smile]: Most obliged. You will find me here by the signpost, or on the road, or wherever the road chooses to leave me.
 -> END
@@ -91,5 +95,16 @@ Fennimore: Let me rub out that shameful little question mark and write it proper
 Fennimore: "Tser Pool: three stars. The stew is plum, onion, hare and sixty years. Ask for the bottom."
 Fennimore [smile]: Read that aloud and tell me it does not make you hungry and slightly reflective at the same time.
 Fennimore: Here are your ten gold pieces, well earned and duly noted under research expenses.
-Fennimore: I am off toward Vallaki next. If you find any of my facts wanting along the road, do tell me before I go to press.
+Fennimore: I shall stay by this post and start the next chapter. If you find any of my facts wanting along the road, do tell me before I go to press.
 -> END
+
+# --- The camp turned on the party before Dorina was asked (sq-stuck, finding 127): the quest is lost, not stuck ---
+
+~ scrap
+quest fennimores_guide unverified
+Fennimore [weary]: Ah. That is a bereavement for the culinary appendix, though I am glad to see you still have all your fingers.
+Fennimore: I must leave the entry as "plum?" with a query in the margin, which sits on a clean page like a grease spot.
+Fennimore: You will understand that I cannot pay ten gold pieces for a question mark; I can supply those myself for nothing.
+Fennimore: Let me strike a star from the Tser Pool entry and write "presently closed to inquiries" beneath it.
+Fennimore [sad]: It is a pity, all the same: a sixty-year broth deserves better than a guess from the road.
+-> menu

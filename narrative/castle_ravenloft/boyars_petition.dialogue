@@ -14,6 +14,26 @@ Boyar Vintila Crainic: One from Nicodim the Verger at the chapel door, and the f
 Boyar Vintila Crainic [weary]: They have been otherwise occupied since the night I arrived. A matter of a wedding, I believe.
 -> castle_ravenloft/household:crainic_menu
 
+# "Which seals do we still lack?": only the ones still wanted (sq-stuck, finding 130). With none yet, the whole form again.
+~ seals_lack
+if not flag.seal_valet and not flag.seal_secretary and not flag.seal_verger and not flag.seal_lamp
+-> form
+endif
+Boyar Vintila Crainic: Let us consult the margins of the parchment and see which of the domestic offices have yet to oblige us.
+if not flag.seal_valet
+Boyar Vintila Crainic: We still require the seal of Ghenadie the Valet, who keeps the upper bedchamber.
+endif
+if not flag.seal_secretary
+Boyar Vintila Crainic: The seal of the chancery remains absent, and must be had from Anghel Daskal in his office.
+endif
+if not flag.seal_verger
+Boyar Vintila Crainic: We lack the chapel seal, which is held by Nicodim the Verger at the chapel door.
+endif
+if not flag.seal_lamp
+Boyar Vintila Crainic: The lamplighter's seal is still wanting, and must be obtained from Vlaicu among the high tower lamps.
+endif
+-> castle_ravenloft/household:crainic_menu
+
 ~ valet_ask
 Ghenadie the Valet: My seal? It is in my waistcoat pocket, where it belongs. I do not give it out to callers.
 Ghenadie the Valet [weary]: Have you seen the master's bed? I have turned the linen down three hundred times, and never a crease in the bolster.

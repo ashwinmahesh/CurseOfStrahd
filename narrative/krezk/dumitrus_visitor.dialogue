@@ -79,6 +79,7 @@ Fennimore [smile]: An archive with notes of spice. Four stars for preservation, 
 Fennimore: Allow me to leave a slip of paper for the tin. 'Krezk: Four stars. Cold, steep, excellent reception at the gate.'
 Dumitru [smile]: Four stars! Wait until the Burgomaster hears we beat the Blue Water Inn.
 Dumitru: I'll put it right under the lid so Uncle Marius sees it first.
+set fennimore_visited_krezk
 quest dumitrus_visitor done
 Dumitru [smile]: Thank you. Having someone walk up the road makes the whole mountain feel less tall.
 Narrator: He pats the lid onto the biscuit tin with both mittens, tucking it carefully beneath his arm.

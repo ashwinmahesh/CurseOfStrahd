@@ -71,7 +71,7 @@ Narrator: Goodwife Sanda moves her lips without a sound, her knuckles white agai
 
 ~ gate_boy
 if quest.dumitrus_visitor == done
-if flag.fennimore_to_krezk
+if flag.fennimore_visited_krezk
 -> krezk/dumitrus_visitor:after_fennimore
 endif
 -> krezk/dumitrus_visitor:after

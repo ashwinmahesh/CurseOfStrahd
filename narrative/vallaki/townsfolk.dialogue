@@ -5,7 +5,7 @@
 ~ goodwife
 if flag.festival_over and flag.vallaki_backed == "neither"
 Goodwife Marta [smile]: No festival this week. Nobody's said we may stop smiling, but nobody's checking either. I'd forgotten what my own face does.
--> END
+-> goodwife_calm
 endif
 if flag.festival_begun and not flag.festival_over
 Goodwife Marta: Off to the square with you. They count the faces, you know. Mine's been counted. I'm only fetching bread.
@@ -14,6 +14,11 @@ endif
 Goodwife Marta [smile]: Good morning! It is a good morning. The Baron says so, and the Baron's men are standing right over there, so it is.
 * How is the market? -> market
 * Heard anything interesting? -> marta_rumor
+* [if quest.the_sun_cake == asked and not flag.cake_eggs] The Baron's cook needs eggs for a sun-cake. -> vallaki/the_sun_cake:marta_eggs
+* Good morning to you. -> END
+
+# The calm after a council takes the town: Marta still sells the sun-cake's eggs (sq-stuck, finding 122).
+~ goodwife_calm
 * [if quest.the_sun_cake == asked and not flag.cake_eggs] The Baron's cook needs eggs for a sun-cake. -> vallaki/the_sun_cake:marta_eggs
 * Good morning to you. -> END
 

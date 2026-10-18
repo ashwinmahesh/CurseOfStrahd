@@ -756,6 +756,16 @@
       "when": "flag.vallaki_backed == \"wachter\""
     },
     {
+      "npc": "tudorel",
+      "cell": [
+        10,
+        3
+      ],
+      "dialogue": "vallaki/florins_grandson:tudorel",
+      "facing": "west",
+      "when": "flag.vallaki_backed == \"wachter\""
+    },
+    {
       "npc": "lydia_petrovna",
       "cell": [
         25,

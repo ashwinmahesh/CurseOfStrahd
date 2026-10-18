@@ -4,12 +4,19 @@
 # bought outright or haggled, then the party helps bake it. Ratatouille takes over if he's along; otherwise a steady
 # hand or a good eye; a collapsed cake the Baron declares a triumph anyway. No fight, and nothing that a plain option
 # doesn't reach (a gold piece buys each ingredient). Lines drafted by Gemini through the ai-bridge, edited; unvoiced.
+# It can fail (sq-stuck, Ashwin's rule that side quests can be lost): once the Tser Pool camp is broken Vadoma will not sell
+# the saffron (vadoma:start jumps to vadoma_no_saffron), and with no saffron there is no sun: the quest closes as failed and
+# Leontina says so (leontina_failed). Eggs and honey have no such end: Marta sells after the festival too, and Paraschiva
+# is a different Vistana at a different camp. Whoever rules the mansion tastes the cake (taste_*).
 
 # --- Leontina in the burgomaster's mansion (npc leontina) ---
 
 ~ leontina
 if quest.the_sun_cake == done
 -> leontina_after
+endif
+if quest.the_sun_cake == failed
+-> leontina_failed
 endif
 if not quest.the_sun_cake
 quest the_sun_cake asked
@@ -19,6 +26,7 @@ Leontina [weary]: The Baron wants a great sun cake for the festival. I have bake
 Leontina: A disk is not a sun. A plate is round. A coin is round. If I roll out one more circle, I'll put my head in the oven.
 Leontina: This one will have proper rays and corners, or I'm done. Only the pantry is bare of what makes a crust hold its shape.
 Leontina: I need fresh eggs from Goodwife Marta, dark honey from Old Paraschiva at the camp, and saffron from Vadoma's wagon. I cannot leave the stove.
+Leontina: Mind your manners at the camp: Vadoma only opens her boxes for people the Vistani still speak to.
 -> leontina_menu
 endif
 if flag.cake_eggs and flag.cake_honey and flag.cake_saffron
@@ -46,6 +54,13 @@ else
 Leontina: Next week I will hammer the iron into a simple square and use one less egg yolk in the wash.
 Leontina: Don't look so mournful. A cake that collapses in the pan has still been baked, and at least it wasn't round.
 endif
+-> END
+
+~ leontina_failed
+Leontina [weary]: No saffron, then. Well, you can't bake a sun with corners out of pale dough and good intentions.
+Leontina: I rolled the thing out with a wine bottle at dawn, four hundred and fourteen, as round and dull as a kettle lid.
+Leontina: You tried, I suppose, which is more than the rest of this house does, though trying doesn't put a crust on a cake.
+Leontina: There's no coin for an empty hand, so take the smell of the kitchen with you and shut the door against the damp.
 -> END
 
 # --- The three ingredients (townsfolk:goodwife, camp_folk:cook, vadoma:menu jump here) ---
@@ -107,9 +122,18 @@ Vadoma: I have one pinch left, taken from the lining of a dead gentleman's velve
 Narrator: She opens a painted cedar box and lifts a tiny twist of crimson silk between two ringed fingers.
 -> vadoma_menu
 
+# Vadoma's refusal once the camp at the Tser Pool is broken (vadoma:start jumps here while the cake is asked and unfinished):
+# there is no other saffron in the valley, so the sun is lost.
+~ vadoma_no_saffron
+quest the_sun_cake failed
+Narrator: A cold draught smells of woodsmoke and wet wool as Vadoma rests her ringed hand flat upon the shut lid of the painted cedar box.
+Vadoma [angry]: Keep your coin in your purse, and tell the Baron's cook her oven can go cold for all I care.
+Vadoma: Blood was spilled by the Tser Pool, and there is not enough gold in this valley to buy one thread of crimson from me.
+-> END
+
 ~ vadoma_menu
 * [if gold >= 5] (Pay the five gold pieces.) -> vadoma_pay
-* [Persuasion DC 12] (Haggle.) -> vadoma_cheap | vadoma_menu
+* [if gold >= 3] [Persuasion DC 12] (Haggle.) -> vadoma_cheap | vadoma_menu
 * Another time. -> END
 
 ~ vadoma_pay
@@ -166,11 +190,37 @@ Narrator: Leontina stands in the kitchen doorway with her floury arms folded tig
 
 ~ verdict_good
 quest the_sun_cake done
+if flag.vallaki_backed == "wachter"
+-> taste_wachter_good
+elif flag.vallaki_backed == "neither"
+-> taste_deposed_good
+endif
 Narrator: The Baron takes a forkful before the assembled household, chewing while his guards watch his eyebrows.
 Baron [smile]: Magnificent! Look at the points on it! Like rays of glory bursting through the abominable fog!
 Baron: A triumph, I say! A masterpiece! A culinary scandal in the very finest sense of the word!
 Baron: From this day forward, Leontina, you have my full permission to abandon the circle whenever inspiration strikes!
 Narrator: Behind his shoulder, Leontina catches your eye and gives a single, brisk nod.
+-> verdict_good_pay
+
+# Lady Wachter rules the mansion: she tastes it (sq-stuck, finding 124).
+~ taste_wachter_good
+Narrator: Lady Wachter lifts a crisp, saffron-bright point to her lips, the warm scent of dark honey rising above her teacup.
+Lady Wachter [smile]: Eight sharp corners, and every one of them crisp: my friends, Leontina has outdone herself.
+Lady Wachter: For years Vargas fed this house little round loaves like wet millstones and called it sunshine.
+Lady Wachter: We have no need of festivals now, of course, though we shall certainly finish the cake before curfew.
+Narrator: Behind Lady Wachter's chair, Leontina catches your eye and gives a single, brisk nod.
+-> verdict_good_pay
+
+# The council has deposed the Baron, who still lives in the mansion.
+~ taste_deposed_good
+Narrator: In his shirtsleeves, the Baron breaks off a warm, saffron-bright point, getting crumbs upon his open festival ledger.
+Baron [smile]: Magnificent! Look at the points on it, sharp as morning bursting through the abominable fog!
+Baron [sad]: Four hundred and thirteen round suns this house has baked me, and here is the first with corners, now there is no square to show it to.
+Baron: Still, we shall eat it here, and someone ought to tell Father Lucian that the corners held.
+Narrator: Behind his shoulder, Leontina catches your eye and gives a single, brisk nod.
+-> verdict_good_pay
+
+~ verdict_good_pay
 gold +60
 inspire party: baked the Baron a sun that wasn't round
 approve ratatoille +2 liriel_dawnsong +1 kip_smudgewick +1: You baked the Baron's sun-cake
@@ -182,11 +232,35 @@ Leontina: Today, for the first time in twenty years, I think the old mistress wo
 
 ~ verdict_flat
 quest the_sun_cake done
+if flag.vallaki_backed == "wachter"
+-> taste_wachter_flat
+elif flag.vallaki_backed == "neither"
+-> taste_deposed_flat
+endif
 Narrator: The Baron spoons up a warm drip of the golden puddle while the household holds its breath.
 Baron [smile]: Extraordinary! It has melted from the sheer, uncontainable heat of its own joy! A triumph!
 Baron: Why, it is the most innovative piece of confectionery in the history of Vallaki! A sun upon the waters!
 Narrator: Leontina's face does not move by so much as the breadth of a hair.
 Baron [smile]: We shall call it the Liquid Dawn! Leontina, my treasure, you must bake four hundred and fourteen of these before winter!
+-> verdict_flat_pay
+
+~ taste_wachter_flat
+Narrator: Lady Wachter touches a silver fork to the wide, bubbling golden puddle and tastes a single drop of the hot syrup.
+Lady Wachter [smile]: How very intriguing, my friends: a sun that has chosen to lie down flat upon the platter.
+Lady Wachter: The saffron is quite unmistakable, and one hardly misses the corners once one accepts the shape of it.
+Lady Wachter: Do take a spoon, everyone, before it cools to the dish; we must not let Leontina's trouble go to waste.
+Narrator: By the sideboard, Leontina's face does not move by so much as the breadth of a hair.
+-> verdict_flat_pay
+
+~ taste_deposed_flat
+Narrator: The Baron dips a finger into the wide, bubbling golden puddle, the warm scent of honey rising over his open ledger.
+Baron [smile]: A triumph, I say, a glorious golden sea of a cake, and the colour of it is quite beyond reproach!
+Baron [sad]: The points have melted away, perhaps, though nobody in the square will be waiting to count them today.
+Baron: Someone ought to write it down in the ledger all the same, just so the house remembers we had saffron once.
+Narrator: Behind his shoulder, Leontina's face does not move by so much as the breadth of a hair.
+-> verdict_flat_pay
+
+~ verdict_flat_pay
 gold +20
 Leontina [weary]: Here is your coin. It's what I can spare from the kitchen tallow fund, and you did fetch what I asked.
 Leontina: Next week I will hammer the iron into a simple square and use one less egg yolk in the wash.

@@ -1179,6 +1179,16 @@
       "when": "flag.wachter_fate == \"stocks\""
     },
     {
+      "npc": "tudorel",
+      "cell": [
+        20,
+        17
+      ],
+      "dialogue": "vallaki/florins_grandson:tudorel_square",
+      "facing": "west",
+      "when": "flag.festival_over and flag.vallaki_backed != \"wachter\" and (flag.wachter_fate == \"stocks\" or flag.wachter_fate == \"exposed\" or flag.wachter_fate == \"exiled\")"
+    },
+    {
       "npc": "izek",
       "cell": [
         22,
