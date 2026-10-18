@@ -9,6 +9,7 @@
   "voice": "docs/voice/ireena.md",
   "monster": "noble",
   "guest": true,
+  "guest_fights": false,
   "tags": [
     "barovian",
     "noble",

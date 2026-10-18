@@ -305,8 +305,9 @@ func test_right_click_menus_offer_the_right_actions() -> void:
 	assert_true(root.get("screen") is CharacterSheetScreen)
 
 
+## (Ismark: Ireena keeps out of fights, test_noncombatant_guest.)
 func test_a_guest_follows_and_fights_on_our_side() -> void:
-	assert_true(GameState.story.add_guest("ireena"))
+	assert_true(GameState.story.add_guest("ismark"))
 	var v := _view()
 	v.place_guests()
 	await _frames(1)
@@ -323,7 +324,7 @@ func test_a_guest_follows_and_fights_on_our_side() -> void:
 		if c.side == &"guest":
 			assert_true(c.is_player_controlled(), "the player commands guests")
 	root.call("_refresh")
-	GameState.story.remove_guest("ireena")
+	GameState.story.remove_guest("ismark")
 
 
 func test_the_fight_inherits_the_light() -> void:

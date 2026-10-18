@@ -556,6 +556,8 @@ def campaign_checks(data, errors, pending):
         for iid in rot.get("pool", []) + [i for g in rot.get("groups", []) for i in g.get("pool", [])]:
             if not item_known(iid):
                 errors.append(f"npcs/{nid}: shop's rotating pool has unknown item '{iid}'")
+        if "guest_fights" in n and not n.get("guest"):
+            errors.append(f"npcs/{nid}: guest_fights only means something on a guest (guest: true)")
         gb = n.get("guest_build", {})
         if gb.get("monster") and gb["monster"] not in monsters:
             errors.append(f"npcs/{nid}: guest_build monster '{gb['monster']}' unknown")
@@ -644,6 +646,8 @@ def treasure_checks(data, parsed, errors, pending):
             continue  # reported by campaign_checks
         if not n.get("guest") or not (n.get("guest_build") or n.get("monster")):
             (pending if later else errors).append(f"npcs/{npc}: the {cid} card's ally needs guest: true and a guest_build (or monster)")
+        if n.get("guest_fights") is False:
+            errors.append(f"npcs/{npc}: the {cid} card's ally sees the end through beside the party, so guest_fights can't be false")
         if npc not in joins:
             (pending if later else errors).append(f"data/tarokka/outcomes.json ally.{cid}: no conversation says `join {npc}`")
 

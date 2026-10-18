@@ -116,7 +116,9 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	view.fight_id = encounter_id   # (the sanctum's braziers flare for Vosk's: AmberGlow)
 	ModeController.force(ModeController.Mode.COMBAT)
 	LocationNpcs.clear_for_fight(view)   # the house's people keep out of it (`steps_aside`)
-	var e := Encounter.new(_combat_grid(view), view.dice)
+	var grid := _combat_grid(view)
+	var sitting := keep_back(view, grid, _starting_squares(view, spec))   # before the encounter, so her square blocks
+	var e := Encounter.new(grid, view.dice)
 	e.title = str(spec.get("text", ""))
 	# Bosses (ADR 0014): the place (a Misty Escape's resting place), the lair's actions, a foe that withdraws.
 	e.location_id = view.loc_id
@@ -142,8 +144,9 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 			continue
 		party_cbs.append(e.add(m.creature, &"party", m.cell))
 	for g in view.guest_members:
-		# A familiar following the party joins as its caster's summon (EncounterSetup.bring_familiars below).
-		if not g.creature.dead and not LocationParty.is_follower(g):
+		# A familiar following the party joins as its caster's summon (EncounterSetup.bring_familiars below), and a guest
+		# who keeps out of fights isn't in the encounter at all (sits_out, keep_back).
+		if not g.creature.dead and not LocationParty.is_follower(g) and not sits_out(view, g):
 			e.add(g.creature, &"guest", g.cell).controller = &"player"
 	for mo: Dictionary in monsters_for(view, spec):
 		e.add(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
@@ -174,13 +177,157 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	view.combat_view.narrator = view.narrator
 	view.combat_view.story = view.st
 	view.add_child(view.combat_view)
-	view._say("combat:start")
-	view._say("combat:sunsword_start")   # the Sunsword, while carried (narrative/narrator/sunsword.dialogue)
+	var opened := view._say("combat:start")
+	opened = view._say("combat:sunsword_start") or opened   # the Sunsword, while carried (narrative/narrator/sunsword.dialogue)
+	_say_keeps_back(view, sitting, opened)   # last: it waits a beat after whatever was just said, so neither is replaced
 	# The picture streaks toward the party and drains for a beat as the fight breaks out (Visual Polish Plan 3).
 	if ScreenPulse.on():
 		ScreenPulse.play(view, "engage", view.rig.global_position)
 	_run_combat(view, encounter_id, spec, e, ctokens, surprised)
 	return true
+
+
+# --- Guests who keep out of fights (docs/contracts/campaign.md) ---------------------------------------------------------
+
+## How far (in feet, walking) a guest who keeps out of a fight steps to get off a square the fight needs.
+const ASIDE_FT := 15
+## How long (seconds) the Narrator waits to speak of her after the fight's own opening line, which the box would replace.
+static var keeps_back_delay := 7.0
+
+
+## Whether guest `g` keeps out of fights (her NPC's `guest_fights: false`: Ireena, StoryState.guest_fights). She isn't in
+## the encounter: no turn, nobody can target her and no area spell of either side catches her. Her figure stays on the
+## board as a bystander (keep_back). A familiar or steed following the party is never one.
+static func sits_out(view: LocationView, g: Combatant) -> bool:
+	if LocationParty.is_follower(g):
+		return false
+	var i := view.st.guests.find(g.creature)
+	return i >= 0 and not StoryState.guest_fights(view.st.guest_ids[i])
+
+
+## The guests who sit this fight out, alive (the fallen are carried home and the dead are gone): with `e`, a fight already
+## going, not one that has a combatant in it (a round-start save made before she kept out has her in it, and she fights
+## that one).
+static func sitting_out(view: LocationView, e: Encounter = null) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for g in view.guest_members:
+		if not g.creature.dead and sits_out(view, g) and (e == null or e.get_c(g.id) == null):
+			out.append(g)
+	return out
+
+
+## Where someone stands as fight `spec` begins: {taken: squares with someone on them, foes: where the foes start}. The
+## living party's squares (they share squares outside a fight), the foes' and their footprints, the bystanders' (the
+## house's people who stay on the board).
+static func _starting_squares(view: LocationView, spec: Dictionary) -> Dictionary:
+	var taken := _bystander_squares(view)
+	for m in view.members:
+		if not m.creature.dead:
+			taken[m.cell] = true
+	var foes: Array[Vector2i] = []
+	for mo: Variant in spec.get("monsters", []):
+		var md := mo as Dictionary
+		var at := LocationView._cell(md["cell"])
+		var size := CombatGrid.size_cells_for(StringName(str(Compendium.shared().monster_data(str(md["monster"])).get("size", "medium"))))
+		foes.append(at)
+		for f in CombatGrid.footprint(at, size):
+			taken[f] = true
+	return {"taken": taken, "foes": foes}
+
+
+## The same for an encounter that is already going (a fight picked up from a save): every combatant's footprint.
+static func _squares_in(view: LocationView, e: Encounter) -> Dictionary:
+	var taken := _bystander_squares(view)
+	var foes: Array[Vector2i] = []
+	for c in e.combatants:
+		for f in CombatGrid.footprint(c.cell, c.size_cells):
+			taken[f] = true
+		if c.side == &"enemy" and c.is_alive():
+			foes.append(c.cell)
+	return {"taken": taken, "foes": foes}
+
+
+static func _bystander_squares(view: LocationView) -> Dictionary:
+	var taken := {}
+	for npc: String in view.npc_tokens:
+		var tok := view.npc_tokens[npc] as CombatToken
+		if tok.visible:
+			taken[tok.combatant.cell] = true
+	return taken
+
+
+## The guests who keep out of this fight stay on the board as bystanders: each steps off a square the fight puts someone
+## on (`squares`, from _starting_squares or _squares_in) to the nearest open one, farther from the foes where there is a
+## choice, and her square blocks on `grid` as any bystander's does (LOW), movement and shots both. With nowhere to step
+## she stays, and her square blocks only if nobody stands on it. Returns who sits out, for the Narrator. `e` is the fight
+## when it is already going (resume_encounter).
+static func keep_back(view: LocationView, grid: CombatGrid, squares: Dictionary, e: Encounter = null) -> Array[Combatant]:
+	var sitting := sitting_out(view, e)
+	var taken := squares["taken"] as Dictionary
+	for g in sitting:
+		var at := g.cell
+		if taken.has(at) or grid.is_solid(at):
+			at = _aside(grid, at, taken, squares["foes"] as Array[Vector2i])
+		if at != g.cell:
+			g.cell = at
+			var tok := view.tokens.get(g.id, null) as CombatToken
+			if tok != null:
+				view.create_tween().tween_property(tok, "position", view.board.cell_center(at), 0.25)
+		if not taken.has(at):
+			grid.set_flag(at, CombatGrid.LOW, true)
+			taken[at] = true
+	return sitting
+
+
+## The open square within ASIDE_FT of `from` (walking) that nobody stands on and is farthest from the foes (capped at six
+## squares), the nearer to `from` on a tie; `from` if there is none.
+static func _aside(grid: CombatGrid, from: Vector2i, taken: Dictionary, foes: Array[Vector2i]) -> Vector2i:
+	var reach := grid.reachable(from, 1, ASIDE_FT, func(_c: Vector2i) -> bool: return false, func(_c: Vector2i) -> bool: return false,
+		func(_c: Vector2i) -> bool: return false)
+	var best := from
+	var best_score := -INF
+	for c: Vector2i in reach:
+		if taken.has(c) or not grid.in_bounds(c) or grid.is_solid(c):
+			continue
+		var clear := 6
+		for f in foes:
+			clear = mini(clear, maxi(absi(c.x - f.x), absi(c.y - f.y)))
+		var score := float(clear) * 10.0 - float((reach[c] as Dictionary)["cost"]) / float(CombatGrid.FEET)
+		if score > best_score:
+			best_score = score
+			best = c
+	return best
+
+
+## Whether `m`, one of the view's figures, stays on the board through fight `e`: a guest who keeps out of fights and has no
+## combatant in it (sitting_out).
+static func _stays_on_board(view: LocationView, e: Encounter, m: Combatant) -> bool:
+	return e.get_c(m.id) == null and sits_out(view, m)
+
+
+## The Narrator's word on a guest keeping out of the fight that is beginning: her first one, once
+## (combat:keeps_back:<npc>:first), then now and then (combat:keeps_back:<npc>, which holds off between fights). When the
+## fight's own opening line was just said (`after_a_line`) it follows a beat later, since the box shows one line at a time.
+static func _say_keeps_back(view: LocationView, sitting: Array[Combatant], after_a_line: bool) -> void:
+	if view.narrator == null:
+		return
+	var lead := view.leader()
+	var actor := lead.creature as Character if lead != null else null
+	for g in sitting:
+		var npc := view.st.guest_ids[view.st.guests.find(g.creature)]
+		for key: String in ["combat:keeps_back:%s:first" % npc, "combat:keeps_back:%s" % npc]:
+			var text := view.narrator.line(key, view.st, actor)
+			if text == "":
+				continue
+			if after_a_line and keeps_back_delay > 0.0:
+				var wait := view.create_tween()
+				wait.tween_interval(keeps_back_delay)
+				wait.tween_callback(func() -> void:
+					if view.in_combat:
+						view.narration.emit(text))
+			else:
+				view.narration.emit(text)
+			return
 
 
 ## The encounter's monsters as the fight places them: [{creature: Monster, side, cell}], with this fight's tuned
@@ -242,8 +389,28 @@ static func _save_round(view: LocationView, encounter_id: String, e: Encounter) 
 	view._save_positions()
 	# The fight as its round began, before the lair or the first turn acted (the view hears of the round after).
 	var data := e.round_snapshot if int(e.round_snapshot.get("round", -1)) == e.round_no else EncounterSnapshot.capture(e)
+	data = _without_bystander_guests(view, e, data)
 	GameState.combat_snapshot = {"location": view.loc_id, "encounter": encounter_id, "data": data}
 	SaveSystem.save_round()
+
+
+## `data`, a fight's saved state, without the squares of the guests who keep out of it (keep_back makes them LOW): the
+## save holds the ground as it was, and the fight picked up again steps her aside afresh (resume_encounter), since a guest
+## is put behind the leader at a load and not where she stood. The same `data` if none of them is on the board.
+static func _without_bystander_guests(view: LocationView, e: Encounter, data: Dictionary) -> Dictionary:
+	var cells: Array[Vector2i] = []
+	for g in view.guest_members:
+		if _stays_on_board(view, e, g):
+			cells.append(g.cell)
+	if cells.is_empty():
+		return data
+	var out := data.duplicate(true)
+	var rows := out["rows"] as Array
+	for c in cells:
+		var row := str(rows[c.y])
+		if c.x < row.length() and row[c.x] == "=":
+			rows[c.y] = row.substr(0, c.x) + "." + row.substr(c.x + 1)
+	return out
 
 
 ## Picks a saved fight up again at the start of its round (after loading a round-start save).
@@ -269,6 +436,7 @@ static func resume_encounter(view: LocationView, snapshot: Dictionary) -> bool:
 	view.fight_id = encounter_id   # (the sanctum's braziers flare for Vosk's: AmberGlow)
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, view.dice, view.st.party)
+	keep_back(view, e.grid, _squares_in(view, e), e)
 	var ctokens := _fight_tokens(view, e)
 	view.combat_view = CombatView.new()
 	view.combat_view.input_locked = view.input_locked
@@ -299,9 +467,13 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 				ctokens[c.id] = tok
 				ours.append(tok)
 				party_mid += spot
+	var aside: Array[CombatToken] = []   # guests who keep out of the fight: still on the board, watching it
 	for m: Combatant in view.members + view.guest_members:
 		if not ours.has(view.tokens[m.id] as CombatToken):
-			(view.tokens[m.id] as Node3D).visible = false
+			if _stays_on_board(view, e, m):
+				aside.append(view.tokens[m.id] as CombatToken)
+			else:
+				(view.tokens[m.id] as Node3D).visible = false
 	party_mid /= maxf(1.0, float(ours.size()))
 	var foes: Array[CombatToken] = []
 	var standing: Array[CombatToken] = []
@@ -341,6 +513,7 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 	every_foe.append_array(standing)
 	turn.tween_callback(func() -> void:
 		_face_nearest_foe(ours, every_foe)
+		_face_nearest_foe(aside, every_foe)
 		_face_nearest_foe(standing, ours))
 	return ctokens
 

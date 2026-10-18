@@ -1,0 +1,17 @@
+# Narrator: a guest who keeps out of fights (docs/contracts/campaign.md: her NPC's guest_fights false, Ireena).
+# LocationFights says combat:keeps_back:<npc>:first once, as the first fight begins with her along, and
+# combat:keeps_back:<npc> in later fights (it holds off for a while between them), a beat after the fight's own opening
+# line. Combat lines are one sentence under 15 words; the first may run to two. Drafted by Gemini through the ai-bridge
+# (docs/plans/gemini_allies/E3/: brief, raw reply, what was changed), edited for length and canon. Unvoiced for now.
+
+~ combat:keeps_back:ireena:first
+| Ireena steps back, blade sheathed. What comes for you goes round her like water round a stone, as if it had been told whose she is.
+once
+
+~ combat:keeps_back:ireena
+| Ireena's knuckles whiten on her sheathed hilt as she steps clear of the steel.
+| Hungry eyes slide right past Ireena to fix on you alone.
+| Ireena folds her arms over her cloak, watching every blow she cannot answer.
+| Not one blade angles toward Ireena where she waits.
+| Ireena measures the distance between your back and the dark with level eyes.
+cooldown 20

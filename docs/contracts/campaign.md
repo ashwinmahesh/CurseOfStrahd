@@ -121,6 +121,14 @@ or `"guest_build": {"pregen": "<pregen id>", "level": 3}` for a guest with a ful
 `join ireena` adds the guest (they follow, fight on the party's side under the player's control, and appear in the
 party frames), `leave ireena` removes them. Conditions: `guest:ireena`.
 
+A guest fights unless the NPC says `"guest_fights": false` (Ireena, Ashwin 2026-10-18: she doesn't attack, and enemies
+don't attack her). Such a guest is never added to an encounter (`LocationFights.start_encounter` leaves her out,
+`LocationFights.sits_out`): she takes no turn, can't be targeted, and no area spell of either side can catch her, because
+she is not a combatant. Her figure stays on the board as a bystander: her square blocks like any bystander's, and if the
+fight starts on a square someone will stand on (the party's, a foe's) she steps aside to the nearest free one, away from
+the foes. She doesn't fall, so `see_to_fallen_guests` never sends her home, and she isn't in the fight's tokens, turn strip
+or party frames. The exploring screen's guest card says "Keeps back". A Tarokka ally always fights (`make validate`).
+
 ## Region travel files (Phase 5, ADR 0011)
 
 Every file in `data/travel/` is merged into the one map: a region adds `data/travel/<region>.json` with the same shape

@@ -276,7 +276,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Removed spells: out of class lists, pickers, subclass and feat grants, and scroll and loot pools; a saved hero's picks of one swapped for a same-level spell on load; copied spellbook spells dropped | rules/model/character.gd (swap_removed_spells), data/spells (`removed`) | tested | test_removed_spells |
 | Merchants' prices by attitude, the Persuasion haggle, price changes while a flag holds, wares the story remembers, stock that changes with the days (U11, F14) | story/trade.gd, story_state.gd shop_*, shop_screen.gd | tested | test_trade |
 | Travel (hours on the road), random encounters (day and night chances; 40% of the chance on a road already walked or a journey to a place already visited, Ashwin 2026-10-18), day and night | story/travel.gd, story/road_familiarity.gd, game_root.gd travel | tested | test_travel, test_road_familiarity |
-| Guests fighting under the player's control | location_view.gd guest_members, combat side guest | tested | test_exploration |
+| Guests fighting under the player's control; one whose NPC says `guest_fights: false` (Ireena) keeps out of every fight, off the board's turns and targets, a bystander square | location_view.gd guest_members, combat side guest; location_fights.gd sits_out, keep_back; story_state.gd guest_fights | tested (deviations: a guest who keeps out of fights) | test_exploration, test_noncombatant_guest |
 
 ## Ravenloft: The Horrors Within (RtHW; combat/ravenloft_features.gd)
 

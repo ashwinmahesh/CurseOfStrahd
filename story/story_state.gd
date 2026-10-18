@@ -713,6 +713,12 @@ static func make_guest(npc_id: String) -> Creature:
 	return cr
 
 
+## Whether a story ally takes part in fights: true unless their NPC says `guest_fights: false` (Ireena keeps out of them:
+## LocationFights.sits_out, docs/contracts/campaign.md).
+static func guest_fights(npc_id: String) -> bool:
+	return bool(Compendium.shared().get_entry("npcs", npc_id).get("guest_fights", true))
+
+
 ## Adds a story ally to the party's company. Returns false if they're already along or unknown.
 func add_guest(npc_id: String) -> bool:
 	if npc_id in guest_ids:
