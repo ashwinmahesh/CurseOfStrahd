@@ -7,9 +7,9 @@ each, 4 to 6 wins in 8 and every seed finishing. Measured with the four pregens 
 
 | Fight | Where | Level | Foes | Wins | Rounds | Party members down |
 |---|---|---|---|---|---|---|
-| `ballroom_colony` | argynvostholt_west_wing, from the ballroom doors onto the dance floor | 8 | 16 giant spiders at 95 HP, 3 swarms of spiderlings at 70 HP | 5 | 8.4 | 1.8 |
-| `ballroom_colony` | the same | 7 | 12 giant spiders at 95 HP, 2 swarms at 60 HP | 5 | 10.1 | 2.6 |
-| `ballroom_colony` | the same | 6 | 8 giant spiders at 100 HP, 1 swarm at 60 HP | 5 | 9.4 | 2.0 |
+| `ballroom_colony` | argynvostholt_west_wing, from the ballroom doors onto the dance floor | 8 | 20 giant spiders at 100 HP, 3 swarms of spiderlings at 70 HP | 5 | 12.0 | 2.6 |
+| `ballroom_colony` | the same | 7 | 12 giant spiders at 90 HP, 2 swarms at 60 HP | 5 | 7.8 | 1.9 |
+| `ballroom_colony` | the same | 6 | 8 giant spiders at 80 HP, 1 swarm at 60 HP | 5 | 8.2 | 1.9 |
 | `chapel_revenants` | argynvostholt_hall, from the west gallery's door into the nave | 8 | 4 revenants at 200 HP | 5 | 9.4 | 1.9 |
 | `chapel_revenants` | the same | 7 | 4 revenants at 120 HP | 5 | 6.2 | 2.5 |
 | `chapel_revenants` | the same | 6 | 4 revenants at 140 HP | 5 | 7.9 | 2.9 |
@@ -37,10 +37,15 @@ The book's three revenants are four here (the sharp party does not lose to three
   with spiders standing on each other and in the east wall (nothing stopped it); tests/unit/test_fight_spread.gd caught it
   (`on another foe`, `blocked`). The squares are now generated (a farthest-point order over the free floor, no footprint on
   another foe, the fallen chandelier, a prop or a square beside the party's start; the first six spiders in view, the rest
-  `unseen`), and the three variants were measured again on them: the same counts and Hit Points land at 5 of 8 on the
-  valid layout (16 at 85 HP gave 6, 105 HP 5; 12 at 85 HP 6, 105 HP 2; 8 at 90 HP 6, 110 HP 3), still with every seed finishing.
+  `unseen`), and the three variants were measured again on them.
+- **The fallen chandelier's squares matter.** The first build drew the chandelier as a 2 x 2 `span` piece over its four `=`
+  squares; `test_models_3d` (new with scale-ups) rejected the span (the candelabra spilled out of its square), so it is one
+  candelabra among fallen beams on four walkable low-cover squares, and the colony moved: the same counts at the same Hit Points
+  now gave 7, 4 and 3 (levels 8, 7 and 6) in place of 5, 5 and 5. Measured again on the final map, party inside, no seed timing out:
+  level 8: 16 spiders at 100 HP 6, at 105 HP 7, at 110 HP 7, 18 at 95 HP 7, at 105 HP 4, 20 at 90 HP 7, **at 100 HP 5**;
+  level 7: 12 spiders at 85 HP 6, **at 90 HP 5**, at 100 HP 6; level 6: 8 spiders at 80 HP 5 (85 HP 4, 90 HP 4, 95 HP 4).
 - **Lots of weak spiders lose to Fireball and Spirit Guardians.** 24 spiders at 70 HP and 34 at 60 won 8 of 8; 24 at 100 HP
-  (door start) 5 of 8 but two seeds stalled. In the room: 16 spiders at 75 HP 7 of 8, at 85 HP 6, at 95 HP 5, at 110 HP 2,
+  (door start) 5 of 8 but two seeds stalled. In the room (on the first layout): 16 spiders at 75 HP 7 of 8, at 85 HP 6, at 95 HP 5, at 110 HP 2,
   at 130 HP 0.
 - **Chapel, level 8:** 4 revenants at 170 HP 6 of 8, 185 HP 4, 200 HP 5. **Level 7:** at 105 HP 7 of 8, 120 HP 5, 130 HP 4.
   **Level 6:** at 100 HP 7, 125 HP 6, 140 HP 5. The steps are 2 to 3 wins a time, so 5 was picked where it was found. (The
