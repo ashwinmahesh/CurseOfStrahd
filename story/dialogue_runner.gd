@@ -11,6 +11,8 @@ extends RefCounted
 ##        {kind: "guidance", offer}: before a check, someone could cast Guidance (GuidanceOffer); the screen asks and
 ##            calls answer_guidance(), which rolls the check and returns its beat
 ##        {kind: "notice", text}
+##        {kind: "lead", npc, to}: the party follows `npc` to `to` (`lead <npc> to <where>`); the game walks them (or asks
+##            first, when it is another place), sets `check.last` to whether they went, and calls resume() on the screen
 ##        {kind: "cutscene", id, image, focus}: a full-screen picture under what follows (id "" takes it away)
 ##        {kind: "end", combat: encounter id or "", end_game: the conversation ended the campaign (`end_game`),
 ##            move: {location, spawn} where `move` sends the party (only present then)}
@@ -50,6 +52,9 @@ var _queued: Array[Dictionary] = []   ## beats a statement produced beyond its f
 ## The game's conversations offer Guidance before a check (a `guidance` beat); off for the bots and tools that play
 ## conversations without a screen.
 var offer_guidance := false
+## The game's conversations stop at a `lead` (the party follows someone on the map, or is asked to follow them to
+## another place); off for the bots and tools that play conversations without a map: the lead counts as followed.
+var offer_leads := false
 ## A check waiting on the Guidance prompt: {offer, who, skill, dc, said, then: Callable(check beat) -> beat to show}.
 var _guidance_wait: Dictionary = {}
 ## The NPC being spoken to (shops open for them).
@@ -288,6 +293,11 @@ func next() -> Dictionary:
 			"appear", "vanish":
 				pc += 1
 				return {"kind": "stage", "what": str(s["t"]), "npc": str(s["npc"]), "at": str(s.get("at", ""))}
+			"lead":
+				pc += 1
+				st.last_check = true
+				if offer_leads:
+					return {"kind": "lead", "npc": str(s["npc"]), "to": str(s["to"])}
 			"join":
 				pc += 1
 				if st.add_guest(str(s["npc"])):

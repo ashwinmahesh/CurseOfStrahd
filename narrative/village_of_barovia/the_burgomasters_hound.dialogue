@@ -65,6 +65,7 @@ Narrator: He shows you the edge of a lip, not quite a snarl, and doesn't take hi
 if not quest.the_burgomasters_hound or quest.the_burgomasters_hound == rumored
 quest the_burgomasters_hound asked
 endif
+lead lupu to 12,3
 Narrator: He leads you round to the study window, and sits, and looks at the wall, and then at you, as if he has been waiting a long time for somebody to understand something simple.
 if guest:ireena
 interject guest:ireena: He hasn't come inside since Father died. He used to sleep under the study desk. He'd never go near that corner, though. The cold corner, we called it.

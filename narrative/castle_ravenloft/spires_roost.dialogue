@@ -86,6 +86,7 @@ Narrator: Only twigs now, and a scrap of red ribbon.
 endif
 Narrator: Wedged deep in a nest of twigs and wire: a brass key as long as your hand, its bow shaped like a jester's cap with a tiny bell on every point.
 set pidlwick_key_found
+give pidlwicks_key
 if quest.the_jesters_key
 quest the_jesters_key found
 endif

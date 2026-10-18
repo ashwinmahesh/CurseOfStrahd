@@ -1083,6 +1083,12 @@ def story_checks(data, errors, need):
                 search_props[pr["id"]] = search_props.get(pr["id"], 0) + 1
         for tr in loc.get("traps", []):
             search_props[tr["id"]] = search_props.get(tr["id"], 0) + 1
+    # Where a conversation can lead the party (`lead <npc> to <target>`): a place (optionally "place:spawn"), a square
+    # ("x,y") or the id of a door, prop, container, exit or area on a map.
+    lead_things = set()
+    for loc in locations.values():
+        for kind in ("doors", "props", "containers", "exits", "areas"):
+            lead_things.update(t["id"] for t in loc.get(kind, []) if "id" in t)
     narrative = ROOT / "narrative"
     parsed = {}
     for f in sorted(narrative.rglob("*.dialogue")) if narrative.exists() else []:
@@ -1132,6 +1138,14 @@ def story_checks(data, errors, need):
             if search_props.get(pid, 0) != 1:
                 errors.append(f"narrative/{where}: reveal '{pid}' must name one hidden find (a search prop) or trap in one location"
                               f" (found {search_props.get(pid, 0)})")
+        for lead_npc, target, where in p.get("leads", []):
+            place, _, spawn = target.partition(":")
+            if re.fullmatch(r"\d+,\d+", target) or (place in lead_things and not spawn):
+                continue
+            if place not in locations:
+                errors.append(f"narrative/{where}: lead {lead_npc} to '{target}': no place, door, prop, container, exit or area by that id")
+            elif spawn and spawn not in locations[place].get("spawns", {}):
+                errors.append(f"narrative/{where}: lead {lead_npc} to '{target}': {place} has no spawn '{spawn}'")
         for fid, wh in p["flags_read"].items():
             flags_read.setdefault(fid, []).extend(wh)
         for fid, wh in p["flags_set"].items():

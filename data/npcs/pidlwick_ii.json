@@ -9,6 +9,17 @@
   "voice": "docs/voice/pidlwick_ii.md",
   "monster": "pidlwick_ii",
   "guest": true,
+  "guest_talk": "castle_ravenloft/spires_pidlwick:companion",
+  "gifts": [
+    {
+      "id": "key",
+      "item": "pidlwicks_key",
+      "label": "The brass wind-up key",
+      "when": "flag.pidlwick_key_found and not flag.pidlwick_wound",
+      "ref": "castle_ravenloft/spires_pidlwick:key_back",
+      "note": "The key the ravens took. Hand it over and he winds himself up."
+    }
+  ],
   "guest_build": {
     "monster": "pidlwick_ii",
     "note": "His own stat block (a small clockwork construct). Joins on the high tower stair if the Tarokka's marionette card names him, or when the party brings back his wind-up key from the ravens' roost."

@@ -324,13 +324,17 @@ static func stage_npc(view: LocationView, npc_id: String, at: String = "") -> vo
 	for m in view.members + view.guest_members:
 		taken[m.cell] = true
 	var cell := Vector2i(-1, -1)
-	for c in LocationParty._cells_around(view, near, 16 if found else 24):
-		if taken.has(c) or view.grid.is_solid(c) or view.npc_tokens.values().any(func(t: Node) -> bool: return view.grid.cell_at((t as Node3D).position) == c):
-			continue
-		if not found and c.distance_to(near) < 3.0:
-			continue   # beside the party, not on top of it
-		cell = c
-		break
+	# Beside the party, not on top of it: three squares off if there's room, else as near as there is (a narrow spawn).
+	for apart: float in ([0.0] if found else [3.0, 2.0, 1.0]):
+		for c in LocationParty._cells_around(view, near, 16 if found else 24):
+			if taken.has(c) or view.grid.is_solid(c) or view.npc_tokens.values().any(func(t: Node) -> bool: return view.grid.cell_at((t as Node3D).position) == c):
+				continue
+			if not found and c.distance_to(near) < apart:
+				continue
+			cell = c
+			break
+		if cell != Vector2i(-1, -1):
+			break
 	if cell == Vector2i(-1, -1):
 		return
 	var npc := Compendium.shared().get_entry("npcs", npc_id)

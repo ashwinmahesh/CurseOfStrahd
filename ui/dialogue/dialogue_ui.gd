@@ -21,6 +21,9 @@ signal services_requested(npc: String)
 signal stage_requested(what: String, npc: String, at: String)
 ## A `respec` pick: the game rebuilds party member `index` and calls resume() when it's done.
 signal respec_requested(index: int)
+## A `lead` line: the game walks the party after `npc` to `to` (asking first when it is another place), sets check.last to
+## whether they went, and calls resume() once the walk is over.
+signal lead_requested(npc: String, to: String)
 
 var runner: DialogueRunner
 var _panel: PanelContainer
@@ -409,6 +412,10 @@ func _show(beat: Dictionary) -> void:
 		"respec":
 			visible = false
 			respec_requested.emit(int(beat["index"]))
+			return
+		"lead":
+			visible = false
+			lead_requested.emit(str(beat["npc"]), str(beat["to"]))
 			return
 		"pick_member":
 			_show_portrait(DialogueRunner.NARRATOR_PORTRAIT)

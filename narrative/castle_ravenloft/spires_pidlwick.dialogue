@@ -155,6 +155,7 @@ Narrator: He nods, very politely, and sits down on the top step with the slate i
 set pidlwick_wound
 quest the_jesters_key returned
 Narrator [away]: You hold out the brass key. He goes perfectly still, then turns his back to you and waits.
+take pidlwicks_key
 Narrator: It takes a long time to wind him: forty turns, fifty. With every turn his ticking grows steadier.
 Pidlwick II: (He spins on one toe.) THANK YOU. THANK YOU. THANK YOU.
 Pidlwick II: A PRESENT. I KEPT IT IN MY HAT FOR A HUNDRED YEARS. (He holds out a fly carved of black wood.) IT GROWS. DON'T TELL ANYONE.

@@ -90,6 +90,22 @@ func _guests() -> Control:
 		head.add_child(UiParts.pill("Guest", "moonlight", 11))
 		col.add_child(head)
 		col.add_child(UiParts.hp_bar(g, 220.0, 8.0, false))
+		var buttons := HBoxContainer.new()
+		buttons.add_theme_constant_override("separation", 6)
+		var talk := UiParts.small_button("Talk", func() -> void: root.call("talk_to_guest", id))
+		talk.name = "Talk_" + id
+		talk.disabled = not calm
+		talk.tooltip_text = "Talk to %s." % g.name if calm else "Not in the middle of a fight or a conversation."
+		buttons.add_child(talk)
+		var give := UiParts.small_button("Give...", func() -> void: root.call("give_to_guest", id))
+		give.name = "Give_" + id
+		var gifts_now := GuestTalk.gifts(st, id)
+		give.disabled = not calm or gifts_now.is_empty()
+		give.tooltip_text = ("Hand %s something the party carries." % g.name if not gifts_now.is_empty()
+			else "Nothing the party carries is for %s right now. Potions go from the Inventory." % g.name) if calm \
+			else "Not in the middle of a fight or a conversation."
+		buttons.add_child(give)
+		col.add_child(buttons)
 		var why := st.guest_stays(id)
 		if why != "":
 			col.add_child(UiKit.label(why, 13, "parchment", 300))
@@ -105,7 +121,7 @@ func _guests() -> Control:
 			b.disabled = not calm
 			b.tooltip_text = "%s goes back to where you found them. Their own people there can ask them along again." % g.name \
 				if calm else "Not in the middle of a fight or a conversation."
-			col.add_child(b)
+			buttons.add_child(b)
 		line.add_child(col)
 		row.add_child(card)
 	return box

@@ -9,6 +9,7 @@ extends RefCounted
 ##   gold {amount} · attitude {npc, value} · xp (milestone) · xp fight {encounter} · check {skill, dc, ok, fail} · interject {selector, text}
 ##   combat {encounter} · move {location, spawn} · narrate {key} · variant {cond, text} · cooldown {minutes} · once · end_game (ADR 0014)
 ##   cast {spell} · reveal {prop} (an exploring spell cast in the scene; a hidden find shown to the party)
+##   lead {npc, to} (the party follows npc to a spot on the map, a square or another place; docs/story/leads_and_guests.md)
 ##   approve {changes: [[companion id, delta]], why} · inspire {selector, why} (story/approval.gd, story/in_character.gd)
 
 const ROOT := "res://narrative/"
@@ -210,6 +211,9 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		"vanish":
 			if parts.size() == 2:
 				return {"t": "vanish", "npc": parts[1]}
+		"lead":
+			if parts.size() == 4 and parts[2] == "to":
+				return {"t": "lead", "npc": parts[1], "to": parts[3]}
 		"combat":
 			if parts.size() == 2:
 				return {"t": "combat", "encounter": parts[1]}

@@ -60,7 +60,7 @@ static func for_thing(thing: Dictionary) -> String:
 		return "pointer"
 	var label := str(thing.get("label", ""))
 	match str(thing["kind"]):
-		"npc", "camper":
+		"npc", "camper", "guest":
 			return "talk"
 		"foe":
 			return "attack"

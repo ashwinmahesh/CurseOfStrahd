@@ -226,6 +226,7 @@ endif
 Parriwimple: It's for the lady. Agafia. She's got three, and they're very small, and up in the woods there's nothing to eat that isn't meat.
 Parriwimple: She says they mustn't have meat. Not ever. Only oats. She says I'm a good man. Nobody's ever said that. I counted.
 Parriwimple: Come up. You'll see. Up the path, past the last house. Don't tell Uncle.
+lead parriwimple to woodcutters_hollow
 -> END
 
 # --- Agafia at the hollow (npc hollow_agafia) ---

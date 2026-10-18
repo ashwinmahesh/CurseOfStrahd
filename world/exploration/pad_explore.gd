@@ -123,13 +123,13 @@ func tick(delta: float) -> void:
 
 
 ## The squares within REACH of the leader with something on them the party can use (people, doors, chests, things,
-## ways out, foes in sight), not the party itself.
+## ways out, foes in sight, the story allies walking with the party), not the heroes themselves.
 func things() -> Array[Vector2i]:
 	var view := _view()
 	var out: Array[Vector2i] = []
 	var at := view.leader().cell
 	var party := {}
-	for m: Combatant in view.members + view.guest_members:
+	for m: Combatant in view.members:
 		party[m.cell] = true
 	for entry: Array in view._pickables():
 		var c := entry[1] as Vector2i

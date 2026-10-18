@@ -57,14 +57,15 @@ func roll(chance: float) -> bool:
 
 
 ## An unplayed line of a guest who's with the party, for a moment of GUEST_MOMENTS ("enter", "fight", "idle"), or []
-## if none suits. Marks it played.
-func guest_next(st: StoryState, moment: String) -> Array[Dictionary]:
+## if none suits. Marks it played. `only`: just that guest's (a word with them, GuestTalk).
+func guest_next(st: StoryState, moment: String, only: String = "") -> Array[Dictionary]:
 	for prefix: String in GUEST_MOMENTS.get(moment, []) as Array:
 		var pool: Array[String] = []
 		for ref in _guest_nodes:
 			if bool(st.flags.get("_banter/" + ref, false)) or not ref.get_slice(":", 1).begins_with(prefix):
 				continue
-			if ref.get_slice(":", 0).trim_prefix("banter/guest_") in st.guest_ids:
+			var who := ref.get_slice(":", 0).trim_prefix("banter/guest_")
+			if who in st.guest_ids and (only == "" or who == only):
 				pool.append(ref)
 		while not pool.is_empty():
 			var ref := pool.pop_at(_rng.randi_range(0, pool.size() - 1)) as String

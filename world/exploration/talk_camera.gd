@@ -36,7 +36,7 @@ static func open(view: LocationView, npc_id: String) -> void:
 		return
 	var rig := view.rig
 	var focus := rig.global_position
-	var tok: Variant = view.npc_tokens.get(npc_id)
+	var tok: Variant = view.npc_tokens.get(npc_id, view._staged.get(npc_id))   # a person of the place, or one a scene brought on
 	if is_instance_valid(tok) and (tok as Node3D).is_inside_tree():
 		focus = (focus + (tok as Node3D).global_position) / 2.0
 	# The rig leans toward shot_focus by shot_weight: a point toward the player, so the pair sits above the box.

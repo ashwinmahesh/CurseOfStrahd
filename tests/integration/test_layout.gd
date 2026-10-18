@@ -685,6 +685,54 @@ func test_the_guidance_prompt() -> void:
 				p.queue_free())
 
 
+## Someone offering to lead the party to another place (ui/common/lead_prompt.gd), with the longest name and place
+## the story has: Follow now or come back later.
+func test_the_follow_prompt() -> void:
+	if not await _game(LATE):
+		return
+	await _check("the Follow prompt", func() -> Variant:
+		var p := LeadPrompt.ask(root, "Sir Godfrey Gwilym of Argynvostholt", "The Amber Temple: Hall of the Faceless God", func(_f: bool) -> void: pass)
+		await _frames(2)
+		return p,
+		func() -> void:
+			for p in root.find_children("LeadPrompt*", "", false, false):
+				p.queue_free())
+
+
+## What the party can hand a guest (ui/common/gift_picker.gd) at its fullest: a few gifts with long labels.
+func test_the_give_picker() -> void:
+	if not await _game(LATE):
+		return
+	var gifts: Array[Dictionary] = []
+	for i in 4:
+		gifts.append({"id": "g%d" % i, "label": "The brass wind-up key that the ravens of the high tower carried off under the roofs (%d)" % i,
+			"item": "pidlwicks_key", "ref": "x:y", "note": "A long note that a tooltip carries."})
+	await _check("the Give picker", func() -> Variant:
+		var p := GiftPicker.ask(root, "Sir Godfrey Gwilym of Argynvostholt", gifts, func(_i: int) -> void: pass)
+		await _frames(2)
+		return p,
+		func() -> void:
+			for p in root.find_children("GiftPicker*", "", false, false):
+				p.queue_free())
+
+
+## The Party screen and the exploring HUD with the most guests the story has travelling at once: each card's Talk, Give...
+## and Send home sit inside it.
+func test_the_party_with_guests() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	st.set_flag("pidlwick_key_found")
+	for id: String in ["pidlwick_ii", "sir_godfrey_gwilym", "ezmerelda", "adrian_martikov"]:
+		st.add_guest(id)
+	(root.get("view") as LocationView).place_guests()
+	await _check("the party (with guests)", _screen("party", 0), _close_screen)
+	await _check("the exploring HUD (with guests)", func() -> Variant:
+		(root.get("hud") as ExploreHud).refresh()
+		await _frames(2)
+		return root.get("hud"))
+
+
 ## The longest options the game's conversations offer, each with a check's chance after it, the way the cut-off ones
 ## looked (owner report).
 static func longest_options(n: int) -> Array:

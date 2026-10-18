@@ -75,6 +75,7 @@ set zuleika_vouched
 set emil_key_found
 attitude zuleika_toranescu friendly
 Zuleika: Then come. Walk behind me, keep your hands away from your weapons, and don't look anyone in the eye for long. The ones inside are mine, or near enough. They'll let you pass if I say so.
+lead zuleika_toranescu to werewolf_den_caves:shrine
 Zuleika: Emil is in the alcove off the great cave, to the west. Here: the key to his chains. Kiril trusted me with it so I could watch him suffer. He has never once understood me.
 Narrator: She presses a small iron key into your hand. It is warm from her pocket, and the bow is wrapped in rag where it would touch the silver.
 interject tag:blunt: And if we change our minds once we're inside?

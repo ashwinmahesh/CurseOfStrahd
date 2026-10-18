@@ -603,6 +603,7 @@
     "jug": "delapouite/jug@clay",
     "key": "lorc/skeleton-key@gold",
     "durst_attic_key": "lorc/skeleton-key@iron",
+    "pidlwicks_key": "lorc/skeleton-key@gold",
     "ladder": "delapouite/ladder@wood",
     "lamp": "lorc/magic-lamp@gold",
     "lance": "skoll/mounted-knight@steel",

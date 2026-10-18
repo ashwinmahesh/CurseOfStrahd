@@ -7,6 +7,8 @@ extends CanvasLayer
 
 signal leader_picked(index: int)
 signal sheet_requested(index: int)
+## A story ally's card was clicked: the game shows what can be done with them (talk, give, send home), beside the card.
+signal guest_clicked(npc_id: String, at: Vector2)
 signal command(name: String)
 
 var st: StoryState
@@ -371,12 +373,16 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		gs.set_content_margin_all(5)
 		gcard.add_theme_stylebox_override("panel", gs)
 		gcard.custom_minimum_size = Vector2(CARD_W, 0)
+		gcard.add_child(_guest_button(st.guest_ids[gi], g.name))   # under the card's content, like a hero's
 		var grow := HBoxContainer.new()
+		grow.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		grow.add_theme_constant_override("separation", 8)
 		gcard.add_child(grow)
 		var npc := Compendium.shared().get_entry("npcs", st.guest_ids[gi])
 		var gportrait := UiParts.framed_portrait(NpcLooks.portrait(npc, st) if not npc.is_empty() else st.guest_ids[gi], 42.0, g.hp <= 0)
-		gportrait.add_child(_stealth_badge(g, 42.0, -1))
+		var gbadge := _stealth_badge(g, 42.0, -1)
+		gbadge.gui_input.connect(_guest_clicked.bind(st.guest_ids[gi], gcard))   # a click on the corner of the portrait opens their choices
+		gportrait.add_child(gbadge)
 		grow.add_child(gportrait)
 		var gv := VBoxContainer.new()
 		gv.add_theme_constant_override("separation", 3)
@@ -387,6 +393,10 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		gv.add_child(ghead)
 		gv.add_child(UiParts.hp_bar(g, 150.0, 8.0, false))
 		grow.add_child(gv)
+		for inner: Node in grow.find_children("*", "Control", true, false):
+			if inner == gbadge or inner.get_parent() == gbadge:
+				continue   # the Stealth badge keeps its hint and takes the card's clicks itself
+			(inner as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE   # the click lies under the card's content
 		_party_box.add_child(gcard)
 	if location_name != "":
 		_fit_where(location_name)
@@ -424,6 +434,28 @@ func _card_button(ch: Character, idx: int) -> Button:
 	btn.tooltip_text = "%s · %s\n%s · Right-click: sheet" % [ch.name, ch.class_summary(), "Dead: can't lead" if ch.dead else ("Down: can't lead" if ch.hp <= 0 else "Click: lead")]
 	btn.gui_input.connect(_card_clicked.bind(idx))
 	return btn
+
+
+## A story ally's card is clickable too (owner, 2026-10-17: guests should be interactable): a click opens the choices for
+## them, Talk, Give... and Send home, beside the card.
+func _guest_button(npc_id: String, who: String) -> Button:
+	var btn := Button.new()
+	btn.flat = true
+	btn.focus_mode = Control.FOCUS_NONE
+	btn.name = "Guest_" + npc_id
+	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
+	btn.tooltip_text = "%s · Guest\nClick: talk, give or send home" % who
+	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	btn.gui_input.connect(_guest_clicked.bind(npc_id, btn))
+	return btn
+
+
+## A click on a guest's card (or on the Stealth badge on their portrait): the choices for them, beside the card.
+func _guest_clicked(ev: InputEvent, npc_id: String, card: Control) -> void:
+	var mb := ev as InputEventMouseButton
+	if mb != null and mb.pressed and mb.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT]:
+		guest_clicked.emit(npc_id, card.get_global_rect().position + Vector2(card.size.x, 0.0))
 
 
 func _card_clicked(ev: InputEvent, idx: int) -> void:

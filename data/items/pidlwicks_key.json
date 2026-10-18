@@ -1,0 +1,13 @@
+{
+  "id": "pidlwicks_key",
+  "name": "Pidlwick's Key",
+  "source": {
+    "book": "CoS",
+    "note": "Castle Ravenloft, the ravens' roost: the brass key that winds Pidlwick II (side quest The Jester's Key); the item is ours."
+  },
+  "category": "quest",
+  "weight_lb": 0,
+  "cost_gp": 0,
+  "summary": "A brass wind-up key as long as a hand, its bow shaped like a jester's cap with a tiny bell on every point.",
+  "text": "Wedged in a raven's nest under the castle roofs, among twigs and wire. It fits the keyhole in the back of Pidlwick II, who has been winding himself with a bent nail ever since the ravens took it. When he is with the party, hand it to him: Give... on his card, or talk to him and say you found it."
+}

@@ -19,6 +19,9 @@ extends Node3D
 
 signal exit_requested(location_id: String, spawn: String)
 signal dialogue_requested(ref: String, npc_id: String)
+## The party means to hand a story ally travelling with it something (LocationGuests, the right-click menu's Give...):
+## the game shows what can be given (GiftPicker).
+signal gift_requested(npc_id: String)
 signal narration(text: String)
 ## A place's cutscene (story/cutscenes.gd `trigger`): its picture, with the narrator's line as the caption.
 signal cutscene_requested(id: String, caption: String)

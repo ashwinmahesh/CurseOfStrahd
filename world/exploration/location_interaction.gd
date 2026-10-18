@@ -30,6 +30,10 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 				out.append_array(LocationCare._tend_actions(view, ch))
 			out.append_array(LocationCare._lay_on_hands_actions(view, ch))
 			out.append_array(PitFall.actions_for(view, view.members[i]))
+			for guest_id in LocationGuests.here_with_member(view, cell):   # a guest on the same square (the line closed up)
+				for a in LocationGuests.actions(view, guest_id):
+					a["label"] = "%s: %s" % [GuestTalk.name_of(guest_id).get_slice(" ", 0), a["label"]]
+					out.append(a)
 			return {"title": ch.name, "actions": out}
 	var thing := thing_at(view, cell)
 	if thing.is_empty():
@@ -43,6 +47,9 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		"camper":
 			title = str(thing["name"])
 			out.append({"id": "talk", "label": str(thing["label"])})
+		"guest":
+			title = str(thing["name"])
+			out.append_array(LocationGuests.actions(view, str(thing["id"])))
 		"npc":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			title = str(npc.get("name", spec["npc"]))
@@ -121,6 +128,9 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 	if action_id.begins_with("loh:"):
 		LocationCare._lay_on_hands_out(view, cell, action_id.substr(4))
 		return
+	if action_id.begins_with("guest_"):
+		LocationGuests.act(view, action_id)   # Talk, Give... and Send home, for a story ally travelling with the party
+		return
 	var thing := thing_at(view, cell)
 	match action_id:
 		"walk":
@@ -198,7 +208,7 @@ static func _look(view: LocationView, cell: Vector2i, thing: Dictionary) -> void
 		return
 	var spec := thing["spec"] as Dictionary
 	match str(thing["kind"]):
-		"npc":
+		"npc", "guest":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			var att := view.st.attitude(str(spec["npc"]))
 			view.narration.emit("%s%s. %s%s%s" % [npc.get("name", spec["npc"]), (", " + str(npc["title"])) if str(npc.get("title", "")) != "" else "",
@@ -267,6 +277,9 @@ static func _pickables(view: LocationView) -> Array:
 static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	if HiddenAreas.hides(view, cell):
 		return {}
+	var guest := LocationGuests.thing(view, cell)
+	if not guest.is_empty():
+		return guest
 	var camp := LocationCamp.of(view)
 	if camp != null and not view.in_combat:
 		var who := camp.who_at(cell)
@@ -398,6 +411,8 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 			var camp := LocationCamp.of(view)
 			if camp != null:
 				camp.talk(str(thing["id"]))
+		"guest":
+			LocationGuests.talk(view, str(thing["id"]))
 		"npc":
 			if not LocationNpcs.can_talk(view, spec):
 				var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))

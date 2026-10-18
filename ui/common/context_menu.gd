@@ -13,7 +13,8 @@ const ICONS := {"talk": "talk", "look": "search", "search_here": "search", "open
 	"pick": "key", "key": "key", "disarm": "key", "trade": "trade", "use": "inventory", "walk": "map", "avoid": "sneak",
 	"lead": "party", "sheet": "character", "inventory": "inventory", "spells": "spells", "info": "journal",
 	"cast": "spells", "meta": "spells", "ready": "attack", "choice": "attack", "knock": "spells", "chime": "inventory",
-	"mystery_key": "key", "strike": "attack", "pickpocket": "sneak", "check": "search", "check_aid": "character"}
+	"mystery_key": "key", "strike": "attack", "pickpocket": "sneak", "check": "search", "check_aid": "character",
+	"guest_talk": "talk", "guest_give": "inventory", "guest_home": "party"}
 
 
 func _init() -> void:

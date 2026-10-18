@@ -107,6 +107,10 @@ Narrator: He weeps and guts, weeps and guts. Mad, right, or both: his face won't
 * Live with it, Bluto. Every day of your life. -> left
 
 ~ to_vistani
+lead bluto to vallaki_vistani_camp
+if not check.last
+-> bluto_nets_menu
+endif
 set bluto_fate = "vistani"
 set lake_boat_ready
 Narrator: He doesn't fight. He leaves the fish where they lie and walks ahead of you along the shore to the painted wagons, and when Luvash sees who you have brought, the whole camp goes silent.

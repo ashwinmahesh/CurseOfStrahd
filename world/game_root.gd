@@ -15,6 +15,7 @@ var screen: Node = null              ## the open full-screen panel (sheet, inven
 var dialogue: DialogueUI = null
 var loot: LootWindow = null
 var guidance: GuidancePrompt = null  ## Guidance offered before a check while exploring (ask_guidance), if it's up
+var _prompting: Node = null          ## a small prompt of ours is up (LeadPrompt: follow now or later; GiftPicker: what to hand a guest)
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
 var _dialogue_ref := ""
@@ -67,6 +68,7 @@ func _ready() -> void:
 			view.set_leader(i)
 		_refresh())
 	hud.sheet_requested.connect(func(i: int) -> void: open_screen("sheet", i))
+	hud.guest_clicked.connect(guest_menu)   # a story ally's card: Talk, Give... and Send home
 	hud.command.connect(_command)
 	plan_bar = PlanBar.new()
 	plan_bar.hud = hud
@@ -148,6 +150,7 @@ func enter_location(location_id: String, spawn: String, sneaking: bool = false) 
 		_covered.call_deferred(to, enter_location.bind(to, sp, leaving.sneaking)))
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
+	view.gift_requested.connect(give_to_guest)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
 	view.cutscene_requested.connect(play_cutscene)
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
@@ -240,7 +243,7 @@ var _fallen := false
 # --- Input ----------------------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
-	if moving or view == null or view.in_combat or dialogue != null or ending != null or guidance != null:
+	if moving or view == null or view.in_combat or dialogue != null or ending != null or guidance != null or _prompting != null:
 		return
 	if screen != null:
 		if event.is_action_pressed(&"combat_cancel"):
@@ -325,7 +328,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	var exploring := not moving and view != null and not view.in_combat and dialogue == null and screen == null \
-		and loot == null and ending == null and guidance == null
+		and loot == null and ending == null and guidance == null and _prompting == null
 	if view != null and not view.in_combat:
 		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight sets its own)
 	if exploring and PadNav.active():
@@ -473,6 +476,134 @@ func respec(index: int) -> void:
 			dialogue.resume())
 
 
+# --- Conversations: someone leads the party (`lead`), and the story allies who travel with it ---------------------
+
+## A `lead <npc> to <where>` line (docs/contracts/dialogue.md): the party follows `npc_id` to `to`. Somewhere on this map
+## they walk after the figure (LocationLead); to another place a prompt asks first (LeadPrompt), then they follow to the
+## way out and the place changes. The conversation carries on where the party stands afterwards, and `check.last` says
+## whether they went.
+func _lead(npc_id: String, to: String) -> void:
+	if view == null or dialogue == null:
+		return
+	var plan := LocationLead.plan(view, to)
+	TalkCamera.close(view, false)
+	if str(plan["kind"]) == "none":
+		push_warning("Dialogue: `lead %s to %s` names no place here" % [npc_id, to])
+		_lead_done(npc_id, true)
+		return
+	if str(plan["kind"]) == "there":
+		_prompting = LeadPrompt.ask(self, GuestTalk.name_of(npc_id), str(plan["name"]), func(follow: bool) -> void:
+			_prompting = null
+			if follow:
+				_lead_walk(npc_id, plan)
+			else:
+				_lead_done(npc_id, false))
+		return
+	_lead_walk(npc_id, plan)
+
+
+## The walk: on this map, to the spot; to another place, to the way out, then the change of place.
+func _lead_walk(npc_id: String, plan: Dictionary) -> void:
+	var here := str(plan["kind"]) == "here"
+	var spot := Vector2i(-1, -1)
+	if here:
+		spot = plan["cell"] as Vector2i
+	elif not (plan["exit"] as Dictionary).is_empty():
+		spot = LocationView._cell((plan["exit"] as Dictionary)["cell"])
+	var walk: LocationLead = null
+	if spot.x >= 0:
+		var fig := LocationLead.figure(view, npc_id)
+		if not fig.is_empty():
+			var stand := LocationLead.stand_for(view, fig["cell"] as Vector2i, spot, bool(plan.get("exact", false)))
+			walk = LocationLead.begin(view, npc_id, stand)
+	if walk == null:
+		if here:
+			_lead_done(npc_id, true)   # nowhere to walk to: they are simply there
+		else:
+			await _lead_there(npc_id, plan)   # no way out on foot from here: the party is simply there
+		return
+	var followed: bool = await walk.finished
+	if not is_inside_tree() or dialogue == null:
+		return
+	if not followed:
+		if view.in_combat:
+			_leave_dialogue_for_fight()   # a fight began on the way: it has the screen
+		else:
+			_lead_done(npc_id, false)
+	elif here:
+		_lead_done(npc_id, true)
+	else:
+		await _lead_there(npc_id, plan)
+
+
+## The change of place: the party and the one leading arrive together, and the conversation carries on there.
+func _lead_there(npc_id: String, plan: Dictionary) -> void:
+	var to := str(plan["where"])
+	var spawn := str(plan["spawn"])
+	st.advance_minutes(5)   # walking between places takes a few minutes
+	await _covered(to, enter_location.bind(to, spawn))
+	if not is_inside_tree() or dialogue == null:
+		return
+	if view.in_combat:
+		_leave_dialogue_for_fight()   # the place set a fight off as the party arrived
+		return
+	ModeController.force(ModeController.Mode.DIALOGUE)
+	hud.visible = false
+	view.stage_npc(npc_id, "")   # beside the party for the rest of the talk
+	_lead_done(npc_id, true)
+
+
+## A fight began while the conversation was stepped back for a lead: the talk is over and the fight has the screen.
+func _leave_dialogue_for_fight() -> void:
+	if dialogue != null:
+		dialogue.queue_free()
+		dialogue = null
+	hud.visible = true
+
+
+## Back to the conversation: the camera comes in again and the box with it.
+func _lead_done(npc_id: String, followed: bool) -> void:
+	if dialogue == null or view == null:
+		return
+	st.last_check = followed
+	TalkCamera.open(view, npc_id)
+	dialogue.resume()
+
+
+## Talk to a story ally who travels with the party (a click on them, the HUD's card, the Party screen's Talk).
+func talk_to_guest(npc_id: String) -> void:
+	if view == null or view.in_combat or dialogue != null or _prompting != null or moving:
+		return
+	if screen != null:
+		close_screen()
+	LocationGuests.talk(view, npc_id)
+
+
+## Hand a story ally something (the right-click menu's Give..., the HUD's and the Party screen's): the picker lists what
+## the party carries that is for them (GuestTalk.gifts); picking one starts the conversation that hands it over.
+func give_to_guest(npc_id: String) -> void:
+	if view == null or view.in_combat or dialogue != null or _prompting != null or moving:
+		return
+	if screen != null:
+		close_screen()
+	var gifts := GuestTalk.gifts(st, npc_id)
+	if gifts.is_empty():
+		hud.toast("Nothing the party carries is for %s right now" % GuestTalk.name_of(npc_id).get_slice(" ", 0))
+		return
+	_prompting = GiftPicker.ask(self, GuestTalk.name_of(npc_id), gifts, func(i: int) -> void:
+		_prompting = null
+		if i >= 0 and str(gifts[i]["ref"]) != "":
+			start_dialogue(str(gifts[i]["ref"]), npc_id))
+
+
+## A guest's card on the HUD was clicked: the same choices as their right-click menu, beside the card.
+func guest_menu(npc_id: String, at: Vector2) -> void:
+	if view == null or view.busy or view.in_combat or dialogue != null or _prompting != null or moving:
+		return
+	_menu_cell = Vector2i(-1, -1)
+	menu.show_actions(GuestTalk.name_of(npc_id), GuestTalk.actions(st, npc_id), at)
+
+
 ## Party banter or a guest's line (story/banter.gd) in the Narrator's box, each line in its speaker's voice.
 func _show_banter(lines: Array) -> void:
 	var text: Array[String] = []
@@ -513,11 +644,13 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		else:
 			view.unstage_npc(npc))
 	dialogue.respec_requested.connect(respec)
+	dialogue.lead_requested.connect(_lead)
 	dialogue.spoke.connect(_talk_music)
 	dialogue.scene_shown.connect(_scene_music)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
 	runner.offer_guidance = true   # Guidance before a check, from whoever can cast it (GuidanceOffer)
+	runner.offer_leads = true      # the party follows whoever leads it (`lead`), and is asked first when it is another place
 	if not dialogue.play(runner, ref):
 		dialogue.queue_free()
 		dialogue = null

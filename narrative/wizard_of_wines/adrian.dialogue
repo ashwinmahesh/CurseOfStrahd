@@ -37,6 +37,7 @@ approve thistle +1 godrick_pendlebrook +1: You said sorry to Adrian for the rave
 
 ~ to_father
 Adrian: This way, round by the trees. Mind the brambles. They're only brambles. Probably.
+lead adrian_martikov to 10,27
 if name:thistle
 interject name:thistle: You're the raven! From the road! I know your smell. You walked with us a mile.
 else

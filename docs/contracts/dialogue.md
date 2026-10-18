@@ -52,6 +52,17 @@ Speaker [away]: Text               The speaker turns their back on the other sid
 appear <npc> [at <id>]             The npc steps onto the map for this scene: beside the door, prop, container or exit
                                    with that id, or a few squares from the party. Gone when the conversation ends.
 vanish <npc>                       ...or before, here (he melts into mist at the gate).
+lead <npc> to <where>              The party follows <npc> to <where> (docs/story/leads_and_guests.md). <where> is a door,
+                                   prop, container, exit or area id on this map (the figure walks there and the party's
+                                   figures follow in marching order, a click or Esc skips the walk), or `x,y` (that square),
+                                   or another place: a location id, `location_id` or `location_id:spawn` (a prompt asks
+                                   "Follow now" or "Come back later"; following walks to the way out, changes place and
+                                   brings <npc> beside the party, and the conversation carries on there until it ends,
+                                   when they step out of the scene like anyone `appear` brought). `check.last` says whether
+                                   the party went (always true on this map). Nothing moves a flag: put the `set`s that must
+                                   wait for the party behind `if check.last`, and keep the conversation's way out on both
+                                   branches (declining leaves the NPC where they are, to be asked again). A lead into a
+                                   place that fights on arrival must have its flags set first (Zuleika's pact does).
 -> node                            Jump. "-> END" ends the conversation; "-> file:node" jumps to another file.
 if <condition>                     Conditional block, closed by "endif" ("elif <condition>" and "else" allowed).
 set flag_id                        Sets a flag to true. "set flag_id = 3", "set flag_id = \"string\"",
