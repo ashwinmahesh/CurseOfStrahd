@@ -1317,6 +1317,7 @@
     {
       "id": "crg_turret_guard",
       "trigger": "enter_area:crg_turret_post_east",
+      "waiting": true,
       "when": "level >= 10",
       "text": "Suits of black armour step down from their stands at once, as if someone had called the watch.",
       "surprise": "",
@@ -1328,7 +1329,8 @@
             32,
             18
           ],
-          "hp": 118
+          "hp": 118,
+          "facing": "southwest"
         },
         {
           "monster": "strahds_animated_armor",
@@ -1336,7 +1338,8 @@
             33,
             22
           ],
-          "hp": 118
+          "hp": 118,
+          "facing": "northwest"
         },
         {
           "monster": "strahds_animated_armor",
@@ -1344,7 +1347,8 @@
             22,
             16
           ],
-          "hp": 118
+          "hp": 118,
+          "unseen": true
         },
         {
           "monster": "strahds_animated_armor",
@@ -1352,13 +1356,15 @@
             25,
             23
           ],
-          "hp": 118
+          "hp": 118,
+          "unseen": true
         }
       ]
     },
     {
       "id": "crg_turret_guard",
       "trigger": "enter_area:crg_turret_post_east",
+      "waiting": true,
       "text": "Suits of black armour step down from their stands, as if someone had called the watch.",
       "surprise": "",
       "flag": "crg_turret_guard_broken",
@@ -1368,28 +1374,32 @@
           "cell": [
             32,
             18
-          ]
+          ],
+          "facing": "southwest"
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             25,
             24
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             24,
             16
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             25,
             9
-          ]
+          ],
+          "unseen": true
         }
       ]
     },

@@ -114,12 +114,12 @@ func test_crg_kestrel_table_v0_at_level_10() -> void:
 
 ## crg_turret_guard, castle_ravenloft_main_floor variant 0 at level 10.
 func test_crg_turret_guard_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_main_floor", 12, 10, "crg_turret_guard", [Vector2i(31, 20), Vector2i(30, 20), Vector2i(29, 20), Vector2i(28, 21)], 4, 6, [])
+	await _held("castle_ravenloft_main_floor", 12, 10, "crg_turret_guard", [Vector2i(30, 20), Vector2i(29, 20), Vector2i(28, 21), Vector2i(27, 22)], 4, 6, [], [], ["crg_turret_east_door"])
 
 
 ## crg_turret_guard, castle_ravenloft_main_floor variant 1 at level 9.
 func test_crg_turret_guard_v1_at_level_9() -> void:
-	await _held("castle_ravenloft_main_floor", 12, 9, "crg_turret_guard", [Vector2i(31, 20), Vector2i(30, 20), Vector2i(29, 20), Vector2i(28, 21)], 4, 6, [])
+	await _held("castle_ravenloft_main_floor", 12, 9, "crg_turret_guard", [Vector2i(30, 20), Vector2i(29, 20), Vector2i(28, 21), Vector2i(27, 22)], 4, 6, [], [], ["crg_turret_east_door"])
 
 
 ## spires_stair_watch, castle_ravenloft_spires variant 1 at level 10.

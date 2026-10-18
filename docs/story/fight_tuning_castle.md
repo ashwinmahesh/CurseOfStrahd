@@ -38,8 +38,8 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 | `crg_kestrel_cellar` | main_floor | L10v0 | 10 | 3 vampire spawn | 7 vampire spawn (126 HP) | 6 |
 | `crg_kestrel_cellar` | main_floor | L10v1 | 10 | 3 vampire spawn | 7 vampire spawn (144 HP) | 5 |
 | `crg_kestrel_table` | main_floor | L10v0 | 10 | 5 vampire spawn (110 HP) | 5 vampire spawn (162 HP) | 5 |
-| `crg_turret_guard` | main_floor | L10v0 | 10 | 2 strahds animated armor | 4 strahds animated armor (118 HP) | 5 |
-| `crg_turret_guard` | main_floor | L9v1 | 9 | strahds animated armor | 4 strahds animated armor | 4 |
+| `crg_turret_guard` | main_floor | L10v0 | 10 | 2 strahds animated armor | 4 strahds animated armor (118 HP) | 6 |
+| `crg_turret_guard` | main_floor | L9v1 | 9 | strahds animated armor | 4 strahds animated armor | 6 |
 | `spires_stair_watch` | spires | L10v1 | 10 | 3 vampire spawn, 3 swarm of bats | 8 vampire spawn, 8 swarm of bats | 6 |
 | `spires_stair_watch` | spires | L11v0 | 11 | 4 vampire spawn, 3 swarm of bats | 9 vampire spawn, 7 swarm of bats | 5 |
 | `spires_stair_watch` | spires | L9v2 | 9 | 2 vampire spawn, swarm of bats | 6 vampire spawn, 5 swarm of bats | 5 |
