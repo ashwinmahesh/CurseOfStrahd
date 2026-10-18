@@ -120,7 +120,9 @@ func test_it_attacks_from_a_square_outside_the_area() -> void:
 
 
 func test_with_no_way_round_it_goes_in() -> void:
-	# The only hero stands in the middle of her own Spirit Guardians: every square beside her is in it.
+	# The only hero stands in the middle of her own Spirit Guardians: every square beside her is in it. Too far to strike
+	# her this turn through the spirits (Difficult Terrain to it), it doesn't stand at their edge: it wades in toward
+	# her (owner, 2026-10-18: enemies don't waste their turn), and strikes the next.
 	var e := TestCombat.open_field(4)
 	var cleric := TestCombat.caster_with(e, ["spirit_guardians"], Vector2i(5, 4))
 	var foe := TestCombat.foe(e, "berserker", Vector2i(10, 4))
@@ -130,22 +132,19 @@ func test_with_no_way_round_it_goes_in() -> void:
 	e.end_turn()
 	assert_eq(e.current(), foe)
 	var hp := foe.creature.hp
-	# Too far to strike her this turn through the spirits (Difficult Terrain to it): it waits at their edge.
 	assert_eq(str(e.ai.plan_turn(foe)["kind"]), "approach")
 	e.run_ai_turn()
-	assert_false(foe.cell in spirits.cells, "not ending its turn among the spirits: %s" % foe.cell)
-	assert_eq(foe.creature.hp, hp)
-	assert_true(e.distance(foe, cleric) <= 15, "but as close as that allows")
+	assert_true(foe.cell in spirits.cells, "in among the spirits: %s" % foe.cell)
+	assert_true(foe.creature.hp < hp, "and they bit")
 	e.end_turn()
 	assert_eq(e.current(), foe)
 	assert_eq(str(e.ai.plan_turn(foe)["kind"]), "attack", "now it can reach her, and nothing else is there to reach")
 	e.run_ai_turn()
 	assert_eq(e.distance(foe, cleric), 5, "in beside her")
-	assert_true(foe.creature.hp < hp, "and the spirits bit")
 
 
-func test_with_no_way_round_it_holds_back_one_round_at_most() -> void:
-	# Too slow to reach her through her spirits in one turn: it waits at their edge once, then wades in.
+func test_with_no_way_round_a_slow_foe_wades_in_the_first_round() -> void:
+	# Too slow to reach her through her spirits in one turn: it doesn't wait at their edge, it wades on in.
 	var e := TestCombat.open_field(4)
 	var cleric := TestCombat.caster_with(e, ["spirit_guardians"], Vector2i(5, 4))
 	var foe := TestCombat.foe(e, "berserker", Vector2i(10, 4))
@@ -154,11 +153,106 @@ func test_with_no_way_round_it_holds_back_one_round_at_most() -> void:
 	var spirits := e.spells.zones.live()[0]
 	foe.creature.base_speed["walk"] = 15
 	e.end_turn()
+	var gap := e.distance(foe, cleric)
 	e.run_ai_turn()
-	assert_false(foe.cell in spirits.cells, "held back: %s" % foe.cell)
-	e.end_turn()
+	assert_true(foe.cell in spirits.cells, "on in: %s" % foe.cell)
+	assert_true(e.distance(foe, cleric) < gap, "nearer her")
+
+
+## What the ground could do at its worst: every die at its highest, every save failed, once a turn where it hits once a
+## turn; and what a creature has room for (its Hit Points less a tenth of its Hit Point maximum, 1 at least).
+func test_the_worst_the_ground_can_do() -> void:
+	var e := TestCombat.open_field()
+	var hero := TestCombat.caster_with(e, ["cloud_of_daggers"], Vector2i(0, 0))
+	var berserker := TestCombat.foe(e, "berserker", Vector2i(9, 3))
+	TestCombat.start_with(e, hero)
+	_daggers(e, hero, _row(3, 4, 6))
+	var v := e.ai.hazards.read(berserker)
+	var through: Array[Vector2i] = [Vector2i(7, 3), Vector2i(6, 3), Vector2i(5, 3), Vector2i(4, 3), Vector2i(3, 3)]
+	assert_between(v.worst(through), 16.0 - 0.01, 16.0 + 0.01, "4d4 at its highest, once a turn")
+	var into: Array[Vector2i] = [Vector2i(7, 3), Vector2i(6, 3)]
+	assert_between(v.worst(into), 16.0 - 0.01, 16.0 + 0.01, "stepping in and staying: still once")
+	var past: Array[Vector2i] = [Vector2i(7, 3), Vector2i(7, 2), Vector2i(6, 2)]
+	assert_between(v.worst(past), 0.0 - 0.01, 0.0 + 0.01, "beside it: nothing")
+	var keep := ceili(0.1 * berserker.creature.max_hp())
+	assert_between(v.room, berserker.creature.hp - keep - 0.01, berserker.creature.hp - keep + 0.01,
+		"its Hit Points less a tenth of its maximum")
+	assert_false(v.deadly(through))
+	berserker.creature.hp = keep + 15
+	v = e.ai.hazards.read(berserker)
+	assert_true(v.deadly(through), "16 at the worst would leave it under a tenth")
+	assert_false(v.deadly(past))
+	berserker.creature.hp = keep + 16
+	assert_false(e.ai.hazards.read(berserker).deadly(through), "exactly a tenth left is enough")
+
+
+## Ground that could drop it at its worst it never walks into, round after round (owner, 2026-10-18: "as long as it
+## won't kill them"): 3rd-level Spirit Guardians can do 24, and a berserker keeps a tenth of its 67 Hit Points (7).
+func test_it_never_wades_into_ground_that_could_drop_it() -> void:
+	var e := TestCombat.open_field(4)
+	var cleric := TestCombat.caster_with(e, ["spirit_guardians"], Vector2i(5, 4))
+	var foe := TestCombat.foe(e, "berserker", Vector2i(10, 4))
+	TestCombat.start_with(e, cleric)
+	assert_true(e.spells.cast(cleric, "spirit_guardians", 3).ok)
+	var spirits := e.spells.zones.live()[0]
+	foe.creature.hp = 30
+	for i in 2:
+		while e.current() != foe:
+			e.end_turn()
+		e.run_ai_turn()
+		assert_false(foe.cell in spirits.cells, "round %d: not among the spirits, %s" % [i + 1, foe.cell])
+		assert_eq(foe.creature.hp, 30, "round %d: untouched" % [i + 1])
+		e.end_turn()
+	assert_true(e.distance(foe, cleric) <= 20, "it waits at their edge, as close as it dares")
+	foe.creature.hp = 31
+	while e.current() != foe:
+		e.end_turn()
+	assert_eq(str(e.ai.plan_turn(foe)["kind"]), "attack", "31 Hit Points: 24 at the worst leaves the 7 it keeps")
 	e.run_ai_turn()
-	assert_true(foe.cell in spirits.cells, "then on in: %s" % foe.cell)
+	assert_true(foe.cell in spirits.cells)
+	assert_eq(e.distance(foe, cleric), 5, "in beside her")
+	while e.pending != null:
+		e.answer_reaction(false)
+
+
+## Beside a cleric in her own Spirit Guardians, with no one else to strike, it strikes her round after round: the hole
+## her own square makes in her spirits is no way round them (it used to walk out of them to close on her "round" them,
+## and strike only every other round or so).
+func test_beside_a_cleric_in_her_spirits_it_strikes_every_round() -> void:
+	var e := TestCombat.open_field(4)
+	var cleric := TestCombat.caster_with(e, ["spirit_guardians"], Vector2i(5, 4))
+	var foe := TestCombat.foe(e, "berserker", Vector2i(6, 4))
+	TestCombat.start_with(e, cleric)
+	assert_true(e.spells.cast(cleric, "spirit_guardians", 3).ok)
+	for i in 2:
+		while e.current() != foe:
+			e.end_turn()
+		var plan := e.ai.plan_turn(foe)
+		assert_eq(str(plan["kind"]), "attack", "round %d: %s" % [i + 1, plan.get("why", "")])
+		e.run_ai_turn()
+		while e.pending != null:
+			e.answer_reaction(false)
+		assert_eq(e.distance(foe, cleric), 5, "round %d: still beside her" % [i + 1])
+		e.end_turn()
+
+
+## The way round the ground leads nowhere this turn (a bystander stands in the one gap): it doesn't wait on it, it
+## goes through the ground, which won't drop it.
+func test_a_way_round_that_goes_nowhere_isnt_waited_on() -> void:
+	var e := TestCombat.encounter(LOOP, 3)
+	var hero := TestCombat.caster_with(e, ["cloud_of_daggers"], Vector2i(9, 3))
+	var foe := TestCombat.foe(e, "berserker", Vector2i(1, 3))
+	var bystander := TestCombat.foe(e, "bandit", Vector2i(1, 2))
+	bystander.side = &"neutral"
+	TestCombat.start_with(e, foe)
+	var cloud := _daggers(e, hero, _row(3, 4, 7))
+	assert_true(bool(e.ai.plan_turn(foe).get("round", false)), "a way round, as far as the map goes")
+	var hp := foe.creature.hp
+	e.run_ai_turn()
+	assert_true(foe.cell.x > 7, "through the daggers: %s" % foe.cell)
+	assert_false(foe.cell in cloud.cells)
+	assert_true(foe.creature.hp < hp, "and they cut")
+	assert_eq(e.distance(foe, hero), 5)
 
 
 func test_it_goes_for_the_hero_it_can_reach_round_the_area() -> void:

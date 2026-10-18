@@ -20,7 +20,8 @@ extends RefCounted
 ## fleeing a broken fight, and at Honour cruel foes striking the fallen.
 ## Dangerous ground (combat/ai/ai_hazards.gd: Spirit Guardians, Hunger of Hadar, Spike Growth, burning oil, found
 ## traps): a creature with an Intelligence above 3 walks round the ground it knows of, attacks from outside it, leaves
-## it, and goes in only when no foe can be reached any other way. The party's autopilot (tests) plays heroes so too.
+## it, and goes in only when no foe can be reached any other way, then at once rather than waste its turn, but never
+## where the ground at its worst could drop it (owner, 2026-10-18). The party's autopilot (tests) plays heroes so too.
 
 const PROFILES := {
 	"pack_hunter": {"oa_fear": 1.0, "finish": 1.5, "nearest": false, "flee_bloodied": false},
@@ -39,6 +40,10 @@ const PROFILES := {
 	"strahd": {"oa_fear": 0.8, "finish": 1.5, "nearest": false, "flee_bloodied": false},
 }
 
+## With no way round dangerous ground, what a point of its expected harm weighs against a foot gained on the target
+## (_harm_ft): little, so it presses on in rather than wait at the edge.
+const PRESS_FT := 0.25
+
 var _enc: WeakRef
 ## The last plan made, for tests and the debug overlay: {kind, target, cell, option, score, why}.
 var last_plan: Dictionary = {}
@@ -54,9 +59,6 @@ var hazards: AiHazards
 var _finishing: Combatant = null
 ## Walking-cost maps by start square and map shape (_walk_from), shared by every foe closing on that square.
 var _walks: Dictionary = {}
-## Creature id -> the round it held back at the edge of dangerous ground with no way round it (_approach_square): the
-## next round it goes in, so a foe never waits out a whole fight there.
-var _held_back: Dictionary = {}
 ## Creature id -> {round, target, gap}: the round it last closed round dangerous ground on a target, and how far off it
 ## was. Round after round with the gap no smaller (a cleric who keeps her Spirit Guardians on it as it circles), it
 ## stops circling and strikes from in the ground.
@@ -612,8 +614,9 @@ static func companion(t: Combatant) -> bool:
 ## it knows of (combat/ai/ai_hazards.gd): an attack from a square clear of it, walked to round it, comes first; while a
 ## foe can still be reached round it, it closes on that one (or strikes a familiar or a steed in reach) rather than go
 ## in; only when none can be, or it has circled that one a round already and is no nearer (_circling), does it go in,
-## where the ground costs least. Such a plan carries the ground: `avoid` (the
-## squares its walk goes round), or for an approach `hazards` (AiHazards.View) and `round` (a way round exists).
+## where the ground costs least, and never on a walk the ground at its worst could drop it on (AiHazards.View.deadly).
+## Such a plan carries the ground: `avoid` (the squares its walk goes round), or for an approach `hazards`
+## (AiHazards.View) and `round` (a way round exists).
 func plan_turn(c: Combatant) -> Dictionary:
 	var e := enc()
 	var prof := profile(c)
@@ -661,11 +664,16 @@ func plan_turn(c: Combatant) -> Dictionary:
 			for cell: Vector2i in cells:
 				# The walk there goes round the dangerous ground when that reaches the square.
 				var walk := calm if calm.has(cell) else reach
+				var path: Array[Vector2i] = []
+				if hz != null:
+					path = CombatGrid.path_to(walk, cell)
+					if hz.deadly(path):
+						continue
 				var cost := 0 if cell == c.cell else int((walk[cell] as Dictionary)["cost"])
 				var score := _score(c, t, o, cell, cost, walk, prof, threats)
 				var into := pet_best if pet else best
 				if hz != null:
-					var harm := hz.cost(CombatGrid.path_to(walk, cell))
+					var harm := hz.cost(path)
 					if harm > unavoidable + 0.01:
 						score -= harm
 						into = risky_pet if pet else risky
@@ -694,9 +702,10 @@ func plan_turn(c: Combatant) -> Dictionary:
 		best = risky_pet
 	# Honour: a cruel foe may strike a hero on 0 Hit Points instead (combat/ai/ai_tactics.gd), not from dangerous ground.
 	var fallen := tactics.fallen_plan(c, options, calm, threats, float(prof["oa_fear"]))
-	if not fallen.is_empty() and hz != null \
-			and hz.cost(CombatGrid.path_to(calm, fallen["cell"] as Vector2i)) > unavoidable + 0.01:
-		fallen = {}
+	if not fallen.is_empty() and hz != null:
+		var fpath := CombatGrid.path_to(calm, fallen["cell"] as Vector2i)
+		if hz.cost(fpath) > unavoidable + 0.01 or hz.deadly(fpath):
+			fallen = {}
 	if not fallen.is_empty() and float(fallen["score"]) > float(best["score"]):
 		best = fallen
 	if str(best["kind"]) == "attack":
@@ -730,15 +739,20 @@ func plan_turn(c: Combatant) -> Dictionary:
 
 
 ## The least harm the dangerous ground does `c` wherever it ends this turn's walk (`reach`, round the ground by `calm`
-## when that gets there), staying put included: 0 unless it can't get out of the ground this turn.
+## when that gets there), staying put included: 0 unless it can't get out of the ground this turn. The ground's `room`
+## rises to the least of its worst there too: what it can't walk away from rules no plan out.
 func _least_harm(c: Combatant, hz: AiHazards.View, reach: Dictionary, calm: Dictionary) -> float:
 	var here: Array[Vector2i] = [c.cell]
 	var least := hz.cost(here)
+	var worst := hz.worst(here)
 	for cell: Vector2i in reach:
-		if least <= 0.0:
+		if least <= 0.0 and worst <= hz.room:
 			break
 		if not bool((reach[cell] as Dictionary)["occupied"]):
-			least = minf(least, hz.cost(CombatGrid.path_to(calm if calm.has(cell) else reach, cell)))
+			var path := CombatGrid.path_to(calm if calm.has(cell) else reach, cell)
+			least = minf(least, hz.cost(path))
+			worst = minf(worst, hz.worst(path))
+	hz.room = maxf(hz.room, worst)
 	return least
 
 
@@ -922,7 +936,14 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 		if _take_off(c, plan):
 			plan.erase("square")
 			return _approach(c, plan)
-		return _through_door(c, plan)
+		var opened := _through_door(c, plan)
+		# The way round dangerous ground goes nowhere this turn (a creature in the gap, or a foe it could only shoot from
+		# somewhere it can't see from): on in through the ground instead, where that won't drop it, rather than wait.
+		if not plan.has("through_door") and bool(plan.get("round", false)) and plan.get("hazards") != null:
+			plan.erase("square")
+			plan["round"] = false
+			return _approach(c, plan)
+		return opened
 	if bool(sq["dash"]) and int(sq["cost"]) > c.movement_left:
 		e.dash(c)
 	var moved := e.move(c, best_cell, sq.get("avoid", {}) as Dictionary)
@@ -1002,8 +1023,9 @@ func _circling(c: Combatant) -> bool:
 ## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it, avoid: the
 ## squares its walk goes round}. It only looks (one Creature read), so think works it out with the plan. With the plan's
 ## dangerous ground (`hazards`, plan_turn): while there's a way round it (`round`), only squares walked to round it and
-## clear of it, out of it first; otherwise the squares it costs least to stand on, holding back at its edge one round
-## at most (_held_back).
+## clear of it, out of it first; otherwise on in, the ground weighing a little (_harm_ft), rather than wait at its edge
+## (owner, 2026-10-18), but on no walk the ground at its worst could drop it on while another is left
+## (AiHazards.View.deadly).
 func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 	var e := enc()
 	var target := plan["target"] as Combatant
@@ -1023,13 +1045,9 @@ func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 		if straight <= 5 or not walk.has(cell):
 			return straight if walk.has(cell) or straight <= 5 else straight + 1000
 		return int((walk[cell] as Dictionary)["cost"])
-	# With no way round, the ground weighs only until it has held back once (then on in it goes).
-	var weigh := round_it or (hz != null and int(_held_back.get(c.id, -9)) != e.round_no - 1)
 	var best_cell := c.cell
 	var here: Array[Vector2i] = [c.cell]
-	var best_base := int(dist.call(c.cell))
-	var nearest := best_base
-	var best_d := best_base + _harm_ft(hz, round_it, here, weigh)
+	var best_d := int(dist.call(c.cell)) + _harm_ft(hz, round_it, here)
 	var best_cost := 0
 	var prof := profile(c)
 	var threats: Array[Dictionary] = []
@@ -1052,30 +1070,30 @@ func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 		var cost := int((way[cell] as Dictionary)["cost"])
 		if not threats.is_empty() and _oa_risk(c, CombatGrid.path_to(way, cell), threats) > 0.0:
 			d += 15
-		var base := d
-		nearest = mini(nearest, base)
 		if hz != null:
-			d += _harm_ft(hz, round_it, CombatGrid.path_to(way, cell), weigh)
+			d += _harm_ft(hz, round_it, CombatGrid.path_to(way, cell))
 		if d < best_d or (d == best_d and cost < best_cost):
 			best_d = d
 			best_cell = cell
 			best_cost = cost
-			best_base = base
-	if hz != null and not round_it and weigh and best_base > nearest:
-		_held_back[c.id] = e.round_no
 	Creature.end_read()
 	return {"cell": best_cell, "cost": best_cost, "dash": dash_ok, "avoid": {} if hz == null else hz.avoid}
 
 
 ## Dangerous ground on the walk `path` and where it ends, in feet of approach (_approach_square): any at all rules a
-## square out while there's a way round it; otherwise every point of expected harm weighs 2 ft (nothing unless `weigh`).
-static func _harm_ft(hz: AiHazards.View, round_it: bool, path: Array[Vector2i], weigh: bool = true) -> int:
-	if hz == null or not weigh:
+## square out while there's a way round it, every point of expected harm weighing 2 ft; with none, each point weighs
+## PRESS_FT, so it presses on in for any real gain and of two ways in takes the one that costs less. A walk the ground
+## at its worst could drop it on (AiHazards.View.deadly) is ruled out while there's another, the least deadly last.
+static func _harm_ft(hz: AiHazards.View, round_it: bool, path: Array[Vector2i]) -> int:
+	if hz == null:
 		return 0
 	var harm := hz.cost(path)
-	if harm <= 0.0:
-		return 0
-	return (1000 if round_it else 0) + int(harm * 2.0)
+	var ft := 0
+	if harm > 0.0:
+		ft = 1000 + int(harm * 2.0) if round_it else int(harm * PRESS_FT)
+	if hz.deadly(path):
+		ft += 100000 + int(hz.worst(path))
+	return ft
 
 
 ## Walking costs from `cell` to every square of the map (no creature in the way: the shape of the walls, doors and
