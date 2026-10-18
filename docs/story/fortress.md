@@ -53,9 +53,9 @@ to any place: plain rests only where they are safe (an inn, a booked room, a saf
 ## Narrator lines
 
 narrative/narrator/daerns_fortress.dialogue (`item:fortress:rise` and `:fold`, `enter:` for the three maps, three
-`examine:` props, `rest:long:` for the two floors) was drafted by Gemini through Ashwin's ai-bridge (2026-10-18) and
+`examine:` props, `rest:long:` for the two floors, and `dream:daerns_fortress`, the three maps' shared region dreams) was drafted by Gemini through Ashwin's ai-bridge (2026-10-18) and
 trimmed and corrected here (iron became adamantine, grass and mud went because the tower can stand anywhere, no
-keyhole, no bolts). The brief and the raw reply are kept in docs/story/fortress/. None of these lines is voiced yet:
+keyhole, no bolts). The brief and the raw reply are kept in docs/story/fortress/ (the dreams were drafted later, 2026-10-18, in gemini_brief_dream_lines.md and gemini_reply_dream_lines.json; the draft said "iron walls" and had a stray colon, both fixed). None of these lines is voiced yet:
 the voice thread voices them.
 
 ## Hooks (for the build thread)
