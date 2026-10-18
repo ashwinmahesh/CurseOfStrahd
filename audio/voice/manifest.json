@@ -12595,6 +12595,12 @@
   "recipe": "ef2f9464fb",
   "text": "Then let's give them something good to report. I'll wave."
  },
+ "godrick_pendlebrook/570a1d4dfa95816e": {
+  "chars": 35,
+  "model": "eleven_v4",
+  "recipe": "ef2f9464fb",
+  "text": "Then we'll finish what you started."
+ },
  "godrick_pendlebrook/5a9f6040fe99fc96": {
   "chars": 133,
   "model": "eleven_v4",
@@ -16256,6 +16262,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "Anna's dress. She folded it in lavender. We're carrying it up a mountain to put it on a dead girl."
+ },
+ "hero_female/570a1d4dfa95816e": {
+  "chars": 35,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Then we'll finish what you started."
  },
  "hero_female/5847708d2ae51275": {
   "chars": 113,
@@ -20630,6 +20642,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Anna's dress. She folded it in lavender. We're carrying it up a mountain to put it on a dead girl."
+ },
+ "hero_male/570a1d4dfa95816e": {
+  "chars": 35,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Then we'll finish what you started."
  },
  "hero_male/5847708d2ae51275": {
   "chars": 113,
@@ -25141,6 +25159,12 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Who was particular?"
+ },
+ "ireena/2a18fc954ccb7c78": {
+  "chars": 55,
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He thinks I'm someone else. They all do, in this house."
  },
  "ireena/2a7cbc2afda24196": {
   "chars": 16,
@@ -37755,6 +37779,12 @@
   "recipe": "dd92281f92",
   "text": "The camp outside is empty and the fire has burned low. Madam Eva has not moved from her table."
  },
+ "narrator/07c3a6b5c2dc2632": {
+  "chars": 157,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One stave of the founder's cask is a door. Behind it, packed in straw, a small crossbow of dark walnut, cocked and ready, as if the founder expected company."
+ },
  "narrator/07e0903985cdf289": {
   "chars": 111,
   "model": "eleven_v4",
@@ -38810,6 +38840,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A shelf of rock above the goat path, out of the worst of the wind: a fire in a ring of stones, a low tent, and a sledge drawn up close to the warmth."
+ },
+ "narrator/100fcf6e9cab7b87": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the jetty's last boards, tied to a post below the waterline, an oilskin sack. In it is a breastplate, dry and bright, though the sack is soaked."
  },
  "narrator/1013a52bfac68007": {
   "chars": 73,
@@ -40299,6 +40335,12 @@
   "recipe": "dd92281f92",
   "text": "One grave has been dug up and filled in again, badly. A little way down, a slim wand of grey wood, dropped by whoever did the digging."
  },
+ "narrator/19e7bc0609045fa1": {
+  "chars": 178,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the chalk circle, one board lifts. Victor hid his worst idea where his father would never kneel: a black rod ending in three rubbery tentacles, which curl toward your hand."
+ },
  "narrator/19ea6f8fe3c2cf67": {
   "chars": 127,
   "model": "eleven_v4",
@@ -40484,6 +40526,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A waist-high stone with a sunburst cut into it, so old the rays are only dents. In the niche at its foot, a candle burnt down to nothing. Somebody has scraped dozens of old stubs out of the niche and stacked them neatly beside it."
+ },
+ "narrator/1ae0346724f18bd7": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The conjurer's bier has a hollow along its length. In it lies a staff of dark ash bound in copper, and the air around it smells of a coming storm."
  },
  "narrator/1aec4aa2d04cd564": {
   "chars": 86,
@@ -42339,6 +42387,12 @@
   "recipe": "dd92281f92",
   "text": "Pidlwick II sits with its painted face turned to the flames, ticking softly. Now and then it claps, once, at nothing."
  },
+ "narrator/27a308420012d369": {
+  "chars": 174,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The roots of the ribbon tree have been dug under and packed back. In the hollow, wrapped in a Vistani shawl, a short bow of dark yew that strings sweeter than any bow should."
+ },
  "narrator/27b97f7a037e8252": {
   "chars": 117,
   "model": "eleven_v4",
@@ -42422,6 +42476,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "In a crack of the lych-gate post, a stoppered vial of holy water, the wax on its stopper stamped with the morninglord's sun. Someone left it here for whoever needs it most."
+ },
+ "narrator/284a50fa96f84be7": {
+  "chars": 195,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "With the beacon burning, a niche you never noticed stands open at the foot of the bier. In it lies a belt of silver dragonhide, left by the dragon for whoever would finish what his knights began."
  },
  "narrator/284a75ae03743f02": {
   "chars": 154,
@@ -42596,6 +42656,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Castle Ravenloft stands on its pillar of rock above the valley, its towers lost in cloud. One window high up is lit, as it always is."
+ },
+ "narrator/29c72b4ef18e1ac3": {
+  "chars": 154,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The count's desk has a drawer no servant was meant to find. In it, on a cushion of black velvet, a brass bottle stoppered with lead and warm to the touch."
  },
  "narrator/29d17de1824e65f0": {
   "chars": 151,
@@ -42950,6 +43016,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The step crumbles under your boot and you go over the edge, onto the turn of the stair below."
+ },
+ "narrator/2c149b59692209c7": {
+  "chars": 198,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One board at the back of the shrine is newer than the rest. Under it, wrapped in oilcloth, a pilgrim's staff worn smooth by a lifetime of hands. It sits in your grip as if it remembers how to fight."
  },
  "narrator/2c1800fd175414a3": {
   "chars": 111,
@@ -43940,6 +44012,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Pidlwick puts one hand on the banister, and takes it off again. Then he writes on his slate and holds it up so only you can see."
+ },
+ "narrator/33686928ed0fca1d": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the nursemaid's mattress, wrapped in a shawl, lies a short sword that was never drawn. A card is tied to the hilt, with a single initial: G."
  },
  "narrator/336c87d1ce6efccd": {
   "chars": 49,
@@ -45278,6 +45356,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Your blade goes into the black wood at the foot of the row, and the whole row flinches, from one end to the other."
+ },
+ "narrator/3d2ea7cb3dc3697d": {
+  "chars": 167,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The empty plinth isn't solid. In a hollow under its top lies a single silver feather, cold as frost. The dragon's hoard was carried off; this one piece, someone saved."
  },
  "narrator/3d59335aed308cb1": {
   "chars": 104,
@@ -48291,6 +48375,12 @@
   "recipe": "dd92281f92",
   "text": "You sleep inside the palisade, to the sound of the watch calling the hours. Each one sounds a little less sure that all will be well."
  },
+ "narrator/53b3f57f1034652f": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The satchel's lining was slit and sewn shut again. Inside: a thin silver headband set with one blue stone, a scholar's best tool and best-kept secret."
+ },
  "narrator/53b4b2491e05ae8e": {
   "chars": 196,
   "model": "eleven_v4",
@@ -50427,6 +50517,12 @@
   "recipe": "dd92281f92",
   "text": "Silver in felt-lined drawers, every fork counted and in its place. The house will notice what's missing."
  },
+ "narrator/62759281a98dbdb6": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The fallen trunk is hollow at one end. Inside lies a staff carved with scales, and when you lift it, it is warm and heavy as a living snake."
+ },
  "narrator/6287c13a48a20f7a": {
   "chars": 73,
   "model": "eleven_v4",
@@ -50456,6 +50552,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The lanterns drop into the mud, still burning. The mourners come on without them."
+ },
+ "narrator/62c012c7b1bd8f1b": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Propped behind the fishers' shrine, a trident with a shaft of green coral and barbs like new silver. It sits in your hands as if it was made for them."
  },
  "narrator/62d3737c22a0a2ee": {
   "chars": 84,
@@ -50846,6 +50948,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The cells stand open and empty. Straw, a tin cup, scratches on the wall in long rows, counting something."
+ },
+ "narrator/655e5e1ba18d13ed": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the shrine of Mother Night, an offering nobody came back for: a little elephant carved from black marble."
  },
  "narrator/656fd9a4f3c5b462": {
   "chars": 113,
@@ -56757,6 +56865,12 @@
   "recipe": "dd92281f92",
   "text": "A rutted lane under dripping pines, the trees so close on either side that the sky is a grey stripe overhead. Cart tracks, footprints, and nobody."
  },
+ "narrator/9017b3ff3e795118": {
+  "chars": 127,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind the wizard's casks, in a nest of old corks, a small hand drum. Tap it once and the whole cellar seems to fall into step."
+ },
  "narrator/901c0c53ba473e85": {
   "chars": 64,
   "model": "eleven_v4",
@@ -58095,6 +58209,18 @@
   "recipe": "dd92281f92",
   "text": "A cramped room with an iron winch and a chain that runs up into the wall."
  },
+ "narrator/99d645eef2ddeb90": {
+  "chars": 167,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One of the organ's stops doesn't make a sound. Pull it and a panel swings open on a plain staff of ironwood, humming faintly, as if the organ's notes had gone into it."
+ },
+ "narrator/99ec8d011d8504de": {
+  "chars": 163,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Among Ludmilla's books is a thick manual bound in red leather, all exercises and drawings of the body. Leafing through it, you feel your heartbeat slow and steady."
+ },
  "narrator/99f74b02943bfc12": {
   "chars": 104,
   "model": "eleven_v4",
@@ -58730,6 +58856,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "\"Bracken. A root through my leg. Adrian wouldn't go, so I gave him the order in Father's voice. Tell Father it was mine. Tell him I was good at it.\""
+ },
+ "narrator/9eea3dc59060b3c3": {
+  "chars": 184,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Set into the arm of the throne of bones, where a hand would rest, is a pale blue stone. Pry it loose and it slips from your fingers to circle your head, and your grip closes like iron."
  },
  "narrator/9ef34be477affc08": {
   "chars": 121,
@@ -59691,6 +59823,12 @@
   "recipe": "dd92281f92",
   "text": "And then it rings again, and the water stands up a second time. They were never coming for just one."
  },
+ "narrator/a52d4412b70bd07f": {
+  "chars": 134,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One suit of armour on the rack hasn't rusted in four hundred years. Its plates are bright and fine, and it weighs half what it should."
+ },
  "narrator/a53f9fca9ed58472": {
   "chars": 201,
   "model": "eleven_v4",
@@ -60026,6 +60164,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "After a moment the rider lifts a gloved hand in return. Then he closes it, one finger at a time, as if around something small."
+ },
+ "narrator/a7b560187921f385": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the oldest niche lies an old priest in rotted vestments, his hands folded on the haft of an iron mace. The rust stops where his fingers held it."
  },
  "narrator/a7e881d3f4740d20": {
   "chars": 94,
@@ -61935,6 +62079,12 @@
   "recipe": "dd92281f92",
   "text": "You kneel by the bed and lay a hand on the boy's chest and pray. For a moment nothing. Then the warmth under your palm changes: not the fever's heat, but a cleaner one, like sun through a shutter."
  },
+ "narrator/b6941ffab04686ce": {
+  "chars": 87,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You pray in the dead chapel anyway, and under the altar's dust something still answers."
+ },
  "narrator/b694babbc4056604": {
   "chars": 215,
   "model": "eleven_v4",
@@ -63260,6 +63410,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "There's a scrabble of claws behind you, and Lupu comes through the study door like a grey storm and plants himself between you and the stair, and growls at the boy he used to sleep beside."
+ },
+ "narrator/c100333a462afaea": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A narrow closet that smells of lamp oil. Lamps hang in rows on hooks, every one of them cold. Whoever kept this closet hidden kept more than lamps in it."
  },
  "narrator/c10438a4de61021b": {
   "chars": 92,
@@ -66279,6 +66435,12 @@
   "recipe": "dd92281f92",
   "text": "Izek comes off the cot in one movement, and the arm that isn't his starts to glow like a coal someone has blown on."
  },
+ "narrator/d72878d7b5c811d4": {
+  "chars": 192,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A drawer hides in the base of the toy chest, the kind a boy finds and tells nobody about. Inside, a leather sling and a handful of smooth stones, and the stones always seem to find their mark."
+ },
  "narrator/d72f01e8b2601119": {
   "chars": 93,
   "model": "eleven_v4",
@@ -67455,6 +67617,12 @@
   "recipe": "dd92281f92",
   "text": "You read him the bottom of his wall. At \"laughed like a goose\" he laughs, and the sound is so alive that everyone flinches."
  },
+ "narrator/e0ae0b051b89d301": {
+  "chars": 157,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the hovel's step, someone keeps a sack. In it, a jerkin of supple black leather, oiled and patched, that turns a knife better than it has any right to."
+ },
  "narrator/e0b2b6463d541028": {
   "chars": 110,
   "model": "eleven_v4",
@@ -68127,6 +68295,12 @@
   "recipe": "dd92281f92",
   "text": "His jaw works. What comes out isn't a word, only the shape of one: a sentry asked for the watchword who has forgotten it. Then he turns smartly about and goes on with his round."
  },
+ "narrator/e4f56692be2c05c9": {
+  "chars": 166,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind the chapel altar, a small silver reliquary in the shape of a dragon's claw. Inside lies a wide silver bowl for holy water, and the water in it is still moving."
+ },
  "narrator/e4fc0effa50977f1": {
   "chars": 148,
   "model": "eleven_v4",
@@ -68222,6 +68396,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Wren comes back to the fire late, with his hands in his pockets, which he never does."
+ },
+ "narrator/e5a687b4080115bd": {
+  "chars": 193,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the front pew, a board lifts on a hollow as long as a man is tall. In it lies a black staff whose head is carved as a snake, its eyes polished bright, hidden from someone a long time ago."
  },
  "narrator/e5ae93cdb5e61746": {
   "chars": 101,
@@ -69747,6 +69927,12 @@
   "recipe": "dd92281f92",
   "text": "Two little beds, a rocking horse, drawings pinned to the walls, and a dollhouse so fine it seems to be holding its breath. The door was locked from the outside."
  },
+ "narrator/f10927aa854b89e9": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind the wayside shrine, someone left a tin for whoever needed it next. Inside is a flask of grey syrup, and holding it, your skin feels like stone."
+ },
  "narrator/f118a7253ae240dc": {
   "chars": 242,
   "model": "eleven_v4",
@@ -69908,6 +70094,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The west gate opens onto the lake road and a ring of painted wagons outside the walls. Music comes from the wagons, and the watch on this gate pretends very hard not to hear it."
+ },
+ "narrator/f26b18db9508af30": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The dragon's desk has a drawer a human hand would never find. In it, a bronze griffon no bigger than your thumb, wings half spread, waiting to be told to fly."
  },
  "narrator/f2723ad15d01aac3": {
   "chars": 103,
@@ -70820,6 +71012,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Somebody's grandparents, stacked like turnips. You leave them be."
+ },
+ "narrator/f9d56c1577ecde88": {
+  "chars": 165,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the grey quilt of dust on the chapel altar lies a rough pink stone like a heart. Lift it, and it rises from your palm and circles your head, steady as a pulse."
  },
  "narrator/f9e80da745c1853b": {
   "chars": 91,
