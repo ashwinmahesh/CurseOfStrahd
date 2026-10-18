@@ -910,6 +910,9 @@ func _refresh_strip() -> void:
 		card.mouse_filter = Control.MOUSE_FILTER_PASS
 		card.gui_input.connect(func(ev: InputEvent) -> void:
 			if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+				# The click is the order's alone: passed on, the board took it for a click on the square behind the card
+				# and walked the hero just taken there (owner, 2026-10-18).
+				card.accept_event()
 				if c in e.shared_heroes() and c != e.current():
 					inspect_requested.emit(c.id)
 				else:
