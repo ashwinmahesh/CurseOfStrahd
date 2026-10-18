@@ -304,11 +304,7 @@
       ],
       "kind": "examine",
       "label": "The fallen chandelier",
-      "model": "candelabra",
-      "span": [
-        2,
-        2
-      ]
+      "model": "candelabra"
     },
     {
       "id": "holt_ballroom_harp",
@@ -431,24 +427,14 @@
       "model": "painting"
     },
     {
-      "id": "holt_kitchen_stove",
-      "cell": [
-        24,
-        14
-      ],
-      "kind": "decor",
-      "label": "A cold stove",
-      "model": "stove"
-    },
-    {
       "id": "holt_iron_pot",
       "cell": [
-        24,
-        15
+        26,
+        14
       ],
       "kind": "examine",
       "label": "A rattling iron pot",
-      "model": "stewpot",
+      "model": "stove",
       "checks": [
         {
           "id": "holt_pot_lid",
@@ -478,7 +464,7 @@
     {
       "id": "holt_kitchen_herbs",
       "cell": [
-        26,
+        24,
         14
       ],
       "kind": "decor",
