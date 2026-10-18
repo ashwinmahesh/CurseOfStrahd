@@ -182,8 +182,8 @@ Eleven maps (data/locations/). Map themes use only existing ones; §11 lists the
    squares, 4d10 fire, Dexterity 15 for half, spent when the first one walks in). `tsolenka_pass/events:green_fire` puts
    it out for good (`tsolenka_green_fire_out`) by Arcana 15 (one try for the party: a failure shuts that way) or Dispel
    Magic (any caster who has it prepared, no roll, no slot); stepping back or walking in always works.
-5. **Two stone demons** (props `tsolenka_vrock_w` and `_e`, drawn with the gargoyle's art until the vrock's own sprite
-   is done) stand against the wall either side of the gate: the book's two petrified vrocks, which wake if anyone climbs
+5. **Two stone demons** (props `tsolenka_vrock_w` and `_e`, drawn with the gargoyle's art; the vrocks they turn into have
+   their own sprite) stand against the wall either side of the gate: the book's two petrified vrocks, which wake if anyone climbs
    the wall. Ours wake when the party forced the gate past the watch (`tsolenka_watch_fate` = `fought`) and steps out of
    the tower onto the road before it: `tsolenka_vrocks` (stat block `vrock`, the 2025 Monster Manual's, with Hit Points
    tuned by level), and the statues are gone once it is won (`tsolenka_vrocks_woke`). A party the watch let through, or
