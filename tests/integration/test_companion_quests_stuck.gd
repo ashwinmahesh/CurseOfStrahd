@@ -129,6 +129,68 @@ func test_the_beacon_still_knights_godrick_when_godfrey_saw_the_sword() -> void:
 	assert_ne(_offered(st, "godrick"), "camp/godrick:talk_unknighted")
 
 
+# --- The Last Lesson --------------------------------------------------------------------------------------------------
+
+func _rahadin_dead(stage: String, met: bool) -> StoryState:
+	var st := _party(COURT)
+	st.set_quest_stage("the_last_lesson", stage)
+	st.set_flag("rahadin_defeated")
+	if met:
+		st.set_flag("wren_rahadin_met")
+	return st
+
+
+func test_wren_is_left_without_his_lesson_in_a_camp_talk() -> void:
+	assert_true(DialogueFile.load_key("camp/wren").nodes.has("talk_unsaid"), "the talk exists")
+	for stage: String in ["the_letter", "the_brother", "let_her_rest", "the_chamberlain"]:
+		for met: bool in [true, false]:
+			var st := _rahadin_dead(stage, met)
+			_mark_before(st, "wren", "talk_unsaid")
+			assert_eq(_offered(st, "wren"), "camp/wren:talk_unsaid", "offered from %s" % stage)
+			var beats := SideQuestPlay.play(st, "camp/wren:talk_unsaid")
+			assert_eq(SideQuestPlay.missing(beats), "")
+			var want := "unlearned" if met else "unsaid"
+			assert_eq(st.quest_stage("the_last_lesson"), want, "%s, met=%s" % [stage, met])
+			assert_eq(_ends("the_last_lesson", want), "failure")
+			assert_true(st.quest_ended("the_last_lesson"))
+			CampTalk.mark(st, "camp/wren:talk_unsaid")
+			assert_ne(_offered(st, "wren"), "camp/wren:talk_unsaid", "it plays once")
+
+
+func test_wren_keeps_his_chance_while_rahadin_lives_or_the_lesson_is_settled() -> void:
+	var talk := "camp/wren:talk_unsaid"
+	var st := _rahadin_dead("the_chamberlain", true)
+	st.flags.erase("rahadin_defeated")
+	_mark_before(st, "wren", "talk_unsaid")
+	assert_ne(_offered(st, "wren"), talk, "Rahadin is alive: his scene is still there")
+	for settled: String in ["learned", "unlearned", "unsaid"]:
+		var done := _rahadin_dead("the_chamberlain", true)
+		done.set_quest_stage("the_last_lesson", settled)
+		_mark_before(done, "wren", "talk_unsaid")
+		assert_ne(_offered(done, "wren"), talk, "%s is already settled" % settled)
+	var fresh := _rahadin_dead("the_chamberlain", true)
+	fresh.quests.erase("the_last_lesson")
+	_mark_before(fresh, "wren", "talk_unsaid")
+	assert_ne(_offered(fresh, "wren"), talk, "the quest never began")
+	var away := SideQuestPlay.party(["liriel_dawnsong", "thistle"], 9, COURT, 22)
+	away.set_quest_stage("the_last_lesson", "the_chamberlain")
+	away.set_flag("rahadin_defeated")
+	assert_false(StoryConditions.check(CampTalk.opening_condition(DialogueFile.load_key("camp/wren"), "talk_unsaid"), away), "no Wren, no talk")
+
+
+func test_wren_has_his_rest_talk_before_the_loss() -> void:
+	# Patrina laid to rest and Rahadin dead before either was talked over: the rest comes first, then the loss.
+	var st := _rahadin_dead("the_brother", false)
+	st.set_quest_stage("patrinas_wail", "at_rest")
+	_mark_before(st, "wren", "talk_rest")
+	assert_eq(_offered(st, "wren"), "camp/wren:talk_rest")
+	SideQuestPlay.play(st, "camp/wren:talk_rest")
+	assert_eq(st.quest_stage("the_last_lesson"), "let_her_rest")
+	CampTalk.mark(st, "camp/wren:talk_rest")
+	_mark_before(st, "wren", "talk_unsaid")
+	assert_eq(_offered(st, "wren"), "camp/wren:talk_unsaid")
+
+
 func test_godrick_stops_asking_about_the_orders_books_once_it_has_gone_home() -> void:
 	# His reading talk is about the Order's oaths written down: it waits for an Order that is still there.
 	var cond := CampTalk.opening_condition(DialogueFile.load_key("camp/godrick"), "talk_letters")

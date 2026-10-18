@@ -1,0 +1,45 @@
+You are drafting dialogue for a single-player D&D 5e computer game, "Curse of Strahd" (Gothic horror, Barovia). I will edit what you write, so write plain text only: no markdown, no headings, no routing, no questions back. Reply with the lines only, grouped under the labels given.
+
+THE CHARACTER
+Wren Featherfoot (he/him) is a twenty-eight-year-old halfling monk, a former street tumbler and pickpocket. Fast, wry, chatty and light, in a London accent: one-liners, comebacks, cheerful insults, always the last word. Physical while he talks (handstands, juggling, catching flies). Quotes his dead teacher's sayings in a mock-solemn voice, then sometimes means them: "Master Sorrel says..." Pet phrases: "Easy." "Watch this." "Rude." "I'll allow it." He deflects every serious moment with a joke, until he doesn't; the one sincere line per scene is the one that counts, and it should cost him. When he is angry or grieving the jokes stop and his sentences go short and very calm. Keep his lines short; the joke goes at the end. Witty means quick and kind, never smug. Fear: that he is a clown with good knees, tricks all the way down, and standing still. Sample lines: "Master Sorrel says patience is a weapon. Never seen it stop a wolf, but I'm young." / "Lovely castle. Bit drafty. Bit evil."
+
+THE QUEST: The Last Lesson
+Wren's teacher Master Sorrel took him in off the street after Wren tried to pick his pocket ("You have very good hands and a very bad teacher. I can fix one of those."), taught him a lesson a day for fourteen years, and died before the last one. He left a sealed letter for his brother Kasimir, a dusk elf in the valley where the sun does not rise, and said the last lesson was in the letter. Sorrel never once said the name of Rahadin, the chamberlain of Castle Ravenloft, a dusk elf too, who killed Sorrel's family for Strahd and carries their screaming voices around him; Sorrel's mother is one of them. Wren hates Rahadin and knows hating him is the wrong lesson. In the intended ending Wren stands in front of Rahadin and tells him that Sorrel never hated him, only pitied him, and that Wren pities him too; every voice around Rahadin goes quiet; Wren walks away on his own two feet; and he works out the last lesson: "You don't get finished on your own. You need someone to walk up the stairs with." Existing lines for tone:
+  Wren: Sorry, Master.
+  Wren: Right. Yes. Thank you. Not now. Not like that.
+  Wren: She's at rest. Patrina. Four hundred years of turning pages, and she closed the book. Kasimir said she looked surprised. Like she'd forgotten you were allowed to stop.
+  Wren: So. That's done. Letter's delivered. I've been waiting all day to feel different. I keep stopping in doorways.
+  Wren: I don't feel finished. That's the thing. Master Sorrel said the last lesson was in the letter, and I've read the letter, well, I've heard it read, and I still don't know what the lesson was.
+  Narrator: Wren is sitting very still at the fire tonight. It's the most unsettling thing you've seen him do.
+
+THE BUG WE ARE FIXING
+Rahadin can be killed in an ordinary fight with the party before Wren ever gets his scene with him. Then there is nobody left to say it to, nothing in the story notices, and the quest stays open forever. We are adding a failure ending. It plays as a quiet camp scene on a night after Rahadin's death, and has two versions:
+  Version A (the quest stage already exists, called "unlearned"): Wren DID stand in front of Rahadin once and was pulled back by the party; then the party fought and killed Rahadin anyway, Wren fighting beside them. He is not angry at the party. He fought, and the lessons he fought with were not Sorrel's.
+  Version B (a new stage called "unsaid"): Wren never got his scene at all. Rahadin is dead and Wren never said Sorrel's name to him. The last lesson went into the ground with the chamberlain.
+The party did nothing wicked: Rahadin was a murderer and a killer of many. But it cost Wren something he needed.
+
+WHAT I NEED (Wren speaks as "Wren"; the Narrator as "Narrator"; optional mood in brackets from: sad, angry, afraid, sly. One or two sentences a line. Two to five lines a node.)
+
+LABEL open: 3 or 4 lines to open the scene, used by both versions. Narrator sets it (Wren is not doing a handstand, not juggling; he is standing still, which scares him). Wren says that Rahadin is dead and that he should be glad, and is not sure what he is.
+
+LABEL version_a: 3 lines, Version A only. He stood in front of him once, they pulled him back, and then it happened anyway with a sword. He fought. He is not blaming anyone. None of what he did was Sorrel's.
+
+LABEL version_b: 3 lines, Version B only. He never got to say it. He had it ready. Now it is a speech for nobody.
+
+LABEL answer_lesson: the player says "Maybe the lesson isn't one you needed him for." Wren answers in 2 or 3 lines: tries the joke, fails, says one sincere thing, and is unsure.
+
+LABEL answer_sorry: the player says "I'm sorry, Wren." Wren answers in 2 lines.
+
+LABEL answer_sit: the player says nothing and sits down beside him. 1 or 2 lines (a Narrator line and a Wren line).
+
+LABEL close: 1 or 2 lines used after any answer. One quiet image of what he does now. Use the motif that he keeps stopping in doorways; he cannot stand still, and tonight he does. Not a lecture, not a promise to try again.
+
+LABEL journal_unsaid: the journal entry for the new failure stage "unsaid", 2 or 3 sentences in the journal's plain past-tense third-person voice about Wren, as for the existing entries:
+  "Strahd's chamberlain Rahadin is a dusk elf too. The screaming that follows him is the voices of everyone he ever killed for his master, and Sorrel's mother is one of them. Sorrel never once said his name."
+  "Wren went for Rahadin's throat with every lesson he had, and none of them were Sorrel's. Whatever happens now, Wren knows which lesson he skipped."
+It must record that Rahadin died before Wren could say what Sorrel would have wanted said, with one quiet image of what was lost. Do not use the words "quest" or "failed".
+
+THREE LIMITS
+1. The failure scene is quiet and specific: one image of what was lost, never a lecture and never the word "failed".
+2. Do not make the failure free, and do not blame the player more than once. Do not invent new characters, places or names beyond those given.
+3. Wren gets one sincere line in the whole scene.

@@ -1,0 +1,35 @@
+LABEL open
+Narrator: Wren isn't on his hands tonight, and he isn't tossing pebbles at the dark. He's just standing by the edge of the firelight with his arms at his sides, as if he doesn't know what to do with them when they aren't moving.
+Wren [sly]: So. Rahadin's dead. Rude of him to go down that easy, really.
+Wren: I had a whole speech worked out, and now he's just a very quiet corpse on a very cold floor.
+Wren: I'm supposed to be glad, aren't I. I'm waiting for the glad bit to show up.
+
+LABEL version_a
+Wren: We were right there in front of him before, and you pulled me back, which was probably the smart play. Then the swords came out anyway.
+Wren: Don't look at me like that, I threw the first punch after the steel cleared. Good form, too, right in the ribs.
+Wren [sad]: Just wasn't anything Master Sorrel ever taught me.
+
+LABEL version_b
+Wren: Never even got in the same room with him until the blades were out. Fourteen years of lessons, and I didn't get to say Master Sorrel's name to his face once.
+Wren [sly]: Had the words lined up in my head like three tin cups on a barrel. Watch this, I was going to say.
+Wren: Bit daft, keeping a speech in your pocket for a dead man.
+
+LABEL answer_lesson
+Wren [sly]: Oh, brilliant, a riddle I can do by myself. Master Sorrel says a wise man learns from an empty room, except he never said that, because it's rubbish.
+Wren [afraid]: I think if I don't know what the last lesson was now, I'm just a pickpocket who learned to jump high.
+Wren: Maybe you're right. Doesn't feel like it tonight, though.
+
+LABEL answer_sorry
+Wren [sly]: Easy. He was a butcher with a choir of ghosts in his coat, not my favourite uncle.
+Wren: You didn't take anything from me that wasn't already gone the second we drew steel.
+
+LABEL answer_sit
+Narrator: You sit beside him in the dirt. For once, he doesn't shift away or find a trick to fill the quiet.
+Wren: Thanks. I'll allow it.
+
+LABEL close
+Narrator: He stays where he is, right on the line where the firelight stops, like a man caught in a doorway with nowhere left to go.
+Wren: I'm just going to stand here a minute. Don't make a fuss.
+
+LABEL journal_unsaid
+Rahadin died with our blades in him before Wren ever spoke Master Sorrel's name to his face. Whatever Sorrel meant his boy to learn at the end went into the cold ground with the chamberlain, like a letter dropped in the mud and never opened. Wren has stopped practicing his steps at night.

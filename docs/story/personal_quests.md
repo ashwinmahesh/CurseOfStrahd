@@ -120,6 +120,7 @@ Kasimir". Sorrel was Kasimir's and Patrina's younger brother, who left before th
 | `let_her_rest` | After patrinas_wail ends (at rest, destroyed, or restored) | camp/wren:talk_rest |
 | `the_chamberlain` | Rahadin, in Castle Ravenloft | castle_ravenloft/court_rahadin menu, lesson:rahadin |
 | `learned` / `unlearned` | Pity instead of hate, and he walks away (success); or he goes for Rahadin's throat (failure, the fight) | lesson:rahadin_pity, :rahadin_rage |
+| `unlearned` / `unsaid` (failure) | Rahadin is killed in an ordinary fight before Wren's scene, so there is nobody left to say it to. At the next camp talk Wren who had stood before him once (`wren_rahadin_met`) closes it as `unlearned`; Wren who never got that far, as the new `unsaid` | camp/wren:talk_unsaid |
 
 ## Kip Smudgewick: The Fine Print (`the_fine_print`)
 

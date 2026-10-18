@@ -177,6 +177,63 @@ interject name:wren_featherfoot: I don't feel finished. That's the thing. Master
 quest the_last_lesson let_her_rest
 -> END
 
+# --- When Rahadin is dead and the lesson wasn't said (the chamberlain fell before Wren's scene) ------------------------
+
+# Rahadin can be killed in an ordinary fight before Wren's scene at his side (companions/lesson:rahadin), and then there
+# is nobody left to say it to: nothing else could finish The Last Lesson. Once he is down, the next night at camp closes it.
+# `wren_rahadin_met` is the scene's own flag: Wren who stood before him and was pulled back fought beside the party
+# (`unlearned`, the stage his own rage ends in); Wren who never got that far lost it unsaid (`unsaid`).
+~ talk_unsaid
+if name:wren_featherfoot and flag.rahadin_defeated and quest.the_last_lesson and not (quest.the_last_lesson >= learned)
+-> unsaid
+endif
+-> END
+
+~ unsaid
+Narrator: Wren isn't on his hands tonight, and he isn't juggling. He's standing at the edge of the firelight with his arms at his sides, as if he doesn't know what to do with them when they aren't moving.
+interject name:wren_featherfoot: So. Rahadin's dead. Rude of him to go down that easy, really.
+interject name:wren_featherfoot: I had a whole speech worked out, and now he's a very quiet corpse on a very cold floor.
+interject name:wren_featherfoot: I'm supposed to be glad, aren't I. I'm waiting for the glad bit to show up.
+if flag.wren_rahadin_met
+interject name:wren_featherfoot: I stood in front of him once, remember. You pulled me back, which was probably the smart play. Then the swords came out anyway.
+interject name:wren_featherfoot: And I was in it with the rest of you, fists and all. I'm not blaming anyone. I'm saying none of it was anything Master Sorrel taught me.
+else
+interject name:wren_featherfoot: I never even got to stand in front of him. One minute he's in his hall and the next there's steel everywhere. Fourteen years of lessons, and I never once said Master Sorrel's name to his face.
+interject name:wren_featherfoot: I had the words lined up in my head like three tin cups on a barrel. Watch this, I was going to say. Bit daft, keeping a speech in your pocket for a dead man.
+endif
+* Maybe the lesson isn't one you needed him for. -> unsaid_lesson
+* I'm sorry, Wren. -> unsaid_sorry
+* (Sit down beside him.) -> unsaid_sit
+
+~ unsaid_lesson
+interject name:wren_featherfoot: Oh, brilliant, a riddle I can solve by myself. Master Sorrel says a wise man learns from an empty room. He never said that. It's rubbish.
+interject name:wren_featherfoot: If I don't know what the lesson was now, I'm just a pickpocket who learned to jump high.
+interject name:wren_featherfoot: Maybe you're right. Doesn't feel like it tonight.
+approve wren_featherfoot +3: You said the lesson might not need Rahadin
+-> unsaid_end
+
+~ unsaid_sorry
+interject name:wren_featherfoot: Easy. He was a butcher with a choir of ghosts in his coat, not my favourite uncle.
+interject name:wren_featherfoot: You didn't take anything from me I'd have been allowed to keep.
+approve wren_featherfoot +2: You told me you were sorry about Rahadin
+-> unsaid_end
+
+~ unsaid_sit
+Narrator: You sit down beside him. For once he doesn't shift away or find a trick to fill the quiet.
+interject name:wren_featherfoot: Thanks. I'll allow it.
+approve wren_featherfoot +2: You sat with me the night Rahadin died
+-> unsaid_end
+
+~ unsaid_end
+if flag.wren_rahadin_met
+quest the_last_lesson unlearned
+else
+quest the_last_lesson unsaid
+endif
+Narrator: He stays where he is, right at the line where the firelight stops, like a man caught in a doorway.
+interject name:wren_featherfoot: I'm just going to stand here a minute. Don't make a fuss.
+-> END
+
 # --- As he comes to trust the party (approval) --------------------------------------------------------------------
 
 ~ talk_warm

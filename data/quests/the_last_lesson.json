@@ -51,6 +51,12 @@
       "journal": "Wren went for Rahadin's throat with every lesson he had, and none of them were Sorrel's. Whatever happens now, Wren knows which lesson he skipped.",
       "objectives": [],
       "ends": "failure"
+    },
+    {
+      "id": "unsaid",
+      "journal": "Rahadin died before Wren could say Master Sorrel's name to his face. Whatever Sorrel meant his boy to learn at the end went into the ground with the chamberlain, like a letter dropped in the mud and never opened. Wren stood very still at the edge of the firelight that night, and didn't make a joke of it.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }
