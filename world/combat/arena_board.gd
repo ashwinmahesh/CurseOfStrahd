@@ -246,13 +246,14 @@ func _build() -> void:
 			SeeThrough.mark(b["root"] as Node3D)
 
 
-## Short flights of steps (Stairs.flight) up each 5 ft rise between two walkable built floors, in the regions that
-## have them (Stairs.FLIGHT_REGIONS, Castle Ravenloft: owner 2026-10-15, no stepping straight up onto 5 ft blocks), in
-## the raised floor's own stone. The gates' wall walk and its stairs are CastleBuilder's, which steps them itself.
+## Short flights of steps (Stairs.flight) up each 5 ft rise between two walkable built floors, in every location
+## (owner: Castle Ravenloft 2026-10-15, every place 2026-10-17, no stepping straight up onto 5 ft blocks: the werewolf
+## den's ledges, the Argynvostholt beacon's stair, Krezk's wall walk), in the raised floor's own stone or boards. The
+## gates' wall walk and its stairs are CastleBuilder's, which steps them itself. A prop stood on (a cart, a perch) is
+## its own model, and natural ground 5 ft apart is a slope, so neither has a flight.
 func _flights(dais: Material) -> void:
-	if place == "" or not Compendium.shared().has("locations", place) \
-			or not str(Compendium.shared().get_entry("locations", place).get("region", "")) in Stairs.FLIGHT_REGIONS:
-		return
+	if place == "":
+		return   # a board with no location (the test arena, tool previews) keeps plain blocks
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
@@ -277,6 +278,7 @@ func _flights(dais: Material) -> void:
 					mi.material_override = mat
 					holder.add_child(mi)
 				flights.append(holder)
+				stepped[n] = true
 
 
 ## A square the party walks on (not a wall, the void or deep water).
@@ -286,6 +288,9 @@ func _walked_floor(c: Vector2i) -> bool:
 
 ## The flights of steps the board drew (_flights), each a node of step boxes named Flight_<lower x>_<lower z>_<upper x>_<upper z>.
 var flights: Array[Node3D] = []
+## The lower squares those flights stand in: room clutter (Furnish) puts no floor piece there, where it would stand in
+## the steps.
+var stepped: Dictionary = {}
 ## Tall billboards (trees) that fade when they stand between the camera and the party.
 var occluders: Array[Sprite3D] = []
 ## 3D trees (ModelPiece) and rock columns (place_looks "rock_walls") that fade the same way.

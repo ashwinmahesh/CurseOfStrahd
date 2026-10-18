@@ -9,7 +9,8 @@ extends RefCounted
 ## theme; every pick comes from the square, so a place is furnished the same way every time.
 ##
 ## The location's own things come first: no piece goes on a wall square that holds one of them, on a square anything
-## stands on, beside a door, an exit, a spawn or a person, or on difficult ground. Nothing here changes the rules grid.
+## stands on, beside a door, an exit, a spawn or a person, or on difficult ground, and no floor piece stands in a flight
+## of small steps (ArenaBoard.stepped). Nothing here changes the rules grid.
 
 
 ## Furnishes `board`'s rooms (ArenaBoard calls it once its squares are dressed). Returns how many pieces it placed.
@@ -73,7 +74,8 @@ static func dress(board: ArenaBoard, loc: Dictionary) -> int:
 						hung = true
 						placed += 1
 						_light(board, c, wall_dir, art, lit, lights, ai, cfg)
-			if hung or board.grid.has_flag(c, CombatGrid.LOW) or board.grid.has_flag(c, CombatGrid.DIFFICULT):
+			if hung or board.grid.has_flag(c, CombatGrid.LOW) or board.grid.has_flag(c, CombatGrid.DIFFICULT) \
+					or board.stepped.has(c):
 				continue
 			var key := "floor"
 			var fill := float(rule.get("floor_fill", cfg.get("floor_fill", 0.6)))

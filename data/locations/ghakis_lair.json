@@ -654,8 +654,8 @@
     {
       "id": "ghakis_hoard_chest",
       "cell": [
-        18,
-        3
+        20,
+        2
       ],
       "kind": "decor",
       "label": "An open chest",
@@ -664,8 +664,8 @@
     {
       "id": "ghakis_jewel_box",
       "cell": [
-        26,
-        3
+        24,
+        2
       ],
       "kind": "decor",
       "label": "A jewel box",
