@@ -152,7 +152,7 @@ interject name:godrick_pendlebrook: Right then. Bed. Big day tomorrow. All the d
 -> END
 
 ~ talk_letters
-if name:godrick_pendlebrook and quest.the_ladle >= the_order_found and not (quest.the_ladle >= knighted) and flag.eva_truth_teller != "godrick_pendlebrook"
+if name:godrick_pendlebrook and quest.the_ladle >= the_order_found and not (quest.the_ladle >= knighted) and quest.the_ladle != unknighted and flag.eva_truth_teller != "godrick_pendlebrook"
 -> letters
 endif
 -> END
@@ -211,6 +211,59 @@ else
 interject name:godrick_pendlebrook: I'll keep it. Somebody'll need soup one day. A knight's for people who need things.
 endif
 interject name:godrick_pendlebrook: Right then. That's done. Now there's only the vampire.
+-> END
+
+# --- When the Order has gone home without him (the beacon lit before Sir Godfrey could knight him) -------------------
+
+# The beacon (argynvostholt/beacon:light) lays the Order to rest, Sir Godfrey with them. Unless Godfrey saw the sword
+# first, he knights nobody before he goes, and his room upstairs is empty from then on: nothing else could finish A Knight,
+# More or Less. Not while Godfrey travels with the party (guest), who can still be asked at his own menu. This stage sits
+# before `knighted` in the quest's data, so the dinner and morning lines that read `>= knighted` don't call him Sir.
+~ talk_unknighted
+if name:godrick_pendlebrook and flag.argynvost_beacon_lit and not guest:sir_godfrey_gwilym and quest.the_ladle and quest.the_ladle != knighted and quest.the_ladle != unknighted
+-> unknighted
+endif
+-> END
+
+~ unknighted
+Narrator: Godrick sits by the fire with Sir Aldric's sword across his knees and the ladle on the log beside him. The rag in his hand hasn't moved in an hour.
+interject name:godrick_pendlebrook: They've gone home, then. Sir Godfrey and all of them.
+interject name:godrick_pendlebrook: The lamp went up and the whole house let go of its breath. That was right, that was. I'd light it again tomorrow.
+interject name:godrick_pendlebrook: Only there's nobody left in the hall to take the sword.
+if flag.ladle_sword_shown
+interject name:godrick_pendlebrook: He knew the name, you know. Put his thumb right on the little griffin on the pommel, and said he'd go and look at his wall for me.
+else
+interject name:godrick_pendlebrook: I never even took it out of the scabbard for him. I kept thinking there'd be a quieter hour to ask.
+endif
+if flag.ladle_wall_read
+interject name:godrick_pendlebrook: Still, we read his wall. Sir Aldric didn't run, and I know that now, even if there's nobody left to tell it to.
+endif
+* You were a knight before any Order said so. -> unknighted_knight
+* We should have waited for you to be knighted first. -> unknighted_wait
+* (Sit down beside him.) -> unknighted_sit
+
+~ unknighted_knight
+interject name:godrick_pendlebrook: You sound like Sir Pellam. He said the ladle would hold until we found proper steel.
+interject name:godrick_pendlebrook: I'm glad you think so. Truly. I only wanted to be able to tell him the errand was done.
+approve godrick_pendlebrook +3: You told me I was a knight before any Order said so
+-> unknighted_end
+
+~ unknighted_wait
+interject name:godrick_pendlebrook: Don't say that. Four hundred years they sat there in the cold.
+interject name:godrick_pendlebrook: Sir Pellam always said a knight doesn't keep tired men standing in the rain just to hear his own name called. Letting them lie down was the right work.
+approve godrick_pendlebrook +2: You wished I'd been knighted first, and I told you the lamp was right
+-> unknighted_end
+
+~ unknighted_sit
+Narrator: He shifts along the log to make room.
+interject name:godrick_pendlebrook: Thanks. It's a bit quiet tonight, isn't it.
+approve godrick_pendlebrook +2: You sat with me the night the Order went home
+-> unknighted_end
+
+~ unknighted_end
+quest the_ladle unknighted
+Narrator: He wraps Sir Aldric's sword in its oiled cloth and ties the string, and sets the ladle on top of it.
+interject name:godrick_pendlebrook: Right then. The watch'll want changing soon. Leave it to me.
 -> END
 
 # --- As he comes to trust the party (approval) --------------------------------------------------------------------

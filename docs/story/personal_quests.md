@@ -50,6 +50,7 @@ before the Order's last battle. Vladimir remembers Aldric as a deserter; Sir God
 | `the_order_found` | Argynvostholt: Godrick shows Sir Godfrey the sword | godfrey menu, companions/ladle:sword |
 | `the_deserter` | Vladimir calls Aldric a coward (skipped if the wall was read first; Godrick quotes it back) | vladimir menu, ladle:vladimir |
 | `kept_faith` | Low on Godfrey's wall: "Aldric Ashgrove rode for help. The dragon sent him." | godfrey menu, ladle:wall |
+| `unknighted` (failure) | The beacon is lit before Godfrey could knight him (the sword never shown, or the oath not mended): the Order and Godfrey go home, his room is empty, and nothing else can finish it. Godrick keeps the ladle. Sits before `knighted` in the data so Strahd's dinner and the morning banter, which read `>= knighted`, don't call him Sir. Not while Godfrey travels with the party (`guest:`): he can still be asked | camp/godrick:talk_unknighted |
 | `knighted` | Godfrey knights him once the Order has its oath back (`godfrey_remembers`); gives a +1 sword | godfrey menu or companion menu, ladle:knighting |
 
 Madam Eva: truth "he can barely read"; question "is the Order still here?" Camp: the ladle; learning to read

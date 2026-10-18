@@ -1,0 +1,43 @@
+You are drafting dialogue for a single-player D&D 5e computer game, "Curse of Strahd" (Gothic horror, Barovia). I will edit what you write, so write plain text only: no markdown, no headings, no routing, no questions back. Reply with the lines only, grouped under the labels given.
+
+THE CHARACTER
+Sir Godrick Pendlebrook (he/him) is a seven-and-a-half-foot goliath paladin, a squire for twelve years to old Sir Pellam Ashgrove, who on his deathbed knighted him with a soup ladle because he could not lift his sword, then gave him the sword (it had been his grandfather Sir Aldric Ashgrove's, a knight of the dead Order of the Silver Dragon) and said: "Take it to them, lad. Tell them an Ashgrove kept faith. Have them knight you proper." Godrick is big, warm, hearty and sincere; kind first and slow second, never stupid about people, only slow about everything else. Simple words, short declarative sentences, northern English cheer. Pet phrases: "Right then!" "Sir Pellam always said..." "Leave it to me." When he is truly grieving the cheer drops and he speaks very plainly and very gently; those lines should land hard, and he gets one clean line and stops. Never write him cruel, cowardly or mean, and never joke that he is stupid. Secret: he can barely read. Sample lines: "Fear not, madam. I'm a knight. More or less. A ladle was involved." / "Sir Pellam said a knight's only as good as the people he won't leave behind."
+
+THE QUEST: A Knight, More or Less
+Godrick carried Sir Aldric's sword to Argynvostholt, the dead Order's ruined manor, to be knighted properly by Sir Godfrey Gwilym, the Order's second, a kind dead knight who forgets things and wrote what mattered on his wall. The party can show Godfrey the sword, read the wall (it says Aldric did not run; he rode for help and the mists closed behind him), and ask Godfrey to knight him. Existing lines for tone:
+  Sir Godfrey Gwilym: A ladle. Oh, that's the best thing I've heard in four hundred years. Then you were already a knight, lad. I'm only the witness.
+  Godrick: He didn't run. Sir Pellam's grandad didn't run. Sir Pellam carried that his whole life. He never even knew he didn't have to.
+  Godrick: Right then. Bed. Big day tomorrow. All the days are big here. Have you noticed? It's very tiring.
+  (from the camp talk after a successful knighting) Narrator: Sir Godrick doesn't polish anything tonight. He sits with the ladle in both hands and looks at it a long while.
+  Godrick: I keep thinking, I should hang it up somewhere. Over a fireplace. That's what knights do with things. But I haven't got a fireplace. I've got a log.
+
+THE BUG WE ARE FIXING
+The party can light the beacon at the top of Argynvostholt's tower, which lets the whole dead Order lie down and go home, Sir Godfrey with them: "In a small room downstairs, under a wall of charcoal names, a big knight in dented plate sits down on his cot and is still." If the party lights it before Godrick has shown Godfrey the sword (or before the wall and the oath are done), Godfrey is gone for good and Godrick can never be knighted. Nothing in the story notices and the quest stays open forever. We are adding a failure ending, stage id "unknighted": the Order went home without him; he keeps the ladle. The party did not do a wicked thing. They lit the dragon's lamp and let the dead rest, which was right. It simply cost Godrick the one thing he came for. This is a quiet camp scene, a few nights after the beacon, with the party's four to six members around the fire.
+
+WHAT I NEED (Godrick speaks as "Godrick"; the Narrator as "Narrator"; optional mood in brackets from: sad, angry, afraid, sly. One or two sentences a line. Two to five lines a node.)
+
+LABEL open: 3 to 5 lines to open the scene. Narrator sets it (he has the old sword across his knees and the ladle beside it; he is not polishing either). Then Godrick says what he has been thinking: the Order has gone home, and so has the man who would have knighted him. He is not angry at the party. He would light the beacon again.
+
+LABEL sword_shown: 1 or 2 lines, used only if Godrick DID show Godfrey Aldric's sword before the beacon was lit: Godfrey knew the name and touched the griffin on the pommel, and was going to remember what the wall said.
+
+LABEL sword_unshown: 1 or 2 lines, used only if Godrick never even showed the sword to anyone in the Order. He kept meaning to.
+
+LABEL wall_read: 1 or 2 lines, used only if the party DID read Godfrey's wall with him and so he knows Aldric did not run. A small hard-won comfort.
+
+LABEL choice_knight: the player says "You were a knight before any Order said so." Godrick answers in 2 or 3 lines, moved and honest, and unsure it is enough.
+
+LABEL choice_beacon: the player says "We should have waited for you to be knighted first." Godrick answers in 2 or 3 lines: no, the lamp was right, the Order was tired; he is sure about this one.
+
+LABEL choice_sit: the player says nothing and sits down beside him. 1 or 2 lines (a Narrator line and a Godrick line).
+
+LABEL close: 1 or 2 lines used after any answer. One quiet image: what he does with the ladle and the sword now. Not a lecture, not a promise to try again.
+
+LABEL journal: the journal entry for the new failure stage, 2 or 3 sentences in the journal's plain past-tense "we" voice, as for the existing entries:
+  "Low on Sir Godfrey's wall, in his own hand, older than most of it: 'ALDRIC ASHGROVE RODE FOR HELP. THE DRAGON SENT HIM. HE DID NOT RUN. DO NOT LET VLADIMIR TELL YOU OTHERWISE.' Aldric was sent out through the mists to call for aid that never came, and the mists closed behind him. An Ashgrove kept faith."
+  "In the dragon's house, by the light of whatever the Order had left, Sir Godfrey Gwilym knighted Godrick Pendlebrook with Sir Aldric's sword. He asked who had knighted him first. 'Sir Pellam. With a ladle.' Sir Godfrey laughed until his armour rang. 'Then you were already a knight, lad. I'm only the witness.'"
+The new entry must record that the beacon was lit and the Order went home before Godrick could be knighted, with one quiet image of what was lost (the sword, the ladle). It should read correctly whether or not the sword was shown. Do not use the words "quest" or "failed".
+
+THREE LIMITS
+1. The failure scene is quiet and specific: one image of what was lost, never a lecture and never the word "failed".
+2. Do not make the failure free, and do not make it the party's fault: a good deed cost him something real.
+3. Carry the consequence without blaming the player more than once. Do not invent new characters, places or names beyond those given.

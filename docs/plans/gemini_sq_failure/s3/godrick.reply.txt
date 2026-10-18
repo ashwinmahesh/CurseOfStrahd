@@ -1,0 +1,34 @@
+LABEL open
+Narrator: Godrick sits by the fire with Sir Aldric's sword across his knees and the ladle resting beside his boot. The oiled rag is in his hand, but he hasn't moved it in an hour.
+Godrick: [sad] They've all gone home, then. Sir Godfrey and the rest of them.
+Godrick: That lamp went up and the whole house just let go its breath. Right thing to do, that was. I'd light it again tomorrow.
+Godrick: [sad] Only there's no one left in the hall to take the sword.
+
+LABEL sword_shown
+Godrick: [sad] He knew the name when I held it out to him. Put his thumb right on the little griffin on the pommel and said he'd look at his wall for me.
+
+LABEL sword_unshown
+Godrick: [sad] I never even took it out of the scabbard for him. Kept thinking there'd be a quieter hour to ask.
+
+LABEL wall_read
+Godrick: Still. We read his wall before the end. Sir Pellam's grandad didn't run, and I know that even if nobody's left to say the words over me.
+
+LABEL choice_knight
+Godrick: [sad] You sound like Sir Pellam. He said the ladle would hold until we found the proper steel.
+Godrick: I'm glad you think so. Truly.
+Godrick: [sad] I just wanted to tell old Sir Pellam I'd finished the errand.
+
+LABEL choice_beacon
+Godrick: Don't say that. Four hundred years they were sitting in the cold.
+Godrick: Sir Pellam always said a knight doesn't keep tired men standing in the rain just to hear his own name called. Letting them lie down was the right work.
+
+LABEL choice_sit
+Narrator: He shifts along the log to make room, his shoulder warm and solid against the dark.
+Godrick: [sad] Thanks. It's a bit quiet tonight, isn't it.
+
+LABEL close
+Narrator: He wraps Sir Aldric's sword back in its oiled cloth and ties the string, then tucks the soup ladle back through his belt where it always rides.
+Godrick: Right then. Watch'll need changing soon. Leave it to me.
+
+LABEL journal
+We lit the beacon in the high tower of Argynvostholt, and the revenants of the Order of the Silver Dragon laid down their swords and went to their rest. Sir Godfrey Gwilym went with them before he could speak the words over Godrick. In camp that night, Godrick wrapped Sir Aldric's blade back in its cloth and kept the old soup ladle at his belt.
