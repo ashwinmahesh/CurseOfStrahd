@@ -495,6 +495,10 @@ func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
 		line.add_child(UiParts.pill("Quest", "flame"))
 	if InventoryScreen.is_attuned(ch, e):
 		line.add_child(UiParts.pill("Attuned", "lilac"))
+	elif ch.idle_for_attunement(e):
+		var idle := UiParts.pill("Not attuned", "flame")
+		idle.tooltip_text = "Worn, but it does nothing until %s attunes to it." % ch.name.get_slice(" ", 0)
+		line.add_child(idle)
 	if rarity != "":
 		line.add_child(UiParts.pill(InventoryScreen.rarity_name(rarity), ItemTile.rarity_colour(rarity)))
 	if MagicItems.has_charges(data):
@@ -1372,6 +1376,8 @@ func _draw_card() -> void:
 		elif needs is bool and bool(needs):
 			req = " (requires attunement)"
 		_card.add_child(UiKit.label("%s magic item%s" % [str(magic.get("rarity", "")).replace("_", " ").capitalize(), req], 14, "moonlight", 420))
+		if ch.idle_for_attunement(_entry(selected)):
+			_card.add_child(UiKit.label("~ Not attuned: worn, but it does nothing until you attune to it", 14, "gilt", 420))
 		if req != "":
 			if selected in ch.attuned:
 				var end_why := ch.end_attunement_blocker(selected)

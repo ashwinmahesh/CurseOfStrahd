@@ -485,7 +485,7 @@ func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Array[
 	if ch == null or not enc().spells.can_react(c) or str(c.reaction_rules.get("assisted_escape", "auto")) == "never":
 		return out
 	for it in items().carried(c):
-		if str(it["id"]) == "wand_of_binding" and str(it["id"]) in ch.attuned and int((it["entry"] as Dictionary).get("charges", 0)) > 0:
+		if str(it["id"]) == "wand_of_binding" and ch.attuned_to("wand_of_binding") and int((it["entry"] as Dictionary).get("charges", 0)) > 0:
 			(it["entry"] as Dictionary)["charges"] = int((it["entry"] as Dictionary)["charges"]) - 1
 			c.reaction_available = false
 			out.append("Wand of Binding")
@@ -528,7 +528,7 @@ func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> vo
 			break
 	for it2 in items().carried(c):
 		var d := it2["data"] as Dictionary
-		if str(d.get("template_id", "")) != "luck_blade" or not str(it2["id"]) in ch.attuned:
+		if str(d.get("template_id", "")) != "luck_blade" or not ch.attuned_to(str(it2["id"])):
 			continue
 		var blade := it2["entry"] as Dictionary
 		out.append({"kind": "luck_blade", "reactor": c, "title": "Luck Blade?",
@@ -561,7 +561,7 @@ func initiative_advantage(c: Combatant) -> Array[String]:
 
 func _warned(c: Combatant) -> bool:
 	for it in items().carried(c):
-		if "warning" in _specials(it) and (not MagicItems.needs_attunement(it["data"] as Dictionary) or str(it["id"]) in ch_of(c).attuned):
+		if "warning" in _specials(it) and (not MagicItems.needs_attunement(it["data"] as Dictionary) or ch_of(c).attuned_to(str(it["id"]))):
 			return true
 	return false
 

@@ -232,6 +232,18 @@ var magic_suppressed := false
 var _item_mods: Array[Modifier] = []
 
 
+## Whether this character is attuned to `item_id` for what the item does. An item they are attuned to counts always; with
+## attunement dropped (MagicItems.attunement_off) one they are using counts too: worn, held or equipped where it has to
+## be, or carried if it works from the pack. So switching to Unlimited can only add effects, never take one away.
+func attuned_to(item_id: String) -> bool:
+	if item_id in attuned:
+		return true
+	if not MagicItems.attunement_off:
+		return false
+	var e := entry_of(item_id)
+	return not e.is_empty() and item_active(e)
+
+
 ## Whether an inventory entry's item is working for its bearer right now: attuned if it needs it, and worn, held or
 ## equipped where it has to be (a weapon or armor equipped, a cloak worn, a wand held). Items that work from the
 ## pack (a Stone of Good Luck "on your person") only need carrying.
@@ -243,6 +255,15 @@ func item_active(e: Dictionary) -> bool:
 		return false
 	if MagicItems.needs_attunement(data) and not str(e["id"]) in attuned:
 		return false
+	return item_in_place(e)
+
+
+## Whether an inventory entry's item is where it has to be to work, attunement aside: a weapon, armor or Shield
+## equipped, a cloak or ring worn in its place, a wand held, anything that works from the pack carried.
+func item_in_place(e: Dictionary) -> bool:
+	if int(e.get("qty", 0)) <= 0:
+		return false
+	var data := compendium.item_data(str(e["id"]))
 	var slot := str(e.get("slot", ""))
 	if Gear.is_weapon(data) or Gear.is_armor(data) or Gear.is_shield(data):
 		return slot != ""
@@ -252,6 +273,31 @@ func item_active(e: Dictionary) -> bool:
 		# A held spellcasting focus in the focus slot is in hand all the same (a hand is always free for it: deviations.md).
 		return slot in ["main_hand", "off_hand"] or (slot == "focus" and Gear.focus_kind(data) != "")
 	return true
+
+
+## The carried items that ask for attunement (in the book) and are where they must be to work, whatever the setting, that
+## this character is not attuned to: worn, held and equipped ones first, then those that work from the pack. What
+## attunement stands between and working, once it is asked for.
+func unattuned_in_place() -> Array[Dictionary]:
+	var used: Array[Dictionary] = []
+	var packed: Array[Dictionary] = []
+	for e in inventory:
+		var id := str(e["id"])
+		if int(e.get("qty", 0)) <= 0 or id in attuned or not MagicItems.asks_attunement(compendium.item_data(id)) or not item_in_place(e):
+			continue
+		if str(e.get("slot", "")) != "":
+			used.append(e)
+		else:
+			packed.append(e)
+	used.append_array(packed)
+	return used
+
+
+## Whether this worn, held or equipped item does nothing for lack of attunement (the book's rule is in force, it asks
+## for attunement and they have none): what the pack and the sheet say so about.
+func idle_for_attunement(e: Dictionary) -> bool:
+	var id := str(e["id"])
+	return int(e.get("qty", 0)) > 0 and str(e.get("slot", "")) != "" and MagicItems.needs_attunement(compendium.item_data(id)) and not attuned_to(id)
 
 
 ## The modifiers of magic items that work for this character right now (item_active). A weapon's own bonuses
@@ -287,7 +333,7 @@ func item_modifiers() -> Array[Modifier]:
 		var attuned_ok := not MagicItems.needs_attunement(data) or iid in attuned
 		var active := item_active(e)
 		# With attunement dropped, what "while attuned" and "on your person" promised is promised to an item in use.
-		var by_use := MagicItems.attunement_off and MagicItems.asks_attunement(data)
+		var by_use := MagicItems.attunement_off and MagicItems.asks_attunement(data) and not iid in attuned
 		for md: Variant in mods:
 			var d := md as Dictionary
 			var when := d.get("when", {}) as Dictionary

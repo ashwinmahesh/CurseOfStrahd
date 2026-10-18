@@ -375,7 +375,7 @@ func _game_rows() -> void:
 	y += GAME_PITCH
 	# Attunement (a house option, Ashwin 2026-10-17): the book's limit of three, or none at all.
 	_choice_row(y, "Attunement", ["Three at most", "Unlimited"], 1 if GameSettings.unlimited_attunement() else 0, func(i: int) -> void:
-		GameSettings.set_unlimited_attunement(i == 1),
+		_set_attunement(i == 1),
 		"Three at most: the book's rule. Unlimited: no attunement at all; a magic item works whenever it is worn, held or equipped, with no limit and no requirements.")
 	y += GAME_PITCH
 	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
@@ -523,6 +523,51 @@ func _display_rows() -> void:
 		GameSettings.set_text_scale(texts[i])
 		_note.text = "Conversations, the Narrator and the journal read larger." if i > 0 else "",
 		"The size of what you read: conversations, the Narrator's box and the journal.")
+
+
+## The Attunement row: switches the option and says what that did to the party's gear (the note under the page), so a
+## switch never turns an effect off unseen. Unlimited only adds: worn, held and equipped magic items that were idle for
+## want of attunement start to work. Back to "Three at most", whatever works now is attuned (Character.attune, up to
+## three each, worn things first), and what can't be kept is named.
+func _set_attunement(on: bool) -> void:
+	if on == GameSettings.unlimited_attunement():
+		return
+	GameSettings.set_unlimited_attunement(on)
+	if st == null or _note == null:
+		return
+	var started: Array[String] = []   # "Belt of Dwarvenkind"
+	var attuned_now := 0
+	var lost: Array[String] = []
+	for ch in st.roster():
+		for e in ch.unattuned_in_place():
+			var name_ := Compendium.shared().display_name("items", str(e["id"]))
+			if on:
+				started.append(name_)
+			elif ch.attune(str(e["id"])):
+				attuned_now += 1
+			else:
+				lost.append(name_)
+	var view := root.get("view") as LocationView if root != null and "view" in root else null
+	if view != null and not view.in_combat:
+		view.refresh_party()   # the frames read the new numbers (a Constitution or Armor Class that moved)
+	if on:
+		_note.text = _clip("Unlimited: %s" % (("%s now work%s." % [_named(started), "s" if started.size() == 1 else ""]) if not started.is_empty() \
+			else "no limit and no attuning; worn magic items just work."))
+	else:
+		var text := "Three at most: attuned %d worn item%s." % [attuned_now, "" if attuned_now == 1 else "s"]
+		if not lost.is_empty():
+			text += " Idle again (limit or requirement): %s." % _named(lost)
+		_note.text = _clip(text)
+
+
+## "Belt of Dwarvenkind" / "Belt of Dwarvenkind and 2 more".
+static func _named(names: Array[String]) -> String:
+	return names[0] if names.size() == 1 else "%s and %d more" % [names[0], names.size() - 1]
+
+
+## The page's note holds two lines: longer is cut with an ellipsis.
+static func _clip(text: String, most: int = 96) -> String:
+	return text if text.length() <= most else text.substr(0, most - 1) + "…"
 
 
 ## Turn-based exploring on or off: the place the party is in switches at once (in a fight, once it's over).

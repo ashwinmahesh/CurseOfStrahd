@@ -184,7 +184,7 @@ func power_why(c: Combatant, p: Dictionary, level: int = 0) -> String:
 	if MagicItems.is_magic(data) and enc().spells.specials.high.in_antimagic(c):
 		return "Antimagic Field: the item's magic is suppressed"
 	var req := str(power.get("requires", ""))
-	if MagicItems.needs_attunement(data) and not iid in ch.attuned and req != "anyone":
+	if MagicItems.needs_attunement(data) and not ch.attuned_to(iid) and req != "anyone":
 		return "Needs attunement"
 	# Worn items have to be worn (a cloak in a pack does nothing); held items are drawn as part of the use.
 	if MagicItems.worn_slot(data) != "" and not ch.item_active(p["entry"] as Dictionary) and req != "anyone":
@@ -821,7 +821,7 @@ func attack_items(c: Combatant, option: Dictionary) -> Array[Dictionary]:
 		if iid == "" or iid == "unarmed_strike":
 			continue
 		var data := comp().item_data(iid)
-		if data.is_empty() or (MagicItems.needs_attunement(data) and not iid in ch.attuned):
+		if data.is_empty() or (MagicItems.needs_attunement(data) and not ch.attuned_to(iid)):
 			continue
 		out.append({"id": iid, "data": data})
 	# Unarmed Strikes with magic wraps worn on the hands.
@@ -921,7 +921,7 @@ func after_attack(c: Combatant, target: Combatant, option: Dictionary, _hit: boo
 		return
 	var p := option["profile"] as WeaponProfile
 	var data := comp().item_data(p.item_id)
-	if bool(_rules(data).get("returns", false)) and (not MagicItems.needs_attunement(data) or p.item_id in ch.attuned):
+	if bool(_rules(data).get("returns", false)) and (not MagicItems.needs_attunement(data) or ch.attuned_to(p.item_id)):
 		if enc().ground.fly_back(c, p.item_id):
 			enc().log.add("info", "%s flies back to %s's hand" % [data.get("name", ""), c.name()], c.id)
 
@@ -1158,7 +1158,7 @@ func reveals_invisible(a: Combatant, b: Combatant) -> bool:
 ## they've threatened or harmed rats (an attack on one, or damage to one, this fight).
 func _rats_leave_alone(target: Combatant) -> bool:
 	var ch := ch_of(target)
-	return ch != null and "pipes_of_the_sewers" in ch.attuned and not target.has_meta("threatened_rats")
+	return ch != null and ch.attuned_to("pipes_of_the_sewers") and not target.has_meta("threatened_rats")
 
 
 func _threatens_rats(c: Combatant, target: Combatant) -> void:

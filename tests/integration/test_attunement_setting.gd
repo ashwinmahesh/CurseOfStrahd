@@ -128,3 +128,67 @@ func test_the_packs_attuned_filter_lists_worn_items_once_attunement_is_off() -> 
 	assert_false(InventoryScreen.is_attuned(ch, cloak), "in the pack, it works for no one")
 	ch.unequip_item("ring_of_protection")
 	assert_false(InventoryScreen.is_attuned(ch, ring), "an old attunement alone doesn't list it once attunement is off")
+
+
+## A hero of the party with the Belt of Dwarvenkind worn and `held` other attunements already used (the Belt is not one).
+func _belt_wearer(held: Array[String]) -> Character:
+	var ch := GameState.story.party[1]
+	ch.attuned.clear()
+	for id in held:
+		ch.add_item(id)
+		assert_true(ch.attune(id), id)
+	ch.add_item("belt_of_dwarvenkind")
+	assert_true(ch.wear("belt_of_dwarvenkind"))
+	return ch
+
+
+func _note_of(menu: Node) -> String:
+	return str((menu.get("_note") as Label).text)
+
+
+func test_switching_names_what_it_started_and_what_it_could_not_keep() -> void:
+	var menu := await _open_game_page()
+	var ch := _belt_wearer(["ring_of_protection", "amulet_of_health", "headband_of_intellect"])   # all three places taken
+	var con := ch.ability_score(&"con")
+	var row := menu.find_child("Attunement", true, false) as Button
+	row.pressed.emit()
+	assert_true(GameSettings.unlimited_attunement())
+	assert_true(_note_of(menu).contains("Belt of Dwarvenkind"), "the note names what began to work: %s" % _note_of(menu))
+	assert_true(ch.ability_score(&"con") > con, "and it works at once")
+	row.pressed.emit()
+	assert_false(GameSettings.unlimited_attunement())
+	assert_true(_note_of(menu).contains("Belt of Dwarvenkind") and _note_of(menu).contains("Idle again"),
+		"going back, the one that no longer fits is named: %s" % _note_of(menu))
+	assert_false(ch.attuned_to("belt_of_dwarvenkind"))
+
+
+func test_going_back_attunes_what_works_while_there_is_room() -> void:
+	var menu := await _open_game_page()
+	var ch := _belt_wearer(["ring_of_protection"])
+	var row := menu.find_child("Attunement", true, false) as Button
+	row.pressed.emit()
+	row.pressed.emit()
+	assert_true("belt_of_dwarvenkind" in ch.attuned, "attuned on the way back, so it keeps working")
+	assert_true(_note_of(menu).begins_with("Three at most: attuned"), _note_of(menu))
+	assert_true(_note_of(menu).length() <= 96, "and it fits the note's two lines")
+
+
+func test_the_pack_says_a_worn_item_is_not_attuned() -> void:
+	var menu := await _open_game_page()
+	var ch := _belt_wearer(["ring_of_protection"])
+	menu.queue_free()
+	root.call("close_screen")
+	await _frames(2)
+	for tag: String in ["book", "unlimited"]:
+		if tag == "unlimited":
+			GameSettings.set_unlimited_attunement(true)
+		root.call("open_screen", "inventory", 1)
+		await _frames(3)
+		var found := false
+		for n in (root.get("screen") as Node).find_children("*", "Label", true, false):
+			if (n as Label).text == "Not attuned" and (n as Control).is_visible_in_tree():
+				found = true
+		assert_eq(found, tag == "book", "%s: the Not attuned tag shows for the idle Belt only under the book's rule" % tag)
+		root.call("close_screen")
+		await _frames(2)
+	assert_true(ch.idle_for_attunement(ch.entry_of("belt_of_dwarvenkind")) == false, "unlimited: not idle")
