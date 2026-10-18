@@ -626,6 +626,8 @@ func build(dice: DiceRoller, errors: Array[String] = []) -> Encounter:
 func _light(e: Encounter, party_cbs: Array[Combatant]) -> void:
 	for l: Variant in location().get("lights", []):
 		var li := l as Dictionary
+		if bool(li.get("visual", false)):
+			continue   # only painted (as in the story's fights)
 		var o := FieldObject.new(FieldObject.Kind.ZONE, "", str(li.get("kind", "light")))
 		o.cell = _cell_of(li)
 		o.rules = {"light": {"bright": int(li.get("bright_ft", 10)), "dim": int(li.get("dim_ft", 10))}}

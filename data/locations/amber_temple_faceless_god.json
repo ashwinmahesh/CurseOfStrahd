@@ -531,7 +531,8 @@
       ],
       "kind": "amber",
       "bright_ft": 5,
-      "dim_ft": 20
+      "dim_ft": 20,
+      "visual": true
     },
     {
       "cell": [
@@ -541,7 +542,8 @@
       "kind": "amber",
       "bright_ft": 5,
       "dim_ft": 20,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -551,7 +553,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -561,7 +564,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -580,7 +584,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 40,
-      "color": "orchid"
+      "color": "orchid",
+      "visual": true
     },
     {
       "cell": [
@@ -590,7 +595,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 25,
-      "color": "plum"
+      "color": "plum",
+      "visual": true
     },
     {
       "cell": [
@@ -600,7 +606,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -610,7 +617,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -620,7 +628,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -630,7 +639,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -640,7 +650,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -650,7 +661,8 @@
       "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "flame"
+      "color": "flame",
+      "visual": true
     },
     {
       "cell": [
@@ -700,7 +712,8 @@
       "kind": "candle",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "frost"
+      "color": "frost",
+      "visual": true
     },
     {
       "cell": [
@@ -710,7 +723,8 @@
       "kind": "candle",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "frost"
+      "color": "frost",
+      "visual": true
     },
     {
       "cell": [
@@ -720,7 +734,8 @@
       "kind": "candle",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "frost"
+      "color": "frost",
+      "visual": true
     },
     {
       "cell": [
@@ -730,7 +745,8 @@
       "kind": "candle",
       "bright_ft": 0,
       "dim_ft": 15,
-      "color": "frost"
+      "color": "frost",
+      "visual": true
     },
     {
       "cell": [
@@ -740,7 +756,8 @@
       "kind": "lamp",
       "bright_ft": 10,
       "dim_ft": 30,
-      "color": "frost"
+      "color": "frost",
+      "visual": true
     }
   ],
   "traps": [

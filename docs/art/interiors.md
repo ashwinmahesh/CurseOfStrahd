@@ -261,6 +261,8 @@ braziers burning in the antechamber and either side of the altar.
     so the party and the glow mirror in it.
   - The temple's lights are the `amber` kind (Atmosphere.LIGHT_KINDS, LightFlicker.STYLES): one slow swell about every
     five seconds, no flutter, no shadow.
+  - The great hall's added mood and amber lights are marked `visual: true`: painted only, no light zone in a fight (the Patrina
+    series fell from 5 in 8 to 3 when they were light zones on that dark map; LocationFights._light_the_fight skips them).
   - The amber is `AmberGlow` (world/look/amber_glow.gd, shaders/world/amber.gdshader), built in code in the Modern finish
     (Classic keeps the lying box): the catalog id's `case` picks `vestige` (upright, two squares tall, lit from inside by
     a light that breathes and the glass follows), `cracked`, `sleeper` (lying, under the vaults), `hollow` (the Thirst's

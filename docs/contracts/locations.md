@@ -64,7 +64,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   ground needs a way out to `travel`; it is outdoors, with its mood and vista place like any outdoor map.
 - **Light:** `bright`, `dim` or `dark` for the map and each area; `lights` add bright and dim radii, and an optional
   `color` (a palette colour: Baba Lysaga's green hearth is "bile"; a fire's own flame takes it too). A prop's `flame`
-  colours the fire burning in its piece (a hearth), as SetDressing.FLAME_TINTS has it. (Vision rules —
+  colours the fire burning in its piece (a hearth), as SetDressing.FLAME_TINTS has it. A light with `visual: true` is only
+  painted: it lights the picture but gives a fight no light zone (the Amber Temple's great hall: its fights were tuned
+  on the old lamps). (Vision rules —
   what Darkvision and darkness do to checks and attacks — belong to the spell and ability audit; the world only
   reports each square's light level.)
 - **Encounter triggers:** `enter_area:<area>`, `open:<door_or_container>`, `examine:<prop>`, `flag:<flag>` (when a

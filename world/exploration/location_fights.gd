@@ -427,6 +427,8 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 	e.sunlit = false
 	for l: Variant in view.loc.get("lights", []):
 		var li := l as Dictionary
+		if bool(li.get("visual", false)):
+			continue   # only painted: a mood or a glow, no light to see by
 		var o := FieldObject.new(FieldObject.Kind.ZONE, "", str(li.get("kind", "light")))
 		o.cell = LocationView._cell(li["cell"])
 		o.rules = {"light": {"bright": int(li.get("bright_ft", 10)), "dim": int(li.get("dim_ft", 10))}}
