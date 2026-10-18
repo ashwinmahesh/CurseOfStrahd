@@ -700,6 +700,7 @@
     {
       "id": "crg_courtyard_gargoyles",
       "trigger": "enter_area:crg_front_courtyard",
+      "waiting": true,
       "when": "night and flag.strahd_invitation != \"accepted\" and level >= 10",
       "text": "Stone creaks overhead. The gargoyles on the gatehouse unfold, stretch like cats, and drop into the courtyard.",
       "surprise": "",
@@ -711,7 +712,8 @@
             10,
             10
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "southeast"
         },
         {
           "monster": "gargoyle",
@@ -719,7 +721,8 @@
             29,
             10
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "southwest"
         },
         {
           "monster": "gargoyle",
@@ -727,7 +730,8 @@
             15,
             13
           ],
-          "hp": 77
+          "hp": 46,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -735,7 +739,8 @@
             24,
             13
           ],
-          "hp": 77
+          "hp": 46,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -743,7 +748,8 @@
             11,
             19
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "northeast"
         },
         {
           "monster": "gargoyle",
@@ -751,7 +757,8 @@
             28,
             19
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "northwest"
         },
         {
           "monster": "gargoyle",
@@ -759,7 +766,8 @@
             19,
             21
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "north"
         },
         {
           "monster": "gargoyle",
@@ -767,7 +775,8 @@
             19,
             8
           ],
-          "hp": 77
+          "hp": 46,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -775,7 +784,8 @@
             19,
             16
           ],
-          "hp": 77
+          "hp": 46,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -783,7 +793,8 @@
             23,
             17
           ],
-          "hp": 77
+          "hp": 46,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -791,7 +802,8 @@
             15,
             17
           ],
-          "hp": 77
+          "hp": 46,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -799,7 +811,8 @@
             11,
             15
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "east"
         },
         {
           "monster": "gargoyle",
@@ -807,7 +820,8 @@
             15,
             9
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "southeast"
         },
         {
           "monster": "gargoyle",
@@ -815,7 +829,8 @@
             15,
             21
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "northeast"
         },
         {
           "monster": "gargoyle",
@@ -823,7 +838,8 @@
             28,
             15
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "west"
         },
         {
           "monster": "gargoyle",
@@ -831,13 +847,15 @@
             23,
             9
           ],
-          "hp": 77
+          "hp": 46,
+          "facing": "southwest"
         }
       ]
     },
     {
       "id": "crg_courtyard_gargoyles",
       "trigger": "enter_area:crg_front_courtyard",
+      "waiting": true,
       "when": "night and flag.strahd_invitation != \"accepted\"",
       "text": "Stone creaks overhead. The gargoyles on the gatehouse unfold, stretch like cats, and drop into the courtyard.",
       "surprise": "",
@@ -849,7 +867,8 @@
             10,
             10
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "southeast"
         },
         {
           "monster": "gargoyle",
@@ -857,7 +876,8 @@
             29,
             10
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "southwest"
         },
         {
           "monster": "gargoyle",
@@ -865,7 +885,8 @@
             11,
             19
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "northeast"
         },
         {
           "monster": "gargoyle",
@@ -873,7 +894,8 @@
             28,
             19
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "northwest"
         },
         {
           "monster": "gargoyle",
@@ -881,7 +903,8 @@
             19,
             8
           ],
-          "hp": 84
+          "hp": 50,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -889,7 +912,8 @@
             19,
             16
           ],
-          "hp": 84
+          "hp": 50,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -897,7 +921,8 @@
             24,
             14
           ],
-          "hp": 84
+          "hp": 50,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -905,7 +930,8 @@
             20,
             21
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "north"
         },
         {
           "monster": "gargoyle",
@@ -913,7 +939,8 @@
             24,
             9
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "southwest"
         },
         {
           "monster": "gargoyle",
@@ -921,7 +948,8 @@
             15,
             14
           ],
-          "hp": 84
+          "hp": 50,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -929,7 +957,8 @@
             28,
             14
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "west"
         },
         {
           "monster": "gargoyle",
@@ -937,7 +966,8 @@
             24,
             18
           ],
-          "hp": 84
+          "hp": 50,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -945,7 +975,8 @@
             15,
             18
           ],
-          "hp": 84
+          "hp": 50,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -953,7 +984,8 @@
             11,
             15
           ],
-          "hp": 84
+          "hp": 50,
+          "facing": "east"
         }
       ]
     }

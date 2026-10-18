@@ -56,12 +56,12 @@ func test_court_post_watch_v0_at_level_10() -> void:
 
 ## crg_courtyard_gargoyles, castle_ravenloft_gates variant 0 at level 10 (strahd_invitatio).
 func test_crg_courtyard_gargoyles_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_gates", 23, 10, "crg_courtyard_gargoyles", [Vector2i(19, 12), Vector2i(18, 11), Vector2i(18, 13), Vector2i(20, 11)], 4, 6, ["strahd_invitatio"])
+	await _held("castle_ravenloft_gates", 23, 10, "crg_courtyard_gargoyles", [Vector2i(19, 21), Vector2i(19, 22), Vector2i(19, 23), Vector2i(19, 24)], 4, 6, ["strahd_invitatio"], [], ["crg_portcullis"])
 
 
 ## crg_courtyard_gargoyles, castle_ravenloft_gates variant 1 at level 9 (strahd_invitatio).
 func test_crg_courtyard_gargoyles_v1_at_level_9() -> void:
-	await _held("castle_ravenloft_gates", 23, 9, "crg_courtyard_gargoyles", [Vector2i(19, 12), Vector2i(18, 11), Vector2i(18, 13), Vector2i(20, 11)], 4, 6, ["strahd_invitatio"])
+	await _held("castle_ravenloft_gates", 23, 9, "crg_courtyard_gargoyles", [Vector2i(19, 21), Vector2i(19, 22), Vector2i(19, 23), Vector2i(19, 24)], 4, 6, ["strahd_invitatio"], [], ["crg_portcullis"])
 
 
 ## larders_guardroom, castle_ravenloft_larders variant 0 at level 10.

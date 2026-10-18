@@ -28,8 +28,8 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 | `cat_guardians` | catacombs_tombs | L10v0 | 10 | strahds animated armor, 2 helmed horror | 2 strahds animated armor, 4 helmed horror | 5 |
 | `court_accountant_rug` | court | L10v0 | 10 | rug of smothering, 3 crawling claw | rug of smothering (57 HP), 3 crawling claw (4 HP), 3 strahds animated armor (235 HP) | 5 |
 | `court_post_watch` | court | L10v0 | 10 | strahds animated armor, 3 helmed horror | strahds animated armor (190 HP), 4 helmed horror (102 HP) | 5 |
-| `crg_courtyard_gargoyles` | gates | L10v0 | 10 | 6 gargoyle | 16 gargoyle (77 HP) | 4 |
-| `crg_courtyard_gargoyles` | gates | L9v1 | 9 | 4 gargoyle | 14 gargoyle (84 HP) | 5 |
+| `crg_courtyard_gargoyles` | gates | L10v0 | 10 | 6 gargoyle | 16 gargoyle (46 HP) | 5 |
+| `crg_courtyard_gargoyles` | gates | L9v1 | 9 | 4 gargoyle | 14 gargoyle (50 HP) | 5 |
 | `larders_guardroom` | larders | L10v0 | 10 | 2 wight, 2 helmed horror, 4 strahd zombie | 4 wight, 4 helmed horror, 6 ghast, strahd zombie | 5 |
 | `larders_watch_alarm` | larders | L10v0 | 10 | 2 wight, 2 helmed horror, 4 strahd zombie | 4 wight (102 HP), 3 helmed horror (75 HP), strahd zombie (38 HP), 5 ghast (45 HP) | 5 |
 | `larders_furnace` | larders_dungeon | L10v0 | 10 | 2 flameskull, fire elemental | 3 flameskull, fire elemental | 4 |
