@@ -240,7 +240,8 @@ func item_active(e: Dictionary) -> bool:
 	if MagicItems.worn_slot(data) != "":
 		return slot == MagicItems.worn_slot(data)
 	if MagicItems.is_held(data):
-		return slot in ["main_hand", "off_hand"]
+		# A held spellcasting focus in the focus slot is in hand all the same (a hand is always free for it: deviations.md).
+		return slot in ["main_hand", "off_hand"] or (slot == "focus" and Gear.focus_kind(data) != "")
 	return true
 
 
@@ -1081,7 +1082,7 @@ func _build_spellcasting() -> void:
 			continue
 		var list := str(sc.get("list", cid))
 		var src := _source("class", cid, "%s spellcasting" % name_, cid, n)
-		var entry := {"class_id": cid, "name": name_, "ability": str(sc["ability"]), "list": list,
+		var entry := {"class_id": cid, "name": name_, "ability": str(sc["ability"]), "list": list, "focus": str(sc.get("focus", "")),
 			"progression": str(sc.get("progression", "full")), "cantrips_max": cantrips_max,
 			"prepared_max": prepared_max, "spellbook_max": 0, "ritual": str(sc.get("ritual", "prepared")),
 			"cantrips": [], "prepared": [], "spellbook": [], "always": [], "bonus": [],
@@ -1202,6 +1203,35 @@ func _collect_granted_spells() -> void:
 		granted_spells.append({"id": spell_id, "class_id": m.class_id, "ability": ability, "uses": count,
 			"recharge": str(uses.get("recharge", "")), "always_prepared": bool(m.data.get("always_prepared", true)),
 			"at_level": m.at_level(), "source": m.source_name, "free_slot": free_slot, "at_will": bool(m.data.get("at_will", false))})
+
+
+## The kinds of spellcasting focus this character's casting classes name: "holy" for a Cleric or Paladin, "arcane" for a
+## Sorcerer, Warlock or Wizard (an Eldritch Knight or Arcane Trickster too), "druidic" for a Druid or Ranger. A Holy
+## Symbol is a focus for the first and no one else.
+func focus_kinds() -> Array[String]:
+	var out: Array[String] = []
+	for e in spellcasting:
+		var kind := str(e.get("focus", ""))
+		if kind != "" and not kind in out:
+			out.append(kind)
+	return out
+
+
+## The focus of `kind` this character has to hand, as an item id ("" if none): one of the kinds above, in the focus slot
+## or held in a hand (a Reliquary, the Holy Symbol of Ravenkind). Other casters' holy symbols are theirs, not this one's.
+## The rules don't ask for it in a fight (a focus is assumed carried, deviations.md); the doll and the sheet show it.
+func focus_item(kind: String) -> String:
+	if kind == "" or not kind in focus_kinds():
+		return ""
+	for slot: String in ["focus", "main_hand", "off_hand"]:
+		var id := held_id(slot)
+		if id != "" and Gear.focus_kind(compendium.item_data(id)) == kind:
+			return id
+	return ""
+
+
+func has_focus(kind: String) -> bool:
+	return focus_item(kind) != ""
 
 
 func spellcasting_entry(class_id: String) -> Dictionary:
@@ -2201,7 +2231,9 @@ func seed_doll() -> void:
 			best["slot"] = "ammo"
 	if held_id("focus") == "":
 		for e in inventory:
-			if str(e["slot"]) == "" and int(e["qty"]) > 0 and Gear.carry_slot(compendium.item_data(str(e["id"]))) == "focus":
+			var d := compendium.item_data(str(e["id"]))
+			# Not an item that needs a hand (the Holy Symbol of Ravenkind): that one is the player's to put there.
+			if str(e["slot"]) == "" and int(e["qty"]) > 0 and Gear.carry_slot(d) == "focus" and not MagicItems.is_held(d):
 				e["slot"] = "focus"
 				break
 

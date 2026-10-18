@@ -10,6 +10,7 @@
   "cost_gp": 0,
   "quest_locked": true,
   "held": true,
+  "focus": "holy",
   "magic": {
     "rarity": "legendary",
     "attunement": "by a Cleric or Paladin",
@@ -53,6 +54,6 @@
       "text": "Magic action, 5 charges: the sunstone blazes with true sunlight, bright for 30 ft and dim for 30 more, for 10 minutes."
     }
   ],
-  "summary": "A platinum sunburst with a raven at its heart and a sunstone in the raven's claws: it holds vampires fast and calls up true sunlight.",
-  "text": "Made long ago by the faithful who fought the valley's first vampire, and lost when its last keeper never came home. It holds 10 charges and regains 1d6 + 4 each dawn. Raised by its attuned bearer, it can hold every vampire and vampire spawn near it frozen in place (1 charge), or blaze with true sunlight for ten minutes (5 charges). It is warm to the touch, even in Barovia."
+  "summary": "A platinum sunburst with a raven at its heart and a sunstone in the raven's claws: it holds vampires fast and calls up true sunlight. A holy symbol for Clerics and Paladins.",
+  "text": "Made long ago by the faithful who fought the valley's first vampire, and lost when its last keeper never came home. It holds 10 charges and regains 1d6 + 4 each dawn. Raised by its attuned bearer, it can hold every vampire and vampire spawn near it frozen in place (1 charge), or blaze with true sunlight for ten minutes (5 charges). It is warm to the touch, even in Barovia. Held or kept in the focus slot, it is a Holy Symbol: a Cleric or Paladin can use it as a Spellcasting Focus."
 }

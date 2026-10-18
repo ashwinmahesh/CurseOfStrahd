@@ -290,7 +290,11 @@ func turn_undead(c: Combatant) -> CombatResult:
 	_spend_channel(c)
 	var dc := _cleric_dc(c)
 	var r := CombatResult.new()
-	e.log.add("spell", "%s presents a holy symbol: Turn Undead (DC %d)" % [c.name(), dc], c.id)
+	var symbol := "a holy symbol"
+	var held := (c.creature as Character).focus_item("holy") if c.creature is Character else ""
+	if held != "" and MagicItems.is_magic(Compendium.shared().item_data(held)):
+		symbol = "the %s" % Compendium.shared().display_name("items", held)   # the Holy Symbol of Ravenkind, say
+	e.log.add("spell", "%s presents %s: Turn Undead (DC %d)" % [c.name(), symbol, dc], c.id)
 	e.events.append({"type": "spell", "caster": c.id, "spell": "turn_undead", "cells": [],
 		"targets": targets.map(func(t: Combatant) -> String: return t.id)})
 	var sear := has_feature(c, "sear_undead")

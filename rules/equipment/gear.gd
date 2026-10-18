@@ -30,16 +30,26 @@ static func is_shield(item: Dictionary) -> bool:
 	return item.has("armor") and str((item["armor"] as Dictionary).get("kind", "")) == "shield"
 
 
+## The kind of spellcasting focus an item is ("arcane", "druidic" or "holy": its `focus`), else "". A Holy Symbol of any
+## make, and the Holy Symbol of Ravenkind, are "holy"; whose focus that is depends on the caster's classes (their
+## spellcasting `focus`: Character.focus_kinds).
+static func focus_kind(item: Dictionary) -> String:
+	return str(item.get("focus", ""))
+
+
 ## Where a hero keeps an item to hand on the paper doll (U11): "ammo" for ammunition (the quiver), "focus" for a
-## spellcasting focus or a component pouch, else "". Neither changes the rules: ammunition is drawn by its kind, and a
-## focus is assumed carried (docs/rules/deviations.md, Material components and focuses).
+## spellcasting focus (an item of the focus category, or any item that is one: a magic item that is also a Holy Symbol)
+## or a component pouch, else "". Neither changes the rules: ammunition is drawn by its kind, and a focus is assumed
+## carried (docs/rules/deviations.md, Material components and focuses).
 static func carry_slot(item: Dictionary) -> String:
 	match str(item.get("category", "")):
 		"ammunition":
 			return "ammo"
 		"focus":
 			return "focus"
-	return "focus" if str(item.get("id", "")) == "component_pouch" else ""
+	if focus_kind(item) != "" or str(item.get("id", "")) == "component_pouch":
+		return "focus"
+	return ""
 
 
 static func weapon_props(item: Dictionary) -> Array:
