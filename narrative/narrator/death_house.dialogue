@@ -783,14 +783,14 @@ once
 | Powder, combs and a mirror that shows you looking tired. Nothing else worth the trouble.
 
 ~ search:nursemaid_mattress
-| Under the nursemaid's mattress, folded with care, lies a grey-green cloak that was never worn. Its edges blur when you look at them. A card is pinned to it, with a single initial: G.
+| Under the nursemaid's mattress, wrapped in a shawl, lies a short sword that was never drawn. A card is tied to the hilt, with a single initial: G.
 once
 
 ~ check:perception:nursemaid_mattress:failure
 | A narrow bed, made tight. Whatever she kept close, she kept it close.
 
 ~ search:toy_chest_drawer
-| A drawer hides in the base of the toy chest, the kind a boy finds and tells nobody about. Inside, a grey cloth bag, and at the bottom of it something soft and warm, like fur.
+| A drawer hides in the base of the toy chest, the kind a boy finds and tells nobody about. Inside, a leather sling and a handful of smooth stones, and the stones always seem to find their mark.
 once
 
 ~ check:investigation:toy_chest_drawer:failure

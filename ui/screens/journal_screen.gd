@@ -2,7 +2,8 @@ class_name JournalScreen
 extends CanvasLayer
 ## The quest journal, the codex and the bestiary (plan §5.5, §5.6). Quests: Main (the story's spine) and Other (side
 ## and companion quests) as tabs, a search box over both, the tab's quests as a list (open ones newest first, then the
-## finished ones), and beside it the one picked: the journal text of every stage reached, its current objectives, a
+## finished ones; the Other tab under a heading for each region, in the campaign's order, Ashwin 2026-10-18), and beside
+## it the one picked: the journal text of every stage reached, its current objectives, a
 ## Hint button for what to do next and Track, which makes it the quest the HUD follows (Ashwin, 2026-10-09). Then the
 ## books, letters and notes the party has read, and what it has learned of the creatures it fought (BestiaryPage, U8).
 ## The reading text follows the player's text size (UiScale.text). On a pad LB/RB change the page, LT/RT Main and
@@ -164,19 +165,20 @@ func _search_row() -> Control:
 	return row
 
 
-## Whether every word of `text` is in the quest's name, summary, journal text or objectives (never its hint).
+## Whether every word of `text` is in the quest's name, region, summary, journal text or objectives (never its hint).
 static func matches(text: String, q: Dictionary) -> bool:
 	if text.strip_edges() == "":
 		return true
-	var hay := " ".join([str(q["name"]), str(q["summary"]), " ".join(q["entries"] as Array),
-		" ".join(q["objectives"] as Array)]).to_lower()
+	var hay := " ".join([str(q["name"]), QuestRegions.title(str(q.get("region", ""))), str(q["summary"]),
+		" ".join(q["entries"] as Array), " ".join(q["objectives"] as Array)]).to_lower()
 	for word in text.to_lower().split(" ", false):
 		if not hay.contains(word):
 			return false
 	return true
 
 
-## The quests under `t` that the search keeps: open ones newest first, then the finished ones, newest first.
+## The quests under `t` that the search keeps: open ones newest first, then the finished ones, newest first; Other's
+## grouped by region (by_region).
 func _shown(all: Array[Dictionary], t: String) -> Array[Dictionary]:
 	var open: Array[Dictionary] = []
 	var done: Array[Dictionary] = []
@@ -188,7 +190,23 @@ func _shown(all: Array[Dictionary], t: String) -> Array[Dictionary]:
 		else:
 			done.push_front(q)
 	open.append_array(done)
-	return open
+	return open if t == "Main" else by_region(open)
+
+
+## Quests grouped by their region (QuestRegions order), each region keeping the order they came in.
+static func by_region(quests: Array[Dictionary]) -> Array[Dictionary]:
+	var groups := {}
+	for q in quests:
+		var region := str(q.get("region", QuestRegions.NONE))
+		if not groups.has(region):
+			groups[region] = [] as Array[Dictionary]
+		(groups[region] as Array[Dictionary]).append(q)
+	var regions: Array = groups.keys()
+	regions.sort_custom(func(a: String, b: String) -> bool: return QuestRegions.before(a, b))
+	var out: Array[Dictionary] = []
+	for region: String in regions:
+		out.append_array(groups[region] as Array[Dictionary])
+	return out
 
 
 func _fill_quests() -> void:
@@ -217,6 +235,10 @@ func _fill_quests() -> void:
 		for q in shown:
 			if bool(q["tracked"]):
 				picked = str(q["id"])
+		# Else the first open quest in the list (Other's regions may put a finished one first), else the first.
+		for q in shown:
+			if picked == "" and str(q["status"]) == "active":
+				picked = str(q["id"])
 		if picked == "" and not shown.is_empty():
 			picked = str(shown[0]["id"])
 	var list := VBoxContainer.new()
@@ -232,8 +254,16 @@ func _fill_quests() -> void:
 		list.add_child(UiKit.label(why, UiScale.text(15), "bone", LIST_W - 20.0))
 		return
 	var finished_shown := false
+	var region := ""
+	var counts := {}
 	for q in shown:
-		if str(q["status"]) != "active" and not finished_shown:
+		counts[str(q["region"])] = int(counts.get(str(q["region"]), 0)) + 1
+	for q in shown:
+		if quest_tab == "Other":
+			if str(q["region"]) != region:
+				list.add_child(_region_heading(str(q["region"]), int(counts[str(q["region"])]), region == ""))
+				region = str(q["region"])
+		elif str(q["status"]) != "active" and not finished_shown:
 			finished_shown = true
 			list.add_child(UiKit.label("Finished", UiScale.text(13), "bone"))
 		list.add_child(_quest_row(q))
@@ -242,6 +272,29 @@ func _fill_quests() -> void:
 			var right := UiParts.fill_scroll(_quest_card(q))
 			right.name = "QuestEntry"
 			_quest_body.add_child(right)
+
+
+## A region's heading over its side quests: its name (wrapping rather than spilling) and how many, a gilt rule under it.
+func _region_heading(region_id: String, count: int, first: bool) -> Control:
+	var gap := MarginContainer.new()
+	gap.name = "Region_" + region_id
+	gap.add_theme_constant_override("margin_top", 0 if first else 10)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 2)
+	gap.add_child(box)
+	var t := UiKit.label("%s  %d" % [QuestRegions.title(region_id), count], UiScale.text(15), "gilt")
+	t.add_theme_font_override("font", UiKit.display_font())
+	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	t.custom_minimum_size = Vector2(1, 0)
+	box.add_child(t)
+	var rule := UiParts.drawn(Vector2(10, 6), func(c: Control) -> void:
+		var y := c.size.y / 2.0
+		UiParts.diamond(c, Vector2(4, y), 3.0, Look.color("gilt"), true)
+		c.draw_line(Vector2(10, y), Vector2(c.size.x, y), Color(Look.color("gilt_dark"), 0.9), 1.0))
+	rule.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.add_child(rule)
+	return gap
 
 
 ## A quest in the list: its name, a gilt diamond while open (lit when tracked), its ending once over.

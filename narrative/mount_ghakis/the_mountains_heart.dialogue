@@ -83,7 +83,7 @@ if flag.grandfather_custom_known
 Narrator: Before you let go you put a small stone on top of it and say his name, the way she told you. The rock stays warm under your hand a long time after.
 endif
 Mountain Captive: (She puts a stone on the floor of the quarry and says a word you don't catch.) The overseer's pay chest is under the wagon. And this. My father's. It knows stone, and stone knows it.
-give belt_of_giant_strength_stone
+give dwarven_plate
 gold +400
 approve liriel_dawnsong +3 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You gave the mountain back its heart
 -> END

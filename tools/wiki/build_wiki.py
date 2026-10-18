@@ -2888,12 +2888,22 @@ class Wiki:
 
         def pct(v):
             return "" if v is None else (f"{v:.0f}%" if v >= 10 else f"{v:.1f}%")
+        # A road the party has walked, or a journey to a place it has been, rolls this share of the chance
+        # (story/road_familiarity.gd).
+        fam_src = (g.root / "story" / "road_familiarity.gd").read_text()
+        fam_m = re.search(r"const SCALE := ([0-9.]+)", fam_src)
+        fam = float(fam_m[1]) if fam_m else 1.0
+
+        def quiet(v):
+            return f"{round(v * fam, 1):g}%"
         lines = ["Travelling between places on the map can be interrupted. Each leg of a journey (one road between two "
                  "places) rolls its road's chance, by day or by night; if something comes, a weighted pick among the "
                  "entries whose condition holds decides what.", "",
-                 "The **By day** and **By night** columns are the chance of meeting that entry on one leg, counting every "
-                 "entry that can happen at that time. A story condition that rules some out, or a one-time meeting you've "
-                 "already had, makes the rest more likely; what raises the odds is at the end of the page.", ""]
+                 "The **By day** and **By night** columns are the chance of meeting that entry on one leg the first time, "
+                 "counting every entry that can happen at that time. A story condition that rules some out, or a one-time "
+                 "meeting you've already had, makes the rest more likely; what raises and lowers the odds is at the end of "
+                 "the page. A road you already know is quieter: its legs roll only "
+                 f"{round(fam * 100)}% of these.", ""]
         for rid, r in g.random_encounters.items():
             day, night = float(r.get("chance_day", 0)), float(r.get("chance_night", 0))
             ents = r.get("entries", [])
@@ -2907,7 +2917,8 @@ class Wiki:
             grounds = [x for x in [r.get("map")] + list(r.get("grounds") or []) if x in g.locations]
             if grounds:
                 lines += [f"**Fought on:** {', '.join(s.loc(x) for x in dict.fromkeys(grounds))}.", ""]
-            lines += [f"Something happens on {int(round(day * 100))}% of legs by day and {int(round(night * 100))}% by night.", "",
+            lines += [f"Something happens on {int(round(day * 100))}% of legs by day and {int(round(night * 100))}% by night "
+                      f"({quiet(day * 100)} and {quiet(night * 100)} on ground you know).", "",
                       "| What | When | By day | By night | XP |", "|---|---|---|---|---|"]
             for e in ents:
                 w = int(e.get("weight", 1))
@@ -2955,7 +2966,14 @@ class Wiki:
                               f"and +{round(float(t.get('road_night', 0)) * 100)}% by night" for t in tiers) + ".",
                   "- **Weather.** " + "; ".join(f"{lbl}, +{round(float(d) * 100)}% by day and +{round(float(n) * 100)}% by night"
                                                 for lbl, d, n in wx) + f" ({s.link('page/weather', 'Weather')}).",
-                  "- The chance never goes above 95%, and Find the Path keeps every road quiet for a day.", ""]
+                  "- The chance never goes above 95%, and Find the Path keeps every road quiet for a day.", "",
+                  "## What lowers the odds", "",
+                  "- **Ground you know.** A leg rolls only "
+                  f"{round(fam * 100)}% of its road's chance when you have walked that road before, or when the journey is "
+                  "bound for a place you have already been to: a road's 15% by day becomes "
+                  f"{quiet(15)} and its 40% by night {quiet(40)}. Strahd's attention and the weather are added "
+                  "after the cut, so his patrols and a storm still find you. A first visit, and any fight the story "
+                  "starts, are never made quieter.", ""]
         self.w.write("page/random_encounters", "World/Random Encounters", "Random Encounters",
                      [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         w = g.weather

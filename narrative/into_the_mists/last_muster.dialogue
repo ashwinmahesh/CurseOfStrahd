@@ -115,6 +115,6 @@ quest last_muster released
 Narrator: When the marshal falls, the column falls with him: every rider, every horse, a long rattle of bones going down together in the mud, and then nothing but harness and rust.
 Narrator: His blade is still bright under the rust. And behind the statues, where the gatehouse was, there's an iron pay chest that four hundred years of vanguard never got around to spending.
 gold +200
-give weapon_plus_2
+give weapon_plus_2__scimitar
 approve godrick_pendlebrook +3 thistle +1 wren_featherfoot +1: You relieved the last of the count's vanguard from his post
 -> END

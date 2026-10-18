@@ -160,6 +160,19 @@ static func magic_stock(st: StoryState, npc_id: String) -> Array[Dictionary]:
 	return out
 
 
+## What a merchant with magic stock pays for a magic item, as a share of its price (Ashwin, 2026-10-17: vendors who sell
+## magic items buy them too): half, whatever share of the price they pay for their other goods. A shop's own
+## `magic_sell_rate` can say otherwise.
+const MAGIC_SELL_RATE := 0.5
+
+
+## Whether `npc_id` buys magic items: a merchant whose magic stock is open to the party (a `magic` list, and its
+## `magic_if` holds). They buy any magic item with a price, whatever their `buys` list says.
+static func buys_magic(st: StoryState, npc_id: String) -> bool:
+	var sh := shop(npc_id)
+	return not (sh.get("magic", []) as Array).is_empty() and StoryConditions.check(str(sh.get("magic_if", "")), st)
+
+
 ## How many of `data` a shop's magic stock holds (MAGIC_QTY).
 static func magic_qty(data: Dictionary) -> int:
 	if str(data.get("category", "")) == "ammunition":

@@ -71,6 +71,6 @@ Narrator: She holds her father's young face in her old hands, and neither of the
 set ilarion_home
 quest the_last_traveller done
 Ilarion: (He sits on the edge of the well and pulls his boots off, one and then the other, and holds them out to you.) Aurica's grandmother's. They walk on air, a little, if you ask them. I put them on to run for the doctor. I won't be running anywhere now.
-give winged_boots
+give boots_of_striding_and_springing
 approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +1 wren_featherfoot +1 kip_smudgewick +1: You walked Ilarion home to his children
 -> END

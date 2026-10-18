@@ -103,6 +103,7 @@ func test_a_fight_on_the_road_then_the_journey_goes_on() -> void:
 	assert_eq(_view().loc_id, "test_town", "and on to town")
 	assert_eq(st.total_minutes() - start, 120 + 1 + 180, "the fight's minute and the second road")
 	assert_true(st.travel_resume.is_empty())
+	assert_true(RoadFamiliarity.walked(st, "r1") and RoadFamiliarity.walked(st, "r2"), "both roads are walked now: familiar ground")
 
 
 ## A fight on the road, saved at its round start and loaded again (Continue after quitting mid-fight), comes back (QA

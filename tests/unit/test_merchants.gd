@@ -136,8 +136,8 @@ func test_every_town_sells_weapons_armor_potions_and_scrolls() -> void:
 	assert_eq(_price(st, "gunther_arasek", "longsword"), 15.0, "Gunther at the PHB's price")
 	assert_eq(_price(st, "gunther_arasek", "plate_armor"), 1500.0)
 	assert_eq(_price(st, "bildrath", "plate_armor"), 15000.0, "Bildrath at ten times, as ever")
-	# Scrolls by level at Sane Magical Prices (Ashwin, 2026-10-14; MagicItems.SCROLL_PRICE).
-	assert_eq(_price(st, "kasimir_velikov", "spell_scroll__magic_missile"), 60.0, "a level 1 scroll")
+	# Scrolls by level at Sane Magical Prices in the rarity bands (Ashwin, 2026-10-14 and 10-17; MagicItems.SCROLL_PRICE).
+	assert_eq(_price(st, "kasimir_velikov", "spell_scroll__magic_missile"), 50.0, "a level 1 scroll, the PHB's price")
 	assert_eq(_price(st, "father_lucian", "spell_scroll__aid"), 120.0, "a level 2 scroll")
 
 
@@ -160,7 +160,7 @@ func test_the_keepers_stores_open_to_their_allies() -> void:
 	var ids := _ids(st, "urwin_martikov")
 	for id: String in ["potion_of_healing_superior", "spell_scroll__revivify", "spell_scroll__death_ward", "figurine_of_wondrous_power_silver_raven"]:
 		assert_true(id in ids, "the Keepers sell %s" % id)
-	assert_eq(_price(st, "urwin_martikov", "potion_of_healing_superior"), 450.0, "at cost (the guide's), though Urwin marks up his bread")
+	assert_eq(_price(st, "urwin_martikov", "potion_of_healing_superior"), 625.0, "at cost (a rare potion's lowest), though Urwin marks up his bread")
 	assert_eq(_price(st, "urwin_martikov", "ration"), 1.0, "the inn's goods keep the inn's markup (75 cp, a whole 1 gp)")
 	assert_true(_opens_shop(st, "urwin_martikov", "vallaki/martikovs:keepers_stores"))
 

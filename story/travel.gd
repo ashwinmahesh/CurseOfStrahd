@@ -2,8 +2,8 @@ class_name Travel
 extends RefCounted
 ## Travelling Barovia (plan §5.2, ADR 0010): places joined by roads on data/travel/barovia.json. A journey follows
 ## the quickest known roads; each road takes its hours off the clock and rolls its random encounter table (the
-## day or night chance, raised by Strahd's attention and by fog, then a weighted entry whose condition holds); bad
-## weather lengthens a leg (Weather, F12). Pure logic: the game root moves the party.
+## day or night chance, lowered on ground the party knows and raised by Strahd's attention and by fog, then a weighted
+## entry whose condition holds); bad weather lengthens a leg (Weather, F12). Pure logic: the game root moves the party.
 
 const MAP := "barovia"
 
@@ -132,8 +132,9 @@ static func hours(legs: Array[Dictionary]) -> float:
 
 
 ## Rolls a road's random encounter table for one leg (at the time the leg ends). Returns {} for a quiet road, or
-## {table, entry} for a fight or an event. Uses the dice (d100 for the chance, then the weights).
-static func roll(road: Dictionary, st: StoryState, dice: DiceRoller) -> Dictionary:
+## {table, entry} for a fight or an event. Uses the dice (d100 for the chance, then the weights). `journey_to` is the
+## place the journey is bound for: a road the party has walked, or a place it has been, is familiar ground (RoadFamiliarity).
+static func roll(road: Dictionary, st: StoryState, dice: DiceRoller, journey_to: String = "") -> Dictionary:
 	var tid := str(road.get("table", ""))
 	if tid == "":
 		return {}
@@ -144,6 +145,8 @@ static func roll(road: Dictionary, st: StoryState, dice: DiceRoller) -> Dictiona
 	if table.is_empty():
 		return {}
 	var chance := float(table["chance_night"]) if st.is_night() else float(table["chance_day"])
+	# Ground the party knows is quieter (Ashwin, 2026-10-18); Strahd's eyes and the weather are added after.
+	chance *= RoadFamiliarity.scale(st, road, journey_to)
 	# Strahd's attention (F9): the more he has noticed the party, the more of his eyes and patrols are on the roads.
 	var watch := StrahdPresence.tier(st)
 	chance = minf(0.95, chance + float(watch.get("road_night" if st.is_night() else "road_day", 0.0)) + Weather.road_bonus(st))

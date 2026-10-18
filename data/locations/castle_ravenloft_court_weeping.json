@@ -567,9 +567,9 @@
       "kind": "search",
       "search_dc": 17,
       "skill": "investigation",
-      "label": "a grimoire among Ludmilla's books",
+      "label": "a manual among Ludmilla's books",
       "model": "scattered_notes",
-      "item": "arcane_grimoire_plus_3"
+      "item": "manual_of_bodily_health"
     },
     {
       "id": "rahadin_swords_1",
@@ -780,7 +780,7 @@
           "qty": 1
         },
         {
-          "id": "ring_of_x_ray_vision",
+          "id": "weapon_plus_3__heavy_crossbow",
           "qty": 1
         }
       ],

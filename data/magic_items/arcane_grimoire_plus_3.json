@@ -36,5 +36,6 @@
     }
   ],
   "summary": "+3 to your Wizard spell attacks and save DC; Arcane Recovery brings back one more slot level.",
-  "text": "This leather-bound tome works as a spellbook. While it is in your hand, your Wizard spells can channel through it as a Spellcasting Focus and gain +3 to their spell attack rolls and their saving throw DCs. Whenever you use Arcane Recovery, the total of spell slot levels you get back rises by 1."
+  "text": "This leather-bound tome works as a spellbook. While it is in your hand, your Wizard spells can channel through it as a Spellcasting Focus and gain +3 to their spell attack rolls and their saving throw DCs. Whenever you use Arcane Recovery, the total of spell slot levels you get back rises by 1. Its pages still hold its last owner's spells, which a Wizard can copy into their own book.",
+  "spells": ["fly", "lightning_bolt", "dimension_door", "greater_invisibility", "ice_storm", "cone_of_cold", "hold_monster"]
 }

@@ -17,7 +17,8 @@ OpenGameArt pages), not from listening.
 
 | Mood | Recordings | For |
 |---|---|---|
-| `sorrow` | Relent (harp, clarinet: "so much sadness"), Unraveling, Penumbra, Memories of Stone | farewells, the dead laid to rest, reunions |
+| `sorrow` | Relent (harp, clarinet: "so much sadness"), Unraveling, Penumbra, Memories of Stone, and since 2026-10-18 the piano: Wounded and the Chopin nocturnes Op. 48 No. 1, Op. 72 No. 1 and Op. posth. | farewells, the dead laid to rest, reunions |
+| `somber` | the Marche funèbre, Chopin's nocturnes Op. 48 No. 1 and Op. posth., the Moonlight Sonata, Unraveling | the Amber Temple's pact ledger |
 | `tension` (level -1.5) | Gloom Horizon, Oppressive Gloom, Lost Frontier | standoffs and menace in town |
 | `dawn` | Long Road Ahead ("the aftermath of a battle between good and evil", triumphant last third), Virtutes Instrumenti (uplifting sacred viol) | real dawn, Strahd's end |
 | `sacred` (level -3) | Night Vigil, Virtutes Instrumenti, Ancient Rite, Gregorian Chant | the vigil at St. Andral's, without the Toccata's organ |
@@ -81,3 +82,29 @@ tension -21, dawn -21.5, sacred -23, against town and tavern -22, castle -21 to 
 
 - The Keepers of the Feather reveal would want a hushed, mysterious piece the game doesn't have.
 - Place cutscenes (walking into an area, examining a thing) keep the place's music; none of them clashed.
+
+## Castle piano (2026-10-18)
+
+The owner's favourite castle piece is Chopin's Marche funèbre, so the audit's shortlist of more lonely piano (in
+audio_shortlist.md) went to a listening page. He marked six Use: the Chopin nocturnes Op. 48 No. 1, Op. 72 No. 1 and
+Op. posth. (C-sharp minor), the E minor prelude Op. 28 No. 4, Beethoven's Moonlight Sonata (first movement) and Kevin
+MacLeod's Wounded. They join the `castle` mood, so the castle now shuffles seven piano pieces among its strings.
+Skipped: Gymnopédie No. 1, Cryptic Sorrow, Loss and Quinn's Song: First Night.
+
+Each piece has a `track_levels` line from its loudness over the whole recording against the Marche funèbre's (the
+Marche plays at +4.4), capped so its peak stays under full scale. The listening page's clips were levelled on their
+first two minutes, so a piece with a loud middle (the Op. 48 nocturne) plays quieter here than in its clip.
+
+The owner also asked (2026-10-18) for the farewells and burials to get the piano: Wounded and the three nocturnes joined
+`sorrow` beside the castle (their levels are per recording, so they play as loud in both). Rose and Thorn's goodbye, Elvir's
+burial, Doru at rest, Sergei's font and the others in the `sorrow` table above now shuffle strings and piano. The prelude
+and the Moonlight Sonata stay castle-only.
+
+## The pact ledger (2026-10-18)
+
+The owner asked for somber music when the party reads the copper ledger holding Strahd's signature for the Thirst joining
+him (`amber_temple/vault:pact_ledger`, then `pact_text`; the Bargain, and Two Accounts of One Night when the Tome is read
+beside it). Both pictures map to a new `somber` mood in `scenes`: the Marche funèbre, the Op. 48 and Op. posth. nocturnes,
+the Moonlight Sonata and Unraveling, chosen for weight (a funeral march, a grave nocturne, grief) and for evenness (they play within a decibel of each
+other; Penumbra is 4 dB louder and Memories of Stone is peaceful, so both stay in `sorrow`). The Amber Temple's drone
+returns when the reading ends.

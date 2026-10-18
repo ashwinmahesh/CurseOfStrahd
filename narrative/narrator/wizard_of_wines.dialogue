@@ -215,14 +215,14 @@ cooldown 10
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:founders_cask_stave
-| One stave of the founder's cask is a door. Behind it, packed in straw, a fat ceramic jug that sloshes, though when you look inside it's empty.
+| One stave of the founder's cask is a door. Behind it, packed in straw, a small crossbow of dark walnut, cocked and ready, as if the founder expected company.
 once
 
 ~ check:investigation:founders_cask_stave:failure
 | Oak, iron hoops and a century of wine soaked into both. The founder's cask is just a cask, as far as you can tell.
 
 ~ search:wizard_cask_decanter
-| Behind the wizard's casks, in a nest of old corks, a stoppered decanter. Pull the stopper and water runs out of it, and keeps running.
+| Behind the wizard's casks, in a nest of old corks, a small hand drum. Tap it once and the whole cellar seems to fall into step.
 once
 
 ~ check:perception:wizard_cask_decanter:failure
