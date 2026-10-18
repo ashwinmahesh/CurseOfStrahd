@@ -1,0 +1,45 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Krezk is a walled mountain village: blunt, frozen, suspicious of strangers and quietly kind underneath; its people say less than they mean. The lake, the winery and the hills are as described. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Krezk Watchman: Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves.
+Goodwife Rodica: One bucket for the Burgomaster, one for the widow at the end of the row, one for me, and a prayer for each. The well's never frozen. Not once. We don't ask why, we just say thank you.
+Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he likes the company.
+Dumitru: Nobody comes up the road. Except you. Did you see wolves? Did you see the castle? Is it true it has a thousand windows?
+Old Simion: Stone suns, every one, so they face the morning. The snow pushes them crooked. I push them back. Between us we've kept it up for thirty years.
+Narrator: The goat chews something that was probably part of the fence, and watches you with its strange square eyes until you go away.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+EXISTING SCENE (so you match it): Lark is a small Belview girl, a mongrelfolk of the abbey on the mountain, who can only speak by copying voices: when she sings she uses her dead mother's grown woman's voice, and when she talks plainly it is her own small scratchy one. Every night after the last bell she goes over the abbey wall and down the road to an old waist-high waystone with a sunburst cut into it, and lights a candle for her brother Yanko. Two winters ago the wolves took Yanko; he is a young werewolf now, fifteen, with one ear like a hound's. He comes to the edge of the candlelight and listens to her sing their mother's songs, but never closer. The wolf pack has noticed and has begun to come down the road for both of them. At night the party stands with her and fights the pack.
+
+NEW SCENE (the daytime way, no fight needed): the party comes to the stone by day and follows Yanko's tracks (a Survival check) to a hollow under a fallen pine where he lies up. Lark, it turns out, steals an hour at the stone at noon as well, while the Abbot is at his midday prayers. She can sing him out in daylight, but she is frightened the pack will hear. A Persuasion check steadies her to keep singing; a Stealth check keeps the pack off. Fail the Stealth check and the pack hears and comes down on them.
+
+LABELS AND BEATS (the Narrator speaks in second person; Lark and Yanko as named):
+== tracks_early
+Before the party has heard about Lark: the Narrator notes a candle, small bare prints and big wolf prints round an old stone in daylight. 2 Narrator lines.
+== tracks_ok
+Success following the tracks: the Narrator describes large prints and small bare prints leading off the road to a hollow under a fallen pine, the grass pressed flat in the shape of a big dog, and at the stone itself fresh small prints with long toes that come and go at noon. 3 Narrator lines.
+== tracks_miss
+A failed attempt: too many wolves' prints crossing one another in the mud to read. 1 Narrator line.
+== lark_day_meet
+Lark at the stone by day, startled and half hiding the candle. First 2 Narrator lines, then 3 lines from Lark (the first in her mother's voice, telling them to go on by, then in her own: the Abbot is at his noon prayers and she has an hour).
+== lark_day_repeat
+If the party returns to Lark by day: one Narrator line and one Lark line. 2 lines.
+== lark_day_who
+Lark explains briefly about Yanko, knowing now the party has seen his lair. 3 Lark lines.
+== sing_ask
+The party offers to watch the road while Lark sings him out into the daylight; she is afraid the pack will hear. 3 lines (the first a Lark line).
+== sing_steady
+Persuasion succeeds: her voice settles and the song carries across the road. 3 lines (Narrator first).
+== sing_shaky
+Persuasion fails: her voice cracks; she begins again, more softly. 2 Narrator lines then 1 Lark line.
+== watch_ok
+Stealth succeeds: the party lies in the pines and the pack, far up the ridge, turns back downwind. 3 Narrator lines.
+== watch_miss
+Stealth fails: a howl answers the song from three directions at once. 2 Narrator lines and 1 Lark line.
+== yanko_comes
+Yanko comes out of the hollow into daylight, wary, a young grey wolf with one ear like a hound's. 4 Narrator lines then 2 Lark lines.

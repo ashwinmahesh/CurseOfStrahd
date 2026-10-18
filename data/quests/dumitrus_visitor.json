@@ -1,0 +1,33 @@
+{
+  "id": "dumitrus_visitor",
+  "name": "Dumitru's Visitor",
+  "summary": "Dumitru waits inside Krezk's gate for a visitor who never comes, and writes weekly letters to an uncle in Vallaki who died.",
+  "giver": "krezk_gate_boy",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Dumitru waits inside Krezk's gate every day for a visitor, and writes weekly letters to his Uncle Marius in Vallaki, who died long ago. He keeps them in a tin. Nobody ever comes up the road for him.",
+      "objectives": [
+        "Give Dumitru a visitor: come as his uncle's friends, or bring someone up the road"
+      ],
+      "hint": "Talk to Dumitru inside the gate at Krezk. A travel writer at the Old Svalich crossroads might walk up the road for him.",
+      "ends": ""
+    },
+    {
+      "id": "fennimore",
+      "journal": "Ambrose Fennimore, the travel writer at the Old Svalich crossroads, has agreed to walk up to Krezk and visit Dumitru.",
+      "objectives": [
+        "Meet Fennimore and Dumitru inside the gate at Krezk"
+      ],
+      "hint": "Go to Krezk and meet Fennimore and Dumitru inside the gate.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Dumitru has had a visitor. He will write to say so.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

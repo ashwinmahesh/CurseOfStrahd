@@ -720,6 +720,48 @@
   ],
   "npcs": [
     {
+      "npc": "ioana",
+      "cell": [
+        22,
+        23
+      ],
+      "dialogue": "krezk/vadu_children:ioana",
+      "facing": "east",
+      "hours": [
+        9,
+        17
+      ],
+      "when": "flag.den_children_freed and not weather == storm"
+    },
+    {
+      "npc": "zamfir",
+      "cell": [
+        21,
+        23
+      ],
+      "dialogue": "krezk/vadu_children:zamfir",
+      "facing": "west",
+      "hours": [
+        9,
+        17
+      ],
+      "when": "flag.den_children_freed and not weather == storm"
+    },
+    {
+      "npc": "codruta",
+      "cell": [
+        21,
+        22
+      ],
+      "dialogue": "krezk/vadu_children:codruta",
+      "facing": "south",
+      "hours": [
+        9,
+        17
+      ],
+      "when": "flag.den_children_freed and not weather == storm"
+    },
+    {
       "npc": "krezk_guard",
       "cell": [
         33,
@@ -975,6 +1017,31 @@
           3
         ]
       ],
+      "hours": [
+        9,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "fennimore",
+      "cell": [
+        25,
+        20
+      ],
+      "dialogue": "krezk/dumitrus_visitor:fennimore_visit",
+      "facing": "east",
+      "approach": 4,
+      "when": "flag.krezk_gate_open and flag.fennimore_to_krezk and quest.dumitrus_visitor == fennimore"
+    },
+    {
+      "npc": "madam_profira",
+      "cell": [
+        23,
+        17
+      ],
+      "dialogue": "krezk/profira:start",
+      "facing": "south",
       "hours": [
         9,
         17

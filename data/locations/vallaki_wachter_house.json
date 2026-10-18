@@ -459,6 +459,16 @@
       "dialogue": "vallaki/cat_in_the_window:stella",
       "facing": "west",
       "when": "not flag.stella_at_church"
+    },
+    {
+      "npc": "tudorel",
+      "cell": [
+        19,
+        4
+      ],
+      "dialogue": "vallaki/florins_grandson:tudorel",
+      "facing": "west",
+      "when": "not (flag.festival_begun and not flag.festival_over) and flag.vallaki_backed != \"wachter\" and flag.wachter_fate != \"stocks\" and flag.wachter_fate != \"exposed\" and flag.wachter_fate != \"exiled\""
     }
   ],
   "encounters": [

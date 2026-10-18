@@ -1,0 +1,56 @@
+== watchman_yes
+Krezk Watchman: No. Wait, what did you ask?
+Krezk Watchman [weary]: Apologies. The word gets stuck in the teeth after a winter or eleven.
+Krezk Watchman: I would like to say yes to somebody, just once, if they ever bring the right question up the hill.
+== watchman_list
+Narrator: He whips a crumpled sheet bearing the burgomaster's wax seal from his coat, holds it up for the space of a blink, and stuffs it back.
+Krezk Watchman: You saw the seal. Everything is in order, and you are not on it.
+Krezk Watchman [weary]: Truth is, the ink might as well be chicken tracks to me. Never learned my letters.
+Krezk Watchman: Easier to tell the whole valley no than let one wrong pair of boots through the gate.
+== watchman_list_miss
+Krezk Watchman: No, not on the list, and no, you cannot look at it longer, the wind will take the ink.
+== watchman_no_1
+Krezk Watchman: Whatever it is you're opening your mouth to ask for, we don't have any, and the answer is no.
+== watchman_no_2
+Krezk Watchman: No. Good morning, if you call this a morning, and it's still no.
+== watchman_no_3
+Krezk Watchman: Save your breath for the climb back down, stranger, because the answer was no before you reached the bend.
+== stefan_want
+Stefan the Woodcutter: A winter where the axe stays sharp and the snow stops below the eaves.
+Stefan the Woodcutter [weary]: Mostly I just want nobody knocking on my door after dark with bad news.
+== stefan_secret
+Narrator: The straightest, driest birch logs sit stacked to the latch by Anna Krezkova's cottage, while the burgomaster's porch gets the knotted pine.
+Stefan the Woodcutter: The wind comes down the mountain strange some nights, and rolls the good birch right against her door.
+== sanda_want
+Goodwife Sanda: Rain that comes down as water instead of ice, just once before my knees give out.
+Goodwife Sanda: It would be nice to hear it on the shingles without having to shovel it off in the morning.
+== sanda_secret
+Goodwife Sanda [afraid]: When nobody is looking, I say a little word for the Abbot up on the hill, too.
+Goodwife Sanda: Best to be polite to anything that lives that high up and doesn't come down for firewood.
+== rodica_secret
+Goodwife Rodica: A pinch of salt from my apron pocket every Tuesday, right down the middle of the well.
+Goodwife Rodica: Keeps the bad luck out of the bucket, and stops the water tasting of nothing at all.
+== cezar_secret
+Cezar: The day that one-horned devil goes in the stewpot, I'll sleep till noon.
+Cezar [weary]: Though I suppose the yard would be awful quiet with nobody listening to me complain about the nails.
+== simion_want
+Old Simion: Seventy stones by the water, and I know the name and the last words under every one of them.
+Old Simion [sad]: I only wish someone younger had the patience to stand in the cold and learn them before I forget.
+== simion_secret
+Narrator: At the end of the row stands a blank sun-stone beside a neat, deep trench covered with pine boughs to keep the drift out.
+Old Simion: Ground freezes hard as iron come midwinter, so I dug my own while my back still had the bend in it.
+== catrina_secret
+Widow Catrina [sad]: Five years I've told that water what the hens laid and who took ill, never expecting a word back.
+Widow Catrina [afraid]: Then last month the ripples stopped, and a voice from the bottom told me to go home and bolt the door.
+Widow Catrina: It wasn't my Radu's voice, and I haven't breathed a word of it to a living soul.
+== ilarie_secret
+Ilarie [sly]: Long grey hare's ear, dried by the stove with a bit of soot rubbed in, looks mighty fierce in a dim room.
+Ilarie: I sell them to a peddler at the crossroads, and he sells them to the Baron in Vallaki for wolf bounty.
+Ilarie [smile]: The Baron gets his trophies, I get salt pork, and the real wolves keep their ears where they belong.
+== belview_gate
+Narrator: The crooked watchman behind the iron bars opens a lopsided mouth and greets you in a trembling old woman's voice, begging for herbs.
+Narrator: It blinks its mismatched eyes, waits half a heartbeat after you speak, and repeats your own greeting back in your exact tone.
+Narrator: It seems pleased with how the words fit in its throat, and tries your last syllable a second time for practice.
+== belview_well
+Narrator: The hunched creature winching the bucket repeats the tail end of everything you say, always a heartbeat behind.
+Narrator: It puts a doubtful little turn on your own words, like an echo that isn't sure it agrees with you.

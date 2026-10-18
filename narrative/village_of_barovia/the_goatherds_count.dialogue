@@ -6,6 +6,10 @@
 # mists don't give anything back for nothing, and the wolves come out of them after her. Reached from Goodwife Petra at
 # the well (village_of_barovia/townsfolk:goodwife_menu) and Erno on the pasture by evening; Speak with Animals lets
 # Snowdrop and the flock tell it themselves. Every line here is unvoiced for now.
+# Reshaped (NPC plan batch 1): the wolves aren't certain. Once the bell is read, the evening becomes a race against the
+# dusk: three beats (stragglers, a gap in the wall, the cracked bell), each a roll or a shrug, and a goat lost to the
+# fog on every miss. Two lost and the mist sends its wolves; fewer and the flock is in, the white finds nothing to push
+# at and the fight is won without a blow (xp fight). Lines drafted by Gemini, edited.
 
 # --- Goodwife Petra at the well (village_of_barovia/townsfolk:goodwife_menu jumps here) ---
 
@@ -26,7 +30,7 @@ Erno: Twenty-three. Every night. (He looks up at the fog, and then doesn't.) I c
 endif
 -> END
 endif
-if flag.pasture_wolves_beaten
+if flag.pasture_wolves_beaten or flag.pasture_flock_safe
 -> after
 endif
 if flag.pasture_erno_met
@@ -60,11 +64,11 @@ if flag.ilarion_met
 Narrator: You've seen that mark before: on a pair of good grey boots, on a young man by the edge of the fog who asked you what day it was.
 endif
 Erno: Gran had a nanny called Snowdrop, when she was little. Great-grandad took her with him the night he went into the fog. Gran says she still hears the bell sometimes, at the edge of the mists. (He swallows.) Gran says a lot of things.
-# Once the wolves are beaten, the bell leads back to choosing where she goes, not to another fight (Wiki finding 9).
-if flag.pasture_wolves_beaten
+# Once the wolves are beaten (or never came), the bell leads back to choosing where she goes, not to another fight (Wiki finding 9).
+if flag.pasture_wolves_beaten or flag.pasture_flock_safe
 -> after
 endif
--> wolves_come
+-> flock_start
 
 ~ snowdrop_cast
 cast speak_with_animals
@@ -82,6 +86,128 @@ Narrator: "He's still in it. On a stone by the road, where the white starts, ask
 endif
 Narrator: "The white let go of me. It doesn't let go for nothing. It wants something back, and it's sending for it." She looks up the pasture, at the fog.
 -> bell
+
+# --- Getting the flock in before dark: each miss costs a goat to the fog ---
+
+~ flock_start
+set goat_strays = 0
+Narrator: The last of the light goes a thin, cold orange along the ridge. Up on the slope, the goats stop grazing and begin to drift toward the white wall of the mist.
+Narrator: The big grey dog sits down hard against your boots and will not look up the hill.
+Erno [afraid]: The light's going. Help me get them inside the stones before the dark comes down.
+Erno [afraid]: Please. Don't let them walk into the white.
+-> round1
+
+~ round1
+Narrator: Half a dozen stragglers have wandered up the steep grass toward the fog, their tin bells clinking in the quiet.
+Narrator: They are twenty paces from the mist, lifting their chins to smell the cold.
+* [Animal Handling DC 10] (Call them down with the old herding calls.) -> r1_ok_animal | r1_fail
+* [Athletics DC 10] (Run up the slope and herd them downhill.) -> r1_ok_athletics | r1_fail
+* (Wave your arms and shout.) -> r1_noroll
+
+~ r1_ok_animal
+Narrator: You cup your hands and give the low, whistling pasture-call the herdsmen use when rain is coming.
+Narrator: The lead billy twitches an ear, turns, and brings the rest clattering down the slope like a grey tide.
+-> round2
+
+~ r1_ok_athletics
+Narrator: You take the turf at a dead run, coming around their flank before they can scatter into the cloud.
+Narrator: They bolt downhill ahead of you in a tangle of horns and hooves, and you find yourselves laughing for the breath it takes.
+-> round2
+
+~ r1_fail
+set goat_strays += 1
+Narrator: You lunge for the nearest goat, but your boot slips on the wet grass and the knot of them breaks apart.
+Narrator: One speckled nanny bounds over the crest, and the white takes her without a sound.
+-> round2
+
+~ r1_noroll
+set goat_strays += 1
+Narrator: You wave your arms and shout up the hill at them.
+Narrator: The stragglers regard you with flat yellow eyes, turn their backs, and step calmly into the fog.
+-> round2
+
+~ round2
+Narrator: Most of the flock is crowding through the gate now, jostling and bleating against the dry-stone wall.
+Narrator: Down where the fold meets the open pasture, the old stones have given way, leaving a gap wide enough for a goat's shoulders.
+* [Survival DC 10] (Find where they are getting through.) -> r2_ok_survival | r2_fail
+* [Investigation DC 10] (Work out which stones fell, and where they go.) -> r2_ok_investigation | r2_fail
+* (Shove a pack into the gap.) -> r2_noroll
+
+~ r2_ok_survival
+Narrator: You spot the spill of crushed nettles and flattened grass where the wall has slumped outward.
+Narrator: Before the press of the flock can find it, you brace your knees and wedge the heavy cornerstone back into the turf.
+-> round3
+
+~ r2_ok_investigation
+Narrator: The fallen slate lies in the mud in the exact order it slid from the course.
+Narrator: Five stones, longest at the bottom, flat side in: you lock them back into the dry-wall before the first goat reaches the corner.
+-> round3
+
+~ r2_fail
+set goat_strays += 1
+Narrator: You search the dark line of the wall for the breach, but the dusk and the jostling backs hide it until too late.
+Narrator: A lean black goat slips sideways through the tumble of stones and vanishes up the hillside.
+-> round3
+
+~ r2_noroll
+set goat_strays += 1
+Narrator: You drop a heavy pack into the breach to block the way.
+Narrator: An old billy sniffs the canvas once, steps neatly over the straps, and trots out onto the darkening slope.
+-> round3
+
+~ round3
+Narrator: The old nanny with the scarred ears stands alone at the open gate, refusing to cross the threshold.
+Narrator: Every breath she takes sets her cracked iron bell clinking, a flat, tinny note that carries up the hill.
+Erno [afraid]: It's the bell. The white hears the bell, that's how it knows where she is.
+* [Sleight of Hand DC 10] (Stuff the bell with Erno's scarf.) -> r3_ok_hands | r3_fail
+* [Animal Handling DC 12] (Talk the old nanny into the fold.) -> r3_ok_calm | r3_fail
+* (Wave her through from a step back.) -> r3_noroll
+
+~ r3_ok_hands
+Narrator: Erno unwinds his woollen scarf and you slip two fingers inside the rusted iron rim.
+Narrator: One quick twist packs the wool tight around the clapper, and the pasture goes dead quiet.
+-> flock_end
+
+~ r3_ok_calm
+Narrator: You drop to one knee by the gatepost and speak to her the way you would speak to a tired horse at the end of a long road.
+Narrator: She lowers her head, steps over the sill, and takes her place in the corner as if she walked out of it yesterday, not fifty years ago.
+-> flock_end
+
+~ r3_fail
+set goat_strays += 1
+Narrator: You reach for the collar, but she jerks her horns back against the gatepost.
+Narrator: The cracked bell strikes the wood once, loud and clear in the hush, and the whole hillside seems to listen.
+-> flock_end
+
+~ r3_noroll
+set goat_strays += 1
+Narrator: You leave the collar alone and try to wave her through from a step back.
+Narrator: She stays where she is, chewing nothing, while the cracked bell rings and rings into the dusk.
+-> flock_end
+
+~ flock_end
+if flag.goat_strays >= 2
+-> wolves_come
+endif
+-> flock_in
+
+# Fewer than two lost: the flock and the old nanny are in, and the white finds nothing to push at.
+~ flock_in
+xp fight pasture_wolves
+set pasture_flock_safe
+quest the_goatherds_count defended
+Narrator: You drop the ash bar across the gate. The flock is inside the stones, pressed flank to flank in the straw.
+Narrator: Up at the top of the pasture, the white wall swells outward like a sail taking wind, hesitates over the empty grass, and settles flat again.
+if flag.goat_strays == 0
+Erno [smile]: Twenty-one, twenty-two, twenty-three. Twenty-four.
+else
+Erno: Twenty-one, twenty-two, and Snowdrop makes twenty-three. There were twenty-four, before the white got thick.
+Narrator: He rests his chin on the top rail of the fold and looks out at the wall of fog, where the road stops.
+Erno [sad]: Gran says the mist gives back what it likes. That was the small brown one with the soft ears, so I hope it likes her.
+endif
+Erno: The village says she's a wolf-goat, come to lead the others in. She isn't. Her collar says Snowdrop.
+Erno [sad]: She just remembered where the fold was. I want her to stay.
+-> after
 
 ~ wolves_come
 Narrator: Up at the top of the pasture, where the grass stops and the fog starts, the white wall of the mists bulges, the way a sheet does when someone pushes on it from the other side.

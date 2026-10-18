@@ -1,0 +1,66 @@
+== start
+Narrator: A thin man steps from the wet roadside brambles, holding a notched and rusted blade upright Before him as though it were a church candle.
+Costica [neutral]: Good day to you, travellers, and my apologies for the interruption upon the road.
+Costica [afraid]: As a professional highwayman, I must ask that you stand and deliver whatever small coin you can comfortably spare.
+Costica [smile]: Please take your time with the clasps on your purses, as the damp makes the leather terribly stiff.
+
+== start_again
+Costica [sad]: Forgive me, I did not recognise your boots through the mist until I had already stepped from the bushes.
+Costica [neutral]: In my trade, however, once one has emerged from the brambles, etiquette demands that one see the robbery through.
+
+== pay
+Costica [smile]: Two whole gold pieces? You are most generous, and a credit to the victims of this valley.
+Narrator: He sets his rusty sword carefully in the mud, fishes a stub of charcoal and a damp scrap of parchment from his coat, and writes with great concentration.
+Costica [neutral]: Here is your receipt, duly signed, so that no other footpad along the Old Svalich Road may tax you twice on the same afternoon.
+
+== scare_ok
+Costica [afraid]: Say no more, I beg you, for I can see at once that I have misjudged the occasion entirely.
+Costica [sad]: It was never my intention to cause distress to travellers of such fierce and admirable bearing.
+Costica [neutral]: Please accept my deepest apologies for the delay, and allow me to offer this parcel of salted turnip and rye bread by way of amends.
+Costica [smile]: It is quite fresh, I assure you, and I shall step back into the wet bushes immediately.
+
+== scare_fail
+Costica [angry]: There is really no call for that tone of voice, especially toward a man who is only trying to conduct an honest hold-up.
+Costica [sad]: You have no idea how damp it is behind those gorse bushes, waiting six hours for a single cart while the mist ruins one's cuffs.
+Costica [neutral]: In my trade we strive to maintain a certain standard of roadside civility, even when our customers are rude.
+Costica [sad]: Go on along the road, then, and keep your purses, for I have quite lost the spirit for brigandage today.
+
+== insight_ok
+Narrator: You notice his knuckles are white around the hilt, yet he holds the flat of the blade angled away from you as if terrified it might accidentally scratch someone.
+Costica [sad]: It belonged to my late grandmother, you see, and she was always most particular about keeping the edge away from company.
+
+== insight_fail
+Narrator: His solemn expression and stiff shoulders are impossible to read through the gloom, suggesting either a deep and cunning secret or a severe cramp from crouching in the ditch.
+
+== who
+Costica [neutral]: I am Costica, highwayman of the Old Svalich Road, at your service.
+Costica [sad]: Times are lean in my profession, as very few people travel for pleasure and fewer still carry spare coin.
+Costica [neutral]: My cousin Bildrath keeps the mercantile in the village, and he tells me a man must find a trade and stick to it.
+Costica [smile]: Everything I manage to plunder, I spend at his counter, though as family he charges me only ten times the usual rate.
+
+== secret
+Costica [smile]: You will be pleased to hear that your two gold pieces were put to immediate and practical use.
+Costica [neutral]: My cousin Bildrath happened to have a very fine felt hat in his shop window, which he had taken from me last month against my tab.
+Costica [sad]: Your generous contribution covered nearly a tenth of what he asked to sell it back to me, so he let me hold it for an hour.
+Costica [smile]: It is a comfort to deal with family, where one knows the money stays in good hands.
+
+== walk_past
+Narrator: You walk steadily past him along the muddy rut while he turns on his heel, keeping the rusty sword upright like a lantern.
+Costica [afraid]: Pardon me, if it is not too bold to ask, did you not hear the part where I bade you stand and deliver?
+Costica [sad]: Tell me honestly, as travellers of the world, should I have pitched my voice lower when stepping from the gorse?
+
+== goodbye
+Costica [neutral]: Safe travels to you then, and do mind the deep puddle just past the bend.
+Costica [sly]: Beware the shadows of the road, for next time I may well ask for three gold pieces, if it is not an inconvenience.
+
+== kip
+interject name:kip_smudgewick: Hold on, he has a receipt book and an opening figure, which means we can easily talk him down to three dried apricots and a button.
+
+== ratatoille
+interject name:ratatoille: Wait a moment before you refuse him, for I wish to know whether that rye bread was baked with caraway or plain sour mash.
+
+== wren
+interject name:wren_featherfoot: Look at that stance, look at that grip, it takes real dedication to do every single part of a stick-up wrong at the same time.
+
+== blunt
+interject tag:blunt: Get out of the road before you drop that thing on your own foot.

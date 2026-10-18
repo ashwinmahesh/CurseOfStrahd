@@ -6,10 +6,13 @@
 ~ dorina
 Old Dorina: Sit, sit. Nobody walks past my pot hungry, not even strangers. Strangers least of all; they never know when they'll eat next.
 * What's in the pot? -> dorina_pot
+* [if quest.fennimores_guide == asked] What is really in the pot? -> svalich_road/fennimore:dorina_ask
+* [if flag.dorina_pot_eaten] Tell us about the pot. -> dorina_stew
 * Have you been with the camp long? -> dorina_long
 * We can't stay. -> END
 
 ~ dorina_pot
+set dorina_pot_eaten
 Old Dorina: Plums, onions, a hare Zora shot, and whatever the last pot left behind. This pot has not been empty since before Stanimir had teeth.
 Narrator: She ladles out a bowl without asking. It is hot, sweet and peppery, and it is the first thing in this valley that has tasted of anything.
 interject tag:blunt: That's good. That's actually good.
@@ -21,6 +24,9 @@ Old Dorina: Long enough to have buried a husband, two sisters and a horse I like
 -> dorina
 
 ~ radu
+if flag.dinte_sold and not flag.radu_horse_paid
+-> svalich_road/radus_horse:radu_pays
+endif
 if quest.the_grey_mare and quest.the_grey_mare != rumored
 -> svalich_road/grey_mare:radu
 endif
@@ -56,6 +62,7 @@ Narrator: The grinding wheel keeps turning under his foot. He looks at your weap
 Petru: Good steel. Badly kept. You've been using it on things that bleed black.
 * Can you sharpen our blades? -> petru_sharpen
 * Who do you sharpen for? -> petru_who
+* Is there a blade you can't sharpen? -> petru_blade
 * Goodbye. -> END
 
 ~ petru_sharpen
@@ -91,6 +98,7 @@ Big Tobar: Walk in the middle. Don't stop to help anyone who calls from the tree
 Zora: Strangers off the road. I'll remember your faces, and how many of you there are.
 * Why do you count us? -> zora_count
 * Heard anything interesting? -> zora_road
+* About the cord at your belt. -> zora_cord
 * Goodbye. -> END
 
 ~ zora_count
@@ -178,3 +186,30 @@ endif
 Narrator: "And somebody hides a drink that smokes in the hollow stump at the edge of the camp, where the chief won't smell it. I can smell it. Everybody can smell it."
 reveal tser_stump_flask
 -> END
+
+# --- Flavour (NPC plan batch 2): the pot, Zora's cord, Petru's blades ---
+
+~ dorina_stew
+Old Dorina: You already ate your share, and now you want the history of the iron. Good.
+Old Dorina [smile]: Sixty years this water has been boiling. A pot like this is a family, child.
+Old Dorina: You do not take from a family to see what is at the bottom. You only add to it.
+-> dorina
+
+~ zora_cord
+if flag.zora_knots_seen
+Zora [smile]: Look here. Your knots are still tight against the leather.
+Zora: That is the best news I have had in a week, and it has been a very long week.
+else
+set zora_knots_seen
+Zora: You are looking at the cord. Everyone looks at the cord eventually.
+Zora: I tie a knot for every stranger who walks into the light of our fire.
+Zora [weary]: When the road takes them, or the mist does, I sit by the wagon and unpick it.
+Narrator: Zora glances down at her belt, then up at your faces, and keeps her thumb over the end of the string.
+endif
+-> zora
+
+~ petru_blade
+Petru: A blade nobody can sharpen? No. There is only iron nobody has been patient enough to teach.
+Petru: Give me a stone, a bucket of tallow, and an hour without anyone talking to me.
+Narrator: Petru looks for a long moment at the sword at your hip, then raises his dark eyes to your face.
+-> petru

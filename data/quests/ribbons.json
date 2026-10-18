@@ -24,6 +24,15 @@
       "ends": ""
     },
     {
+      "id": "forged",
+      "journal": "Daciana wrote the lamp's list with invented names on it, Horatiu Cornel and Mirela Nobody among them, and Dobre took it. Now we watch where it turns up: the Baron's clerk, Lady Wachter's ladies, the rider at the west gate. Two proofs win a hearing before the Baron.",
+      "objectives": [
+        "Find two proofs of where the false list went, then bring Dobre before the Baron"
+      ],
+      "hint": "Check the Baron's clerk in the burgomaster's mansion, the stocks in Vallaki's square, and the west gate at dusk, then speak to the Baron.",
+      "ends": ""
+    },
+    {
       "id": "sold_three_times",
       "journal": "Watchman Dobre collects the lists and sells each one three times: to the Baron's clerk, which fills the stocks; to the back door of Wachterhaus, whose ladies visit whoever is in the stocks and tell them who put them there; and to a rider on a black horse at the west gate, for the castle. The unhappy are the ones who open their doors.",
       "objectives": [

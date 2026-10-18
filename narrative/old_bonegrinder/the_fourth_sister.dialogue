@@ -165,6 +165,7 @@ Narrator: She goes. Granny puts one huge grey hand on her head, gently, the way 
 Granny Ash: Clever ones. Granny likes clever ones. Here's Granny's offer. The girl comes with Granny, and you have this. (She shakes the basket, and it clinks.) And Granny goes back to the deep wood and never comes to this valley again. Never ever. Granny's word.
 * (Take the basket and let her go.) -> given
 * No. -> fight
+* Hags bargain. Play her at riddles instead. -> riddle_offer
 
 ~ given
 set mouse_fate = "given"
@@ -227,3 +228,108 @@ approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +1
 Narrator: Zamfira sits on the step beside her mother, shelling beans much faster than her mother does, with grey-rooted nails.
 Mouse: I make the pastries for Bildrath's now. Plain ones. People buy them. Nobody's dreamed anything yet.
 -> END
+
+# --- Without a fight: riddles with Granny Ash (NPC plan batch 4; docs/plans/npc_depth_and_quests.md) ---
+# Hags bargain. Granny asks three riddles and the party answers each from a short list (or works it out: Investigation).
+# Two right answers win; the third is the name she ate, and knowing it (Mouse's name, from Goodwife Sarnov) wins it. Win,
+# and she keeps her word and goes back to the deep wood, leaving the basket; lose, and it is the fight as before.
+
+~ riddle_offer
+Granny Ash [smile]: Riddles? Oh, listen to that, my pretties. The little meats want to play a game with old Granny.
+Narrator: She leans down until her iron teeth click in the frost, smelling of wet wool and cellar mould. The great grey dogs sit at her heels.
+Granny Ash [sly]: Three questions, then, and answer two. Win, and Granny leaves her basket in the lane and walks back into the trees alone.
+Granny Ash [smile]: Lose, dearie, and we do it the old way. The noisy way.
+set riddle_right = 0
+-> riddle_1
+
+~ riddle_1
+Granny Ash: Here is the first, my clever ones. Listen close.
+Granny Ash: I have a mouth that never eats, and a cold dark bed where I never sleep.
+Granny Ash [sly]: I run all day and I run all night, yet never take a single step. What am I?
+* [Investigation DC 12] (Think it through.) -> riddle_1_right | riddle_1_wrong
+* A river. -> riddle_1_right
+* A road. -> riddle_1_wrong
+* A well. -> riddle_1_wrong
+
+~ riddle_1_right
+set riddle_right += 1
+Granny Ash [smile]: Oh, sharp as needles! You have ears on you after all, dearie.
+-> riddle_2
+
+~ riddle_1_wrong
+Granny Ash [sly]: Tut, tut. No, my sweet. Your little brains are frozen through.
+-> riddle_2
+
+~ riddle_2
+Granny Ash: Now for the second, and mind your tongue.
+Granny Ash: I speak without a mouth, and I have no body to warm by the fire.
+Granny Ash [sly]: Call to me across the stones and I will always answer, though I am never there. What am I?
+* [Investigation DC 12] (Think it through.) -> riddle_2_right | riddle_2_wrong
+* An echo. -> riddle_2_right
+* A shadow. -> riddle_2_wrong
+* A bell. -> riddle_2_wrong
+
+~ riddle_2_right
+set riddle_right += 1
+Granny Ash [sly]: Clever, clever. You might spoil Granny's supper yet.
+-> riddle_3
+
+~ riddle_2_wrong
+Granny Ash [smile]: Wrong again, dearie. The kettle is almost singing.
+-> riddle_3
+
+~ riddle_3
+Granny Ash [smile]: And the last. What did old Granny eat twelve years ago that was so sweet and delicious?
+Granny Ash: It was the very first thing the child was ever given.
+Granny Ash [sly]: And the only thing she could not keep.
+Narrator: Behind you, Mouse stops shivering and lifts her head to listen.
+* [if flag.mouse_named] Zamfira. -> riddle_3_name
+* A pastry. -> riddle_3_wrong
+* A kiss. -> riddle_3_wrong
+* A name. -> riddle_3_wrong
+
+~ riddle_3_name
+set riddle_right += 1
+Narrator: Granny Ash goes quite still, her long blue fingers tightening on the handle of the cradle-basket.
+Mouse [afraid]: Zamfira. That was mine. You took it out of my mouth when I was little.
+Granny Ash [angry]: Hush your noise, Mousie! Who told them that? Nothing in these hills remembers what Granny has swallowed!
+-> riddle_end
+
+~ riddle_3_wrong
+Granny Ash [smile]: No, dearie. Oh, no. Granny swallowed it down, lick and crumb, and nobody remembers it now.
+-> riddle_end
+
+~ riddle_end
+if flag.riddle_right >= 2
+-> riddle_won
+endif
+-> riddle_lost
+
+~ riddle_won
+xp fight granny_ash
+if flag.mouse_named
+Granny Ash [smile]: Well, well. A bargain is a bargain, and the wood keeps its word better than the town.
+Narrator: She lets the great wicker basket drop into the lane with a dry creak, and clicks her tongue to the pony-sized hounds.
+Granny Ash [sly]: Keep your meat and keep your bones, little Zamfira. You would have been stringy anyway.
+Narrator: The mist takes her between one pine and the next, until only the deep paw-prints in the mud remain.
+else
+Granny Ash [smile]: Well, well. A bargain is a bargain, and the wood keeps its word better than the town.
+Narrator: She lets the great wicker basket drop into the lane with a dry creak, and clicks her tongue to the pony-sized hounds.
+Granny Ash [sly]: Keep your meat and keep your bones, little Mousie. You would have been stringy anyway.
+Narrator: The mist takes her between one pine and the next, until only the deep paw-prints in the mud remain.
+endif
+-> riddle_dawn
+
+~ riddle_lost
+Granny Ash [smile]: Oh, poor dearies. You tried so hard, and that is what counts.
+Granny Ash: Stand by the hut, Mousie, and cover your ears. Granny won't be long.
+combat granny_ash
+
+~ riddle_dawn
+Narrator: When the trees are quiet again, the girl steps out from behind the hut and looks down the empty, rutted lane.
+Mouse: My head stopped hurting. I thought it would always hurt like that.
+Mouse [weary]: Come inside by the stove. There's cabbage left from yesterday, and I don't feel so hungry anymore.
+if flag.mouse_named
+-> home
+endif
+-> keepers

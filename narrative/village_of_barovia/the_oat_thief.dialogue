@@ -5,6 +5,9 @@
 # the full moon, and she keeps them on oats so they never learn the taste of meat. **Escalation:** the oats left a
 # trail, and the pack's hunters come up it. Reached from Bildrath's news (bildrath:news) and Parriwimple on the north
 # path by night. Every line here is unvoiced for now.
+# Reshaped (NPC plan batch 1): by day it is a small detective story in Bildrath's back room (clues, then name the
+# thief; wrong guesses cost a little time and goodwill and never close anything, and after two Bildrath names him), and
+# at the hollow the fight can be avoided by laying a false trail to the river. Lines drafted by Gemini, edited.
 
 # --- Bildrath's news (village_of_barovia/bildrath:news jumps here) ---
 
@@ -22,7 +25,174 @@ Bildrath: Parriwimple says he hasn't seen anything. Parriwimple is a very poor l
 if guest:parriwimple and not flag.hollow_known
 -> with_parriwimple
 endif
--> village_of_barovia/bildrath:news
+-> stock_menu
+
+~ stock_menu
+* [if not flag.hollow_known] Show us the back room. -> back_room_intro
+* Another time. -> village_of_barovia/bildrath:news
+
+# --- The back room by day ---
+
+~ back_room_intro
+if flag.oat_room_seen
+-> back_room
+endif
+set oat_room_seen
+Narrator: The back room is swept to the boards, every crate squared to the wall, except where a rectangular gap sits in the stacked oat sacks.
+Bildrath: Four sacks a week, every week since the moon turned, and not a splinter raised on the latch.
+Bildrath: Nothing else is touched: not the salt, not the tallow, not the iron nails, which are worth ten times the oats.
+Bildrath [neutral]: I am not accusing you. I am merely noting that you are new, and the oats are gone.
+-> back_room
+
+~ back_room
+* [if not flag.oat_clue_dust] [Investigation DC 10] (Look at the floor.) -> clue_dust | clue_dust_miss
+* [if not flag.oat_clue_print] [Perception DC 11] (Look at the door and the lock.) -> clue_print | clue_print_miss
+* [if not flag.oat_clue_bildrath] [Insight DC 12] (Watch Bildrath while he talks about the thief.) -> clue_bildrath | clue_bildrath_miss
+* Name the thief. -> accuse
+* We'll look again later. -> village_of_barovia/bildrath:news
+
+~ clue_dust
+set oat_clue_dust
+set oat_clues += 1
+Narrator: Pale oat husks lie in the cracks between the floorboards, leading in a thin, steady line from the empty pallet to the back door.
+Narrator: Whoever carried the last sack held it high against their chest while a torn seam bled grain all the way into the alley.
+-> clue_progress
+
+~ clue_dust_miss
+Narrator: There is grey dust on the floorboards and burlap sacks stacked to the rafters, and neither of them tells you anything.
+-> back_room
+
+~ clue_print
+set oat_clue_print
+set oat_clues += 1
+Narrator: By the threshold sits the print of an enormous boot in the flour dust, the left heel dragging an inch behind the sole.
+Narrator: Above the frame, the iron key hangs from a nail on a loop of twine, set so high only a very tall man could reach it without a stool.
+Bildrath: The lock is never forced because the door is never locked from the inside. A thief with that reach simply lets himself out.
+-> clue_progress
+
+~ clue_print_miss
+Narrator: It is a wooden floor, and boots of various unremarkable sizes have walked across it for thirty years.
+-> back_room
+
+~ clue_bildrath
+set oat_clue_bildrath
+set oat_clues += 1
+Narrator: You watch Bildrath while he speaks. He complains of the thief not like a merchant robbed by a stranger, but like a man aggrieved by a relative.
+Narrator: When you mention the size of the sacks, his eyes flick once toward the shop door before returning to his ledger.
+Bildrath [weary]: I have no notion who it could be. A strong back is not uncommon in a valley where everyone hauls timber or dies cold.
+Bildrath: It is not my nephew, if that is your drift. Parriwimple is a very poor liar, which is the one thing I like about him.
+-> clue_progress
+
+~ clue_bildrath_miss
+Narrator: Bildrath has a shopkeeper's face, built over forty winters to give nothing away for free.
+Narrator: He straightens a lead pencil beside his ledger and waits for you to earn your keep.
+-> back_room
+
+~ clue_progress
+if flag.oat_clues >= 2 and quest.the_oat_thief == rumored
+quest the_oat_thief suspect
+endif
+-> back_room
+
+# --- Naming the thief: a wrong guess costs ten minutes and a little goodwill, never the way on ---
+
+~ accuse
+Bildrath: You have stared at my floor and breathed my dust long enough. Since you are so thorough, you may name the thief.
+Bildrath: Speak plainly. I keep an orderly house, and whatever name you put in my ledger, I will hold you to it.
+* [if not flag.oat_wrong_arik] Arik. -> accuse_arik
+* [if not flag.oat_wrong_goat] The village goat. -> accuse_goat
+* [if not flag.oat_wrong_raven] The raven on the roof. -> accuse_raven
+* Parriwimple. -> parri_called
+* Not yet. -> back_room
+
+~ accuse_arik
+set oat_wrong_arik
+set oat_wrong += 1
+time +10
+Narrator: Arik is fetched from the tavern across the square, wiping a glass on his apron while the accusation is laid out before him.
+Arik [weary]: Oats.
+Bildrath [weary]: It was a reasonable guess for a man seen near the alley at that hour. You may return to your taps, Arik.
+Arik: Leaving.
+approve godrick_pendlebrook -1 liriel_dawnsong -1: You blamed Arik for Bildrath's oats
+-> accuse_wrong_end
+
+~ accuse_goat
+set oat_wrong_goat
+set oat_wrong += 1
+time +10
+Narrator: The village goat, which has wandered in from the road, regards you with infinite yellow-eyed calm.
+Narrator: It leans over the counter and eats the corner of Bildrath's receipt book where the missing stock was tallied.
+Bildrath [angry]: Put that out in the street before it eats the bindings off the salt ledger.
+Bildrath: The goat cannot lift four fifty-pound sacks, nor can it reach the door peg, and I am losing patience with your methods.
+-> accuse_wrong_end
+
+~ accuse_raven
+set oat_wrong_raven
+set oat_wrong += 1
+time +10
+Bildrath [weary]: A raven weighs two pounds when wet and cannot lift four sacks of winter oats through a bolted storeroom door.
+Bildrath: I do not know what kind of town you think this is, but our birds are merely unpleasant, not pack mules.
+Narrator: Through the high window, the raven on the gable preens a wing and looks distinctly relieved.
+-> accuse_wrong_end
+
+~ accuse_wrong_end
+if flag.oat_wrong >= 2
+-> bildrath_names
+endif
+-> accuse
+
+~ bildrath_names
+if quest.the_oat_thief == rumored
+quest the_oat_thief suspect
+endif
+Bildrath [angry]: Enough. Stop guessing at the livestock and the neighbours.
+Bildrath: It is Parriwimple, obviously. He is a very poor liar, and he has had oat dust in his cuffs since the new moon.
+Bildrath [sad]: I have known for a week. I let you look because I did not want to be right.
+-> parri_enters
+
+~ parri_called
+if quest.the_oat_thief == rumored
+quest the_oat_thief suspect
+endif
+Narrator: Bildrath goes very still behind the counter, his thumb resting on the brass scale, before he raises his voice toward the front room.
+Bildrath [weary]: Parriwimple. Step in here and leave the broom by the door.
+-> parri_enters
+
+~ parri_enters
+Narrator: Parriwimple ducks his head under the low timber frame, filling the doorway from shoulder to shoulder.
+Narrator: He looks at you, then at the gap in the sacks, then at his uncle's face, and turns an unhappy shade of red.
+-> confess
+
+~ confess
+set hollow_known
+quest the_oat_thief asked
+Parriwimple [sad]: It was me took the oats, Uncle. Nobody helped me.
+Parriwimple: They were for Agafia up the north path in the trees, with the three little ones.
+Parriwimple: They can't ever eat meat, Uncle. Not ever.
+Parriwimple: I carried two sacks after dark, one on each shoulder, so I only had to go once.
+Parriwimple [weary]: One of the corners had a hole in the weave. I didn't hear it spilling.
+Parriwimple [afraid]: Please don't be angry, Uncle Bildrath.
+Parriwimple [sad]: Or if you have to be angry, be angry at me. Not at her, and not at the children.
+* [Persuasion DC 10] Go easy on him, Bildrath. He fed hungry people. -> bildrath_gentle | bildrath_harsh
+* (Say nothing.) -> say_nothing
+
+~ bildrath_gentle
+Bildrath: You are softer than you look, which is a dangerous habit in this valley.
+Bildrath [weary]: His wages will not be docked this month. That is an accounting decision, not forgiveness, and he knows the difference.
+Bildrath: I will have to think about whether feeding stray mouths in the woods counts as charity, which I do not hold with.
+approve liriel_dawnsong +1 godrick_pendlebrook +1: You spoke up for Parriwimple
+-> END
+
+~ bildrath_harsh
+Bildrath: A shop that gives away four sacks a week is not a shop, it is a ruin with shelves.
+Bildrath: Six coppers off your wages for the week, Parriwimple, until the pallet is squared. Take the pencil and enter it yourself.
+Narrator: Parriwimple takes the stub of lead in his huge fingers and writes it down very slowly, so you can watch him do it.
+-> END
+
+~ say_nothing
+Bildrath: Your silence is noted. It is the most sensible thing you have offered since you walked in.
+Bildrath [weary]: Go back to the front room, Parriwimple. I will deal with the books after the customers have left.
+-> END
 
 ~ with_parriwimple
 set hollow_known
@@ -50,7 +220,7 @@ Parriwimple: (He looks at the oats, and at you, and at the dark up the path.) Th
 
 ~ path_told
 set hollow_known
-if quest.the_oat_thief == rumored or not quest.the_oat_thief
+if quest.the_oat_thief == rumored or quest.the_oat_thief == suspect or not quest.the_oat_thief
 quest the_oat_thief asked
 endif
 Parriwimple: It's for the lady. Agafia. She's got three, and they're very small, and up in the woods there's nothing to eat that isn't meat.
@@ -65,7 +235,7 @@ if quest.the_oat_thief == done
 Agafia: Oats, and a door that shuts, and three children asleep. It's more than the den ever gave us.
 -> END
 endif
-if flag.oat_hunters_beaten
+if flag.oat_hunters_beaten or flag.oat_trail_cleared
 -> after
 endif
 if flag.agafia_met
@@ -104,11 +274,40 @@ Narrator: From down the path, a long howl that isn't any dog's. Agafia's knife c
 set oat_trail_seen
 Narrator: Spilled oats, every few yards, all the way back down the path toward the village: a sack with a hole in it. A trail any hunter could follow. And over the oats, here and there, the print of a very large paw.
 Agafia: (She sees it too. Her face goes still.) He's been carrying it with the hole at the bottom. Every week.
--> hunters
+-> plan
 
 ~ trail_missed
 Narrator: Pine needles, mud and the dark, and the howl again, nearer.
 -> hunters
+
+~ plan
+Agafia: The boy meant well, which is how most people get killed in these trees.
+Agafia: Tell me plainly what you intend to do about the trail.
+* [Survival DC 12] (Sweep the husks into the moss and scatter a false line down to the river.) -> false_ok | false_fail
+* [Stealth DC 12] (Carry the torn sack down toward the river and spill a new trail there.) -> false_ok | false_fail
+* (Stand in front of the door.) -> hunters
+* (Leave her for now.) -> hollow_leave
+
+~ false_ok
+xp fight oat_hunters
+set oat_trail_cleared
+quest the_oat_thief defended
+Narrator: You sweep the pale husks from the moss with pine boughs, gathering what remains to scatter a fresh line down toward the river rocks.
+Narrator: Half an hour before dark, a long howl rises from the ridge, answers itself lower down, and passes wide toward the water.
+Narrator: Agafia watches from the mouth of the roots with an iron knife across her knee, saying nothing until the woods go quiet again.
+Agafia [weary]: That bought us the week. Thank you. Now get inside or get back to the road before the mist thickens.
+-> END
+
+~ false_fail
+Narrator: You are halfway down the slope with the torn sack when a low, wet howl answers from the brush fifty yards uphill.
+Narrator: Behind you, Agafia's iron knife comes up in one flat, practiced motion as she backs into the roots.
+Agafia [angry]: Drop the sack. The wind turned. Get in front of the door and keep your steel low.
+-> hunters
+
+~ hollow_leave
+Agafia [weary]: Go on, then. The children sleep while the light holds, and they are used to the cold.
+Agafia: I will be right here when you come back. There is nowhere else in this valley to go.
+-> END
 
 ~ hunters
 Narrator: Shapes come out of the pines at the edge of the hollow: wolves, low and silent, and behind them something that walks on two legs some of the time.
@@ -119,10 +318,21 @@ combat oat_hunters
 if not flag.agafia_thanked
 set agafia_thanked
 quest the_oat_thief done
+if flag.oat_trail_cleared
+Agafia [weary]: The hunters went down by the river before dawn and never looked back this way. I can put the knife down now.
+Agafia: Take this. It was my grandmother's, soft tan cloth, still shines a bit if you hold it to the light.
+Agafia: Throw it on the ground when you're in trouble and a beast comes out to fight for you till morning. We have teeth enough in this house.
+else
 Agafia: They came up the oats. Of course they did. And you were here. (She puts the knife away at last, and takes a little bag of tan cloth from her apron, gone soft and shiny at the neck.)
 Agafia: My grandmother's. Feel inside and there's always something soft at the bottom. Throw it, and it gets up on four legs and fights for you till morning. Take it. We've teeth enough in this house.
+endif
+# One grant for both routes (item audit: a lasting item is placed once; tests/unit/test_loot_distinct.gd).
 give bag_of_tricks_tan
+if flag.oat_trail_cleared
+Agafia [smile]: When you go back down to the village, tell Bildrath thank you from me.
+else
 Agafia: Tell Bildrath. Tell him the truth or tell him wolves. Either way, tell him thank you.
+endif
 approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You stood at a hiding mother's door
 -> END
 endif

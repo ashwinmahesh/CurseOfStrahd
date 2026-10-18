@@ -1,0 +1,29 @@
+== first
+Narrator: Pale hooves clatter across the flagstones just as the dust settles. A phantom rider reins in hard, his helm slightly askew.
+Sir Ottokar the Late: Hold! Stand fast, my brothers, I am with you! Wait. Did I miss it?
+Sir Ottokar the Late [weary]: Pray forgive me. The stairs collapsed three hundred years ago, and my mare still insists on taking the hallway.
+Sir Ottokar the Late [smile]: Sir Ottokar of the Silver Dragon, at your service. They call me the Late, and not solely for my condition.
+Sir Ottokar the Late: If you intend to be ambushed again in the next room, do give a louder shout.
+== again_1
+Sir Ottokar the Late: Make way! My lance is levelled and my oath is sworn! Oh, you have already wiped your blades.
+Sir Ottokar the Late [weary]: Did I miss it? I swear to you, I started galloping the very moment I heard the first scream.
+== again_2
+Sir Ottokar the Late: The buckle on my greave caught upon the tapestry in the west gallery. Did I miss it?
+Sir Ottokar the Late: You dispatch them with remarkable haste. It leaves very little room for a chivalrous rescue.
+== again_3
+Sir Ottokar the Late: Do not tell me that was the last of them. Did I miss it again?
+Sir Ottokar the Late [smile]: At least the dead are still dead when I arrive. One must find comfort where one can.
+== want
+Sir Ottokar the Late: Only to arrive while a sword is still raised in anger, just once before this manor falls to dust.
+Sir Ottokar the Late [weary]: I should like to shout our battle cry before the battle is entirely concluded.
+Sir Ottokar the Late: Even the third blow would suffice. I am not a greedy man.
+== secret_ok
+Narrator: His easy smile fades. You see it is not the tardiness that weighs on him, but the truth he keeps behind it.
+Sir Ottokar the Late [sad]: On the day the valley fell, a miller's wife had lost a cartwheel in the ditch by the crossroads. The mud was up to the axle.
+Sir Ottokar the Late: I could not leave an old woman in the rain with night coming on. When I reached the hill, the banners were already down.
+Sir Ottokar the Late: I have never told the others, lest they think I offer an excuse. Yet if the wheel broke tomorrow, I would stop again.
+== secret_miss
+Sir Ottokar the Late [smile]: Ah, well, my mare was bred for endurance rather than haste, and eternity has not improved her trot.
+== about_vladimir
+Sir Ottokar the Late [smile]: Lord Vladimir says I am a fine knight and a terrible clock.
+Sir Ottokar the Late: He never strikes my name from the roster, though. He merely writes it at the bottom of the page.

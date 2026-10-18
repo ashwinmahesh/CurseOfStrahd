@@ -21,4 +21,12 @@ Old Varvara: The bones are home. I felt it in the floor this morning, like a sto
 -> END
 endif
 Old Varvara: Somebody took the saint's bones. Father Lucian won't say so, but his face says so. I pray they come home before the dark finds out the door's unlocked.
+* [if not flag.bones_returned] Do you know who might have taken them? -> varvara_milivoj
+* Goodbye. -> END
+
+~ varvara_milivoj
+Old Varvara [sad]: I kneel here every morning and ask St. Andral for his bones to come home, though the stones are hard on the knees.
+Old Varvara: I knew Milivoj's mother when she was a girl, you know. Seven mouths in that cottage, and never enough bread.
+Old Varvara [afraid]: Now the relics are gone from under the altar, and the boy is walking the yard in a pair of new leather boots.
+Old Varvara [sad]: A new iron spade, too, and he won't meet my eyes. If you speak to him, be gentle; he's only a frightened boy.
 -> END

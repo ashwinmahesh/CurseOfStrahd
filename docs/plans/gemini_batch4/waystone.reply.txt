@@ -1,0 +1,49 @@
+== tracks_early
+Narrator: A stub of tallow sits in the carving of the old sun stone, grey and cold in the daylight.
+Narrator: Around the base, the mud holds small bare footprints and the heavy, splayed tracks of a wolf.
+== tracks_ok
+Narrator: The heavy pawprints and a boy's bare heels lead together off the road to a hollow under a fallen pine.
+Narrator: Down among the roots, the dead grass is pressed flat and warm in the curl of a great dog.
+Narrator: Back by the stone, a second set of small prints with long, crooked toes comes down from the abbey and returns.
+== tracks_miss
+Narrator: Too many wolves have crossed and recrossed the mire here to tell one track from another.
+== lark_day_meet
+Narrator: A small girl crouches by the waystone in the pale noon light, her crooked toes tucked under her hem.
+Narrator: She starts at your step and cups both hands over an unlit stub of candle.
+Lark [afraid]: Keep to the road, good travellers, there is nothing by the stone for you.
+Lark [weary]: That was my mother's voice. I only use it when I want folk to walk on.
+Lark: The Abbot is at his noon prayers. He prays a full hour, so I have an hour.
+== lark_day_repeat
+Narrator: Lark sits with her chin on her knees by the carved sun, watching the pines across the road.
+Lark: The bells have not rung yet. He is still on his knees up the hill, and I am still here.
+== lark_day_who
+Lark [sad]: You found the pine hollow, then. He sleeps there when the sun is up, because the bracken keeps the wind off.
+Lark: He is my brother Yanko. Two winters back the pack took him, and now he only remembers me when I sing.
+Lark [weary]: One of his ears still flops like a hound's. That is how I know which wolf is mine.
+== sing_ask
+Lark [afraid]: Sing now, in the light? The old wolves sleep light on the ridge, and the wind goes up the hill.
+Narrator: She looks from the dark pines to your weapons, weighing the road between them.
+Lark: If you lie in the ditch and keep them off, I can try. He likes the daytime, he is less hungry then.
+== sing_steady
+Narrator: She draws a small breath, shuts her eyes, and lets her shoulders drop.
+Narrator: When she opens her mouth, a grown woman's contralto rises clear and warm across the cold road.
+Lark [smile]: Sleep, little turnip, the kettle is on, the snow is on the roof and the latch is down.
+== sing_shaky
+Narrator: Her first note comes out in her own scratchy throat and breaks on the cold air.
+Narrator: She swallows hard, presses her palms to her knees, and starts the tune again under her breath.
+Lark [afraid]: Sleep, little turnip, the kettle is on... Come out, Yanko, please, before I lose the voice.
+== watch_ok
+Narrator: You settle into the wet pine needles downwind of the stone and watch the upper slope.
+Narrator: High on the ridge, a grey shape lifts its muzzle to test the noon air, finds nothing, and pads back into the trees.
+Narrator: Below you on the road, the woman's song goes on unbroken.
+== watch_miss
+Narrator: A dry branch snaps under a boot, and the sound carries up the quiet hill.
+Narrator: From three points along the ridge, long throats answer Lark's song all at once.
+Lark [afraid]: Stop, stop, that is the old bitch on the height. They heard us.
+== yanko_comes
+Narrator: The dead bracken stirs under the fallen pine, and a lean grey wolf steps out into the noon light.
+Narrator: He is young, ribs showing through his winter coat, and his left ear hangs soft like a hound's.
+Narrator: He stops at the ditch beyond the waystone, yellow eyes fixed on the girl, and sits down in the mud.
+Narrator: His tail gives one slow thump against the frozen earth.
+Lark [smile]: There you are, ugly. You have pine needles in your coat again.
+Lark [sad]: Stay on your side of the stone. I brought the rest of the song.

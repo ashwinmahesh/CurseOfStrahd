@@ -61,9 +61,11 @@ Big Tobar: Nelu sits with his back to the falls now, and sings over anything tha
 if flag.wisps_beaten
 -> ledge
 endif
+if flag.nelu_saved
+-> ledge
+endif
 if not night
-Narrator: By day the gorge is only a gorge: wet black rock, the falls roaring down into mist, and nothing calling out of it at all.
--> END
+-> falls_day
 endif
 quest called_by_name voices
 Narrator: Down in the gorge there are lights: small, pale, drifting like lanterns carried by people who are taking their time. Under the roar of the water, somebody is calling.
@@ -125,4 +127,57 @@ quest called_by_name nelu_found
 Narrator: He's on a shelf of wet rock no wider than a cart, twenty feet down, soaked and shaking and three days hungry, with his knees pulled up and his hands over his ears.
 Nelu: Is it you? Really you? They used everybody's voice. They used my Da's.
 Nelu: Get me home. Please. And don't let anything say my name on the way.
+-> END
+
+# --- By day: the same ledge, no lights, and a way down that doesn't need the fight (NPC plan batch 2) ---
+
+~ falls_day
+Narrator: Below the lip of the gorge, Tser Falls roars down through wet black rock into a pale churning mist.
+Narrator: Twenty feet down, a thin boy lies curled on a shelf no wider than a cart, his hands pressed tight over his ears.
+Narrator: No lights drift in the grey daylight, only cold spray, and at the crunch of your boots he looks up.
+-> falls_day_menu
+
+~ falls_day_menu
+* [Athletics DC 13] (Rope off a pine and go down for him.) -> climb_day | climb_fail
+* [Survival DC 12] (Read the rock for a way down.) -> climb_survival | climb_fail
+* [knows:misty_step] (Step down to his ledge and back with him.) -> spell_day
+* [knows:spider_climb] (Walk down the rock with Spider Climb.) -> spell_day
+* (Call down to him.) -> nelu_day_hail
+* (Come back after dark.) -> END
+
+~ nelu_day_hail
+Narrator: He squints up through the mist, his voice scraped raw from three nights of shouting back at the dark.
+Nelu [afraid]: Stay where I can see your faces, and do not say my name until we are sure of one another.
+Nelu [weary]: They only come when the sun goes down, so I sleep by day and watch the water all night.
+Nelu [weary]: Three nights I have sat here listening to them practice my mother's voice in the spray.
+Nelu: The stone is too slick to climb with stiff fingers, even when the canyon goes quiet.
+-> falls_day_menu
+
+~ climb_day
+Narrator: You knot the rope fast around a pine at the lip of the gorge and test your weight against the bark.
+Narrator: Hand over hand, you go down the wet black rock with the cold spray of the falls beating into your face.
+Narrator: The hemp holds, and your boots find the narrow ledge twenty feet below.
+-> carried_day
+
+~ climb_survival
+Narrator: A careful eye picks out a seam of cracked black stone and the worn notches of an old goat path.
+Narrator: Cold spray needles your faces as you work your way down from foothold to narrow foothold.
+Narrator: The ledge is slick with moss, but it holds your weight when your boots touch down beside him.
+-> carried_day
+
+~ spell_day
+Narrator: Magic pulls at the soles of your boots with a brief, weightless tug, as if the gorge has forgotten how to drop you.
+Narrator: A heartbeat later, you stand on the wet stone ledge beside the boy.
+-> carried_day
+
+# Nelu comes up in the sun; the wisps are never met (xp fight pays what beating them would have).
+~ carried_day
+xp fight falls_wisps
+set nelu_saved
+quest called_by_name nelu_found
+Narrator: You haul him up onto the wet grass at the lip of the gorge, where he sits shivering in the grey light.
+Nelu [weary]: Up here in the sun, all that water sounds like nobody at all.
+Nelu [sad]: If anything calls to me in the dark again, I am going to sing over it until my throat gives out.
+Narrator: Below you, the gorge is only a gorge: black stone, white water, and cold mist rising.
+Narrator: Nelu has not yet let go of the sleeve of the one who pulled him over the edge.
 -> END

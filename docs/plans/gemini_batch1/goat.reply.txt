@@ -1,0 +1,29 @@
+== goat_shop
+Narrator: The village goat is standing between two barrels of salt pork, methodically eating a paper price tag off a coil of hemp rope.
+Narrator: Bildrath is looking over its head at the door, as if a goat in his shop is a matter between the goat and the inventory.
+Narrator: The corner of the tag still showing says thirty silver pieces. The goat swallows it without blinking.
+
+== goat_shop_speaks
+Narrator: The goat chews twice before answering you. Its voice is flat, patient, and slightly muffled by twine.
+Narrator: "Tastes of Bildrath's thumb," it says. "Which is to say it tastes of tallow and nothing at all, only very dear."
+Narrator: "The ink is the best part. He buys the good ink to write the bad numbers."
+
+== goat_church
+Narrator: The goat is standing on the third pew from the front, all four hooves planted neatly on the kneeler.
+Narrator: It is eating the corner of a hymn-book page with slow, even pulls. Goodwife Sorina has turned her shawl to face the wall.
+Narrator: When the page comes free, the goat does not hurry to the next one. It has all afternoon.
+
+== goat_church_speaks
+Narrator: The goat speaks around a mouthful of morning prayers. It sounds like an old parishioner who only comes for the roof.
+Narrator: "The paper here is sweet from the damp," it says. "The priest's turnips out back are sweeter, when he remembers to plant them."
+Narrator: "There is something hungry under the floorboards. I have decided it is none of my business."
+
+== goat_gate
+Narrator: The goat is standing by the iron gate of the old house at the end of the lane, looking up at the dark windows.
+Narrator: The upper windows look back down at the goat with the flat, patient attention of a house that does not like company.
+Narrator: The goat chews a splinter from the gatepost and seems to have seen worse stonework.
+
+== goat_gate_speaks
+Narrator: The goat does not take its eyes off the third-floor window when it answers you.
+Narrator: "Good dock-weed in the yard," it says. "Very rich soil. I do not ask why."
+Narrator: "The little doll in the attic wants someone to come up and play. I prefer the fence."

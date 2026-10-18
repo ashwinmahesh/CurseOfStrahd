@@ -1,0 +1,66 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Krezk is a walled mountain village: blunt, frozen, suspicious of strangers and quietly kind underneath; its people say less than they mean. The lake, the winery and the hills are as described. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Krezk Watchman: Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves.
+Goodwife Rodica: One bucket for the Burgomaster, one for the widow at the end of the row, one for me, and a prayer for each. The well's never frozen. Not once. We don't ask why, we just say thank you.
+Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he likes the company.
+Dumitru: Nobody comes up the road. Except you. Did you see wolves? Did you see the castle? Is it true it has a thousand windows?
+Old Simion: Stone suns, every one, so they face the morning. The snow pushes them crooked. I push them back. Between us we've kept it up for thirty years.
+Narrator: The goat chews something that was probably part of the fence, and watches you with its strange square eyes until you go away.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS (all in or near the walled village of Krezk, or on the hill trail above Lake Zarovich; each has a small hidden fact that is revealed only if a party member asks the right way, so keep the hidden fact out of their first greeting):
+- Krezk Watchman: the gate guard, paid to say one word and the word is no. He wants to say yes to someone, once. His secret: he cannot read the burgomaster's list of who may enter, so he says no to everyone to be safe.
+- Stefan the Woodcutter: splits and stacks wood for the whole street; wants a quiet winter. His secret: he leaves the best logs at Anna Krezkova's door (her little boy is sick) and says the wind brought them.
+- Goodwife Sanda: carries water and stops at the shrine every trip; wants rain that is not snow. Her secret: she prays for the Abbot, in case.
+- Goodwife Rodica: says a prayer over every bucket; wants a well that does not freeze. Her secret: she drops a pinch of salt in the well for luck, which is why the water tastes like that.
+- Cezar: mends the rails the one-horned billy goat breaks; wants the billy gone. His secret: he is fond of it.
+- Old Simion: keeps the graves by the pool, knows who lies under every stone; wants somebody to tell it to. His secret: one grave is empty, his own, dug early and waiting.
+- Widow Catrina: says her late husband's name to the pool each morning and tells him the news; wants an answer. Her secret: an answer came once, in a voice she did not know, and she has told nobody.
+- Ilarie: a hare hunter on the hill trail above Lake Zarovich, one eye always on the trees; wants one season without wolves. His secret: he sells hares' ears to a dealer, who sells them to the Baron of Vallaki as wolves' ears.
+- Belview: a Belview is a mongrelfolk of the abbey on the mountain who can only speak by copying voices, and always a beat behind. One guards the abbey gate, one fetches water at the well.
+
+THE SCENES: short, 1 to 3 lines each. A greeting that shows the trait, a "want" answer, and a "secret" reveal (the secret reveal is the one the party earns; make it quiet and human, not a joke at their expense).
+
+LABELS AND BEATS:
+== watchman_yes
+The Watchman, asked if he ever says yes. He says "No" out of habit, catches himself, and admits he would like to say yes to somebody once, eleven years he has been waiting for the right question. 3 lines.
+== watchman_list
+Narrator describes the Watchman holding up the burgomaster's list of names (a sheet with the burgomaster's seal) very fast, then the Watchman admits he cannot read it and so says no to everyone to be safe. A little proud, a little ashamed. 4 lines (Narrator first).
+== watchman_list_miss
+The Watchman says no very quickly and puts the list away. 1 line, the Watchman.
+== watchman_no_1
+A one-line greeting from the Watchman that is a refusal even though nobody asked for anything. 1 line.
+== watchman_no_2
+Another one-line unprompted refusal, different wording. 1 line.
+== watchman_no_3
+Another one-line unprompted refusal, different wording. 1 line.
+== stefan_want
+Stefan, asked what he wants. A quiet winter. 2 lines.
+== stefan_secret
+The party notices the best logs are piled at Anna Krezkova's door, not the burgomaster's. Stefan, caught, says the wind brought them. 2 lines (Narrator first, then Stefan).
+== sanda_want
+Sanda, asked about her prayers: she asks for rain that is not snow. 2 lines.
+== sanda_secret
+Sanda quietly admits she also prays for the Abbot, in case. Short, uneasy. 2 lines.
+== rodica_secret
+Rodica, asked why the well water tastes of salt: she admits to the pinch of salt for luck. Deadpan. 2 lines.
+== cezar_secret
+Cezar, asked whether he really wants the billy goat gone. He grumbles, then admits he talks to it while he mends. 2 lines.
+== simion_want
+Old Simion says he would like somebody to tell it all to. Who lies under every stone, and what they said last. 2 lines.
+== simion_secret
+The party asks about a stone with no name and a hole dug beside it already. Simion says it is his own. 2 lines (Narrator first, then Simion).
+== catrina_secret
+Catrina, gently pressed, says an answer came once, in a voice that was not her husband's, and she has not told anyone. 3 lines.
+== ilarie_secret
+Ilarie, asked about hares: he sells the ears to a dealer; the dealer sells them to the Baron as wolves'. Rueful and a little proud. 3 lines.
+== belview_gate
+Narrator describes the Belview who guards the abbey gate greeting the party in the voice of the last visitor, a beat late, and then in the party's own voice. 3 Narrator lines.
+== belview_well
+Narrator: the Belview at the well copies the party's last words a beat behind them, so it looks like an echo that has opinions. 2 Narrator lines.

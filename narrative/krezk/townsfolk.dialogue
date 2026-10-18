@@ -4,29 +4,89 @@
 ~ woodcutter
 if flag.ilya_fate == "healed"
 Stefan the Woodcutter [smile]: Ilya's up and about. Took a cord of wood off me this morning to prove it. You did that, I hear. Thank you.
--> END
+-> woodcutter_menu
 endif
 Stefan the Woodcutter: The Burgomaster let you in, so I'll say good day. Wood for the winter. It's always winter for the wood.
--> END
+-> woodcutter_menu
+
+~ woodcutter_menu
+* What would you like, Stefan? -> woodcutter_want
+* [if not flag.stefan_logs_known] [Insight DC 12] (Watch where the best logs go.) -> woodcutter_secret | woodcutter_miss
+* Good day. -> END
+
+~ woodcutter_want
+Stefan the Woodcutter: A winter where the axe stays sharp and the snow stops below the eaves.
+Stefan the Woodcutter [weary]: Mostly I just want nobody knocking on my door after dark with bad news.
+-> woodcutter_menu
+
+~ woodcutter_secret
+set stefan_logs_known
+Narrator: The straightest, driest birch logs sit stacked to the latch by Anna Krezkova's cottage, while the burgomaster's porch gets the knotted pine.
+Stefan the Woodcutter: The wind comes down the mountain strange some nights, and rolls the good birch right against her door.
+-> woodcutter_menu
+
+~ woodcutter_miss
+Narrator: Stefan stacks another split pine log onto the pile, checks its level with his thumb, and does not look up until you leave.
+-> woodcutter_menu
 
 # ---------------------------------------------------------------- Lane 28 (2026-10-08): Krezk at work inside its wall:
 # the well, the pens, the shrine, the gate and the south row. Lines unvoiced.
 
 ~ well_wife
 Goodwife Rodica: One bucket for the Burgomaster, one for the widow at the end of the row, one for me, and a prayer for each. The well's never frozen. Not once. We don't ask why, we just say thank you.
--> END
+-> well_wife_menu
+
+~ well_wife_menu
+* Why does the well water taste of salt? -> well_wife_salt
+* Good day. -> END
+
+~ well_wife_salt
+Goodwife Rodica: A pinch of salt from my apron pocket every morning, right down the middle of the well.
+Goodwife Rodica: Keeps the bad luck out of the bucket, and stops the water tasting of nothing at all.
+-> well_wife_menu
 
 ~ bucket_wife
 Goodwife Sanda: Water to the south row, a word at the shrine, and back. Thirty times a day. My arms are as strong as Cezar's and my knees are holier than the abbot's.
--> END
+-> bucket_wife_menu
+
+~ bucket_wife_menu
+* Why so many trips to the shrine? -> bucket_wife_want
+* [if not flag.sanda_prays_known] [Insight DC 12] (She prays a beat too long.) -> bucket_wife_secret | bucket_wife_miss
+* Good day. -> END
+
+~ bucket_wife_want
+Goodwife Sanda: Rain that comes down as water instead of ice, just once before my knees give out.
+Goodwife Sanda: It would be nice to hear it on the shingles without having to shovel it off in the morning.
+-> bucket_wife_menu
+
+~ bucket_wife_secret
+set sanda_prays_known
+Goodwife Sanda [afraid]: When nobody is looking, I say a little word for the Abbot up on the hill, too.
+Goodwife Sanda: Best to be polite to anything that lives that high up and doesn't come down for firewood.
+-> bucket_wife_menu
+
+~ bucket_wife_miss
+Narrator: Goodwife Sanda moves her lips without a sound, her knuckles white against the frosted stone, and keeps her prayers to herself.
+-> bucket_wife_menu
 
 ~ gate_boy
+if quest.dumitrus_visitor == done
+if flag.fennimore_to_krezk
+-> krezk/dumitrus_visitor:after_fennimore
+endif
+-> krezk/dumitrus_visitor:after
+endif
 if flag.ilya_fate == "healed"
 Dumitru [smile]: Ilya's out of the house! Everybody says it was you. Is it true you've been past Vallaki? Is it true there's a lake?
--> END
+-> gate_boy_menu
 endif
 Dumitru: Nobody comes up the road. Except you. Did you see wolves? Did you see the castle? Is it true it has a thousand windows?
--> END
+-> gate_boy_menu
+
+~ gate_boy_menu
+* [if not quest.dumitrus_visitor] Who are you waiting for, Dumitru? -> krezk/dumitrus_visitor:asks
+* [if quest.dumitrus_visitor == asked or quest.dumitrus_visitor == fennimore] About that visitor... -> krezk/dumitrus_visitor:menu
+* Goodbye. -> END
 
 ~ goatherd
 Stelian: That one's Rodica's, and that one's the Burgomaster's, and the one with the horn is nobody's, because nobody's brave enough. Mind your fingers by the rails.
@@ -41,7 +101,16 @@ endif
 
 ~ fence_mender
 Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he likes the company.
--> END
+-> fence_mender_menu
+
+~ fence_mender_menu
+* Do you really want the billy gone? -> fence_mender_secret
+* Good day. -> END
+
+~ fence_mender_secret
+Cezar: The day that one-horned devil goes in the stewpot, I'll sleep till noon.
+Cezar [weary]: Though I suppose the yard would be awful quiet with nobody listening to me complain about the nails.
+-> fence_mender_menu
 
 ~ carver
 if flag.mother_flown

@@ -1,0 +1,154 @@
+# Old Silviu's Wedding Cask (side quest, NPC plan batch 4; docs/plans/npc_depth_and_quests.md): a delivery against the
+# clock. Old Silviu, the cooper at the Wizard of Wines (once the family is home), wants the last cask of the year Elvir
+# was born in Vallaki for his daughter Dana's wedding. The road is bad: ruts, a wolf that has learned carts mean food, and
+# thirsty hands. Each is one precaution, with a plain way (a few coins) and a roll; how many held decides how the cask
+# arrives (a triumph, a little shaken, vinegar) and what Master Costel says over it. The wedding happens whatever
+# arrives. No fight, nothing behind a roll. Lines drafted by Gemini through the ai-bridge, edited; every line here is
+# unvoiced for now.
+
+# --- Old Silviu at the winery (hands:cooper_menu jumps here) ---
+
+~ ask
+if quest.silvius_wedding_cask == carrying
+Old Silviu: Noon the day after next, by the town pump. Look for the girl telling three grown men how to hang a ribbon.
+Old Silviu: Tell her the old man's knees kept him home, not his heart. Now get on before the light goes.
+-> END
+endif
+if not quest.silvius_wedding_cask
+quest silvius_wedding_cask asked
+Old Silviu: Going to Vallaki? You look like you've got the boots for it, and a cart that hasn't lost an axle yet.
+Old Silviu: My daughter Dana is getting married the day after next. Noon, in the square, whether the mist lifts or not.
+Old Silviu: I made the cask myself. Good oak, tight ash hoops, not a weep in the seams, and I can't leave the yard to bring it.
+Old Silviu: Get it to her before the bells, keep it upright, and there's silver waiting for you at the other end.
+endif
+-> menu
+
+~ menu
+* Tell us about the cask. -> year
+* We'll take it to Dana. -> road
+* Not just now. -> END
+
+~ year
+Narrator: Old Silviu rests his broad, scarred thumb against the branded mark on the cask head and goes quiet for a moment.
+Old Silviu: It's the Red Dragon Crush from the autumn little Elvir was born. Last full barrel of that pressing left in the cellar.
+Old Silviu [sad]: Good sun on the south slope that year. The boy never grew old enough to taste it, so it ought to go to a wedding.
+-> menu
+
+~ road
+Old Silviu: First, the frost has chewed the Svalich road to pieces. Drop a wheel in a deep rut and you'll bruise the wine.
+Old Silviu: Second, there's a grey wolf by the crossroads that knows a slow cart means suet, salt pork, or a limping horse.
+Old Silviu: Third is thirsty hands along the way, including your own. Don't pull the bung, not even to smell it.
+set cask_care = 0
+-> ruts
+
+~ ruts
+* [Athletics DC 12] (Pad the cask with straw and lash it down.) -> ruts_ok | ruts_bad
+* [if gold >= 3] (Buy Silviu's good straw and rope, 3 gp.) -> ruts_buy
+* (Make do.) -> wolf
+
+~ ruts_buy
+gold -3
+-> ruts_ok
+
+~ ruts_ok
+set cask_care += 1
+Narrator: You pack dry straw tight around the bilge and lash the hemp rope twice through the iron rings until the barrel cannot budge.
+Old Silviu: That'll hold. The cart can rattle your teeth out of your gums now and the lees will stay where they belong.
+-> wolf
+
+~ ruts_bad
+Narrator: The straw is damp and thin, and no matter how hard you haul on the rope, the cask still shifts an inch when the axle groans.
+Old Silviu [weary]: Well, my hoops won't spring, at least. Just try to steer round the worst of the stones if you want it clear.
+-> wolf
+
+~ wolf
+* [Animal Handling DC 12] (Work out how to buy off a hungry wolf.) -> wolf_ok | wolf_bad
+* [if gold >= 2] (Pack the butcher's scraps, 2 gp.) -> wolf_buy
+* (Hope.) -> kip
+
+~ wolf_buy
+gold -2
+-> wolf_ok
+
+~ wolf_ok
+set cask_care += 1
+Narrator: A bundle of rancid tallow and butcher's scraps goes under the tailboard, ready to toss the moment grey ears show in the brush.
+Old Silviu: Smart enough. He's an old beggar, not a hero. Give him a mouthful of fat and he'll let the wheels roll past.
+-> kip
+
+~ wolf_bad
+Narrator: You find only a dry heel of salt rind and a rusty tin pan to bang, which looks more likely to annoy a wolf than feed one.
+Old Silviu [weary]: If he comes trotting out, don't stop to argue with him. Keep the nag moving and hope he's already eaten.
+-> kip
+
+~ kip
+* [Persuasion DC 12] (Have everyone swear off the bung.) -> kip_ok | kip_bad
+* [if gold >= 1] (Seal the bung with Silviu's lead and tallow, 1 gp.) -> kip_buy
+* (Trust everyone.) -> kip_bad
+
+~ kip_buy
+gold -1
+-> kip_ok
+
+~ kip_ok
+set cask_care += 1
+Narrator: A strip of stamped winery lead goes over the bung, sealed flat with hot tallow where everyone can see a thumbprint.
+interject name:kip_smudgewick: You'd think I carried a gimlet in my boot just for family heirlooms. I only wanted to make sure it wasn't leaking.
+-> setting_off
+
+~ kip_bad
+Narrator: While your back is turned, a tiny reed plug goes into the vent-hole, and a dark red drop vanishes onto a very quick thumb.
+interject name:kip_smudgewick: Sound as a church bell, I promise you. Just breathing the cellar dust off the top so the bride doesn't sneeze.
+-> setting_off
+
+~ setting_off
+quest silvius_wedding_cask carrying
+give silvius_wedding_cask
+Old Silviu: Noon the day after next, by the town pump. Look for the girl telling three grown men how to hang a ribbon.
+Old Silviu: Tell her the old man's knees kept him home, not his heart. Now get on before the light goes.
+-> END
+
+# --- Dana in Vallaki's square (npc silvius_dana, while the quest is carrying) ---
+
+~ dana
+Narrator: In Vallaki's damp square, a bride in a sensible wool shawl is directing two cousins with a hammer while guests huddle near a brazier.
+Dana [smile]: Hold the ladder, Dorin, don't just look at it! Oh, thank the Morninglord, is that my father's oak on your wagon?
+Dana: I knew those hoops the moment you turned the corner. Nobody else in the valley hoops ash that neat.
+if flag.cask_care >= 3
+Narrator: You tap the spigot into the chime, and the wine runs into Dana's cup as dark and clear as garnet glass.
+Dana [smile]: Not a speck of cloud in it. It smells like the south hill in September, before the cold comes down from the peaks.
+Dana [sad]: He kept the very last of Elvir's year for us. I didn't think he'd ever bring himself to let it out of the dark.
+Master Costel: Friends, neighbours, and damp well-wishers! Observe how even our banners hang straighter in the presence of such a vintage!
+Master Costel [smile]: Pressed in a gentler autumn, guarded in the dark, and poured out ruby-bright to warm a Vallaki noon!
+Master Costel: Let the bride and groom keep their household as Old Silviu keeps his cellar: tight against the cold, and sweet within!
+gold +60
+elif flag.cask_care >= 1
+Narrator: The wine pours out a little murky from the long jolting on the road, purple and thick in the tin cup, but fragrant still.
+Dana: The road gave it a proper thrashing, didn't it? Never mind, let the sediment sit a minute and it'll drink just the same.
+Dana [smile]: Better a bruised vintage at the table than an empty cup. My father's oak brought it home, and that's what counts.
+Master Costel: Citizens and wedding guests! Look into your cups and do not ask for crystal, for crystal has never travelled the Svalich road!
+Master Costel: This wine has been jolted by ruts, threatened by wolves, and carried through the fog, yet here it stands upon the board!
+Master Costel [smile]: So too with marriage in our valley: a little cloudy after a hard mile, perhaps, but sound at the bottom!
+gold +40
+else
+Narrator: What trickles from the tap is sharp enough to make your eyes water at arm's length, soured clean through by air and hard travel.
+Dana: Oh, sweet saints above, that could strip the rust off a ploughshare! Give me the cup before the groom smells it.
+Dana [smile]: Look at the work on these staves, though. He sent us his best barrel. We will each take one sip, if it curls our toes.
+Master Costel: Good people of Vallaki, do not wince! Any fool in silk may toast a wedding with sugar and summer plums!
+Master Costel: What we hold today is sterner stuff: wine that has met the world, taken the air, and turned as honest and sharp as winter!
+Master Costel [smile]: Drink it down without blinking, and remember that a sour draught shared by a warm fire keeps the teeth in your head!
+gold +25
+endif
+take silvius_wedding_cask
+quest silvius_wedding_cask done
+Dana [smile]: Take this pouch before my husband spends it on more of Costel's painted cloth. You earned every coin on that road.
+Dana: When you pass the winery, tell my father the hoops held tight, and that I saved him a piece of the salt-crust loaf.
+approve thistle +1 wren_featherfoot +1 godrick_pendlebrook +1 liriel_dawnsong +1: You got Silviu's cask to Dana's wedding
+-> END
+
+# --- Old Silviu, afterwards ---
+
+~ after
+Old Silviu: Costel made a speech, did he? Well, the cask held together, and the girl had her day in the square.
+Old Silviu [smile]: Bread's still got the wedding salt on the crust. Pull up that dry keg and sit down a minute, the rain's coming on.
+-> wizard_of_wines/hands:cooper_menu

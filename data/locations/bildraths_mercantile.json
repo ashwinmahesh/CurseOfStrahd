@@ -159,6 +159,15 @@
           "face": "west"
         }
       ]
+    },
+    {
+      "npc": "barovia_goat",
+      "cell": [
+        8,
+        7
+      ],
+      "dialogue": "village_of_barovia/townsfolk:goat_shop",
+      "facing": "south"
     }
   ],
   "narration": {

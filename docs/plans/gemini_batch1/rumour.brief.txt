@@ -1,0 +1,39 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. The village people are tired, frightened, poor and wry; they are never silly and never wink at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Erno: Twenty-one, twenty-two, twenty-three. (A long pause.) Twenty-four.
+Agafia: Oats don't teach anything. If they never learn, maybe they'll grow up to be people who change, not wolves who pretend.
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+Vasile: Interesting? In Barovia? We've had the same three rumours since the mist came down. We take turns.
+Petre: Strangers. Haven't had strangers since the last strangers. They didn't stay long either. Nobody does, except us.
+Bildrath: Welcome to Bildrath's Mercantile. Prices are posted. They are ten times what you're used to. You are used to the wrong place.
+Parriwimple: Uncle says I'm a good lifter. That's nearly the same. Thank you. I'll remember you.
+Arik: Wine.
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS: Vasile and Petre are two threadbare villagers who stand outside the tavern trading the same three rumours "in turns". Vasile is the dramatist, Petre the contradictor. Arik is the barkeep who speaks one word at a time. Goodwife Petra is the careful grey well-woman. Bildrath is the shopkeeper: no credit, no returns, ten times the going price, never gives a discount, precise and humourless.
+
+THE SCENE (a gentle comic side quest, no fight): the party offers Vasile and Petre a fourth rumour, which the village has not had in years, and sells it to them. The party picks one of three rumours to plant: that the Baron of Vallaki is bald under his wig; that the burgomaster's old wolfhound Lupu can count; that Bildrath gives discounts on Tuesdays. The rumour spreads and comes back garbled: Arik's one-word version, and Goodwife Petra's garbled version. If the Tuesday rumour is believed, Bildrath, out of spite, honours it once. Playing it straight is the whole joke.
+
+LABELS AND BEATS:
+== offer (5 lines, Vasile and Petre: the party asks whether they have ever thought of having a fourth rumour; Vasile is scandalised that a rumour could be made rather than happen to you; Petre says it could be a thing that happens to them; they look at each other)
+== seed_baron_told (4 lines: the party tells them the Baron is bald under the wig; Vasile gasps; Petre says the Baron has never been seen without it; Vasile says that is exactly the point)
+== seed_lupu_told (4 lines: the party tells them the burgomaster's old wolfhound Lupu can count; Vasile asks how many; the party says nobody has asked; Petre says that is the kind of thing a dog would hide)
+== seed_tuesday_told (4 lines: the party tells them Bildrath gives discounts on Tuesdays; there is a long silence; Petre says no one has ever seen it; Vasile says that is what makes it a rumour)
+== sold_ok (3 lines: Vasile and Petre are convinced; they decide to take it in turns, starting tomorrow, and to tell it to everyone, and are happier than they have been in a decade)
+== sold_fail (3 lines: they do not buy it; Vasile, a little hurt, offers the party a better rumour of his own invention instead: that Goodwife Petra's well has a bottom; Petre, gently, says every well does)
+== sold_plain (3 lines: the party just says it, flatly, with no flourish; Vasile and Petre half believe it, which Petre says is the best any rumour gets in Barovia)
+== arik_echo_baron (1 line, Arik, one word, about the Baron being bald)
+== arik_echo_lupu (1 line, Arik, one or two words, about the dog counting)
+== arik_echo_tuesday (1 line, Arik, one word, about Bildrath's discount day)
+== petra_echo_baron (2 lines, Goodwife Petra: she heard the Baron is bald; garbled: she heard he wears two wigs and the second is for the first)
+== petra_echo_lupu (2 lines, Goodwife Petra: she heard the old dog can count; garbled: she heard he counts the dead in the churchyard and is correct)
+== petra_echo_tuesday (2 lines, Goodwife Petra: she heard Bildrath gives discounts on Tuesdays; garbled: she heard he gives discounts on Tuesday to people called Tuesday)
+== bildrath_tuesday (5 lines, Bildrath: he says he has been told it is Tuesday, that he has never given a discount on any day, that he is giving one, once, as a purely cultural matter, and that if the party repeat this they will be charged for the walls)
+== vasile_thanks (4 lines, Vasile and Petre: they tell the party that their rumour has gone round the village in a single morning, that it came back wrong, and that this is how you know it is a good one; Vasile thanks them, awkwardly)

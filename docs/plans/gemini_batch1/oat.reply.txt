@@ -1,0 +1,100 @@
+== back_room_intro
+Narrator: The back room is swept to the boards, every crate squared to the wall, except where a rectangular gap sits in the stacked oat sacks.
+Bildrath: Four sacks a week, every week since the moon turned, and not a splinter raised on the latch.
+Bildrath: Nothing else is touched: not the salt, not the tallow, not the iron nails, which are worth ten times the oats.
+Bildrath [neutral]: I am not accusing you. I am merely noting that you are new, and the oats are gone.
+
+== clue_dust
+Narrator: Pale oat husks lie in the cracks between the floorboards, leading in a thin, steady line from the empty pallet to the back door.
+Narrator: Whoever carried the last sack held it high against their chest while a torn seam bled grain all the way into the alley.
+
+== clue_dust_miss
+Narrator: There is grey dust on the floorboards and burlap sacks stacked to the rafters, and neither of them tells you anything.
+
+== clue_print
+Narrator: By the threshold sits the print of an enormous boot in the flour dust, the left heel dragging an inch behind the sole.
+Narrator: Above the frame, the iron key hangs from a nail on a loop of twine, set so high only a very tall man could reach it without a stool.
+Bildrath: The lock is never forced because the door is never locked from the inside. A thief with that reach simply lets himself out.
+
+== clue_print_miss
+Narrator: It is a wooden floor, and boots of various unremarkable sizes have walked across it for thirty years.
+
+== clue_bildrath
+Narrator: You watch Bildrath while he speaks. He complains of the thief not like a merchant robbed by a stranger, but like a man aggrieved by a relative.
+Narrator: When you mention the size of the sacks, his eyes flick once toward the shop door before returning to his ledger.
+Bildrath [weary]: I have no notion who it could be. A strong back is not uncommon in a valley where everyone hauls timber or dies cold.
+Bildrath: It is not my nephew, if that is your drift. Parriwimple is a very poor liar, which is the one thing I like about him.
+
+== clue_bildrath_miss
+Narrator: Bildrath has a shopkeeper's face, built over forty winters to give nothing away for free.
+Narrator: He straightens a lead pencil beside his ledger and waits for you to earn your keep.
+
+== accuse_prompt
+Bildrath: You have stared at my floor and breathed my dust long enough. Since you are so thorough, you may name the thief.
+Bildrath: Speak plainly. I keep an orderly house, and whatever name you put in my ledger, I will hold you to it.
+
+== accuse_arik
+Narrator: Arik is fetched from the tavern across the square, wiping a glass on his apron while the accusation is laid out before him.
+Arik [weary]: Oats.
+Bildrath [weary]: It was a reasonable guess for a man seen near the alley at that hour. You may return to your taps, Arik.
+Arik: Leaving.
+
+== accuse_goat
+Narrator: The village goat, which has wandered in from the road, regards you with infinite yellow-eyed calm.
+Narrator: It leans over the counter and eats the corner of Bildrath's receipt book where the missing stock was tallied.
+Bildrath [angry]: Put that out in the street before it eats the bindings off the salt ledger.
+Bildrath: The goat cannot lift four fifty-pound sacks, nor can it reach the door peg, and I am losing patience with your methods.
+
+== accuse_raven
+Bildrath [weary]: A raven weighs two pounds when wet and cannot lift four sacks of winter oats through a bolted storeroom door.
+Bildrath: I do not know what kind of town you think this is, but our birds are merely unpleasant, not pack mules.
+Narrator: Through the high window, the raven on the gable preens a wing and looks distinctly relieved.
+
+== bildrath_names
+Bildrath [angry]: Enough. Stop guessing at the livestock and the neighbours.
+Bildrath: It is Parriwimple, obviously. He is a very poor liar, and he has had oat dust in his cuffs since Tuesday.
+Bildrath [sad]: I have known for a week. I paid you to look because I did not want to be right.
+
+== accuse_parri
+Narrator: Bildrath goes very still behind the counter, his thumb resting on the brass scale, before he raises his voice toward the front room.
+Bildrath [weary]: Parriwimple. Step in here and leave the broom by the door.
+Narrator: Parriwimple ducks his head under the low timber frame, filling the doorway from shoulder to shoulder.
+Narrator: He looks at you, then at the gap in the sacks, then at his uncle's face, and turns the deep, miserable red of a boiled beetroot.
+
+== bildrath_gentle
+Bildrath: You are softer than you look, which is a dangerous habit in this valley.
+Bildrath [weary]: His wages will not be docked this month. That is an accounting decision, not forgiveness, and he knows the difference.
+Bildrath: I will have to think about whether feeding stray mouths in the woods counts as charity, which I do not hold with.
+
+== bildrath_harsh
+Bildrath: A shop that gives away four sacks a week is not a shop, it is a ruin with shelves.
+Bildrath: Six coppers off your wages for the week, Parriwimple, until the pallet is squared. Take the pencil and enter it yourself.
+Narrator: Parriwimple takes the stub of lead in his huge fingers and writes it down very slowly, so you can watch him do it.
+
+== say_nothing
+Bildrath: Your silence is noted. It is the most sensible thing you have offered since you walked in.
+Bildrath [weary]: Go back to the front room, Parriwimple. I will deal with the books after the customers have left.
+
+== hollow_plan_prompt
+Agafia: The boy meant well, which is how most people get killed in these trees. The pack will find the spilled oats before dusk.
+Agafia [afraid]: Once they have the scent of the storehouse, they will follow his heavy boots straight to this hollow.
+Agafia: I cannot leave the three of them to sweep a mile of mud. Tell me plainly what you intend to do about the trail.
+
+== hollow_trail_false_ok
+Narrator: You sweep the pale husks from the moss with pine boughs, gathering what remains to scatter a fresh line down toward the river rocks.
+Narrator: Half an hour before dark, a long howl rises from the ridge, answers itself lower down, and passes wide toward the water.
+Narrator: Agafia watches from the mouth of the roots with an iron knife across her knee, saying nothing until the woods go quiet again.
+Agafia [weary]: That bought us the week. Thank you. Now get inside or get back to the road before the mist thickens.
+
+== hollow_trail_false_fail
+Narrator: You are halfway down the slope with the torn sack when a low, wet howl answers from the brush fifty yards uphill.
+Narrator: Behind you, Agafia's iron knife comes up in one flat, practiced motion as she backs into the roots.
+Agafia [angry]: Drop the sack. The wind turned. Get in front of the door and keep your steel low.
+
+== hollow_stand
+Agafia [angry]: Nothing comes past that root while I have two hands.
+Agafia: Aim for the throat if they leap, and do not look back at the children.
+
+== hollow_leave
+Agafia [weary]: Go on, then. The children sleep while the light holds, and they are used to the cold.
+Agafia: I will be right here when you come back. There is nowhere else in this valley to go.

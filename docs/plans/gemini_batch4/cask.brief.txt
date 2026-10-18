@@ -1,0 +1,59 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Krezk is a walled mountain village: blunt, frozen, suspicious of strangers and quietly kind underneath; its people say less than they mean. The lake, the winery and the hills are as described. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Krezk Watchman: Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves.
+Goodwife Rodica: One bucket for the Burgomaster, one for the widow at the end of the row, one for me, and a prayer for each. The well's never frozen. Not once. We don't ask why, we just say thank you.
+Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he likes the company.
+Dumitru: Nobody comes up the road. Except you. Did you see wolves? Did you see the castle? Is it true it has a thousand windows?
+Old Simion: Stone suns, every one, so they face the morning. The snow pushes them crooked. I push them back. Between us we've kept it up for thirty years.
+Narrator: The goat chews something that was probably part of the fence, and watches you with its strange square eyes until you go away.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS: Old Silviu is the cooper at the Wizard of Wines winery: gruff, kind, proud of his hoops, not a talker. Wants his daughter Dana's wedding cask in Vallaki by noon the day after next. The cask is the last of the year Elvir was born (Elvir was the winery family's youngest son, who died; Silviu says it quietly and does not dwell on it). The road to Vallaki is bad: ruts that shake a cask, a wolf that has learned carts mean food, and thirsty travellers. Dana is Silviu's daughter, a bride in Vallaki, brisk, fond, a little overwhelmed. Master Costel is Vallaki's bunting seller, a man who loves any chance for a speech. Kip is a sly thief in the party who would like to taste the wine.
+
+THE SCENE (a delivery against the clock, no fight): Silviu asks the party to carry the cask to Vallaki. Before they set off there are three precautions: padding the cart against the ruts, dealing with the wolf, and keeping thirsty hands off it. Each has a plain way (a coin, or a promise) and a roll way. Tally of the precautions decides how the cask arrives: triumph, a little shaken, or vinegar. At Vallaki, Dana receives it, and Master Costel makes a speech about it either way. The wedding happens regardless. The ending is warm, a little comic, and never harsh.
+
+LABELS AND BEATS (speaker names exactly: Old Silviu, Dana, Master Costel, Narrator; Kip as Kip):
+== silviu_ask
+Silviu asks the party if they are going to Vallaki and asks them to carry the cask. 4 lines (Old Silviu).
+== silviu_year
+Silviu, asked about the cask: it is the last of the year Elvir was born. 3 lines (Old Silviu, the last in a lower voice, Narrator first).
+== silviu_road
+Silviu lists the three things that go wrong on this road: ruts, a wolf, thirsty hands. 3 lines (Old Silviu).
+== ruts_ok
+Padding or lashing the cask works. 2 lines (Narrator, then Old Silviu).
+== ruts_bad
+It doesn't quite work; the cask will take a few bumps. 2 lines (Narrator, then Old Silviu).
+== wolf_ok
+The wolf plan works. 2 lines (Narrator, then Old Silviu).
+== wolf_bad
+The wolf plan only half works. 2 lines (Narrator, then Old Silviu).
+== kip_ok
+Keeping thirsty hands off works. Kip protests. 2 lines (Narrator, then Kip).
+== kip_bad
+Kip has had a taste, or someone has. 2 lines (Narrator, then Kip).
+== silviu_go
+Silviu sends them off with the cask. 2 lines (Old Silviu).
+== dana_meet
+At Vallaki Dana meets the party in the square where wedding guests are gathering and sees the cask. 3 lines (Narrator, then Dana twice).
+== cask_good
+The cask arrives as it should; Dana tastes, and is moved. 3 lines (Narrator, then Dana twice).
+== cask_shaken
+The cask arrives a little shaken and cloudy; Dana tastes and decides it is still the best. 3 lines (Narrator, then Dana twice).
+== cask_vinegar
+The cask arrives and it is vinegar. Dana laughs and cries and decides it is a toast anyway. 3 lines (Narrator, then Dana twice).
+== speech_good
+Master Costel's speech on the wine that is the last of a particular year, in his festival-bunting style. 3 lines (Master Costel).
+== speech_shaken
+Master Costel's speech on a wine that has lived, travelled and arrived. 3 lines (Master Costel).
+== speech_vinegar
+Master Costel's speech on vinegar as the true taste of marriage. Deadpan, kind. 3 lines (Master Costel).
+== dana_thanks
+Dana thanks the party and sends a word to her father. 2 lines (Dana).
+== silviu_after
+Back at the winery, Silviu hears about the wedding. 2 lines (Old Silviu).

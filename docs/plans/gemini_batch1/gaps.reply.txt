@@ -1,0 +1,32 @@
+== petre_coat_bridge
+Petre [weary]: You keep staring at the wool. Suppose a whole gold piece buys you the right to stare.
+Petre: Better you hear it from me than get the wrong idea in the tavern.
+Petre: All right. The coat.
+
+== petre_coat_shut
+Petre [weary]: Draft's coming straight through the boards tonight. Going to rain before morning, if the fog lets it.
+
+== anca_secret_miss
+Narrator: You watch her face for some small twitch of guilt or memory, but she only sweeps the same grey flagstone a third time.
+
+== sorina_shy
+Goodwife Sorina [weary]: Best I keep to my knees while the candle holds, stranger.
+Goodwife Sorina: If the frost takes the cabbages tonight, there won't be enough left to boil on Sunday.
+
+== viorica_secret_miss
+Narrator: Her expression gives nothing away at all. She slides the same four worn coppers back into a neat pile and counts them again.
+
+== confess
+Parriwimple [sad]: It was me took the oats, Uncle. Nobody helped me.
+Parriwimple: They were for Agafia up the north path in the trees, with the three little ones.
+Parriwimple: They can't ever eat meat, Uncle. Not ever.
+Parriwimple: I carried two sacks after dark, one on each shoulder, so I only had to go once.
+Parriwimple [weary]: One of the corners had a hole in the weave. I didn't hear it spilling.
+Parriwimple [afraid]: Please don't be angry, Uncle Bildrath.
+Parriwimple [sad]: Or if you have to be angry, be angry at me. Not at her, and not at the children.
+
+== after_clear
+Agafia [weary]: The hunters went down by the river before dawn and never looked back this way. I can put the knife down now.
+Agafia: Take this. It was my grandmother's, soft tan cloth, still shines a bit if you hold it to the light.
+Agafia: Throw it on the ground when you're in trouble and a beast comes out to fight for you till morning. We have teeth enough in this house.
+Agafia [smile]: When you go back down to the village, tell Bildrath thank you from me.

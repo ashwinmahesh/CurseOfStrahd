@@ -1,0 +1,33 @@
+{
+  "id": "the_sun_cake",
+  "name": "The Sun-Cake",
+  "summary": "The Baron wants a cake shaped like the sun for the festival, and his cook, who has made four hundred and thirteen round things, wants to make one that isn't.",
+  "giver": "leontina",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Leontina, the Baron's cook, needs a cake shaped like the sun for the festival and has made four hundred and thirteen round things. She needs eggs (Goodwife Marta), honey (Old Paraschiva at the Vistani camp) and saffron (Vadoma), and she has no time to fetch them.",
+      "objectives": [
+        "Get eggs from Goodwife Marta, honey from Old Paraschiva and saffron from Vadoma"
+      ],
+      "hint": "Fetch eggs from Goodwife Marta on Vallaki's market row, honey from Old Paraschiva at the Vistani camp outside Vallaki's west gate, and saffron from Vadoma at her painted wagon, then take them to Leontina in the burgomaster's mansion.",
+      "ends": ""
+    },
+    {
+      "id": "ready",
+      "journal": "We have the eggs, the honey and the saffron. Leontina is waiting in the mansion with the oven lit.",
+      "objectives": [
+        "Bake the sun-cake with Leontina"
+      ],
+      "hint": "Take the eggs, the honey and the saffron to Leontina in the burgomaster's mansion in Vallaki and bake the cake.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The cake is baked and the Baron has declared it a triumph. Leontina has made something that isn't round, or very nearly, and has a scar on her thumb to prove she once trained somewhere good.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+== offer
+Vasile [afraid]: Make a rumour? Out of nothing? A rumour isn't a loaf of bread, stranger. It has to happen to you in the dark.
+Petre: The mist happened to us. The wolves happened to us. A fourth rumour happening to us wouldn't be the worst thing.
+Vasile: You mean someone tells it to us, and then we have it? Like a coat from a dead man?
+Petre [sly]: If it fits, Vasile, it fits. Nobody asks where a dry coat came from.
+Narrator: They look at each other for a long time, weighing the terrible responsibility of a fourth thing to say.
+
+== seed_baron_told
+Narrator: You lean in and tell them that the Baron of Vallaki is completely bald beneath his wig.
+Vasile [afraid]: Bald? Entirely? Like a turnip left in the cellar since the autumn before last?
+Petre: Nobody has ever seen the Baron without his hair, Vasile. Not even the Baroness, and she sleeps in the room.
+Vasile [sly]: Well, of course nobody has seen it, Petre. That is why he wears the wig. That is the whole point of the thing.
+
+== seed_lupu_told
+Vasile: The burgomaster's old wolfhound can count? Up to how many?
+Narrator: You tell them that nobody has ever thought to ask the dog how high he goes.
+Petre [weary]: A sensible animal. If you let on you can count in this valley, they put you in charge of the taxes.
+Vasile: Still. A dog that knows how many legs he has. That is something to think about when the wind comes up.
+
+== seed_tuesday_told
+Narrator: You tell them that Bildrath gives a discount on Tuesdays. A long, damp silence settles over the street.
+Petre: No living soul in Barovia has ever seen Bildrath take a copper off anything, not even for his own sister's burial.
+Vasile [sly]: Well, if anyone had seen it, Petre, it would just be a fact. A fact is no good to us at all.
+Petre: True enough. You can't pass a fact back and forth all winter. It wears right through.
+
+== sold_ok
+Vasile [smile]: Four rumours. Come tomorrow morning, I will start with the new one, and you can take the afternoon.
+Petre [smile]: Fair is fair. We ought to tell old Marta by the pump before the damp gets into her ears.
+Narrator: They stand a little straighter in their thin coats, happier than either of them has been in ten years.
+
+== sold_fail
+Vasile [sad]: No, no, that won't do at all. It has no weight to it. You can tell when a story was made by hand.
+Vasile: Take one of mine instead, if you're short: they say Goodwife Petra's well actually has a bottom to it.
+Petre [weary]: Every well has a bottom to it, Vasile. That is what stops the water from falling out of the ground.
+
+== sold_plain
+Narrator: You state the rumour plainly, without lowering your voice or looking over your shoulder.
+Vasile [weary]: You don't tell it very well, do you? Still, I suppose the shape of it is there, if I squint.
+Petre: We half believe you, stranger. Which in Barovia is as much as any rumour gets before it dies of the cold.
+
+== arik_echo_baron
+Arik: Wig.
+
+== arik_echo_lupu
+Arik: Counting dog.
+
+== arik_echo_tuesday
+Arik: Tuesday.
+
+== petra_echo_baron
+Goodwife Petra: I heard the news from the square, though I keep to my well. They say the Baron of Vallaki has no hair left at all.
+Goodwife Petra [sly]: Worse than that, they say he wears two wigs now, and the second one is only there to keep the first one warm.
+
+== petra_echo_lupu
+Goodwife Petra: Vasile was by the bucket this morning. He says the burgomaster's old grey hound knows his numbers like a clerk.
+Goodwife Petra [afraid]: Every night he sits by the iron gate and counts the dead in the churchyard, and he has never once been wrong.
+
+== petra_echo_tuesday
+Goodwife Petra: It has gone all round the lanes that Bildrath is giving a discount on Tuesdays now, though I never thought I'd live to hear it.
+Goodwife Petra [weary]: Mind you, Marta says the discount is only on a Tuesday, and only for folk who were christened Tuesday at the font.
+
+== bildrath_tuesday
+Bildrath [angry]: I have been informed by three separate paupers since dawn that today is Tuesday.
+Bildrath: I have never given a discount on a Tuesday, nor on a Wednesday, nor on the day my own mother went into the ground.
+Bildrath: However, it appears the village has decided this is a custom, and I am a man who respects local custom.
+Bildrath [weary]: You may have one copper off the tallow candles. Once. As a purely cultural matter.
+Bildrath [angry]: If you repeat this to anyone outside that door, I will charge you rent for looking at my walls.
+
+== vasile_thanks
+Vasile [smile]: Back already? It went all the way to the church and round by the well before noon.
+Petre: Came back to us completely wrong, too. Marta says it happened to my cousin in Vallaki.
+Vasile: That is how you know it's a proper rumour, stranger. It comes home wearing somebody else's boots.
+Vasile [weary]: Thank you. We didn't have anything to give you back, except the listening, and we've done that.

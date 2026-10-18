@@ -1,0 +1,18 @@
+{
+  "id": "silvius_dana",
+  "name": "Dana",
+  "title": "A Bride of Vallaki",
+  "summary": "Old Silviu's daughter, marrying in Vallaki. Brisk, fond and a little overwhelmed; she wants her father's last good cask at her wedding.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

@@ -127,7 +127,32 @@ endif
 ~ watchman
 Narrator [away]: The grey soldier at his post doesn't look at you. His eyes are on the door to the road, exactly where they have been for centuries.
 tsolenka_watchman [away]: Talk to the sergeant.
--> END
+-> watchman_menu
+
+~ watchman_menu
+* (Ask him for the watchword.) -> watchman_ask
+* (Give him a watchword: any word at all.) -> watchman_nods
+* [if flag.watchman_nodded] (Press him on it.) -> watchman_forgot
+* Goodbye. -> END
+
+~ watchman_ask
+Narrator: For a long moment only the wind moves through the arrow-slit, combing the frost in his beard. He looks past your shoulder at the empty road.
+Phantom Watchman: It is the challenger's place to ask the word, and the road's place to give it. That is the order of the post.
+Phantom Watchman [weary]: If I gave the word to every traveller who came up out of the pines, we should both look very foolish when the sergeant made his rounds.
+-> watchman_menu
+
+~ watchman_nods
+set watchman_nodded
+Narrator: He listens with his chin raised, weighs the syllables against the mountain wind, and inclines his head a single, measured inch.
+Phantom Watchman: Very good. Spoken like a soldier who remembers his drill, even if the valley accent has grown strange since the snows came.
+Phantom Watchman: Pass to the inner stair, and mind the third step from the landing. The frost has got under the mortar.
+-> watchman_menu
+
+~ watchman_forgot
+Phantom Watchman [weary]: It was the name of a river in the south, or else a winter bird. After the first hundred winters, the wind takes the small words first.
+Phantom Watchman: No one has come up the pass to change it since the year the well froze solid, and a post must have a watchword, or it is only a room in the cold.
+Phantom Watchman [sad]: So when a living voice says anything at all to me in the dark, I nod, and let it be the word. It keeps the watch in order.
+-> watchman_menu
 
 # ---------------------------------------------------------------- The gate winch (prop in the gatehouse)
 

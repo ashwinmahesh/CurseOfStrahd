@@ -1,0 +1,56 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Argynvostholt is a ruined manor haunted by the dead knights of the Order of the Silver Dragon: formal, honour-bound, grieving, courtly even in death, and slightly absurd when their rules meet a living person. The Amber Temple is old, cold and quiet, and its last warden is a forgetful, courteous lich. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Sir Godfrey Gwilym: Ioan. Ioan. (He shuts his eyes, which doesn't seem to help him much.) A thin lad with big hands. He cut stone for his father before he came to us.
+Sir Godfrey Gwilym [sad]: So he said he'd wait until he wasn't. He sleeps out there on the stones. It's very cold. He means it, I think. I'd have meant it, at his age.
+Cosmin: Cosmin. Of Vallaki. Cooper's son. I'm here for the oath. They won't give it to me, so I'm waiting. It doesn't take long, in this cold, they say.
+Phantom Warden: None pass to the dragon's rest but the Order. Name your oath, or turn back.
+Exethanter: Visitors! How unusual. We almost never get visitors. Have we met? You have the look of people I've met. Everyone does, lately.
+Exethanter: The trouble with forever is that the things you're guarding can talk.
+Narrator: The grey soldier at his post doesn't look at you. His eyes are on the door to the road, exactly where they have been for centuries.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTER: Exethanter is the last Warden of the Amber Temple, a lich who has forgotten nearly everything. Courteous, cheerful, apologetic, pinned all over with notes to himself, his robe gone the colour of weak tea. He forgets the party between visits unless there is a note on his sleeve. He gives his answers in rambling, kind, sad sentences.
+
+THE SCENE (a gentle puzzle, no fight): the party notices the pile of loose notes pinned to him and asks what he was doing this morning. He doesn't remember. Five notes in his handwriting have come unpinned and lie out of order. The party puts them in the right order, and he realises he was making tea. The five notes (in the right order) are: fetch water from the well down the stair; light the hob; put leaves in the pot from the grey tin; wait for the whistle and do not leave the room; pour. Write each note as a short instruction in his own muddled-but-polite hand, so that a careful reader can work out the order from the content alone, without numbers or the words first/second. The notes should be funny in a dry way (for example reminding himself of previous mistakes), but each must still read as a plain step in making tea.
+
+LABELS AND BEATS (speaker names exactly: Exethanter, Narrator):
+== intro
+The party asks about the many notes pinned to him. He unpins five and lays them out, and says he cannot recall which goes where. 4 lines (Narrator, then Exethanter x3).
+== note_water
+The note about fetching water. Write it as a single line spoken by the Narrator quoting the note: Narrator: A scrap reads: "..." 1 line.
+== note_fire
+The note about lighting the hob. 1 Narrator line quoting it.
+== note_leaves
+The note about the leaves from the grey tin. 1 Narrator line quoting it.
+== note_wait
+The note about waiting for the whistle. 1 Narrator line quoting it.
+== note_pour
+The note about pouring. 1 Narrator line quoting it.
+== right_1
+Exethanter's reaction when the party picks the right first note (water). 1 line.
+== right_2
+Reaction when the party picks the right second note (fire). 1 line.
+== right_3
+Reaction when the party picks the right third note (leaves). 1 line.
+== right_4
+Reaction when the party picks the right fourth note (wait). 1 line.
+== wrong_1
+Exethanter's gentle reaction to a wrong pick: that does not sound like this morning. 1 line.
+== wrong_2
+Another wrong-pick reaction, different wording. 1 line.
+== wrong_3
+A third wrong-pick reaction, different wording. 1 line.
+== hint
+Success on Investigation: the party notices which scrap is newest by the ink and the wax. 2 lines (Narrator, then Exethanter).
+== finished
+All five in order. Exethanter realises: tea. He was making tea. He is delighted and sad. 5 lines (Narrator, then Exethanter x4).
+== tea
+He makes tea for the party in the cold temple, with the grey tin, and the whistle sounds. 4 lines (Narrator x2, Exethanter x2).
+== after
+A later greeting: he thinks about tea with fondness. 2 lines (Exethanter).

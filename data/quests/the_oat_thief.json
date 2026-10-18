@@ -9,9 +9,18 @@
       "id": "rumored",
       "journal": "Bildrath is short four sacks of oats a week, and the lock on his back room is never touched. He says Parriwimple is a very poor liar.",
       "objectives": [
-        "Watch the north path at night"
+        "Look over the oats in Bildrath's back room, or watch the north path at night"
       ],
-      "hint": "Watch the north path at the village's north edge after dark and see who's carrying the oats.",
+      "hint": "Ask Bildrath at his mercantile in the village to see the back room, or watch the village's north path after dark and see who's carrying the oats.",
+      "ends": ""
+    },
+    {
+      "id": "suspect",
+      "journal": "The back room says it plainly: oat husks from the gap to the back door, a very large boot with the left heel dragging, a lock that's never touched. Whoever is stealing Bildrath's oats is very big, and a very poor liar.",
+      "objectives": [
+        "Name the thief to Bildrath, or watch the north path at night"
+      ],
+      "hint": "Tell Bildrath at the village's mercantile who you think has been taking the oats, or watch the north path at the village's north edge after dark.",
       "ends": ""
     },
     {

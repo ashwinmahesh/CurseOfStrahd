@@ -107,7 +107,8 @@ def parse_dialogue(path):
         elif (m := RE_JUMP.match(line)):
             st.update(t="jump", to=[m.group(1)])
         elif (m := RE_CHECK.match(line)):
-            st.update(t="jump", to=[x for x in (m.group(1), m.group(2)) if x])
+            # is_check: a roll (to[0] on success, the last target on failure), for tools/data/fail_routes.py
+            st.update(t="jump", to=[x for x in (m.group(1), m.group(2)) if x], is_check=True)
         elif (m := RE_SET.match(line)):
             val = "+" if m.group(2) in ("+=", "-=") else (True if m.group(3) is None else _value(m.group(3)))
             st.update(t="set", flag=m.group(1), value=val)

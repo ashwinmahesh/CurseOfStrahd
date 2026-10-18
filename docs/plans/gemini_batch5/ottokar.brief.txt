@@ -1,0 +1,36 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Argynvostholt is a ruined manor haunted by the dead knights of the Order of the Silver Dragon: formal, honour-bound, grieving, courtly even in death, and slightly absurd when their rules meet a living person. The Amber Temple is old, cold and quiet, and its last warden is a forgetful, courteous lich. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Sir Godfrey Gwilym: Ioan. Ioan. (He shuts his eyes, which doesn't seem to help him much.) A thin lad with big hands. He cut stone for his father before he came to us.
+Sir Godfrey Gwilym [sad]: So he said he'd wait until he wasn't. He sleeps out there on the stones. It's very cold. He means it, I think. I'd have meant it, at his age.
+Cosmin: Cosmin. Of Vallaki. Cooper's son. I'm here for the oath. They won't give it to me, so I'm waiting. It doesn't take long, in this cold, they say.
+Phantom Warden: None pass to the dragon's rest but the Order. Name your oath, or turn back.
+Exethanter: Visitors! How unusual. We almost never get visitors. Have we met? You have the look of people I've met. Everyone does, lately.
+Exethanter: The trouble with forever is that the things you're guarding can talk.
+Narrator: The grey soldier at his post doesn't look at you. His eyes are on the door to the road, exactly where they have been for centuries.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTER: Sir Ottokar the Late is a dead knight of the Order of the Silver Dragon at Argynvostholt, a ruined manor of dead knights. He arrived late to the Order's last battle and has been late to everything since: he turns up after every fight at the manor, riding in as the last blow lands, and asks "Did I miss it?" He is cheerful, apologetic, courteous, a little breathless even in death, and entirely sincere. Wants: to be on time, just once. Secret: he was late to the last battle because he stopped on the road to help a farmer's wife whose cart had lost a wheel, and he would do it again; he has never told the Order why, because he fears they would call it an excuse. Vladimir, the commander, thinks him a good knight and a bad clock. Dry and warm. Never mocked for the lateness, only the lateness is the joke.
+
+LABELS AND BEATS (speaker names exactly: Sir Ottokar the Late, Narrator):
+== first
+Ottokar rides up to the party on a ghost horse after a fight, apologising, and asks if he missed it. He introduces himself. 5 lines (Narrator, then Sir Ottokar the Late x4).
+== again_1
+A later arrival after another fight: a different breathless apology and "Did I miss it?" 2 lines.
+== again_2
+Another later arrival, different wording. 2 lines.
+== again_3
+Another later arrival, different wording. 2 lines.
+== want
+Asked what he wants: to be on time, once. 3 lines.
+== secret_ok
+Success on Insight: the party sees he is not ashamed of being late but of the reason. He admits he stopped to help a farmer's wife with her cart, and would again. 4 lines (Narrator, then Sir Ottokar the Late x3).
+== secret_miss
+He laughs the question off with a story about a very slow horse. 1 line.
+== about_vladimir
+Asked what Vladimir thinks of him. 2 lines.

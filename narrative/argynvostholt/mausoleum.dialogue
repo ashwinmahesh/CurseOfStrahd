@@ -11,8 +11,29 @@ Phantom Warden: None pass to the dragon's rest but the Order. Name your oath, or
 * [if flag.godfrey_remembers or guest:sir_godfrey_gwilym] Sir Godfrey Gwilym of the Order vouches for us. -> warden_vouched
 * [if not flag.warden_challenge_failed] [History DC 15] (Answer the challenge as a knight of the Order would have.) -> warden_history | warden_wrong
 * [if not flag.warden_challenge_failed] [Religion DC 14] We've come to tend his rest, not to rob it. -> warden_religion | warden_wrong
+* Why do you still keep this door? -> warden_why
+* [if flag.warden_why_heard and not flag.warden_secret_known] [Insight DC 12] (He holds the doorframe too tightly.) -> warden_secret_ok | warden_secret_miss
 * Stand aside, or we go through you. -> warden_force
 * We'll come back. -> END
+
+~ warden_why
+set warden_why_heard
+Phantom Warden: The fourth watch relieves the third at the striking of the bell. The third has not come down the stair, and the bell is in the rubble.
+Phantom Warden [weary]: A sentinel does not quit his threshold because the roof has fallen in. The rules of the house are very clear on thresholds.
+Phantom Warden: Until the corporal of the guard brings my name in chalk, I am the third watch, and this door is my charge.
+-> warden_menu
+
+~ warden_secret_ok
+set warden_secret_known
+Narrator: His spear lies crosswise as ever, but his other hand grips the doorframe hard, as though someone might still be knocking.
+Phantom Warden [sad]: He carried the white reed of parley, and his horse was lathered to the girth. You do not leave a herald in the sleet when he brings a white reed.
+Phantom Warden [sad]: I drew the great bolt myself. I told the boy on the windlass to grease the chain so it would not wake the knights at their prayers.
+Phantom Warden: They came through six abreast before the iron touched the stone. So I keep this door now. It is a smaller door, and has no parley-slit.
+-> warden_menu
+
+~ warden_secret_miss
+Narrator: The grey light of his face gives nothing away at all: only the old, settled patience of a soldier who knows his boots are clean and the bolt is home.
+-> warden_menu
 
 ~ warden_oath
 Narrator: You say it: the watch, the sleeper and the stranger, the fallen, the gift, the light. The spear doesn't move until the last word. Then it lifts.

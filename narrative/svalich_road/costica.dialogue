@@ -1,0 +1,90 @@
+# Costica, the worst highwayman in Barovia (NPC plan batch 2; docs/plans/npc_depth_and_quests.md): Bildrath's cousin, who
+# robs politely and never keeps a thing. By day on the Old Svalich Road at the crossroads. Every spoken line was drafted
+# by Gemini 4 Argon (Medium) through the ai-bridge and edited by Claude (docs/plans/gemini_batch2/). Nodes, checks, flags
+# and exits are Claude's. No quest, no main flag; every node ends in a menu or END; nothing here needs a roll.
+
+~ start
+if flag.costica_met
+Costica [sad]: Forgive me, I did not recognise your boots through the mist until I had already stepped out of the bushes.
+Costica [neutral]: In my trade, once one has emerged from the brambles, etiquette demands the robbery be seen through.
+else
+set costica_met
+Narrator: A thin man steps out of the roadside brambles, holding a notched and rusted blade upright in front of him like a church candle.
+Costica [neutral]: Good day, travellers, and my apologies for the interruption.
+Costica [afraid]: As a professional highwayman, I must ask you to stand and deliver whatever small coin you can comfortably spare.
+Costica [smile]: Do take your time with the clasps on your purses. The damp makes the leather terribly stiff.
+interject name:kip_smudgewick: Hold on. He has a receipt and an opening figure, so we can talk him down to three dried apricots and a button.
+interject name:wren_featherfoot: Look at that stance, that grip. It takes real dedication to do every part of a stick-up wrong at once.
+interject name:ratatoille: Before you refuse him, I should like to know whether that rye was baked with caraway.
+interject tag:blunt: Get out of the road before you drop that thing on your own foot.
+endif
+-> menu
+
+~ menu
+* [if gold >= 2] Hand over two gold. -> pay
+* [Intimidation DC 12] Put that down before you hurt yourself. -> scare_ok | scare_fail
+* [Insight DC 11] There's something wrong with the way he's holding that sword. -> insight_ok | insight_fail
+* Who are you? -> who
+* [if flag.costica_paid] What did you do with our gold? -> secret
+* [if quest.radus_unsellable_horse == offered] We hear you want a horse. -> svalich_road/radus_horse:costica_horse
+* We'll just walk past. -> walk_past
+* Goodbye. -> goodbye
+
+~ pay
+set costica_paid
+gold -2
+Costica [smile]: Two whole gold pieces? You are most generous, and a credit to the victims of this valley.
+Narrator: He lays his sword in the mud, takes a stub of charcoal and a damp scrap of parchment from his coat, and writes with great concentration.
+Costica [neutral]: Your receipt, duly signed, so that no other footpad on the Old Svalich Road may tax you twice in one afternoon.
+-> menu
+
+~ scare_ok
+Costica [afraid]: Say no more, I beg you. I can see I have misjudged the occasion entirely.
+Costica [sad]: It was never my intention to distress travellers of such fierce and admirable bearing.
+Costica [neutral]: Please accept my apologies, and this parcel of salted turnip and rye bread by way of amends.
+give ration
+Costica [smile]: It is quite fresh, I assure you. I shall now step back into the wet bushes.
+-> END
+
+~ scare_fail
+Costica [angry]: There is no call for that tone, least of all toward a man conducting an honest hold-up.
+Costica [sad]: You have no idea how damp it is behind those gorse bushes, waiting six hours for a single cart.
+Costica [neutral]: In my trade we strive for a certain roadside civility, even when our customers are rude.
+time +15
+Narrator: By the time he has finished explaining the difficulties of the profession, a quarter of an hour has gone.
+Costica [sad]: Go on, then, and keep your purses. I have quite lost the spirit for brigandage today.
+-> END
+
+~ insight_ok
+Narrator: His knuckles are white on the hilt, yet he angles the blade away from you, as if terrified it might scratch someone.
+Costica [sad]: It was my late grandmother's. She was always most particular about keeping the edge away from company.
+-> menu
+
+~ insight_fail
+Narrator: His stiff shoulders are impossible to read in the gloom: a cunning secret, or a cramp from crouching in the ditch.
+-> menu
+
+~ who
+Costica [neutral]: I am Costica, highwayman of the Old Svalich Road, at your service.
+Costica [sad]: Times are lean in my profession. Very few people travel for pleasure, and fewer still carry spare coin.
+Costica [neutral]: My cousin Bildrath keeps the mercantile in the village. He says a man must find a trade and stick to it.
+Costica [smile]: Everything I plunder I spend at his counter. Family pays ten times the going price, same as everyone, and Bildrath considers that a kindness.
+-> menu
+
+~ secret
+Costica [smile]: You will be glad to hear your two gold pieces were put to immediate and practical use.
+Costica [neutral]: Last month I sold my best hat to my cousin, to cover the rent. He keeps it in his window at ten times the price.
+Costica [sad]: Your gold bought me one afternoon of wearing it, which Bildrath rents out by the hour. I do not complain.
+Costica [smile]: Do not mistake me for bitter. It is a very good hat, and it was well worth the afternoon.
+-> menu
+
+~ walk_past
+Narrator: You walk past him along the muddy rut. He turns on his heel to keep facing you, sword still upright, as if nobody has told it the robbery is over.
+Costica [afraid]: Pardon me, if it is not too bold, did you not hear the part where I bade you stand and deliver?
+Costica [sad]: Tell me honestly, as travellers of the world: should I have pitched my voice lower when I stepped out of the gorse?
+-> END
+
+~ goodbye
+Costica [neutral]: Safe travels, then, and do mind the deep puddle just past the bend.
+Costica [sly]: Beware the shadows of the road, for next time I may well ask for three gold pieces, if it is not an inconvenience.
+-> END

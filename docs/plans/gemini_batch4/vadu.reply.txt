@@ -1,0 +1,24 @@
+== ioana_hello
+Ioana [smile]: Ma gave us warm milk with lard in it. Do you want half of my bread? It only fell in the snow once.
+Narrator: Behind her, a smaller shadow in an identical wool coat clutches two fistfuls of her hem and stares at your boots.
+== ioana_cried
+Ioana: That was me you heard down in the rocks. I have very loud lungs when I'm cross.
+Narrator: Beside her, Zamfir keeps both eyes fixed on the mud and says nothing at all, though a small thumb hooks tighter into Ioana's sleeve.
+Ioana: I'm older by a whole minute, so it was my turn to make the noise. That's how we do it.
+== zamfir_hello
+Zamfir [afraid]: Your cloak smells like wet dog and iron, just like the dark place, only nicer.
+Narrator: Having spent all that bravery in a single breath, Zamfir disappears behind Ioana's shoulder again.
+== zamfir_cried
+Zamfir [sly]: Ioana cried the whole time in the dark, right until you came. She was ever so loud.
+Ioana [weary]: Loud enough to wake the whole hillside, yes. Now hush and eat your crust before the crows get it.
+Narrator: Ioana reaches back without looking to tug Zamfir's hood straight, keeping the lie between them like a shared blanket.
+== codruta_doll
+Narrator: She holds a damp, button-eyed rag doll by the neck with both hands, glaring up at you as if you might ask to borrow it.
+Codruta [angry]: Her skirt got torn on the thorns, and she's missing an ear, and nobody is allowed to touch her but me.
+== codruta_nodoll
+Narrator: Her mittens are empty, and she keeps opening and closing her fingers as if checking whether something has come back to them.
+Codruta [sad]: Linen doesn't have any fur on it. She's going to freeze out there on the hill all by herself.
+== codruta_hid
+Codruta [afraid]: When the big gray one picked me up, I pushed her under the gorse root by the ditch. I didn't drop her.
+Narrator: She wipes her nose on her sleeve and looks toward the gate, where the mist presses white against the timber.
+Codruta: If the wolves took both of us, there'd be nobody left to know where we lived. So I made her stay behind.

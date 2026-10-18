@@ -12,6 +12,9 @@ func test_the_gossip_knows_a_cleric_buried_the_burgomaster() -> void:
 	var said := SideQuestPlay.text(SideQuestPlay.play(st, "village_of_barovia/townsfolk:gossip"))
 	assert_false(said.contains("No priest"), said)
 	assert_true(said.contains("said the prayers over him"), said)
+	# Vasile and Petre tell the burial once now (NPC plan batch 1), so the other rites are a fresh telling.
+	st = SideQuestPlay.party(["ilse_varga"], 2, "village_of_barovia", 12)
+	st.set_flag("burgomaster_buried")
 	st.set_flag("burial_method", "lay_rites")
 	said = SideQuestPlay.text(SideQuestPlay.play(st, "village_of_barovia/townsfolk:gossip"))
 	assert_true(said.contains("No priest, mind."), "a burial without one still says so")

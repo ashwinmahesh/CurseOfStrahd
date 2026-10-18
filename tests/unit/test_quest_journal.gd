@@ -39,7 +39,7 @@ func test_the_hud_follows_the_tracked_quest() -> void:
 	var hud := ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
-	assert_eq(str(hud.call("_objective")), "◆ Watch the north path at night", "the newest open quest's")
+	assert_eq(str(hud.call("_objective")), "◆ Look over the oats in Bildrath's back room, or watch the north path at night", "the newest open quest's")
 	QuestLog.track(st, "escort_ireena")
 	assert_eq(str(hud.call("_objective")), "◆ Help bury the burgomaster", "the tracked one's")
 	hud.free()

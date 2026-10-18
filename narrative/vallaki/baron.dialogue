@@ -38,6 +38,7 @@ endif
 
 ~ menu
 * What is this festival for? -> festival
+* Any new decrees today? -> decree
 * What are you afraid of, Baron? -> afraid
 * [Insight DC 13] Read him. What's under the ribbons? -> read_ok | read_fail
 * Who would wish your festival ill? -> enemies
@@ -218,3 +219,24 @@ Baron [sad]: The council lets me keep the sash. Lucian insisted. He's kind, Luci
 ~ deposed_now
 Baron: Lydia wants to grow turnips. Victor wants nothing to do with either of us, which is the same as before. And I... I thought I might go to a festival. Somebody else's. Just to see what it's like, not being in charge of the cheering.
 -> END
+
+# A new decree each time (NPC plan batch 3): five, then he repeats the last with feeling.
+~ decree
+set baron_decrees += 1
+if flag.baron_decrees == 1
+Baron [smile]: Hear ye! By order of the Burgomaster, no citizen shall be seen to wipe their eyes in the public square.
+Baron: Should the morning wind cause your eyes to water, you are required by law to laugh about it openly!
+elif flag.baron_decrees == 2
+Baron [smile]: Notice to all households! From this hour forth, every dog in Vallaki shall wear a yellow festival ribbon.
+Baron: A dog without a ribbon is a dog with an opinion, and we have no room for either in a happy town!
+elif flag.baron_decrees == 3
+Baron [smile]: Hear ye! It is hereby a fineable misdemeanour to utter the word 'wolves' in a discouraging or negative tone.
+Baron: If wolves must be mentioned at all, let them be spoken of in a spirit of neighbourly optimism!
+elif flag.baron_decrees == 4
+Baron [smile]: By municipal proclamation, the sky over Vallaki shall henceforth be considered a bright and cheering blue!
+Baron: Anyone who disagrees with this observation is welcome to take the matter up with the sky from the stocks.
+else
+Baron [smile]: Citizens, rejoice! All clocks and watches within the walls are to be set immediately to 'festive'.
+Baron: The town clock in the square has already complied, and I expect no less from the rest of you!
+endif
+-> menu

@@ -34,6 +34,7 @@ endif
 ~ start_menu
 * Show us what you have. -> trade
 * Heard anything interesting on the roads? -> roads
+* (Ask about the drivers who had his carts before.) -> gunther_list
 * Goodbye. -> END
 
 ~ roads
@@ -49,4 +50,10 @@ endif
 if flag.mists_wolves_cowed
 Gunther: You came over the pass and the wolves let you by? Huh. They don't let my carts by.
 endif
+-> start_menu
+
+~ gunther_list
+Gunther Arasek: Honest timber, iron nails, and salt pork in barrels, with the grey wolves on the Svalich road counted into the freight price.
+Gunther Arasek [sad]: I keep a ledger in my desk with the name of every driver taken off the box, and their widows get the winter share on the first of the month.
+Gunther Arasek: The book stays locked in the drawer; it is an account between me and the road, and not for customers to read.
 -> start_menu

@@ -1,0 +1,27 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. The Vistani of the Tser Pool camp are warm, shrewd, theatrical and watchful, with a grudge against the road; the others are as described. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Stanimir: Guests! Off the road, out of the dark, into the light! I am Stanimir. The fire is free, the wine is cheap, and the music is the best in Barovia, because it is the only music in Barovia.
+Radu: Ah! Travellers with good boots and no horse. Tragic. I have a cure for that.
+Old Dorina: Sit, sit. Nobody walks past my pot hungry, not even strangers. Strangers least of all; they never know when they'll eat next.
+Zora: I count everyone. People coming, people going. Most nights the numbers match.
+Big Tobar: Hold still, you. Hold still. There. Oh! Hello. Sorry. I was talking to the wheel.
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS: Radu is the Tser Pool camp's swaggering horse-trader in a red coat; he sold his grey mare Steaua to a black carriage with no driver because a kind voice in it promised his friend's son Nicu would ride home. She is tied at the crossroads milestone being turned into one of the castle's black horses; the carriage comes at midnight to fetch her. Lavinia is the camp's dancer. The camp's troupe has a pantomime horse for winter plays called the Winter Horse: a cloth-and-straw horse with a long sad face and two people's worth of legs.
+
+THE SCENE: the party's new plan: don't fight the carriage; leave a decoy in Steaua's place, and bring Steaua home. Radu is appalled and delighted by the idea. They borrow the Winter Horse (with Lavinia's blessing, offered through Radu), blacken it with lamp soot, and at the milestone before midnight switch it for Steaua, who is calmed and runs home. The carriage arrives, takes the thing on the cord, and leaves; if the switch is noticed, the carriage's escort comes for the party instead. The mood: tense, then absurd, then relief.
+
+LABELS AND BEATS:
+== decoy_ask (4 lines: the party asks Radu whether the camp has anything shaped like a horse that could stand in the dark at a milestone; Radu thinks, then lights up and says the Winter Horse; he says Lavinia will say yes if asked nicely and he will say it for her; he is appalled and delighted)
+== decoy_given (4 lines: Radu brings it out: a cloth-and-straw horse with a very long sad face; he tells the party to rub it with lamp soot from the stage lamps; the Narrator adds how it looks; Radu says solemnly that it has been in a great many plays and is nobody's fool)
+== swap_intro (3 lines, Narrator: before midnight at the milestone, the soot-black Winter Horse beside the real mare; the brand on Steaua smoking on her flank; the black cord)
+== swap_ok (6 lines: the swap goes cleanly; Steaua pulls free and runs for the camp; the soot-black horse is tied in her place; the carriage lamp swings up the castle road; the thing in the harness looks at the Winter Horse, looks at the dark, and takes it; the carriage turns and goes back up the road; the Narrator notes the brand on Steaua will have gone out with the first light)
+== swap_fail (4 lines: the switch is noticed; the carriage lamp stops short of the milestone; the coachless thing steps down; Steaua is already galloping home and the straw horse is the only thing tied there; the carriage's escort comes for the party instead)
+== return_decoy (4 lines, Radu, the morning after, with Steaua back in the pen: he laughs until he has to sit on the rail; he says that in forty years of trading horses he has never sold one to the devil and he has never bought one back with a play costume; he asks them not to tell Lavinia what became of the Winter Horse)

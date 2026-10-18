@@ -1,0 +1,111 @@
+# Stanimir's Fire (side quest, docs/story/side_quests.md; NPC plan batch 2): Stanimir bets his cask of plum wine that
+# nobody can tell a better tale at his fire than he can. Three rounds: a tale (Performance or Deception DC 12, or told
+# plainly), a true tale of the valley (History or Nature DC 12, or told plainly), and the camp's vote; two good rounds
+# of three wins (an entertainer in the party tips it with a third). Lose and the forfeit is a dance on Lavinia's stage,
+# and the cask comes anyway. No fight, nothing locked: both prizes end the quest. Reached from Stanimir's menu
+# (svalich_road/stanimir:menu) once he has told his story. Lines drafted by Gemini through the ai-bridge, edited; every
+# line here is unvoiced for now.
+
+~ offer
+Stanimir [smile]: Look at you, sitting by my fire with dry boots and full bellies. You have been here long enough to owe us a story.
+Stanimir: I have kept this fire for thirty winters, and I tell you plainly: nobody who walks the road tells a better tale than I do.
+Narrator: He heaves a heavy oak cask of plum wine onto the log between you, where it settles with a rich, sloshing thud.
+Stanimir [sly]: Beat me two rounds out of three, and the cask is yours. Lose, and you pay the camp's forfeit.
+Narrator: Around the fire, the chatter dies down. Spoons pause over bowls, and dark eyes turn toward the light to listen.
+set fire_score = 0
+-> round1
+
+~ round1
+Stanimir [smile]: First, a tale of the road! I give you the night I sold a blind mule to the burgomaster's tax collector, twice, in the same rainstorm.
+Narrator: When the roar of laughter fades, Stanimir sweeps his arm toward you, inviting your finest lie or grandest truth.
+* [Performance DC 12] (Tell a tale with all the trimmings.) -> r1_ok | r1_flat
+* [Deception DC 12] (Tell a tale that is entirely made up, and swear it is true.) -> r1_ok | r1_flat
+* (Tell it plainly.) -> r1_plain
+
+~ r1_ok
+set fire_score += 1
+Narrator: Your voice catches the rhythm of the fire, drawing the wagons closer as the tale unfolds.
+Narrator: Old Dorina stops stirring her pot, the wooden ladle held suspended above the rising steam.
+Narrator: Out in the dark, tin cups begin to knock softly and steadily against the logs.
+-> round2
+
+~ r1_flat
+Narrator: Your story stumbles over its own feet and wanders into the weeds before reaching the point.
+Narrator: Stanimir's broad smile does not waver by a fraction of an inch, which somehow makes it worse.
+Narrator: Somewhere near the back of the circle, a tin cup is set down very quietly on the grass.
+-> round2
+
+~ r1_plain
+Narrator: You tell the story plainly, without ornament or dramatic pauses, giving only the bones of it.
+Narrator: A polite, attentive silence holds the circle when you finish.
+Narrator: Stanimir gives a slow, measured nod, like a carpenter judging a plain plank of sound wood.
+-> round2
+
+~ round2
+Stanimir: Now for the second round. Give us a true tale of this valley, something you have seen with your own eyes.
+Stanimir [weary]: Lies are easy by a warm fire, friends, and the truth is what Barovia has the least of.
+* [History DC 12] (A true tale of the valley, from what you have read.) -> r2_ok | r2_flat
+* [Nature DC 12] (A true tale of the woods and what lives in them.) -> r2_ok | r2_flat
+* (Tell it plainly.) -> r2_plain
+
+~ r2_ok
+set fire_score += 1
+Narrator: Your words settle over the camp with the cold, unmistakable weight of things truly seen in the mist.
+Narrator: Over by the pine trees, Old Marin lowers his skinning knife and stares into the embers.
+Narrator: Zora's eyes move quietly around the circle, counting the listeners, and the number does not drop.
+-> vote
+
+~ r2_flat
+Narrator: The account rings thin against the dark trees, neither true enough to chill nor strange enough to hold them.
+Narrator: A wet log pops loudly in the fire, sending a small shower of sparks into the silence.
+Narrator: Near the plank stage, Lavinia raises a slender hand to hide a very long yawn.
+-> vote
+
+~ r2_plain
+Narrator: You speak a plain, unadorned truth about the valley and the things that walk its roads.
+Narrator: The Vistani receive it in grave, nodding silence, without a single murmur of showmanship.
+Narrator: Nobody bangs a cup, yet nobody looks away from the fire for a long moment.
+-> vote
+
+# The camp bangs its cups. An entertainer in the party works the crowd for one more point.
+~ vote
+if background:entertainer
+set fire_score += 1
+Narrator: The entertainer among you leaps onto a log, turning the last phrase into a tumbling caper that has the whole camp banging its cups.
+Stanimir [smile]: Ah, now that is shameless cheating! Shameless, blatant cheating, and I love it with all my heart!
+endif
+if flag.fire_score >= 2
+-> vote_win
+endif
+-> vote_lose
+
+~ vote_win
+Narrator: Tin cups hammer against the logs until the bark splinters and the horses snort in their traces.
+Stanimir [smile]: Enough, enough! Have mercy on the timber, I have ears!
+Narrator: The huge elder rises to his feet and sweeps a bow so low his grey beard brushes the grass.
+Stanimir: Take the cask. It is the first time I have been beaten at my own fire in thirty years.
+Stanimir [sly]: Drink it slow, my friends. I intend to pretend to be gracious about this for one night only.
+-> prize
+
+~ vote_lose
+Narrator: The camp erupts with a deafening roar for Stanimir, hammering cups until the firelight seems to shake.
+Stanimir [smile]: Ah, my people are too kind! And far too honest to flatter my guests.
+Narrator: He spreads his great hands in a display of sympathy that does not hide his triumph at all.
+Stanimir [sly]: A bet is a bet, travellers. The forfeit is a dance upon the planks for the whole camp!
+Lavinia [smile]: Up, up! Do not be shy, the boards only creak when you stand still!
+-> forfeit
+
+~ forfeit
+Narrator: Lavinia catches your hands and pulls you onto the narrow plank stage, setting a brisk, merciless pace.
+Narrator: The whole camp claps along with immense enthusiasm and very little regard for the actual beat.
+Narrator: It is, without question, the worst and most joyful dancing the valley of Barovia has seen all year.
+Narrator: Stanimir tucks his fiddle under his beard and saws away faster and faster just to watch you scramble.
+Narrator: When you finally stumble off the planks, breathless and red-faced, he rolls the heavy cask to your feet anyway.
+Stanimir [smile]: Take it, take it! A prize for the effort, and twice over for the entertainment!
+-> prize
+
+~ prize
+quest stanimirs_fire done
+give stanimirs_plum_wine
+approve wren_featherfoot +1 kip_smudgewick +1 thistle +1: You told your tale at Stanimir's fire
+-> END

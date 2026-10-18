@@ -1,0 +1,53 @@
+== hearing_intro
+Narrator: Five dead knights take their places among the small graves, seating themselves on the frost as if a long oak table still stood between them.
+Vladimir Horngaard: A petition at the stones has not been called since the first winter of our order. State your business, boy, before the wind takes my patience.
+Sir Godfrey Gwilym: You have the right of it, lad. Speak plainly. We have no chairs out here, and the commander's knees were bad even when he had blood in them.
+Cosmin [afraid]: I ask the table to hear the matter of Ioan, your last squire, whom your book names a coward. I have his blood, and I say the book lies.
+Vladimir Horngaard [weary]: It is my hand in that book, cooper's son. Sit in the snow, if you must, and we will hear what you have brought to prove me a liar.
+== hearing_case
+Narrator: A heavy ledger rests on Vladimir's armoured knee, its vellum stiff with frost. He does not need to look down to read the line.
+Vladimir Horngaard: Ioan, son of the mason. Left his post on the night the hall fell. One word stands beside his name, and I wrote it when the roof was still smoking.
+Vladimir Horngaard: Who speaks for a boy four hundred years dead, and what have you brought into the cold besides his great-nephew's stubbornness?
+== ev_stone
+Narrator: You brush the rime from the back of the last marker and read the cramped, hurried letters chipped into the rough slate.
+Vladimir Horngaard: He cut five stones while the vanguard was breaking at the gate. His chisel work was always crooked when he was in a hurry.
+Cosmin: He stayed until the others had their names over them. A boy running for his life does not stop to spell five dead friends properly.
+== ev_words
+Narrator: You repeat the words that lingered in the ruin's cold air. Around the graves, five grey heads lift at once.
+Vladimir Horngaard [sad]: Let them go home. He spoke that to the hall before the end, when the smoke was in our throats, and I would not hear it.
+Vladimir Horngaard [weary]: A squire would not know our lord's last command unless a knight gave it to him to carry. And I set his name down in the ash for obeying.
+Sir Godfrey Gwilym [sad]: He wanted the valley to know we had released them from their tithe. We were very proud, then, and very loud, and only the boy listened.
+== ev_godfrey
+Sir Godfrey Gwilym [sad]: That was my mare. The grey one with the white pastern. I put the reins in his hand myself at the postern gate, because his own pony was lame.
+Sir Godfrey Gwilym: I meant to tell the clerk in the morning, Vladimir. Only by morning there was no clerk, and my head had been split on the stair, and it went from me.
+Vladimir Horngaard [weary]: Four centuries at the same table, Godfrey, and you might have mentioned the horse before the boy's kin came freezing to our door.
+== history_ok
+Narrator: You cite the Order's own rolls: no brother or squire is marked fled unless two witnesses saw his back on the road.
+Vladimir Horngaard: You have read our law better than our clerk did. Nobody saw him go, because everyone who looked toward the road that night was already dead.
+== history_miss
+Narrator: You reach for a precedent in the old rolls, but the names and the winters tangle in the telling, and the knights only stare at you.
+Vladimir Horngaard: That was the rule of the third chapter at Berez, stranger, and they were all drowned before my grandfather was born. Keep to what you know.
+== persuade_ok
+Narrator: You speak quietly of the stone-cutter's boy who rode into the dark alone, and the cooper's boy who has slept three nights on the frost to clear him.
+Cosmin: I do not care if I freeze, my lord. Only don't let my father die thinking we came from a man who left his brothers in the fire.
+Vladimir Horngaard [sad]: We have kept our anger warm a long time, and it has done nothing for the dead. Perhaps it is time it did some small thing for the living.
+== persuade_miss
+Narrator: Your plea runs on into the wind, and the dead knights look away toward the dark trees, where speeches have never mended anything.
+Vladimir Horngaard [weary]: Spare us the sermon. We know what honour costs, stranger. We are sitting in it.
+== ottokar_late
+Narrator: Hooves drum without sound across the crusted snow, and a sixth phantom reins in hard beside the graves, his cloak still half-unclasped.
+Sir Ottokar the Late [weary]: Did I miss it?
+== hearing_won
+Narrator: One by one, four grey gauntlets rise from the snow and lay themselves flat upon the empty air where the table would be.
+Vladimir Horngaard: Five voices for the squire. Let the word be struck from the roll. Ioan of the stones kept his post, and rode by order of this house.
+Narrator: Vladimir rises, the frost cracking from his greaves, and looks down at the shivering boy.
+Cosmin [afraid]: Does that mean I may go home and tell my father, my lord?
+Sir Godfrey Gwilym [smile]: You may go home and fetch a thicker coat, Squire Cosmin. We have no beds left, and you are no good to the Order with your toes black.
+Cosmin [smile]: Yes, Sir Godfrey. I have a coat at the inn. It has three buttons left, if the rats haven't had them.
+== hearing_lost
+Vladimir Horngaard: A grave and a story are not enough to unwrite the book of this house. The roll stands as it was written.
+Sir Godfrey Gwilym [sad]: Wait by the brazier tonight, lad. My memory is a sieve, and it may be that more comes back to me before the dawn.
+Cosmin: I can stand the vigil instead, my lord. If you will not hear his name cleared, you can see how his blood holds a sword.
+== hearing_book
+Narrator: With a dry quill that leaves a faint grey crease in the vellum, Sir Godfrey draws a single straight line through the old word.
+Sir Godfrey Gwilym [smile]: Ioan: rode with my lord's last word, on my horse, on my order. And under it, Cosmin: squire. Go on, lad, before I forget how to spell Vallaki.

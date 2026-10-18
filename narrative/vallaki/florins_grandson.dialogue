@@ -1,0 +1,117 @@
+# Florin's Grandson (side quest, docs/story/side_quests.md; NPC plan batch 3): Old Florin prays in the Village of
+# Barovia's church that his grandson Tudorel, who went up the castle road two winters ago, doesn't come back; Florin told
+# the boy the castle pays well. Tudorel is alive, a footman in Lady Wachter's house in Vallaki, in the count's livery,
+# warm and ashamed, sending one unsigned coin a month by the carter. The party tells Florin the truth, a merciful lie, or
+# half of it. A moral choice with no fight and no right answer; nothing here needs a roll. Reached from Old Florin
+# (village_of_barovia/indoor_folk:mihai) and Tudorel at Wachterhaus (npc tudorel). Lines drafted by Gemini through the
+# ai-bridge, edited; every line here is unvoiced for now.
+
+# --- Old Florin in the church (indoor_folk:mihai jumps here) ---
+
+~ florin_ask
+Old Florin [weary]: Tudorel? He went up the castle road two winters back to ask the steward for work.
+Old Florin: The roof was leaking through onto the straw, and a boy of sixteen eats like a horse.
+Old Florin: People think I come here every morning to pray that he walks back through that door.
+Old Florin [sad]: I know what walks down from that hill, so I pray he stays wherever he fell.
+Narrator: He clasps his hands together on the pew in front of him, but you can still see them shaking.
+* [Insight DC 12] (He's holding something back.) -> florin_secret_ok | florin_secret_miss
+* We'll look for him. -> florin_asked
+
+~ florin_secret_ok
+Old Florin [weary]: We had boiled turnip peelings for three days running, and my knees had gone too stiff for the ditching.
+Old Florin: I told him the castle pays in silver and never lacks for firewood.
+Old Florin [sad]: I have not said that aloud to a living soul, not even the priest.
+Old Florin: Do not waste your breath forgiving me for it, because I will not forgive myself.
+-> florin_asked
+
+~ florin_secret_miss
+Narrator: An old man's folded hands, white at the knuckle. If there is more, he keeps it where the prayers are.
+-> florin_asked
+
+~ florin_asked
+if not quest.florins_grandson
+quest florins_grandson asked
+endif
+-> END
+
+# --- Tudorel in Lady Wachter's parlour ---
+
+~ tudorel
+if quest.florins_grandson == done
+Tudorel: Thank you for going. The coin goes out on the first of the month, and now it goes out with a name on it, in a manner of speaking.
+-> END
+endif
+if flag.tudorel_met
+-> tudorel_menu
+endif
+set tudorel_met
+Narrator: A young footman in good grey-and-black wool pours pale tea into thin porcelain cups without spilling a drop.
+Tudorel: Dry your boots by the fender if you like; her ladyship does not mind the steam.
+Narrator: He catches you looking at his face, and his hand pauses on the silver pot for just a breath.
+Tudorel [weary]: I know what you are thinking, and you may think it, only keep your voices down in the hall.
+Tudorel: I have been warm for two winters here, and there is mutton in the kitchen every Sunday.
+Narrator: Fixed neatly to the high collar of his coat is a small silver crest, the raven and crown of the castle.
+-> tudorel_menu
+
+~ tudorel_menu
+* [if quest.florins_grandson != found and quest.florins_grandson != done] We've come from Old Florin, in the Village of Barovia. -> tudorel_coin
+* Goodbye. -> END
+
+~ tudorel_coin
+if quest.florins_grandson != done
+quest florins_grandson found
+endif
+Narrator: When you mention the old man in the village church, the boy goes quite still.
+Tudorel [sad]: I give Old Kolya a silver piece every month when he goes down the valley with his cart, wrapped in a bit of tea-paper with no name on it.
+Tudorel: If my grandfather knew whose coat I was wearing to earn it, he would throw it in the well.
+Tudorel [afraid]: Please do not tell him where you saw me, or whose bread I am eating.
+Tudorel: Tell him I died clean in the ditch if you have to, or whatever you think will let him sleep.
+-> END
+
+# --- Back to Old Florin (indoor_folk:mihai jumps here once Tudorel is found) ---
+
+~ florin_choice
+* Tell him the whole truth: Tudorel is alive, in the count's livery, and likes it. -> florin_truth
+* Tell him Tudorel died, at peace. -> florin_lie
+* Tell him Tudorel is well and warm, and don't say whose livery. -> florin_half
+* Not yet. -> END
+
+~ florin_truth
+set florin_told = "truth"
+quest florins_grandson done
+Narrator: Old Florin sits very straight on the narrow bench for a long moment after you finish speaking.
+Old Florin [weary]: Well. Better a grandson in a count's coat than a grandson in a count's cellar, I suppose.
+Old Florin [angry]: The young fool always did care more for a warm belly than a clean name.
+Old Florin [sad]: And the Morninglord help me, I am glad he has the mutton.
+Old Florin: Wait a moment before you go back down the road.
+Old Florin [smile]: Do any of you happen to have a stub of pencil I could borrow?
+approve godrick_pendlebrook +1 thistle +1 liriel_dawnsong +1: You told Old Florin the truth about his grandson
+-> END
+
+~ florin_lie
+set florin_told = "lie"
+quest florins_grandson done
+Narrator: Old Florin takes the news like a blow he has been bracing his shoulders against for two years.
+Old Florin [sad]: Thank you for coming all this way to tell me plainly.
+Old Florin: In my heart I knew it before the first snow melted, though a man still looks at the road.
+Old Florin [weary]: It is a great courtesy to know he is at peace and out of the cold.
+Old Florin: Would you mind lighting one of the tallow candles by the door on your way out?
+approve kip_smudgewick +1 wren_featherfoot +1 godrick_pendlebrook -1: You told Old Florin his grandson was dead
+-> END
+
+~ florin_half
+set florin_told = "half"
+quest florins_grandson done
+Narrator: Old Florin looks at your faces for a long, quiet time without blinking.
+Old Florin [weary]: Warm, fed, and in honest service, and you did not think to ask the master's name.
+Old Florin: That is either a very good lie or a very careful truth.
+Old Florin [sad]: At my age, I do not think I need to pry into which one you brought me.
+Old Florin: Thank you for the kindness, travellers, and mind the ruts on the road back.
+approve ratatoille +1 liriel_dawnsong +1: You told Old Florin his grandson was well and asked no more
+-> END
+
+~ florin_after
+Narrator: Old Florin sits near the brazier, turning a single silver coin over and over between his crooked fingers.
+Old Florin [weary]: Old Kolya left a twist of paper on my windowsill this morning before the mist lifted.
+Old Florin [smile]: Strange thing about castle silver: the paper it comes in always smells of good tea.
+-> END
