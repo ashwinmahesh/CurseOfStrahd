@@ -30,7 +30,9 @@ packaged service at 127.0.0.1:8765, project `ai-bridge`), on 2026-10-18. Claude 
   conversation), the exits' labels ("Stairs up to Van Richten's room", "Stairs down to the lantern room", "Out through the broken
   window to the scaffolding"), prop labels, and the Narrator's `once`/`cooldown` lines.
 - Drafted and not used: `LIFT_OPT_RIDE` (the lift's menu opens straight from the platform or the figures), `RUBBLE_ENTER`
-  (the dig is on the island, not in a hollow).
+  (the dig is on the island, not in a hollow). Used from the collapse commit on: the ward's second and third firings, the collapsed
+  island's first view, the door that is gone, the heap, the digging and the loose pages; from the antimagic commit on: `ANTI_ENTER`,
+  `ANTI_FIZZLE`.
 
 All of it stays unvoiced (no `make voice` from a lane): the hand-off names the voiced lines (everything but the option lines,
 which are never voiced) for the voice thread.

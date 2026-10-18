@@ -2,6 +2,10 @@
 # copper rod feeds the lightning ward on the lantern-room floor.
 
 ~ door
+if flag.tower_collapsed
+Narrator: Where the smooth door stood, a steep spill of broken masonry chokes the arch right up to the lintel. A few split oak joists jut from the rubble like snapped ribs.
+-> van_richtens_tower/the_collapse:heap
+endif
 if flag.tower_door_opened
 if (flag.khazan_jar_known or flag.khazan_withdrawn) and not flag.khazan_name_broken
 -> van_richtens_tower/the_name_over_the_door:lintel

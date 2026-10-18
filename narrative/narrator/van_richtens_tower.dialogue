@@ -4,6 +4,7 @@
 ~ enter:van_richtens_tower
 | Lake Baratok is small, cold and very still, held in the lap of the mountain like water in a cupped hand. In the middle of it, on a knuckle of rock, stands a round black tower with one window lit.
 | [flag.van_richten_reunited] Two people are sitting by the fire on the shore, not quite looking at each other, passing a cup back and forth. The tower's window is dark for once.
+| [flag.tower_collapsed] Across the cold tarn, the black tower still rises from its island, though no lantern burns behind the high slit now. Only a hollow drum of dark stone faces the shore, open to the grey sky.
 | [night] The tower's one lit window throws a long yellow line across the black water, all the way to your feet, like an invitation nobody actually sent.
 cooldown 30
 
@@ -176,3 +177,15 @@ once
 
 ~ examine:vrt_study_desk
 | A brass lamp, a stoppered inkpot, and a stack of squared paper. The top sheet holds a dozen crossed-out beginnings to the same letter, none getting past MY DEAR.
+
+~ trap:vrt_door_ward_2:found
+| Fine lines like frost run along the threshold and up the stone frame. They hum faintly, and a pale blue spark crawls slowly from one groove to the next.
+
+~ trap:vrt_door_ward_2:triggered
+| Blue lightning throws you back onto the stones again. Above you, the whole tower shudders, shedding a dry rain of mortar as a crack climbs the black wall.
+
+~ trap:vrt_door_ward_3:found
+| Fine lines like frost run along the threshold and up the stone frame. They hum faintly, and a pale blue spark crawls slowly from one groove to the next.
+
+~ trap:vrt_door_ward_3:triggered
+| The third bolt hurls you back across the stones, and inside the tower the floors drop through one another with a long, grinding roar. When the dust clears, the black outer wall stands empty around a choked doorway.

@@ -14,7 +14,8 @@ const INTERIOR_SHA := "362cf96b799913cf50e119096c21b838bfd6185d"
 const TOWER_ROWS_SHA := "d1a5d800b40f9bea3407aec9416c9a34f84799c6"
 const INTERIOR_ROWS_SHA := "2ecf61ee2264d4c10c21dab58046e46d1b313fae"
 ## What V1 added to those maps (the pinned lines leave these out).
-const TOWER_NEW: Array = ["vrt_scaffolding", "from_scaffold"]
+const TOWER_NEW: Array = ["vrt_scaffolding", "from_scaffold", "vrt_rubble_heap", "vrt_rubble_beam", "vrt_rubble_spill", "vrt_scaffold_wreck",
+	"vrt_rubble_notes"]
 const INTERIOR_NEW: Array = ["vrt_study", "lantern_from_above", "study_from_below", "lantern_from_scaffold", "lift_f1", "lift_f2", "lift_f3",
 	"lift_f4", "vrt_stairs_up_3", "vrt_stairs_down_4", "vrt_scaffold_down", "vrt_lift_platform_1", "vrt_lift_statue_1", "vrt_lift_statue_2",
 	"vrt_lift_statue_3", "vrt_lift_statue_4", "vrt_lift_platform_2", "vrt_lift_platform_3", "vrt_lift_platform_4", "vrt_scaffold_hole",
@@ -290,3 +291,89 @@ func test_the_ward_calls_the_werewolves() -> void:
 	assert_eq(wolves.size(), 5, "five werewolves for a party of level 7")
 	root.queue_free()
 	await get_tree().process_frame
+
+
+## The ward goes off three times and the third brings the tower down (the book): two more traps on the same squares, each armed
+## by the one before. It never comes down while Van Richten is at home, and never once the door is open.
+func test_the_third_firing_brings_the_tower_down() -> void:
+	var traps := {}
+	for t: Variant in _loc(TOWER)["traps"]:
+		traps[str((t as Dictionary)["id"])] = t
+	for n: int in [1, 2, 3]:
+		assert_true(traps.has("vrt_door_ward_%d" % n), "firing %d has its trap" % n)
+	var st := _party()
+	assert_false(StoryConditions.check(str((traps["vrt_door_ward_2"] as Dictionary)["when"]), st), "the second waits for the first")
+	st.set_flag("tower_ward_1")
+	assert_true(StoryConditions.check(str((traps["vrt_door_ward_2"] as Dictionary)["when"]), st))
+	assert_false(StoryConditions.check(str((traps["vrt_door_ward_3"] as Dictionary)["when"]), st), "the third waits for the second")
+	st.set_flag("tower_ward_2")
+	assert_true(StoryConditions.check(str((traps["vrt_door_ward_3"] as Dictionary)["when"]), st))
+	st.set_flag("rictavio_gone")
+	assert_false(StoryConditions.check(str((traps["vrt_door_ward_3"] as Dictionary)["when"]), st), "not on Van Richten at home")
+	st.set_flag("van_richten_reunited")
+	assert_true(StoryConditions.check(str((traps["vrt_door_ward_3"] as Dictionary)["when"]), st), "his tower is empty once he has gone to the shore")
+	assert_eq((traps["vrt_door_ward_3"] as Dictionary)["flag"], "tower_collapsed")
+	GameState.reset()
+	for id: String in FOUR:
+		var ch := Pregens.build(id, 10)
+		ch.finish_long_rest()
+		GameState.story.party.append(ch)
+	GameState.story.location = TOWER
+	GameState.story.minute_of_day = 12 * 60
+	GameState.story.set_flag("tower_wolves_beaten")   # the werewolves are dealt with: no fight in the way
+	GameState.story.positions = [Vector2i(15, 13), Vector2i(15, 14), Vector2i(16, 14), Vector2i(14, 14)]
+	var root := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	for i in 3:
+		await get_tree().process_frame
+	var v := root.get("view") as LocationView
+	assert_true(SideQuestPlay.shown(GameState.story, TOWER, "vrt_scaffolding"), "the scaffolding stands")
+	assert_false(SideQuestPlay.shown(GameState.story, TOWER, "vrt_rubble_heap"), "and the doorway is clear")
+	for n: int in 3:
+		v.members[0].creature.hp = v.members[0].creature.max_hp()
+		v.members[0].cell = Vector2i(15, 11)
+		assert_true(LocationTraps._check_traps(v), "firing %d goes off" % (n + 1))
+		assert_false(v.in_combat, "and the wolves are beaten")
+		assert_eq(bool(GameState.story.get_flag("tower_collapsed", false)), n == 2, "the tower stands until the third")
+		v.members[0].cell = Vector2i(15, 13)
+	v.members[0].cell = Vector2i(15, 11)
+	assert_false(LocationTraps._check_traps(v), "a fourth step is only a step")
+	assert_true(SideQuestPlay.shown(GameState.story, TOWER, "vrt_rubble_heap"), "the doorway is a heap now")
+	assert_false(SideQuestPlay.shown(GameState.story, TOWER, "vrt_scaffolding"), "and the scaffolding is gone with the rest")
+	assert_true(SideQuestPlay.shown(GameState.story, TOWER, "vrt_scaffold_wreck"))
+	root.queue_free()
+	await get_tree().process_frame
+
+
+## Digging out: three good shifts of two hours (Athletics DC 14) reach the strongbox, hand over the Tarokka treasure the cards
+## hid there, the strongbox's loot (once) and the hunter's loose pages with their flags. The door's own talk goes to the heap.
+func test_the_dig_reaches_the_strongbox() -> void:
+	var st := _party(10)
+	st.set_flag("tower_collapsed")
+	st.tarokka = {"tome": "stars_master"}
+	var door := SideQuestPlay.play(st, "van_richtens_tower/tower:door")
+	assert_true(SideQuestPlay.text(door).contains("snapped ribs"), "the door is gone")
+	assert_true(_offered(door, "dig into the rubble"), "and its talk offers the dig")
+	assert_false(_offered(SideQuestPlay.play(st, "van_richtens_tower/tower:door"), "poses"), "no riddle at a doorway that is not there")
+	var start := st.total_minutes()
+	var picks: Array[String] = []
+	for _i in 30:
+		picks.append("dig into the rubble")
+	var dug := SideQuestPlay.play(st, "van_richtens_tower/the_collapse:heap", picks, 3)
+	assert_eq(SideQuestPlay.missing(dug), "")
+	assert_true(bool(st.get_flag("vrt_strongbox_dug", false)), "the strongbox is reached")
+	assert_true(st.total_minutes() - start >= 360, "after at least three shifts of two hours")
+	assert_true(bool(st.get_flag("treasure_found_tome", false)), "the Tarokka treasure comes out of it")
+	assert_eq(st.gold, 120.0, "and its gold")
+	var again := SideQuestPlay.play(st, "van_richtens_tower/the_collapse:heap")
+	assert_false(_offered(again, "dig into the rubble"), "once is enough")
+	var notes := SideQuestPlay.play(st, "van_richtens_tower/the_collapse:notes")
+	assert_eq(SideQuestPlay.missing(notes), "")
+	assert_true(bool(st.get_flag("van_richten_notes_read", false)) and bool(st.get_flag("van_richten_identity_known", false)) and bool(st.get_flag("den_way_known", false)),
+		"the casebook's, the ledger's and the map's flags come out of the pages")
+	var looted := _party(10)
+	looted.set_flag("tower_collapsed")
+	looted.set_flag("van_richten_strongbox_opened")
+	SideQuestPlay.play(looted, "van_richtens_tower/the_collapse:heap", picks, 3)
+	assert_true(bool(looted.get_flag("vrt_strongbox_dug", false)))
+	assert_eq(looted.gold, 0.0, "a strongbox already emptied is not paid twice")

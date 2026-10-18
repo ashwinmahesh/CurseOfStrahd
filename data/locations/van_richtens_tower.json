@@ -422,7 +422,65 @@
       "kind": "examine",
       "label": "A rotten scaffolding",
       "model": "fallen_beam",
-      "dialogue": "van_richtens_tower/the_scaffold:climb"
+      "dialogue": "van_richtens_tower/the_scaffold:climb",
+      "when": "not flag.tower_collapsed"
+    },
+    {
+      "id": "vrt_rubble_heap",
+      "cell": [
+        16,
+        12
+      ],
+      "kind": "examine",
+      "label": "The fallen doorway",
+      "model": "rubble",
+      "when": "flag.tower_collapsed",
+      "dialogue": "van_richtens_tower/the_collapse:heap"
+    },
+    {
+      "id": "vrt_rubble_beam",
+      "cell": [
+        16,
+        11
+      ],
+      "kind": "decor",
+      "label": "Splintered beams",
+      "model": "fallen_beam",
+      "when": "flag.tower_collapsed"
+    },
+    {
+      "id": "vrt_rubble_spill",
+      "cell": [
+        14,
+        12
+      ],
+      "kind": "decor",
+      "label": "Fallen stone",
+      "model": "rubble",
+      "when": "flag.tower_collapsed"
+    },
+    {
+      "id": "vrt_scaffold_wreck",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "label": "The scaffolding's wreck",
+      "model": "rubble",
+      "when": "flag.tower_collapsed"
+    },
+    {
+      "id": "vrt_rubble_notes",
+      "cell": [
+        17,
+        12
+      ],
+      "kind": "examine",
+      "label": "Loose pages from the hunter's papers",
+      "model": "letters",
+      "when": "flag.vrt_strongbox_dug",
+      "dialogue": "van_richtens_tower/the_collapse:notes"
     }
   ],
   "containers": [
@@ -510,6 +568,56 @@
       "flag": "tower_ward_1",
       "when": "not flag.tower_door_opened and not guest:rictavio",
       "text": "White lightning cages the tower and hurls you backwards across the wet rock. High on the black ridge above the lake, long throats take up a single howl."
+    },
+    {
+      "id": "vrt_door_ward_2",
+      "label": "The lightning ward on the door",
+      "cells": [
+        [
+          14,
+          11
+        ],
+        [
+          15,
+          11
+        ]
+      ],
+      "detect_dc": 15,
+      "disarm_dc": 17,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "lightning",
+      "flag": "tower_ward_2",
+      "when": "flag.tower_ward_1 and not flag.tower_door_opened and not guest:rictavio",
+      "text": "Blue lightning throws you back onto the stones again. Above you, the whole tower shudders, shedding a dry rain of mortar as a crack climbs the black wall."
+    },
+    {
+      "id": "vrt_door_ward_3",
+      "label": "The lightning ward on the door",
+      "cells": [
+        [
+          14,
+          11
+        ],
+        [
+          15,
+          11
+        ]
+      ],
+      "detect_dc": 15,
+      "disarm_dc": 17,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "lightning",
+      "flag": "tower_collapsed",
+      "when": "flag.tower_ward_2 and not flag.tower_door_opened and not guest:rictavio and (not flag.rictavio_gone or flag.van_richten_reunited)",
+      "text": "The third bolt hurls you back across the stones, and inside the tower the floors drop through one another with a long, grinding roar. When the dust clears, the black outer wall stands empty around a choked doorway."
     }
   ],
   "lights": [

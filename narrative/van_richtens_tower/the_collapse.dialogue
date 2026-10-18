@@ -1,0 +1,53 @@
+# The tower that fell in (Dungeon Expansion Plan V1; Elven Tower, chapter 11: three firings of the door's ward bring the
+# tower down, and what it held waits under the stone, hours of digging). The island's map can't change, so the black wall stays
+# standing round a pit and the party digs from the doorway (prop vrt_rubble_heap, and the door's own conversation once the
+# door is gone). Three good shifts (Athletics DC 14, two hours each) reach the lantern room's strongbox and Van Richten's
+# loose pages, so nothing the story needs is lost: the Tarokka place, the casebook's flags, the loot.
+
+~ heap
+Narrator: Inside the standing shell, the rooms have dropped straight down into a pit like nested boxes. Whatever the hunter kept up there is still buried at the bottom, waiting for a shovel.
+if flag.vrt_strongbox_dug
+-> END
+endif
+-> heap_menu
+
+~ heap_menu
+* Start hauling stone and dig into the rubble. -> dig
+* Leave the heap of stone as it is. -> END
+
+~ dig
+time +120
+check Athletics DC 14 -> dig_ok | dig_fail
+
+~ dig_ok
+set vrt_dig += 1
+if flag.vrt_dig >= 3
+-> dig_found
+endif
+Narrator: Two hours of levering timber and passing heavy black stone from hand to hand. Your shoulders ache and your palms are raw, but the pit is deeper.
+-> heap_menu
+
+~ dig_fail
+Narrator: Every heavy block you pry free brings three more sliding down to take its place. Two hours pass in the cold damp, and the hole is no deeper.
+-> heap_menu
+
+~ dig_found
+set vrt_strongbox_dug
+Narrator: A beam shifts, opening a dark pocket under the old window sill. Inside, an iron strongbox rests unharmed on its side, surrounded by dry pages from the hunter's desk.
+tarokka give van_richtens_tower
+if not flag.van_richten_strongbox_opened
+set van_richten_strongbox_opened
+gold +120
+give holy_water 3
+give potion_of_healing_greater 2
+give spell_scroll_level_1
+give ammunition_of_slaying_undead__arrow 2
+endif
+-> END
+
+~ notes
+set van_richten_notes_read
+set van_richten_identity_known
+set den_way_known
+Narrator: Loose sheets from a casebook, a neat ledger, and a map of the valley floor. The fallen stone kept the lake mist off them; every cramped line remains legible.
+-> END

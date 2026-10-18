@@ -381,6 +381,26 @@
       "id": "vrt_head_spoke",
       "type": "bool",
       "summary": "The party spoke with the Vistani man's head (Speak with Dead, once): it named Arrigal's camp (arrigal_suspected)."
+    },
+    {
+      "id": "tower_ward_2",
+      "type": "bool",
+      "summary": "The lightning ward on the tower door has gone off twice (trap vrt_door_ward_2): the tower shakes."
+    },
+    {
+      "id": "tower_collapsed",
+      "type": "bool",
+      "summary": "The ward went off a third time (trap vrt_door_ward_3) and the tower fell in on itself: the doorway is buried, the black wall stands round a pit, and what the tower held is dug out on the island (the_collapse.dialogue). It never fires while Van Richten is at home."
+    },
+    {
+      "id": "vrt_dig",
+      "type": "int",
+      "summary": "Shifts of digging that have gone well in the fallen tower (three reach the strongbox)."
+    },
+    {
+      "id": "vrt_strongbox_dug",
+      "type": "bool",
+      "summary": "The party dug into the fallen tower and reached the lantern room's strongbox and the hunter's loose pages."
     }
   ]
 }
