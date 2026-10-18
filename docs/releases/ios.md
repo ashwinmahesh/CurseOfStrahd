@@ -474,7 +474,12 @@ The separate unchanged-runtime diagnostic reached settings, saved and relaunched
 
 The native extension now activates AVAudioSession before CoreAudio initialization and again before the engine's
 foreground restart. Gameplay retains its explicit Continue pause; native activation failures remain visible to
-ErrorWatch. The focused iPad title/campaign recovery journey has passed all three cycles; finalized result
-collection and phone qualification are pending. Required `make check` passes 174 tests plus compilation, lint and
+ErrorWatch. The finalized iPad title/campaign recovery journey passed all three cycles (one native test, 726.129 seconds).
+Phone qualification remains open: iOS 27.0 passed title recovery but timed out querying the campaign UI
+before its interruption rounds; the iOS 27.1 retry stayed foreground after XCTest sent Home and failed
+the background-state assertion. Both failures are retained. The restarted iOS 27.0 phone retry reached background and activated the app, but failed because
+“Ready when you are” never appeared; its snapshot showed the title instead. This is an unresolved
+phone recovery gate. The same app, saved campaign and assertions were retained, with the completed
+iPad simulator shut down. Required `make check` passes 174 tests plus compilation, lint and
 validation; 42 Python iOS tooling tests pass. No 1.0.1 upload has been dispatched.
 See [the investigation and provenance](../plans/ios_ux_research.md#october-17-audio-initialization-and-foreground-recovery).

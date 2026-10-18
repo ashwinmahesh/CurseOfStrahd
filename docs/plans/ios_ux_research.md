@@ -137,3 +137,22 @@ The revised early-activation candidate passes the three-cycle iPad journey in 72
 The SDK reports a main-thread unresponsiveness warning for synchronous AVAudioSession activation. Deferring it independently would race Godot's inline restart; an asynchronous design would need coordinated engine lifecycle changes. Physical-device activation latency, audio routes, interruption priority and audible playback remain unqualified. A process sample attributes the slow simulator campaign frames to software 3D rendering, not an audio wait; this is not a device-performance measurement. Eight separately labeled approved offscreen controller captures preserve the inventory/icons, keyboard, Actions and Continue layouts. Obsidian's **iOS Audio Session Recovery - 2026-10-17** note contains reviewed failure imagery and source/image hashes.
 
 Version 1.0.1 is authorized conditionally on clearing the major blocker. Its version configuration is committed at `2ed9aa46e`; the new upload is held pending current phone/tablet recovery results and required checks. Build 2001 remains the earlier Apple VALID build. Future new uploads increment the marketing patch version; versioning policy alone does not authorize another upload.
+
+
+#### Native recovery qualification follow-up
+
+The finalized early-activation iPad result is **Passed**, with all three title/campaign background-return cycles
+and six reviewed native screenshots. Phone iOS 27.0 recovered the title, then failed while XCTest evaluated a
+campaign accessibility snapshot before campaign interruption. The unchanged iOS 27.1 retry failed its
+background-state assertion after Home; retained simulator lifecycle logs show the game still foreground
+before teardown. Neither result establishes successful phone campaign recovery. Keep the release gate open
+and retain failures separately from retries. A retry restarted only the owned original phone simulator
+and removed the completed iPad workload; app, save and assertions remained unchanged. It failed after
+34.526 seconds: XCTest observed background and activated the same app, but the required recovery pause
+never appeared and its snapshot still showed the title. This is not evidence of a resolved lifecycle path.
+Keep 1.0.1 on hold and diagnose notification/pause delivery before another release attempt.
+
+Artifact native implementation and harness SHA-256 values match committed `f80f04c2615e2c9cfac803c1b9cb26668f00510c`.
+The incremental simulator package remains labeled 1.0.0(1), with the unchanged full-game resource pack and
+rebuilt native extension. It is not a clean production 1.0.1 export. Required checks remain 174 passed, zero
+failed, with 42 passing iOS Python tooling tests. Physical audio and Metal performance remain unqualified.
