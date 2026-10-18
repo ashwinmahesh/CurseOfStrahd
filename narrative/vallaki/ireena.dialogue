@@ -14,6 +14,7 @@ endif
 * Come with us again. -> rejoin
 * [if flag.ireena_met and flag.izek_story_heard and flag.izek_dolls_seen and not flag.izek_sister_truth] Ireena, what do you remember from before Kolyan found you? -> remember
 * [if flag.izek_sister_truth and not flag.izek_told_truth] Ireena, it's about Izek. -> tell_her
+* How are you holding up under the Martikovs' roof? -> allies/ireena:checkin
 * Rest well. -> END
 
 ~ at_church
@@ -30,6 +31,7 @@ endif
 * Come with us again. -> rejoin
 * [if flag.ireena_met and flag.izek_story_heard and flag.izek_dolls_seen and not flag.izek_sister_truth] Ireena, what do you remember from before Kolyan found you? -> remember
 * [if flag.izek_sister_truth and not flag.izek_told_truth] Ireena, it's about Izek. -> tell_her
+* How are you holding up here at the church? -> allies/ireena:checkin
 * Rest well. -> END
 
 ~ to_church

@@ -1,0 +1,19 @@
+~ life_krezk_2_sick
+Ireena [weary]: Anna lets me sit by little Ilya's bed while she sleeps, and he asks me what the sun's like while the neighbours watch me like a bell they expect to toll.
+
+~ life_krezk_3_pool
+Ireena: The town's stopped asking about the pool, Anna sets my place at table without a word, and I've taken the evening watch on the wall so I'm looking at the road instead of the water.
+
+~ news_reunion
+Ireena [smile]: That loud showman Rictavio and Ezmerelda have finally made up after twelve years of each blaming the other for walking away.
+Ireena [weary]: It must be strange, having someone left from before the mist to quarrel with.
+
+~ news_children_2
+Ireena: Five mothers below the abbey are barring their doors tonight with all their children inside, and that's no small thing.
+
+~ news_reading
+Ireena [weary]: I've never trusted fortune-tellers, least of all when they deal out my future on a table.
+Ireena: Keep Madam Eva's painted cards to yourselves, unless one of them tells you plainly where to find a sharper blade.
+
+~ mind_bites_1
+Ireena [weary]: I've stopped counting the nights since the second bite, and I've given up waiting for those two pale, puckered marks under my scarf to close.

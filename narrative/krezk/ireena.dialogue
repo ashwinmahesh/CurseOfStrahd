@@ -56,6 +56,7 @@ if flag.ireena_pool_vision
 Ireena: I go down to the pool in the mornings. I don't look in. I just sit with my back to it, so it knows I'm there.
 endif
 * Come with us again, Ireena. -> rejoin
+* How are they treating you behind Krezk's wall? -> allies/ireena:checkin
 * Stay safe. -> END
 
 ~ rejoin

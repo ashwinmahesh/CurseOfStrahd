@@ -1,0 +1,93 @@
+~ greet_first
+Ireena: People usually check the locks when they come near me, not my temper.
+Ireena [smile]: Still. Sit down if you have a minute, and tell me what the road looks like.
+
+~ greet_again
+Ireena: Back with all your limbs. Good. Tell me what you stirred up out there.
+
+~ greet_often
+Ireena [smile]: I was just counting how many hours until you walked in smelling of wet wool and trouble.
+
+~ life_inn_1
+Ireena: I dry glasses until midnight, and then I sit with Urwin while he watches the shutters. Neither of us sleeps much.
+
+~ life_inn_2
+Ireena: I found three black feathers in the flour bin this morning, and Urwin counts the sky like a ledger. This house keeps odd hours.
+
+~ life_inn_3
+Ireena: The Martikovs aren't simple vintners, and those birds on the roof aren't simple birds. Don't worry, I know how to keep my mouth shut.
+
+~ life_inn_3_keepers
+Ireena [smile]: I saw Urwin come down from the eaves on two wings at dawn. It is a great relief to be trusted with a secret for once.
+
+~ life_church_1
+Ireena: Father Lucian lets me ring the vespers bell when my hands are restless. The rope is heavier than it looks, which is the point.
+
+~ life_church_2
+Ireena [weary]: The stone keeps the bad dreams out, mostly. It turns out my own head makes plenty of noise when the room is quiet.
+
+~ life_church_3
+Ireena: I've been running footwork drills against the churchyard posts with a broom handle. Father Lucian looks very hard at his prayer book whenever he walks past.
+
+~ life_krezk_1
+Ireena: Dmitri gave me the morning watch on the gatehouse wall between the goat-milking and the cheese press. At least from up there I can see the trees.
+
+~ life_krezk_2
+Ireena: Little Ilya follows me along the path, while the rest of the town watches me from their doorways like a bell they expect to toll.
+
+~ life_krezk_3
+Ireena [afraid]: I walk past that unfreezing pool every morning on the way to the pens. I never look down into the water, and I couldn't tell you why.
+
+~ life_mansion_1
+Ireena [weary]: Ismark brings stew from the tavern at dusk, and then we check the nails in the shutters and listen to the wolves test the porch.
+
+~ life_mansion_2
+Ireena [sad]: I sit in Father's chair after the lamps go out and talk to the panelling. The house is quieter when someone speaks to it.
+
+~ life_mansion_3
+Ireena: I've begun sorting Father's ledgers by year and tying them in twine. I haven't decided yet whether it is grief or just housekeeping.
+
+~ life_road_1
+Ireena [smile]: I know who snores, who mutters over their boots, and who hides the dry kindling in their pack. You are not subtle company.
+
+~ life_road_2
+Ireena: My boots have finally given up fighting my heels. Wake me for the middle watch tonight, and don't try to skip my turn.
+
+~ life_road_3
+Ireena: Keep your eyes on the treeline when we make camp. Something has been pacing us since noon, and I know what being watched feels like.
+
+~ bye_inn
+Ireena: Go on. I'll have Urwin keep a pot of something hot by the hearth.
+
+~ bye_church
+Ireena: Watch the roads out there. The saint's bones only reach as far as the churchyard wall.
+
+~ bye_krezk
+Ireena: Tell Dmitri at the gate you're leaving, or he'll bar it behind you twice. Come back whole.
+
+~ bye_mansion
+Ireena: Give three knocks when you come back to the porch, so Ismark doesn't put a blade through the door.
+
+~ bye_road
+Ireena: Lead on, then. I'm right behind you.
+
+~ open_checkin_inn
+* How are you holding up under the Martikovs' roof?
+
+~ open_checkin_church
+* How are you holding up here at the church?
+
+~ open_checkin_krezk
+* How are they treating you behind Krezk's wall?
+
+~ open_checkin_mansion
+* How are you holding up in the old house?
+
+~ ask_mind
+* You've gone quiet. Is something on your mind?
+
+~ leave_it_stay
+* Keep safe until we get back.
+
+~ leave_it_road
+* Let's get moving again while the light holds.

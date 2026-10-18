@@ -1,0 +1,15 @@
+Sixth request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as before. Four single lines need a new draft because of a fact I have to keep true in every playthrough. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else. Each line is 1-2 sentences, ideally under 25 words, spoken as she speaks (contractions), British spelling, no stage directions, never the devil's name.
+
+## The nodes
+
+news_hags_abandoned_1: Ireena x1. Replaces the first line of news_hags_abandoned (the party left the stolen children in the hands of the hags at the Old Bonegrinder). Your earlier first line, "You stood beside Father's coffin when the wolves were at the shutters, and you did not flinch", assumes a night's vigil that did not always happen. What is true in every playthrough: the party helped her bury her father, and it carried him to the churchyard with her. Write one line that sets that against what they did at the windmill, without claiming anything else about how the burial went (no prayers, no priest, no wolves).
+
+life_road_3: Ireena x1. Replaces the third road line in which she watches the treeline at camp. Your earlier line said "Something has been pacing us since noon", which claims an event that never happens. Instead: a line about the habit of watching the dark edge of the camp, that she can tell when she is being watched because she has had practice, without saying anything is out there now.
+
+news_berez_dead_2: Ireena x1. Replaces the SECOND line of news_berez_dead (Baba Lysaga, the witch who nursed the devil as a baby, is dead). In this version Ireena does not know the truth about Marina; she only knows the witch is dead. Do not mention a marsh of skulls or a drowned village. What is true: the witch lived in a hut on a giant stump that walked about on its own, in the ruins of Berez, with straw men for guards. Keep it a dry grim joke in her voice about a grandmother, or about leaving a house behind.
+
+news_dinner_declined_2: Ireena x1. Replaces the SECOND line of news_dinner_declined (the party refused the devil's dinner invitation and the black carriage came back more than once and went away empty). Your earlier line, "Our visitor is not used to having his doors left knocking", did not make sense. Something short about him not being used to a refusal, or about an invitation that comes with a carriage and no choice.
+
+## Format
+
+One line per row, exactly: `Ireena [mood]: Text` (mood optional; allowed moods: smile, angry, afraid, sad, weary). Plain ASCII punctuation. Group each line under its node name as `~ node_name`, in the order given. Do not add nodes, code or commentary.

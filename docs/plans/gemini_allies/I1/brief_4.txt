@@ -1,0 +1,34 @@
+Fourth request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as before. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else.
+
+## What these nodes are
+
+In a check-in, the party can ask Ireena "is something on your mind?" and she raises ONE topic from a short menu, each only once. These are not news about what the party did: they are HER inner life, the things she turns over at night. The game picks which variant to play from what has happened, and the lines must read right in any of her five situations (the inn, the church, Krezk, her father's mansion, or travelling with the party), so do not mention the place. She never says the devil's name ("him", "the devil", "our visitor"). She may say Tatyana and Sergei in the last topic only. Gemini, reach for plain specifics, not poetry; she is exact, grief comes out as precision, she makes the grim joke before anyone can pity her, and she is not fragile. 1-2 sentences a line, ideally under 25 words; line counts are targets, not more.
+
+Do not reuse images from your previous replies (the resin and amber smell, the bell and the rope, ledgers and twine, sorting boards, counting spoons, the white dress). She does NOT wear a white dress in the game, and the Narrator has already said she is in her plum cloak; do not put her in any clothes.
+
+## The nodes
+
+Her father, as the thing on her mind. The game picks the variant from how the party buried Kolyan; she judges people by how they treated his memory and she says so about this party in one line. Each variant is Ireena x2:
+mind_father_church: the village priest, Father Donavich, said the proper words over him. (Warm and a little wry: he would have corrected the priest's grammar was used in the game already, so do not use it.)
+mind_father_cleric: a cleric in the party said the rites over him. (Gratitude that is specific; she says she believes in a god a little more for it.)
+mind_father_hasty: the party buried him fast, without words. (Cooler. She went on with them and has not forgotten how it was done; honest, not cruel; she does not demand an apology.)
+mind_father_lay: the party buried him with honest words, not a priest's. (Warm in her way: he would have taken honest over pretty.)
+
+mind_bites: Ireena x3. The marks on her neck and her nights. She has stopped counting how many nights it has been; she wakes at the same hour; she checks the window latch twice a night and is never quite sure which of the two of them she is checking it against. (Do NOT state her secret flatly: some nights she does not want the window shut. Let the line about the latch carry it. The grim joke is welcome.)
+
+mind_dreams: Ireena x3. The dream of a lake, a white dress, a fall into cold water. (Here the dream may be described, once, because it is a dream; she does not know what it means. She is asking for nothing from the party.)
+
+mind_izek_afraid: Ireena x2. Izek (the Baron's brute with the burning arm) is alive and has stared at her in the square; she has not been told why. The thing on her mind is being looked at as if she were already his. (Angry, practical.)
+mind_izek_sister: Ireena x2. Izek is alive and has been told the truth: he is the brother she cannot remember, who carved her face into dolls for years. (A brother is a word that does not fit her mouth yet; do not repeat "does not fit my mouth".)
+mind_izek_gone: Ireena x2. Izek is dead. Whether or not she was his sister, a man who stared at her is gone, and she is checking the door anyway. (Quiet. No relief, no grief; just the habit.)
+
+mind_tatyana_promised: Ireena x3. At the pool in Krezk she remembered a chapel full of white flowers and a morning when she was happy, and a wall, and the devil's brother Sergei in the water. She is Ireena, but she carries Tatyana's memory, and she has promised Sergei she will go back to the pool once the devil is dead. (Calm and exact; this is a promise she means to keep; Tatyana is a woman she is not.)
+mind_tatyana_stayed: Ireena x3. The same memory, but she chose to stay Ireena, and it hurts "properly". (She says the name Ireena aloud to herself and it works; no big speech.)
+mind_tatyana_open: Ireena x3. The same memory, and she has not decided what to do with it. (Honest about not knowing.)
+
+Also write, for the menu where the party picks which topic to ask about, what the PARTY says (not Ireena), as `* text` rows each under 12 words:
+ask_father: `* ` about Kolyan  /  ask_bites: `* ` about the nights and the marks  /  ask_dreams: `* ` about the dream of the lake  /  ask_izek: `* ` about Izek  /  ask_tatyana: `* ` about what she remembered at the pool  /  ask_back: `* ` leaving the topic
+
+## Format
+
+One line per row, exactly: `Ireena [mood]: Text` (mood optional; allowed moods: smile, angry, afraid, sad, weary). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). No stage directions, no placeholders. Group the lines under the node names above, each node on its own line as `~ node_name`, in the order given. Do not add nodes, code or commentary.

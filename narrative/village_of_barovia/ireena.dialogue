@@ -287,6 +287,7 @@ approve godrick_pendlebrook -4 liriel_dawnsong -2 wren_featherfoot -2 kip_smudge
 Ireena: Changed your minds? Or just checking the shutters for us?
 * We'll take you after all. Vallaki. -> accept_vallaki
 * We'll take you to Krezk. -> krezk
+* How are you holding up in the old house? -> allies/ireena:checkin
 * Just checking on you. -> END
 
 # --- The first four (owner, 2026-10-06: kept so older saves still play their quests) ---

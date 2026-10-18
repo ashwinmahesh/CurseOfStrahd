@@ -1,0 +1,200 @@
+{
+  "region": "allies_ireena",
+  "flags": [
+    {
+      "id": "ireena_checkins",
+      "type": "int",
+      "summary": "How many check-ins the party has had with Ireena (narrative/allies/ireena:checkin), wherever she was. It picks her greeting; the later Ireena packages (errands, letters, camp talks) may read it (Story Allies Presence Plan, package I1)."
+    },
+    {
+      "id": "ireena_trust",
+      "type": "int",
+      "summary": "How far Ireena trusts the party, a side counter that starts at 0. I1 adds 1 the first time the party checks in on her at each place (the inn, St. Andral's, Krezk, the mansion, the road). Only her own new lines, the finale and the epilogues may read it; it never moves a story flag."
+    },
+    {
+      "id": "ireena_news_now",
+      "type": "int",
+      "summary": "How many news items Ireena has told in the check-in now under way (at most 3). Reset to 0 at the start of every check-in; no story reads it."
+    },
+    {
+      "id": "ireena_topics_now",
+      "type": "int",
+      "summary": "How many of Ireena's own topics are on offer in the check-in's menu now (at most 3). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_visits_inn",
+      "type": "int",
+      "summary": "How many check-ins the party has had with Ireena at the Blue Water Inn. It picks the line of her days there (three stages); no story reads it."
+    },
+    {
+      "id": "ireena_visits_church",
+      "type": "int",
+      "summary": "How many check-ins the party has had with Ireena at St. Andral's. It picks the line of her days there (three stages); no story reads it."
+    },
+    {
+      "id": "ireena_visits_krezk",
+      "type": "int",
+      "summary": "How many check-ins the party has had with Ireena at the Krezkovs' house in Krezk. It picks the line of her days there (three stages); no story reads it."
+    },
+    {
+      "id": "ireena_visits_mansion",
+      "type": "int",
+      "summary": "How many check-ins the party has had with Ireena at her father's mansion. It picks the line of her days there (three stages); no story reads it."
+    },
+    {
+      "id": "ireena_visits_road",
+      "type": "int",
+      "summary": "How many check-ins the party has had with Ireena at the road, travelling with the party. It picks the line of her days there (three stages); no story reads it."
+    },
+    {
+      "id": "ireena_heard_dinner",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the dinner invitation (strahd_invitation), in a check-in (narrative/allies/ireena:n_dinner). Told once."
+    },
+    {
+      "id": "ireena_heard_hunted",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to Strahd's attention at its highest tier, in a check-in (narrative/allies/ireena:n_hunted). Told once."
+    },
+    {
+      "id": "ireena_heard_dark_gift",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to a dark gift taken in the Amber Temple, in a check-in (narrative/allies/ireena:n_dark_gift). Told once."
+    },
+    {
+      "id": "ireena_heard_mordenkainen",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to Mordenkainen's memory restored, in a check-in (narrative/allies/ireena:n_mordenkainen). Told once."
+    },
+    {
+      "id": "ireena_heard_berez",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to Baba Lysaga's death and the truth about Marina, in a check-in (narrative/allies/ireena:n_berez). Told once."
+    },
+    {
+      "id": "ireena_heard_sunsword",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the Sunsword carried, in a check-in (narrative/allies/ireena:n_sunsword). Told once."
+    },
+    {
+      "id": "ireena_heard_symbol",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the Holy Symbol of Ravenkind carried, in a check-in (narrative/allies/ireena:n_symbol). Told once."
+    },
+    {
+      "id": "ireena_heard_tome",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the Tome of Strahd carried, in a check-in (narrative/allies/ireena:n_tome). Told once."
+    },
+    {
+      "id": "ireena_heard_beacon",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the Argynvostholt beacon lit, in a check-in (narrative/allies/ireena:n_beacon). Told once."
+    },
+    {
+      "id": "ireena_heard_abbot",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the Abbot's fate, in a check-in (narrative/allies/ireena:n_abbot). Told once."
+    },
+    {
+      "id": "ireena_heard_reunion",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to Van Richten and Ezmerelda reunited, in a check-in (narrative/allies/ireena:n_reunion). Told once."
+    },
+    {
+      "id": "ireena_heard_hags",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the fate of Old Bonegrinder, in a check-in (narrative/allies/ireena:n_hags). Told once."
+    },
+    {
+      "id": "ireena_heard_den",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the werewolf den's end, in a check-in (narrative/allies/ireena:n_den). Told once."
+    },
+    {
+      "id": "ireena_heard_children",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the children freed from the den, in a check-in (narrative/allies/ireena:n_children). Told once."
+    },
+    {
+      "id": "ireena_heard_yester",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to Yester Hill broken, in a check-in (narrative/allies/ireena:n_yester). Told once."
+    },
+    {
+      "id": "ireena_heard_wine",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the winery's wine flowing again, in a check-in (narrative/allies/ireena:n_wine). Told once."
+    },
+    {
+      "id": "ireena_heard_izek",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to Izek told the truth, or dead, in a check-in (narrative/allies/ireena:n_izek). Told once."
+    },
+    {
+      "id": "ireena_heard_festival",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to the festival's outcome in Vallaki, in a check-in (narrative/allies/ireena:n_festival). Told once."
+    },
+    {
+      "id": "ireena_heard_bones",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to St. Andral's bones returned, in a check-in (narrative/allies/ireena:n_bones). Told once."
+    },
+    {
+      "id": "ireena_heard_reading",
+      "type": "bool",
+      "summary": "Ireena has told the party her reaction to Madam Eva's Tarokka reading, in a check-in (narrative/allies/ireena:n_reading). Told once."
+    },
+    {
+      "id": "ireena_heard_father",
+      "type": "bool",
+      "summary": "Ireena has talked to the party about her father and how he was buried, as a topic on her mind in a check-in. Told once."
+    },
+    {
+      "id": "ireena_heard_bites",
+      "type": "bool",
+      "summary": "Ireena has talked to the party about the marks on her neck and her nights, as a topic on her mind in a check-in. Told once."
+    },
+    {
+      "id": "ireena_heard_dreams",
+      "type": "bool",
+      "summary": "Ireena has talked to the party about the dream of the lake, as a topic on her mind in a check-in. Told once."
+    },
+    {
+      "id": "ireena_heard_izek_mind",
+      "type": "bool",
+      "summary": "Ireena has talked to the party about Izek (afraid, her brother, or gone), as a topic on her mind in a check-in. Told once."
+    },
+    {
+      "id": "ireena_heard_tatyana",
+      "type": "bool",
+      "summary": "Ireena has talked to the party about what she remembered at the pool in Krezk, as a topic on her mind in a check-in. Told once."
+    },
+    {
+      "id": "ireena_offer_tatyana",
+      "type": "bool",
+      "summary": "Her tatyana topic is on offer in the check-in's menu now (the three newest unheard topics are offered). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_offer_izek",
+      "type": "bool",
+      "summary": "Her izek topic is on offer in the check-in's menu now (the three newest unheard topics are offered). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_offer_dreams",
+      "type": "bool",
+      "summary": "Her dreams topic is on offer in the check-in's menu now (the three newest unheard topics are offered). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_offer_bites",
+      "type": "bool",
+      "summary": "Her bites topic is on offer in the check-in's menu now (the three newest unheard topics are offered). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_offer_father",
+      "type": "bool",
+      "summary": "Her father topic is on offer in the check-in's menu now (the three newest unheard topics are offered). Recomputed before every menu; no story reads it."
+    }
+  ]
+}

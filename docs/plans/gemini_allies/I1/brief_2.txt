@@ -1,0 +1,30 @@
+Second request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as the first request. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else.
+
+## What these nodes are
+
+During a check-in Ireena also reacts to NEWS: big things the party has done since she last saw them. Each news item is a short node of her own reaction. The game plays at most three of them in a check-in and each only once, so each must stand alone, with no reference to the others and no "as I said". She is in one of the five situations from the first request (the inn, the church, Krezk, her father's mansion, or travelling with the party), and the SAME lines are played in all of them, so every line has to read right whether she SAW the event (she was with the party, or nearby) or only HEARD of it (from the party, from rumour, from a courier). Therefore: do not say "when you told me", "I saw you", "you came back and said". Talk about the event and what it means to her, in the present tense, as someone who knows it happened. She never says Strahd's name ("him", "the devil", "our visitor", "the lord of the castle"). She is dry, proud and exact, makes the grim joke before anyone can pity her, and judges people by how they treated her father's memory. She is not fragile and the lines must not make her fragile. 1-2 sentences a line, ideally under 25 words; use the line counts below as targets, not more.
+
+Allowed extra names (and no others): Kolyan or "Father", Ismark, Father Lucian, Urwin Martikov, Dmitri and Anna Krezkov, Ilya, the Baron, Lady Wachter, Izek, Madam Eva, the Abbot, Vasilka (the Abbot's made bride), Baba Lysaga, Marina, Mordenkainen, Rictavio, Ezmerelda. Do not invent anyone else.
+
+## The nodes
+
+news_dinner_accepted: Ireena x2. The devil sent an invitation to dine at his castle and the party accepted: a black carriage took them to the castle's front door. (Her feelings about her enemy putting out a table for her friends: contempt and fear, a dry joke.)
+news_dinner_declined: Ireena x2. The same invitation, and the party refused it; the black carriage came back more than once and went away empty.
+news_hunted: Ireena x2. The devil has taken a personal interest in the party now: his creatures hunt them at night. (She knows what it is to be hunted by him; she does not pity them and does not hide that it frightens her.)
+news_dark_gift: Ireena x3. In the Amber Temple, one of the party accepted a "dark gift", a power from the old buried gods. She can smell it on them: an old sweet resin smell, like amber. It frightens her more than anything the devil has done, because he is something that happens to people and this is something people choose. Not accusing; scared, and plain about it.
+news_mordenkainen: Ireena x2. On Mount Baratok the party gave the Mad Mage his memory back; he is Mordenkainen, a great wizard from another world who came to end the devil and lost his mind instead. (She envies him: she has no memory of her first years and would take hers back even if it were bad.)
+news_berez_both: Ireena x2. The witch Baba Lysaga, who nursed the devil as a baby, is dead, and the party learned she had killed Marina, a girl of the drowned village of Berez whom the devil had loved. (A girl killed for being loved by him. Ireena knows what being wanted by him is. She does not say she is like Marina; she goes quiet and exact.)
+news_berez_truth: Ireena x2. The party learned that Baba Lysaga killed Marina, the girl of Berez the devil had loved, but the witch is still alive. (Same; and she wants the witch dealt with.)
+news_berez_dead: Ireena x2. Baba Lysaga, the witch who nursed the devil as a baby, is dead. (Practical, relieved, a little grim joke about a grandmother with a cleaver.)
+news_sunsword: Ireena x2. The party carries the Sunsword, a sword of daylight that can hurt him. (She is kept out of fights and would give a great deal to hold it once; do not make her ask. A dry line about a sword that makes shadows nervous.)
+news_symbol: Ireena x2. The party carries the Holy Symbol of Ravenkind, a sun-shaped amulet that keeps the devil back. (A hard-eyed gladness; she knows what it is to need a light between her and the window.)
+news_tome: Ireena x2. The party carries the Tome of Strahd, the devil's own book. (She wants to know what it says and is afraid of what it says about her; she says they are not to read her anything from it unless she asks. Do NOT hint that she has another name or past life: she knows nothing of that.)
+news_beacon: Ireena x2. At the ruined manor of Argynvostholt in the west, the party lit the old beacon with a dragon's fire, and the knights who died there are at rest; the light reaches the castle every night. (She noticed the light on the mountain at night; for the first time in a long while the night has a lamp in it.)
+news_abbot_wedding: Ireena x2. The Abbot of the abbey above Krezk wanted to give her to the devil as his bride; Vasilka, the bride the Abbot made, was sent to the castle in her place. (Relief and guilt together; the girl who went in her place is on her mind; no easy absolution.)
+news_abbot_repentant: Ireena x2. The Abbot, who wanted to give her to the devil as a bride, unmade his work, healed Anna's son Ilya and walked up the mountain to be judged. (She does not forgive him and she does not wish him ill; she has decided not to decide.)
+news_abbot_broken: Ireena x2. The Abbot's made bride was destroyed and he now sits mute in his church. (Pity she did not expect and does not want.)
+news_abbot_slain: Ireena x2. The Abbot, who wanted to give her to the devil as a bride, is dead. (Plain. She asks only that the people he hurt are let go home.)
+
+## Format
+
+One line per row, exactly: `Ireena [mood]: Text` (mood optional; allowed moods: smile, angry, afraid, sad, weary). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). No stage directions, no placeholders. Group the lines under the node names above, each node on its own line as `~ node_name`, in the order given. Do not add nodes, code or commentary.

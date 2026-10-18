@@ -1,0 +1,19 @@
+Fifth request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as before. Thank you; your drafts are good. A few nodes need a new draft, for these reasons. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else. Keep each line to 1-2 sentences, ideally under 25 words, and write her as she speaks (contractions: "I'm", "don't", "can't", "I'd"). British spelling (colour, neighbour). She never says the devil's name.
+
+## The nodes
+
+life_krezk_2_sick: Ireena x1. A variant of the second Krezk stage for when little Ilya Krezkov (Anna and Dmitri's son, eight years old) is STILL ill in his bed: Anna lets Ireena sit with him while Anna sleeps; he asks what the sun is like; the rest of the town watches Ireena like a bell they expect to toll. (Your earlier version had Ilya following her along the path, which only fits when he is well.)
+
+life_krezk_3_pool: Ireena x1. A variant of the third Krezk stage for when she HAS been to the pool in Krezk's square (the one that never freezes) and remembered a past life there; she already tells the party elsewhere that she sits with her back to the water in the mornings, so do not say that. Instead: the town has stopped asking her about it, Anna has started setting a place for her at the table without remarking on it, and she has begun taking an evening watch on the wall so she is looking at the road, not the water. (Plain, a little dry, not sentimental.)
+
+news_reunion: Ireena x2. Redraft. The showman Rictavio (really the monster hunter Van Richten) and Ezmerelda, the young hunter he trained, have made up after twelve years apart. Your earlier first line was garbled ("So loud Rictavio in his silly feathers and Ezmerelda spent twelve years each blaming the other for walking away"). One dry line about the two of them, and one line that is quietly about her: she has no one from before to quarrel with.
+
+news_children_2: Ireena x1. Redraft of the second line of news_children (five children taken from the farms below Krezk were brought out of the werewolf den and sent home). The line "That is five fewer small shoes left by the hearth for nothing" does not parse. Something plain about the children being home, or about their mothers.
+
+news_reading: Ireena x2. Redraft. Madam Eva has read the Tarokka cards for the party and five quests are foretold. Do NOT use the joke about the Vistani looking at her as if she were something they mislaid (it is already said elsewhere in the game). Keep the second line you wrote about the cards and a sharper blade, or improve it. She distrusts fortune-tellers; she wants no reading about herself unless it has a sword in it.
+
+mind_bites_1: Ireena x1. Redraft of the first line of the topic about the marks on her neck. Your earlier line says the marks turned into "neat little scars"; in the game the two punctures have NOT healed properly (they are pale and puckered and neatly spaced), and she wears a scarf over them. She has stopped counting the nights since the second time, and has stopped waiting for the marks to heal.
+
+## Format
+
+One line per row, exactly: `Ireena [mood]: Text` (mood optional; allowed moods: smile, angry, afraid, sad, weary). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). No stage directions, no placeholders. Group the lines under the node names above, each node on its own line as `~ node_name`, in the order given. Do not add nodes, code or commentary.

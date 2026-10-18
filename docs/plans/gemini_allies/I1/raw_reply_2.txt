@@ -1,0 +1,64 @@
+~ news_dinner_accepted
+Ireena [angry]: The devil sets a silver table after his wolves tear up my father's porch.
+Ireena: I hope you counted the spoons on your way out of that castle.
+
+~ news_dinner_declined
+Ireena [smile]: An empty black carriage rattling back up the mountain is the finest sight this valley has seen in years.
+Ireena: Our visitor is not used to having his doors left knocking.
+
+~ news_hunted
+Ireena [afraid]: When the lord of the castle learns your names, the dark between the trees changes its weight.
+Ireena: Keep your blades near your bedrolls. I know what it costs when he decides to pay attention.
+
+~ news_dark_gift
+Ireena [afraid]: There is a smell of old sweet resin on your coats, like amber kept too long in the dark.
+Ireena: The devil is a thing that happens to people, whether they bar the shutters or not.
+Ireena [sad]: Whatever was waiting in that mountain only comes out when someone reaches for it. That frightens me much more.
+
+~ news_mordenkainen
+Ireena: So the madman on the crag was Mordenkainen all along, and now he has his mind back.
+Ireena [weary]: I cannot remember anything before the mist and Father's door. I would take those years back even if they burned.
+
+~ news_berez_both
+Ireena [sad]: Marina was wanted by the devil, and Baba Lysaga drowned a whole village to cure him of it.
+Ireena: Everyone who claims to love him leaves the same kind of ruin behind.
+
+~ news_berez_truth
+Ireena [angry]: Baba Lysaga butchered Marina in Berez just to tidy up the devil's heart.
+Ireena: Do not leave that old woman in her swamp. One monster in this valley is enough.
+
+~ news_berez_dead
+Ireena: Baba Lysaga is dead in the reeds, and the devil has one less nursery nurse to dote on him.
+Ireena [smile]: Most grandmothers leave behind a shawl or a kettle, not a marsh full of skulls.
+
+~ news_sunsword
+Ireena [smile]: Even the shadows in the corners pull back an inch when that hilt is in the room.
+Ireena: My hand itches just looking at the grip. Make sure the next swing counts.
+
+~ news_symbol
+Ireena: Hold on to that amulet. It is a rare thing in Barovia to carry a light that actually answers.
+Ireena [smile]: I would have slept much better last winter with a piece of the sun hung on my latch.
+
+~ news_tome
+Ireena [afraid]: Keep the devil's book strapped shut in your pack when you sit near me.
+Ireena: If my name is anywhere in his ink, do not read a word of it aloud unless I ask you plainly.
+
+~ news_beacon
+Ireena [smile]: There is a clear silver light burning on the western ridge every night now.
+Ireena: Have you noticed how it reaches all the way to the castle walls? He cannot shutter the whole mountain.
+
+~ news_abbot_wedding
+Ireena [sad]: The Abbot stitched poor Vasilka together just to pay my debt at the castle gate.
+Ireena: I am glad to be out of a white dress, and ashamed that another girl went up that road in my stead.
+
+~ news_abbot_repentant
+Ireena: Little Ilya is whole again, and the Abbot has gone up the mountain to answer for his bride-making.
+Ireena [weary]: I will not wish him ill, and I will not forgive him. The mountain can sort him out.
+
+~ news_abbot_broken
+Ireena [weary]: Vasilka is gone, and the Abbot sits staring at the stones of his altar without a word.
+Ireena [sad]: He meant to hand me to the devil like a tithe, and still I cannot stomach pitying him.
+
+~ news_abbot_slain
+Ireena: The Abbot is dead, and his needlework with him.
+Ireena: See that the poor souls he kept locked in that abbey are given the road home.

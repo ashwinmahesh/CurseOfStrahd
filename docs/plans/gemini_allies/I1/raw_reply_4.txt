@@ -1,0 +1,70 @@
+~ mind_father_church
+Ireena [smile]: Father Donavich got Kolyan into the earth with all the proper prayers, though Father would have complained about the damp knees.
+Ireena: You stood through every word with us, and I measure the people around me by how they treated his bones.
+
+~ mind_father_cleric
+Ireena: Your cleric spoke the rites over Father's grave as if a village burgomaster mattered as much as a king.
+Ireena [smile]: I judge people by how they handled his memory that morning, and you made me believe in a god a little more.
+
+~ mind_father_hasty
+Ireena [weary]: We put Father in the ground fast and without a single prayer, and I walked away with you anyway.
+Ireena: I do not want an apology, only for you to know that I measure people by how they treated him, and I remember.
+
+~ mind_father_lay
+Ireena [smile]: None of you were priests when we buried Kolyan, and the plain words you said over the dirt suited him better.
+Ireena: Father always took an honest sentence over a pretty one, and I judge you generously for giving him that.
+
+~ mind_bites
+Ireena [weary]: I stopped counting the days since the second bite once the scabs over my collarbones turned into neat little scars.
+Ireena: Every night I wake up three hours after midnight, when the tallow candle goes out, and my throat feels pulled toward the casement.
+Ireena [smile]: I check the window latch twice before I lie back down, and I am never quite sure which of us I am locking out.
+
+~ mind_dreams
+Ireena [weary]: When I sleep deeply, I am standing high above a dark mountain lake with cold wind in my teeth.
+Ireena [sad]: I am wearing white silk I have never owned, and then I step off the stone into the black water before I wake.
+Ireena: I do not know whose memory it is, and I am not asking you to fix it. I just dislike waking up cold.
+
+~ mind_izek_afraid
+Ireena [angry]: That brute Izek looks at me in the street as if I were a bolt of cloth he already paid for.
+Ireena: Keep a hand near your hilt when he is near, because I have enough men in this valley claiming my skin.
+
+~ mind_izek_sister
+Ireena [weary]: Izek is alive out there, and I am supposed to call a stranger with a monstrous arm my brother.
+Ireena: He spent years having my face carved into ugly little dolls. Blood or not, I do not know how to look at him.
+
+~ mind_izek_gone
+Ireena [weary]: Izek is dead and under the dirt, so there is one less pair of eyes following me down the street.
+Ireena: Even so, I still catch myself sliding the bolt across the door at dusk out of pure habit.
+
+~ mind_tatyana_promised
+Ireena: At the pool I remembered a chapel full of white blossoms, a high stone wall, and the devil's brother Sergei calling me Tatyana.
+Ireena [sad]: Tatyana is a dead woman I am not, even if I carry her morning in my head like a borrowed book.
+Ireena: Still, I promised Sergei I would return to the water once the devil is ash, and I keep my word.
+
+~ mind_tatyana_stayed
+Ireena: I remember Tatyana's white flowers and Sergei's voice in the water, and how easy it was to let go of my own life.
+Ireena [weary]: Walking away from that pool hurt properly, the way a set bone hurts when it knits.
+Ireena [smile]: Every morning I say the name Ireena Kolyana aloud to the washbasin, and so far it still answers.
+
+~ mind_tatyana_open
+Ireena [weary]: Since I looked into that water, I have two women's lives sitting behind my eyes and only one body for them.
+Ireena: Sergei waited centuries for Tatyana by that pool, and Kolyan raised Ireena by the hearth for twenty years.
+Ireena [sad]: I have not decided what to do with what I remembered, and I will not be hurried into choosing.
+
+~ ask_father
+* Are you thinking about Kolyan?
+
+~ ask_bites
+* How are your nights, with the marks on your neck?
+
+~ ask_dreams
+* Have you had the dream of the lake again?
+
+~ ask_izek
+* Is Izek on your mind?
+
+~ ask_tatyana
+* What are you making of what you remembered at the pool?
+
+~ ask_back
+* Let us speak of something else.

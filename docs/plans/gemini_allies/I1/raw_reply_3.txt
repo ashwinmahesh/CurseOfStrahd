@@ -1,0 +1,72 @@
+~ news_reunion
+Ireena [smile]: So loud Rictavio in his silly feathers and Ezmerelda spent twelve years each blaming the other for walking away.
+Ireena [weary]: It must be strange to have someone from before the mist left to quarrel with.
+
+~ news_hags_ended
+Ireena [angry]: The old mill on the hill is quiet, and those three witches will bake no more children into their pies.
+Ireena: My only regret is that I was not there to strike the flint against their floorboards myself.
+
+~ news_hags_stand
+Ireena [weary]: The stolen children are home from the mill, even if the witches still keep their grinding stones.
+Ireena: I have no stomach for bargains with monsters, though I will not pretend I could have bought those lives back cleaner.
+
+~ news_hags_abandoned
+Ireena [sad]: You stood beside Father's coffin when the wolves were at the shutters, and you did not flinch.
+Ireena: I am trying very hard to understand how the same people walked down from that windmill and left the children behind.
+
+~ news_den_emil
+Ireena: The new pack leader in the hills says his wolves will no longer answer the lord of the castle.
+Ireena [weary]: After a winter of claws against Father's oak boards, you will forgive me if I keep the iron latch down.
+
+~ news_den_kiril
+Ireena [angry]: One wolf dies in the caves and a worse one takes the pack to hunt for the castle.
+Ireena: A change of teeth is no change at all. Keep the silver close.
+
+~ news_den_none
+Ireena: Both leaders in the werewolf den are dead, and the pack has scattered into the hills.
+Ireena [smile]: They scratched at Father's shutters every night before he died. I will believe they are gone after one quiet moon.
+
+~ news_children
+Ireena [smile]: Five children are back from the caves and under their mothers' roofs below Krezk tonight.
+Ireena: That is five fewer small shoes left by the hearth for nothing.
+
+~ news_yester
+Ireena [smile]: The druids on the hill spent all that blood on a wooden giant, and now it is only kindling.
+Ireena: The pines along the road have watched me my whole life. I hope they are a little less proud tonight.
+
+~ news_wine
+Ireena: Every name-day I can remember, Father bought one small cask from the Wizard of Wines and tapped it by the fire.
+Ireena [sad]: It tasted of sour plums and damp cellar oak, and I thought it was the finest thing in the world.
+Ireena: If the road east were clear, I would carry a full cup back to the churchyard and pour it into the grass.
+
+~ news_izek_told
+Ireena [weary]: Izek has walked away from the Baron's house, and everyone expects me to know how to say the word brother.
+Ireena: He spent years carving my face into little dolls while I knew nothing of him. Give me time to look at it plainly.
+
+~ news_izek_dead_known
+Ireena [sad]: Izek is dead in the dirt, and the only man who remembered me before the mist took my name with him.
+Ireena: I had twenty years of questions for a brother, and now I do not even know what color my mother's hair was.
+
+~ news_izek_dead_unknown
+Ireena [weary]: Izek is dead, and he will not stand in the square staring at me with that ruined arm anymore.
+Ireena [sad]: It ought to be a simple relief. I do not know why it feels like a door slammed shut.
+
+~ news_festival_baron
+Ireena [weary]: The Baron still sits in his chair, ordering another round of soggy wicker suns for the square.
+Ireena: A man who thinks wet torches will scare the devil off his porch will keep burning them until the roof falls in.
+
+~ news_festival_wachter
+Ireena [angry]: Lady Wachter has the town now, which means the lord of the castle has it without lifting a finger.
+Ireena: I said wooden palisades would not keep him out. A town that bows to him is only a larger cage.
+
+~ news_festival_neither
+Ireena [smile]: Father Lucian and Urwin Martikov are running the town now, which should at least improve the sermons and the supper.
+Ireena: Still, an honest priest and an innkeeper make a thin shield when the castle decides to take notice.
+
+~ news_bones
+Ireena [smile]: The old saint's bones are back under the altar stone, and Father Lucian has his sanctuary again.
+Ireena: They say our visitor cannot cross that threshold now. I would very much like to watch him try it on someone else.
+
+~ news_reading
+Ireena [weary]: Whenever we pass the Vistani, they look at me as if I am something they mislaid on the road years ago.
+Ireena: Keep Madam Eva's painted cards to yourselves, unless one of them tells you plainly where to find a sharper blade.

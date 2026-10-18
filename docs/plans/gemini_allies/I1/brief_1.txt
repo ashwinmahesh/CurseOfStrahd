@@ -1,0 +1,61 @@
+You are drafting dialogue for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. I need about 30 lines for ONE character's "check-in" conversation. Reply with plain text only: the lines under the node names given below, nothing else. Finish without sending messages to anyone else. (This is the first of four short requests in this conversation; later ones will give more nodes for the same conversation, so keep the voice and the limits below in mind throughout.)
+
+## The scene
+
+Ireena Kolyana is a young woman in her early twenties, red-haired, the adopted daughter of the late burgomaster Kolyan Indirovich of the Village of Barovia. The vampire lord of the valley has come to her window twice; twice she woke with two punctures on her neck and no memory of letting him in. The player's party buried her father with her, and then either took her somewhere safe and left her there, or it travels with her. In the game she can no longer fight: something in the valley goes round her like water round a stone, and she hates being kept back from it.
+
+This conversation is a "check-in": the player walks up to her, picks "How are you holding up?" and she talks about her life where she is, tells the party her reactions to what they have been doing, and sometimes raises something that weighs on her. It is NOT a quest and nothing in it is a choice with consequences; it is a way for the player to feel that she is a person who is still there, still thinking, still dry and proud, while they are out in the valley. She greets the party differently the first time, the second and later. She hears the news the party's deeds make. Each check-in she is in one of five situations:
+
+1. THE BLUE WATER INN, Vallaki. The Martikov family keep it; the innkeeper Urwin Martikov sits up all night watching the windows. (Already said, so do not repeat: "The Martikovs are kind. Urwin sits up all night watching the windows. I've never met a man so interested in birds." Behind it: the Martikovs are secretly the Keepers of the Feather, wereravens who watch the valley. She has no proof and a growing suspicion; if the party earned the Keepers' trust, she has worked it out.)
+2. ST. ANDRAL'S CHURCH, Vallaki. Holy ground since the saint's bones were brought home. Father Lucian is the priest. (Already said, so do not repeat: "Father Lucian's teaching me the long prayers. I'm terrible at them. He says the saint doesn't mind." and "I slept through the night. The whole night. I'd forgotten that was a thing people did.")
+3. KREZK, at the house of the burgomaster Dmitri Krezkov and his wife Anna, behind the last wall on the road. Their small son Ilya has been very ill. There is a pool in the town that never freezes. (Already said, so do not repeat: "Anna's teaching me to make cheese. I'm terrible at it. Dmitri says it builds character. I have character. I'd like a sword drill." and "The boy's well. He follows me round asking if I've seen the sun.")
+4. THE BURGOMASTER'S MANSION, in her home village, if the party would not take her away. Shutters nailed shut every night, wolves at the boards, her brother Ismark (Kolyan's son, her adoptive brother, nicknamed "the Lesser", a swordsman who drinks at the tavern in the village) bringing food and standing at doors.
+5. ON THE ROAD with the party (she is a travelling companion, in whatever place the party happens to be). Do not name a place.
+
+## The nodes I need (line counts are targets; one line = 1-2 short sentences, ideally under 25 words in total)
+
+greet_first: Ireena x2 (the first time the party asks how she is: surprised, a little guarded, dry; nobody asks)
+greet_again: Ireena x1 (the second check-in)
+greet_often: Ireena x1 (the third and later; warmer, still dry)
+
+Her life where she is. Each place has three stages (the first, second and third-and-later check-in there). One line per stage unless said otherwise. She is describing what her days are like, in the present tense, to the party:
+life_inn_1, life_inn_2, life_inn_3: the inn. Stage 1: the night watches with Urwin and the taproom. Stage 2: a dry first suspicion about the family's "interest in birds" (feathers in unexpected places, the way Urwin counts the sky). Stage 3: she says the suspicion plainly and calmly; she has worked out they are not what they seem.
+life_inn_3_keepers: Ireena x1, a replacement for life_inn_3 when the party has already earned the Keepers' trust: she knows what the family are, because she has seen one of them change, and she is quietly pleased to be kept in a secret, not kept out of one.
+life_church_1, life_church_2, life_church_3: the church. Stage 1: she is allowed to ring the vespers bell and the rope is heavier than it looks. Stage 2: she sleeps better and does not trust it, or sits in the quiet and finds out how much noise her own head makes. Stage 3: she has begun practising sword forms on the posts in the churchyard; Father Lucian pretends not to see.
+life_krezk_1, life_krezk_2, life_krezk_3: Krezk. Stage 1: the wall, the goats and the cheese; Dmitri has given her a task on the wall in the daytime. Stage 2: Ilya and the sun; the town watches her the way people watch a bell that might ring. Stage 3: the pool that never freezes; she goes past it each morning and does not look in (she does not know why she won't).
+life_mansion_1, life_mansion_2, life_mansion_3: her father's house. Stage 1: the shutters nailed, Ismark bringing stew from the tavern. Stage 2: she has taken to sitting in her father's chair and talking to the house; the house, to her surprise, is quieter. Stage 3: she has started putting his things in order, and has not decided whether that is grief or housekeeping.
+life_road_1, life_road_2, life_road_3: with the party on the road. Stage 1: a dry list of what she has learned about each of the party's habits at the fire (do not name or describe anyone in particular). Stage 2: her feet, the boots, the road; the watch she insists on taking. Stage 3: she is quieter, watches the treeline and says she can tell when something is watching.
+
+Goodbyes, one line each, what she says when the party takes its leave:
+bye_inn: Ireena x1  /  bye_church: Ireena x1  /  bye_krezk: Ireena x1  /  bye_mansion: Ireena x1  /  bye_road: Ireena x1
+
+## Option texts
+
+Also write what the PARTY says (not Ireena), as `* text` lines, each under 12 words, in the party's voice ("we" or addressing her):
+open_checkin: `* ` an opening question to start the check-in (variants for: the inn, the church, Krezk, the mansion; four lines: open_checkin_inn, open_checkin_church, open_checkin_krezk, open_checkin_mansion). One of them can be "How are you holding up?"; make the others fit the place.
+ask_mind: `* ` a gentle "is something on your mind?"
+leave_it: `* ` a goodbye that the player picks to end the check-in (leave_it_stay for a refuge, leave_it_road for the road)
+
+## Ireena Kolyana - voice bible
+
+Direct and proud. Short sentences, no ornament. She asks questions like a magistrate. Dry humor with an edge; she makes the grim joke before anyone can pity her. Never says "please" to the devil. Calls Strahd "him" or "the devil" or "our visitor" and NEVER says his name. Gets more formal, not softer, when she is grieving; grief comes out as precision. Her pet phrases are "I'm not made of glass." "Say it plainly." "Father would want it done properly." (She is NOT glass: do not make her fragile; use the glass phrase at most once in the whole reply, or not at all.) She judges people by how they treat her father's memory. She hates being kept out of things. Wants: to bury her father properly, then to stop being prey; she would rather be hunted on a road than waited for in a parlour. Fears: the dreams, a lake, a white dress, a fall; that one night she will open the window herself. Secret (never stated flatly): some nights she does not want to keep the window shut.
+
+Her existing lines (match this register; do not repeat them):
+- "I'm not made of glass. I'm made of whatever's left when the glass breaks. Now, are you here to help carry him?"
+- "He's been to my window twice. I don't remember opening it either time. That's the part that frightens me."
+- "Father would want it done properly: the priest, the words, the earth. After that, take me anywhere he isn't."
+- "Back again. Good. The house is quieter with more swords in it."
+- "Last night you stood in my father's house, and nobody ran. I've watched a lot of people run. I won't forget it."
+- "I keep a scarf over the marks. I'm not ashamed of them. I'm ashamed I don't remember."
+- "Take the watch in pairs tonight, and give me a turn. Don't argue. I hardly sleep anyway."
+- "Walls, a gate, and a burgomaster who throws festivals at the dark. I can see why Ismark wanted me here. I can see why it won't work."
+- "When this is over, I'd like to spar with whichever of you is best with a blade. I want to know how far behind I am."
+- "Is anyone hurt? Say it plainly. I'd rather know now than at the next door."
+
+## Canon limits
+
+Do not invent named characters or places. Names you may use: Kolyan or "Father" (her late father), Ismark (her brother), Father Lucian, Urwin Martikov or "the Martikovs", Dmitri and Anna (Krezk's burgomaster and his wife), Ilya (their son), the Baron and Lady Wachter (Vallaki's rulers), Izek. She never names the party (she says "you"; the party is several people). No new monsters, no new history for her beyond what is said here. NO stage directions in brackets or asterisks, NO "{name}" or other placeholders, no emoji, no markdown. She is not holding a sword in any line (she is kept out of fights) but she may talk about wanting to.
+
+## Format
+
+One line per row, exactly: `Ireena [mood]: Text` (the mood in brackets is optional; allowed moods: smile, angry, afraid, sad, weary; leave it out for neutral). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each node on its own line as `~ node_name`, in the order given. The option texts are `* text` rows under their node names. Do not add nodes, code or commentary.

@@ -1,0 +1,500 @@
+# Ireena Kolyana's check-in (Story Allies Presence Plan, package I1; docs/story/ireena_checkin.md, docs/voice/ireena.md).
+# One conversation opened from wherever she is: the Blue Water Inn and St. Andral's (vallaki/ireena), the Krezkovs' house
+# (krezk/ireena), the mansion once the party declined to take her (village_of_barovia/ireena) and, as her `guest_talk`,
+# on the road. Nothing here is a quest and nothing depends on a roll: it is the way the player finds out she is still
+# there, still thinking. The drafts are Gemini's (docs/plans/gemini_allies/I1/), edited; every line is unvoiced.
+#
+# The order of a check-in: checkin -> (greet) -> life -> news -> menu. `life` is one line of her days where she is, a stage
+# per visit to that place (ireena_visits_<place>). `news` is her reaction to what the party has done, up to three items a
+# visit, newest story first, each once (ireena_heard_<topic>). `menu` offers "Is something on your mind?" (up to three of
+# her topics, newest first, each once), the existing way to take her along again, and goodbye.
+#
+# Only side flags (data/flags/allies_ireena.json) are set here; story flags are read. Later Ireena packages (errands,
+# letters, camp talks) add their options at the marked place in `menu_show` and their counters in `checkin`.
+
+~ checkin
+set ireena_checkins += 1
+set ireena_news_now = 0
+if not guest:ireena
+-> greet
+endif
+-> life
+
+~ greet
+if flag.ireena_checkins == 1
+Ireena: People usually check the locks when they come near me, not my temper.
+Ireena [smile]: Still. Sit down if you have a minute, and tell me what the road looks like.
+elif flag.ireena_checkins == 2
+Ireena: Back with all your limbs. Good. Tell me what you stirred up out there.
+else
+Ireena [smile]: I was counting the hours until you walked in smelling of wet wool and trouble.
+endif
+-> life
+
+# --- Her days where she is: one line, a stage per visit to that place --------------------------------------------------
+
+~ life
+if guest:ireena
+-> life_road
+elif flag.ireena_sanctuary == "inn"
+-> life_inn
+elif flag.ireena_sanctuary == "st_andrals"
+-> life_church
+elif flag.ireena_in_krezk
+-> life_krezk
+elif flag.ireena_escort == "declined"
+-> life_mansion
+endif
+-> news
+
+~ life_inn
+set ireena_visits_inn += 1
+if flag.ireena_visits_inn == 1
+set ireena_trust += 1
+Ireena: I dry glasses until midnight, and then I sit with Urwin while he watches the shutters. Neither of us sleeps much.
+elif flag.ireena_visits_inn == 2
+Ireena: I found three black feathers in the flour bin this morning, and Urwin counts the sky like a ledger. This house keeps odd hours.
+elif flag.keepers_of_the_feather_met
+Ireena [smile]: I saw Urwin come down from the eaves on two wings at dawn. It's a great relief to be trusted with a secret for once.
+else
+Ireena: The Martikovs aren't simple innkeepers, and those birds on the roof aren't simple birds. Don't worry. I know how to keep my mouth shut.
+endif
+-> news
+
+~ life_church
+set ireena_visits_church += 1
+if flag.ireena_visits_church == 1
+set ireena_trust += 1
+Ireena: Father Lucian lets me ring the vespers bell when my hands are restless. The rope is heavier than it looks, which is the point.
+elif flag.ireena_visits_church == 2
+Ireena [weary]: The stone keeps the bad dreams out, mostly. It turns out my own head makes plenty of noise when the room is quiet.
+else
+Ireena: I've been running footwork against the churchyard posts with a broom handle. Father Lucian looks very hard at his prayer book whenever he walks past.
+endif
+-> news
+
+~ life_krezk
+set ireena_visits_krezk += 1
+if flag.ireena_visits_krezk == 1
+set ireena_trust += 1
+Ireena: Dmitri gave me a morning watch on the wall, between the goat-milking and the cheese press. From up there I can at least see the trees.
+elif flag.ireena_visits_krezk == 2
+if flag.ilya_fate == "healed"
+Ireena: Little Ilya follows me along the path, while the rest of the town watches me from their doorways like a bell they expect to toll.
+else
+Ireena [weary]: Anna lets me sit by little Ilya's bed while she sleeps, and he asks what the sun's like. The rest of the town watches me like a bell they expect to toll.
+endif
+elif flag.ireena_pool_vision
+Ireena: The town's stopped asking about the pool. Anna sets my place at table without a word, and I've taken the evening watch on the wall, so I'm looking at the road instead of the water.
+else
+Ireena [afraid]: I walk past that pool that never freezes every morning on the way to the pens. I never look down into the water, and I couldn't tell you why.
+endif
+-> news
+
+~ life_mansion
+set ireena_visits_mansion += 1
+if flag.ireena_visits_mansion == 1
+set ireena_trust += 1
+Ireena [weary]: Ismark brings stew from the tavern at dusk, and then we check the nails in the shutters and listen to the wolves test the porch.
+elif flag.ireena_visits_mansion == 2
+Ireena [sad]: I sit in Father's chair after the lamps go out and talk to the panelling. The house is quieter when someone speaks to it.
+else
+Ireena: I've begun sorting Father's ledgers by year and tying them in twine. I haven't decided yet whether it's grief or just housekeeping.
+endif
+-> news
+
+~ life_road
+set ireena_visits_road += 1
+if flag.ireena_visits_road == 1
+set ireena_trust += 1
+Ireena [smile]: I know who snores, who mutters over their boots, and who hides the dry kindling in their pack. You're not subtle company.
+elif flag.ireena_visits_road == 2
+Ireena: My boots have finally given up fighting my heels. Wake me for the middle watch tonight, and don't try to skip my turn.
+else
+Ireena [weary]: I watch the dark edge of the trees out of habit now. I've had enough practice to know how it feels to be watched.
+endif
+-> news
+
+# --- News: what the party has done. Up to three a visit, the later parts of the story first, each once -----------------
+
+~ news
+-> n_dinner
+
+~ n_dinner
+if flag.ireena_news_now < 3 and flag.strahd_invitation and not flag.ireena_heard_dinner
+set ireena_heard_dinner
+set ireena_news_now += 1
+if flag.strahd_invitation == "accepted"
+Ireena [angry]: The devil sets a silver table after his wolves tear up my father's porch.
+Ireena: I hope someone counted the spoons.
+else
+Ireena [smile]: An empty black carriage rattling back up the mountain is the finest sight this valley has seen in years.
+Ireena: Our visitor isn't used to setting a table for guests who won't get into his carriage, and he won't forgive the slight.
+endif
+endif
+-> n_hunted
+
+~ n_hunted
+if flag.ireena_news_now < 3 and attention >= hunted and not flag.ireena_heard_hunted
+set ireena_heard_hunted
+set ireena_news_now += 1
+Ireena [afraid]: Now that the lord of the castle knows your names, the dark between the trees has changed its weight.
+Ireena: Keep your blades near your bedrolls. I know what it costs when he decides to pay attention.
+endif
+-> n_dark_gift
+
+~ n_dark_gift
+if flag.ireena_news_now < 3 and flag.dark_gifts_taken >= 1 and not flag.ireena_heard_dark_gift
+set ireena_heard_dark_gift
+set ireena_news_now += 1
+Ireena [afraid]: There's a smell of old sweet resin about you, like amber kept too long in the dark.
+Ireena: The devil is a thing that happens to people, whether they bar the shutters or not.
+Ireena [sad]: Whatever was waiting in that mountain only came out because someone reached for it. That frightens me more.
+endif
+-> n_mordenkainen
+
+~ n_mordenkainen
+if flag.ireena_news_now < 3 and flag.mordenkainen_restored and not flag.ireena_heard_mordenkainen
+set ireena_heard_mordenkainen
+set ireena_news_now += 1
+Ireena: So the madman on the mountain was Mordenkainen all along, and now he has his mind back.
+Ireena [weary]: I can't remember anything before the road Father found me on. I'd take those years back, even if they burned.
+endif
+-> n_berez
+
+~ n_berez
+if flag.ireena_news_now < 3 and (flag.lysaga_dead or flag.marina_truth_known) and not flag.ireena_heard_berez
+set ireena_heard_berez
+set ireena_news_now += 1
+if flag.lysaga_dead and flag.marina_truth_known
+Ireena [sad]: Marina was wanted by the devil, and Baba Lysaga killed her and let him drown a whole village for it.
+Ireena: Everyone who loves him, or is loved by him, leaves the same kind of ruin.
+elif flag.marina_truth_known
+Ireena [angry]: Baba Lysaga killed Marina to keep the devil's heart tidy, and let him drown a village for it.
+Ireena: Don't leave that old woman in her swamp. This valley has monsters enough.
+else
+Ireena: Baba Lysaga is dead, and the devil has one less nursemaid to dote on him.
+Ireena [smile]: Most grandmothers leave a silver spoon or a shawl, not a walking tree stump and a yard full of angry straw men.
+endif
+endif
+-> n_sunsword
+
+~ n_sunsword
+if flag.ireena_news_now < 3 and item:sunsword and not flag.ireena_heard_sunsword
+set ireena_heard_sunsword
+set ireena_news_now += 1
+Ireena [smile]: Even the shadows in the corners pull back an inch when that hilt is in the room.
+Ireena: My hand itches just looking at the grip. Make sure the next swing counts.
+endif
+-> n_symbol
+
+~ n_symbol
+if flag.ireena_news_now < 3 and item:holy_symbol_of_ravenkind and not flag.ireena_heard_symbol
+set ireena_heard_symbol
+set ireena_news_now += 1
+Ireena: Hold on to that amulet. It's a rare thing in Barovia to carry a light that actually answers.
+Ireena [smile]: I'd have slept better some nights with a piece of the sun hung on my latch.
+endif
+-> n_tome
+
+~ n_tome
+if flag.ireena_news_now < 3 and item:tome_of_strahd and not flag.ireena_heard_tome
+set ireena_heard_tome
+set ireena_news_now += 1
+Ireena [afraid]: Keep the devil's book strapped shut in your pack when you sit near me.
+Ireena: If my name is anywhere in his ink, don't read a word of it aloud unless I ask you plainly.
+endif
+-> n_beacon
+
+~ n_beacon
+if flag.ireena_news_now < 3 and flag.argynvost_beacon_lit and not flag.ireena_heard_beacon
+set ireena_heard_beacon
+set ireena_news_now += 1
+Ireena [smile]: There's a clear light burning on the western ridge every night now.
+Ireena: It reaches all the way to the castle walls. He can't shutter a whole mountain.
+endif
+-> n_abbot
+
+~ n_abbot
+if flag.ireena_news_now < 3 and (flag.abbot_fate == "wedding" or flag.abbot_fate == "repentant" or flag.abbot_fate == "broken" or flag.abbot_fate == "slain") and not flag.ireena_heard_abbot
+set ireena_heard_abbot
+set ireena_news_now += 1
+if flag.abbot_fate == "wedding"
+Ireena [sad]: The Abbot stitched poor Vasilka together to give the devil a bride who wasn't me.
+Ireena: I'm glad it isn't me, and ashamed that another girl went up that road in my place.
+elif flag.abbot_fate == "repentant"
+Ireena: Little Ilya is whole again, and the Abbot has gone up the mountain to answer for what he made.
+Ireena [weary]: I won't wish him ill, and I won't forgive him. The mountain can sort him out.
+elif flag.abbot_fate == "broken"
+Ireena [weary]: Vasilka is gone, and the Abbot sits staring at the stones of his altar without a word.
+Ireena [sad]: He meant to hand me to the devil like a tithe, and still I can't stomach pitying him.
+else
+Ireena: The Abbot is dead, and his needlework with him.
+Ireena: See that the poor souls he kept in that abbey are given the road home.
+endif
+endif
+-> n_reunion
+
+~ n_reunion
+if flag.ireena_news_now < 3 and flag.van_richten_reunited and not flag.ireena_heard_reunion
+set ireena_heard_reunion
+set ireena_news_now += 1
+Ireena [smile]: Rictavio and Ezmerelda have finally made up after twelve years of each blaming the other for walking away.
+Ireena [weary]: It must be strange, having someone left from before to quarrel with.
+endif
+-> n_hags
+
+~ n_hags
+if flag.ireena_news_now < 3 and (flag.bonegrinder_fate == "destroyed" or flag.bonegrinder_fate == "broken" or flag.bonegrinder_fate == "bella" or flag.bonegrinder_fate == "bargain" or flag.bonegrinder_fate == "abandoned") and not flag.ireena_heard_hags
+set ireena_heard_hags
+set ireena_news_now += 1
+if flag.bonegrinder_fate == "destroyed" or flag.bonegrinder_fate == "broken"
+Ireena [angry]: The old mill on the hill is quiet, and those witches will bake no more children into their pies.
+Ireena: My only regret is that I wasn't there to strike the flint against their floorboards myself.
+elif flag.bonegrinder_fate == "abandoned"
+Ireena [angry]: You carried my father's coffin to the churchyard with me.
+Ireena: I'm trying very hard to understand how the same people walked down from that windmill and left the children behind.
+else
+Ireena [weary]: The stolen children are home from the mill, even though the witches still keep their millstones.
+Ireena: I've no stomach for bargains with monsters, though I won't pretend I could have bought those lives back cleaner.
+endif
+endif
+-> n_den
+
+~ n_den
+if flag.ireena_news_now < 3 and (flag.wolf_pack_leader == "emil" or flag.wolf_pack_leader == "kiril" or flag.wolf_pack_leader == "none") and not flag.ireena_heard_den
+set ireena_heard_den
+set ireena_news_now += 1
+if flag.wolf_pack_leader == "emil"
+Ireena: The pack in the hills won't answer the lord of the castle any more.
+Ireena [weary]: After a month of claws against Father's boards, you'll forgive me if I keep the latch down.
+elif flag.wolf_pack_leader == "kiril"
+Ireena [angry]: One wolf died in the caves, and the other still hunts for the castle.
+Ireena: A change of teeth is no change at all. Keep the silver close.
+else
+Ireena: Both leaders in the werewolf den are dead, and the pack has scattered into the hills.
+Ireena [smile]: They scratched at Father's shutters every night before he died. I'll believe they're gone after one quiet moon.
+endif
+endif
+-> n_children
+
+~ n_children
+if flag.ireena_news_now < 3 and flag.den_children_freed and not flag.ireena_heard_children
+set ireena_heard_children
+set ireena_news_now += 1
+Ireena [smile]: Five children are back from the caves and under their mothers' roofs below Krezk.
+Ireena: Five mothers can bar their doors with every child inside again. That's no small thing.
+endif
+-> n_yester
+
+~ n_yester
+if flag.ireena_news_now < 3 and flag.yester_hill_resolved and not flag.ireena_heard_yester
+set ireena_heard_yester
+set ireena_news_now += 1
+Ireena [smile]: The druids on the hill spent all that blood on a wooden giant, and now it's kindling.
+Ireena: The pines along the road have watched me my whole life. I hope they're a little less proud.
+endif
+-> n_wine
+
+~ n_wine
+if flag.ireena_news_now < 3 and flag.winery_wine_flows and not flag.ireena_heard_wine
+set ireena_heard_wine
+set ireena_news_now += 1
+Ireena: Every name-day I can remember, Father bought one small cask from the Wizard of Wines and tapped it by the fire.
+Ireena [sad]: It tasted of sour plums and damp cellar oak, and I thought it was the finest thing in the world.
+Ireena: If I could, I'd carry a full cup back to the churchyard and pour it into the grass.
+endif
+-> n_izek
+
+~ n_izek
+if flag.ireena_news_now < 3 and (flag.izek_dead or flag.izek_told_truth) and not flag.ireena_heard_izek
+set ireena_heard_izek
+set ireena_news_now += 1
+if flag.izek_dead and flag.izek_sister_truth
+Ireena [sad]: Izek is dead, and the only man who remembered me before Father's door took my name with him.
+Ireena: I had twenty years of questions for a brother, and now I don't even know what colour my first mother's hair was.
+elif flag.izek_dead
+Ireena [weary]: Izek is dead, and he won't stand in the square staring at me with that arm any more.
+Ireena [sad]: It ought to be a simple relief. I don't know why it feels like a door slammed shut.
+else
+Ireena [weary]: Izek has walked away from the Baron's service, and I'm supposed to know how to say the word brother.
+Ireena: He spent years having my face carved into little dolls while I knew nothing of him. Give me time to look at it plainly.
+endif
+endif
+-> n_festival
+
+~ n_festival
+if flag.ireena_news_now < 3 and (flag.vallaki_backed == "baron" or flag.vallaki_backed == "wachter" or flag.vallaki_backed == "neither") and not flag.ireena_heard_festival
+set ireena_heard_festival
+set ireena_news_now += 1
+if flag.vallaki_backed == "baron"
+Ireena [weary]: The Baron still sits in his chair, ordering another festival for the dark to ignore.
+Ireena: A man who thinks torches will scare the devil off his porch will keep lighting them until the roof falls in.
+elif flag.vallaki_backed == "wachter"
+Ireena [angry]: Lady Wachter has the town now, which means the lord of the castle has it without lifting a finger.
+Ireena: I said walls would never keep him out. A town that bows to him is just a larger cage.
+else
+Ireena [smile]: Father Lucian and Urwin Martikov are running the town now, which should at least improve the sermons and the supper.
+Ireena: Still, an honest priest and an innkeeper make a thin shield when the castle decides to take notice.
+endif
+endif
+-> n_bones
+
+~ n_bones
+if flag.ireena_news_now < 3 and flag.bones_returned and not flag.ireena_heard_bones
+set ireena_heard_bones
+set ireena_news_now += 1
+Ireena [smile]: The old saint's bones are back in the crypt, and Father Lucian has his sanctuary again.
+Ireena: They say our visitor can't cross that threshold now. I'd very much like to watch him try it on someone else.
+endif
+-> n_reading
+
+~ n_reading
+if flag.ireena_news_now < 3 and flag.eva_reading_done and not flag.ireena_heard_reading
+set ireena_heard_reading
+set ireena_news_now += 1
+Ireena [weary]: I've never trusted fortune-tellers, least of all when they deal out my future on a table.
+Ireena: Keep Madam Eva's painted cards to yourselves, unless one of them tells you plainly where to find a sharper blade.
+endif
+-> menu
+
+# --- What's on her mind: up to three of her topics on offer, the later ones first, each once ---------------------------
+
+~ menu
+set ireena_topics_now = 0
+set ireena_offer_tatyana = false
+set ireena_offer_izek = false
+set ireena_offer_dreams = false
+set ireena_offer_bites = false
+set ireena_offer_father = false
+-> offer_tatyana
+
+~ offer_tatyana
+if flag.ireena_topics_now < 3 and flag.ireena_pool_vision and not flag.ireena_heard_tatyana
+set ireena_offer_tatyana
+set ireena_topics_now += 1
+endif
+-> offer_izek
+
+~ offer_izek
+if flag.ireena_topics_now < 3 and (flag.izek_saw_ireena or flag.izek_sister_truth or flag.izek_dead) and not flag.ireena_heard_izek_mind
+set ireena_offer_izek
+set ireena_topics_now += 1
+endif
+-> offer_dreams
+
+~ offer_dreams
+if flag.ireena_topics_now < 3 and not flag.ireena_heard_dreams
+set ireena_offer_dreams
+set ireena_topics_now += 1
+endif
+-> offer_bites
+
+~ offer_bites
+if flag.ireena_topics_now < 3 and not flag.ireena_heard_bites
+set ireena_offer_bites
+set ireena_topics_now += 1
+endif
+-> offer_father
+
+~ offer_father
+if flag.ireena_topics_now < 3 and not flag.ireena_heard_father
+set ireena_offer_father
+set ireena_topics_now += 1
+endif
+-> menu_show
+
+~ menu_show
+* [if flag.ireena_topics_now > 0] Is something on your mind? -> topics
+# The later Ireena packages put their asks and errands here.
+* [if (flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals") and not guest:ireena] Come with us again. -> vallaki/ireena:rejoin
+* [if flag.ireena_in_krezk and not guest:ireena] Come with us again, Ireena. -> krezk/ireena:rejoin
+* [if flag.ireena_escort == "declined" and not guest:ireena] We'll take you after all. -> village_of_barovia/ireena:declined
+* [if not guest:ireena] Keep safe until we get back. -> bye
+* [if guest:ireena] Let's keep moving. -> bye
+
+~ topics
+* [if flag.ireena_offer_tatyana] What are you making of what you remembered at the pool? -> mind_tatyana
+* [if flag.ireena_offer_izek] Is Izek on your mind? -> mind_izek
+* [if flag.ireena_offer_dreams] Have you had the dream of the lake again? -> mind_dreams
+* [if flag.ireena_offer_bites] How are your nights, with the marks on your neck? -> mind_bites
+* [if flag.ireena_offer_father] Are you thinking about your father? -> mind_father
+* Let's talk about something else. -> menu
+
+~ mind_father
+set ireena_heard_father
+if flag.burial_method == "church_rites"
+Ireena [smile]: Father Donavich got Father into the earth with all the proper prayers, though Father would have complained about the damp knees.
+Ireena: You stood through every word with us, and I measure the people around me by how they treated him.
+elif flag.burial_method == "cleric_rites"
+Ireena: Your cleric spoke the rites over Father as if a village burgomaster mattered as much as a king.
+Ireena [smile]: I judge people by how they handled his memory that morning, and you made me believe in a god a little more.
+elif flag.burial_method == "hasty"
+Ireena [weary]: We put Father in the ground fast, without a prayer, and I went with you anyway.
+Ireena: I don't want an apology. I only want you to know I measure people by how they treated him, and I remember.
+else
+Ireena [smile]: None of you were priests when we buried Father, and the plain words you said over the dirt suited him better.
+Ireena: Father always took an honest sentence over a pretty one, and I judge you kindly for giving him that.
+endif
+-> menu
+
+~ mind_bites
+set ireena_heard_bites
+Ireena [weary]: I've stopped counting the nights since the second bite, and I've given up waiting for those two pale, puckered marks under my scarf to close.
+Ireena: Every night I wake in the small hours, and my throat feels pulled toward the window.
+Ireena: I check the latch twice before I lie back down, and I'm never quite sure which of us I'm locking out.
+-> menu
+
+~ mind_dreams
+set ireena_heard_dreams
+Ireena [weary]: When I sleep deeply, I'm standing high above a dark lake with cold wind in my teeth.
+Ireena [sad]: I'm wearing a white dress I've never owned, and then I step off the stone into the black water before I wake.
+Ireena: I don't know whose memory it is, and I'm not asking you to fix it. I just dislike waking up cold.
+-> menu
+
+~ mind_izek
+set ireena_heard_izek_mind
+if flag.izek_dead
+Ireena [weary]: Izek is dead and under the dirt, so there's one less pair of eyes following me down the street.
+Ireena: Even so, I still catch myself sliding the bolt across the door at dusk out of pure habit.
+elif flag.izek_sister_truth
+Ireena [weary]: Izek is alive out there, and I'm supposed to call a stranger with that arm my brother.
+Ireena: He spent years having my face carved into little dolls. Blood or not, I don't know how to look at him.
+else
+Ireena [angry]: That brute Izek looks at me in the square as if I were a bolt of cloth he'd already paid for.
+Ireena: Keep a hand near your hilt when he's near. This valley has enough men claiming me already.
+endif
+-> menu
+
+~ mind_tatyana
+set ireena_heard_tatyana
+if flag.ireena_pool_choice == "promised"
+Ireena: At the pool I remembered a chapel full of white flowers, a high stone wall, and the devil's brother Sergei calling me Tatyana.
+Ireena [sad]: Tatyana is a dead woman I am not, even if I carry her morning in my head like a borrowed book.
+Ireena: Still, I promised Sergei I'd return to the water once the devil is ash, and I keep my word.
+elif flag.ireena_pool_choice == "stayed"
+Ireena: I remember Tatyana's white flowers and Sergei's voice in the water, and how easy it was to let go of my own life.
+Ireena [weary]: Walking away from that pool hurt properly, the way a set bone hurts when it knits.
+Ireena [smile]: Every morning I say the name Ireena Kolyana aloud to the washbasin, and so far it still answers.
+else
+Ireena [weary]: Since I looked into that water, I have two women's lives sitting behind my eyes and only one body for them.
+Ireena: Sergei has waited centuries by that pool, and Father raised Ireena by the hearth since she was a child.
+Ireena [sad]: I haven't decided what to do with what I remembered, and I won't be hurried into choosing.
+endif
+-> menu
+
+# --- Goodbye -----------------------------------------------------------------------------------------------------------
+
+~ bye
+if guest:ireena
+Ireena: Lead on, then. I'm right behind you.
+elif flag.ireena_sanctuary == "inn"
+Ireena: Go on. I'll have Urwin keep something hot by the hearth.
+elif flag.ireena_sanctuary == "st_andrals"
+Ireena: Watch the roads out there. The saint's bones only reach as far as the churchyard wall.
+elif flag.ireena_in_krezk
+Ireena: Tell Dmitri at the gate you're leaving, or he'll bar it before you're through. Come back whole.
+elif flag.ireena_escort == "declined"
+Ireena: Give three knocks when you come back to the porch, so Ismark doesn't put a blade through the door.
+endif
+-> END
