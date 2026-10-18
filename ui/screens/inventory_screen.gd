@@ -1085,8 +1085,11 @@ static func rarity_name(rarity: String) -> String:
 ## attuned to it, or it works for them all the same (Character.item_active), so with the attunement limit lifted the
 ## filter lists every worn magic item that would have needed attuning.
 static func is_attuned(ch: Character, e: Dictionary) -> bool:
-	if int(e.get("qty", 0)) <= 0 or not MagicItems.needs_attunement(Compendium.shared().item_data(str(e["id"]))):
+	# The item's own word (asks_attunement), since with the Unlimited option no item needs it any more.
+	if int(e.get("qty", 0)) <= 0 or not MagicItems.asks_attunement(Compendium.shared().item_data(str(e["id"]))):
 		return false
+	if MagicItems.attunement_off:
+		return ch.item_active(e)
 	return str(e["id"]) in ch.attuned or ch.item_active(e)
 
 

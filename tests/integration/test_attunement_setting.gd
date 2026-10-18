@@ -108,3 +108,23 @@ func test_the_sheet_stops_counting_attunements_once_it_is_off() -> void:
 	assert_false(await _sheet_says_attunement_is_off(), "by default the sheet counts attunements")
 	GameSettings.set_unlimited_attunement(true)
 	assert_true(await _sheet_says_attunement_is_off(), "with the option it says attunement is off")
+
+
+func test_the_packs_attuned_filter_lists_worn_items_once_attunement_is_off() -> void:
+	var ch := TestChars.pregen("ilse_varga", 5)
+	ch.add_item("ring_of_protection")
+	ch.add_item("cloak_of_protection")
+	ch.attune("ring_of_protection")
+	ch.wear("ring_of_protection")
+	ch.wear("cloak_of_protection")
+	var ring := ch.entry_of("ring_of_protection")
+	var cloak := ch.entry_of("cloak_of_protection")
+	assert_true(InventoryScreen.is_attuned(ch, ring), "attuned and worn")
+	assert_false(InventoryScreen.is_attuned(ch, cloak), "worn, but never attuned: it does nothing")
+	GameSettings.set_unlimited_attunement(true)
+	assert_true(InventoryScreen.is_attuned(ch, ring), "worn and working")
+	assert_true(InventoryScreen.is_attuned(ch, cloak), "every worn item that would have needed attuning is listed")
+	ch.unequip_item("cloak_of_protection")
+	assert_false(InventoryScreen.is_attuned(ch, cloak), "in the pack, it works for no one")
+	ch.unequip_item("ring_of_protection")
+	assert_false(InventoryScreen.is_attuned(ch, ring), "an old attunement alone doesn't list it once attunement is off")
