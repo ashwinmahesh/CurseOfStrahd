@@ -22,9 +22,10 @@ func _ready() -> void:
     status.text = "Native bridge ready" if native != null else "Native bridge MISSING"
     status.add_theme_font_size_override("font_size", 24)
     box.add_child(status)
-    for label: String in ["Import JSON from Files", "Share test save", "Update search value"]:
-        var button := Button.new()
+    for label: String in ["Import JSON from Files", "Share test save", "Update search value", "Reduce extra motion"]:
+        var button: Button = CheckButton.new() if label == "Reduce extra motion" else Button.new()
         button.text = label
+        button.toggle_mode = label in ["Update search value", "Reduce extra motion"]
         button.custom_minimum_size = Vector2(600, 60)
         box.add_child(button)
         controls[label] = button
@@ -32,8 +33,8 @@ func _ready() -> void:
             if label.begins_with("Import"):
                 native.call("import_save", ProjectSettings.globalize_path("user://import.json"))
             elif label == "Update search value":
-                access_value = "zzzz"
-            else:
+                access_value = "zzzz" if button.button_pressed else "before"
+            elif label == "Share test save":
                 var file := FileAccess.open("user://" + save_name + ".json", FileAccess.WRITE)
                 file.store_string("{\"test\":true}")
                 file.close()
@@ -49,7 +50,8 @@ func _process(_delta: float) -> void:
             var size_ := Vector2(get_window().size)
             rect = (control.get_viewport().get_screen_transform() * control.get_global_transform_with_canvas() * control.get_global_transform().affine_inverse()) * rect
             rect.position -= Vector2(get_window().position)
-            items.append({"id": label, "label": label, "value": access_value if label == "Update search value" else "", "hint": "", "role": "button", "frame": [rect.position.x / size_.x, rect.position.y / size_.y, rect.size.x / size_.x, rect.size.y / size_.y]})
+            var value := access_value if label == "Update search value" else ("On" if control.button_pressed else "Off") if control is CheckButton else ""
+            items.append({"id": label, "label": label, "value": value, "hint": "", "role": "button", "selected": control.button_pressed, "frame": [rect.position.x / size_.x, rect.position.y / size_.y, rect.size.x / size_.x, rect.size.y / size_.y]})
         native.call("set_accessibility", JSON.stringify({"revision": "1", "items": items}))
     var messages: Array = JSON.parse_string(native.call("take_events"))
     for message: Dictionary in messages:
@@ -61,5 +63,8 @@ func _process(_delta: float) -> void:
         if message["kind"] == "access_activate":
             var id := str(message["value"]).trim_prefix("1:")
             if controls.has(id):
-                (controls[id] as Button).pressed.emit()
+                var button := controls[id] as Button
+                if button.toggle_mode:
+                    button.button_pressed = not button.button_pressed
+                button.pressed.emit()
         print("NATIVE_EVENT ", message)

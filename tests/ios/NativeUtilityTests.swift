@@ -9,9 +9,35 @@ final class NativeUtilityTests: XCTestCase {
         let field = app.buttons["Update search value"]
         XCTAssertTrue(field.waitForExistence(timeout: 20), app.debugDescription)
         XCTAssertEqual(field.value as? String, "before", app.debugDescription)
+        XCTAssertFalse(field.isSelected, app.debugDescription)
         field.tap()
         let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "zzzz"), object: field)
         XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 10), .completed, app.debugDescription)
+        let selected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "selected == true"), object: field)
+        XCTAssertEqual(XCTWaiter.wait(for: [selected], timeout: 10), .completed, app.debugDescription)
+        field.tap()
+        let restored = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ AND selected == false", "before"), object: field)
+        XCTAssertEqual(XCTWaiter.wait(for: [restored], timeout: 10), .completed, app.debugDescription)
+    }
+
+    func testSwitchStateMatchesItsSelectionAfterEachTap() throws {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let app = XCUIApplication(bundleIdentifier: "app.curseofstrahd.nativeprobe")
+        app.launch()
+        let toggle = app.buttons["Reduce extra motion"]
+        XCTAssertTrue(toggle.waitForExistence(timeout: 20), app.debugDescription)
+        XCTAssertEqual(toggle.value as? String, "Off", app.debugDescription)
+        XCTAssertFalse(toggle.isSelected, app.debugDescription)
+        for enabled in [true, false] {
+            toggle.tap()
+            let state = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@ AND selected == %@", enabled ? "On" : "Off", NSNumber(value: enabled)), object: toggle)
+            XCTAssertEqual(XCTWaiter.wait(for: [state], timeout: 10), .completed, app.debugDescription)
+        }
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        attachment.name = "switch-off-after-two-taps"
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 
     func testFilesPickerAndShareSheetCanBeCancelled() throws {

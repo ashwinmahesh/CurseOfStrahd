@@ -414,6 +414,45 @@ func test_accessibility_refreshes_existing_input_values_and_geometry() -> void:
 	assert_true(access.revision > old_revision)
 
 
+func test_accessibility_switches_publish_on_off_state_after_touch_and_native_activation() -> void:
+	for size_: Vector2 in [Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var body := MobilePage.build(root, "Preference states", func() -> void: pass)
+		var toggle := CheckButton.new()
+		toggle.text = "Reduce extra motion"
+		MobileUi.fit(toggle)
+		body.add_child(toggle)
+		await _frames()
+		var access := MobileAccessibility.new()
+		var projection := access.snapshot(get_tree().root)
+		var id := str(toggle.get_instance_id())
+		for step in 3:
+			var expected := step == 1
+			var found := false
+			for item: Dictionary in projection["items"]:
+				if str(item["id"]) == id:
+					found = true
+					assert_eq(str(item["value"]), "On" if expected else "Off", "switch state is readable without inferring an absent selected trait")
+					assert_eq(bool(item["selected"]), expected)
+			assert_true(found)
+			if step == 2:
+				break
+			if step == 0:
+				var at := toggle.get_global_rect().get_center()
+				_touch(at, true)
+				await _frames()
+				_touch(at, false)
+			else:
+				access.activate("access_activate", str(projection["revision"]) + ":" + id)
+			await _frames()
+			projection = access.snapshot(get_tree().root)
+		MobileUi.clear(root)
+		await _frames()
+
+
 func test_mobile_keyboard_avoidance_preserves_text_and_returns_page_geometry() -> void:
 	var body := MobilePage.build(root, "Name", func() -> void: pass)
 	var page := body.get_parent().get_parent().get_parent() as MobilePage

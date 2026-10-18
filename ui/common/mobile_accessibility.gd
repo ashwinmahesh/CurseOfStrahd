@@ -56,6 +56,8 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 			disabled = button.disabled
 			selected = bool(button.get_meta(&"access_selected", button.button_pressed if button.toggle_mode else false))
 			role = "button"
+			if button is CheckButton or button is CheckBox:
+				value = "On" if button.button_pressed else "Off"
 		elif control is Label:
 			label = (control as Label).text
 		elif control is RichTextLabel:
