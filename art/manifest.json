@@ -6240,6 +6240,34 @@
       "sprite_flags": [
         "BODY=float"
       ]
+    },
+    {
+      "id": "dinosaur_spirit",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/dinosaur_spirit_turnaround.png",
+      "sprites": "art/sprites/dinosaur_spirit/walk.tres",
+      "portrait": "art/portraits/dinosaur_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a dinosaur spirit, a huge four-legged dinosaur made of glowing pale green and gold spirit light, with a bony frill ringed by three curved horns, a row of armoured plates down its back, a heavy clubbed tail, a toothy tyrannosaur jaw and bright amber eyes, wisps of green spirit light trailing from its back and tail, flat cartoon colours. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, every view drawn at the same size and all five in one straight row with clear space between them (no view overlapping or tucked under another), same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "The Dinosaur Spirit Summon Dinosaur calls up (Huge; it stood as a capsule until the art-fixes lane, owner todo 2026-10-17, typed yes 2026-10-18). One sprite for all three forms like the other spirits: a horned, frilled, plated dinosaur of pale green and gold spirit light with a toothy jaw. 5-view quadruped turnaround (21:9) -> make sprite BODY=quadruped; gore and bite attack from art/anim/animations.json; turn-bar portrait (BG=ash_violet). Height 3.0 (Huge band 1.95 to 4.0).",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "plant_spirit",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/plant_spirit_turnaround.png",
+      "sprites": "art/sprites/plant_spirit/walk.tres",
+      "portrait": "art/portraits/plant_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a plant spirit, a Large walking heap of living wood made of glowing pale green spirit light: a gnarled bark torso with thick twisting root legs and long branch arms, wrapped in climbing green vines with small white flowers, clusters of red-capped mushrooms growing from its shoulders and back, a hollow bark face with two bright green eyes. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing upright on its roots, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "The Plant Spirit Summon Plant calls up (Large; it stood as a capsule until the art-fixes lane, owner todo 2026-10-17, typed yes 2026-10-18). One sprite for all three forms (tree, vine, fungus): a gaunt walking figure of bark and roots with vines, flowers and red mushrooms and a glowing green face. 5-view turnaround (21:9) -> make sprite BODY=lumber; branch slam attack from art/anim/animations.json; turn-bar portrait (BG=ash_violet). Height 1.9 (Large band 1.3 to 2.8).",
+      "sprite_flags": [
+        "BODY=lumber"
+      ]
     }
   ],
   "image_provider": "gemini"

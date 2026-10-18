@@ -19,5 +19,29 @@
     "attack": "longsword strike",
     "windup": "the longsword drawn back and raised beside its head, the shield held out in front, leaning back",
     "strike": "the longsword swung forward and down at the enemy at full arm's length, the shield pulled in, leaning into the blow"
+  },
+  "dinosaur_spirit": {
+    "shape": "animal",
+    "height": 3.0,
+    "expression": "fierce, ancient",
+    "pose": "Standing on all four legs in a neutral pose, every view drawn at the same size and all five in one straight row with clear space between them (no view overlapping or tucked under another)",
+    "body": "quadruped",
+    "look": "a dinosaur spirit, a huge four-legged dinosaur made of glowing pale green and gold spirit light, with a bony frill ringed by three curved horns, a row of armoured plates down its back, a heavy clubbed tail, a toothy tyrannosaur jaw and bright amber eyes, wisps of green spirit light trailing from its back and tail, flat cartoon colours",
+    "who": "a dinosaur spirit",
+    "attack": "gore and bite",
+    "windup": "head lowered and drawn back, horns levelled, front feet digging in, jaws opening, ready to charge",
+    "strike": "charging forward with its head thrust at the enemy, horns down and jaws wide open"
+  },
+  "plant_spirit": {
+    "shape": "creature",
+    "height": 1.9,
+    "expression": "stern, slow",
+    "pose": "Standing upright on its roots",
+    "body": "lumber",
+    "look": "a plant spirit, a Large walking heap of living wood made of glowing pale green spirit light: a gnarled bark torso with thick twisting root legs and long branch arms, wrapped in climbing green vines with small white flowers, clusters of red-capped mushrooms growing from its shoulders and back, a hollow bark face with two bright green eyes",
+    "who": "a plant spirit",
+    "attack": "branch slam",
+    "windup": "both heavy branch arms raised high above it, leaning back",
+    "strike": "both branch arms slammed down and forward at the enemy, the whole figure lurching forward"
   }
 }

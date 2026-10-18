@@ -55,3 +55,34 @@ func test_guardian_of_faith_stands_on_the_board() -> void:
 	assert_false(is_instance_valid(zone), "gone with the spell")
 	field.queue_free()
 	board.queue_free()
+
+
+## Every creature a spell calls up is drawn from a sprite with a walk and an attack sheet, and has a portrait for the turn
+## bar: no capsule on the board (a stat block with no sprite is drawn as one).
+func test_every_summoned_creature_has_a_sprite_and_a_portrait() -> void:
+	var checked := 0
+	var gaps: Array[String] = []
+	for b in DrawnCreatures.blocks():
+		var data := b["data"] as Dictionary
+		if not bool(data.get("summon", false)):
+			continue
+		checked += 1
+		var art := CombatToken.monster_art(data)
+		if not DirectionalSprite.has_attack(DirectionalSprite.frames_for(art)):
+			gaps.append("%s has no walk and attack sheet (%s)" % [b["label"], art])
+		if not ResourceLoader.exists("res://art/portraits/%s.png" % art):
+			gaps.append("%s has no portrait (%s)" % [b["label"], art])
+	assert_true(checked >= 20, "the summons are checked (%d)" % checked)
+	assert_eq(gaps, [] as Array[String], "summons drawn as capsules")
+
+
+## The two spirits that had none stand at the height their size asks for (test_creature_sizes checks the bands).
+func test_the_dinosaur_and_plant_spirits_have_their_own_figures() -> void:
+	for pair: Array in [["dinosaur_spirit", "huge"], ["plant_spirit", "large"]]:
+		var id := str(pair[0])
+		var block := SummonBlocks.for_spell("summon_" + id.trim_suffix("_spirit"), 9, "", {})
+		assert_eq(str(block.get("id", "")), id)
+		assert_eq(str(block.get("size", "")), str(pair[1]))
+		assert_eq(CombatToken.monster_art(block), id, "%s wears its own sprite" % id)
+		var band := DrawnCreatures.BANDS[str(pair[1])] as Array
+		assert_between(DrawnCreatures.drawn_height(block), float(band[0]), float(band[1]), "%s fills its squares" % id)

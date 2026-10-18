@@ -985,5 +985,13 @@
   "guardian_of_faith": {"who": "a spectral guardian, a faceless hooded figure of pale golden light hovering above the ground, with a gleaming silver longsword and a round silver shield bearing a golden sunburst",
     "attack": "longsword strike",
     "windup": "the longsword drawn back and raised beside its head, the shield held out in front, leaning back",
-    "strike": "the longsword swung forward and down at the enemy at full arm's length, the shield pulled in, leaning into the blow"}
+    "strike": "the longsword swung forward and down at the enemy at full arm's length, the shield pulled in, leaning into the blow"},
+  "dinosaur_spirit": {"who": "a dinosaur spirit",
+    "attack": "gore and bite",
+    "windup": "head lowered and drawn back, horns levelled, front feet digging in, jaws opening, ready to charge",
+    "strike": "charging forward with its head thrust at the enemy, horns down and jaws wide open"},
+  "plant_spirit": {"who": "a plant spirit",
+    "attack": "branch slam",
+    "windup": "both heavy branch arms raised high above it, leaning back",
+    "strike": "both branch arms slammed down and forward at the enemy, the whole figure lurching forward"}
 }
