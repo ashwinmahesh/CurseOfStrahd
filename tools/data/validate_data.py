@@ -30,6 +30,7 @@ FOLDERS = {
     "endings": "ending",
     "cutscenes": "cutscene",
     "strahd": {"visits": "strahd_visits", "attention": "strahd_attention"},
+    "visits": "ally_visits",
     "schedule": "schedule",
     "objects": {"kinds": "object_kinds"},
     "weather": "weather",
@@ -655,12 +656,13 @@ def castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs):
             cond(sl.get("when", ""), f"{w} epilogue {i}")
 
     locations, monsters = data["locations"], data["monsters"]
-    for v in data.get("strahd", {}).get("visits", {}).get("visits", []):
-        w = f"strahd/visits.json {v['id']}"
+    for src, v in visits_to_check(data):
+        w = f"{src} {v['id']}"
         cond(v.get("when", ""), w)
         if v.get("dialogue"):
             dialogue_refs.append((v["dialogue"], w))
-        for step in v.get("then", []):
+        # The visit's own first step (a fight or a ride of its own), then what follows its conversation.
+        for step in [v] + list(v.get("then", [])):
             cond(step.get("when", ""), w)
             enc = step.get("encounter")
             if enc:
@@ -673,14 +675,50 @@ def castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs):
                         errors.append(f"{w}: withdraw names '{wd.get('who')}', who isn't in the fight")
                     if wd.get("flag"):
                         flags_set.setdefault(wd["flag"], []).append(w)
+                if enc.get("flag"):
+                    flags_set.setdefault(enc["flag"], []).append(w)
+                if enc.get("after"):
+                    dialogue_refs.append((enc["after"], w))
             if step.get("go"):
                 lid, _, spawn = step["go"].partition(":")
                 if lid not in locations:
                     errors.append(f"{w}: go to unknown location '{lid}'")
                 elif spawn and spawn not in locations[lid].get("spawns", {}):
                     errors.append(f"{w}: {lid} has no spawn '{spawn}'")
-            if step.get("dialogue"):
+            if step.get("dialogue") and step is not v:
                 dialogue_refs.append((step["dialogue"], w))
+    ally_visit_checks(data, errors)
+
+
+def visits_to_check(data):
+    """Every visit with the file it is in: Strahd's (data/strahd/visits.json), then each character's (data/visits/)."""
+    for v in data.get("strahd", {}).get("visits", {}).get("visits", []):
+        yield "strahd/visits.json", v
+    for npc, f in sorted(data.get("visits", {}).items()):
+        for v in f.get("visits", []):
+            yield f"visits/{npc}.json", v
+
+
+def ally_visit_checks(data, errors):
+    """Ally visits (data/visits/<npc>.json, story/strahd_presence.gd): the file is a character's, every visit's id is its own
+    (the game remembers visits by id, Strahd's included), each plays a conversation and is limited (or it would come at
+    every event), and the places it names exist."""
+    seen = {v["id"]: "strahd/visits.json" for v in data.get("strahd", {}).get("visits", {}).get("visits", [])}
+    for npc, f in sorted(data.get("visits", {}).items()):
+        if npc not in data["npcs"]:
+            errors.append(f"visits/{npc}.json: no NPC '{npc}' in data/npcs (a file is named for its character)")
+        for v in f.get("visits", []):
+            w = f"visits/{npc}.json {v['id']}"
+            if v["id"] in seen:
+                errors.append(f"{w}: this id is already {seen[v['id']]}'s (visits are remembered by id, across all files)")
+            seen[v["id"]] = f"visits/{npc}.json"
+            if not v.get("dialogue"):
+                errors.append(f"{w}: an ally visit plays a conversation (`dialogue`)")
+            if not (v.get("once") or v.get("max") or v.get("cooldown_hours")):
+                errors.append(f"{w}: needs `once`, `max` or `cooldown_hours`, or it comes at every event")
+            for lid in v["trigger"].get("at", []):
+                if lid not in data["locations"]:
+                    errors.append(f"{w}: trigger names unknown location '{lid}'")
 
 
 def schedule_checks(data, errors, cond, flags_set, dialogue_refs):

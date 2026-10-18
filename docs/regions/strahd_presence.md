@@ -12,12 +12,14 @@ our own words.
 |---|---|
 | `data/strahd/visits.json` (schema `data/schemas/strahd_visits.schema.json`) | The visits: trigger, condition, once / cooldown / max, steps |
 | `story/strahd_presence.gd` (`StrahdPresence`) | Pure logic: which visit is due, its steps in order, where its foes stand |
+| `data/visits/<npc>.json` (schema `data/schemas/ally_visits.schema.json`) | Other characters' visits, the same engine: see "Ally visits" |
 | `narrative/strahd/visits.dialogue` | The watcher, the night visit, the test of strength and its parting words |
 | `narrative/strahd/letters.dialogue` | The first letter, the invitation and the black carriage |
 | `narrative/strahd/ireena.dialogue` | The move against Ireena: the inn, Krezk, St. Andral's |
 | `narrative/strahd/final.dialogue` | `strahd/final:parley`, the price he names before the final battle |
 | `data/flags/strahd.json` | The flags below |
-| `tests/unit/test_strahd_presence.gd` | Triggers, steps, placement, the conversations, the withdraw, the game's hooks |
+| `tests/unit/test_strahd_presence.gd` | Triggers, steps, placement, the conversations, the withdraw, the game's hooks, the ally visits and the bot's answer to one |
+| `tests/support/ally_visit_answer.gd` (`AllyVisitAnswer`) | The story bot's exit from an ally visit's conversation |
 
 ## How a visit works
 
@@ -81,6 +83,58 @@ or upstairs dressing for dinner when he holds her). His price: Ireena given free
 party or he holds her), or kneel and serve, or fight. The answer is `strahd_parley`: `fight` (the battle starts),
 `yield` (Strahd triumphant) or `ireena` (the bride). Optional lines: "You can't leave this valley either"
 (`strahd_seen_trapped`), Insight DC 18 (spent on failure; never needed).
+
+## Ally visits (data/visits/)
+
+The engine also carries other characters' letters and road meetings (the Story Allies Presence Plan, package E1: Ireena's
+letters, Izek taking her, Ezmerelda on the road). They are visits in every way above except who they are from and the
+three differences below, so a courier's letter or a meeting on the road needs no engine of its own.
+
+**Files.** One per character, `data/visits/<npc id>.json`: `id` (the NPC's id, which is also the file name), `summary` and
+`visits`, each visit shaped as in `data/strahd/visits.json` (`data/schemas/ally_visits.schema.json` reuses its visit
+definition). Lines go in a dialogue file of the character's own (`narrative/allies/`); the visit only names the
+conversation. `StrahdPresence.data()` loads every file there after his visits, in name order, and marks each visit
+`ally: true` (`StrahdPresence.is_ally`); the files don't say so, and the schema refuses an `ally` key, so no file can
+make a visit Strahd's or the other way round. At an event his visits are asked first, then the allies', file by file.
+
+**How an ally visit differs from his.**
+
+| | His | An ally's |
+|---|---|---|
+| Hallow, Forbiddance, Private Sanctum, Nondetection (`Wards.hides_from_strahd`) | keep every visit but an `urgent` one away | don't matter: a friend isn't looking for the party through Strahd's eyes |
+| His attention tier's `gap` (×0.85 down to ×0.5) | shortens his wait between visits | doesn't: the wait is the file's plain `gap_hours` (12), however much he has noticed |
+| `last` visit | starts his wait | starts his wait: the one `last` is shared, so a letter and a vampire never come in the same breath, and either waits after the other |
+
+Everything else is as for his visits: the trigger (`arrive`, `rest`, `travel`, `days`, `night`, `outdoors`, `at`,
+`region`), `when`, `once` / `cooldown_hours` / `max`, `urgent` (which ignores the gap for an ally too, so use it for
+what truly can't wait), the steps and `then`, a fight's `withdraw`, and the quiet places: `quiet_regions` (the castle,
+Death House, the mists) and holy ground in `quiet_at` stay quiet for friends unless the visit's trigger names the place
+in `at`. `fires()` is the same function for both. The game root's hooks (`_strahd`, `_strahd_on_road`,
+`strahd_after_rest`, the steps after a conversation and a fight) and `LongRest` are unchanged: an ally's visit plays
+through them, stops a journey on the road like his, and a rest visit that may come to blows (`may_fight`) breaks the
+Long Rest the same way. The memory is the same `StoryState.flags["_strahd"]`, keyed by visit id.
+
+**What `make validate` holds an ally visit to** (`ally_visit_checks`, tools/data/validate_data.py): the file is a
+character's (`data/npcs/<id>.json` exists); the visit's id is unique across his file and every ally file (the game
+remembers visits by id); it plays a conversation (`dialogue`, so the bot has something to answer); it is limited
+(`once`, `max` or a `cooldown_hours` above 0, or it would come at every event); the places in `trigger.at` exist. The
+checks every visit gets also cover the allies: conditions parse, conversations and nodes exist, a fight's monsters,
+`withdraw` and `after` conversation, a `go` target and its spawn, and the flags the visit reads and sets are
+registered. `story_reach` follows an ally visit's conversations as it does his (what a playthrough can reach), and
+`make voice` finds a `withdraw.say` in these files too.
+
+**The story bot.** An ally's letter is not a branch of the story the bot walks, so
+`StoryBot.converse()` answers a conversation `StrahdPresence.ally_playing` says is an ally visit's by its exit
+(`tests/support/ally_visit_answer.gd`): the last option that ends the conversation (`-> END`), else the last whose node
+asks nothing more and starts no fight, shop or journey. An option with a skill check is never the exit, and the bot's
+usual preferences don't apply inside a letter. The visits it answered are in `StoryBot.ally_visits`. A menu with no
+such option is answered the usual way, so every ally conversation should have one (the project rule: every
+conversation has an exit). A conversation the bot walks up to itself (a talk, a hub) is answered as before.
+
+**Adding one.** Write the character's file (or add a visit to it), name its conversation, give it a limit, run
+`make validate`, and answer it in the phase tests that could reach it (compare with main first: a visit that moves
+where the party stands or what time it is can move a fight; close every conversation, since an unanswered letter
+leaks an open prompt into logcheck). The first ally files are Ireena's (I3), Izek's (Z1) and Ezmerelda's (M1).
 
 ## His attention (F9, data/strahd/attention.json)
 

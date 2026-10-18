@@ -158,7 +158,8 @@ def _data_lines():
                 yield NARRATOR, g["text"], f"camp/night_visitors:{g.get('id', '')}"
     # A foe that leaves a fight with a parting line (an encounter's `withdraw`: Strahd quitting his visits and the castle
     # fights) speaks it in its `speaker`'s voice when it goes (CombatView).
-    for f in sorted((ROOT / "data" / "locations").glob("*.json")) + [ROOT / "data" / "strahd" / "visits.json"]:
+    visit_files = [ROOT / "data" / "strahd" / "visits.json"] + sorted((ROOT / "data" / "visits").glob("*.json"))
+    for f in sorted((ROOT / "data" / "locations").glob("*.json")) + visit_files:
         if f.exists():
             for w in _withdrawals(json.loads(f.read_text())):
                 yield w["speaker"], w["say"], f"{f.parent.name}/{f.stem}:withdraw"

@@ -4,9 +4,57 @@ extends TestCase
 ## last), its steps follow one another (his conversation, then his fight, then his parting words), his fights find
 ## open floor for their foes and end with his withdrawal and its flag, the conversations set what the rest of the
 ## campaign reads (the window, the carriage, the parley's price), and the game's hooks play it all: a journey, a rest,
-## an arrival.
+## an arrival. Ally visits (data/visits/, a friend's letter or road meeting) share the engine: they skip his wards and his
+## attention, keep his spacing and his quiet places, and the story bot answers their conversations by the exit.
 
 const ROAD := {"location": "", "outdoors": true}
+const ALLY_DIR := "user://test_ally_visits"
+## A conversation of an ally's visit: its first options go deeper, and the way out is the last.
+const LETTER := """~ letter
+Narrator: A courier holds out a letter in a hand you know.
+* Open it and read it aloud. -> read
+* Ask the courier who paid for the road. -> ask
+* Put it away. -> END
+
+~ read
+Narrator: It is long, and it ends mid-sentence.
+* Go on. -> ask
+
+~ ask
+Narrator: The courier shrugs.
+* Another question. -> read
+* Goodbye. -> END
+
+~ sealed
+Narrator: A letter, sealed with wax.
+* Burn it. -> burned
+* [Persuasion DC 10] Talk the courier into reading it. -> kept | burned
+* Keep it. -> kept
+
+~ burned
+set test_letter_burned
+-> END
+
+~ kept
+set test_letter_kept
+Narrator: It is warm against you.
+-> END
+
+~ doorstep
+Narrator: He is at the door.
+* Fight him. -> brawl
+* Shut the door. -> shut
+
+~ brawl
+combat strahd_at_the_window
+
+~ shut
+Narrator: The door closes.
+-> via
+
+~ via
+-> END
+"""
 
 var root: Node = null
 var _saved := {}
@@ -14,10 +62,16 @@ var _saved := {}
 
 func before_each() -> void:
 	StrahdPresence.use({})
+	DialogueFile.register(DialogueFile.parse(LETTER, "test_allies/letter"))
 
 
 func after_each() -> void:
 	StrahdPresence.use({})
+	StrahdPresence.use_attention({})
+	if DirAccess.dir_exists_absolute(ALLY_DIR):
+		for f: String in DirAccess.get_files_at(ALLY_DIR):
+			DirAccess.remove_absolute(ALLY_DIR.path_join(f))
+		DirAccess.remove_absolute(ALLY_DIR)
 	if root != null:
 		root.queue_free()
 		root = null
@@ -460,3 +514,183 @@ func test_a_visit_waits_for_the_spoils_window() -> void:
 	(root.get("loot") as LootWindow).call("_close")
 	await _frames(4)
 	assert_eq(await _talk_through(), "strahd/letters:invitation", "then he comes")
+
+
+# --- Ally visits (data/visits/): a friend's letter or road meeting, on the same engine ----------------
+
+func _his(id: String, extra: Dictionary = {}) -> Dictionary:
+	var v := {"id": id, "summary": "", "trigger": {"on": ["arrive"]}, "max": 20, "dialogue": "test_allies/letter:letter"}
+	v.merge(extra, true)
+	return v
+
+
+func _hers(id: String, extra: Dictionary = {}) -> Dictionary:
+	var v := _his(id, extra)
+	v["ally"] = true   # the loader's mark (the files don't carry it)
+	return v
+
+
+func _pack(visits: Array, extra: Dictionary = {}) -> Dictionary:
+	var d := {"id": "visits", "summary": "", "gap_hours": 12, "visits": visits}
+	d.merge(extra, true)
+	return d
+
+
+func _write(path: String, body: Variant) -> void:
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(body if body is String else JSON.stringify(body))
+	f.close()
+
+
+func test_ally_visits_load_from_a_folder_marked_and_in_name_order() -> void:
+	DirAccess.make_dir_recursive_absolute(ALLY_DIR)
+	_write(ALLY_DIR.path_join("zofia.json"), {"id": "zofia", "summary": "", "visits": [
+		{"id": "z1", "summary": "", "trigger": {"on": ["arrive"]}, "once": true}]})
+	_write(ALLY_DIR.path_join("anna.json"), {"id": "anna", "summary": "", "visits": [
+		{"id": "a1", "summary": "", "trigger": {"on": ["rest"]}, "once": true},
+		{"id": "a2", "summary": "", "trigger": {"on": ["travel"]}, "max": 2}]})
+	_write(ALLY_DIR.path_join("notes.txt"), "not a visit file")
+	var got := StrahdPresence.ally_visits(ALLY_DIR)
+	assert_eq(got.map(func(v: Dictionary) -> String: return str(v["id"])), ["a1", "a2", "z1"], "files in name order, a file's visits in order")
+	for v in got:
+		assert_true(StrahdPresence.is_ally(v), "%s is marked an ally's" % v["id"])
+	assert_true(StrahdPresence.ally_visits("user://no_such_visits").is_empty(), "no folder, no visits")
+	# The game's own list: his visits first, then every file of data/visits/, and only the latter marked.
+	var all := StrahdPresence.data()["visits"] as Array
+	assert_eq(str((all[0] as Dictionary)["id"]), "watcher", "his come first")
+	var allies := StrahdPresence.ally_visits()
+	var his := ((JSON.parse_string(FileAccess.get_file_as_string(StrahdPresence.PATH)) as Dictionary)["visits"] as Array).size()
+	assert_eq(all.size(), his + allies.size(), "his file's visits and the ally files' visits, nothing else")
+	for v: Variant in all:
+		var vis := v as Dictionary
+		assert_eq(StrahdPresence.is_ally(vis), allies.any(func(a: Dictionary) -> bool: return a["id"] == vis["id"]),
+			"%s: marked an ally's only if it came from data/visits/" % vis["id"])
+
+
+func test_an_ally_visit_is_not_hidden_by_the_wards_that_hide_the_party_from_strahd() -> void:
+	StrahdPresence.use(_pack([_his("his"), _hers("hers")]))
+	var st := _party()
+	st.active_spells["nondetection"] = {"until": st.total_minutes() + 600}
+	assert_true(Wards.hides_from_strahd(st, "vallaki") != "", "Nondetection hides them from him")
+	assert_eq(str(StrahdPresence.due(st, "arrive", {"location": "vallaki"}).get("id", "")), "hers", "his can wait; a friend's can't be warded off")
+	var open := _party()
+	assert_eq(str(StrahdPresence.due(open, "arrive", {"location": "vallaki"}).get("id", "")), "his", "unwarded, file order: his first")
+
+
+func test_an_ally_visit_waits_the_plain_gap_however_much_he_has_noticed_and_shares_his_last_visit() -> void:
+	StrahdPresence.use_attention({"tiers": [{"id": "unnoticed", "min": 0, "gap": 1.0}, {"id": "hunted", "min": 1, "gap": 0.5}],
+		"marks": [{"id": "m", "when": "flag.test_mark", "points": 1, "summary": ""}]})
+	StrahdPresence.use(_pack([_hers("hers"), _his("his")]))
+	var st := _party()
+	st.set_flag("test_mark")   # hunted: his visits come after six hours, not twelve
+	var town := {"location": "vallaki"}
+	assert_eq(str(StrahdPresence.due(st, "arrive", town).get("id", "")), "hers", "the first, in file order")
+	st.advance_minutes(7 * 60)
+	assert_eq(str(StrahdPresence.due(st, "arrive", town).get("id", "")), "his", "seven hours on, his is allowed (hunted) and hers isn't (twelve)")
+	st.advance_minutes(5 * 60)
+	assert_true(StrahdPresence.due(st, "arrive", town).is_empty(), "five hours after his: neither (the wait counts from the last visit, whoever's)")
+	st.advance_minutes(7 * 60)
+	assert_eq(str(StrahdPresence.due(st, "arrive", town).get("id", "")), "hers", "twelve hours after his: a friend again")
+	st.advance_minutes(5 * 60)
+	assert_true(StrahdPresence.due(st, "arrive", town).is_empty(), "and his waits on hers: no letter and vampire in one breath")
+
+
+func test_an_urgent_ally_visit_ignores_the_gap_as_his_do() -> void:
+	StrahdPresence.use(_pack([_his("his"), _hers("late", {"urgent": true, "trigger": {"on": ["rest"]}})]))
+	var st := _party()
+	var town := {"location": "vallaki"}
+	assert_eq(str(StrahdPresence.due(st, "arrive", town).get("id", "")), "his")
+	st.advance_minutes(60)
+	assert_eq(str(StrahdPresence.due(st, "rest", town).get("id", "")), "late", "an hour on, urgent")
+
+
+func test_an_ally_visit_keeps_the_quiet_regions_and_holy_ground() -> void:
+	StrahdPresence.use(_pack([_hers("hers"), _hers("at_church", {"trigger": {"on": ["arrive"], "at": ["vallaki_st_andrals"]}})],
+		{"quiet_regions": ["krezk"], "quiet_at": ["vallaki_st_andrals"]}))
+	var st := _party()
+	assert_true(StrahdPresence.due(st, "arrive", {"location": "krezk"}).is_empty(), "a quiet region is quiet for friends too")
+	assert_true(StrahdPresence.find(st, "arrive", {"location": "krezk"}).is_empty())
+	assert_eq(str(StrahdPresence.due(st, "arrive", {"location": "vallaki_st_andrals"}).get("id", "")), "at_church", "holy ground, unless the visit names it")
+	st.advance_minutes(12 * 60)
+	assert_eq(str(StrahdPresence.due(st, "arrive", {"location": "vallaki"}).get("id", "")), "hers")
+
+
+func test_an_ally_visit_plays_its_steps_and_says_so_while_its_conversation_is_open() -> void:
+	StrahdPresence.use(_pack([_hers("hers", {"then": [{"when": "flag.test_letter_kept", "go": "vallaki:default"}]}), _his("his", {"trigger": {"on": ["rest"]}})]))
+	var st := _party()
+	var v := StrahdPresence.due(st, "arrive", {"location": "vallaki"})
+	assert_eq(str(v["id"]), "hers")
+	assert_eq(StrahdPresence.times(st, "hers"), 1)
+	assert_true(StrahdPresence.ally_playing(st, "test_allies/letter:letter").is_empty(), "not before it begins")
+	var step := StrahdPresence.begin(st, v)
+	assert_eq(str(step["dialogue"]), "test_allies/letter:letter")
+	assert_eq(str(StrahdPresence.ally_playing(st, "test_allies/letter:letter")["id"]), "hers", "now it is playing")
+	assert_true(StrahdPresence.ally_playing(st, "test_allies/letter:read").is_empty(), "only its own conversation")
+	st.set_flag("test_letter_kept")
+	assert_eq(str(StrahdPresence.after_dialogue(st, "test_allies/letter:letter").get("go", "")), "vallaki:default", "then what follows")
+	assert_true(StrahdPresence.ally_playing(st, "test_allies/letter:letter").is_empty(), "and it is over")
+	StrahdPresence.begin(st, StrahdPresence.visit("his"))
+	assert_true(StrahdPresence.ally_playing(st, "test_allies/letter:letter").is_empty(), "his visits are never an ally's")
+
+
+# --- The story bot's answer to an ally visit --------------------------------------------------------
+
+## The menu of `ref` (its lines read through), and the index AllyVisitAnswer picks from it.
+func _exit_of(ref: String) -> Dictionary:
+	var r := DialogueRunner.new(_party(), DiceRoller.new(5))
+	if not r.start(ref):
+		fail("no conversation at %s" % ref)
+		return {}
+	var b := r.next()
+	for i in 20:
+		if str(b["kind"]) == "options":
+			var opts := b["options"] as Array
+			var at := AllyVisitAnswer.exit_option(r, opts)
+			return {"at": at, "text": str((opts[at] as Dictionary)["text"]) if at >= 0 else ""}
+		b = r.next()
+	fail("%s never asked" % ref)
+	return {}
+
+
+func test_the_bot_leaves_an_ally_visit_by_the_option_that_ends_it() -> void:
+	assert_eq(_exit_of("test_allies/letter:letter")["text"], "Put it away.", "an option that ends outright, though others come first")
+	assert_eq(_exit_of("test_allies/letter:ask")["text"], "Goodbye.")
+
+
+func test_the_bot_takes_the_last_way_out_that_asks_nothing_more_and_never_a_check() -> void:
+	assert_eq(_exit_of("test_allies/letter:sealed")["text"], "Keep it.", "burn or keep both end it; a check could fail")
+	assert_eq(_exit_of("test_allies/letter:doorstep")["text"], "Shut the door.", "a fight is not a way out; a node that jumps on to the end is")
+
+
+func test_the_bot_has_no_exit_to_take_from_a_menu_that_only_goes_deeper() -> void:
+	assert_eq(_exit_of("test_allies/letter:read")["at"], -1, "'Go on' leads to another menu")
+	assert_true(AllyVisitAnswer.leaves("test_allies/letter", "kept"), "a node that sets a flag and ends")
+	assert_true(AllyVisitAnswer.leaves("test_allies/letter", "shut"), "a jump to a node that ends")
+	assert_false(AllyVisitAnswer.leaves("test_allies/letter", "brawl"), "a fight")
+	assert_false(AllyVisitAnswer.leaves("test_allies/letter", "ask"), "a menu")
+	assert_false(AllyVisitAnswer.leaves("test_allies/letter", "nowhere"), "a node that isn't there")
+
+
+# --- The game's hooks play an ally visit ------------------------------------------------------------
+
+func test_the_game_plays_an_ally_visit_and_the_bot_answers_it_by_the_exit_but_not_other_talk() -> void:
+	await _start_scene()
+	var st := GameState.story
+	StrahdPresence.use(_pack([_hers("hers", {"once": true}), _his("his", {"trigger": {"on": ["rest"]}})]))
+	root.call("enter_location", "test_town", "default")
+	await _frames(3)
+	assert_true(root.get("dialogue") != null, "the visit's conversation opens on arriving")
+	var bot := StoryBot.new(self, root)
+	await bot.settle()
+	assert_eq(str(bot.ally_visits), str(["hers"]), "the bot knew it for an ally's")
+	assert_true(bot.trace.any(func(t: String) -> bool: return t.ends_with("says: Put it away.")), "and left by the exit: %s" % str(bot.trace))
+	assert_false(bot.trace.any(func(t: String) -> bool: return t.ends_with("says: Open it and read it aloud.")), "without reading it")
+	assert_true(root.get("dialogue") == null, "the conversation is over")
+	assert_true((StrahdPresence.memory(st)["pending"] as Dictionary).is_empty(), "and the visit with it")
+	# The same conversation, started by the player walking up to someone, is answered the ordinary way.
+	root.call("start_dialogue", "test_allies/letter:letter", "")
+	await _frames(2)
+	await bot.settle()
+	assert_true(bot.trace.any(func(t: String) -> bool: return t.ends_with("says: Open it and read it aloud.")), "an ordinary talk takes the first option not taken yet")
+	assert_eq(str(bot.ally_visits), str(["hers"]), "and is no ally visit")
+

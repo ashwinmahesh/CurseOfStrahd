@@ -8,8 +8,12 @@ extends RefCounted
 ## condition holds once the conversation is over. Pure logic: the game root asks due() at its hooks and plays the
 ## steps; what happened is kept in StoryState.flags["_strahd"], so it survives saves. His attention (F9, below)
 ## shortens the wait between visits and gates the visits, road events and patrols that ask for it.
+## Other characters use the same engine for their letters and road meetings (ally visits, data/visits/<npc>.json): they
+## come after his, share his spacing, and keep clear of his wards and his attention (see find()).
 
 const PATH := "res://data/strahd/visits.json"
+## Where the ally visits are, one file per character (data/schemas/ally_visits.schema.json).
+const ALLY_DIR := "res://data/visits"
 ## Where the visits' memory lives in StoryState.flags: {fired: {visit id: {n, last}}, last: minute, pending: {}}.
 const MEMORY := "_strahd"
 const EVENTS: Array[String] = ["arrive", "rest", "travel"]
@@ -25,17 +29,45 @@ const ATTENTION_PATH := "res://data/strahd/attention.json"
 static var _attention: Dictionary = {}
 
 
-## The visits file (loaded once).
+## The visits file (loaded once), with the ally visits of data/visits/ after his own.
 static func data() -> Dictionary:
 	if _data.is_empty():
 		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(PATH))
 		_data = parsed as Dictionary if parsed is Dictionary else {"visits": []}
+		var list := _data.get("visits", []) as Array
+		list.append_array(ally_visits())
+		_data["visits"] = list
 	return _data
 
 
-## Tests swap in their own visits; use({}) goes back to the file.
+## Tests swap in their own visits (mark an ally's visit `"ally": true`); use({}) goes back to the files.
 static func use(d: Dictionary) -> void:
 	_data = d
+
+
+## An ally's visit (data/visits/): a friend's letter or road meeting, not Strahd's.
+static func is_ally(vis: Dictionary) -> bool:
+	return bool(vis.get("ally", false))
+
+
+## The visits of every file in `dir`, files in name order, each marked `ally: true` (the files don't say so).
+static func ally_visits(dir: String = ALLY_DIR) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if not DirAccess.dir_exists_absolute(dir):
+		return out
+	var files := Array(DirAccess.get_files_at(dir))
+	files.sort()
+	for f: String in files:
+		if not f.ends_with(".json"):
+			continue
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(dir.path_join(f)))
+		if not parsed is Dictionary:
+			continue
+		for v: Variant in (parsed as Dictionary).get("visits", []):
+			var vis := (v as Dictionary).duplicate(true)
+			vis["ally"] = true
+			out.append(vis)
+	return out
 
 
 # --- Attention (F9) -------------------------------------------------------------------------------
@@ -98,6 +130,19 @@ static func times(st: StoryState, id: String) -> int:
 	return int(((memory(st)["fired"] as Dictionary).get(id, {}) as Dictionary).get("n", 0))
 
 
+## The ally's visit whose conversation `ref` is, while it is playing (begin() has handed it out and its conversation
+## hasn't ended), or {}. Reads only: the story bot asks it to know a letter from a talk it walked up to.
+static func ally_playing(st: StoryState, ref: String) -> Dictionary:
+	var mem: Variant = st.flags.get(MEMORY, null)
+	if not mem is Dictionary:
+		return {}
+	var pending := (mem as Dictionary).get("pending", {}) as Dictionary
+	if str(pending.get("stage", "")) != "dialogue" or str(pending.get("ref", "")) != ref:
+		return {}
+	var vis := visit(str(pending.get("visit", "")))
+	return vis if is_ally(vis) else {}
+
+
 # --- When a visit happens -------------------------------------------------------------------------
 
 ## The visit that happens now, at `on` (arrive, rest or travel), or {}. It is marked as happened. `ctx` may give
@@ -111,7 +156,10 @@ static func due(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary:
 
 
 ## The visit due() would play now, without marking it as happened: a Long Rest asks it before its benefits come, so
-## a visit that may come to blows (may_fight) comes first (LongRest).
+## a visit that may come to blows (may_fight) comes first (LongRest). An ally's visit (is_ally) is not hidden by the
+## wards that hide the party from Strahd and its wait is the file's plain `gap_hours`, however much he has noticed;
+## it still keeps the quiet regions and places (fires) and shares his `last` visit, so a letter and a vampire never
+## come in the same breath.
 static func find(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary:
 	if not on in EVENTS:
 		return {}
@@ -127,11 +175,13 @@ static func find(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary
 	var now := st.total_minutes()
 	# The more he has noticed, the sooner he comes again (the attention tier's `gap`, a share of the usual wait).
 	var gap := roundi(float(d.get("gap_hours", 0)) * 60.0 * float(tier(st).get("gap", 1.0)))
+	var ally_gap := roundi(float(d.get("gap_hours", 0)) * 60.0)
 	# Nondetection, or a hallowed, forbidden or sanctum place (story/wards.gd): only the visits that can't wait come.
 	var hidden := Wards.hides_from_strahd(st, loc_id) != ""
 	for v: Variant in d.get("visits", []):
 		var vis := v as Dictionary
-		if not bool(vis.get("urgent", false)) and (hidden or now - int(mem["last"]) < gap):
+		var ally := is_ally(vis)
+		if not bool(vis.get("urgent", false)) and ((hidden and not ally) or now - int(mem["last"]) < (ally_gap if ally else gap)):
 			continue
 		if fires(vis, st, on, loc_id, region, night, outdoors):
 			return vis

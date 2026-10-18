@@ -138,6 +138,7 @@ class Story:
         t = lambda n: _table(self.root, n)  # noqa: E731
         self.locs, self.npcs, self.quests = t("locations"), t("npcs"), t("quests")
         self.random, self.schedule, self.strahd = t("random_encounters"), t("schedule"), t("strahd")
+        self.ally_visits = t("visits")
         self.endings, self.monsters = t("endings"), t("monsters")
         self.places, self.roads = [], []
         for k, v in sorted(t("travel").items()):
@@ -456,7 +457,10 @@ class Story:
                     for f, v in (e.get("set") or {}).items():
                         self.changed |= self.add(("flag", f, v), f"data/schedule/{sid}.json {e['id']}")
                     self.walk_ref(e.get("dialogue"), f"data/schedule/{sid}.json {e['id']}")
-        for v in self.strahd.get("visits", {}).get("visits", []):
+        visits = [("Strahd's visit", v) for v in self.strahd.get("visits", {}).get("visits", [])]
+        for npc, f in sorted(self.ally_visits.items()):   # a friend's letter or road meeting (data/visits/)
+            visits += [(f"{npc}'s visit", v) for v in f.get("visits", [])]
+        for who, v in visits:
             if not self.possible(v.get("when", "")):
                 continue
             for step in [v] + list(v.get("then", [])):
@@ -464,12 +468,12 @@ class Story:
                     continue
                 enc = step.get("encounter") if isinstance(step.get("encounter"), dict) else {}
                 for ref in (step.get("dialogue"), step.get("after"), enc.get("after")):
-                    self.walk_ref(ref, f"Strahd's visit {v['id']}")
+                    self.walk_ref(ref, f"{who} {v['id']}")
                 for f in (enc.get("flag"), (enc.get("withdraw") or {}).get("flag")):
                     if f:
-                        self.changed |= self.add(("flag", f, True), f"Strahd's visit {v['id']}")
+                        self.changed |= self.add(("flag", f, True), f"{who} {v['id']}")
                 for f, val in (step.get("set") or {}).items():
-                    self.changed |= self.add(("flag", f, val), f"Strahd's visit {v['id']}")
+                    self.changed |= self.add(("flag", f, val), f"{who} {v['id']}")
         for fk, nodes in self.dlg.items():
             top = fk.split("/")[0]
             for node, stmts in nodes.items():
