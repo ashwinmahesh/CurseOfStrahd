@@ -128,6 +128,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | The vault guardian | 10 | Amber Golem, Wraith | Amber Golem (460 HP), 4 Wraiths | 3/8 | 3 |
 | Offalia in her oven (open:hag_oven) | 6 | Night Hag (80 HP) | Night Hag (200 HP), 6 Nightmares | 3/8 | 3 |
 | Rahadin at the failed footlocker | 10 | Rahadin | Rahadin (325 HP), 3 Strahd's Animated Armors (220 HP) | 3/8 | 3 |
+| The iron knight (brazier room, from the brazier / from the alcove) | 10 | Iron Golem x2 (252 HP each, 2025 block): 1 to 2 wins in 8 at any Hit Points, so one wakes | Iron Golem (230 HP), the other knight empty armour | 4/8 / 3/8 | 3 |
 
 ## Where a fight is not at 3 in 8, and why
 

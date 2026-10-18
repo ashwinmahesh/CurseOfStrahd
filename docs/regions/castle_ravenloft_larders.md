@@ -263,6 +263,37 @@ Start in `castle_ravenloft_larders` at `from_gates`, level 10, by day. No flags 
   fog", "Stay in your cell", "We could end this"; avoid "We're getting you out" (Anatol's ambush), "Strike the
   chains off" (Doru), "(Draw steel on him.)" and the Intimidation option with Cyrus.
 
+## 17. The brazier room and the book's way down (Dungeon Expansion Plan C4, K78 to K82)
+
+Source: R. C. Veeder's area-by-area survey of the 2016 text (rcveeder.net, "Paths of Pain and Torment", K78 to K83) and
+play reports of the brazier room (the yellow stone to the count's tomb), read 2026-10-18. The survey gives each place's
+shape and what the 2016 text changed; the full list of the stones' places was not found in a source we could check, so
+the stones below are ours, labelled as ours (the plan's rule: only places the party has been, and the Amber Temple only
+once `tsolenka_gate_open`). The iron golem's numbers are the 2025 Monster Manual's, read twice from aidedd.org.
+
+| Book | Ours |
+|---|---|
+| K79, the western stair: a landing where the stair turns, with a glyph of warding that raises an illusory count who attacks whoever steps on it; the first hit that lands shows it is wax and it melts | A low iron door in the dungeon hall's south wall (`larders_west_stair_door` (15, 6), unlocked, behind the cold brazier; the nook behind it, (15, 6) and (15, 7), is carved out of solid wall) and a stair down (`larders_west_stair_down`) to the new map's upper flight. The landing's glyph (`brazier_glyph_ward`, a trap: Search 15 finds it, thieves' tools 15 disarm it, six squares across the whole landing so it can't be walked round) sets `brazier_glyph_woken`, which starts `brazier_wax_strahd` (the trap's flag starts the fight waiting on it: the same hunk in `LocationTraps._spring_trap` as the crypts' and V1's). The image is a `commoner`'s block in the count's own sprite and name "Wax Image of the Count", with 1 Hit Point, so it melts at the first blow that lands. No fight band (a one-hit illusion; 10 XP of a commoner's) |
+| K78, the brazier room: a white flame that gives no heat, seven stones in cups round the rim, a floating hourglass with a verse, two iron golems that fight only if the brazier, the hourglass or a golem is attacked; throwing a stone in carries you to another place | 10 by 10 squares (the book's room is 30 ft; ours is a fight room) with two alcoves. The brazier (`brazier_brazier`, a conversation) offers a stone only for a place the party has been (`visited:`): violet the Tsolenka guard tower, orange the castle's roofs, red Van Richten's tower, green the catacombs (the new `from_tunnel` arrival), indigo the Rooms of Weeping, blue the Amber Temple (also `tsolenka_gate_open`), yellow Strahd's tomb (the one place the reports name). Each throw turns the flame that colour and starts the sand; stepping in is `time +5` and a `move`. With none visited they are only pebbles. The verse on the hourglass (`brazier_hourglass`, a glass ring (`glass_ring`) standing in until the hourglass is drawn) names every colour in riddles. Never anything for a stone whose place the party hasn't seen |
+| K78's iron golems | One iron golem (`iron_golem`, the 2025 block: AC 20, 252 Hit Points, Bladed Arm with Fire, Fiery Bolt, a recharging 60-foot Poison Breath, Fire Absorption), woken only by a choice: striking a knight, striking the hourglass (it rings and doesn't break) or kicking the brazier over. It comes out of the west alcove at 230 Hit Points (`brazier_golems`); the east knight is empty armour. A boss fight for the full-ability party at level 10, over seeds 1-8 (tests/integration/test_scaled_boss_fights_brazier.gd): 3 wins from the knight's alcove and 4 from the brazier, both inside the band of 2 to 4 (5 rounds, about two heroes down). Two golems lose the party in about three rounds at any Hit Points (40 to 90 each: 1 to 2 wins in 8, nearly everyone down every time; 80 and 30 won 3, a coin toss on who breathes first), so the plan's "fewer or weaker" is one, a little weaker. It borrows the helmed horror's sprite and portrait at 2.6 high until its own is paid for |
+| K80 and K81, the centre stair and the tunnel through the Pillarstone: a long low tunnel, thick fog, a trapdoor that drops into the marble slide | A flight south from the room and a tunnel 32 squares long, two wide, with slick (difficult) squares and a fog mood (`ravenloft_brazier`). The trapdoor (`brazier_trapdoor_hatch`: Search 15, thieves' tools 14, four squares across the whole width) tips, sets `brazier_trapdoor_fell`, and the next step's check plays the slab's talk (`brazier_tunnel_slab`'s `call`), a `move` to the cell. A disarmed trapdoor is just floor |
+| K82, the marble slide: lands in a cell of the dungeon, no way back up without magic | The slide lands in the third north cell (`from_chute`, (13, 9)). The chute's mouth is a prop in the cell's north wall (`larders_chute_mouth`): Spider Climb, Levitate or Fly takes the party back up to the tunnel (`from_chute`), nothing else does. The cell's own gate opens from inside |
+| K81's other end: the tunnel ends in the catacombs | Stairs up to a new arrival in the lower gallery (`cat_tunnel_mouth` (38, 29), a notch in its south wall, arrival `from_tunnel` (38, 27)), and the same way back |
+
+Left out: K83, the spiral stair from the brazier room to the study (the plan's C4 stops at K82; the study has its own
+way down in C3), and the book's three doors on the brazier room's far wall (ours has the west door and the centre stair).
+
+Nothing that existed moved. The dungeon gained the nook's two squares, an area, a door, an exit, two spawns and the
+chute prop; the catacombs gained one wall notch, one exit and one spawn (tests/integration/test_brazier_room.gd compares
+every row of both maps with what they were). Flags (this file's data/flags, all bool): `brazier_glyph_woken`,
+`brazier_wax_melted`, `brazier_golems_awake`, `brazier_golems_beaten`, `brazier_trapdoor_fell`; none is a main flag and no
+quest, milestone or loot is attached, so the story bot's routes don't change.
+
+Words: narrative/castle_ravenloft/larders_brazier.dialogue and the end of narrative/narrator/castle_ravenloft_larders.dialogue,
+drafted by Gemini through the ai-bridge and edited here (the three briefs, the raw replies and the edits are in
+docs/plans/gemini_dungeon/C4/). None is voiced yet. Paid, waiting for a typed yes: the iron golem's own sprite and portrait
+(about 10 Gemini images, then a Blender render on an idle Mac) and the hourglass prop (1 or 2 images).
+
 ## 16. Files
 
 - Region: docs/regions/castle_ravenloft_larders.md (this file); task docs/tasks/P6-07.md
@@ -271,3 +302,5 @@ Start in `castle_ravenloft_larders` at `from_gates`, level 10, by day. No flags 
 - Quest: data/quests/the_cooks_guests.json; flags data/flags/castle_ravenloft_larders.json
 - Dialogue: narrative/castle_ravenloft/{larders_cyrus, larders_cells, larders_cellar, larders_machinery}.dialogue;
   narrative/narrator/castle_ravenloft_larders.dialogue; narrative/banter/castle_ravenloft_larders.dialogue
+- C4 (§17): data/locations/castle_ravenloft_brazier_room.json, data/monsters/iron_golem.json; narrative/castle_ravenloft/
+  larders_brazier.dialogue; tests/integration/{test_brazier_room, test_scaled_boss_fights_brazier}.gd

@@ -216,6 +216,9 @@ Each uses the nearest catalog model today:
 - Flags: data/flags/castle_ravenloft_catacombs.json
 - Dialogue: narrative/castle_ravenloft/{catacombs_coffin, catacombs_sergei}.dialogue;
   narrative/narrator/castle_ravenloft_catacombs.dialogue; narrative/banter/castle_ravenloft_catacombs.dialogue
+- The tunnel from the brazier room (Dungeon Expansion Plan C4, docs/regions/castle_ravenloft_larders.md §17): the lower
+  gallery has a notch in its south wall at (38, 29), the exit `cat_tunnel_mouth`, and the arrival `from_tunnel` (38, 27).
+  The green stone in the brazier room lands there too.
 
 ## 13. Critical path (story bot)
 
