@@ -100,6 +100,57 @@ func test_the_dursts_book_shows_its_spells_and_a_wizard_copies_from_the_inventor
 	root.call("close_screen")
 
 
+## The warden's book from the Amber Temple (Ashwin, 2026-10-18: found spellbooks always hold spells a Wizard can
+## learn; that chest held a blank one): at level 10 every spell in it can be copied from the inventory card.
+func test_the_wardens_book_from_the_amber_temple_copies_from_the_inventory() -> void:
+	Compendium.shared().tables["locations"]["test_study"] = {"id": "test_study", "name": "Test Study", "region": "test",
+		"summary": "", "map": {"rows": ["#####", "#...#", "#...#", "#####"]}, "spawns": {"default": [1, 1]}, "rest": "safe"}
+	GameState.reset()
+	var st := GameState.story
+	for id: String in ["godrick_pendlebrook", "ratatoille"]:
+		var ch := Pregens.build(id, 10)
+		ch.finish_long_rest()
+		st.party.append(ch)
+	st.gold = 1000.0
+	st.location = "test_study"
+	var rat := st.party[1]
+	st.party[0].add_item("amber_warden_spellbook", 1)
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await get_tree().process_frame
+	root.call("open_screen", "inventory", 0)
+	await get_tree().process_frame
+	var inv := root.get("screen") as InventoryScreen
+	inv.selected = "amber_warden_spellbook"
+	inv.call("_draw")
+	var card := inv.get("_card") as Container
+	var copies: Array[Button] = []
+	var texts: Array[String] = []
+	for c in card.get_children():
+		for l in c.find_children("*", "Label", true, false):
+			texts.append((l as Label).text)
+		for b in c.find_children("*", "Button", true, false):
+			if (b as Button).text.begins_with("Ratatouille copies it") or (b as Button).text.begins_with("In Ratatouille's book"):
+				copies.append(b as Button)
+	var joined := "\n".join(texts)
+	assert_true(joined.contains("Spells in this book") and joined.contains("Counterspell") and joined.contains("Wall of Force"), joined)
+	assert_eq(copies.size(), 9, "a copy button for each of the nine spells")
+	for b in copies:
+		if b.text.begins_with("Ratatouille copies it"):
+			assert_false(b.disabled, "%s: %s" % [b.text, b.tooltip_text])
+	var counter: Button = null
+	for b2 in copies:
+		if b2.text.begins_with("Ratatouille copies it") and b2.tooltip_text.contains("Into Ratatouille's spellbook"):
+			counter = b2
+			break
+	assert_true(counter != null, "something left to copy")
+	var before := (rat.spellcasting_entry("wizard")["spellbook"] as Array).size()
+	counter.pressed.emit()
+	await get_tree().process_frame
+	assert_eq((rat.spellcasting_entry("wizard")["spellbook"] as Array).size(), before + 1, "one more spell in his book")
+	root.call("close_screen")
+
+
 func test_an_older_save_gets_the_dursts_book_back() -> void:
 	# Before 2026-10-07 the footlocker held a plain spellbook; a save that looted it now carries the Dursts' book.
 	var st := StoryState.new()

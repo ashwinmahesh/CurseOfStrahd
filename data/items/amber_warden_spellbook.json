@@ -1,0 +1,25 @@
+{
+  "id": "amber_warden_spellbook",
+  "name": "A Warden's Spellbook",
+  "source": {
+    "book": "CoS",
+    "note": "Our own contents for the spellbook in a warden's chest at the Amber Temple; not checked against the module."
+  },
+  "category": "gear",
+  "weight_lb": 3,
+  "cost_gp": 50,
+  "icon": "spellbook",
+  "summary": "A temple warden's spellbook, its pages stiff with cold. Nine Wizard spells for keeping things shut in, a Wizard can copy.",
+  "text": "Grey leather gone hard with the cold, the clasp shaped like a closed eye. The wardens who kept the Amber Temple wrote down the spells they kept it with: wards and glyphs, walls that nothing crosses, and the words that send a thing back where it came from. Anyone can read the list; a Wizard can copy them into their own book.",
+  "spells": [
+    "alarm",
+    "see_invisibility",
+    "counterspell",
+    "dispel_magic",
+    "glyph_of_warding",
+    "banishment",
+    "mordenkainens_private_sanctum",
+    "otilukes_resilient_sphere",
+    "wall_of_force"
+  ]
+}

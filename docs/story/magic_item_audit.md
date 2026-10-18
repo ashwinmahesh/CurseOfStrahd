@@ -170,6 +170,28 @@ lamplighters), a Potion of Supreme Healing, three diamonds and 450 gp, a hoard o
 level 10 secrets (very rare, not legendary: legendary items stay in the four level 10 villains' hoards). The closet's
 first-sight line now hints that it keeps more than lamps.
 
+## 6. Found spellbooks (2026-10-18)
+
+Ashwin: found spellbooks should always hold spells a Wizard can learn. The warden's chest at the Amber Temple held the
+PHB's blank Spellbook, and the Arcane Grimoires (books that work as a spellbook) and the Enduring Spellbook held
+nothing either. Now:
+
+| Book | Where | Spells (all on the Wizard list, in play) |
+|---|---|---|
+| A Warden's Spellbook (new, data/items/amber_warden_spellbook.json) | Amber Temple, a warden's chest (level 10) | Alarm, See Invisibility, Counterspell, Dispel Magic, Glyph of Warding, Banishment, Mordenkainen's Private Sanctum, Otiluke's Resilient Sphere, Wall of Force |
+| The Dursts' Spellbook (unchanged; it already passed) | Death House, the Dursts' footlocker (level 2) | Comprehend Languages, Disguise Self, False Life, Ray of Sickness, Unseen Servant, Darkness, Gentle Repose |
+| Arcane Grimoire, +1 | sold (Kasimir, Xaver) | Mage Armor, Magic Missile, Shield, Misty Step, Scorching Ray |
+| Arcane Grimoire, +2 | Dobre's satchel (Ribbons, Vallaki, level 5); sold | Sleep, Thunderwave, Mirror Image, Web, Fireball, Haste |
+| Arcane Grimoire, +3 | sold (Xaver) | Fly, Lightning Bolt, Dimension Door, Greater Invisibility, Ice Storm, Cone of Cold, Hold Monster |
+| Enduring Spellbook | sold (Blinsky) | Detect Magic, Find Familiar, Identify, Magic Missile, Levitate |
+
+A shop's blank Spellbook stays blank (it's paper to write in). Mordenkainen's book from the Baratok cairn isn't an
+item: the story hands it back to him. tests/unit/test_spellbook_loot.gd fails if a book lists a spell a Wizard can't
+learn (off the list, out of play, a cantrip, twice, or above what a Wizard two levels past the place can prepare), if a
+blank spellbook is ever loot, or if random treasure could roll an empty one; test_spellbook_copy.gd copies from the
+warden's book on the inventory card. A save whose warden's chest still holds the blank book, or whose non-Wizard took
+it, gets the warden's book (StoryState._upgrade_found_spellbook, which now does the Dursts' book too).
+
 ## Lines left unvoiced
 
 The swaps change what 34 Narrator lines describe (the search line for each find, the dragon's gift niche, the chapel
