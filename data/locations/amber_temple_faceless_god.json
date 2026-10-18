@@ -53,7 +53,8 @@
           28
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble"
     },
     {
       "id": "amber_great_hall",
@@ -68,7 +69,8 @@
           21
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble"
     },
     {
       "id": "ring_of_amber",
@@ -83,7 +85,9 @@
           21
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble",
+      "walls": "amber/glazed_wall"
     },
     {
       "id": "hall_of_echoes",

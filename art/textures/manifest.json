@@ -1387,6 +1387,42 @@
         "material": {
           "roughness": 0.25
         }
+      },
+      "violet_marble": {
+        "file": "art/textures/amber/violet_marble_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/amber/violet_marble_2k.webp",
+        "normal_file": "art/textures/amber/violet_marble_2k_n.webp",
+        "orm_file": "art/textures/amber/violet_marble_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/amber_violet_marble.webp",
+        "variants": [
+          {
+            "file": "art/textures/amber/violet_marble_2k_b.webp",
+            "normal_file": "art/textures/amber/violet_marble_2k_b_n.webp",
+            "orm_file": "art/textures/amber/violet_marble_2k_b_orm.webp"
+          }
+        ],
+        "material": {
+          "gloss": 0.2,
+          "relief": 0.4
+        }
+      },
+      "glazed_wall": {
+        "file": "art/textures/amber/glazed_wall_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/amber/glazed_wall_2k.webp",
+        "normal_file": "art/textures/amber/glazed_wall_2k_n.webp",
+        "orm_file": "art/textures/amber/glazed_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/amber_glazed_wall.webp",
+        "material": {
+          "roughness": 0.3
+        }
       }
     },
     "mountain": {

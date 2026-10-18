@@ -83,7 +83,9 @@
           16
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble",
+      "walls": "amber/glazed_wall"
     },
     {
       "id": "sanctum",

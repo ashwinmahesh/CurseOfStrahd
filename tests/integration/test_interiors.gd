@@ -656,8 +656,10 @@ func test_the_amber_temple_keeps_its_own_look() -> void:
 	var want := {"amber_temple_library": {"stacks_chained_1": "chained_bookcase"},
 		"amber_temple_entrance": {"west_cold_brazier": "brazier_cold"},
 		"amber_temple_vault": {"sanctum_braziers": "brazier_cold"}}
-	var floors := {"amber_temple_library": [Vector2i(6, 3), Vector2i(23, 5)], "amber_temple_faceless_god": [Vector2i(20, 14)],
-		"amber_temple_vault": [Vector2i(20, 12)]}
+	var floors := {"amber_temple_library": [Vector2i(6, 3), Vector2i(23, 5)], "amber_temple_vault": [Vector2i(20, 24)]}
+	# The great hall, its ring of amber and the hall of vestiges lie on the polished violet-black marble (the paid surfaces
+	# of the Look Plan, P1); the rest keep the temple's black stone.
+	var marble := {"amber_temple_faceless_god": [Vector2i(20, 14), Vector2i(35, 13)], "amber_temple_vault": [Vector2i(20, 12)]}
 	# The cold rooms lie on frosted flags (Amber Temple Look Plan step 1): the doors' vestibule and guardrooms, the hall
 	# of echoes and the wardens' cells. Every other room is the temple's black stone.
 	var frosted := {"amber_temple_entrance": [Vector2i(15, 4), Vector2i(4, 5), Vector2i(26, 5)],
@@ -674,6 +676,9 @@ func test_the_amber_temple_keeps_its_own_look() -> void:
 		for c: Vector2i in floors.get(loc_id, []):
 			var f := board.floor_box(c)
 			assert_true(f != null and _surface(f) == "amber/black_stone", "%s %s is the temple's black stone" % [loc_id, c])
+		for c: Vector2i in marble.get(loc_id, []):
+			var f := board.floor_box(c)
+			assert_true(f != null and _surface(f) == "amber/violet_marble", "%s %s is the violet-black marble" % [loc_id, c])
 		for c: Vector2i in frosted.get(loc_id, []):
 			var f := board.floor_box(c)
 			assert_true(f != null and _surface(f) == "church/frosted_flags", "%s %s is frosted flags" % [loc_id, c])
