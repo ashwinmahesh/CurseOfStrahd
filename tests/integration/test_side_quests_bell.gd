@@ -50,7 +50,8 @@ func test_defending_bluto_and_ringing_the_bell_for_the_dead() -> void:
 	SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water")
 	assert_eq(roundi(st.gold), 200, "paid once")
 	assert_eq(_pictures(SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water")), [] as Array[String], "they rise once")
-	beats = SideQuestPlay.play(st, "lake_zarovich/old_fisher:start")
+	# A party that can still ask about the Reed Isle is offered the bell or the island first (sq-stuck-2).
+	beats = SideQuestPlay.play(st, "lake_zarovich/old_fisher:start", ["the bell"])
 	assert_true(SideQuestPlay.text(beats).contains("pike"))
 	assert_true(SideQuestPlay.text(beats).contains("child in a sack"))
 
