@@ -328,6 +328,55 @@ func test_flames_flicker_by_kind() -> void:
 		fire[2]])
 
 
+## The Amber Temple's lights are amber (Amber Temple Look Plan, step 3): a slow breath, one swell about every five
+## seconds, never a flutter or a gutter, no shadow, each light on its own beat; every light the temple's four maps name
+## by kind `magic` is one.
+func test_the_amber_breathes_slowly() -> void:
+	var amber := _flicker_spread("amber")
+	assert_true(amber[0] > 0.03 and amber[0] < 0.12, "it breathes, gently (%.3f)" % amber[0])
+	assert_true(amber[1] >= 0.7 and amber[2] <= 1.3, "never out and never flaring (%.2f to %.2f)" % [amber[1], amber[2]])
+	var f := LightFlicker.new()
+	f.set_style(LightFlicker.STYLES["amber"] as Dictionary)
+	f.set_seed(3)
+	var turns := 0
+	var quickest := 0.0
+	var last := f.step(1.0 / 60.0)
+	var rising := true
+	for i in 1200:
+		var level := f.step(1.0 / 60.0)
+		quickest = maxf(quickest, absf(level - last))
+		if (level > last + 0.0005) != rising and absf(level - last) > 0.0005:
+			rising = not rising
+			turns += 1
+		last = level
+	f.free()
+	assert_true(turns <= 10, "slow: its level turns %d times in twenty seconds" % turns)
+	assert_true(quickest < 0.004, "and smooth: no frame moves it more than %.4f (a candle's flutter would)" % quickest)
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var places := 0
+	for loc_id: String in ["amber_temple_entrance", "amber_temple_faceless_god", "amber_temple_library", "amber_temple_vault"]:
+		var v := _view(loc_id)
+		for i in 2:
+			await get_tree().process_frame
+		var found := 0
+		for n in v.find_children("*", "OmniLight3D", true, false):
+			var l := n as OmniLight3D
+			if str(l.get_meta("light_kind", "")) != "amber":
+				continue
+			found += 1
+			assert_true(LightFlicker.of(l) != null, "%s: an amber light breathes" % loc_id)
+			assert_false(l.shadow_enabled and not l.has_meta("no_shadow"), "%s: and casts no shadow" % loc_id)
+			assert_true(l.has_meta("no_shadow"), "%s: marked so" % loc_id)
+		for li: Variant in (v.loc["lights"] as Array):
+			assert_true(str((li as Dictionary)["kind"]) != "magic", "%s: no steady magic light is left" % loc_id)
+		assert_true(found >= 3, "%s has its amber lights (%d)" % [loc_id, found])
+		places += 1
+		v.queue_free()
+	assert_eq(places, 4, "all four maps")
+	Look.set_style(was, false)
+
+
 ## A flickering light's energy and colour waver about its own, each light on its own beat, and its range stays put
 ## (no shadow map redrawn for it); a CandleFlicker's own jitter stops; a change made to the light by anything else
 ## becomes its new own energy.

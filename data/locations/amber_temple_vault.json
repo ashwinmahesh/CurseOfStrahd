@@ -408,7 +408,7 @@
         20,
         8
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 5,
       "dim_ft": 20,
       "color": "flame"
@@ -418,7 +418,7 @@
         20,
         2
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 10,
       "dim_ft": 20,
       "color": "wick"
@@ -428,7 +428,7 @@
         20,
         22
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 20,
       "color": "mist_blue"
@@ -438,7 +438,7 @@
         5,
         12
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15
     },
@@ -447,7 +447,7 @@
         33,
         12
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15
     },
@@ -456,7 +456,7 @@
         4,
         7
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
       "color": "flame"
@@ -466,7 +466,7 @@
         13,
         12
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
       "color": "flame"
@@ -476,7 +476,7 @@
         20,
         12
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
       "color": "flame"
@@ -486,7 +486,7 @@
         27,
         12
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
       "color": "flame"

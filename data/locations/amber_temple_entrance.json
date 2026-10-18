@@ -498,7 +498,7 @@
         15,
         5
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15,
       "color": "mist_blue"
@@ -508,7 +508,7 @@
         16,
         9
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10
     },
@@ -517,7 +517,7 @@
         18,
         11
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10
     },
@@ -526,7 +526,7 @@
         15,
         2
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10,
       "color": "flame"
@@ -536,7 +536,7 @@
         3,
         5
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10,
       "color": "moonlight"
@@ -546,7 +546,7 @@
         27,
         5
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10,
       "color": "moonlight"

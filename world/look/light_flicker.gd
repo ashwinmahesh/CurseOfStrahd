@@ -29,6 +29,11 @@ const STYLES := {
 		"redden": 0.2, "sway": 0.0},
 	"lit_window": {"swell": 0.08, "flutter": 0.03, "shiver": 0.0, "pace": 0.6, "gutters": 1.0, "dip": 0.12,
 		"redden": 0.1, "sway": 0.0},
+	# The Amber Temple's amber (Amber Temple Look Plan, step 3): a slow breath, one swell about every five seconds (the
+	# swell layer picks a new level every 1 / (0.5 * pace) seconds), no flutter, no gutters, never reddening. Each light
+	# starts from its own random point, so a room's amber never breathes in step.
+	"amber": {"swell": 0.22, "flutter": 0.0, "shiver": 0.0, "pace": 0.4, "gutters": 0.0, "dip": 0.0, "redden": 0.0,
+		"sway": 0.0},
 }
 ## How many times a second each layer (swell, flutter, shiver) turns, at pace 1.
 const RATES: Array[float] = [0.5, 2.2, 8.0]
