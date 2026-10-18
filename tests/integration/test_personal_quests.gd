@@ -164,7 +164,8 @@ func test_every_camp_talk_opens_with_a_condition() -> void:
 		for node in df.order:
 			if node.begins_with("talk_"):
 				talks += 1
-				assert_true(CampTalk.opening_condition(df, node).contains("name:"), "%s:%s names its companion" % [f, node])
+				var cond := CampTalk.opening_condition(df, node)
+				assert_true(cond.contains("name:") or cond.contains("guest:"), "%s:%s names its companion or guest" % [f, node])
 		assert_true(talks >= 2, "%s has talks" % f)
 
 
