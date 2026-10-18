@@ -65,12 +65,13 @@ func test_the_rag_queen_at_level_9() -> void:
 const SEVENTH_ROW: Array[Vector2i] = [Vector2i(29, 24), Vector2i(28, 24), Vector2i(27, 24), Vector2i(26, 24)]
 
 
-## The vine mother at level 6: The Vine Mother (340 HP), 3 Vine Blights, 5 Needle Blights; 3 in 8.
+## The vine mother at level 6: The Vine Mother (340 HP), 3 Vine Blights, 5 Needle Blights; 3 in 8, and 7 with Adrian
+## since foes' cones aim freely (owner, 2026-10-18: accept the new results, no retune).
 func test_the_vine_mother_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4, 5, 6, 7, 8], ["winery_reclaimed"],
 		["adrian_martikov"], [], SEVENTH_ROW)
-	assert_true(wins >= 2 and wins <= 4, "the Vine Mother falls in 2 to 4 of 8 with Adrian (%d)" % wins)
+	assert_true(wins >= 6 and wins <= 8, "the Vine Mother falls in 6 to 8 of 8 with Adrian (%d)" % wins)
 	wins = await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4, 5, 6, 7, 8], ["winery_reclaimed"], [], [],
 		SEVENTH_ROW)
 	assert_true(wins >= 2 and wins <= 4, "and in 2 to 4 of 8 without him (%d)" % wins)
@@ -151,11 +152,12 @@ func test_the_tinkers_wagon_at_level_5() -> void:
 	assert_true(wins >= 2 and wins <= 4, "the Wagon falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## The Tinker's Wagon at level 6: The Tinker's Wagon (450 HP), 5 Mimics; 2 in 8, the harder side (no step lands on 3).
+## The Tinker's Wagon at level 6: The Tinker's Wagon (450 HP), 5 Mimics; 2 in 8, the harder side (no step lands on 3);
+## 1 since foes' cones aim freely (owner, 2026-10-18: accept the new results, no retune).
 func test_the_tinkers_wagon_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("svalich_crossroads", 12, 6, "tinkers_wagon", [1, 2, 3, 4, 5, 6, 7, 8])
-	assert_true(wins >= 2 and wins <= 4, "the Wagon falls in 2 to 4 of 8 (%d)" % wins)
+	assert_true(wins >= 0 and wins <= 2, "the Wagon falls in 0 to 2 of 8 (%d)" % wins)
 
 
 ## The Count's fowler, three more fowlers (vampire spawn) and three swarms of bats.
@@ -267,24 +269,26 @@ const KHAZAN_DOORS: Array[String] = ["khazan_study_door_w", "khazan_study_door_e
 
 
 ## The First and Second Visitors (a banshee and a wraith), five remembered knights (ghosts), five visitors (specters) and
-## two more wraiths.
+## two more wraiths. 7 in 8 since foes' cones aim freely (owner, 2026-10-18: accept the new results, no retune).
 func test_the_remembered_at_level_10() -> void:
 	speakers_step_aside = false
 	var wins := await _series("khazan_undercroft", 12, 10, "remembered", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], KHAZAN_STAIR)
-	assert_true(wins >= 4 and wins <= 6, "the remembered fall in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 6 and wins <= 8, "the remembered fall in 6 to 8 of 8 (%d)" % wins)
 
 
-## Khazan with his name at level 10: Khazan (315 HP), 2 Specters; 3 in 8.
+## Khazan with his name at level 10: Khazan (315 HP), 2 Specters; 3 in 8, and 1 since foes' cones aim freely (owner,
+## 2026-10-18: accept the new results, no retune).
 func test_khazan_with_his_name_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("khazan_undercroft", 12, 10, "khazan_named", [1, 2, 3, 4, 5, 6, 7, 8], [], [], KHAZAN_DOORS, KHAZAN_STUDY)
-	assert_true(wins >= 2 and wins <= 4, "Khazan is driven off in 2 to 4 of 8 (%d)" % wins)
+	assert_true(wins >= 0 and wins <= 2, "Khazan is driven off in 0 to 2 of 8 (%d)" % wins)
 
 
-## Driven off, not destroyed: he leaves the fight below 30 Hit Points and goes back into his name.
+## Driven off, not destroyed: he leaves the fight below 30 Hit Points and goes back into his name (seed 7 since foes'
+## cones aim freely; it was seed 1).
 func test_khazan_withdraws_into_his_name() -> void:
-	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 1, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
-	assert_eq(str(res["outcome"]), "victory", "seed 1 drives him off")
+	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 7, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	assert_eq(str(res["outcome"]), "victory", "seed 7 drives him off")
 	assert_true((res["story_flags"] as Dictionary).has("khazan_withdrawn"), "back into his name")
 	assert_true((res["departed"] as Array).has("withdraw"), "he left the fight, he didn't die in it")
 
@@ -326,20 +330,22 @@ func test_the_eye_below_with_the_wardens_ways_at_level_10() -> void:
 const YESTER_CROWN: Array[Vector2i] = [Vector2i(15, 18), Vector2i(16, 18), Vector2i(17, 18), Vector2i(18, 18)]
 
 
-## The Ash Effigy and Zorica at level 7: The Ash Effigy (355 HP), Druid, 5 Twig Blights; 3 in 8.
+## The Ash Effigy and Zorica at level 7: The Ash Effigy (355 HP), Druid, 5 Twig Blights; 3 in 8, and 1 since foes'
+## cones aim freely (owner, 2026-10-18: accept the new results, no retune).
 func test_the_ash_effigy_and_zorica_at_level_7() -> void:
 	speakers_step_aside = true
 	var wins := await _series("yester_hill_gulthias_tree", 22, 7, "ash_effigy", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved", "gulthias_tree_burned"], [], [], YESTER_CROWN)
 	speakers_step_aside = false
-	assert_true(wins >= 2 and wins <= 4, "the Ash Effigy and Zorica fall in 2 to 4 of 8 at level 7 (%d)" % wins)
+	assert_true(wins >= 0 and wins <= 2, "the Ash Effigy and Zorica fall in 0 to 2 of 8 at level 7 (%d)" % wins)
 
 
-## The Ash Effigy at level 8: The Ash Effigy (430 HP), 4 Twig Blights; 4 in 8.
+## The Ash Effigy at level 8: The Ash Effigy (430 HP), 4 Twig Blights; 4 in 8, and 5 since foes' cones aim freely
+## (owner, 2026-10-18: accept the new results, no retune).
 func test_the_ash_effigy_at_level_8() -> void:
 	speakers_step_aside = true
 	var wins := await _series("yester_hill_gulthias_tree", 22, 8, "ash_effigy", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved", "gulthias_tree_burned", "kostin_doubts"], [], [], YESTER_CROWN)
 	speakers_step_aside = false
-	assert_true(wins >= 2 and wins <= 4, "the Ash Effigy falls in 2 to 4 of 8 at level 8 (%d)" % wins)
+	assert_true(wins >= 4 and wins <= 6, "the Ash Effigy falls in 4 to 6 of 8 at level 8 (%d)" % wins)
 
 ## The family crypts under Death House, the four at Walter's crypt.
 const WALTERS_CRYPT: Array[Vector2i] = [Vector2i(14, 3), Vector2i(15, 3), Vector2i(14, 2), Vector2i(15, 2)]

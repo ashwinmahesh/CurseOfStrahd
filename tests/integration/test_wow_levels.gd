@@ -34,10 +34,18 @@ func test_the_story_fights_at_level_7() -> void:
 	await _held("wizard_of_wines_press_house", 12, 7, "press_house_mash", [], [])
 
 
+## Each level's bands without Adrian and with him. Since foes' cones aim freely (owner, 2026-10-18: accept the new
+## results, no retune) the party wins 8 in 8 with Adrian at level 5, 1 without him at level 7 and 1 with him at level 8.
+const VINE_MOTHER_BANDS := {5: [[2, 4], [7, 8]], 7: [[0, 2], [2, 5]], 8: [[2, 4], [0, 2]]}
+
+
 func test_the_vine_mother_at_levels_5_7_and_8() -> void:
 	for level: int in [5, 7, 8]:
-		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, [], 2, 4)
-		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, ["adrian_martikov"], 2, 5)
+		var bands := VINE_MOTHER_BANDS[level] as Array
+		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, [],
+			int((bands[0] as Array)[0]), int((bands[0] as Array)[1]))
+		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, ["adrian_martikov"],
+			int((bands[1] as Array)[0]), int((bands[1] as Array)[1]))
 
 
 ## The Ash Effigy with a druid at level 8: The Ash Effigy (480 HP), Druid, 4 Twig Blights; 3 in 8.
