@@ -304,6 +304,14 @@ braziers burning in the antechamber and either side of the altar.
   - The temple's found traps glow (TrapGlow, world/look/trap_glow.gd, from TrapSight.dress; shaders/world/trap_glow.gdshader): the
     line of warding glyphs pulses runes along the floor, the faceless god's gaze is a slow violet ring of light on the
     squares it looks at, the frost vent breathes pale wisps. They go with the trap when it is disarmed; Modern only.
+  - The paid art (Look Plan P1 to P3, six Gemini sheets, 2026-10-18, about $0.70; Ashwin's typed yes in the thread): two surfaces,
+    `amber/violet_marble` (the great hall, its ring and the hall of vestiges: area `floor`) and `amber/glazed_wall` (the ring
+    and the hall of vestiges: area `walls`); two decal sheets, `wall_seeps` (amber running down the glazed walls) and
+    `floor_temple` (frost rime, scrapes and frost dust in the cold rooms by the catalog's `clutter.places` rules for the three
+    inside maps; its gold arc, four of them turned a quarter each, is the inlaid ring in the ring of amber, AmberMotion._inlay);
+    two prop sheets: the copper pact ledger (the sanctum's lectern, with a low copper light and glints), a dish of offering candles
+    (two of the god's pilgrim candles), amber shards and a standing shard (by the Eye's broken block), and four icicle pieces
+    (cut, not yet hung: they wait for the doors' look).
 
 ### Castle Ravenloft
 

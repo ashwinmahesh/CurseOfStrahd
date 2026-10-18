@@ -11,6 +11,11 @@ const SEEP_SHADER := preload("res://shaders/world/amber_seep.gdshader")
 ## The hall of echoes' squares (the great hall's west room), and Patrina's desk, whose candle stays warm.
 const ECHOES := Rect2i(0, 6, 11, 16)
 const PATRINA_DESK := Vector2i(6, 8)
+## The middle of the six blocks of the ring of amber (world x, z), how far out the gold inlay's outer edge reaches, and
+## the decal it is made of.
+const INLAY_AT := Vector2(36.0, 14.0)
+const INLAY_RADIUS := 3.4
+const INLAY_DECAL := "floor_temple_2"
 ## Where her book lies (squares, world x and z) and how high the flakes start above the floor.
 const BOOK_AT := Vector2(6.55, 8.55)
 const FLAKE_TOP := 1.25
@@ -28,6 +33,7 @@ static func dress(view: LocationView) -> void:
 	match view.loc_id:
 		"amber_temple_faceless_god":
 			_flakes(view)
+			_inlay(view)
 		"amber_temple_library":
 			_steam(view)
 			_stir(view)
@@ -120,6 +126,36 @@ static func _flakes(view: LocationView) -> void:
 	p.draw_pass_1 = quad
 	p.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	view.add_child(p)
+
+
+## The ring of amber's gold inlay (the paid decal `floor_temple_2`, a quarter of a ring of black stone set with gold lines):
+## four of them turned a quarter each make a ring in the floor round the middle of the six blocks.
+static func _inlay(view: LocationView) -> void:
+	var info := Clutter.manifest().get(INLAY_DECAL, {}) as Dictionary
+	if info.is_empty() or not ResourceLoader.exists("res://" + str(info.get("file", ""))):
+		return
+	var albedo := load("res://" + str(info["file"])) as Texture2D
+	var normal: Texture2D = load("res://" + str(info["normal_file"])) as Texture2D if ResourceLoader.exists("res://" + str(info.get("normal_file", ""))) else null
+	var root := Node3D.new()
+	root.name = "GoldInlay"
+	view.add_child(root)
+	var c := Vector3(INLAY_AT.x, view.board.floor_y(Vector2i(int(INLAY_AT.x), int(INLAY_AT.y))) + 0.02, INLAY_AT.y)
+	var aspect := float(info.get("aspect", 1.0))
+	var w := INLAY_RADIUS * sqrt(aspect)
+	var tall := INLAY_RADIUS / sqrt(aspect)
+	for k in 4:
+		var turn := Basis(Vector3.UP, float(k) * PI / 2.0)
+		var d := Decal.new()
+		d.name = "InlayQuarter%d" % k
+		d.texture_albedo = albedo
+		if normal != null:
+			d.texture_normal = normal
+		d.size = Vector3(w, Clutter.DEPTH, tall)
+		d.basis = turn
+		d.position = c + turn * Vector3(w / 2.0, 0.0, -tall / 2.0)   # (the arc bends round the picture's bottom left corner: the ring's middle)
+		d.upper_fade = 0.25
+		d.lower_fade = 0.25
+		root.add_child(d)
 
 
 # --- The library -------------------------------------------------------------------------------------------------------

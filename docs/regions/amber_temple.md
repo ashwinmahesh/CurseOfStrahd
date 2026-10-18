@@ -339,8 +339,11 @@ Modern finish only; Classic keeps what it had. Nothing here changes a rule, a fl
 - **Still to do**: the doors outside (the dead twin colossus dark, the Sentinel's dais and eye light, the warm wedge of
   light from the doors' seams, the shards once it is destroyed) and the Sentinel stepping down as a 30 ft figure (plan
   items 12 and 25) wait for the scale-ups work (per-prop `tint`/`scale`, the Sentinel's height) to land on main; the
-  pillar strips and wall seams do not go dark when the temple is sealed; and the optional surfaces, decals and props
-  (plan section 6) are paid art awaiting Ashwin's word.
+  pillar strips and wall seams do not go dark when the temple is sealed; the icicle props (cut from the paid art) wait for
+  the doors.
+- **Paid art** (plan section 6, Ashwin's yes 2026-10-18): violet-black marble floors and amber-glazed walls in the great hall, the
+  ring and the hall of vestiges; amber seeps down their walls, frost and scrapes in the cold rooms, and a gold inlaid ring in the
+  ring of amber; the copper pact ledger, offering-candle dishes and amber shards.
 
 ## 14. The critical path (story bot)
 

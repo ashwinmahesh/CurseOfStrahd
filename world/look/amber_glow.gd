@@ -46,7 +46,7 @@ const THREAD_RADIUS := 0.03
 const THREAD_LENGTH := 11.0
 ## The glint on a heap of gold (the vault of offerings), and the pieces that are heaps.
 const GLINT_SHADER := preload("res://shaders/world/glint.gdshader")
-const HEAPS: Array[String] = ["offering_pile", "gold_heap", "gold_spill", "coin_pile"]
+const HEAPS: Array[String] = ["offering_pile", "gold_heap", "gold_spill", "coin_pile", "copper_ledger"]
 const GLINTS_PER_HEAP := 3
 ## The fight the sanctum's cold braziers flare violet for, and the pieces that are those braziers.
 const FLARE_ENCOUNTER := "vosk_unmasked"
@@ -271,10 +271,25 @@ static func dress_place(view: LocationView) -> void:
 			continue   # (a piece a prop took the square from is still there, hidden)
 		if art in HEAPS:
 			heaps.append((n as Node3D).global_position)
+			if art == "copper_ledger":
+				_ledger_glow(view, (n as Node3D).global_position)   # the pact ledger glints copper in the dark sanctum
 		elif art == BRAZIER:
 			braziers.append(n as Node3D)
 	_glints(view, heaps)
 	_braziers(view, braziers)
+
+
+## A low copper light on the pact ledger, so it glints in the dark of the sanctum and is seen there.
+static func _ledger_glow(view: LocationView, at: Vector3) -> void:
+	var light := CandleFlicker.new()
+	light.name = "LedgerGlow"
+	light.light_color = Look.color("flame").lerp(Look.color("rust"), 0.5)
+	light.omni_range = 2.4
+	light.base_energy = 0.7
+	light.flicker = 0.05
+	light.position = at + Vector3(0.0, 0.7, 0.2)
+	light.set_meta("no_shadow", true)
+	view.add_child(light)
 
 
 ## A few glints hung above each heap of gold, one shared material (each flashes on its own beat).

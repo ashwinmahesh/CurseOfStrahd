@@ -1406,8 +1406,8 @@
           }
         ],
         "material": {
-          "gloss": 0.2,
-          "relief": 0.4
+          "gloss": 0.28,
+          "relief": 0.18
         }
       },
       "glazed_wall": {

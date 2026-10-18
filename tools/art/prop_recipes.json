@@ -1184,6 +1184,24 @@
         "blood_pool"
       ],
       "aspect": "1:1"
+    },
+    "amber_props_a": {
+      "view": "stand",
+      "items": [
+        "copper_ledger",
+        "amber_shards",
+        "offering_candles",
+        "amber_spire"
+      ]
+    },
+    "amber_props_b": {
+      "view": "wall",
+      "items": [
+        "icicles_long",
+        "icicles_short",
+        "icicles_cluster",
+        "icicles_single"
+      ]
     }
   },
   "props": {
@@ -2895,6 +2913,38 @@
     "statue_young_strahd_back": {
       "height": 2.0,
       "back_of": "statue_young_strahd"
+    },
+    "copper_ledger": {
+      "height": 0.75,
+      "subject": "a huge old pact ledger bound in green-tarnished copper plates with thick copper corners and a heavy copper clasp, lying closed on a small carved black stone lectern"
+    },
+    "amber_shards": {
+      "height": 0.45,
+      "subject": "a heap of broken sharp shards of translucent honey-gold amber, some as long as a forearm, lying where they fell, with a scatter of tiny splinters"
+    },
+    "offering_candles": {
+      "height": 0.35,
+      "subject": "a shallow stone dish of pilgrims' offerings: a dozen short white candle stubs of different heights standing in a crust of melted wax, a few lit with small flames, some burned down to nothing"
+    },
+    "amber_spire": {
+      "height": 0.9,
+      "subject": "one tall jagged shard of translucent honey-gold amber standing upright out of a small drift of splinters"
+    },
+    "icicles_long": {
+      "height": 0.6,
+      "subject": "only ice, no stone, no door and nothing behind it: a fringe of long pale blue-white icicles of different lengths joined at the top by a thin ragged bar of frozen ice, the middle ones longest"
+    },
+    "icicles_short": {
+      "height": 0.4,
+      "subject": "only ice, no stone and nothing behind it: a short fringe of small pale blue-white icicles evenly spaced along a thin ragged bar of frozen ice"
+    },
+    "icicles_cluster": {
+      "height": 0.5,
+      "subject": "only ice, no stone and nothing behind it: a thick cluster of three heavy pale blue-white icicles fused together at the top into one lump of frozen ice"
+    },
+    "icicles_single": {
+      "height": 0.45,
+      "subject": "one single long thin pale blue-white icicle hanging down with a drop of water at its tip"
     }
   },
   "pair_prompt": "A game prop sheet: two objects, each shown twice, arranged in a 2 by 2 grid with wide empty white space between the four drawings; nothing touches or crosses the middle of the image. Every drawing uses the same three-quarter view from slightly above, and each object is turned the same way in its pair: its front faces toward the lower right of the picture. Top left: {0}, seen from the front. Top right: the very same object seen from directly behind at the same angle, so its back faces toward the lower right. Bottom left: {1}, seen from the front. Bottom right: the very same object seen from directly behind at the same angle. Same colours, size and details in each pair, on a plain flat white background, no ground, no ground shadows, no labels, no text, no grid lines, no borders.",

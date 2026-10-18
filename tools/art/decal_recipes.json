@@ -146,6 +146,26 @@
         "a straight stretch of two parallel wheel ruts running from left to right, shallow and grassy at the edges, fading away at both ends"
       ],
       "along": true
+    },
+    "wall_seeps": {
+      "view": "wall",
+      "ref": "castle_hall_ab",
+      "subjects": [
+        "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: a thick wet ribbon of amber that starts as a thin crack-shaped seam at the top and runs down in three slow tongues of different length, the longest ending in a heavy drop",
+        "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: a broad slow sheet of amber that is thin and ragged at the top and pools thick at the bottom with three short drips hanging from its lower edge",
+        "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: one single long thin tear of amber running straight down with a small round bead caught at its end",
+        "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: a loose scatter of small beads and drops of amber, some joined by thin glossy threads"
+      ]
+    },
+    "floor_temple": {
+      "view": "floor",
+      "ref": "castle_hall_ab",
+      "subjects": [
+        "a patch of pale blue-white frost rime, delicate crystal ferns spreading out in all directions from a cold centre with soft ragged edges",
+        "a curved arc of thin inlaid gold line set into black stone, a quarter of a circle with a small engraved diamond at its middle, worn and a little dull",
+        "a set of four long parallel scrape marks gouged across stone, where something heavy was dragged, pale scratched grooves with grit",
+        "a drift of fine white frost dust and a few tiny ice crystals scattered unevenly with soft edges"
+      ]
     }
   }
 }
