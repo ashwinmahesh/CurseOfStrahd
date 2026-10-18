@@ -1,7 +1,7 @@
 extends TestCase
 ## Aiming a Line on the board (owner, 2026-10-12: "Allow aiming straight line spells (like lightning bolt) in any straight
-## line (not just aligned with squares)"): the mouse points it at any angle and the stick does on a pad; a cone still
-## takes the nearest of the eight directions.
+## line (not just aligned with squares)"): the mouse points it at any angle and the stick does on a pad; so they do a
+## cone (owner, 2026-10-18).
 
 var e: Encounter
 var view: CombatView
@@ -67,7 +67,7 @@ func test_the_mouse_points_a_line_at_any_angle() -> void:
 	assert_true(view.overlay.is_showing_outline(), "its edge drawn")
 	_aim("burning_hands")
 	var cone: Vector2 = view._aim_dir(wizard)
-	assert_true(cone.distance_to(Vector2.RIGHT) < 0.0001, "a cone still snaps to the nearest of the eight: %s" % cone)
+	assert_true(cone.distance_to(Vector2(11, -4.5).normalized()) < 0.0001, "a cone points at the pointer too: %s" % cone)
 	view._cancel_targeting()
 	_root.queue_free()
 	await _frames(1)
@@ -78,11 +78,11 @@ func test_the_stick_points_a_line_at_any_angle() -> void:
 	_aim("lightning_bolt")
 	var basis := view.rig.ground_basis()
 	var want := Vector2(11, -4.5).normalized()
-	# The stick that points that way on the ground, given the camera's turn (the inverse of _pad_line_aim's mapping).
+	# The stick that points that way on the ground, given the camera's turn (the inverse of _pad_aim's mapping).
 	var up := Vector2(basis[0].x, basis[0].z)
 	var right := Vector2(basis[1].x, basis[1].z)
 	var stick := Vector2(want.dot(right), -want.dot(up))
-	view._pad_line_aim(wizard, stick, 100)
+	view._pad_aim(wizard, stick, 100)
 	var dir: Vector2 = view._aim_dir(wizard)
 	assert_true(dir.distance_to(want) < 0.01, "the line points the way the stick does: %s" % dir)
 	assert_true(e.grid.in_bounds(view.cursor_cell), "the cursor at its far end, on the board")

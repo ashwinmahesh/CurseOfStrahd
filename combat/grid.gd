@@ -615,8 +615,10 @@ func can_see(a: Vector2i, a_size: int, b: Vector2i, b_size: int) -> bool:
 ##   emanation: around the footprint `origin_cell` x `origin_size`, size = ft (origin squares excluded): everything
 ##     within that reach of the footprint measured straight, so round rather than a square of squares (owner,
 ##     2026-10-12: "round the rule too"); 5 ft still takes every square touching it
-##   cube: origin = grid point on a face, `direction` = which way it extends, size = side ft
-##   cone: origin = grid point at the caster, `direction` = aim vector, size = length ft
+##   cube: origin = grid point on a face, `direction` = which way it extends, size = side ft; turned off the rows and
+##     columns (Thunderwave aimed at a slant), a square is in it when at least half of it is
+##   cone: origin = where it leaves the caster (cone_aim), `direction` at any angle, size = length ft; a square is in it
+##     when at least a quarter of it is
 ##   line: origin = where it starts (line_origin, for one from a creature), `direction` at any angle, size = length ft,
 ##     width ft (default 5); a square is in it when at least half of it is (2024 DMG, areas of effect on a grid)
 func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2 = Vector2.RIGHT,
@@ -646,6 +648,8 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 					var side := Vector2(-dir.y, dir.x)
 					var across := (p - origin).dot(side)
 					inside = along >= 0.0 and along <= r and absf(across) <= r / 2.0
+					if absf(dir.x) > 0.0001 and absf(dir.y) > 0.0001:
+						inside = _line_covers(c, origin, dir, r, r / 2.0)
 				"cone":
 					inside = _cone_covers(c, origin, dir, r)
 				"wall":
@@ -721,19 +725,28 @@ static func _polygon_area(pts: PackedVector2Array) -> float:
 ## starts half a square to the side, so its edges run along grid lines and it takes whole squares, as wide as it is.
 static func line_origin(cell: Vector2i, size_cells: int, dir: Vector2, width_ft: int = 5) -> Vector2:
 	var d := dir.normalized() if dir.length() > 0.001 else Vector2.RIGHT
-	var out := Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0) + d * (size_cells / 2.0) / maxf(absf(d.x), absf(d.y))
+	var out := edge_point(cell, size_cells, d)
 	if (absf(d.x) < 0.0001 or absf(d.y) < 0.0001) and (maxi(1, width_ft / FEET) + size_cells) % 2 == 1:
 		out += Vector2(-d.y, d.x) * 0.5
 	return out
+
+
+## Where an area from a creature starts when aimed along `dir`: where a ray from the middle of its space leaves it (the
+## middle of its facing edge straight out, its corner diagonally, the point between at any other angle).
+static func edge_point(cell: Vector2i, size_cells: int, dir: Vector2) -> Vector2:
+	var d := dir.normalized() if dir.length() > 0.001 else Vector2.RIGHT
+	return Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0) + d * (size_cells / 2.0) / maxf(absf(d.x), absf(d.y))
 
 
 ## How close (degrees) an aimed Line must point to a row, a column or a diagonal to lie exactly along it.
 const LINE_SNAP_DEG := 2.0
 
 
-## The way a Line points when aimed along `d` (owner, 2026-10-12: "Allow aiming straight line spells (like lightning
-## bolt) in any straight line (not just aligned with squares)"): any angle, except within LINE_SNAP_DEG of the eight grid
-## directions, where it lies exactly along the row, column or diagonal, so a line down a row is easy to point.
+## The way an area aimed from a creature points when aimed along `d` (owner, 2026-10-12, for Lines: "Allow aiming
+## straight line spells (like lightning bolt) in any straight line (not just aligned with squares)"; 2026-10-18, for
+## cones and the rest: "we should be able to aim them freely (not have it locked to certain boxes)"): any angle, except
+## within LINE_SNAP_DEG of the eight grid directions, where it lies exactly along the row, column or diagonal, so one
+## straight down a row is easy to point.
 static func line_aim(d: Vector2) -> Vector2:
 	if d.length() < 0.0001:
 		return Vector2.RIGHT
@@ -745,22 +758,32 @@ static func line_aim(d: Vector2) -> Vector2:
 
 
 ## A square is in a cone when at least a quarter of it lies inside the cone's triangle (its width at any distance
-## equals that distance): that gives the even, symmetric templates of the grid rules (a 15-ft cone straight out is
-## 1, 3, 3 squares; diagonally 2, 3, 1) instead of the thin, lopsided shapes a square's centre alone gives.
-func _cone_covers(c: Vector2i, origin: Vector2, dir: Vector2, r: float) -> bool:
+## equals that distance), measured exactly, at whatever angle it points: that gives the even, symmetric templates of the
+## grid rules (a 15-ft cone straight out is 1, 3, 3 squares; diagonally 2, 3, 1) instead of the thin, lopsided shapes a
+## square's centre alone gives.
+static func _cone_covers(c: Vector2i, origin: Vector2, dir: Vector2, r: float) -> bool:
 	var side := Vector2(-dir.y, dir.x)
-	var hit := 0
-	for i in 4:
-		for j in 4:
-			var v := Vector2(c.x + (i + 0.5) / 4.0, c.y + (j + 0.5) / 4.0) - origin
-			var along := v.dot(dir)
-			if along > 0.0 and along <= r + 0.001 and absf(v.dot(side)) <= along / 2.0 + 0.001:
-				hit += 1
-	return hit >= 4
+	var v := Vector2(c.x + 0.5, c.y + 0.5) - origin
+	var along := v.dot(dir)
+	var across := absf(v.dot(side))
+	# A square's corners lie within half its diagonal of its centre, and its centre's distance from a side of the cone
+	# is (across - along / 2) / 1.118: wholly outside or wholly inside needs no clipping.
+	var corner := 0.7072
+	var past_side := (across - along / 2.0) * 0.8944
+	if along < -corner or along > r + corner or past_side > corner:
+		return false
+	if along >= corner and along <= r - corner and past_side <= -corner:
+		return true
+	var far := origin + dir * r
+	var tri := PackedVector2Array([origin, far - side * r / 2.0, far + side * r / 2.0])
+	var square := PackedVector2Array([Vector2(c), Vector2(c.x + 1, c.y), Vector2(c.x + 1, c.y + 1), Vector2(c.x, c.y + 1)])
+	var area := 0.0
+	for part: PackedVector2Array in Geometry2D.intersect_polygons(square, tri):
+		area += absf(_polygon_area(part))
+	return area >= 0.25 - 0.0001
 
 
-## A cone from a creature toward `toward`: aimed along the nearest of the eight grid directions, starting at the
-## middle of the creature's facing edge (straight out) or at its corner (diagonally).
+## A cone from a creature toward `toward`, at any angle (cone_aim), not taking the creature's own squares.
 func cone_from(cell: Vector2i, size_cells: int, toward: Vector2, size_ft: int) -> Array[Vector2i]:
 	var aim := cone_aim(cell, size_cells, toward)
 	var out := area_cells("cone", size_ft, aim[0] as Vector2, aim[1] as Vector2)
@@ -769,14 +792,17 @@ func cone_from(cell: Vector2i, size_cells: int, toward: Vector2, size_ft: int) -
 	return out
 
 
-## Where cone_from's cone starts and the way it points: [origin, direction].
+## Where cone_from's cone starts and the way it points: [origin, direction]. It points straight at `toward` from the
+## middle of the creature's space, at any angle (owner, 2026-10-18: "we should be able to aim them freely (not have it
+## locked to certain boxes)"), and starts where that way leaves the space (edge_point): the middle of its facing edge
+## straight out, its corner diagonally, as cones did when they could only point those eight ways.
 static func cone_aim(cell: Vector2i, size_cells: int, toward: Vector2) -> Array:
 	var center := Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0)
 	var aim := toward - center
 	if aim.length() < 0.01:
 		aim = Vector2.RIGHT
-	var step := Vector2(roundf(cos(snappedf(aim.angle(), PI / 4.0))), roundf(sin(snappedf(aim.angle(), PI / 4.0))))
-	return [center + step * (size_cells / 2.0), step.normalized()]
+	aim = aim.normalized()
+	return [edge_point(cell, size_cells, aim), aim]
 
 
 ## The edge of the area area_cells covers with the same arguments, for drawing it (GridOverlay.show_outline), in the

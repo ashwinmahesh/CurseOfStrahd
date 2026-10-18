@@ -192,11 +192,12 @@ func test_a_15_ft_cone_is_an_even_wedge_in_all_eight_directions() -> void:
 	assert_eq(diagonal.size(), 6)
 	for cell in diagonal:
 		assert_true(Vector2i(cell.y, cell.x) in diagonal, "a diagonal cone is mirror-symmetric (no L)")
-	# Every direction gives the same number of squares, and a slightly-off aim snaps to the nearest direction.
+	# Every direction gives the same number of squares; a slightly-off aim points where it's aimed (owner, 2026-10-18:
+	# "we should be able to aim them freely"), so it no longer takes the straight cone's squares.
 	for aim: Vector2 in [Vector2(1.5, 5.5), Vector2(5.5, 1.5), Vector2(5.5, 9.5), Vector2(1.5, 1.5), Vector2(9.5, 1.5), Vector2(1.5, 9.5)]:
 		var n := g.cone_from(me, 1, aim, 15).size()
 		assert_true(n == 7 or n == 6, "%s: %d squares" % [aim, n])
-	assert_eq(g.cone_from(me, 1, Vector2(9.5, 6.3), 15), straight, "aim snaps to the nearest of the eight directions")
+	assert_ne(g.cone_from(me, 1, Vector2(9.5, 7.5), 15), straight, "aimed between the row and the diagonal, it turns that way")
 
 
 func test_walls_stop_areas() -> void:

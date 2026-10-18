@@ -2,7 +2,7 @@ extends TestCase
 ## Line areas aimed at any angle (owner, 2026-10-12: "Allow aiming straight line spells (like lightning bolt) in any
 ## straight line (not just aligned with squares)"): Lightning Bolt and the other Line spells, their later beams and turns,
 ## a Dragonborn's Breath Weapon line and monsters' lines go straight from the caster's middle the way they're pointed,
-## taking each square at least half inside (2024 DMG); cones and cubes still take the nearest of the eight directions.
+## taking each square at least half inside (2024 DMG). Cones and cubes aim at any angle too (test_free_aim.gd).
 
 
 func _field() -> Encounter:
@@ -72,8 +72,8 @@ func test_which_actions_aim_as_a_line() -> void:
 	var cat := ActionCatalog.new(e)
 	assert_eq(cat.line_ft(c, cat.find(c, "spell:lightning_bolt")), 100)
 	assert_eq(cat.line_ft(c, cat.find(c, "spell:gust_of_wind")), 60)
-	assert_eq(cat.line_ft(c, cat.find(c, "spell:burning_hands")), 0, "a cone keeps the eight directions")
-	assert_eq(cat.line_ft(c, cat.find(c, "spell:thunderwave")), 0, "so does a cube")
+	assert_eq(cat.line_ft(c, cat.find(c, "spell:burning_hands")), 0, "a cone isn't a line")
+	assert_eq(cat.line_ft(c, cat.find(c, "spell:thunderwave")), 0, "nor is a cube")
 	assert_eq(cat.line_ft(c, {"id": "feat:breath_weapon:line"}), 30)
 	assert_eq(cat.line_ft(c, {"id": "feat:breath_weapon:cone"}), 0)
 	# Gust of Wind's Bonus Action turn aims the spell's own line.

@@ -116,7 +116,7 @@ Settings can rebind them.
 
 | Button | Does |
 |---|---|
-| Left stick | Move the square cursor (the camera follows it); while aiming a Line (Lightning Bolt, a Breath Weapon line), point it at any angle, the cursor at its far end |
+| Left stick | Move the square cursor (the camera follows it); while aiming an area from the caster (a Line such as Lightning Bolt, a Cone such as Cone of Cold or a Breath Weapon, Thunderwave), point it at any angle in one-degree steps, the cursor at its far end; X aims it straight at the next creature |
 | Right stick | Turn and zoom the camera (while the radial is closed) |
 | A | Confirm at the cursor: move, attack, pick a target; a dying hero's Death Saving Throw |
 | B | Cancel, or take back a pick |

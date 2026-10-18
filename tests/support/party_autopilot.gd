@@ -573,7 +573,9 @@ func _sharp_crowd(c: Combatant) -> CombatResult:
 
 
 ## The direction from `c` along which the self-origin cone `spell_id` catches the most foes: {dir, n, big} or {} when it
-## catches none (or an ally, unless the spell spares them).
+## catches none (or an ally, unless the spell spares them). It aims toward a foe along the nearest of the eight grid
+## directions, as the fights were tuned with before cones could point anywhere (owner, 2026-10-18): free aim is the
+## player's, and the yardstick stays where it was.
 func _cone_dir(c: Combatant, foes: Array[Combatant], spell_id: String, allies_safe: bool) -> Dictionary:
 	var s := Compendium.shared().spell_data(spell_id)
 	var origin := e.center_of(c)
@@ -583,7 +585,8 @@ func _cone_dir(c: Combatant, foes: Array[Combatant], spell_id: String, allies_sa
 		var dir := e.center_of(f) - origin
 		if dir.length() < 0.01:
 			continue
-		dir = dir.normalized()
+		var a := snappedf(dir.angle(), PI / 4.0)
+		dir = Vector2(roundf(cos(a)), roundf(sin(a))).normalized()
 		var n := 0
 		var big := false
 		var allies := 0

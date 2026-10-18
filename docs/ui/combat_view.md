@@ -58,7 +58,14 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   Cube with its middle there and its point of origin on the face toward the caster, where its range is measured (an odd
   size, such as 15 ft, sits on the middle of the square pointed at), an Emanation from a point on the square pointed
   at. Pointing at a creature's figure aims at the creature, not the floor behind it. No cursor ring is drawn while
-  placing it: the outline is the cursor. Cones and lines from the caster aim as before.
+  placing it: the outline is the cursor.
+- **An area aimed from the caster points at the pointer, at any angle** (owner, 2026-10-12 for Lines, 2026-10-18 for
+  the rest: "For AoE spells like cone of cold, we should be able to aim them freely (not have it locked to certain
+  boxes)"; `CombatView._aim_dir`): a Cone (Burning Hands, Cone of Cold, a Breath Weapon), a Line (Lightning Bolt) or
+  Thunderwave's Cube starts where the aim leaves the caster's space and turns with it, settling on a row, column or
+  diagonal within 2° of one. A cone takes every square at least a quarter inside its triangle, a line or a turned cube
+  every square at least half inside it (`CombatGrid.area_cells`); the outline drawn is that shape and the creatures
+  listed are the ones it takes. Monsters' cones point straight at the creature they're aimed at the same way.
 - **A creature in another shape wears it** (owner, 2026-10-13: "When an enemy or character is polymorphed, their
   sprite should reflect their transformed shape"): a Polymorph's, True Polymorph's or Wild Shape's Beast is drawn with
   that Beast's own sprite, height and base, facing the way the creature faced, its name, health bar and portrait the

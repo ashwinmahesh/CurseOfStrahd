@@ -1713,11 +1713,31 @@ func _known_defenses(t: Combatant) -> String:
 
 
 ## How long the Line an action aimed in a direction makes, in feet (Lightning Bolt, Gust of Wind and its turn, Sunbeam's
-## later beams, a Dragonborn's Breath Weapon line); 0 when it makes another shape or none. A Line is aimed at any angle,
-## where the other shapes take the nearest of the eight grid directions (owner, 2026-10-12).
+## later beams, a Dragonborn's Breath Weapon line); 0 when it makes another shape or none.
 func line_ft(c: Combatant, action: Dictionary) -> int:
 	if str(action.get("id", "")) == "feat:breath_weapon:line":
 		return 30
+	var area := _aimed_area(c, action)
+	return int(area.get("size", 0)) if str(area.get("shape", "")) == "line" else 0
+
+
+## How far the area an action aims from its user in a direction reaches, in feet: a Line's length (line_ft), a Cone's
+## (Burning Hands, Cone of Cold, a Breath Weapon cone, a Wand of Teeth's spray), a Cube's side (Thunderwave); 0 for an
+## action aimed some other way. All of them point at any angle (owner, 2026-10-12 for Lines, 2026-10-18 for the rest).
+func aim_ft(c: Combatant, action: Dictionary) -> int:
+	if str(action.get("targeting", "")) != "direction":
+		return 0
+	var line := line_ft(c, action)
+	if line > 0:
+		return line
+	if str(action.get("id", "")) == "feat:breath_weapon:cone":
+		return 15
+	var size := int(_aimed_area(c, action).get("size", 0))
+	return size if size > 0 else maxi(int(action.get("range", 0)), CombatGrid.FEET)
+
+
+## The area of the spell (or the sustained spell's turn) an action aims, {} when it has none.
+func _aimed_area(c: Combatant, action: Dictionary) -> Dictionary:
 	var area := {}
 	if str(action.get("kind", "")) == "sustain":
 		for a: Dictionary in e.spells.sustained:
@@ -1725,7 +1745,7 @@ func line_ft(c: Combatant, action: Dictionary) -> int:
 				area = (a["def"] as Dictionary).get("area", {}) as Dictionary
 	if area.is_empty() and str(action.get("spell_id", "")) != "":
 		area = Compendium.shared().spell_data(str(action["spell_id"])).get("area", {}) as Dictionary
-	return int(area.get("size", 0)) if str(area.get("shape", "")) == "line" else 0
+	return area
 
 
 ## The area a spell would cover and who's in it (cb_02): {cells, outline: its edge to draw (SpellTargeting.area_outline;

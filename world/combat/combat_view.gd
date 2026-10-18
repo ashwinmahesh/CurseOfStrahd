@@ -1163,28 +1163,31 @@ func _aim() -> Dictionary:
 	return TargetPicker.aim(e, _player(), selected, at, slot_level)
 
 
-## The way an area aimed from the caster points, toward the pointer: a Line at any angle (CombatGrid.line_aim), anything
-## else along the nearest of the eight grid directions.
+## The way an area aimed from the caster points, toward the pointer: a Line, a Cone or Thunderwave's Cube at any angle
+## (owner, 2026-10-12 for Lines, 2026-10-18 for the rest: "we should be able to aim them freely (not have it locked to
+## certain boxes)"), settling on a row, column or diagonal within a hair of one (CombatGrid.line_aim).
 func _aim_dir(c: Combatant) -> Vector2:
 	var center := Vector2(c.cell.x + c.size_cells / 2.0, c.cell.y + c.size_cells / 2.0)
 	var d := Vector2(hover_world.x, hover_world.z) - center
 	if d.length() < 0.1:
 		return Vector2(c.facing)
-	if catalog.line_ft(c, selected) > 0:
-		return CombatGrid.line_aim(d)
-	var a := snappedf(d.angle(), PI / 4.0)
-	return Vector2(cos(a), sin(a))
+	return CombatGrid.line_aim(d)
 
 
-## A Line aimed on a pad (owner, 2026-10-12): the left stick points it, at any angle, and the cursor goes to its far
-## end (short of the board's edge), where its count and saves show and A casts it. The camera stays put.
-func _pad_line_aim(c: Combatant, stick: Vector2, length_ft: int) -> void:
+## The step (degrees) a stick turns an area aimed from the caster in, so a steady thumb holds a steady aim.
+const AIM_STEP_DEG := 1.0
+
+
+## An area aimed from the caster on a pad (owner, 2026-10-12 for Lines, 2026-10-18 for cones and cubes): the left stick
+## points it at any angle, in AIM_STEP_DEG steps, and the cursor goes to its far end (short of the board's edge), where
+## its count and saves show and A casts it. The camera stays put.
+func _pad_aim(c: Combatant, stick: Vector2, length_ft: int) -> void:
 	var basis := rig.ground_basis()
 	var world := basis[0] * -stick.y + basis[1] * stick.x
 	var d := Vector2(world.x, world.z)
 	if d.length() < 0.01:
 		return
-	d = d.normalized()
+	d = Vector2.from_angle(snappedf(d.angle(), deg_to_rad(AIM_STEP_DEG)))
 	var center := e.center_of(c)
 	var reach := c.size_cells / 2.0 + length_ft / float(CombatGrid.FEET) - 0.5
 	var p := center + d * reach
@@ -1485,16 +1488,16 @@ func _process(delta: float) -> void:
 		return
 	if hud.radial.visible:
 		hud.radial.aim(Vector2(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X), Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)))
-	# Controller cursor: the left stick steps it a square at a time, or points a Line being aimed.
+	# Controller cursor: the left stick steps it a square at a time, or points an area aimed from the caster.
 	var stick := Input.get_vector(&"cursor_left", &"cursor_right", &"cursor_up", &"cursor_down")
-	var line := 0
+	var reach := 0
 	if stick.length() > 0.5 and mode == Mode.TARGET and _player() != null and not picker.active() \
 			and str(selected.get("targeting", "")) == "direction":
-		line = catalog.line_ft(_player(), selected)
-	if line > 0:
+		reach = catalog.aim_ft(_player(), selected)
+	if reach > 0:
 		using_pad = true
 		_pad_repeat = 0.0
-		_pad_line_aim(_player(), stick, line)
+		_pad_aim(_player(), stick, reach)
 	elif stick.length() > 0.5:
 		using_pad = true
 		_pad_repeat -= delta
