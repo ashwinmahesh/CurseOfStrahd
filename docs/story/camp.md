@@ -66,9 +66,11 @@ after a Long Rest taken somewhere that keeps it. `CampTalk.who_asks` reads the c
 or `guest:<npc>` it names who is here, in the order it names them, so a talk written for two people puts the one who
 asks first; `CampSite.asker` gives the id the camp seats that person by, which is a companion's character id and a
 guest's creature id, `guest_<npc>` (the key of `LocationCamp.people`, so the mark and the click find her). A guest's
-talks go in `narrative/camp/<npc>.dialogue` like a companion's (at least two `talk_` nodes to a file, each opening with its
-`if`). Approval stays the companions': a guest has none, and an `approve` line in her talk moves the companions who
-watch, as in any scene. A guest who isn't along asks nothing, and her talks wait.
+talks go in `narrative/camp/<npc>.dialogue` like a companion's, each `talk_` node opening with its `if` (a companion's
+file has at least two talks; a guest's or the Sunsword's, which asks through whoever carries it with `item:sunsword`, at
+least one: test_every_camp_talk_opens_with_a_condition). Approval stays the companions': a guest has none, and an
+`approve` line in her talk moves the companions who watch, as in any scene. A guest who isn't along asks nothing, and her
+talks wait.
 
 ## The night
 

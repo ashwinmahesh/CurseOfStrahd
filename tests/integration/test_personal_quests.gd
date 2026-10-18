@@ -161,12 +161,17 @@ func test_every_camp_talk_opens_with_a_condition() -> void:
 		var df := DialogueFile.load_key("camp/" + f.get_basename())
 		assert_true(df != null and df.errors.is_empty(), "camp/%s parses" % f)
 		var talks := 0
+		var companions := false
 		for node in df.order:
 			if node.begins_with("talk_"):
 				talks += 1
+				# Who asks (CampTalk.who_asks): a companion, a travelling guest, or the Sunsword through whoever carries it.
 				var cond := CampTalk.opening_condition(df, node)
-				assert_true(cond.contains("name:") or cond.contains("guest:"), "%s:%s names its companion or guest" % [f, node])
-		assert_true(talks >= 2, "%s has talks" % f)
+				assert_true(cond.contains("name:") or cond.contains("guest:") or cond.contains("item:sunsword"),
+					"%s:%s names its companion, guest or the blade" % [f, node])
+				companions = companions or cond.contains("name:")
+		# A companion has several words; a guest or the blade may have one (the Sunsword's fear, once).
+		assert_true(talks >= (2 if companions else 1), "%s has talks" % f)
 
 
 func test_an_old_save_keeps_the_first_fours_quests() -> void:
