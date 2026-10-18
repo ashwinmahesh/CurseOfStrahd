@@ -239,6 +239,11 @@ func _build() -> void:
 	if place != "" and (theme in INTERIORS or theme == "dungeon") and Compendium.shared().has("locations", place):
 		Furnish.dress(self, Compendium.shared().get_entry("locations", place))   # lived-in rooms (docs/art/interiors.md)
 	Clutter.dress(self)   # decals: cracks, stains, moss, mud fringes ... (docs/art/decals.md)
+	# Houses and Castle Ravenloft stand whole and open round the party where they hide it (SeeThrough); an interior's
+	# walls are marked as they're built.
+	for b: Dictionary in buildings:
+		if not b.has("interior") and is_instance_valid(b.get("root")):
+			SeeThrough.mark(b["root"] as Node3D)
 
 
 ## Short flights of steps (Stairs.flight) up each 5 ft rise between two walkable built floors, in the regions that
@@ -530,8 +535,10 @@ func roof_material(grand: bool) -> Material:
 	return _roof_tex if _roof_tex != null else Look.cel("blood_deep")
 
 
-## A piece hung on a house's wall goes with the house when it's cut away (TownBuilder.cut_away).
+## A piece hung on a wall opens with it round the party (SeeThrough), and one on a house's wall goes with the house
+## when it's cut away (TownBuilder.cut_away).
 func attach_to_building(c: Vector2i, node: Node3D) -> void:
+	SeeThrough.mark(node)
 	if house_cells.has(c):
 		((buildings[int(house_cells[c])] as Dictionary)["extras"] as Array).append(node)
 

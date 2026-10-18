@@ -8,6 +8,7 @@ shader_type spatial;
 #include "res://shaders/world/world_map.gdshaderinc"
 #include "res://shaders/world/lit_light.gdshaderinc"
 #include "res://shaders/world/weather_surface.gdshaderinc"
+#include "res://shaders/world/see_through.gdshaderinc"
 
 uniform sampler2D albedo_tex : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
 // Multiplies the texture (an emptied container darkens, ModelPiece.dim).
@@ -63,6 +64,10 @@ int tile_layer(vec2 uv) {
 }
 
 void fragment() {
+	// A wall in the party's way opens round it (SeeThrough).
+	if (see_cut(VERTEX, VIEW_MATRIX, INV_VIEW_MATRIX, CAMERA_POSITION_WORLD, FRAGCOORD.xy)) {
+		discard;
+	}
 	vec2 uv = world_uv(world_pos, world_normal, tile_units, uv_offset, wall_band, band_top, band_height);
 	float layer = float(tile_layer(uv));
 	bool layered = layer_count > 0;

@@ -66,27 +66,38 @@ func test_madam_evas_tent_is_canvas() -> void:
 	await _frames(1)
 
 
-## Like a room's walls, the canvas toward the camera drops to the cut-away height and the far side stands.
-func test_the_tent_cuts_away_toward_the_camera() -> void:
+## Like a room's walls, the canvas stands on every side whichever way the camera looks, and opens round the party where
+## it hides it (SeeThrough; owner 2026-10-17: no walls collapsing). With the catalog's interiors cut_away on, the side
+## toward the camera drops to the cut-away height instead.
+func test_the_tent_stands_toward_the_camera() -> void:
 	Look.set_style("modern", false)
-	var v := _view("tser_pool_eva_tent")
-	await _frames(2)
-	var board := v.board
-	var north: Dictionary = {}
-	for w: Dictionary in (board.get_meta("interior_walls", {}) as Dictionary).get("walls", []):
-		if w["cell"] == Vector2i(6, 0):
-			north = w
-	assert_false(north.is_empty(), "the north side is a tent wall")
-	if north.is_empty():
+	var cutting: Variant = (BuildingKit.settings()["interiors"] as Dictionary).get("cut_away")
+	for cut: bool in [false, true]:
+		(BuildingKit.settings()["interiors"] as Dictionary)["cut_away"] = cut
+		var v := _view("tser_pool_eva_tent")
+		await _frames(2)
+		var board := v.board
+		var north: Dictionary = {}
+		for w: Dictionary in (board.get_meta("interior_walls", {}) as Dictionary).get("walls", []):
+			if w["cell"] == Vector2i(6, 0):
+				north = w
+		assert_false(north.is_empty(), "the north side is a tent wall")
+		if north.is_empty():
+			v.queue_free()
+			break
+		var focus := board.cell_center(Vector2i(6, 2))
+		board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
+		assert_true((north["full"] as Node3D).visible, "the far side stands")
+		board.cut_buildings(focus + Vector3(0, 8, -10), focus, 1.0)
+		if cut:
+			assert_true((north["low"] as Node3D).visible and not (north["full"] as Node3D).visible, "cutting on: the near side is cut away")
+		else:
+			assert_true((north["full"] as Node3D).visible and north["low"] == null, "the near side stands too")
+			var canvas := (north["full"] as Node3D).find_children("Canvas", "MeshInstance3D", true, false)
+			assert_true(not canvas.is_empty() and SeeThrough.marked(canvas[0] as MeshInstance3D), "and opens round the party")
 		v.queue_free()
-		return
-	var focus := board.cell_center(Vector2i(6, 2))
-	board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
-	assert_true((north["full"] as Node3D).visible, "the far side stands")
-	board.cut_buildings(focus + Vector3(0, 8, -10), focus, 1.0)
-	assert_true((north["low"] as Node3D).visible and not (north["full"] as Node3D).visible, "the near side is cut away")
-	v.queue_free()
-	await _frames(1)
+		await _frames(1)
+	(BuildingKit.settings()["interiors"] as Dictionary)["cut_away"] = cutting
 
 
 ## Classic keeps tents low: canvas at the cut-away height, no charms, no full walls.
@@ -311,7 +322,7 @@ func test_vallakis_rooms_have_what_their_text_names() -> void:
 	for w: Dictionary in (inn.board.get_meta("interior_walls", {}) as Dictionary).get("walls", []):
 		if Rect2i(15, 13, 7, 3).has_point(w["cell"] as Vector2i):
 			for mi in (w["full"] as Node).find_children("*", "MeshInstance3D", true, false):
-				if (mi as MeshInstance3D).material_override == paint:
+				if (mi as MeshInstance3D).material_override in [paint, SeeThrough.opening(paint)]:   # (a wall's own copy, SeeThrough)
 					red += 1
 					break
 	assert_true(red >= 10, "its sides are painted red (%d)" % red)

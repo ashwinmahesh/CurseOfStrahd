@@ -6,9 +6,10 @@ extends RefCounted
 ## few squares, and a rope along the top that charms hang from. The painted eyes among the charms turn, very slowly, to
 ## face the camera ("each one is turning, very slowly, to face you"). Behind the canvas lies the camp's ground.
 ##
-## In the Modern look the sheets stand a full tent wall high and drop to the cut-away height toward the camera as a
-## room's walls do (InteriorWalls hands every tent wall square here, with its state); in Classic they stand at the
-## cut-away height, without charms or roof. Nothing here changes the rules grid.
+## In the Modern look the sheets stand a full tent wall high and open a window round the party where they hide it, as a
+## room's walls do (SeeThrough; with interiors cut_away on they drop to the cut-away height toward the camera instead;
+## InteriorWalls hands every tent wall square here, with its state); in Classic they stand at the cut-away height,
+## without charms or roof. Nothing here changes the rules grid.
 
 ## How far the canvas leans in over a full wall, and how far the roof's foot reaches in and climbs above it.
 const LEAN := 0.16
@@ -38,9 +39,9 @@ static func is_tent(board: ArenaBoard) -> bool:
 	return BuildingKit.interior_style(board) == "tent"
 
 
-## Builds tent wall square `c`: canvas on each side facing the room (full and cut versions, registered with the room
-## walls' cut-away in `st`, InteriorWalls' state; empty in Classic), always on the camp's ground. Always true: a tent
-## never falls back to a wall block.
+## Builds tent wall square `c`: canvas on each side facing the room (a full version, and a cut one where cutting is on,
+## registered with the room walls in `st`, InteriorWalls' state; empty in Classic), always on the camp's ground. Always
+## true: a tent never falls back to a wall block.
 static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dictionary) -> bool:
 	# Pieces hung on the canvas or backed onto it stand off it: past the inset and the lean at about chest height.
 	board.wall_inset = INSET + FOLD_DEPTH + LEAN * (float(st["height"]) if not st.is_empty() else InteriorWalls.CUT) / 2.5 * 0.6
@@ -62,12 +63,15 @@ static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dictio
 	var full := Node3D.new()
 	full.name = "Full"
 	node.add_child(full)
-	var low := Node3D.new()
-	low.name = "Cut"
-	low.visible = false
-	node.add_child(low)
 	_canvas(full, board, c, faces, h, canvas, true)
-	_canvas(low, board, c, faces, InteriorWalls.CUT, canvas, false)
+	var low: Node3D = null
+	if bool(st["cutting"]):
+		low = Node3D.new()
+		low.name = "Cut"
+		low.visible = false
+		node.add_child(low)
+		_canvas(low, board, c, faces, InteriorWalls.CUT, canvas, false)
+	SeeThrough.mark(node)
 	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "cell": c, "cut": false, "h": h})
 	return true
 

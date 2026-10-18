@@ -1,14 +1,16 @@
 extends TestCase
 ## The building kit (Improvement Ideas W7, docs/art/building_kit.md): towns are put together from Blender modules in
 ## their region's style instead of textured boxes: Barovia's timber framing, Vallaki's clapboard and palisade, Krezk's
-## stone. A door hung on a house makes a door bay; a house in the way is cut down to its footing.
+## stone. A door hung on a house makes a door bay; a house in the way stands and opens a window round the party.
 
 
 var _cut_away: Variant = null
+var _rooms_cut: Variant = null
 
 
 func before_each() -> void:
 	_cut_away = BuildingKit.settings().get("cut_away")
+	_rooms_cut = (BuildingKit.settings().get("interiors", {}) as Dictionary).get("cut_away")
 	GameState.reset()
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
@@ -20,6 +22,7 @@ func before_each() -> void:
 func after_each() -> void:
 	Look.set_style(Look.DEFAULT_STYLE, false)
 	BuildingKit.settings()["cut_away"] = _cut_away
+	(BuildingKit.settings()["interiors"] as Dictionary)["cut_away"] = _rooms_cut
 
 
 ## The catalog's building_kit "cut_away", on for a test of how a building in the way would cut down (the owner turned
@@ -139,9 +142,10 @@ func test_a_kit_house_cuts_away_to_its_footing() -> void:
 	v.queue_free()
 
 
-## Owner decision (2026-10-13: "why do buildings shrink down ... when I get near them? Same things with walls. Lets
-## disable this effect"): outside, a house or Castle Ravenloft's wall between the camera and the party stands, roof and
-## all, and goes see-through like the trees while it hides the party (his pick the same day), solid again once clear.
+## Owner decisions (2026-10-13: "why do buildings shrink down ... when I get near them? Same things with walls. Lets
+## disable this effect"; 2026-10-17: big walls all round going see-through "looks really weird"): outside, a house or
+## Castle Ravenloft's wall between the camera and the party stands whole and solid, roof and all, with every mesh of it
+## marked to open a window round the party (SeeThrough), never fading whole.
 func test_buildings_and_walls_in_the_way_stand() -> void:
 	assert_false(bool(BuildingKit.settings().get("cut_away", false)), "the catalog's cut_away is off")
 	var v := _view("village_of_barovia")
@@ -154,10 +158,13 @@ func test_buildings_and_walls_in_the_way_stand() -> void:
 	assert_true((b0["walls"] as Node3D).visible and is_equal_approx((b0["walls"] as Node3D).scale.y, 1.0), "the house in the way stands")
 	assert_false((b0["stub"] as Node3D).visible, "no footing in its place")
 	assert_true((b0["upper"] as Node3D).visible, "roof and all")
-	assert_true(_fade_of(b0["walls"] as Node3D) > 0.5 and _fade_of(b0["upper"] as Node3D) > 0.5, "see-through while it hides the party")
+	assert_true(is_zero_approx(_fade_of(b0["walls"] as Node3D)) and is_zero_approx(_fade_of(b0["upper"] as Node3D)), "solid, never see-through whole")
+	assert_true(_all_marked(b0["root"] as Node3D), "every mesh of it opens round the party")
 	for i in 2:
 		v.board.cut_buildings(behind + Vector3(0, 5, -14), behind, 1.0)
-	assert_true(is_zero_approx(_fade_of(b0["walls"] as Node3D)) and is_zero_approx(_fade_of(b0["upper"] as Node3D)), "solid again once clear")
+	assert_true(is_zero_approx(_fade_of(b0["walls"] as Node3D)) and (b0["walls"] as Node3D).visible, "and the same once clear")
+	var street := v.board.floor_box(v.members[0].cell)
+	assert_true(street != null and not SeeThrough.marked(street), "the street never opens")
 	v.queue_free()
 	await _frames(1)
 	var c := _view("castle_ravenloft_gates")
@@ -167,10 +174,22 @@ func test_buildings_and_walls_in_the_way_stand() -> void:
 	for i in 2:
 		c.board.cut_buildings(focus + Vector3(0, 12, 12), focus, 1.0)
 	assert_true((gate_wall["walls"] as Node3D).visible and not (gate_wall["stub"] as Node3D).visible, "the castle wall in the way stands")
-	assert_true(_fade_of(gate_wall["walls"] as Node3D) > 0.5, "see-through")
+	assert_true(is_equal_approx((gate_wall["walls"] as Node3D).scale.y, 1.0) and is_zero_approx(_fade_of(gate_wall["walls"] as Node3D)),
+		"whole and solid")
 	var keep := c.board.buildings[int(c.board.house_cells[Vector2i(20, 4)])] as Dictionary
-	assert_true(is_zero_approx(_fade_of(keep["walls"] as Node3D)), "the keep behind the party stays solid")
+	assert_true(_all_marked(gate_wall["root"] as Node3D) and _all_marked(keep["root"] as Node3D), "the castle's pieces open round the party")
 	c.queue_free()
+
+
+## Whether every mesh under `n` opens round the party (SeeThrough.mark).
+func _all_marked(n: Node3D) -> bool:
+	var meshes := n.find_children("*", "GeometryInstance3D", true, false)
+	if n is GeometryInstance3D:
+		meshes.append(n)
+	for g in meshes:
+		if not (g is GPUParticles3D or (g as Node).get_parent() is GPUParticles3D) and not SeeThrough.marked(g as GeometryInstance3D):
+			return false   # (a chimney's smoke aside)
+	return not meshes.is_empty()
 
 
 ## The most see-through any mesh under `n` is (GeometryInstance3D.transparency, as ModelPiece.set_fade sets it).
@@ -299,7 +318,7 @@ func test_krezk_is_walled_all_round() -> void:
 			assert_eq(walls.size(), 1, "the town wall stands tall at %s" % c)
 			for w in walls:
 				assert_true(Rect2(x, z, 1, 1).has_point(Vector2(w.global_position.x, w.global_position.z)), "placed on its square")
-				assert_true(w in k.board.mesh_occluders, "and fading when it hides the party")
+				assert_true(SeeThrough.marked(w) and not w in k.board.mesh_occluders, "and opening round the party when it hides it")
 	assert_eq(edge, 91, "the north, west and south walls are all there (the pool lane's gap aside)")
 	# It turns the corners and runs on into the wall on the gate's side.
 	var ne := ((k.board.dressing[Vector2i(31, 0)] as Array)[0] as MeshInstance3D).get_aabb()
@@ -319,11 +338,12 @@ func test_krezk_is_walled_all_round() -> void:
 				ground += 1
 		assert_eq(ground, 1, "ground under the wall at %s" % c)
 		assert_false(k.board.is_tree(c), "the wall at %s isn't a tree" % c)
-	# Just inside the south wall, with the camera behind it, the wall fades as the pines there did.
+	# Just inside the south wall, with the camera behind it, the wall stands solid (a window opens in it round the
+	# party, SeeThrough) instead of fading as the pines there did.
 	var south := (k.board.dressing[Vector2i(8, 29)] as Array)[0] as GeometryInstance3D
 	var inside := k.board.cell_center(Vector2i(8, 27))
 	k.board.fade_occluders(inside + Vector3(-8, 10, 8), inside, 1.0)
-	assert_true(south.transparency > 0.5, "the south wall fades (%.2f)" % south.transparency)
+	assert_true(is_zero_approx(south.transparency) and SeeThrough.marked(south), "the south wall stands, opening round the party")
 	k.queue_free()
 	await _frames(1)
 	var v := _view("village_of_barovia")
@@ -350,17 +370,20 @@ func test_lone_wall_squares_are_pillars() -> void:
 			if n.name == "Pillar" and n is MeshInstance3D:
 				found = true
 				assert_true((n as MeshInstance3D).get_aabb().size.y > 2.0, "%s's pillar stands tall" % pair[0])
-				assert_true(n in v.board.mesh_occluders, "and fades when it hides the party")
+				assert_true(SeeThrough.marked(n as MeshInstance3D) and not n in v.board.mesh_occluders,
+					"and opens round the party when it hides it, never fading whole")
 		assert_true(found, "%s has a %s pillar at %s" % [pair[0], pair[2], cell])
 		assert_eq(BuildingKit.interior_style(v.board), str(pair[2]))
 		v.queue_free()
 		await _frames(1)
 
 
-## W8: a room's walls stand a full storey, and a wall drops to the cut-away height when it stands between the camera
-## and the party's room; turning the camera turns which. Past the house's outer walls there's the street, a storey
-## below on the Death House's upper floor, and a doorway has wall over it. The Classic look keeps the low walls.
-func test_interiors_have_full_walls_that_cut_away() -> void:
+## W8: a room's walls stand a full storey from every heading (owner 2026-10-17: "walls collapse down when looking from
+## certain angles ... I don't like this behavior"): a wall between the camera and the party stands whole and opens a
+## window round the party instead (SeeThrough), with no cut-away version built. Past the house's outer walls there's the
+## street, a storey below on the Death House's upper floor, and a doorway has wall over it. With the catalog's interiors
+## cut_away on, the near walls still drop to the cut-away height, turning with the camera. Classic keeps the low walls.
+func test_interiors_have_full_walls_that_stand() -> void:
 	var v := _view("death_house_upper")
 	await _frames(2)
 	var board := v.board
@@ -372,41 +395,46 @@ func test_interiors_have_full_walls_that_cut_away() -> void:
 	if ground != null:
 		var top := ground.global_position.y + (ground.mesh as BoxMesh).size.y / 2.0
 		assert_between(top, -InteriorWalls.STOREY - 0.2, -InteriorWalls.STOREY + 0.1, "a storey below")
-	var headers := 0
-	var wall := {}
-	for w: Dictionary in st.get("walls", []):
-		if w.has("flanks"):
-			headers += 1
-			continue
-		# An outer wall on the room's north side: the room below it, nothing open above it.
-		var c := w["cell"] as Vector2i
-		if wall.is_empty() and _open(board, c + Vector2i(0, 1)) and _open(board, c + Vector2i(0, 2)):
-			var clear := true
-			for k: int in [1, 2, 3, 4, 5]:
-				clear = clear and not _open(board, c - Vector2i(0, k))
-			if clear:
-				wall = w
-	assert_true(headers > 0, "doorways have wall over them (%d)" % headers)
+	var wall := _north_wall(board, st)
+	assert_true(_headers(st) > 0, "doorways have wall over them (%d)" % _headers(st))
 	assert_false(wall.is_empty(), "a north wall to look at")
 	if wall.is_empty():
 		v.queue_free()
 		return
 	var full := wall["full"] as Node3D
-	var low := wall["low"] as Node3D
 	var tall := AABB()
 	for mi: Node in full.find_children("*", "MeshInstance3D", true, false):
 		tall = tall.merge((mi as MeshInstance3D).global_transform * (mi as MeshInstance3D).mesh.get_aabb())
 	assert_true(tall.size.y > 2.3, "the wall stands a storey (%.2f)" % tall.size.y)
+	assert_true(wall["low"] == null and (wall["node"] as Node3D).get_node_or_null("Cut") == null, "with no cut-away version")
+	assert_true(_all_marked(wall["node"] as Node3D), "and opens round the party where it hides it")
 	var focus := board.cell_center((wall["cell"] as Vector2i) + Vector2i(0, 2))
-	# The camera south of the party: the north wall is the far wall, standing.
-	board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
-	assert_true(full.visible and not low.visible, "the far wall stands")
-	# Turned to look south: it's between the camera and the party, and drops to the cut-away height.
-	board.cut_buildings(focus + Vector3(0, 8, -10), focus, 1.0)
-	assert_true(low.visible and not full.visible, "the near wall is cut away")
-	board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
-	assert_true(full.visible and not low.visible, "and stands again when the camera turns back")
+	# The camera south of the party (the north wall is the far wall), then turned to look south (the near wall).
+	for camera: Vector3 in [focus + Vector3(0, 8, 10), focus + Vector3(0, 8, -10), focus + Vector3(0, 8, 10)]:
+		for i in 2:
+			board.cut_buildings(camera, focus, 1.0)
+		assert_true(full.visible and is_equal_approx(full.scale.y, 1.0), "the wall stands from every side")
+	for w: Dictionary in st["walls"]:
+		assert_true((w["full"] as Node3D).visible and is_equal_approx((w["full"] as Node3D).scale.y, 1.0), "every wall stands")
 	v.queue_free()
+	await _frames(1)
+	(BuildingKit.settings()["interiors"] as Dictionary)["cut_away"] = true
+	var cut := _view("death_house_upper")
+	await _frames(2)
+	var cst := cut.board.get_meta("interior_walls", {}) as Dictionary
+	var cw := _north_wall(cut.board, cst)
+	var cfull := cw["full"] as Node3D
+	var low := cw["low"] as Node3D
+	assert_true(low != null, "cutting on: a cut-away version too")
+	if low != null:
+		focus = cut.board.cell_center((cw["cell"] as Vector2i) + Vector2i(0, 2))
+		cut.board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
+		assert_true(cfull.visible and not low.visible, "the far wall stands")
+		cut.board.cut_buildings(focus + Vector3(0, 8, -10), focus, 1.0)
+		assert_true(low.visible and not cfull.visible, "the near wall is cut away")
+		cut.board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
+		assert_true(cfull.visible and not low.visible, "and stands again when the camera turns back")
+	cut.queue_free()
 	await _frames(1)
 	Look.set_style("classic", false)
 	var c := _view("death_house_upper")
@@ -415,6 +443,30 @@ func test_interiors_have_full_walls_that_cut_away() -> void:
 		"Classic keeps its low walls")
 	assert_true(c.board.get_node_or_null("InteriorWalls") == null, "with no full walls")
 	c.queue_free()
+
+
+## An outer wall on a room's north side (the room below it, nothing open above it) among the walls in `st`.
+func _north_wall(board: ArenaBoard, st: Dictionary) -> Dictionary:
+	for w: Dictionary in st.get("walls", []):
+		if w.has("flanks"):
+			continue
+		var c := w["cell"] as Vector2i
+		if _open(board, c + Vector2i(0, 1)) and _open(board, c + Vector2i(0, 2)):
+			var clear := true
+			for k: int in [1, 2, 3, 4, 5]:
+				clear = clear and not _open(board, c - Vector2i(0, k))
+			if clear:
+				return w
+	return {}
+
+
+## How many of the walls in `st` stand over doorways.
+func _headers(st: Dictionary) -> int:
+	var n := 0
+	for w: Dictionary in st.get("walls", []):
+		if w.has("flanks"):
+			n += 1
+	return n
 
 
 func _open(board: ArenaBoard, c: Vector2i) -> bool:
@@ -448,12 +500,13 @@ func test_doorways_inside_are_framed_in_the_place_style() -> void:
 				if str(n.name).begins_with("DoorFrame") and board.grid.cell_at((n as Node3D).global_position) == cell:
 					fail("%s's door at %s still has a plain frame" % [spec[0], cell])
 					break
-			# The camera across the doorway: the wall over it cuts away with its head, the jambs stay.
+			# The camera across the doorway: the wall over it stands with its head and the jambs, all of them opening
+			# round the party instead (SeeThrough).
 			var at := board.cell_center(cell)
 			for i in 2:
 				board.cut_buildings(at + Vector3(0, 8, -10), at + Vector3(0, 0, 2), 1.0)
-			assert_false(head.is_visible_in_tree(), "%s: the head goes with the wall over the doorway" % spec[0])
-			assert_true(jambs.is_visible_in_tree(), "%s: the jambs stay" % spec[0])
+			assert_true(head.is_visible_in_tree() and jambs.is_visible_in_tree(), "%s: the doorway stands" % spec[0])
+			assert_true(SeeThrough.marked(head) and SeeThrough.marked(jambs), "%s: and opens round the party" % spec[0])
 		v.queue_free()
 		await _frames(1)
 	# A secret door: no doorway until it's found.

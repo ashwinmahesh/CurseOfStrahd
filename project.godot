@@ -74,3 +74,11 @@ world_sky={
 "type": "color",
 "value": Color(0.1, 0.15, 0.25, 1)
 }
+see_window={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+see_window_eye={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}

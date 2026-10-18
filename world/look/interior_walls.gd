@@ -1,14 +1,15 @@
 class_name InteriorWalls
 extends RefCounted
 ## Interiors that sit in the world (Improvement Ideas W8, docs/art/building_kit.md): a room's walls stand a full storey
-## high, and the walls between the camera and the rooms behind them drop to the old cut-away height, so the party is
-## always in view and the far walls frame the room the way the look target frames do. Turning the camera turns which
-## walls are down. Past the building's outer walls there is ground (a village street, a castle yard) instead of black,
-## a storey or more below on an upper floor, with the outer walls running down to it.
+## high from every heading, and a wall between the camera and the party opens a window round the party (SeeThrough;
+## owner 2026-10-17: "walls collapse down when looking from certain angles ... I don't like this behavior"). Past the
+## building's outer walls there is ground (a village street, a castle yard) instead of black, a storey or more below on
+## an upper floor, with the outer walls running down to it.
 ##
-## ArenaBoard hands every wall square of an interior or dungeon here (BuildingKit.interior_wall); the board's cut-away
-## each frame reaches the walls through a building entry {"interior": true} (TownBuilder.cut_away). Nothing here
-## changes the rules grid.
+## With the catalog's interiors "cut_away" on (off since 2026-10-17), the walls between the camera and the rooms behind
+## them drop to the old cut-away height instead, turning with the camera: each wall is built in a full and a cut
+## version, and the board's cut-away each frame reaches them through a building entry {"interior": true}
+## (TownBuilder.cut_away). Nothing here changes the rules grid.
 
 const CUT := ModelPiece.CUT_TOP
 ## How tall a room's walls stand, by interior style (BuildingKit.interior_style); a place can set its own.
@@ -24,9 +25,9 @@ const BEYOND := 0.8
 const NEAR := 7.0
 
 
-## Builds wall square `c` (wall material `wall_mat`, as ArenaBoard picked it): a pillar, a room wall (a full and a cut
-## version), a solid block, or outside ground; a tent's canvas (TentWalls). False where W8 isn't on for this board
-## (its walls stay as before).
+## Builds wall square `c` (wall material `wall_mat`, as ArenaBoard picked it): a pillar, a room wall (with a cut version
+## where cutting is on), a solid block, or outside ground; a tent's canvas (TentWalls). False where W8 isn't on for
+## this board (its walls stay as before).
 static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
 	var st := _state(board)
 	if not st.is_empty() and (st["outside"] as Dictionary).has(c):
@@ -43,8 +44,8 @@ static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
 	return true
 
 
-## This board's W8 settings, worked out once: {style, height, ground, below, outside (cells), walls, headers}; empty
-## when off.
+## This board's W8 settings, worked out once: {style, height, ground, below, outside (cells), walls, headers, cutting};
+## empty when off.
 static func _state(board: ArenaBoard) -> Dictionary:
 	if board.has_meta("interior_walls"):
 		return board.get_meta("interior_walls") as Dictionary
@@ -56,7 +57,7 @@ static func _state(board: ArenaBoard) -> Dictionary:
 		st = {"style": style, "height": float(place.get("height", HEIGHTS.get(style, 2.4))),
 			"ground": str(place.get("ground", (cfg.get("ground", {}) as Dictionary).get(style, ""))),
 			"below": float(place.get("below", 0.0)) * STOREY, "outside": _outside_cells(board), "walls": [],
-			"headers": {}, "done_ground": false}
+			"headers": {}, "done_ground": false, "cutting": cutting()}
 		var root := Node3D.new()
 		root.name = "InteriorWalls"
 		board.add_child(root)
@@ -69,6 +70,11 @@ static func _state(board: ArenaBoard) -> Dictionary:
 		board.buildings.append(entry)   # (the entry holds the state, never the other way: a cycle would leak both)
 	board.set_meta("interior_walls", st)
 	return st
+
+
+## Whether rooms' walls cut away toward the camera (catalog building_kit interiors "cut_away"; off, owner 2026-10-17).
+static func cutting() -> bool:
+	return bool((BuildingKit.settings().get("interiors", {}) as Dictionary).get("cut_away", false))
 
 
 ## A place's own outside (catalog building_kit interiors.outside, by the start of its id): its ground, how many storeys
@@ -126,8 +132,9 @@ static func _open_faces(board: ArenaBoard, c: Vector2i) -> Array[Vector2i]:
 	return out
 
 
-## A room wall: its full storey and its cut-away version under one node on its square, the full one standing unless
-## the camera looks into a room over it. An outer wall of an upper floor runs down to the ground outside.
+## A room wall: its full storey on its square (and, where cutting is on, its cut-away version under the same node, the
+## full one standing unless the camera looks into a room over it). An outer wall of an upper floor runs down to the
+## ground outside. It opens round the party when it stands in the way (SeeThrough).
 static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dictionary) -> void:
 	var h := float(st["height"])
 	var node := Node3D.new()
@@ -138,19 +145,22 @@ static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: D
 	var full := Node3D.new()
 	full.name = "Full"
 	node.add_child(full)
-	var low := Node3D.new()
-	low.name = "Cut"
-	low.visible = false
-	node.add_child(low)
 	_box(full, Vector3(1, h, 1), Vector3(0, h / 2.0, 0), _tall(wall_mat, h))
 	_box(full, Vector3(1.02, 0.1, 1.02), Vector3(0, h + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
 	ModelPiece.dress_wall(board, c, wall_mat, h, full)
-	_box(low, Vector3(1, CUT, 1), Vector3(0, CUT / 2.0, 0), wall_mat)
-	_box(low, Vector3(1.02, 0.1, 1.02), Vector3(0, CUT + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
-	ModelPiece.dress_wall(board, c, wall_mat, CUT, low)
+	var low: Node3D = null
+	if bool(st["cutting"]):
+		low = Node3D.new()
+		low.name = "Cut"
+		low.visible = false
+		node.add_child(low)
+		_box(low, Vector3(1, CUT, 1), Vector3(0, CUT / 2.0, 0), wall_mat)
+		_box(low, Vector3(1.02, 0.1, 1.02), Vector3(0, CUT + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
+		ModelPiece.dress_wall(board, c, wall_mat, CUT, low)
 	var below := float(st["below"])
 	if below > 0.0 and _beside_outside(c, st):
 		_box(node, Vector3(1, below, 1), Vector3(0, -below / 2.0, 0), wall_mat)   # down to the street
+	SeeThrough.mark(node)
 	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "cell": c, "cut": false, "h": h})
 	# A doorway beside this wall (one open square between it and another wall): the wall goes on over it.
 	for d in SetDressing.FACES:
@@ -165,8 +175,8 @@ static func _open(board: ArenaBoard, c: Vector2i) -> bool:
 	return board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL) and not board.grid.has_flag(c, CombatGrid.VOID)
 
 
-## The wall over a doorway, from the cut-away height (an interior door's top) to the storey's; it stands while either
-## wall beside it stands. A doorway into a room is framed in the place's style (W7): the jambs stay, and the head over
+## The wall over a doorway, from the cut-away height (an interior door's top) to the storey's; where cutting is on, it
+## stands while either wall beside it stands. A doorway into a room is framed in the place's style (W7): the jambs stay, and the head over
 ## them (a lintel, an arch, a cornice) goes with the wall over the doorway.
 static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: Material, st: Dictionary) -> void:
 	var h := float(st["height"])
@@ -181,14 +191,17 @@ static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: M
 	var size := Vector3(1.0, h - CUT, 0.5) if along.x != 0 else Vector3(0.5, h - CUT, 1.0)
 	_box(full, size, Vector3(0, CUT + (h - CUT) / 2.0, 0), _tall(wall_mat, h))
 	_box(full, size + Vector3(0.02, 0.1 - size.y, 0.02), Vector3(0, h + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
-	var low := Node3D.new()
-	low.name = "Cut"
-	low.visible = false
-	node.add_child(low)
+	var low: Node3D = null
+	if bool(st["cutting"]):
+		low = Node3D.new()
+		low.name = "Cut"
+		low.visible = false
+		node.add_child(low)
 	# The frame stands on the faces of the walls beside the doorway, the wall over it set back behind its head.
 	var sides := _framed_sides(board, n, along, str(st["style"]))
 	if not sides.is_empty():
 		_frame(node, full, sides, str(st["style"]), st, n)
+	SeeThrough.mark(node)
 	(st["headers"] as Dictionary)[n] = true
 	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "cell": n, "cut": false, "h": h,
 		"flanks": [n - along, n + along]})
@@ -328,18 +341,21 @@ static func _wall(board: ArenaBoard, c: Vector2i) -> bool:
 	return board.grid.in_bounds(c) and board.grid.has_flag(c, CombatGrid.WALL)
 
 
-## Solid wall inside the building (a thick wall's middle): a block at the cut-away height, its top the dark of a cut wall.
+## Solid wall inside the building (a thick wall's middle): a block as tall as the walls round it, its top the dark of
+## a wall's top (at the cut-away height where walls cut away, so it never stands over a wall that's down).
 static func _block(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dictionary) -> void:
 	var node := Node3D.new()
 	node.name = "WallBlock"
 	node.position = board.cell_center(c)
 	node.set_meta("on_floor", true)
 	board.add_child(node)
-	_box(node, Vector3(1, CUT, 1), Vector3(0, CUT / 2.0, 0), wall_mat)
-	_box(node, Vector3(1.02, 0.1, 1.02), Vector3(0, CUT + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
+	var h := CUT if bool(st["cutting"]) else float(st["height"])
+	_box(node, Vector3(1, h, 1), Vector3(0, h / 2.0, 0), wall_mat if bool(st["cutting"]) else _tall(wall_mat, h))
+	_box(node, Vector3(1.02, 0.1, 1.02), Vector3(0, h + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
 	var below := float(st["below"])
 	if below > 0.0 and _beside_outside(c, st):
 		_box(node, Vector3(1, below, 1), Vector3(0, -below / 2.0, 0), wall_mat)
+	SeeThrough.mark(node)
 
 
 ## Outside the building: the ground the house stands on, a storey or more below on an upper floor, made once as one slab
@@ -406,7 +422,7 @@ static func _box(parent: Node3D, size: Vector3, pos: Vector3, mat: Material) -> 
 	return mi
 
 
-## Each frame (TownBuilder.cut_away): a wall with floor just beyond it, looking from the camera, near the party,
+## Each frame where cutting is on (TownBuilder.cut_away): a wall with floor just beyond it, looking from the camera, near the party,
 ## stands in front of the party's room or one beside it and goes down to the cut-away height; the rest stand (the far
 ## walls frame the rooms, and rooms further off stay walled). A thick wall's back half goes down with its front. A wall changing squashes down or grows back, then its other version takes over.
 static func cut(board: ArenaBoard, entry: Dictionary, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
@@ -415,6 +431,8 @@ static func cut(board: ArenaBoard, entry: Dictionary, camera_pos: Vector3, focus
 		return
 	dir = dir.normalized()
 	var st := entry["state"] as Dictionary
+	if not bool(st.get("cutting", false)):
+		return   # built without cut versions (cutting off when the board was built)
 	var ahead := {}
 	var near := Vector2(focus.x, focus.z)
 	for w: Dictionary in st["walls"]:
