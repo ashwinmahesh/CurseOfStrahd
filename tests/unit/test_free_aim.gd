@@ -258,3 +258,33 @@ func test_how_far_each_aimed_area_reaches() -> void:
 	assert_eq(cat.aim_ft(c, cat.find(c, "spell:fireball")), 0, "placed at a point, not aimed from the caster")
 	assert_eq(cat.aim_ft(c, {"id": "feat:breath_weapon:cone", "targeting": "direction"}), 15)
 	assert_eq(cat.aim_ft(c, {"id": "feat:breath_weapon:line", "targeting": "direction"}), 30)
+
+
+func test_cones_and_lines_are_the_size_the_rules_give() -> void:
+	# Owner, 2026-10-18: "Is the cone of cold 60ft cone accurate? It seems small". A Cone is as wide at its end as it is
+	# long (2024 rules glossary): Cone of Cold's 60 ft is 12 squares out and 12 across at the far end.
+	var e := _field()
+	var c := _wizard(e, Vector2i(2, 8))
+	TestCombat.start_with(e, c)
+	var cold := Compendium.shared().spell_data("cone_of_cold")
+	var tri := e.spells.targeting.area_outline(c, cold, Vector2.INF, Vector2.RIGHT)["points"] as PackedVector2Array
+	assert_eq(tri, PackedVector2Array([Vector2(3, 8.5), Vector2(15, 2.5), Vector2(15, 14.5)]), "12 squares long, 12 wide at its end")
+	var g := _grid(40, 30)
+	var me := Vector2i(14, 14)
+	var cone := g.cone_from(me, 1, _toward(me, 1, 0.0), 60)
+	var columns := {}
+	for cell in cone:
+		columns[cell.x] = int(columns.get(cell.x, 0)) + 1
+	assert_eq(columns.keys().size(), 12, "it reaches 12 squares out")
+	assert_eq(columns.keys().min(), 15, "from the square in front of the caster")
+	assert_eq(int(columns[26]), 13, "the last of them 13 squares across (12, and the squares the edges cut a quarter of)")
+	assert_eq(cone.size(), 84, "84 squares in all; the cone's own area is 72")
+	for spell: Array in [["burning_hands", 3], ["fear", 6], ["color_spray", 3], ["prismatic_spray", 12], ["conjure_barrage", 12]]:
+		var s := Compendium.shared().spell_data(str(spell[0]))
+		var pts := e.spells.targeting.area_outline(c, s, Vector2.INF, Vector2.RIGHT)["points"] as PackedVector2Array
+		var n := float(spell[1])
+		assert_true(absf(pts[1].x - pts[0].x - n) < 0.001 and absf(pts[2].y - pts[1].y - n) < 0.001, "%s: %d long, %d wide at its end" % [spell[0], int(n), int(n)])
+	var bolt := g.area_cells("line", 100, CombatGrid.line_origin(Vector2i(5, 14), 1, Vector2.RIGHT), Vector2.RIGHT)
+	assert_eq(bolt.size(), 20, "Lightning Bolt: 100 ft, 20 squares in a row")
+	for cell in bolt:
+		assert_eq(cell.y, 14, "one square wide")
