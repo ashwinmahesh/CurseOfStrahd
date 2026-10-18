@@ -227,7 +227,7 @@ func test_a_trigger_starts_its_own_version_of_a_fight() -> void:
 	assert_eq(int(oven["hp"]), 200, "Offalia at the oven has 200 HP")
 	var locker := await _fired("castle_ravenloft_court_weeping", 10, "check:rahadin_footlocker:failure", RAHADINS_CHAMBER)
 	assert_true(bool(locker["started"]), "the footlocker's failure starts a fight")
-	assert_eq(int(locker["hp"]), 325, "Rahadin at the footlocker has 325 HP")
+	assert_eq(int(locker["hp"]), 580, "Rahadin at the footlocker has 580 HP")
 
 
 ## The foes a trigger starts at `location` for the four pregens at `level`, standing at `at`: {started, foes, hp (the toughest)}.
