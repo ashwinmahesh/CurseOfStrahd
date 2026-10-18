@@ -1,5 +1,5 @@
 extends TestCase
-## The inventory's categories and marks (owner, 2026-10-17): Potions and Quest items have tabs of their own, a magic
+## The inventory's categories and marks (owner, 2026-10-17): Potions, Spell Scrolls (2026-10-18) and Quest items have tabs of their own, a magic
 ## item's picture has a box in the colour of its rarity (the row itself stays plain), an Attuned filter sits beside New
 ## and Junk, and a Rarity filter keeps any of the six rarities. The shop's pack side shares the tabs and the picture
 ## boxes, and its wares have a Potions tab.
@@ -71,7 +71,7 @@ func _all_items() -> Array[Dictionary]:
 
 func test_every_item_is_in_one_category_and_quest_items_are_not_gear() -> void:
 	assert_true("Potions" in InventoryScreen.FILTERS and "Quest" in InventoryScreen.FILTERS, "the two new tabs")
-	var kinds: Array[String] = ["Weapons", "Armor", "Potions", "Consumables", "Gear"]
+	var kinds: Array[String] = ["Weapons", "Armor", "Potions", "Scrolls", "Consumables", "Gear"]
 	var checked := 0
 	for data in _all_items():
 		var id := str(data.get("id", ""))
@@ -91,8 +91,10 @@ func test_every_item_is_in_one_category_and_quest_items_are_not_gear() -> void:
 	var comp := Compendium.shared()
 	assert_true(InventoryScreen.in_filter("Potions", comp.item_data("potion_of_healing")), "a potion is under Potions")
 	assert_false(InventoryScreen.in_filter("Consumables", comp.item_data("potion_of_healing")), "and no longer under Consumables")
-	assert_true(InventoryScreen.in_filter("Consumables", comp.item_data("spell_scroll_level_1")), "a scroll stays a consumable")
-	assert_true(InventoryScreen.in_filter("Consumables", comp.item_data("antitoxin")), "so does an antitoxin")
+	assert_true(InventoryScreen.in_filter("Scrolls", comp.item_data("spell_scroll_level_1")), "a Spell Scroll is under Scrolls")
+	assert_false(InventoryScreen.in_filter("Consumables", comp.item_data("spell_scroll_level_1")), "and no longer under Consumables")
+	assert_true(InventoryScreen.in_filter("Consumables", comp.item_data("scroll_of_protection_undead")), "a Scroll of Protection is no Spell Scroll")
+	assert_true(InventoryScreen.in_filter("Consumables", comp.item_data("antitoxin")), "an antitoxin stays a consumable")
 	assert_true(InventoryScreen.in_filter("Quest", comp.item_data("st_andrals_bones")), "St. Andral's bones are a quest item")
 	assert_true(InventoryScreen.in_filter("Quest", comp.item_data("sunsword")) and InventoryScreen.in_filter("Weapons", comp.item_data("sunsword")),
 		"the Sunsword is both a weapon and a quest item")
@@ -101,7 +103,8 @@ func test_every_item_is_in_one_category_and_quest_items_are_not_gear() -> void:
 
 func test_the_potions_and_quest_tabs_show_only_theirs() -> void:
 	var ch := GameState.story.party[0]
-	for id: String in ["potion_of_healing", "potion_of_speed", "spell_scroll_level_1", "antitoxin", "rope", "st_andrals_bones", "durst_attic_key"]:
+	for id: String in ["potion_of_healing", "potion_of_speed", "spell_scroll_level_1", "scroll_of_protection_undead", "antitoxin", "rope",
+			"st_andrals_bones", "durst_attic_key"]:
 		ch.add_item(id)
 	var inv := await _open(0)
 	_button(inv, "Potions").pressed.emit()
@@ -114,8 +117,14 @@ func test_the_potions_and_quest_tabs_show_only_theirs() -> void:
 	_button(inv, "Consumables").pressed.emit()
 	await _frames(1)
 	shown = inv.shown_ids()
-	assert_true("antitoxin" in shown and shown.any(func(id: String) -> bool: return id.begins_with("spell_scroll")), "a scroll and antitoxin: %s" % [shown])
-	assert_false("potion_of_healing" in shown, "no potions under Consumables")
+	assert_true("antitoxin" in shown and "scroll_of_protection_undead" in shown, "antitoxin and the Scroll of Protection: %s" % [shown])
+	assert_false("potion_of_healing" in shown or shown.any(func(id: String) -> bool: return id.begins_with("spell_scroll")),
+		"no potions and no Spell Scrolls under Consumables: %s" % [shown])
+	_button(inv, "Scrolls").pressed.emit()
+	await _frames(1)
+	shown = inv.shown_ids()
+	assert_eq(shown.size(), 1, "the one Spell Scroll: %s" % [shown])
+	assert_true(shown[0].begins_with("spell_scroll"), "%s is a Spell Scroll" % shown[0])
 	_button(inv, "Quest").pressed.emit()
 	await _frames(1)
 	shown = inv.shown_ids()
@@ -136,8 +145,8 @@ func test_the_potions_and_quest_tabs_show_only_theirs() -> void:
 	assert_true(inv.shown_ids().size() >= 2)
 
 
-## The tab strip has eight tabs now: it must fit the pack column on the inventory and on the shop's pack side.
-func test_the_eight_tabs_fit_without_spilling() -> void:
+## The tab strip has nine tabs now: it must fit the pack column on the inventory and on the shop's pack side.
+func test_the_tabs_fit_without_spilling() -> void:
 	var inv := await _open(0)
 	var strip := _strip_of(inv)
 	assert_true(strip != null, "found the inventory's tabs")
@@ -461,3 +470,138 @@ func test_a_rarity_nothing_has_is_greyed_out_and_the_six_chips_fit() -> void:
 	for c in row.get_children():
 		if c is Button:
 			assert_true((c as Button).get_minimum_size().x <= (c as Button).size.x + 0.5, "%s holds its label" % (c as Button).text)
+
+
+## Every Spell Scroll there can be: the bare one, the two that only say a level, and one for each spell in the game
+## (found or bought: "spell_scroll__<spell>"). Nothing else is.
+func test_is_spell_scroll_is_every_spell_scroll_and_nothing_else() -> void:
+	var comp := Compendium.shared()
+	var seen := 0
+	for id: String in ["spell_scroll", "spell_scroll_cantrip", "spell_scroll_level_1"]:
+		assert_true(InventoryScreen.is_spell_scroll(comp.item_data(id)), "%s is a Spell Scroll" % id)
+	var levels := {}
+	for sid: String in (comp.tables["spells"] as Dictionary).keys():
+		var data := comp.item_data("spell_scroll%s%s" % [MagicItems.SEP, sid])
+		if data.is_empty():
+			continue
+		seen += 1
+		levels[int((comp.tables["spells"] as Dictionary)[sid].get("level", 0))] = true
+		assert_true(InventoryScreen.is_spell_scroll(data), "the scroll of %s is a Spell Scroll" % sid)
+		assert_true(InventoryScreen.in_filter("Scrolls", data) and not InventoryScreen.in_filter("Consumables", data),
+			"%s: under Scrolls only" % sid)
+	assert_true(seen > 100 and levels.size() == 10, "scrolls of %d spells, levels %s" % [seen, levels.keys()])
+	# Everything else that merely is a scroll, or has scroll in its name, is not.
+	var others: Array[String] = []
+	for data in _all_items():
+		var id := str(data.get("id", ""))
+		var is_scroll := str(data.get("category", "")) == "scroll" and (id.begins_with("spell_scroll") or data.has("scroll_spell"))
+		if InventoryScreen.is_spell_scroll(data) != is_scroll:
+			others.append(id)
+		if InventoryScreen.is_spell_scroll(data):
+			assert_eq(str(data.get("category", "")), "scroll", "%s is a scroll" % id)
+	assert_true(others.is_empty(), "disagreements: %s" % [others])
+	for id: String in ["scroll_of_protection_undead", "scroll_of_protection_fiend", "map_or_scroll_case", "potion_of_healing", "rope"]:
+		assert_false(InventoryScreen.is_spell_scroll(comp.item_data(id)), "%s is no Spell Scroll" % id)
+
+
+func test_the_scrolls_tab_holds_spell_scrolls_of_every_level_and_combines_with_the_rest() -> void:
+	var ch := GameState.story.party[0]
+	# Found (a scroll that says only its level), bought (one for a spell), a cantrip, a high one, and two decoys.
+	var ids: Array[String] = ["spell_scroll_cantrip", "spell_scroll_level_1", "spell_scroll__fireball", "spell_scroll__banishment",
+		"spell_scroll__wish", "scroll_of_protection_undead", "potion_of_healing", "rope"]
+	for id in ids:
+		ch.add_item(id)
+	var inv := await _open(0)
+	_button(inv, "Scrolls").pressed.emit()
+	await _frames(1)
+	assert_eq(inv.filter, "Scrolls")
+	var shown := inv.shown_ids()
+	assert_eq(shown.size(), 5, "five Spell Scrolls (the two that said only a level are particular spells now): %s" % [shown])
+	for id in shown:
+		assert_true(InventoryScreen.is_spell_scroll(Compendium.shared().item_data(id)), "%s is a Spell Scroll" % id)
+	assert_true("spell_scroll__fireball" in shown and "spell_scroll__wish" in shown and "spell_scroll__banishment" in shown, "levels 3, 4 and 9 show: %s" % [shown])
+	assert_false("scroll_of_protection_undead" in shown, "a Scroll of Protection is not here")
+	# With the Rarity chips: Fireball is uncommon, Banishment rare, Wish legendary.
+	inv.rarities.assign(["rare", "legendary"])
+	inv.call("_draw")
+	await _frames(1)
+	var chosen := inv.shown_ids()
+	chosen.sort()
+	assert_eq(chosen, ["spell_scroll__banishment", "spell_scroll__wish"] as Array[String], "Scrolls, rare or legendary: %s" % [chosen])
+	# With the search, the junk mark and the stash-less New mark.
+	inv.rarities.clear()
+	inv.search = "fireball"
+	inv.call("_draw")
+	await _frames(1)
+	assert_eq(inv.shown_ids(), ["spell_scroll__fireball"] as Array[String], "'fireball' on the Scrolls tab")
+	inv.search = ""
+	InventoryScreen.set_junk(ch, "spell_scroll__wish", true)
+	inv.marks = "junk"
+	inv.call("_draw")
+	await _frames(1)
+	assert_eq(inv.shown_ids(), ["spell_scroll__wish"] as Array[String], "Junk on the Scrolls tab")
+	inv.marks = "new"
+	inv.call("_draw")
+	await _frames(1)
+	assert_eq(inv.shown_ids().size(), 5, "all five are new finds")
+	# The tab comes with its place in the strip, a focusable button like Potions.
+	var tab := _button(inv, "Scrolls")
+	assert_ne(tab.focus_mode, Control.FOCUS_NONE, "a pad and the keyboard can reach the tab")
+	assert_eq(InventoryScreen.FILTERS.find("Scrolls"), InventoryScreen.FILTERS.find("Potions") + 1, "right after Potions")
+	# An empty tab says so, and Consumables hold the decoy.
+	GameState.story.party[1].attuned.clear()
+	root.call("close_screen")
+	await _frames(2)
+	var inv2 := await _open(1)
+	inv2.filter = "Scrolls"
+	inv2.call("_draw")
+	await _frames(1)
+	assert_true(inv2.shown_ids().is_empty())
+	var text := ""
+	for l in (inv2.get("_list_foot") as Node).find_children("*", "Label", true, false):
+		if not (l as Node).is_queued_for_deletion():
+			text += (l as Label).text
+	assert_true(text != "", "an empty tab says so: '%s'" % text)
+	inv2.filter = "Consumables"
+	inv2.call("_draw")
+	await _frames(1)
+	assert_false(inv2.shown_ids().any(func(id: String) -> bool: return id.begins_with("spell_scroll")), "no Spell Scrolls under Consumables")
+
+
+func test_the_shop_sorts_spell_scrolls_the_same_way() -> void:
+	var ch := GameState.story.party[0]
+	for id: String in ["spell_scroll__fireball", "spell_scroll_level_1", "scroll_of_protection_undead", "antitoxin"]:
+		ch.add_item(id)
+	var shop := ShopScreen.new()
+	root.add_child(shop)
+	shop.open_for(root, GameState.story, "father_lucian")   # buys potions and scrolls
+	ShopScreen.only_buys = false
+	shop.pick_filter("Scrolls")
+	var ids := shop.sell_ids()
+	assert_eq(ids.size(), 2, "the sell side's Scrolls tab: two Spell Scrolls: %s" % [ids])
+	for id in ids:
+		assert_true(InventoryScreen.is_spell_scroll(Compendium.shared().item_data(id)), "%s is a Spell Scroll" % id)
+	shop.pick_filter("Consumables")
+	ids = shop.sell_ids()
+	assert_true("antitoxin" in ids and "scroll_of_protection_undead" in ids, "Consumables keep the rest: %s" % [ids])
+	assert_false(ids.any(func(id: String) -> bool: return InventoryScreen.is_spell_scroll(Compendium.shared().item_data(id))), "but no Spell Scroll")
+	# LB/RB step through the tab right after Potions.
+	ShopScreen.sell_filter = "Potions"
+	(_button(shop, "Only what Father Lucian buys") as Control).grab_focus()
+	assert_true(PadNav.current.tab(shop, 1), "LB/RB find the tabs")
+	assert_eq(ShopScreen.sell_filter, "Scrolls", "RB from Potions lands on Scrolls")
+	# The wares side.
+	var wares := GameState.story.shop_wares("father_lucian")
+	var tabs := ShopScreen.ware_tabs(wares)
+	assert_true("Scrolls" in tabs, "Lucian sells Spell Scrolls: %s" % [tabs])
+	assert_eq(ShopScreen.ware_kind({"id": "spell_scroll__bless"}), "Scrolls")
+	assert_eq(ShopScreen.ware_kind({"id": "spell_scroll"}), "Scrolls")
+	assert_eq(ShopScreen.ware_kind({"id": "scroll_of_protection_undead"}), "Consumables", "a Scroll of Protection stays a consumable")
+	shop.pick_ware_filter("Scrolls")
+	assert_false(shop.ware_ids().is_empty())
+	for id in shop.ware_ids():
+		assert_true(InventoryScreen.is_spell_scroll(Compendium.shared().item_data(id)), "%s is a Spell Scroll" % id)
+	shop.pick_ware_filter("Consumables")
+	for id in shop.ware_ids():
+		assert_false(InventoryScreen.is_spell_scroll(Compendium.shared().item_data(id)), "%s is not on the Consumables tab" % id)
+	shop.queue_free()

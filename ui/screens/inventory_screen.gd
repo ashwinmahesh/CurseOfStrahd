@@ -15,10 +15,11 @@ extends CanvasLayer
 ## the character's page was last opened (Character.add_item marks it; closing this screen clears it for every page shown).
 ## The bag is always a list (owner 2026-10-09: "keep the inventory as list always").
 
-const FILTERS := ["All", "Weapons", "Armor", "Potions", "Consumables", "Magic", "Gear", "Quest"]
+const FILTERS := ["All", "Weapons", "Armor", "Potions", "Scrolls", "Consumables", "Magic", "Gear", "Quest"]
 const SORTS := ["name", "weight", "value", "newest"]
 ## Item categories each filter keeps. Magic is any magic item, whatever its category, and Quest any quest item (is_quest),
-## whatever it is otherwise; Gear is everything else that isn't a quest item. Potions are not Consumables.
+## whatever it is otherwise; Gear is everything else that isn't a quest item. Potions and Scrolls (the Spell Scrolls,
+## is_spell_scroll, of every level) are not Consumables.
 const FILTER_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armor", "shield", "clothing"],
 	"Potions": ["potion"], "Consumables": ["consumable", "scroll"]}
 ## The paper doll: where each slot's tile sits on the figure (its middle, in the doll's own pixels), every worn slot of
@@ -1002,6 +1003,10 @@ static func in_filter(name_: String, data: Dictionary) -> bool:
 			return not (data.get("magic", {}) as Dictionary).is_empty()
 		"Quest":
 			return is_quest(data)
+		"Scrolls":
+			return is_spell_scroll(data)
+		"Consumables":
+			return cat in (FILTER_CATEGORIES["Consumables"] as Array) and not is_spell_scroll(data)
 		"Gear":
 			if is_quest(data):
 				return false
@@ -1025,6 +1030,15 @@ static func matches(text: String, data: Dictionary, e: Dictionary = {}) -> bool:
 		if not hay.contains(word):
 			return false
 	return true
+
+
+## Whether an item is a Spell Scroll of any level: the bare Spell Scroll, a scroll that only says its level ("Spell Scroll
+## (Level 1)", found in the story's loot before it picks a spell) or one holding a particular spell
+## ("spell_scroll__fireball", found or bought). A Scroll of Protection is a scroll but no Spell Scroll.
+static func is_spell_scroll(data: Dictionary) -> bool:
+	if str(data.get("category", "")) != "scroll":
+		return false
+	return data.has("scroll_spell") or str(data.get("template_id", "")) == "spell_scroll" or str(data.get("id", "")).begins_with("spell_scroll")
 
 
 ## A magic item's rarity as it shows ("common" to "artifact"); "" for anything that isn't magic.

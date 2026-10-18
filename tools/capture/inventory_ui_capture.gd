@@ -1,7 +1,7 @@
 extends Node
 ## The inventory's categories, rarity borders and Attuned filter (inventory-ui lane): a pack with potions of every rarity,
 ## quest items, magic items of each rarity and some attuned, then the screens one shot each. LANE_ONLY=all,magic,potions,
-## rarities,rarity_filter,quest,attuned,shop,shop_potions limits the shots; the tabs this build doesn't have are skipped (so the same scene
+## rarities,rarity_filter,consumables,scrolls,quest,attuned,shop,shop_potions limits the shots; the tabs this build doesn't have are skipped (so the same scene
 ## takes the "before" shots on an older build).
 ## make capture SCENE=res://tools/capture/inventory_ui_capture.tscn NAME=inventory-ui/after FRAMES=10
 
@@ -28,7 +28,8 @@ func _ready() -> void:
 			["potion_of_giant_strength_storm", 1], ["rope", 1], ["torch", 5], ["candle", 4], ["spell_component_ring", 1],
 			["cloak_of_protection", 1], ["ring_of_warmth", 1], ["ring_of_protection", 1], ["ring_of_telekinesis", 1],
 			["wand_of_secrets", 1], ["sunsword", 1], ["orb_of_damara", 1], ["st_andrals_bones", 1], ["holy_symbol_of_ravenkind", 1],
-			["tome_of_strahd", 1]]:
+			["tome_of_strahd", 1], ["spell_scroll__fireball", 1], ["spell_scroll__bless", 2], ["spell_scroll__banishment", 1],
+			["spell_scroll_cantrip", 1], ["scroll_of_protection_undead", 1], ["antitoxin", 2]]:
 		g.add_item(str(it[0]), int(it[1]))
 	for e in g.inventory:
 		e.erase("new")
@@ -97,6 +98,25 @@ func capture_shots(tool: Node, out: String) -> void:
 			inv.filter = "Potions"
 			inv.selected = "potion_of_speed")
 		await _shoot(tool, "%s_rarity_filter_potions.png" % out)
+		root.call("close_screen")
+	if _wants("consumables"):
+		_inventory(func(inv: InventoryScreen) -> void:
+			inv.filter = "Consumables"
+			inv.selected = "spell_scroll__fireball")
+		await _shoot(tool, "%s_consumables.png" % out)
+		root.call("close_screen")
+	if _wants("scrolls") and _has_tab("Scrolls"):
+		_inventory(func(inv: InventoryScreen) -> void:
+			inv.filter = "Scrolls"
+			inv.selected = "spell_scroll__fireball")
+		await _shoot(tool, "%s_scrolls.png" % out)
+		root.call("close_screen")
+		# With the Rarity filter on uncommon and rare, and the search.
+		_inventory(func(inv: InventoryScreen) -> void:
+			inv.filter = "Scrolls"
+			inv.rarities.assign(["uncommon", "rare"])
+			inv.selected = "spell_scroll__banishment")
+		await _shoot(tool, "%s_scrolls_rarity.png" % out)
 		root.call("close_screen")
 	if _wants("potions") and _has_tab("Potions"):
 		_inventory(func(inv: InventoryScreen) -> void:
