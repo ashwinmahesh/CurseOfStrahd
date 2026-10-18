@@ -31,7 +31,7 @@
       "objectives": [
         "Finish the names left in her ledger"
       ],
-      "hint": "Ask Ezmerelda about her ledger: at Van Richten's Tower, at the abbey switchback, in the Blue Water Inn's stable yard, or on the road beside her.",
+      "hint": "Ask Ezmerelda about her ledger: at Van Richten's Tower, at the abbey switchback, in the Blue Water Inn's stable yard, or by clicking on her if she travels with the party.",
       "ends": ""
     },
     {
@@ -39,6 +39,12 @@
       "journal": "Every name in Ezmerelda's ledger is struck through. She closed the book herself and, for once, was not in a hurry.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "ledger_closed",
+      "journal": "Every name we were willing to strike is struck. The rest of Ezmerelda's ledger stays unmarked: names we spared, or made terms with. She closed the book at what was done and said she would open it again if one of them needed silver after all.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

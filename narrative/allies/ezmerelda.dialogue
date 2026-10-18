@@ -99,7 +99,7 @@ endif
 
 ~ leg
 set ezmerelda_heard_leg
-if flag.kiril_defeated
+if flag.kiril_defeated or flag.den_broken
 Ezmerelda: The hills above Lake Zarovich, back when I was young and quick and stupid. Kiril took it laughing, with his black jaws wide.
 Ezmerelda [weary]: Rudolph built this brace, and it kicks harder than the old one. With the wolf dead, I mostly just feel lighter.
 else
@@ -194,7 +194,7 @@ set ledger_pick_grandsire
 set ledger_named += 1
 set ledger_ready += 1
 endif
-if flag.kiril_defeated and not flag.ledger_paid_kiril and flag.ledger_named < 3
+if (flag.kiril_defeated or flag.den_broken) and not flag.ledger_paid_kiril and flag.ledger_named < 3
 set ledger_pick_kiril
 set ledger_named += 1
 set ledger_ready += 1
@@ -252,7 +252,7 @@ if region:krezk and level >= 7 and not flag.grandsire_slain and not flag.ledger_
 set ledger_pick_grandsire
 set ledger_named += 1
 endif
-if region:werewolf_den and level >= 7 and not flag.kiril_defeated and not flag.ledger_pick_kiril and flag.ledger_named < 3 and not (flag.wolf_pack_leader == "kiril")
+if region:werewolf_den and level >= 7 and not flag.kiril_defeated and not flag.den_broken and not flag.ledger_pick_kiril and flag.ledger_named < 3 and not (flag.wolf_pack_leader == "kiril")
 set ledger_pick_kiril
 set ledger_named += 1
 endif
@@ -289,7 +289,7 @@ if level >= 7 and not flag.khazan_destroyed and not flag.ledger_pick_khazan and 
 set ledger_pick_khazan
 set ledger_named += 1
 endif
-if level >= 7 and not flag.kiril_defeated and not flag.ledger_pick_kiril and flag.ledger_named < 3 and not (flag.wolf_pack_leader == "kiril")
+if level >= 7 and not flag.kiril_defeated and not flag.den_broken and not flag.ledger_pick_kiril and flag.ledger_named < 3 and not (flag.wolf_pack_leader == "kiril")
 set ledger_pick_kiril
 set ledger_named += 1
 endif
@@ -335,8 +335,61 @@ Ezmerelda: Nothing's owed yet, so these are the hunts I'd take in your boots. Pi
 endif
 -> ledger_menu
 
+# Nothing to put in front of the party. At level 9 every name the book can still offer is struck or spared, so a party that
+# spared some names (below) is offered the book's close (sq-stuck, finding 134): it ends as a failure, not struck through.
+# The sparing is the ledger's own rule for dropping a name from its hunts (see the picks above); if the party later kills
+# one of them anyway the claim pays as always, and thirteen paid still ends the quest as ledger_struck.
 ~ ledger_none
+set ledger_spared = 0
+set ledger_spared_kiril = false
+set ledger_spared_grandsire = false
+set ledger_spared_morgantha = false
+set ledger_spared_lysaga = false
+if flag.wolf_pack_leader == "kiril" and not flag.kiril_defeated and not flag.den_broken
+set ledger_spared_kiril
+set ledger_spared += 1
+endif
+if quest.the_packs_runt == given and not flag.grandsire_slain
+set ledger_spared_grandsire
+set ledger_spared += 1
+endif
+if (flag.bonegrinder_fate == "bargain" or flag.bonegrinder_fate == "bella") and not flag.morgantha_slain
+set ledger_spared_morgantha
+set ledger_spared += 1
+endif
+if (flag.lysaga_fate == "bargained" or flag.lysaga_fate == "broken") and not flag.lysaga_dead
+set ledger_spared_lysaga
+set ledger_spared += 1
+endif
+if level >= 9 and flag.ledger_spared > 0 and quest.hunters_ledger != ledger_closed
+-> ledger_spared_close
+endif
 Ezmerelda [weary]: Nothing in reach that's worth your boots, and the rest would eat you whole. Come back once the valley's moved.
+-> menu
+
+~ ledger_spared_close
+Ezmerelda [weary]: Every name in reach is struck, and what's left on the page is breathing by your leave.
+if flag.ledger_spared_kiril
+Ezmerelda: Kiril Stoyanovich stays in ink: you left him running the den, and I pay for pelts, not politics.
+endif
+if flag.ledger_spared_grandsire
+Ezmerelda: The Grandsire in Krezk stays open too, since you brought him little Petru instead of a silver bolt.
+endif
+if flag.ledger_spared_morgantha
+Ezmerelda: Morgantha's line stays unmarked while your terms around Old Bonegrinder hold and the old hag draws breath.
+endif
+if flag.ledger_spared_lysaga
+Ezmerelda: Baba Lysaga stays on the page: broken or bargained with in Berez, she isn't dead enough for my ink.
+endif
+Ezmerelda: I won't ink a bargain as a kill, so we close the ledger as it stands or leave it open.
+* Close the book at what we've struck. -> ledger_close
+* Leave the ledger open for now. -> menu
+
+~ ledger_close
+quest hunters_ledger ledger_closed
+Ezmerelda [weary]: A hunter isn't a judge, though Rudolph would grumble for a week at an untidy page.
+Ezmerelda: The buckle goes shut on the work you did, and the ink stays dry on the rest.
+Ezmerelda [sly]: If any of your old bargains sours and needs silver after all, bring me the proof and I'll pay.
 -> menu
 
 ~ ledger_menu
@@ -356,8 +409,8 @@ Ezmerelda [weary]: Nothing in reach that's worth your boots, and the rest would 
 * [if flag.ledger_pick_huntsman and flag.huntsman_slain] We killed the Count's Huntsman and his hounds at the crossroads. -> claim_huntsman
 * [if flag.ledger_pick_grandsire and not flag.grandsire_slain] Tell us about the Grandsire. -> brief_grandsire
 * [if flag.ledger_pick_grandsire and flag.grandsire_slain] We killed the Grandsire in Krezk's square. -> claim_grandsire
-* [if flag.ledger_pick_kiril and not flag.kiril_defeated] Tell us about Kiril Stoyanovich. -> brief_kiril
-* [if flag.ledger_pick_kiril and flag.kiril_defeated] Kiril is dead in his den. -> claim_kiril
+* [if flag.ledger_pick_kiril and not flag.kiril_defeated and not flag.den_broken] Tell us about Kiril Stoyanovich. -> brief_kiril
+* [if flag.ledger_pick_kiril and (flag.kiril_defeated or flag.den_broken)] Kiril is dead in his den. -> claim_kiril
 * [if flag.ledger_pick_khazan and not flag.khazan_destroyed] Tell us about Khazan under the tower. -> brief_khazan
 * [if flag.ledger_pick_khazan and flag.khazan_destroyed] We destroyed Khazan under the tower. -> claim_khazan
 * [if flag.ledger_pick_lysaga and not flag.lysaga_dead] Tell us about Baba Lysaga in Berez. -> brief_lysaga
@@ -546,7 +599,7 @@ give potion_of_healing 3
 endif
 -> claim_end
 
-# Kiril Stoyanovich (flag kiril_defeated; fought in werewolf_den; named from level 7).
+# Kiril Stoyanovich (flag kiril_defeated, or den_broken: the reckoning kills him with Emil's pack; fought in werewolf_den; named from level 7).
 ~ brief_kiril
 Ezmerelda: Kiril Stoyanovich dens in the hills above Lake Zarovich and steals farm children from below Krezk to grow a pack for the castle.
 Ezmerelda: He laughs with his mouth open and calls armed men meat with swords. Silver first, give him no room, and tell me when he's done.
@@ -659,7 +712,8 @@ endif
 # ---------------------------------------------------------------- After a payment
 
 # One more name struck: the journal moves on, the first payment warms her a little, and the fourth and eighth names
-# bring a gift from her wagon (a +1 light crossbow, uncommon; Mage Breaker, rare: each is the only one in the story).
+# bring a gift from her wagon (a +1 light crossbow, uncommon; Mage Breaker, rare). The crossbow is the only one in the story;
+# Dmitri Krezkov also sells a Mage Breaker from party level 5, so hers is not one of a kind.
 ~ claim_end
 if flag.ezmerelda_ledger_paid == 1
 set ezmerelda_trust += 1

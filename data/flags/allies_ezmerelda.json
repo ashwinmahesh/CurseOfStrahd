@@ -167,6 +167,31 @@
       "summary": "Working flag: the Eye Below is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
     },
     {
+      "id": "ledger_spared",
+      "type": "int",
+      "summary": "Working flag: how many of the ledger's names the party has spared or made terms with (Kiril left in charge, the Grandsire given Petru, Morgantha or Baba Lysaga bargained with). Recomputed when the ledger has nothing to offer; not story state."
+    },
+    {
+      "id": "ledger_spared_kiril",
+      "type": "bool",
+      "summary": "Working flag: Kiril Stoyanovich is spared (he was left in charge of the pack and is not dead). Recomputed with ledger_spared; not story state."
+    },
+    {
+      "id": "ledger_spared_grandsire",
+      "type": "bool",
+      "summary": "Working flag: the Grandsire is spared (the party gave him Petru and has not killed him). Recomputed with ledger_spared; not story state."
+    },
+    {
+      "id": "ledger_spared_morgantha",
+      "type": "bool",
+      "summary": "Working flag: Morgantha is spared (a bargain or Bella's pact, and she is not dead). Recomputed with ledger_spared; not story state."
+    },
+    {
+      "id": "ledger_spared_lysaga",
+      "type": "bool",
+      "summary": "Working flag: Baba Lysaga is spared (bargained with or left broken, and she is not dead). Recomputed with ledger_spared; not story state."
+    },
+    {
       "id": "ledger_named",
       "type": "int",
       "summary": "Working flag: how many names the ledger has picked so far in this visit (at most three). Recomputed whenever the ledger opens; not story state."
