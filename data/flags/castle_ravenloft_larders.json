@@ -180,6 +180,31 @@
       "id": "larders_anatol_destroyed",
       "type": "bool",
       "summary": "Brother Anatol and his two spawn are destroyed (larders_false_brother or larders_false_brother_unmasked)."
+    },
+    {
+      "id": "brazier_glyph_woken",
+      "type": "bool",
+      "summary": "The warding glyph on the western stair's landing was stepped on (the brazier room's way down, behind the low door in the dungeon hall): the wax image of the count rose and fought (brazier_wax_strahd)."
+    },
+    {
+      "id": "brazier_wax_melted",
+      "type": "bool",
+      "summary": "The wax image of the count was struck and melted (encounter brazier_wax_strahd)."
+    },
+    {
+      "id": "brazier_golems_awake",
+      "type": "bool",
+      "summary": "Someone struck the brazier room's brazier, hourglass or an iron knight (larders_brazier:brazier, :hourglass, :knight): the two iron knights stepped out of their alcoves."
+    },
+    {
+      "id": "brazier_golems_beaten",
+      "type": "bool",
+      "summary": "The two iron knights of the brazier room were destroyed (encounter brazier_golems)."
+    },
+    {
+      "id": "brazier_trapdoor_fell",
+      "type": "bool",
+      "summary": "The trapdoor in the tunnel through the Pillarstone tipped under the party: the next step slides it down the marble chute to a north cell of the dungeon (larders_brazier:slide)."
     }
   ]
 }

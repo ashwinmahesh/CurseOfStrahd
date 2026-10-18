@@ -1,0 +1,181 @@
+{
+  "id": "iron_golem",
+  "name": "Iron Golem",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Iron Golem, read twice from aidedd.org's page for it on 2026-10-18 (both reads agreed on every number; the 2014 block it replaces has 210 Hit Points, a Slam and a Sword, a 15-foot Poison Breath at DC 19, Magic Weapons and a nonmagical-weapons immunity, none of which the new block keeps). Fire Absorption is the engine's `absorb: fire` (the golem regains Hit Points equal to the Fire damage it takes, including the Fire half of its own Bladed Arm if that ever hit it). Immutable Form is text only. Its Hit Points are tuned down per fight in the encounter (data/locations/castle_ravenloft_brazier_room.json), as the plan's iron golem pair asks."
+  },
+  "size": "large",
+  "type": "construct",
+  "alignment": "unaligned",
+  "art": "helmed_horror",
+  "art_height": 2.6,
+  "ac": 20,
+  "initiative": 9,
+  "hp": {
+    "average": 252,
+    "dice": "24d10+120"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 24,
+    "dex": 9,
+    "con": 20,
+    "int": 3,
+    "wis": 11,
+    "cha": 1
+  },
+  "immunities": [
+    "fire",
+    "poison",
+    "psychic"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 10,
+  "languages": [
+    "understands Common and two other languages but can't speak"
+  ],
+  "cr": 16,
+  "xp": 15000,
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "id": "fire_absorption",
+      "name": "Fire Absorption",
+      "action": "passive",
+      "summary": "Fire damage heals it instead: it regains Hit Points equal to the Fire damage dealt.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "fire_absorption"
+        }
+      ],
+      "absorb": "fire",
+      "implemented": "engine"
+    },
+    {
+      "id": "immutable_form",
+      "name": "Immutable Form",
+      "action": "passive",
+      "summary": "It can't shape-shift.",
+      "implemented": "text"
+    },
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bladed_arm",
+          "count": 2
+        }
+      ],
+      "summary": "Two attacks, Bladed Arm or Fiery Bolt in any combination (the engine plays two Bladed Arms in reach; Fiery Bolt is its attack from range)."
+    },
+    {
+      "id": "bladed_arm",
+      "name": "Bladed Arm",
+      "kind": "melee",
+      "attack": {
+        "bonus": 12,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 20,
+          "dice": "3d8+7",
+          "type": "slashing"
+        },
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "An iron blade for an arm: 3d8+7 Slashing plus 3d6 Fire, reach 10 ft.",
+      "text": "Melee Attack Roll: +12, reach 10 ft. Hit: 20 (3d8 + 7) Slashing damage plus 10 (3d6) Fire damage."
+    },
+    {
+      "id": "fiery_bolt",
+      "name": "Fiery Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 10,
+        "range": [
+          120,
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 36,
+          "dice": "8d8",
+          "type": "fire"
+        }
+      ],
+      "summary": "A bolt of fire from its chest at a foe up to 120 ft away: 8d8 Fire.",
+      "text": "Ranged Attack Roll: +10, range 120 ft. Hit: 36 (8d8) Fire damage."
+    },
+    {
+      "id": "poison_breath",
+      "name": "Poison Breath",
+      "kind": "save",
+      "recharge": "6",
+      "save": {
+        "ability": "con",
+        "dc": 18,
+        "success": "half"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 60
+      },
+      "targets": {
+        "range": 60
+      },
+      "damage": [
+        {
+          "average": 55,
+          "dice": "10d10",
+          "type": "poison"
+        }
+      ],
+      "summary": "Recharge 6: a 60-ft cone of poison gas; DC 18 Con save, 10d10 Poison, half on a success.",
+      "text": "Constitution Saving Throw: DC 18, each creature in a 60-foot Cone. Failure: 55 (10d10) Poison damage. Success: Half damage."
+    }
+  ],
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "brute",
+  "summary": "An iron knight the size of a doorway: a blade for an arm that burns, a bolt of fire from range, and a cone of poison gas now and then. Fire only feeds it."
+}

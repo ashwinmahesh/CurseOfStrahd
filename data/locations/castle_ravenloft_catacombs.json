@@ -35,7 +35,7 @@
       "#........................................~.#",
       "#..............~...........................#",
       "#..........................................#",
-      "#####.######################################",
+      "#####.################################.#####",
       "############################################"
     ],
     "theme": "dungeon",
@@ -225,6 +225,10 @@
     "from_strahd": [
       18,
       14
+    ],
+    "from_tunnel": [
+      38,
+      27
     ]
   },
   "exits": [
@@ -267,6 +271,16 @@
       "to": "castle_ravenloft_catacombs_strahd",
       "spawn": "from_catacombs",
       "label": "The black stair down"
+    },
+    {
+      "id": "cat_tunnel_mouth",
+      "cell": [
+        38,
+        29
+      ],
+      "to": "castle_ravenloft_brazier_room",
+      "spawn": "from_catacombs",
+      "label": "Stairs down to the tunnel through the Pillarstone"
     }
   ],
   "doors": [

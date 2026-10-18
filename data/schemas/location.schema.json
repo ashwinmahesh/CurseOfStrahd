@@ -364,8 +364,8 @@
           },
           "flame": {
             "type": "string",
-            "enum": ["bile"],
-            "description": "The colour of the fire burning in the piece (a hearth's flame), as SetDressing.FLAME_TINTS has it: bile is a green fire."
+            "enum": ["bile", "frost"],
+            "description": "The colour of the fire burning in the piece (a hearth's flame), as SetDressing.FLAME_TINTS has it: bile is a green fire, frost a cold white-blue one (the brazier room's)."
           },
           "span": {
             "type": "array",

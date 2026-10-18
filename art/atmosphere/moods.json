@@ -76,7 +76,8 @@
     "castle_ravenloft_court_treasury": "ravenloft_vault",
     "amber_temple_library": "amber_library",
     "amber_temple_vault": "amber_vault",
-    "argynvostholt_west_wing": "webbed_wing"
+    "argynvostholt_west_wing": "webbed_wing",
+    "castle_ravenloft_brazier_room": "ravenloft_brazier"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -3956,6 +3957,49 @@
             "core": "bone",
             "rim": "pewter",
             "amount": 90
+          }
+        ]
+      }
+    },
+    "ravenloft_brazier": {
+      "like": "ravenloft_crypt",
+      "times": {
+        "any": {
+          "ambient": "night",
+          "ambient_energy": 0.8,
+          "mist": "silver",
+          "mist_strength": 0.65,
+          "grade": {
+            "shadows": "night_deep",
+            "lights": "moonlight",
+            "amount": 0.35
+          }
+        }
+      },
+      "modern": {
+        "tone": {
+          "shade": "night_deep",
+          "amount": 0.5,
+          "ambient_tint": "mist_blue",
+          "ambient_mix": 0.45,
+          "ambient": 1.1
+        },
+        "times": {
+          "any": {
+            "ambient": "night",
+            "ambient_energy": 0.9,
+            "key": "moonlight",
+            "key_energy": 0.3
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "frost",
+            "rim": "moonlight",
+            "amount": 60
           }
         ]
       }

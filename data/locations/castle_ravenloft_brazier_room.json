@@ -1,0 +1,427 @@
+{
+  "id": "castle_ravenloft_brazier_room",
+  "name": "Castle Ravenloft, the Brazier Room",
+  "region": "castle_ravenloft",
+  "summary": "Far below the dungeon, a stair that was never on the household's plans: a landing guarded by a warding glyph, a vault with a cold white brazier, a floating hourglass and two iron knights, and a long low tunnel through the black rock to the catacombs.",
+  "text": "Cold stone, dripping steps and the feeling of a great many floors overhead.",
+  "map": {
+    "rows": [
+      "######################################################",
+      "###..#################################################",
+      "###..#################################################",
+      "###..#################################################",
+      "###..###########..####..##############################",
+      "###..###########..####..##############################",
+      "###..##########..........#############################",
+      "###..##########..........#############################",
+      "###..##########..........#############################",
+      "##.......................#############################",
+      "##.................=.....#############################",
+      "##.......................#############################",
+      "###############..........#############################",
+      "###############..........#############################",
+      "###############..........#############################",
+      "###############..........#############################",
+      "###################..#################################",
+      "###################..#################################",
+      "###################..#################################",
+      "###################..#################################",
+      "###################..#################################",
+      "###################..#################################",
+      "###################.....~...~~............~..~......##",
+      "###################......~...~...........~~...~....###",
+      "######################################################",
+      "######################################################",
+      "######################################################",
+      "######################################################",
+      "######################################################",
+      "######################################################",
+      "######################################################",
+      "######################################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "brazier_west_stair",
+      "name": "The western stair",
+      "cells": [
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          8
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "furnish": false
+    },
+    {
+      "id": "brazier_landing",
+      "name": "The landing and the lower flight",
+      "cells": [
+        [
+          2,
+          9
+        ],
+        [
+          14,
+          11
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "furnish": false
+    },
+    {
+      "id": "brazier_room",
+      "name": "The brazier room",
+      "cells": [
+        [
+          15,
+          4
+        ],
+        [
+          24,
+          15
+        ]
+      ],
+      "light": "dim",
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar",
+      "furnish": false
+    },
+    {
+      "id": "brazier_centre_stair",
+      "name": "The centre stair",
+      "cells": [
+        [
+          19,
+          16
+        ],
+        [
+          20,
+          21
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "furnish": false
+    },
+    {
+      "id": "brazier_tunnel",
+      "name": "The tunnel through the Pillarstone",
+      "cells": [
+        [
+          19,
+          22
+        ],
+        [
+          51,
+          23
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "furnish": false
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      3
+    ],
+    "from_dungeon": [
+      3,
+      3
+    ],
+    "from_catacombs": [
+      49,
+      22
+    ],
+    "from_chute": [
+      32,
+      22
+    ]
+  },
+  "exits": [
+    {
+      "id": "brazier_stair_up",
+      "cell": [
+        3,
+        1
+      ],
+      "to": "castle_ravenloft_larders_dungeon",
+      "spawn": "from_west_stair",
+      "label": "Stairs up to the dungeon hall"
+    },
+    {
+      "id": "brazier_tunnel_end",
+      "cell": [
+        51,
+        22
+      ],
+      "to": "castle_ravenloft_catacombs",
+      "spawn": "from_tunnel",
+      "label": "Stairs up to the catacombs"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "brazier_brazier",
+      "cell": [
+        19,
+        10
+      ],
+      "kind": "examine",
+      "label": "the stone brazier",
+      "model": "brazier",
+      "scale": 2.0,
+      "flame": "frost",
+      "dialogue": "castle_ravenloft/larders_brazier:brazier"
+    },
+    {
+      "id": "brazier_hourglass",
+      "cell": [
+        20,
+        9
+      ],
+      "kind": "examine",
+      "label": "the hourglass",
+      "model": "glass_ring",
+      "dialogue": "castle_ravenloft/larders_brazier:hourglass"
+    },
+    {
+      "id": "brazier_knight_west",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "examine",
+      "label": "an iron knight",
+      "model": "statue_knight",
+      "scale": 1.4,
+      "when": "not flag.brazier_golems_awake",
+      "facing": "south",
+      "dialogue": "castle_ravenloft/larders_brazier:knight"
+    },
+    {
+      "id": "brazier_knight_east",
+      "cell": [
+        22,
+        4
+      ],
+      "kind": "examine",
+      "label": "an iron knight",
+      "model": "statue_knight",
+      "scale": 1.4,
+      "when": "not flag.brazier_golems_beaten",
+      "facing": "south",
+      "dialogue": "castle_ravenloft/larders_brazier:knight"
+    },
+    {
+      "id": "brazier_knight_east_still",
+      "cell": [
+        22,
+        4
+      ],
+      "kind": "decor",
+      "label": "an iron knight",
+      "model": "statue_knight",
+      "scale": 1.4,
+      "when": "flag.brazier_golems_beaten",
+      "facing": "south"
+    },
+    {
+      "id": "brazier_wreck_west",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "decor",
+      "label": "broken iron",
+      "model": "rubble",
+      "when": "flag.brazier_golems_beaten"
+    },
+    {
+      "id": "brazier_wax_puddle",
+      "cell": [
+        10,
+        10
+      ],
+      "kind": "examine",
+      "label": "a puddle of wax",
+      "model": "puddle",
+      "when": "flag.brazier_wax_melted"
+    },
+    {
+      "id": "brazier_tunnel_slab",
+      "cell": [
+        36,
+        22
+      ],
+      "kind": "decor",
+      "label": "a wet patch",
+      "model": "puddle",
+      "approach": 12,
+      "call": "castle_ravenloft/larders_brazier:slide",
+      "call_when": "flag.brazier_trapdoor_fell"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        19,
+        10
+      ],
+      "kind": "magic",
+      "bright_ft": 30,
+      "dim_ft": 60,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        6,
+        9
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        12,
+        11
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        19,
+        20
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "traps": [
+    {
+      "id": "brazier_glyph_ward",
+      "label": "a warding glyph",
+      "cells": [
+        [
+          7,
+          9
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "detect_dc": 15,
+      "disarm_dc": 15,
+      "flag": "brazier_glyph_woken",
+      "text": "The glyph flares and an image of the count steps out of the light."
+    },
+    {
+      "id": "brazier_trapdoor_hatch",
+      "label": "a trapdoor in the tunnel floor",
+      "cells": [
+        [
+          34,
+          22
+        ],
+        [
+          35,
+          22
+        ],
+        [
+          34,
+          23
+        ],
+        [
+          35,
+          23
+        ]
+      ],
+      "detect_dc": 15,
+      "disarm_dc": 14,
+      "flag": "brazier_trapdoor_fell",
+      "model": "roof_hatch",
+      "text": "The floor tips under your boots."
+    }
+  ],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "brazier_wax_strahd",
+      "trigger": "flag:brazier_glyph_woken",
+      "when": "not flag.brazier_wax_melted",
+      "text": "The pale figure of the count comes at you in silence, one gloved hand raised to strike.",
+      "surprise": "",
+      "flag": "brazier_wax_melted",
+      "monsters": [
+        {
+          "monster": "commoner",
+          "cell": [
+            10,
+            10
+          ],
+          "name": "Wax Image of the Count",
+          "hp": 1,
+          "art": "strahd"
+        }
+      ]
+    },
+    {
+      "id": "brazier_golems",
+      "trigger": "dialogue",
+      "when": "not flag.brazier_golems_beaten",
+      "text": "The western knight steps into the pale light, shaking centuries of grey dust from its hinges. Its twin across the room does not stir at all.",
+      "surprise": "",
+      "flag": "brazier_golems_beaten",
+      "monsters": [
+        {
+          "monster": "iron_golem",
+          "cell": [
+            16,
+            4
+          ],
+          "name": "Iron Knight",
+          "hp": 230,
+          "facing": "south"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_brazier_room"
+  },
+  "rest": "no",
+  "rest_text": "Not here, with a cold white fire burning and iron watching from the alcoves."
+}

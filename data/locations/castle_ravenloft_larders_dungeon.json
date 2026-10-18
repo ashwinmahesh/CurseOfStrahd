@@ -12,8 +12,8 @@
       "#......................=...............#",
       "#....#...#...#...#...#.....#...........#",
       "#....#...............#.....#...........#",
-      "####################..######...........#",
-      "####################..######...........#",
+      "###############.####..######...........#",
+      "###############.####..######...........#",
       "####...#...#...#...#..#...##...........#",
       "####...#...#...#...#..#...####.#########",
       "####...#...#...#...#..#...####........##",
@@ -259,6 +259,23 @@
       "light": "dim",
       "floor": "dungeon/stone_floor",
       "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "larders_west_stair",
+      "name": "The low door and the stair behind it",
+      "cells": [
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -272,6 +289,14 @@
     ],
     "from_lift": [
       24,
+      9
+    ],
+    "from_west_stair": [
+      15,
+      5
+    ],
+    "from_chute": [
+      13,
       9
     ]
   },
@@ -295,6 +320,16 @@
       "to": "castle_ravenloft_larders",
       "spawn": "from_lift",
       "label": "The lift cage, up to the larders"
+    },
+    {
+      "id": "larders_west_stair_down",
+      "cell": [
+        15,
+        7
+      ],
+      "to": "castle_ravenloft_brazier_room",
+      "spawn": "from_dungeon",
+      "label": "Stairs down to the brazier room"
     }
   ],
   "doors": [
@@ -435,6 +470,14 @@
       ],
       "label": "a seam in the bone-panelled wall",
       "secret_dc": 15
+    },
+    {
+      "id": "larders_west_stair_door",
+      "cell": [
+        15,
+        6
+      ],
+      "label": "a low iron door"
     }
   ],
   "props": [
@@ -1021,6 +1064,17 @@
       "label": "a stone set into the throne of bones",
       "model": "bone_scatter",
       "item": "ioun_stone_strength"
+    },
+    {
+      "id": "larders_chute_mouth",
+      "cell": [
+        12,
+        7
+      ],
+      "kind": "examine",
+      "label": "a black marble opening high in the wall",
+      "model": "arch_carved",
+      "dialogue": "castle_ravenloft/larders_brazier:chute"
     }
   ],
   "containers": [

@@ -78,8 +78,15 @@ static func activate(view: LocationView, trap: Dictionary) -> void:
 	_spring_trap(view, trap, victim)
 
 
-## Springs `trap` on `victim` (null: set off with nobody in it). Its marks go: a sprung trap is spent.
+## Springs `trap` on `victim` (null: set off with nobody in it). Its marks go: a sprung trap is spent. A trap that sets a
+## `flag` can start the fight waiting on it (`flag:` trigger: the ghouls under Sir Jarnwald's illusory floor).
 static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant) -> void:
+	_spring(view, trap, victim)
+	if trap.has("flag"):
+		LocationFights.check_flag_encounters(view)
+
+
+static func _spring(view: LocationView, trap: Dictionary, victim: Combatant) -> void:
 	Audio.sfx("trap")
 	if PitFall.is_pit(trap):
 		PitFall.spring(view, trap, victim)   # a real drop: catch the edge or fall in (and climb out later)
