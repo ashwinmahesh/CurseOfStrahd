@@ -1023,12 +1023,12 @@ func _circling(c: Combatant) -> bool:
 
 
 ## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it, avoid: the
-## squares its walk goes round, held_off: a square the ground could drop it on would have been nearer}. It only looks
-## (one Creature read), so think works it out with the plan. With the plan's dangerous ground (`hazards`, plan_turn):
-## while there's a way round it (`round`), only squares walked to round it and clear of it, out of it first; otherwise
-## on in, the ground weighing a little (_harm_ft), rather than wait at its edge (owner, 2026-10-18), but on no walk the
-## ground at its worst could drop it on (AiHazards.View.deadly) while another is left, the least deadly last. Held off
-## turn after turn, it gives up the fight (AiTactics.stranded_turn).
+## squares its walk goes round, held_off: with no way round, a square the ground could drop it on would have been
+## nearer}. It only looks (one Creature read), so think works it out with the plan. With the plan's dangerous ground
+## (`hazards`, plan_turn): while there's a way round it (`round`), only squares walked to round it and clear of it, out
+## of it first; otherwise on in, the ground weighing a little (_harm_ft), rather than wait at its edge (owner,
+## 2026-10-18), but on no walk the ground at its worst could drop it on (AiHazards.View.deadly) while another is left,
+## the least deadly last. Held off turn after turn, it gives up the fight (AiTactics.stranded_turn).
 func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 	var e := enc()
 	var target := plan["target"] as Combatant
@@ -1089,7 +1089,7 @@ func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 			best_cost = cost
 	Creature.end_read()
 	return {"cell": best_cell, "cost": best_cost, "dash": dash_ok, "avoid": {} if hz == null else hz.avoid,
-		"held_off": nearest_deadly < best_d}
+		"held_off": not round_it and nearest_deadly < best_d}
 
 
 ## Dangerous ground on the walk `path` and where it ends, in feet of approach (_approach_square): any at all rules a
