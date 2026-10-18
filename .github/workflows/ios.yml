@@ -16,7 +16,7 @@ on:
       version:
         description: App version (major.minor.patch)
         required: true
-        default: '1.0.0'
+        default: '1.0.1'
       build_kind:
         description: Full game or a small signing/upload check (no gameplay)
         type: choice

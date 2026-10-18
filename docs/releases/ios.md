@@ -32,6 +32,16 @@ remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.
 
 Desktop Forward+ rendering, layouts, input bindings and saved preferences retain their existing paths.
 
+## Version policy
+
+The next authorized iOS upload is **1.0.1**, following 1.0.0 (2001). Increment the marketing patch version
+for each subsequent new upload: 1.0.2, 1.0.3, and so on, unless the owner requests a minor or major release.
+Set the explicit workflow `version` input and keep the iOS preset and local exporter default aligned.
+The pipeline's independent integer build number remains generated from its run number and attempt.
+A retry of the same release keeps its marketing version while using a fresh build number. Versioning policy
+is not authorization to upload future builds; uploads still require the owner's current instruction.
+Pin the source commit, preserve the upload/Apple processing receipt, and report success after Apple VALID.
+
 ## Prerequisites
 
 Use macOS, Godot **4.7.2 stable**, its matching `ios.zip` export template, and full Xcode with the iOS SDK.
@@ -102,7 +112,7 @@ failed stages for diagnostics and choose a fresh directory for the next attempt.
 ## Export and build
 
 ```sh
-IOS_TEAM_ID=YOURTEAMID IOS_BUNDLE_ID=app.curseofstrahd.game VERSION=1.0.0 IOS_BUILD=1 \
+IOS_TEAM_ID=YOURTEAMID IOS_BUNDLE_ID=app.curseofstrahd.game VERSION=1.0.1 IOS_BUILD=1 \
   make ios-export IOS_OUT=/absolute/path/to/ios-build-1
 ```
 

@@ -430,7 +430,7 @@ def main() -> int:
     output = args.output.expanduser().resolve()
     team = os.environ.get("IOS_TEAM_ID", "")
     bundle = os.environ.get("IOS_BUNDLE_ID", "app.curseofstrahd.game")
-    version = os.environ.get("VERSION", "1.0.0")
+    version = os.environ.get("VERSION", "1.0.1")
     build = os.environ.get("IOS_BUILD", "1")
     try:
         validate_identity(team, bundle, version, build)
