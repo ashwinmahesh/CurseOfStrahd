@@ -83,11 +83,52 @@ func test_the_vestiges_stand_upright_on_their_squares() -> void:
 			assert_true(case.light != null, "%s has a light inside it" % id)
 			assert_eq(str(case.light.get_meta("light_kind", "")), "amber", "the amber kind, once dressed")
 			assert_true(case.light.has_meta("no_shadow"), "casting no shadow")
-			assert_true(LightFlicker.of(case.light) != null, "and breathing")
+			assert_true(LightFlicker.of(case.light) != null or case.locked, "and breathing (Savnok's holds still)")
 			for m in case.glass:
 				assert_true(bool(m.get_shader_parameter("see_through")), "%s opens a window round the party like a wall" % id)
 		v.queue_free()
 		await _frames(1)
+
+
+## Each vestige holds its own shape and its own touch (Amber Temple Look Plan step 5): a quad turned to the camera hung in
+## its block, dahlver_nar's teeth on a second plane that turns, Savnok's light holding still, Zhudun's light grey-white,
+## Tenebrous's dim and its middle dark, Shami's glass rose.
+func test_each_vestige_holds_its_own_shape() -> void:
+	var held := {}
+	var views: Array[LocationView] = []
+	for loc_id: String in ["amber_temple_faceless_god", "amber_temple_vault"]:
+		var v := _view(loc_id)
+		views.append(v)
+		await _frames(4)
+		for prop: Variant in v.loc["props"]:
+			var id := str((prop as Dictionary)["id"])
+			if not (id in RING or id in NAVE):
+				continue
+			var case := _case(v, id)
+			var vid := id.trim_prefix("sarc_")
+			assert_eq(case.vestige, vid, "%s knows which vestige it holds" % id)
+			assert_true(case.get_node_or_null("Shape") != null, "%s holds a shape in its block" % id)
+			assert_true(case.shape_materials.size() == (2 if vid == "dahlver_nar" else 1), "%s: %d planes" % [id, case.shape_materials.size()])
+			held[vid] = case
+	await _frames(3)
+	assert_eq(held.size(), 16, "all sixteen")
+	var savnok := held["savnok"] as AmberGlow.Case
+	assert_true(savnok.locked and savnok.light != null and LightFlicker.of(savnok.light) == null, "Savnok's light holds still")
+	var normal := held["zantras"] as AmberGlow.Case
+	assert_true(normal.light != null and LightFlicker.of(normal.light) != null, "the others breathe")
+	var zhudun := held["zhudun"] as AmberGlow.Case
+	assert_true(zhudun.light.light_color.r > 0.6 and absf(zhudun.light.light_color.r - zhudun.light.light_color.b) < 0.2, "Zhudun's light is grey-white")
+	var tenebrous := held["tenebrous"] as AmberGlow.Case
+	assert_true(tenebrous.light.base_energy < normal.light.base_energy * 0.5, "Tenebrous's is dim")
+	assert_eq(int(tenebrous.shape_materials[0].get_shader_parameter("touch")), AmberGlow.TOUCHES["void"], "round a black middle")
+	var shami := held["shami_amourae"] as AmberGlow.Case
+	var core := shami.glass[0].get_shader_parameter("core") as Color
+	assert_true(core.r > core.g and core.r > 0.6, "Shami's glass is rose-honey")
+	var teeth := (held["dahlver_nar"] as AmberGlow.Case).shape_materials[1]
+	assert_true(float(teeth.get_shader_parameter("spin")) > 0.0, "Dahlver-Nar's teeth turn slowly")
+	for v in views:
+		v.queue_free()
+	await _frames(1)
 
 
 ## The hollow is the largest block of all: lying across all four squares of its cover, longer and higher than any

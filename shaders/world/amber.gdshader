@@ -24,6 +24,8 @@ uniform float glow : hint_range(0.0, 2.0) = 1.0;
 uniform float dead : hint_range(0.0, 1.0) = 0.0;
 // Clouding through the amber (a sick block's, a dead one's), 0 clear.
 uniform float cloud : hint_range(0.0, 1.0) = 0.15;
+// What the clouding is made of (a sick block's bile): multiplied into the murk, white leaves it plain.
+uniform vec3 cloud_tint : source_color = vec3(1.0);
 // How see-through the glass is at its middle and at its edges.
 uniform float alpha_core : hint_range(0.0, 1.0) = 0.52;
 uniform float alpha_edge : hint_range(0.0, 1.0) = 0.86;
@@ -74,15 +76,16 @@ void fragment() {
 	vec3 col = mix(edge, core, pow(facing, 1.35) * shade);
 	// Murk: slow clouds through the glass, thicker the deader it is.
 	float murk = 0.5 + 0.5 * sin(lp.x * 5.3 + lp.y * 3.1) * sin(lp.z * 4.7 - lp.y * 2.3 + 1.7);
-	col = mix(col, col * 0.55, cloud * murk);
+	col = mix(col, col * 0.55 * cloud_tint, cloud * murk);
 	// Specks and bubbles held still in it: a few bright points.
-	float speck = step(0.988, hash13(floor(lp * 13.0))) * (1.0 - dead);
+	vec3 cell = lp * 13.0;
+	float speck = step(0.988, hash13(floor(cell))) * smoothstep(0.34, 0.1, length(fract(cell) - 0.5)) * (1.0 - dead);   // round, not a square cell
 	col += core * speck * 0.5;
 	col = mix(col, dead_tint * (0.8 + 0.5 * murk), dead);
 	float lit = glow * (1.0 - dead);
 	ALBEDO = col * 0.3;
 	EMISSION = col * lit * 0.6;
 	ALPHA = clamp(mix(alpha_core, alpha_edge, 1.0 - facing) + dead * 0.1, 0.0, 1.0);
-	ROUGHNESS = 0.28;
-	SPECULAR = 0.35;
+	ROUGHNESS = 0.5;
+	SPECULAR = 0.12;
 }

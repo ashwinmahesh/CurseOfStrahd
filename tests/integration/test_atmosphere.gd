@@ -365,7 +365,8 @@ func test_the_amber_breathes_slowly() -> void:
 			if str(l.get_meta("light_kind", "")) != "amber":
 				continue
 			found += 1
-			assert_true(LightFlicker.of(l) != null, "%s: an amber light breathes" % loc_id)
+			var held_still := l.get_parent() is AmberGlow.Case and (l.get_parent() as AmberGlow.Case).locked   # (Savnok's)
+			assert_true(LightFlicker.of(l) != null or held_still, "%s: an amber light breathes" % loc_id)
 			assert_false(l.shadow_enabled and not l.has_meta("no_shadow"), "%s: and casts no shadow" % loc_id)
 			assert_true(l.has_meta("no_shadow"), "%s: marked so" % loc_id)
 		for li: Variant in (v.loc["lights"] as Array):

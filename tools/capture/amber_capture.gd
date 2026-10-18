@@ -8,7 +8,7 @@ extends Node3D
 ## Environment: AMBER_LOC=amber_temple_vault, AMBER_AT=19,24 (the square the camera looks at; several, split by |, each a
 ## shot), AMBER_ZOOM=9 (the camera's distance), AMBER_TURNS=1 (camera quarter turns), AMBER_PARTY=19,26|20,26 (the
 ## party's squares; empty: the place's own spawn), AMBER_FLAGS=amber_temple_sealed,... (story flags set first),
-## AMBER_HOUR=12, AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them).
+## AMBER_HOUR=12, AMBER_WINDOW=1 (keep the window round the party that walls and blocks open; off by default), AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them).
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 ## How much faster than real time the game runs while a clip's frames are taken.
@@ -67,6 +67,12 @@ func _build(loc_id: String) -> void:
 	view = LocationView.create(loc_id, st, Narrator.new(), Dice.roller, "" if not party.is_empty() else "default")
 	add_child(view)
 	view.update_daylight()
+	if OS.get_environment("AMBER_WINDOW") != "1":
+		# No window opened in the walls and blocks nearer the camera than the party (SeeThrough puts it where the camera
+		# looks when nobody is followed): a shot of a block wants it whole.
+		var see := view.find_child("SeeThrough", true, false)
+		if see != null:
+			see.queue_free()
 
 
 ## `frames` frames of the place, `seconds` of its time apart (the game runs CLIP_SPEED times fast between them):
