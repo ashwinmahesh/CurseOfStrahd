@@ -340,6 +340,13 @@
       "res://art/sourced/kevin_macleod/Virtutes Instrumenti.mp3",
       "res://art/sourced/kevin_macleod/Ancient Rite.mp3",
       "res://art/sourced/kevin_macleod/Gregorian Chant.mp3"
+    ],
+    "somber": [
+      "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg",
+      "res://art/sourced/wikimedia_commons/Beethoven_Moonlight_Sonata_I_Paul_Pitman.ogg",
+      "res://art/sourced/scott_buckley/Unraveling.mp3"
     ]
   },
   "sfx": {
@@ -1694,6 +1701,8 @@
     "strahd_end": "dawn",
     "knights_at_the_stair": "dawn",
     "church_vigil": "sacred",
-    "arabelle_shore": "camp"
+    "arabelle_shore": "camp",
+    "amber_pact": "somber",
+    "pact_two_books": "somber"
   }
 }
