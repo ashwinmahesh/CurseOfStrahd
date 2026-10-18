@@ -1301,6 +1301,7 @@
     {
       "id": "cat_gargoyle_watch",
       "trigger": "enter_area:cat_gargoyle_tomb",
+      "waiting": true,
       "surprise": "",
       "flag": "cat_gargoyles_slain",
       "text": "The winged figures at the corners of the slab unfold, stone grinding on stone, and drop to the floor.",
@@ -1311,7 +1312,8 @@
             38,
             7
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "southwest"
         },
         {
           "monster": "gargoyle",
@@ -1319,7 +1321,8 @@
             41,
             7
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "southwest"
         },
         {
           "monster": "gargoyle",
@@ -1327,7 +1330,8 @@
             38,
             11
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "northwest"
         },
         {
           "monster": "gargoyle",
@@ -1335,7 +1339,8 @@
             41,
             11
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "northwest"
         },
         {
           "monster": "gargoyle",
@@ -1343,7 +1348,8 @@
             40,
             6
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "north"
         },
         {
           "monster": "gargoyle",
@@ -1351,7 +1357,8 @@
             39,
             12
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "south"
         },
         {
           "monster": "gargoyle",
@@ -1359,7 +1366,8 @@
             40,
             9
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1367,7 +1375,8 @@
             42,
             9
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "west"
         },
         {
           "monster": "gargoyle",
@@ -1375,7 +1384,8 @@
             40,
             8
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1383,7 +1393,8 @@
             41,
             9
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1391,7 +1402,8 @@
             40,
             10
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1399,7 +1411,8 @@
             41,
             8
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1407,7 +1420,8 @@
             41,
             10
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1415,7 +1429,8 @@
             40,
             7
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1423,7 +1438,8 @@
             40,
             11
           ],
-          "hp": 134
+          "hp": 101,
+          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -1431,7 +1447,8 @@
             42,
             8
           ],
-          "hp": 134
+          "hp": 101,
+          "facing": "west"
         }
       ]
     },

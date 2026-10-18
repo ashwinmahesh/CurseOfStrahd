@@ -26,7 +26,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 ## cat_gargoyle_watch, castle_ravenloft_catacombs variant 0 at level 10.
 func test_cat_gargoyle_watch_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_catacombs", 12, 10, "cat_gargoyle_watch", [Vector2i(37, 9), Vector2i(36, 9), Vector2i(35, 9), Vector2i(34, 8)], 4, 6, [])
+	await _held("castle_ravenloft_catacombs", 12, 10, "cat_gargoyle_watch", [Vector2i(36, 9), Vector2i(35, 9), Vector2i(34, 8), Vector2i(34, 7)], 4, 6, [], [], ["cat_champion_gate"])
 
 
 ## cat_sleepers, castle_ravenloft_catacombs variant 0 at level 10.
