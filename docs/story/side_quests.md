@@ -225,6 +225,12 @@ Back at Vasile and Petre the quest is done.
 Talker: Zora ("Heard anything interesting?" is her old road question renamed). Radu's Nicu line now starts
 `the_hanged_vistana` at `asked`, as Luminita's does.
 
+**The camp turning on the party (Failure Plan, T1).** Once `tser_pool_brawl_won` or `vistani_turned_hostile` is set the camp's
+people are gone (the brawl hides Luminita and Stanimir as well), so four quests that end there each close somewhere the
+party can still go: Called by Name at the lake camp, The Dancing Bear at the bare plank stage, The Grey Mare in the empty
+pen, and The Hanged Man at the Crossroads with Arrigal, who takes Nicu's news (`the_hanged_vistana` `told` from `buried`
+or `risen`, only after the brawl; no potion, no Luminita). None of them sets a main flag.
+
 ### The Grey Mare (`the_grey_mare`, narrative/svalich_road/grey_mare.dialogue)
 
 The black carriage that drives itself stopped by Radu's pen and left a purse; tonight Radu walked his grey mare,
@@ -249,6 +255,11 @@ bolts home and the carriage comes early; failed or left alone, she is black by m
   calming is tried (a failed one-try calm loses her; the swap never does): Sleight of Hand DC 13, or Stealth DC 13 from
   the ditch. Clean, the carriage takes the straw horse and goes (`carriage_fooled`, no fight, `xp fight` pays it) and
   Steaua is home, `saved`; fumbled, or switched in plain sight, it is the escort fight with Steaua already away.
+- **When the Tser Pool camp has turned on the party (Side Quest Failure Plan, T1, 2026-10-18).** Radu is gone with it
+  (`tser_pool_brawl_won` or `vistani_turned_hostile`). Once the carriage is beaten (`carriage_beaten`), the empty horse
+  pen (prop `tser_pen_empty`) closes the quest: a saved Steaua is found grey and alone with the castle's purse still on the
+  gatepost (`home`, 120 gp, no rod and no approval from Radu); a mare lost leaves an empty place at the end of the pen and
+  closes it as `empty_pen`, a failure.
 
 ### Called by Name (`called_by_name`, narrative/svalich_road/called_by_name.dialogue; batch 2)
 
@@ -272,6 +283,10 @@ decides whether someone is lured toward the edge, which starts the fight with th
   DC 12 for the old goat path, Misty Step or Spider Climb all get him up, and the wisps are never met (`xp fight` pays
   the fight). A failed climb costs half an hour and he says to try again; "come back after dark" is the night fight as
   before. Once he's out, the falls are quiet at night.
+- **When the Tser Pool camp has turned on the party (Failure Plan, T1).** Tobar is gone with the camp, so a boy brought
+  out of the gorge (`nelu_found`) waits at the Vistani camp by the lake outside Vallaki's west gate (`tser_nelu` there,
+  `called_by_name:nelu_away`) and the quest closes as `no_fire`, a failure: Nelu is alive, with no money and no quiver from
+  his father and no way home. The `nelu_found` hint names both camps.
 
 ### The Dancing Bear (`the_dancing_bear`, narrative/svalich_road/the_dancing_bear.dialogue; batch 7, level 3)
 
@@ -289,6 +304,10 @@ young. **Escalation:** opening the trap makes the cub scream, and the blights co
 - Then Bujor goes home to Lavinia's stage with the cub (he stands on the stage from then on), or into the den with it.
   Lavinia gives her grandmother's fan either way: a Wind Fan (uncommon) and 60 gp. Told whose trap it was, she sends
   the party to Old Marin, who confesses and pulls all eleven of his traps.
+- **When the Tser Pool camp has turned on the party (Failure Plan, T1).** With no stage to bring him to, the choice at
+  the den offers only the den (`choose`), and letting them go closes the quest as `no_stage`, a failure: no fan and no
+  60 gp. A bear already led or let go (`found`) and a camp that turns afterwards is closed at the bare plank stage (prop
+  `tser_stage_empty`).
 
 ### The Spiders' Gully (`the_spiders_gully`, narrative/svalich_road/the_spiders_gully.dialogue; batch 9, level 3)
 

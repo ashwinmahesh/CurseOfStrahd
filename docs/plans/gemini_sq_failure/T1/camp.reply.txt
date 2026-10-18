@@ -1,0 +1,46 @@
+== nelu_away
+Narrator: A woman by the lake fire puts a bowl of hot mutton broth into Nelu's hands and pulls a dry wool blanket around his thin shoulders.
+Nelu [weary]: They gave me bread and fat, and a coat that smells like somebody else's horse, and they told me the road back to the pool is shut.
+Nelu [sad]: Nobody here says why I cannot go home. Have you seen my Da on the road, or is he only looking for me in the wrong part of the trees?
+Narrator: The mist off the lake is cold on your face, and the fire snaps in the quiet while the boy waits for an answer you do not have.
+Nelu [sad]: That is all right. You pulled me off the wet rock when the water was loud, and that was work enough for one week.
+Nelu: When the mist comes up from the water tonight, I am going to sing every song I know until the dark has no room left to talk.
+
+== nelu_away_after
+Nelu [weary]: I sit with my back to the lake now, because water sounds the same everywhere once the sun goes down.
+Nelu: I do not ask after the pool camp anymore, and if anything calls my name from the reeds, I sing over it until it gives up.
+
+== bear_choose_gone
+Narrator: With the iron off the cub's leg, Bujor stands in the bruised fern and looks down the deer path toward the pool.
+Narrator: Nothing comes up through the wet pines to meet him: no fiddle, no woodsmoke, and no girl on the planks to take his chain.
+
+== bear_let_go_gone
+Narrator: You walk back down the deer path through the cold smell of pine and turned earth, leaving the rocks and the dark behind you.
+Narrator: Below the trees, the plank stage by the pool stands bare to the drizzle, and a big brown bear is dancing for nobody at all.
+
+== stage_empty
+Narrator: Rain sits in the nail-holes of the plank stage, and the cold tin lamp on the post smells of dead tallow.
+Narrator: Dead leaves have drifted into the hollow under the boards where the cub used to chew on old leather.
+Narrator: The wind moves through the alders by the water, and there is no one left in the clearing to hear that the bear got away whole.
+
+== pen_saved
+Narrator: Steaua stands alone in the mud of the empty pen, grey and cross, methodically stripping the bark from the top rail.
+Narrator: A wet leather purse still hangs from the gatepost where the castle carriage left it, heavy with old gold coins.
+Narrator: The mare flattens one ear as you lift the purse from the post, then goes back to chewing the fence.
+Narrator: Around you the wagons stand open to the damp air, with nobody left to say whose horse she is now.
+
+== pen_lost
+Narrator: The rail pen stands open to the mist, with hoof-prints filling with grey water at the far end where Steaua used to wait.
+Narrator: Dead needles float in the wooden trough, and the cold smell of the wet mud is all that is left of the night.
+Narrator: There is no one left by the wagons to hear what the black carriage took, or what the castle made of her.
+
+== arrigal_nicu_option
+* Tell him what became of Nicu at the crossroads gallows.
+* We buried Luminita's brother at the crossroads, and her camp is gone.
+
+== arrigal_nicu
+Narrator: Arrigal listens with his hands folded over the silver buttons of his waistcoat, while the lake wind pulls the smoke sideways.
+Arrigal: A boy on the crossroads rope with a thief's board around his neck, and strangers to put him in the dirt when the crows were done.
+Arrigal: You did not owe him a spade, and you did not owe me the story. Our people remember who brings word when the roads go bad.
+Arrigal: I carry messages, my friend. This one will find his sister and his blood, wherever the wagons have stopped tonight.
+Arrigal [weary]: What they do with their grief is their own affair, and none of yours, I think. Sit by the fire until the rain lets up.
