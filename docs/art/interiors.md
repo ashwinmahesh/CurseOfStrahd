@@ -276,6 +276,10 @@ braziers burning in the antechamber and either side of the altar.
     TalkCamera.open's `prop_id`), `attending` (its conversation is open while another voice speaks), `sated` (a party
     member carries its `gift_of_<name>`: held low and still, the shape sharper) or `sealed` (`flag.amber_temple_sealed`:
     dark brown glass, no light, the shape faint; a sealed temple opens dark). The looks are AmberGlow.LOOKS.
+  - Each vestige calls to the party once as it comes near, before anyone touches the amber: a prop's `approach: 3`, `call`
+    and `call_when` (the location data), played by `LocationNpcs._check_calls` from the step's cell events
+    (`LocationWalk._check_cell_events`), the `~ <name>_call` nodes of narrative/amber_temple/vestiges.dialogue. Drafted by
+    Gemini and edited (docs/story/drafts/amber-calls/); unvoiced.
 
 ### Castle Ravenloft
 

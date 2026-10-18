@@ -220,7 +220,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a crowned figure)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:zantras"
+      "dialogue": "amber_temple/vestiges:zantras",
+      "approach": 3,
+      "call": "amber_temple/vestiges:zantras_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_zantras_heard and not gift:gift_of_zantras"
     },
     {
       "id": "sarc_fekre",
@@ -231,7 +234,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a swollen shape)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:fekre"
+      "dialogue": "amber_temple/vestiges:fekre",
+      "approach": 3,
+      "call": "amber_temple/vestiges:fekre_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_fekre_heard and not gift:gift_of_fekre"
     },
     {
       "id": "sarc_taar_haak",
@@ -242,7 +248,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (five heads)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:taar_haak"
+      "dialogue": "amber_temple/vestiges:taar_haak",
+      "approach": 3,
+      "call": "amber_temple/vestiges:taar_haak_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_taar_haak_heard and not gift:gift_of_taar_haak"
     },
     {
       "id": "sarc_shami_amourae",
@@ -253,7 +262,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a smiling figure)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:shami_amourae"
+      "dialogue": "amber_temple/vestiges:shami_amourae",
+      "approach": 3,
+      "call": "amber_temple/vestiges:shami_amourae_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_shami_amourae_heard and not gift:gift_of_shami_amourae"
     },
     {
       "id": "sarc_yog",
@@ -264,7 +276,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a horned hulk)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:yog"
+      "dialogue": "amber_temple/vestiges:yog",
+      "approach": 3,
+      "call": "amber_temple/vestiges:yog_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_yog_heard and not gift:gift_of_yog"
     },
     {
       "id": "sarc_drizlash",
@@ -275,7 +290,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (something spidery)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:drizlash"
+      "dialogue": "amber_temple/vestiges:drizlash",
+      "approach": 3,
+      "call": "amber_temple/vestiges:drizlash_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_drizlash_heard and not gift:gift_of_drizlash"
     },
     {
       "id": "echo_desks",

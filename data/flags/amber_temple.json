@@ -42,6 +42,11 @@
       "summary": "The frozen warden-guards (wights) in the east guardroom are destroyed (encounter frozen_watch)."
     },
     {
+      "id": "amber_calls_begun",
+      "type": "bool",
+      "summary": "Guard: the first vestige has called to the party as it came near (the opener's Narrator line plays once; narrative/amber_temple/vestiges.dialogue, the `<name>_call` nodes)."
+    },
+    {
       "id": "amber_voices_begun",
       "type": "bool",
       "summary": "Guard: the party has heard its first vestige (quest the_amber_temple voices_heard). Banter."
