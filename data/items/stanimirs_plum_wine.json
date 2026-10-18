@@ -1,0 +1,14 @@
+{
+  "id": "stanimirs_plum_wine",
+  "name": "Stanimir's Plum Wine",
+  "source": {
+    "book": "CoS",
+    "note": "The Tser Pool camp's plum wine, the cask Stanimir bets at his fire; ours."
+  },
+  "category": "consumable",
+  "weight_lb": 8,
+  "cost_gp": 5,
+  "stackable": false,
+  "summary": "A small cask of the Tser Pool camp's plum wine, sweet as a promise and about as strong as a threat.",
+  "text": "Stanimir's own, from the cask he bets at his fire. It tastes of plums and smoke and gets better with company."
+}

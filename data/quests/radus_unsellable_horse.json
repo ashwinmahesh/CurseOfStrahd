@@ -1,0 +1,33 @@
+{
+  "id": "radus_unsellable_horse",
+  "name": "Radu's Unsellable Horse",
+  "summary": "Radu has a handsome dun gelding called Dinte that bites everyone, and he will pay fifteen gold to anyone who finds it a home.",
+  "giver": "tser_radu",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "offered",
+      "journal": "Radu's dun gelding Dinte bites everyone who comes within reach, and Radu has been unable to sell him. He'll pay fifteen gold to whoever finds Dinte a home.",
+      "objectives": [
+        "Find Dinte a buyer"
+      ],
+      "hint": "Look over Dinte in the horse pen at the Tser Pool camp, then find someone who wants a horse: Costica and Ambrose Fennimore are on the Old Svalich Road near the crossroads.",
+      "ends": ""
+    },
+    {
+      "id": "buyer_found",
+      "journal": "Dinte has a home, and a buyer who wasn't bitten, or was. Radu owes us fifteen gold and is going to find that very hard to believe.",
+      "objectives": [
+        "Tell Radu that Dinte has a home"
+      ],
+      "hint": "Tell Radu at the horse pen in the Tser Pool camp that Dinte has a home.",
+      "ends": ""
+    },
+    {
+      "id": "sold",
+      "journal": "Dinte has a home. Radu is stunned and delighted, has paid his fifteen gold, and says he will tell this story for the rest of his life, and in it we are very tall.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

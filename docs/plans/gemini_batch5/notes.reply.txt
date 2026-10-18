@@ -1,0 +1,46 @@
+== intro
+Narrator: Parchment scraps hang from his tea-coloured robe on bent brass pins. Five have fallen into his lap, and he sorts them with dry, clicking fingers.
+Exethanter: This morning? Oh, I was quite busy this morning, I'm almost certain of it.
+Exethanter [weary]: The pins work loose when I walk, you see, and then the morning gets out of order.
+Exethanter [smile]: If you've a moment, perhaps you might look them over. My hand is clear enough, I'm told, even when the rest of me isn't.
+== note_water
+Narrator: A scrap reads: "Take the copper kettle down the stair to the well. Break the ice before dipping, or you will only bring up the lid again."
+== note_fire
+Narrator: A scrap reads: "Set the full kettle on the hob and speak the small word of kindling. Not the large word. The soot is still on the ceiling."
+== note_leaves
+Narrator: A scrap reads: "While the kettle warms, measure two spoons from the grey tin into the pot. The blue tin is cemetery dust. Do not use the blue tin."
+== note_wait
+Narrator: A scrap reads: "Stay by the hearth until the kettle whistles. If you go to the library while the leaves wait in the pot, the kettle will boil dry."
+== note_pour
+Narrator: A scrap reads: "When the whistle sounds, take the kettle from the flame and pour the water over the leaves. Set a cup out, in case someone calls."
+== right_1
+Exethanter [smile]: Ah, yes, the well. My knees always tell me when I've been down the stair, though they never mention why.
+== right_2
+Exethanter: The small word of kindling, quite right. It's a very gentle syllable, once one remembers not to shout it.
+== right_3
+Exethanter [smile]: The grey tin, of course. I really ought to move the blue one to another shelf, or at least label it more firmly.
+== right_4
+Exethanter [weary]: Do not leave the room. Yes. I have ruined three good kettles by going to look up a name I no longer needed.
+== wrong_1
+Exethanter: Hm. No, I don't think that can be right. That doesn't sound like the sort of thing one starts the morning with.
+== wrong_2
+Exethanter [weary]: Pardon me, no, I believe something else had to happen before that. Otherwise the kettle is quite empty, you see.
+== wrong_3
+Exethanter: Oh dear, no. I'm sure I tried them in that order once, in the winter of the great snow, and nothing came of it.
+== hint
+Narrator: The ink on the well note is grey and watered down, and its corner still holds a crumb of fresh red sealing wax. The others were written slightly later, as the nib dried.
+Exethanter [smile]: Oh, well spotted. The ink-pot freezes in the night, so the earliest line is always the palest.
+== finished
+Narrator: The five scraps lie in a neat row across his knees. He reads them through twice, his bone fingers tracing the faded ink.
+Exethanter [smile]: Tea. I was making tea.
+Exethanter: How marvellous. I knew it was something civilised.
+Exethanter [sad]: I used to make a pot every morning, when there were students in the lower halls. They liked it very strong, with honey from the valley.
+Exethanter [weary]: The honey has been gone for some centuries, I'm afraid, and the students longer still. But the grey tin is half full.
+== tea
+Narrator: He shuffles to the cold hearth, speaks a quiet syllable that smells of cedar, and measures dry leaves from a dented grey tin.
+Narrator: Presently the copper kettle gives a thin, reedy whistle that echoes a little way down the amber hall and dies.
+Exethanter [smile]: There we are. It isn't very hot, and it tastes mostly of the tin, if I recall.
+Exethanter: Do take a cup, if you drink. It does the room good to have steam in it.
+== after
+Exethanter [smile]: Ah, hello again. Or is it still this morning? Regardless, the kettle is warm.
+Exethanter: I've pinned the five notes to my left cuff, in order, with two pins each. One can't be too careful with tea.

@@ -1543,6 +1543,15 @@
         4
       ],
       "facing": "north"
+    },
+    {
+      "npc": "barovia_goat",
+      "cell": [
+        32,
+        24
+      ],
+      "dialogue": "village_of_barovia/townsfolk:goat_gate",
+      "facing": "west"
     }
   ],
   "encounters": [

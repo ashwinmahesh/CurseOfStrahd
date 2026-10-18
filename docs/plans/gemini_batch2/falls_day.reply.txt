@@ -1,0 +1,23 @@
+== falls_day_look
+Narrator: Below the lip of the gorge, Tser Falls roars down through wet black rock into a pale churning mist.
+Narrator: Twenty feet down, a thin boy lies curled on a shelf no wider than a cart, his hands pressed tight over his ears.
+Narrator: No lights drift in the grey daylight, only cold spray, and at the crunch of your boots he looks up.
+
+== nelu_day_hail
+Narrator: He squints up through the mist, his voice scraped raw from three nights of shouting back at the dark.
+Nelu [afraid]: Stay where I can see your faces, and do not say my name until we are sure of one another.
+Nelu [weary]: They only come when the sun goes down, so I sleep by day and watch the water all night.
+Nelu [weary]: Three nights I have sat here listening to them practice my mother's voice in the spray.
+Nelu: The stone is too slick to climb with stiff fingers, even when the canyon goes quiet.
+
+== climb_survival_ok
+Narrator: A careful eye picks out a seam of cracked black stone and the worn notches of an old goat path.
+Narrator: Cold spray needles your faces as you work your way down from foothold to narrow foothold.
+Narrator: The ledge is slick with moss, but it holds your weight when your boots touch down beside him.
+
+== carried_day
+Narrator: You haul him up onto the wet grass at the lip of the gorge, where he sits shivering in the grey light.
+Nelu [weary]: Up here in the sun, all that water sounds like nobody at all.
+Nelu [sad]: If anything calls to me in the dark again, I am going to sing over it until my throat gives out.
+Narrator: Below you, the gorge is only a gorge: black stone, white water, and cold mist rising.
+Narrator: Nelu has not yet let go of the sleeve of the one who pulled him over the edge.

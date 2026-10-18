@@ -659,6 +659,16 @@
   "lights": [],
   "npcs": [
     {
+      "npc": "sir_ottokar",
+      "cell": [
+        25,
+        16
+      ],
+      "dialogue": "argynvostholt/ottokar:start",
+      "facing": "west",
+      "when": "(flag.courtyard_phantoms_defeated or flag.bone_watch_defeated or flag.lamp_dark_cleared or flag.beacon_stand_won or flag.vladimir_duel_won or flag.squires_vigil_won) and flag.order_fate != \"rest\""
+    },
+    {
       "npc": "sir_godfrey_gwilym",
       "cell": [
         21,

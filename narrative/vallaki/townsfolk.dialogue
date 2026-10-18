@@ -14,6 +14,7 @@ endif
 Goodwife Marta [smile]: Good morning! It is a good morning. The Baron says so, and the Baron's men are standing right over there, so it is.
 * How is the market? -> market
 * Heard anything interesting? -> marta_rumor
+* [if quest.the_sun_cake == asked and not flag.cake_eggs] The Baron's cook needs eggs for a sun-cake. -> vallaki/the_sun_cake:marta_eggs
 * Good morning to you. -> END
 
 ~ marta_rumor
@@ -38,7 +39,8 @@ Old Kolya: No more wicker to haul. My back thanks you, whoever you are. My purse
 endif
 Old Kolya: Mind the cart. That's a sun, that is. Will be. Every week I bring the wicker up, every week they burn it, every week the sky stays grey.
 Old Kolya: Don't tell the Baron I said "grey".
--> END
+* How long have you hauled the wicker? -> kolya_sun
+* Goodbye. -> END
 
 ~ lamplighter
 if quest.black_roses and quest.black_roses != rumored
@@ -73,6 +75,7 @@ Old Kolya: Sit, sit. This is the only chair in Vallaki nobody's ordered me to be
 ~ grumbler
 Anton the Cooper: Don't look at me like that. I smiled. I smiled the whole festival. Apparently it didn't reach my eyes.
 * What happens now? -> grumbler_now
+* Are you all right in there? -> anton_stocks
 * Chin up. -> END
 
 ~ grumbler_now
@@ -96,6 +99,7 @@ Old Smaranda: Sage, garlic, wolfsbane. Same as always. The festival's done, so I
 endif
 Old Smaranda [smile]: Sage for sleep, garlic for the door, wolfsbane for the window. And a ribbon, dear, yellow, for your coat. They're watching who wears one.
 * Why garlic for the door? -> herbwife_garlic
+* Does your wolfsbane work? -> smaranda_parsley
 * Just looking. -> END
 
 ~ herbwife_garlic
@@ -104,7 +108,8 @@ Old Smaranda: Because the Baron says there's nothing to fear, and the Baron is a
 
 ~ cloth_merchant
 Master Costel [smile]: Bunting! Festival bunting, by the yard or the bolt! I have sold yellow to every house in Vallaki and three of them twice. Business has never been better, which worries me more than you'd think.
--> END
+* What else do you keep in stock? -> costel_velvet
+* Goodbye. -> END
 
 ~ porter
 Matei: Mind your feet! Sacks for Urwin, wine for the square, wicker for the sun. Everything in this town goes on my back sooner or later.
@@ -151,7 +156,8 @@ Watchman Dobre: Keep moving, strangers. And smile. It's not a request. It's a fe
 
 ~ raker
 Gheorghe: Every morning I rake it smooth. Every afternoon the carts churn it up. Every morning I rake it smooth again. The Baron says this is what order looks like.
--> END
+* What are the lines in the mud? -> gheorghe_pictures
+* Goodbye. -> END
 
 ~ dog
 Narrator: The big dog sniffs your boots for a long moment, decides you are not food and not trouble, and lies down across the square's best patch of sun.
@@ -181,3 +187,44 @@ Narrator: "And there's a little ring in the mud by the punishing boards. It tast
 reveal stocks_mud
 -> END
 
+# --- Flavour (NPC plan batch 3) ---
+
+~ anton_stocks
+Anton the Cooper [weary]: Good day to you. I've been locked in since the six o'clock bell, and I have never been so well in my life.
+Anton the Cooper: Out there it's ribbons and teeth from dawn till dark, until your jaw aches worse than your back.
+Anton the Cooper [smile]: In the stocks, nobody asks you to smile. You're already being punished, so your face is your own business.
+Anton the Cooper: Besides, my wife brings cabbage soup at noon and feeds it to me with a wooden spoon. Could be worse.
+-> grumbler
+
+~ smaranda_parsley
+Old Smaranda: Does the wolfsbane work? It works as well as anything else in Barovia, dear, which is to say you're still breathing.
+Old Smaranda: Go on, take a good sniff of the bundle. Don't be shy; I don't charge for the smell.
+Old Smaranda [sly]: Parsley? Listen to the scholar. That is genuine mountain wolfsbane that has simply been through a very hard winter.
+Old Smaranda: Put it on the sill and shut the latch tight. It's the latch that does most of the work anyway.
+* [Insight DC 11] (She is not telling the whole of it.) -> smaranda_honest | herbwife_garlic
+* Never mind. -> END
+
+~ smaranda_honest
+Old Smaranda [weary]: Keep your voice down, then. Half of it is parsley, yes, because real wolfsbane grows where the wolves are.
+Old Smaranda [sly]: It still keeps the beasts off the porch, mind. They smell a window full of soup greens and get as confused as the customers.
+Old Smaranda: Here, take the bundle from the bottom of the basket. That's the true root, and I'll charge you the usual price.
+-> END
+
+~ gheorghe_pictures
+Gheorghe: The Baron says the mud must be raked smooth by eight, so I draw something in it first, a different picture every morning.
+Gheorghe: Today's was a three-masted boat, though I have never seen the sea, and then I pulled the tines through and made it street again.
+Gheorghe [afraid]: Do not mention the boat to the watch, if it's all the same to you; the Baron has opinions about where people's minds go.
+-> raker
+
+~ kolya_sun
+Old Kolya [weary]: Fifty years I have hauled the willow up from the river, and fifty years I have watched them bend it into a ball.
+Old Kolya: The very first year, I crept into the square three nights early with a tallow stub and set the whole thing blazing.
+Old Kolya: The old Baron had the stocks full for a fortnight, but he never found out it was the carter who brought the wood.
+Old Kolya [sad]: Look at these knuckles now; I have built two thousand suns since then, and not one of them kept my hands warm.
+-> carter
+
+~ costel_velvet
+Master Costel [smile]: Yellow linen, yellow wool, yellow ribbon by the bolt; if it looks like butter or brass, the town has bought me clean out of it.
+Master Costel [sly]: Of course, a sensible merchant keeps one roll of good, heavy black velvet wrapped in oilcloth behind the cellar stairs.
+Master Costel: I am holding that back for afterwards, and no, I will not say after what, though I have the yardstick ready.
+-> cloth_merchant

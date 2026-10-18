@@ -1,0 +1,35 @@
+== ovidiu_want
+Ovidiu: Some folk talk to dogs. I talk to the old roots along the south wall, the ones I've given proper names.
+Ovidiu [weary]: If every named vine puts out one green leaf before the frost takes us, I'll call that a good year.
+== ovidiu_secret
+Ovidiu [sad]: I gave each of the strong stocks a name for the master's children, so I'd remember to tend them twice.
+Ovidiu: And the twisted one by the gate, I named that for young Elvir, who's gone to the dirt.
+Ovidiu [sad]: All the others are holding on by their fingernails. Only Elvir's went dry in the night.
+== tereza_want
+Tereza: I came up from Vallaki for one autumn's picking, and that was four winters back.
+Tereza [weary]: The moment the road's clear of twigs and teeth, I'm packing my kettle and walking home.
+== tereza_secret
+Narrator: You notice that when she scolds Horia, she always makes sure his collar is turned down first.
+Tereza: Well, someone has to keep an eye on the big ox, or he'd split his own boot with that axe.
+Tereza [smile]: Vallaki's damp in the winter anyway. I suppose I can stay until he learns to mend a shirt.
+== tereza_miss
+Narrator: She wrings out a grey shirt as if it owes her coin and turns her back to the wind.
+== ionel_want
+Ionel [weary]: Eight hours with my boots off and both eyes shut, and nobody shouting from the trees.
+Ionel: I don't even want a good dream. Just the black part between lying down and getting up.
+== ionel_secret
+Narrator: The bowstring rests slack against the wood, and his quiver holds nothing but a dry stick.
+Ionel [afraid]: Don't say it loud. I dropped the quarrel bag in the brambles three nights ago when the hedge moved.
+Ionel [weary]: If the twig-men come up the lane, I'll have to point it very hard and hope they're polite.
+== ionel_miss
+Narrator: He shifts the heavy stock under his arm so you cannot quite see the groove.
+== horia_want
+Horia: Good white oak wasn't grown to go up a chimney. It wants shaping and steaming and an iron hoop.
+Horia [weary]: Give me one sound barrel to cooper before spring, so my hands remember they have a trade.
+== horia_secret
+Narrator: A slow, dark red climbs from Horia's collar all the way to the tips of his ears.
+Horia: She's got a sharp tongue on her, right enough. Sharpest in the hills.
+Horia [smile]: She mended my mittens twice last week without my asking, though, so I let her shout.
+== andrei_apology
+Narrator: Andrei holds a bruised purple grape between thumb and forefinger, looking at it with real regret.
+Andrei [sad]: Forgive me, little brother, you'd never have made a vintage anyway, and my mouth is very dry.

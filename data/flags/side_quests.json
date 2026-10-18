@@ -1490,6 +1490,556 @@
       "id": "grandfather_heart_kept",
       "type": "bool",
       "summary": "The Mountain's Heart: the party kept the mountain's heart."
+    },
+    {
+      "id": "gossip_asked",
+      "type": "bool",
+      "summary": "Vasile and Petre have been asked 'Heard anything interesting?' at least once (the first answer carries their preamble)."
+    },
+    {
+      "id": "gossip_spoke",
+      "type": "int",
+      "summary": "Scratch counter inside the gossip node: how many new things Vasile and Petre said on this ask; zero sends them to 'nothing new'."
+    },
+    {
+      "id": "gossip_nothing",
+      "type": "int",
+      "summary": "How many times Vasile and Petre have had nothing new to say (1: a crow; 2: the talking dog; 3: Old Mihail's spade; then the quiet)."
+    },
+    {
+      "id": "gossip_told_teodor",
+      "type": "bool",
+      "summary": "Vasile and Petre have told how Widow Ileana's vigil ended (The Polite Caller), once."
+    },
+    {
+      "id": "gossip_told_luca",
+      "type": "bool",
+      "summary": "Vasile and Petre have told that Grigore's lad Luca is up and about (Cut After Noon), once."
+    },
+    {
+      "id": "gossip_told_muster",
+      "type": "bool",
+      "summary": "Vasile and Petre have told that the riders at the gates are gone (The Last Muster), once."
+    },
+    {
+      "id": "gossip_told_sarnov",
+      "type": "bool",
+      "summary": "Vasile and Petre have told that the Sarnovs have three children again (The Fourth Sister), once."
+    },
+    {
+      "id": "gossip_told_heart",
+      "type": "bool",
+      "summary": "Vasile and Petre have told the party the burgomaster's death was 'heart' (and Petre's 'it wasn't his heart')."
+    },
+    {
+      "id": "gossip_told_burial",
+      "type": "bool",
+      "summary": "Vasile and Petre have told the party the burgomaster was buried, once."
+    },
+    {
+      "id": "vasile_wrong_heard",
+      "type": "bool",
+      "summary": "Vasile told the party the burgomaster's wolfhound has learned to talk (it says 'Woof', meaningfully); Goodwife Petra puts it right."
+    },
+    {
+      "id": "petre_coat_known",
+      "type": "bool",
+      "summary": "Petre told the party the coat was Ireena's, given the first hard frost after his roof gave in."
+    },
+    {
+      "id": "anca_letters",
+      "type": "bool",
+      "summary": "The party wrote Anca's name in the dirt and she learned her four letters; she scratched them on her broom handle."
+    },
+    {
+      "id": "anca_secret_known",
+      "type": "bool",
+      "summary": "Anca told the party she tells the cellar the weather every morning, for Doru, who nobody else talks to."
+    },
+    {
+      "id": "arik_nothing",
+      "type": "int",
+      "summary": "How many times Arik has been asked for a rumour with none to give (1: Nothing; 2: Quiet; then No)."
+    },
+    {
+      "id": "bildrath_ledger_known",
+      "type": "bool",
+      "summary": "The party read Bildrath's ledger: half the village owes him and beside every sum he has written 'lost, wolves'."
+    },
+    {
+      "id": "bildrath_tuesday_done",
+      "type": "bool",
+      "summary": "Bildrath honoured the Tuesday rumour with his 10% discount, once, out of spite (The Fourth Rumour)."
+    },
+    {
+      "id": "parriwimple_book_shown",
+      "type": "bool",
+      "summary": "Parriwimple told the party he reads his uncle's debt ledger at night, and asked whether never collecting is kind."
+    },
+    {
+      "id": "viorica_candle",
+      "type": "bool",
+      "summary": "The party paid for Goodwife Viorica's candle for her son's name-day."
+    },
+    {
+      "id": "viorica_secret_known",
+      "type": "bool",
+      "summary": "Goodwife Viorica told the party the coppers she counts came off her husband's eyes."
+    },
+    {
+      "id": "sorina_doru_known",
+      "type": "bool",
+      "summary": "Goodwife Sorina told the party she prays for Doru, whom she liked, who went up the castle road."
+    },
+    {
+      "id": "fourth_rumour_seed",
+      "type": "string",
+      "summary": "Which rumour the party planted for Vasile and Petre: baron (bald under his wig), lupu (the dog can count) or tuesday (Bildrath's discount)."
+    },
+    {
+      "id": "fourth_rumour_echoed",
+      "type": "bool",
+      "summary": "The planted rumour came back to the party garbled, in Arik's one word or Goodwife Petra's version (The Fourth Rumour)."
+    },
+    {
+      "id": "oat_room_seen",
+      "type": "bool",
+      "summary": "Bildrath showed the party the back room where the oats go missing (The Oat Thief)."
+    },
+    {
+      "id": "oat_clue_dust",
+      "type": "bool",
+      "summary": "The party found the oat husks leading to the back door."
+    },
+    {
+      "id": "oat_clue_print",
+      "type": "bool",
+      "summary": "The party found the enormous boot print with the dragging left heel, and the key hung high."
+    },
+    {
+      "id": "oat_clue_bildrath",
+      "type": "bool",
+      "summary": "The party saw that Bildrath talks of the thief like a relative."
+    },
+    {
+      "id": "oat_clues",
+      "type": "int",
+      "summary": "How many clues the party has found in the back room (two moves The Oat Thief to 'suspect')."
+    },
+    {
+      "id": "oat_wrong",
+      "type": "int",
+      "summary": "How many wrong thieves the party has named to Bildrath (at two he names Parriwimple himself)."
+    },
+    {
+      "id": "oat_wrong_arik",
+      "type": "bool",
+      "summary": "The party blamed Arik for the oats."
+    },
+    {
+      "id": "oat_wrong_goat",
+      "type": "bool",
+      "summary": "The party blamed the village goat for the oats."
+    },
+    {
+      "id": "oat_wrong_raven",
+      "type": "bool",
+      "summary": "The party blamed the raven on the roof for the oats."
+    },
+    {
+      "id": "oat_trail_cleared",
+      "type": "bool",
+      "summary": "The party laid a false trail to the river and the pack's hunters went the wrong way: the fight at Agafia's hollow never happens."
+    },
+    {
+      "id": "goat_strays",
+      "type": "int",
+      "summary": "Goats lost to the fog while the party gets the flock in (The Goatherd's Count): two or more bring the mist-wolves."
+    },
+    {
+      "id": "pasture_flock_safe",
+      "type": "bool",
+      "summary": "The flock and the old nanny were got in before dark and the mist found nothing to push at: no wolves came (The Goatherd's Count)."
+    },
+    {
+      "id": "costica_met",
+      "type": "bool",
+      "summary": "The party has met Costica, the worst highwayman in Barovia, on the Old Svalich Road."
+    },
+    {
+      "id": "costica_paid",
+      "type": "bool",
+      "summary": "The party paid Costica two gold and got a receipt (his later chat about the hat)."
+    },
+    {
+      "id": "dinte_led",
+      "type": "bool",
+      "summary": "The party led Dinte out of Radu's pen on a rope (Radu's Unsellable Horse)."
+    },
+    {
+      "id": "dinte_sold",
+      "type": "bool",
+      "summary": "Dinte has a buyer, Costica or Ambrose Fennimore; he is gone from the pen."
+    },
+    {
+      "id": "radu_horse_paid",
+      "type": "bool",
+      "summary": "Radu paid the 15 gp commission for finding Dinte a home."
+    },
+    {
+      "id": "fennimore_met",
+      "type": "bool",
+      "summary": "The party has met Ambrose Fennimore, the travel writer, at the crossroads signpost."
+    },
+    {
+      "id": "fire_score",
+      "type": "int",
+      "summary": "Stanimir's Fire: how many of the three rounds the party has won (two win the cask)."
+    },
+    {
+      "id": "decoy_given",
+      "type": "bool",
+      "summary": "Radu lent the party the troupe's Winter Horse to leave in Steaua's place at the milestone (The Grey Mare)."
+    },
+    {
+      "id": "carriage_fooled",
+      "type": "bool",
+      "summary": "The black carriage took the soot-blackened Winter Horse instead of Steaua and went away; no fight (The Grey Mare)."
+    },
+    {
+      "id": "dorina_pot_eaten",
+      "type": "bool",
+      "summary": "The party has eaten Old Dorina's stew (so she'll talk about the pot)."
+    },
+    {
+      "id": "zora_knots_seen",
+      "type": "bool",
+      "summary": "Zora showed the party the cord of knots at her belt."
+    },
+    {
+      "id": "ribbons_list_forged",
+      "type": "bool",
+      "summary": "The party had Daciana write a list of names that don't exist and left it under the lamp on Main Street (Ribbons)."
+    },
+    {
+      "id": "forged_collected",
+      "type": "bool",
+      "summary": "The forged list was taken from under the lamp overnight (Ribbons)."
+    },
+    {
+      "id": "ribbons_proofs",
+      "type": "int",
+      "summary": "How many of the three proofs of where the forged list went the party has found (the clerk, the ladies, the rider); two win the hearing."
+    },
+    {
+      "id": "proof_clerk",
+      "type": "bool",
+      "summary": "The Baron's clerk admitted he has a warrant for Horatiu Cornel, who doesn't exist (Ribbons)."
+    },
+    {
+      "id": "proof_ladies",
+      "type": "bool",
+      "summary": "The party saw Lady Wachter's ladies' basket and card at an empty stock (Ribbons)."
+    },
+    {
+      "id": "proof_rider",
+      "type": "bool",
+      "summary": "The party watched the castle's rider pay Dobre for a list of names that don't exist (Ribbons)."
+    },
+    {
+      "id": "dobre_arrested",
+      "type": "bool",
+      "summary": "Watchman Dobre was brought before the Baron and put in his own stocks; no fight, no mark on Strahd's attention (Ribbons)."
+    },
+    {
+      "id": "tudorel_met",
+      "type": "bool",
+      "summary": "The party has met Tudorel, Old Florin's grandson, a footman at Wachterhaus."
+    },
+    {
+      "id": "florin_told",
+      "type": "string",
+      "summary": "What the party told Old Florin about his grandson: truth, lie or half."
+    },
+    {
+      "id": "emanoil_met",
+      "type": "bool",
+      "summary": "The party has met Emanoil outside Henrik's coffin shop."
+    },
+    {
+      "id": "emanoil_poems_heard",
+      "type": "bool",
+      "summary": "Emanoil read the party a canto."
+    },
+    {
+      "id": "emanoil_lonely",
+      "type": "bool",
+      "summary": "A party member saw that Emanoil's poems are about being unseen."
+    },
+    {
+      "id": "emanoil_truth_told",
+      "type": "bool",
+      "summary": "The party told Emanoil what the castle's court is really like."
+    },
+    {
+      "id": "cake_eggs",
+      "type": "bool",
+      "summary": "The party has the eggs for Leontina's sun-cake (Goodwife Marta)."
+    },
+    {
+      "id": "cake_honey",
+      "type": "bool",
+      "summary": "The party has the honey for Leontina's sun-cake (Old Paraschiva)."
+    },
+    {
+      "id": "cake_saffron",
+      "type": "bool",
+      "summary": "The party has the saffron for Leontina's sun-cake (Vadoma)."
+    },
+    {
+      "id": "cake_result",
+      "type": "string",
+      "summary": "How the sun-cake came out: good (Ratatouille, a steady hand or a good eye) or flat (the Baron calls it a triumph anyway)."
+    },
+    {
+      "id": "baron_decrees",
+      "type": "int",
+      "summary": "How many of the Baron's decrees the party has heard (five, then the last again)."
+    },
+    {
+      "id": "piccolo_paid",
+      "type": "bool",
+      "summary": "Piccolo took the party's admission, one gold piece, and it is not coming back."
+    },
+    {
+      "id": "watchman_nos",
+      "type": "int",
+      "summary": "Scratch counter for the Krezk Watchman: how many of his unprompted refusals the party has had (three, then none)."
+    },
+    {
+      "id": "watchman_asked_yes",
+      "type": "bool",
+      "summary": "The party asked the Krezk Watchman whether he ever says yes (he wants to, once)."
+    },
+    {
+      "id": "watchman_list_known",
+      "type": "bool",
+      "summary": "The party saw that the Krezk Watchman cannot read the burgomaster's list (an Insight roll)."
+    },
+    {
+      "id": "watchman_jilt_told",
+      "type": "bool",
+      "summary": "The Krezk Watchman told the party that his grandfather jilted Madam Profira."
+    },
+    {
+      "id": "watchman_said_yes",
+      "type": "bool",
+      "summary": "The Krezk Watchman said yes to Madam Profira's supper, the first yes of his eleven years at the gate."
+    },
+    {
+      "id": "profira_met",
+      "type": "bool",
+      "summary": "The party has met Madam Profira, the matchmaker of Krezk."
+    },
+    {
+      "id": "profira_pairs",
+      "type": "int",
+      "summary": "How many times Madam Profira has paired off the party (one to three); each round uses a different pairing."
+    },
+    {
+      "id": "profira_three_heard",
+      "type": "bool",
+      "summary": "Madam Profira told the party about the three people she has tried to marry for thirty years."
+    },
+    {
+      "id": "profira_secret_known",
+      "type": "bool",
+      "summary": "The party knows why Madam Profira matches people out of spite (the Watchman's grandfather jilted her)."
+    },
+    {
+      "id": "profira_supper_asked",
+      "type": "bool",
+      "summary": "The party suggested the Watchman come to supper with Madam Profira."
+    },
+    {
+      "id": "profira_supper_done",
+      "type": "bool",
+      "summary": "The Watchman came to Madam Profira's supper."
+    },
+    {
+      "id": "stefan_logs_known",
+      "type": "bool",
+      "summary": "The party saw where Stefan the Woodcutter leaves the best logs (Anna Krezkova's door)."
+    },
+    {
+      "id": "sanda_prays_known",
+      "type": "bool",
+      "summary": "Goodwife Sanda admitted she prays for the Abbot too."
+    },
+    {
+      "id": "catrina_told",
+      "type": "bool",
+      "summary": "Widow Catrina told the party about the voice that answered from the pool."
+    },
+    {
+      "id": "simion_want_heard",
+      "type": "bool",
+      "summary": "Old Simion told the party what he wants (somebody to tell it to); the unnamed stone is then open to ask about."
+    },
+    {
+      "id": "ilarie_ears_known",
+      "type": "bool",
+      "summary": "Ilarie admitted what he does with the hares' ears."
+    },
+    {
+      "id": "dumitru_cousins_tried",
+      "type": "bool",
+      "summary": "The party tried to pass as Dumitru's uncle's friends (Deception; spent once tried)."
+    },
+    {
+      "id": "dumitru_fennimore_heard",
+      "type": "bool",
+      "summary": "Dumitru said Ambrose Fennimore might come up the road for him."
+    },
+    {
+      "id": "fennimore_to_krezk",
+      "type": "bool",
+      "summary": "Ambrose Fennimore agreed to walk up to Krezk and visit Dumitru; he stands at Krezk's gate until the visit is done."
+    },
+    {
+      "id": "waystone_tracked",
+      "type": "bool",
+      "summary": "The party followed the tracks off the Krezk road to Yanko's lair (The Waystone, by day)."
+    },
+    {
+      "id": "waystone_lark_day_met",
+      "type": "bool",
+      "summary": "The party met Lark at the waystone by day, during the Abbot's noon prayers."
+    },
+    {
+      "id": "ferry_trips",
+      "type": "int",
+      "summary": "The Baron's Island: scratch counter for the crossings made while rowing the castaways off (one to three)."
+    },
+    {
+      "id": "ferry_seen",
+      "type": "int",
+      "summary": "The Baron's Island: scratch counter for crossings where the boat was nearly seen; two and the boatmen come."
+    },
+    {
+      "id": "ionel_crossbow_known",
+      "type": "bool",
+      "summary": "The party saw that Ionel's crossbow is not loaded (he lost the bolts)."
+    },
+    {
+      "id": "tereza_sweet_known",
+      "type": "bool",
+      "summary": "The party saw that Tereza is sweet on Horia."
+    },
+    {
+      "id": "ovidiu_want_heard",
+      "type": "bool",
+      "summary": "Ovidiu told the party what he wants; the vines he has named are then open to ask about."
+    },
+    {
+      "id": "sprig_met",
+      "type": "bool",
+      "summary": "The party has met Sprig, the twig blight that thinks it is a dog."
+    },
+    {
+      "id": "cask_care",
+      "type": "int",
+      "summary": "Old Silviu's Wedding Cask: how many of the three precautions held (ruts, wolf, thirsty hands); three is a triumph, none is vinegar."
+    },
+    {
+      "id": "riddle_right",
+      "type": "int",
+      "summary": "The Fourth Sister: how many of Granny Ash's riddles the party has answered right (two win; the third is Mouse's name)."
+    },
+    {
+      "id": "twins_cry_heard",
+      "type": "bool",
+      "summary": "Ioana said she was the one who cried in the den (Zamfir says otherwise, once asked)."
+    },
+    {
+      "id": "codruta_hid_told",
+      "type": "bool",
+      "summary": "Codruta told the party where she lost her rag doll (she hid it under a gorse root)."
+    },
+    {
+      "id": "hearing_held",
+      "type": "bool",
+      "summary": "The Squire: the Order's table has heard Ioan's case at the graves (once)."
+    },
+    {
+      "id": "hearing_votes",
+      "type": "int",
+      "summary": "The Squire: how many votes Ioan's case has gained at the hearing; three carry it."
+    },
+    {
+      "id": "hear_stone",
+      "type": "bool",
+      "summary": "The Squire hearing: the words on the headstone have been read to the table."
+    },
+    {
+      "id": "hear_words",
+      "type": "bool",
+      "summary": "The Squire hearing: the dragon's last words have been given to the table."
+    },
+    {
+      "id": "hear_godfrey",
+      "type": "bool",
+      "summary": "The Squire hearing: Sir Godfrey has said what he did."
+    },
+    {
+      "id": "hear_history",
+      "type": "bool",
+      "summary": "The Squire hearing: the History argument has been tried (once)."
+    },
+    {
+      "id": "hear_persuade",
+      "type": "bool",
+      "summary": "The Squire hearing: the plea for Ioan has been tried (once)."
+    },
+    {
+      "id": "ottokar_met",
+      "type": "bool",
+      "summary": "The party has met Sir Ottokar the Late, who arrives after every fight at Argynvostholt."
+    },
+    {
+      "id": "ottokar_visits",
+      "type": "int",
+      "summary": "Scratch counter for Sir Ottokar's greetings (three different arrivals, then the last again)."
+    },
+    {
+      "id": "ottokar_wanted",
+      "type": "bool",
+      "summary": "Sir Ottokar said what he wants (to be on time once); his secret is then open to an Insight roll."
+    },
+    {
+      "id": "ottokar_secret_known",
+      "type": "bool",
+      "summary": "Sir Ottokar admitted why he was late to the last battle (a farmer's wife and her cart)."
+    },
+    {
+      "id": "warden_why_heard",
+      "type": "bool",
+      "summary": "The Phantom Warden said why he still keeps the mausoleum door."
+    },
+    {
+      "id": "warden_secret_known",
+      "type": "bool",
+      "summary": "The Phantom Warden admitted he opened the gate to the count's herald under a flag of truce."
+    },
+    {
+      "id": "watchman_nodded",
+      "type": "bool",
+      "summary": "The Phantom Watchman nodded at a watchword the party gave him."
+    },
+    {
+      "id": "notes_step",
+      "type": "int",
+      "summary": "Exethanter's Notes: scratch counter for which scrap the party is placing (one to four)."
     }
   ]
 }

@@ -1,0 +1,22 @@
+== stefan_miss
+Narrator: Stefan stacks another split pine log onto the pile, checks its level with his thumb, and does not look up until you leave.
+
+== sanda_miss
+Narrator: Goodwife Sanda moves her lips without a sound, her knuckles white against the frosted stone, and keeps her prayers to herself.
+
+== catrina_miss
+Narrator: Widow Catrina tests the dark water with two fingers, tells you only that the pool is cold today, and turns back to her basket.
+
+== ilarie_miss
+Ilarie: A man has his ways of keeping count, and the hares don't need them anymore.
+
+== gift_stayed
+Ostap: These came off the last lad they brought ashore. Cold iron, too smooth by half, and not a keyhole on them.
+Ostap [weary]: Take them with you. I'd sleep better knowing they found their way back to the wrists that earned them.
+
+== gift_ferried
+Ostap: I kept these from the night they tipped us in the lake. Cold iron, too smooth by half, and not a keyhole on them.
+Ostap [weary]: Now we're safe ashore, I have no use for them. Put them on the right wrists if you get the chance.
+
+== waystone_after_day
+Lark [smile]: He looks much better with the grey out of his face. Thank you for bringing him where it's light.

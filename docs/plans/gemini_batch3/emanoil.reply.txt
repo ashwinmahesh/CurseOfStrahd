@@ -1,0 +1,60 @@
+== meet
+Narrator: Outside Henrik's shop stands a pale young man in dyed black wool he could not quite afford. He holds a bruised rose and a satchel of ink-stained papers.
+Emanoil: Good day to you, strangers, or perhaps not good day, if the light offends your eyes.
+Narrator: He bows so low that three sheets of parchment slide out of his bag into a puddle.
+Emanoil: I am Emanoil: a clerk by necessity, a poet by calling, and a humble seeker of the night.
+Emanoil [smile]: Tell me quietly, for the watch is near: have you come down from the high castle to receive my petition?
+Emanoil [sad]: Ah. No, of course not. Your boots have road mud on them, not the dust of ancient crypts.
+
+== poems
+Emanoil: Allow me to read from my seventeenth canto, entitled 'A Moth Upon the Velvet Sill'.
+Emanoil: 'O Lord of Gloom, within thy lofty tomb, / Deliver me from Vallaki and its cheerful doom.'
+Emanoil: 'I lie within my pinewood box and wait for thee to sup, / Though I keep a tallow candle lit until the sun comes up.'
+Emanoil [weary]: 'For the dark is very dark indeed when one is in a box, / And Henrik did not oil the hinges or the little locks.'
+Narrator: He lowers the parchment and looks at you expectantly. For a long moment, none of you say a word.
+
+== poems_insight
+Narrator: Beneath the terrible rhymes about graves and velvet, the ink is smudged where he rested his hand for hours. He is not writing about dying; he is writing about being noticed.
+Narrator: You tell him gently that it sounds very quiet in that room of his.
+Emanoil [sad]: I copy tax ledgers from eight until six, and when I walk home, the guards only look at my coat to see if I have pinned a yellow ribbon to it.
+Emanoil [sad]: I have lived in this town for twenty-six years, and no one has ever once asked me what I wanted.
+
+== poems_miss
+Narrator: The verses are only bad verses, full of damp velvet and questionable grammar.
+Narrator: He holds the paper to his chest and waits, with dreadful hope, to be applauded.
+
+== letter
+Narrator: You offer to help him draft a fresh cover letter to the castle, on clean paper.
+Emanoil: Write thus: 'To the Dread Sovereign of the Unending Shadow, from a trembling lamb who wishes to be devoured at your earliest convenience.'
+Narrator: You suggest that a nobleman might prefer something shorter, perhaps beginning with 'My Lord' and a polite inquiry about clerical vacancies.
+Emanoil [weary]: Clerical vacancies. Well, my handwriting is very neat, and I suppose even an immortal court has to keep accounts.
+Narrator: He melts a stub of black wax over the fold and presses his ring into it, then kisses the seal for luck.
+Narrator: The black carriage never stops in Vallaki to collect the post. You see no reason to tell him that today.
+
+== truth
+Narrator: You tell him what the castle is really like: the cold waiting rooms, the thick dust, and the petitioners who have been promised an audience before dawn for two hundred years.
+Narrator: Emanoil looks down at his dyed black cuffs, where the grey wool is already showing through.
+Emanoil [afraid]: Are you quite certain? Not even a small salon with harpsichord music and bitter wine?
+Narrator: You tell him there is only the wind in the rafters and the sound of doors locking from the outside.
+Emanoil [sad]: Oh. I see. I only thought that if one gave up the sun, it would be for something a little more...
+
+== candle
+Emanoil [weary]: If I am to be entirely truthful with you, the coffin is very narrow in the shoulders.
+Emanoil [afraid]: I bought it from Henrik on credit, six coppers a week, and I have to leave the lid propped open with a dictionary so the candle does not go out.
+Emanoil [sad]: I am terribly afraid of the dark, you see. It is a great defect in a creature of the night.
+Emanoil: I do not think I truly wish to be bitten. I only wished to be chosen, and to wear a better coat.
+
+== ending_company
+Narrator: You suggest that if he wants an audience, the taproom at the Blue Water Inn is warmer than a pine box.
+Emanoil [afraid]: Read them aloud? To people who drink ale and have all their blood? They would throw turnips at me.
+Narrator: That evening, you pass the inn window and see him seated near the hearth, where Urwin's boy Matei has brought him a stool and a mug of spiced cider.
+Narrator: Two carters and an old woman are listening to him read, their faces lit by the fire.
+Emanoil [smile]: Nobody threw a single turnip. The drayman asked what happened to the moth in the next verse.
+
+== ending_better_poem
+Narrator: When you pass Henrik's shop the next day, Emanoil hurries out with a fresh sheet of paper, the ink still wet.
+Emanoil [smile]: I have abandoned the seventeenth canto. I have written an ode to your company instead.
+Emanoil: 'Four strangers walked the misty road, / And paused before my grim abode.'
+Emanoil: 'They did not laugh, they did not jeer, / And left one small warm candle here.'
+Narrator: You tell him, quite honestly, that it is the finest thing he has ever written.
+Emanoil [smile]: Do you think so? 'Road' and 'abode' came to me while I was washing my teacup.

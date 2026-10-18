@@ -1,0 +1,14 @@
+{
+  "id": "silvius_wedding_cask",
+  "name": "Silviu's Wedding Cask",
+  "source": {
+    "book": "CoS",
+    "note": "The last cask of the year Elvir was born, hooped by Old Silviu for his daughter's wedding; ours."
+  },
+  "category": "quest",
+  "weight_lb": 60,
+  "cost_gp": 0,
+  "stackable": false,
+  "summary": "A small oak cask, hooped by Old Silviu, of the last good wine of the year Elvir Martikov was born.",
+  "text": "Silviu's own hoops, and the last of a good year. It is for his daughter Dana's wedding in Vallaki, and it should not be shaken."
+}

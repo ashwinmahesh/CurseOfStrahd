@@ -22,6 +22,7 @@ Sorvia: Your boots have walked farther than boots should, in this valley. Sorry.
 * What can you tell us about the man by the hearth? -> ismark
 * What do you know about the burgomaster's daughter? -> ireena
 * How does anyone get out of this valley? -> leave_valley
+* What would you call us, then? -> nicknames
 * [Insight DC 14] Watch how they watch you. -> insight_ok | insight_fail
 * Read my palm. -> palm
 * [if flag.vistani_wine_bought and not flag.vistani_deck_tried] [Performance DC 13] Earn the next round: give them a song. -> perform_ok | perform_fail
@@ -73,6 +74,31 @@ Sorvia [sad]: She's nice. She mended my horse's bridle once and wouldn't take a 
 Alenka: The mists let us pass. Not you. Not anyone he hasn't finished with.
 Sorvia: And he hasn't finished with you. He's hardly started.
 interject tag:veteran: Good. Neither have we.
+-> menu
+
+~ nicknames
+Mirabel [smile]: What would I call you? Oh, my sisters, listen to this, they want to be christened before they've even bought a round.
+Mirabel [sly]: Hold still and let me look at the mud on your boots. A good name has to fit like a wet coat.
+if class:paladin
+Mirabel [sly]: You in the tin coat, you're "Kettle," because you shine like a scullery pot and you're already whistling at the boil.
+endif
+if class:cleric
+Mirabel [smile]: And the soft one with the morning eyes is "Candle-end," still trying to light a whole church with an inch of tallow.
+endif
+if class:ranger
+Mirabel [sly]: The one checking the floorboards for badger prints is "Bramble," all briar on the hem and nowhere to sit.
+endif
+if class:wizard
+Mirabel [smile]: The fussy one smelling of sage and scorched paper is "Soup-bone," because they look like they'd lecture a turnip before peeling it.
+endif
+if class:monk
+Mirabel [smile]: That little nimble thing is "Thimble," small enough to lose in a pocket and sharp enough to catch your thumb.
+endif
+if class:warlock
+Mirabel [sly]: And you with the counting-house frown, you're "Farthing," always checking the rim to see who clipped you.
+endif
+Mirabel [sly]: Anyone left over gets "Pockets" until they do something worth a syllable. Don't look crestfallen, it's a perfectly dry name.
+Mirabel [sad]: I called little Sorvia "Sparrow" when she started here. That is the only one I'd take back, if names came back.
 -> menu
 
 ~ insight_ok

@@ -47,6 +47,7 @@ endif
 * Show us what you have to trade. -> trade
 * Tell us about Madam Eva. -> about_eva
 * [if not flag.stanimir_tale_heard] Tell us a story. -> tale
+* [if flag.stanimir_tale_heard and not quest.stanimirs_fire] We have a tale of our own. -> fire_challenge
 * [name:ilse_varga] [if flag.kestrel_tally_tser and not flag.kestrel_jory_told] Ask about the soldiers your people guided a year ago. -> companions/kestrel:stanimir
 * [if not flag.stanimir_read] [Insight DC 14] Who do your people answer to? -> answer_ok | answer_fail
 * Goodbye. -> END
@@ -113,6 +114,11 @@ Stanimir: Then we will play something cheerful. Something very loud and very che
 endif
 interject name:liriel_dawnsong: A bargain with something under the world. Then that is why the morning stays away.
 -> menu
+
+# Stanimir's Fire begins here, so his own conversation file moves the quest (tests/integration/test_side_quest_reach.gd).
+~ fire_challenge
+quest stanimirs_fire challenged
+-> svalich_road/stanimirs_fire:offer
 
 ~ answer_ok
 set stanimir_read

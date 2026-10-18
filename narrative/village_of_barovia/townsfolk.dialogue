@@ -1,6 +1,8 @@
 # The Village of Barovia's few people out by day (lane 4, F2): Goodwife Petra carrying water from the well. She walks
 # her route (the location's `path`) and is indoors long before dark. Lane 28 (2026-10-08) added Grigore hauling his
-# firewood in from the west road and Widow Ileana at her husband's grave.
+# firewood in from the west road and Widow Ileana at her husband's grave. NPC depth, batch 1 (docs/plans/
+# npc_depth_and_quests.md; lines drafted by Gemini, edited): Vasile and Petre have nothing new to say, and one wrong
+# rumour; Petre's coat; Anca learns her name; the goat turns up in the shop, the church and at the Death House gate.
 
 ~ goodwife
 if flag.bride_buried
@@ -18,7 +20,15 @@ Goodwife Petra [afraid]: Strangers. Don't stand so close to the well. Folk will 
 * [if quest.six_feet and not flag.bride_story_known] Your brother Mihail is worried about you. -> village_of_barovia/six_feet:petra
 * [if not flag.burgomaster_buried] Who would poison a well? -> poison
 * [if not quest.the_goatherds_count] Whose goats are those, up on the hill? -> village_of_barovia/the_goatherds_count:petra
+* [if flag.vasile_wrong_heard] Vasile says the burgomaster's dog has learned to talk. -> petra_correction
+* [if quest.the_fourth_rumour == planted and not flag.fourth_rumour_echoed] Heard anything lately? -> village_of_barovia/the_fourth_rumour:petra_echo
 * We'll leave you be. -> END
+
+~ petra_correction
+Goodwife Petra [weary]: Vasile told you the hound speaks? Last winter Vasile told the whole lane my well was haunted by a drowned choir.
+Goodwife Petra: It is a hole with rainwater at the bottom. It makes a noise when the bucket hits.
+Goodwife Petra: And a dog howls in the dark because it is cold and its master is in the ground. That is what dogs are for.
+-> goodwife_menu
 
 ~ poison
 Goodwife Petra: Nobody. That's the point. There's nothing left here worth the trouble. Only the water, and the walk to it, and being home before the light goes.
@@ -98,84 +108,211 @@ Old Mihail: Somebody's been putting things in it, mind. Of a night. I don't look
 -> END
 
 ~ acolyte
+if flag.anca_letters
+Anca [smile]: Good morning. Look, on the broom handle: I scratched my letters into the ash-wood with a nail.
+Anca: Even if the rain washes the path clean, the broom remembers.
+else
 Anca: Good morning. Father Donavich says a swept path is a prayer you can walk on. I sweep it twice, to be sure.
+endif
 if flag.burgomaster_buried
 Anca: It's quieter under the floor since the burial. I sleep better. Father doesn't.
--> END
 endif
-* What's under the floor? -> acolyte_floor
+-> acolyte_menu
+
+~ acolyte_menu
+* [if not flag.burgomaster_buried] What's under the floor? -> acolyte_floor
+* [if not flag.anca_letters] Can you read? -> anca_ask
+* [if flag.anca_letters and not flag.anca_secret_known] [Insight DC 12] (She hums at the cellar grate as she sweeps. It isn't a hymn.) -> anca_secret_notice | anca_secret_miss
 * Goodbye. -> END
 
 ~ acolyte_floor
 Anca: Nothing. The cellar. Father says it's the wind in the cellar. The wind says his name, sometimes, and asks for him.
 Anca: I sweep a bit louder when it does.
--> END
+-> acolyte_menu
+
+~ anca_ask
+Anca: Read? No. Nobody here has the ink to waste on girls.
+Anca [weary]: Father Donavich says a swept path is a prayer, and the Morninglord hears broom-straw as clearly as a hymn.
+Anca: Still. I'd like to know what the big book by the altar says about the people we put in the ground.
+* (Write her name in the dirt with a stick.) -> anca_teach
+* Not now. -> acolyte_menu
+
+~ anca_teach
+set anca_letters
+Narrator: You take a dry twig from the ditch and scratch four letters into the grey dirt by her boots.
+Anca: That first one looks like a church roof with a beam across to hold the snow up.
+Narrator: She takes the stick from your hand, her knuckles chapped red from the morning cold, and traces the groove.
+Anca: And the last one is the same roof again. That seems thrifty. I can remember thrifty.
+Narrator: She scratches all four letters beside yours, smaller and crooked, then stands back to look.
+Anca [smile]: There. Now the path knows who sweeps it.
+approve liriel_dawnsong +1 godrick_pendlebrook +1: You taught Anca to write her name
+-> acolyte_menu
+
+~ anca_secret_notice
+Narrator: When the broom passes the cellar grate, she hums three low notes that belong to no hymn you have heard.
+Anca [afraid]: That's only the boards settling. Old wood makes all sorts of noises when the damp gets in.
+* You can tell us. -> anca_secret
+* We won't pry. -> acolyte_menu
+
+~ anca_secret_miss
+Narrator: You watch her face for some small twitch of guilt or memory, but she only sweeps the same grey flagstone a third time.
+-> acolyte_menu
+
+~ anca_secret
+set anca_secret_known
+Anca [sad]: Please don't look at the grate like that. It makes him quiet, and the quiet is worse for him.
+Anca: I only tell him the weather when I sweep. Nobody has told him anything since Father locked the padlock.
+Anca: Most days I tell him the mist is down to the well-head and the crows are on the lychgate.
+Anca [sad]: Today I told him the sun came out over the woods. It's a small lie, and the floorboards are thick.
+Anca [afraid]: Don't tell Father Donavich. He prays so loud to drown the cellar out, and his knees are already raw.
+approve liriel_dawnsong +1 thistle +1: You kept Anca's secret
+-> acolyte_menu
 
 ~ vasile
 Vasile: You heard about the burgomaster? Dead. Heart gave out. The wolves stood round the house all night like mourners.
 Petre: It wasn't his heart.
 Vasile: It was his heart, Petre. Something took it.
+-> vasile_menu
+
+~ vasile_menu
 * Heard anything interesting? -> gossip
+* [if not quest.the_fourth_rumour] Ever thought of having a fourth rumour? -> fourth_rumour
+* [if quest.the_fourth_rumour == offered] About that fourth rumour. -> village_of_barovia/the_fourth_rumour:seeds
+* [if flag.fourth_rumour_echoed and quest.the_fourth_rumour == planted] About that rumour of ours. -> village_of_barovia/the_fourth_rumour:thanks
 * Goodbye. -> END
+
+# The Fourth Rumour starts here, so Vasile and Petre's own conversation file moves it (tests/integration/test_side_quest_reach.gd).
+~ fourth_rumour
+if not quest.the_fourth_rumour
+quest the_fourth_rumour offered
+endif
+-> village_of_barovia/the_fourth_rumour:offer
 
 ~ petre
 Petre: Strangers. Haven't had strangers since the last strangers. They didn't stay long either. Nobody does, except us.
 Vasile: We'd leave if we could. Road's open. You just come back round to the gate.
 Petre: In the mist. Every time.
+-> petre_menu
+
+~ petre_menu
 * Heard anything interesting? -> gossip
+* That's a good coat. -> petre_coat
+* [if not quest.the_fourth_rumour] Ever thought of having a fourth rumour? -> fourth_rumour
+* [if quest.the_fourth_rumour == offered] About that fourth rumour. -> village_of_barovia/the_fourth_rumour:seeds
+* [if flag.fourth_rumour_echoed and quest.the_fourth_rumour == planted] About that rumour of ours. -> village_of_barovia/the_fourth_rumour:thanks
 * Goodbye. -> END
 
-# "Heard anything interesting?" (docs/story/side_quests.md): the same three rumours, in turns, and how they ended.
+~ petre_coat
+if flag.petre_coat_known
+Petre: It's still a good coat. We've said all there is to say about it.
+-> petre_menu
+endif
+Petre: It keeps the wet off my shoulders. That's all a coat needs to do in this place.
+Petre [weary]: Never mind the stitching. Ask a man about the weather if you want to make small talk.
+* [Persuasion DC 11] It's a good coat. You wear it like a good memory. -> petre_coat_told | petre_coat_shut
+* [if gold >= 1] (Press a gold piece into his hand.) -> petre_coat_paid
+* Another time. -> petre_menu
+
+~ petre_coat_shut
+Petre [weary]: Draft's coming straight through the boards tonight. Going to rain before morning, if the fog lets it.
+-> petre_menu
+
+~ petre_coat_paid
+gold -1
+Narrator: Petre catches the coin in both chapped hands and slips it deep into his lining as though it might go off.
+Petre [afraid]: Put that away before someone sees it shine. Gold has a bad habit of outliving the pockets it sits in.
+Petre [weary]: Still. That's firewood through the new moon, and salt besides. May the mist leave your road clear.
+Petre [weary]: You keep staring at the wool. Suppose a whole gold piece buys you the right to stare.
+Petre: Better you hear it from me than get the wrong idea in the tavern.
+Petre: All right. The coat.
+-> petre_coat_told
+
+~ petre_coat_told
+set petre_coat_known
+Petre [sad]: It was the burgomaster's daughter. Ireena. The first hard frost after my roof gave in, I had only a sack over my shirt.
+Petre: She came down the steps with it over her arm and said it was too broad in the shoulder for her brother.
+Petre [sad]: A grown man ought not be cold enough to take good wool from a girl's hands. Still, the wind was off the mountain.
+Petre: She never looks at it when she passes me in the street. That is the best part of the charity.
+Petre [weary]: Keep it to yourself, mind. If Vasile hears, he'll be coughing under her window before dark.
+approve godrick_pendlebrook +1 liriel_dawnsong +1: Petre told you where the coat came from
+-> petre_menu
+
+# "Heard anything interesting?" (docs/story/side_quests.md): the same three rumours, in turns, and how they ended. Asked
+# again with nothing to add, they say so (batch 1 of the NPC plan): three ways, and one rumour that is wrong.
 ~ gossip
+set gossip_spoke = 0
+if not flag.gossip_asked
 Vasile: Interesting? In Barovia? We've had the same three rumours since the mist came down. We take turns.
+endif
 if not quest.polite_caller
+set gossip_spoke += 1
 set teodor_rumor
 quest polite_caller rumored
 Vasile: Widow Ileana leaves her shutter open a crack every night. Says it's for the smoke.
 Petre: It's not for the smoke.
 Vasile: I know it's not for the smoke, Petre. That's what makes it a rumour.
-elif flag.teodor_fate == "dawn"
+elif flag.teodor_fate == "dawn" and not flag.gossip_told_teodor
+set gossip_spoke += 1
+set gossip_told_teodor
 Petre: Widow Ileana shuts her shutter at night now. Sleeps, too, she says. First time in three winters.
-elif flag.teodor_fate == "woods"
+elif flag.teodor_fate == "woods" and not flag.gossip_told_teodor
+set gossip_spoke += 1
+set gossip_told_teodor
 Petre: Widow Ileana still leaves her shutter open. Says she sleeps better. Two knocks, now and then, from the woods side.
-elif flag.teodor_fate == "ended"
+elif flag.teodor_fate == "ended" and not flag.gossip_told_teodor
+set gossip_spoke += 1
+set gossip_told_teodor
 Vasile: Widow Ileana's put garlic up. First time ever. She doesn't talk to anyone now.
 endif
 if not quest.cut_after_noon
+set gossip_spoke += 1
 set luca_rumor
 quest cut_after_noon rumored
 Petre: Grigore's lad, Luca. Went out for the last load two days back and came home after dark with it. Said nothing. Went to bed. Hasn't got up.
 Vasile: Cut after noon, that's what. You don't cut after noon. Everybody knows you don't cut after noon.
 Petre: Everybody but Luca.
-elif flag.luca_awake
+elif flag.luca_awake and not flag.gossip_told_luca
+set gossip_spoke += 1
+set gossip_told_luca
 Vasile: Grigore's lad is up and about. Won't go near the west road after dinner, though. Won't even look at it.
 endif
 if not quest.last_muster and quest.polite_caller and quest.cut_after_noon
+set gossip_spoke += 1
 set muster_rumor
 quest last_muster rumored
 Petre: And the riders. Every night, out at the gates, after midnight. Bones on horses.
 Vasile: You can hear them from the east road if the wind's right. Lances knocking. Somebody giving orders.
 Petre: Nobody goes to see. That's the one rumour we don't take turns on.
-elif flag.bone_marshal_beaten
+elif flag.bone_marshal_beaten and not flag.gossip_told_muster
+set gossip_spoke += 1
+set gossip_told_muster
 Vasile: No riders at the gates any more. The wind's quiet. I don't like it.
 Petre: You didn't like the riders.
 Vasile: I knew where I was with the riders.
 endif
 if flag.children_rescued and flag.morgantha_slain and not quest.the_fourth_sister
+set gossip_spoke += 1
 quest the_fourth_sister rumored
 Petre: The Sarnov woman walks up the miller's lane every morning now. Comes back with one plain pastry.
 Vasile: From a girl who sells them up there. She says the girl's got her husband's eyes.
 Petre: Her husband had the ordinary kind.
 Vasile: That's what makes it a rumour, Petre.
-elif flag.mouse_fate == "home"
+elif flag.mouse_fate == "home" and not flag.gossip_told_sarnov
+set gossip_spoke += 1
+set gossip_told_sarnov
 Petre: The Sarnovs have got three children again. Nobody's asking how.
 Vasile: I'm asking.
 Petre: You're not asking her, though.
 endif
-if not flag.burgomaster_buried
+if not flag.burgomaster_buried and not flag.gossip_told_heart
+set gossip_spoke += 1
+set gossip_told_heart
 Vasile: And the burgomaster. Heart.
 Petre: Wasn't his heart.
-elif flag.burial_method == "church_rites"
+elif flag.burgomaster_buried and not flag.gossip_told_burial
+set gossip_spoke += 1
+set gossip_told_burial
+if flag.burial_method == "church_rites"
 Petre: And they buried the burgomaster. Properly, with the priest.
 Vasile: Took them long enough. He was starting to be a rumour himself.
 elif flag.burial_method == "cleric_rites"
@@ -184,6 +321,39 @@ Vasile: Took them long enough. He was starting to be a rumour himself.
 else
 Petre: And they buried the burgomaster. No priest, mind.
 Vasile: Took them long enough. He was starting to be a rumour himself.
+endif
+endif
+set gossip_asked
+if flag.gossip_spoke == 0
+-> gossip_nothing
+endif
+-> END
+
+# Nothing new to say (owner's "not everything should give us information", 2026-10-17): in turn, the second time is the
+# wrong rumour, which Goodwife Petra puts right.
+~ gossip_nothing
+set gossip_nothing += 1
+if flag.gossip_nothing == 1
+Vasile [angry]: Again? You asked us that an hour ago. Do we look like men to whom things happen on the hour?
+Petre: A crow sat on the well-beam. Then it flew off toward the woods. That was the afternoon.
+Vasile [weary]: It was the same crow as this morning. I know its bad foot.
+Petre: There you are, then. Come back at dusk if you want to hear about the mud.
+elif flag.gossip_nothing == 2
+set vasile_wrong_heard
+Vasile [sly]: If you must know, the late burgomaster's old wolfhound has begun to speak. Plain as you or me, just after midnight.
+Petre: It has not.
+Vasile: One single word, every night, right at the kennel fence. Enough to chill the marrow in your shins.
+Petre [weary]: Go on, then. What word does it say, Vasile?
+Vasile: It says "Woof." But with a terrible, knowing weight to it.
+elif flag.gossip_nothing == 3
+Vasile: Well, Old Mihail's spade broke in the frost, if you missed that the first four times.
+Petre: That was last month, Vasile. You cannot keep serving last month to guests.
+Vasile [sly]: They're from out of the valley. Last month is brand new to them.
+Petre [weary]: Pay him no mind. Nobody has died since breakfast, and we are all very put out about it.
+else
+Vasile: Three whole days without a screaming in the lane. That has to be a record since the fog came.
+Petre [afraid]: Don't say it out loud, you fool. The quiet only means it's taking a breath.
+Vasile [weary]: Let it breathe, then. My knees ache less when nothing is chasing us.
 endif
 -> END
 
@@ -209,3 +379,67 @@ reveal barn_beams_stash
 Narrator: "And the god-house screams every night, when the sun goes. Don't eat anything near the god-house."
 -> END
 
+# The goat in places it cannot be (NPC plan batch 1, the first three of its sightings; the rest come with the later
+# regions): Bildrath's shop, the church nave, the Death House gate. Speak with Animals gets a word from it each time.
+~ goat_shop
+Narrator: The village goat is standing between two barrels of salt pork, methodically eating a paper price tag off a coil of hemp rope.
+Narrator: Bildrath is looking over its head at the door, as if a goat in his shop is a matter between the goat and the inventory.
+Narrator: The corner of the tag still showing says thirty silver pieces. The goat swallows it without blinking.
+* [if spell:speak_with_animals] Ask the goat what it thinks of the shop. -> goat_shop_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the goat what it thinks of the shop.) -> goat_shop_cast
+* Leave it to its dinner. -> END
+
+~ goat_shop_cast
+cast speak_with_animals
+if check.last
+-> goat_shop_speaks
+endif
+-> END
+
+~ goat_shop_speaks
+Narrator: The goat chews twice before answering you. Its voice is flat, patient, and slightly muffled by twine.
+Narrator: "Tastes of Bildrath's thumb," it says. "Which is to say it tastes of tallow and nothing at all, only very dear."
+Narrator: "The ink is the best part. He buys the good ink to write the bad numbers."
+-> END
+
+~ goat_church
+Narrator: The goat is standing on the third pew from the front, all four hooves planted neatly on the kneeler.
+Narrator: It is eating the corner of a hymn-book page with slow, even pulls. Goodwife Sorina has turned her shawl to face the wall.
+Narrator: When the page comes free, the goat does not hurry to the next one. It has all afternoon.
+* [if spell:speak_with_animals] Ask the goat what it makes of the church. -> goat_church_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the goat what it makes of the church.) -> goat_church_cast
+* Leave it to its hymn. -> END
+
+~ goat_church_cast
+cast speak_with_animals
+if check.last
+-> goat_church_speaks
+endif
+-> END
+
+~ goat_church_speaks
+Narrator: The goat speaks around a mouthful of morning prayers. It sounds like an old parishioner who only comes for the roof.
+Narrator: "The paper here is sweet from the damp," it says. "The priest's turnips out back are sweeter, when he remembers to plant them."
+Narrator: "There is something hungry under the floorboards. I have decided it is none of my business."
+-> END
+
+~ goat_gate
+Narrator: The goat is standing by the iron gate of the old house at the end of the lane, looking up at the dark windows.
+Narrator: The upper windows look back down at the goat with the flat, patient attention of a house that does not like company.
+Narrator: The goat chews a splinter from the gatepost and seems to have seen worse stonework.
+* [if spell:speak_with_animals] Ask the goat about the house. -> goat_gate_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the goat about the house.) -> goat_gate_cast
+* Leave it to its splinter. -> END
+
+~ goat_gate_cast
+cast speak_with_animals
+if check.last
+-> goat_gate_speaks
+endif
+-> END
+
+~ goat_gate_speaks
+Narrator: The goat does not take its eyes off the third-floor window when it answers you.
+Narrator: "Good dock-weed in the yard," it says. "Very rich soil. I do not ask why."
+Narrator: "The little doll in the attic wants someone to come up and play. I prefer the fence."
+-> END

@@ -1,0 +1,66 @@
+== anca_ask
+Anca: Read? No. Nobody here has the ink to waste on girls.
+Anca [weary]: Father Donavich says a swept path is a prayer, and the Lord hears broom-straw as clear as Latin.
+Anca: Still. I'd like to know what the big book by the altar says about the people we put in the ground.
+
+== anca_teach
+Narrator: You take a dry twig from the ditch and scratch four letters into the grey dirt by her boots.
+Anca: That first one looks like a church roof with a beam across to hold the snow up.
+Narrator: She takes the stick from your hand, her knuckles chapped red from the morning cold, and traces the groove.
+Anca: And the last one is the same roof again. That seems thrifty. I can remember thrifty.
+Narrator: She scratches all four letters beside yours, smaller and crooked, then stands back to look.
+Anca [smile]: There. Now the path knows who sweeps it.
+
+== anca_secret_ask
+Narrator: When the broom passes the cellar grate, she hums three low notes that belong to no hymn you have heard.
+Anca [afraid]: That's only the boards settling. Old wood makes all sorts of noises when the damp gets in.
+
+== anca_secret
+Anca [sad]: Please don't look at the grate like that. It makes him quiet, and the quiet is worse for him.
+Anca: I only tell him the weather when I sweep. Nobody has told him anything since Father locked the padlock.
+Anca: Most days I tell him the mist is down to the well-head, and the crows are on the lich-gate.
+Anca [sad]: Today I told him the sun came out over the woods. It's a small lie, and the floorboards are thick.
+Anca [afraid]: Don't tell Father Donavich. He prays so loud to drown the cellar out, and his knees are already raw.
+
+== anca_after
+Anca [smile]: Look here, by the twine. I scratched my letters into the ash-wood with a nail.
+Anca: Even if the rain washes the path clean, the broom remembers.
+
+== viorica_candle_ask
+Goodwife Viorica [weary]: I need nothing from strangers, thank you. I am only counting what I brought.
+Goodwife Viorica: Tallow was one copper in the spring, and now the board says three, though the sheep haven't grown any dearer.
+
+== viorica_candle_pay
+Narrator: You set a gold piece on the scarred oak counter and nod toward the shelf of tallow dips.
+Narrator: Bildrath does not look up from his ledger, writes a figure in the margin, and draws a single dry line through it.
+Goodwife Viorica [afraid]: That is too much coin to leave on wood in this village. Put the rest back in your purse.
+Goodwife Viorica: I only wanted the one, and perhaps a second in case the draught by the door blows the wick out.
+Goodwife Viorica [sad]: Tomorrow is my boy's name-day. Eight years since he was christened, and two since the fever.
+
+== viorica_candle_secret
+Goodwife Viorica [sad]: You have quiet eyes. Most folk who come through the gates look at us as if we are already ghosts.
+Goodwife Viorica: These two coppers are what we took off my husband's eyelids before the sexton closed the box.
+Goodwife Viorica [weary]: I cannot give them to Bildrath. I only bring them in to hear them clink on the counter, so I know what two sounds like.
+
+== viorica_after
+Goodwife Viorica: The tallow burned clean all the way to the iron spike, without a drop of grease spilled.
+Goodwife Viorica [smile]: For a whole hour the corner by St. Andral's feet was warmer than the street.
+
+== parriwimple_book
+Parriwimple: At night, when Uncle bolts the shutters and goes up the stairs, I take the heavy book down from the desk.
+Parriwimple [sly]: Uncle thinks I only know the numbers on the bins, because numbers are shaped like hooks and sacks.
+Parriwimple: The big book has everyone in the village in it, and beside every name is what they took home without paying.
+Parriwimple: Goodwife Marta owes for salt since the winter before last, and old Lucian owes for three yards of wool.
+Parriwimple [weary]: Nobody has paid a copper against the book in four years, and Uncle writes the new loaves in every week.
+Parriwimple: He never asks them for it when they come in. He only shouts about the price of rope so they look at the floor.
+Parriwimple: Is it wicked to keep a book of debts you never ask for, or is that how Uncle stays kind without wasting the ink?
+
+== parriwimple_book_kind
+Parriwimple [smile]: I thought it might be kind. It feels heavy like kindness when I put it back on the shelf.
+Parriwimple: Though if Uncle is a good man, I must be very careful not to let him find out.
+Parriwimple [weary]: It would upset him terribly, and he has enough to oil and count as it is.
+
+== parriwimple_book_business
+Parriwimple: Yes. Uncle says it is ruinous business every night while he scrapes the mud off his boots.
+Parriwimple: He says it very loud when the door is open, so the whole street hears that Bildrath is a hard man.
+Parriwimple [sad]: I think if he did not say it was bad business out loud, he would have to say that everyone is hungry.

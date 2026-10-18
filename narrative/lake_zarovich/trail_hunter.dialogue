@@ -4,4 +4,19 @@
 ~ start
 Ilarie: Hares, grouse, the odd fox. The wolves take the deer before I get near them. They're bold this year, bold as dogs. They watch the trail in the daytime now.
 Ilarie: The lake's below, if that's where you're going. Don't drink from the near shore. Bluto's been sick in it.
--> END
+-> hunter_menu
+
+~ hunter_menu
+* [if not flag.ilarie_ears_known] [Insight DC 12] (He keeps touching the hares at his belt.) -> hunter_secret | hunter_miss
+* Good hunting. -> END
+
+~ hunter_secret
+set ilarie_ears_known
+Ilarie [sly]: Long grey hare's ear, dried by the stove with a bit of soot rubbed in, looks mighty fierce in a dim room.
+Ilarie: I sell them to a peddler at the crossroads, and he sells them to the Baron in Vallaki for wolf bounty.
+Ilarie [smile]: The Baron gets his trophies, I get salt pork, and the real wolves keep their ears where they belong.
+-> hunter_menu
+
+~ hunter_miss
+Ilarie: A man has his ways of keeping count, and the hares don't need them anymore.
+-> hunter_menu

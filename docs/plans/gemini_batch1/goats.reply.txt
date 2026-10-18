@@ -1,0 +1,78 @@
+== flock_start
+Narrator: The last of the light goes a thin, cold orange along the ridge. Up on the slope, the goats stop grazing and begin to drift toward the white wall of the mist.
+Narrator: The sheepdog sits down hard against your boots and will not look up the hill.
+Erno [afraid]: The light's going. Help me get them inside the stones before the dark comes down.
+Erno [afraid]: Please. Don't let them walk into the white.
+
+== r1_intro
+Narrator: Half a dozen stragglers have wandered up the steep grass toward the fog, their tin bells clinking in the quiet.
+Narrator: They are twenty paces from the mist, lifting their chins to smell the cold.
+
+== r1_ok_animal
+Narrator: You cup your hands and give the low, whistling pasture-call the herdsmen use when rain is coming.
+Narrator: The lead billy twitches an ear, turns, and brings the rest clattering down the slope like a grey tide.
+
+== r1_ok_athletics
+Narrator: You take the turf at a dead run, coming around their flank before they can scatter into the cloud.
+Narrator: They bolt downhill ahead of you in a tangle of horns and hooves, and you find yourselves laughing for the breath it takes.
+
+== r1_fail
+Narrator: You lunged for the nearest tether, but your boot slips on the wet grass and the knot of goats breaks apart.
+Narrator: One speckled nanny bounds over the crest, and the white takes her without a sound.
+
+== r1_noroll
+Narrator: You wave your arms and shout up the hill at them.
+Narrator: The stragglers regard you with flat yellow eyes, turn their backs, and step calmly into the fog.
+
+== r2_intro
+Narrator: Most of the flock is crowding through the gate now, jostling and bleating against the dry-stone wall.
+Narrator: Down where the fold meets the open pasture, the old stones have given way, leaving a gap wide enough for a goat's shoulders.
+
+== r2_ok_survival
+Narrator: You spot the spill of crushed nettles and flattened grass where the wall has slumped outward.
+Narrator: Before the press of the flock can find it, you brace your knees and wedge the heavy cornerstone back into the turf.
+
+== r2_ok_investigation
+Narrator: The fallen slate lies in the mud in the exact order it slid from the course.
+Narrator: Five stones, longest at the bottom, flat side in: you lock them back into the dry-wall before the first goat reaches the corner.
+
+== r2_fail
+Narrator: You search the dark line of the wall for the breach, but the dusk and the jostling backs hide it until too late.
+Narrator: A lean black goat slips sideways through the tumble of stones and vanishes up the hillside.
+
+== r2_noroll
+Narrator: You drop a heavy pack into the breach to block the way.
+Narrator: An old billy sniffs the canvas once, steps neatly over the straps, and trots out onto the darkening slope.
+
+== r3_intro
+Narrator: The old nanny with the scarred ears stands alone at the open gate, refusing to cross the threshold.
+Narrator: Every breath she takes sets her cracked iron bell clinking, a flat, tinny note that carries up the hill.
+Erno [afraid]: It's the bell. The white hears the bell, that's how it knows where she is.
+
+== r3_ok_hands
+Narrator: You snatch the woollen scarf from Erno's neck and slip two fingers inside the rusted iron rim.
+Narrator: One quick twist packs the wool tight around the clapper, and the pasture goes dead quiet.
+
+== r3_ok_calm
+Narrator: You drop to one knee by the gatepost and speak to her the way you would speak to a tired horse at the end of a long road.
+Narrator: She lowers her head, steps over the sill, and takes her place in the corner as if she walked out of it yesterday, not fifty years ago.
+
+== r3_fail
+Narrator: You reach for the collar, but she jerks her horns back against the gatepost.
+Narrator: The cracked bell strikes the wood once, loud and clear in the hush, and the whole hillside seems to listen.
+
+== r3_noroll
+Narrator: You leave the collar alone and try to wave her through from a step back.
+Narrator: She stays where she is, chewing nothing, while the cracked bell rings and rings into the dusk.
+
+== flock_in
+Narrator: You drop the ash bar across the gate. All twenty-four are inside the stones, pressed flank to flank in the straw.
+Narrator: Up at the top of the pasture, the white wall swells outward like a sail taking wind, hesitates over the empty grass, and settles flat again.
+Erno [weary]: Twenty-one, twenty-two, twenty-three. Twenty-four.
+Erno: They say in the village she's a wolf-goat, come to lead the others in. She isn't. Her collar says Snowdrop.
+Erno [sad]: She just remembered where the fold was. I want her to stay.
+
+== wolves_bridge
+Narrator: Up on the ridge, where the stragglers went in, the white wall bulges outward and does not stop.
+Erno [afraid]: The fold! Get inside the fold and shut the bar!
+Narrator: Low shapes the colour of wet smoke come loping down the grass without a sound, and you turn to meet them at the stones.

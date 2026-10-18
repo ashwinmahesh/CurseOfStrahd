@@ -1,0 +1,54 @@
+== nothing_new_1
+Vasile [angry]: Again? You asked us that an hour ago. Do we look like men to whom things happen on the hour?
+Petre: A crow sat on the well-beam. Then it flew off toward the woods. That was the afternoon.
+Vasile [weary]: It was the same crow from this morning. I know its bad foot.
+Petre: There you are, then. Come back at dusk if you want to hear about the mud.
+
+== nothing_new_2
+Vasile: Well, Old Mihail's spade broke in the frost, if you missed that the first four times.
+Petre: That was Tuesday, Vasile. You cannot keep serving Tuesday to guests.
+Vasile [sly]: They're from out of the valley. Tuesday is brand new to them.
+Petre [weary]: Pay him no mind. Nobody has died since breakfast, and we are all very put out about it.
+
+== nothing_new_3
+Vasile: Three whole days without a screaming in the lane. That has to be a record since the fog came.
+Petre [afraid]: Don't say it out loud, you fool. The quiet only means it's taking a breath.
+Vasile [weary]: Let it breathe, then. My knees ache less when nothing is chasing us.
+
+== wrong_rumour
+Vasile [sly]: If you must know, the late burgomaster's old wolfhound has begun to speak. Plain as you or me, just after midnight.
+Petre: It has not.
+Vasile: One single word, every night, right at the kennel fence. Enough to chill the marrow in your shins.
+Petre [weary]: Go on, then. What word does it say, Vasile?
+Vasile: It says "Woof." But with a terrible, knowing weight to it.
+
+== petra_correction
+Goodwife Petra [weary]: Vasile told you the hound speaks? Last winter Vasile told the whole lane my well was haunted by a drowned choir.
+Goodwife Petra: It is a stone hole with rainwater at the bottom. It makes a noise when the bucket hits.
+Goodwife Petra: And a dog in the dark howls because it is cold and its master is in the ground. That is what dogs are for.
+
+== arik_no_1
+Arik: Nothing.
+
+== arik_no_2
+Arik: Quiet.
+
+== arik_no_3
+Arik: No.
+Narrator: He sets down the dry pewter cup and picks up another that is just as dry. His thumb goes round the rim without hurry.
+
+== petre_coat_ask
+Petre: It keeps the wet off my shoulders. That's all a coat needs to do in this place.
+Petre [weary]: Never mind the stitching. Ask a man about the weather if you want to make small talk.
+
+== petre_coat_told
+Petre [sad]: It was the burgomaster's daughter. Mistress Ireena. The first hard frost after my roof gave in, I had only a sack over my shirt.
+Petre: She came down the steps with it over her arm and said it was too broad in the shoulder for her brother.
+Petre [sad]: A grown man ought not be cold enough to take good wool from a girl's hands. Still, the wind was off the mountain.
+Petre: She never looks at it when she passes me in the street. That is the best part of the charity.
+Petre [weary]: Keep it to yourself, mind. If Vasile hears, he'll be coughing under her window before dark.
+
+== petre_coat_paid
+Narrator: Petre catches the coin in both chapped hands and slips it deep into his lining as though it might draw lightning.
+Petre [afraid]: Put that away before someone sees it shine. Gold has a bad habit of outliving the pockets it sits in.
+Petre [weary]: Still. That's firewood through the new moon, and dry salt besides. May the mist leave your road clear.

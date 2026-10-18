@@ -1,0 +1,18 @@
+{
+  "id": "emanoil",
+  "name": "Emanoil",
+  "title": "A Clerk Who Would Be Bitten",
+  "summary": "A young Vallaki clerk in black he can't afford, who writes long bad poems to the castle and sleeps in a coffin from Henrik's because he wants to be chosen and bitten by the lord of the valley. He is secretly afraid of the dark and sleeps with a candle burning in the coffin.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

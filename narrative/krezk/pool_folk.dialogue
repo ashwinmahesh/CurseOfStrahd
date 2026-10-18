@@ -3,12 +3,43 @@
 
 ~ mourner
 Widow Catrina: Every morning I tell him the news. The goats, the weather, who's fallen out with whom. The water never freezes, not even in the deep of winter. That's how I know he hears.
--> END
+-> mourner_menu
+
+~ mourner_menu
+* [if not flag.catrina_told] [Insight DC 13] (Ask gently whether the water ever answers.) -> mourner_secret | mourner_miss
+* Good day. -> END
+
+~ mourner_secret
+set catrina_told
+Widow Catrina [sad]: Five years I've told that water what the hens laid and who took ill, never expecting a word back.
+Widow Catrina [afraid]: Then last month the ripples stopped, and a voice from the bottom said thank you for the news. A young man's voice.
+Widow Catrina: It wasn't my Nicolae's voice, and I haven't breathed a word of it to a living soul.
+-> mourner_menu
+
+~ mourner_miss
+Narrator: Widow Catrina tests the dark water with two fingers, tells you only that the pool is cold today, and turns back to her basket.
+-> mourner_menu
 
 ~ grave_keeper
 if flag.sorin_fate == "pool"
 Old Simion [sad]: The Krezkov boy, at peace in the water at last. I'll keep his stone straighter than all the rest. Don't tell the others.
--> END
+-> keeper_menu
 endif
 Old Simion: Stone suns, every one, so they face the morning. The snow pushes them crooked. I push them back. Between us we've kept it up for thirty years.
--> END
+-> keeper_menu
+
+~ keeper_menu
+* What would you like, Simion? -> keeper_want
+* [if flag.simion_want_heard] That stone with no name, at the end of the row? -> keeper_secret
+* Good day. -> END
+
+~ keeper_want
+set simion_want_heard
+Old Simion: Seventy stones by the water, and I know the name and the last words under every one of them.
+Old Simion [sad]: I only wish someone younger had the patience to stand in the cold and learn them before I forget.
+-> keeper_menu
+
+~ keeper_secret
+Narrator: At the end of the row stands a blank sun-stone beside a neat, deep trench covered with pine boughs to keep the drift out.
+Old Simion: Ground freezes hard as iron come midwinter, so I dug my own while my back still had the bend in it.
+-> keeper_menu

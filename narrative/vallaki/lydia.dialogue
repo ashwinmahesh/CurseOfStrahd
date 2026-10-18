@@ -20,6 +20,7 @@ endif
 
 ~ menu
 * The bunting is lovely. -> bunting
+* [if flag.lydia_met] (Notice the key on a yellow ribbon at her collar.) -> lydia_key
 * Tell us about the festival. -> festival
 * How is your son? -> victor
 * [Insight DC 12] Is she as happy as she looks? -> read_ok | read_fail
@@ -72,3 +73,10 @@ if flag.victor_vanished
 Lydia Petrovna [afraid]: And Victor's gone. There was a light in the attic, and then there wasn't any Victor. I keep laying a place for him.
 endif
 -> END
+
+~ lydia_key
+Lydia Petrovna [smile]: Oh, this little thing? I keep it on a yellow ribbon so it looks like trim, dear, right against the collar.
+Lydia Petrovna: It opens the stocks in the square. The wood gets terribly damp after midnight, and it ruins a good coat.
+Lydia Petrovna [sly]: I let them out once the watch turns and have them locked back in by dawn. Vargas never counts the same man twice.
+Lydia Petrovna [afraid]: Do keep it to yourselves, though. He means so well, and it would break his heart to know they were comfortable.
+-> menu

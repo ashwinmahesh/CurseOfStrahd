@@ -80,3 +80,32 @@ Blinsky [sad]: Piccolo is a critic. He has never once paid to see anything, and 
 ~ bye
 Blinsky: Goodbye. Come back. Or don't. The toys will be here either way. They are very patient.
 -> END
+
+# Piccolo's perch (prop piccolo_perch): his admission, one gold piece, once; the party can try to catch him (NPC plan batch 3).
+~ piccolo
+if flag.piccolo_paid
+-> END
+endif
+Narrator: On his carved perch behind the counter, Piccolo the monkey regards you over his stitched red waistcoat with the cold, unblinking appraisal of a moneylender.
+Narrator: He extends one small, grey palm and taps a fingernail against the wood until you understand that looking at the toys is not free.
+if gold >= 1
+set piccolo_paid
+gold -1
+Narrator: A gold piece leaves your fingers and vanishes into his waistcoat pocket.
+Narrator: You watch him the entire time, and you still cannot say how the coin got there.
+* [Sleight of Hand DC 12] (Catch his tail before the coin goes up the shelf.) -> piccolo_catch_ok | piccolo_catch_miss
+* Let him keep it. -> END
+endif
+-> END
+
+~ piccolo_catch_ok
+gold +1
+Narrator: You catch the tip of Piccolo's tail just as he slips along the wainscoting toward the high shelves with your gold.
+Narrator: He stops, turns slowly, and presses the warm coin back into your palm with an expression of elaborate, weary contempt.
+Narrator: Smoothing his waistcoat with both hands, he climbs back to his perch and refuses to look at you for the rest of your visit.
+-> END
+
+~ piccolo_catch_miss
+Narrator: The monkey is much faster than your hand; he makes three silent bounds up the clockwork shelves and drops your coin into a stuffed jester's hat near the ceiling.
+Narrator: Peering down over the brim with his chin in his hands, he looks deeply, professionally pleased with himself.
+-> END

@@ -70,6 +70,7 @@ endif
 * [Persuasion DC 17] Come home. Your mother's at the north gate every night. -> home | stays
 * [if not flag.ioan_stone_read] [Investigation DC 13] (Look at the last headstone, the one he's sitting on.) -> stone | stone_missed
 * [if night and quest.the_squire == truth] (Stand the vigil with him.) -> vigil
+* [if quest.the_squire == truth and not flag.hearing_held] Ask the Order's table to hear Ioan's case, here at the graves. -> hearing_intro
 * Goodbye. -> END
 
 ~ order_rests
@@ -120,8 +121,119 @@ quest the_squire done
 Narrator: When the last man-at-arms goes down into the frost, the squires come forward from their stones, one by one, and each of them touches the banner and goes back.
 Narrator: Sir Godfrey comes down from the house with the Order's book under his arm, and a shield, and a pen that's been dry for centuries, and he writes for a long time.
 Sir Godfrey Gwilym: Ioan: rode with my lord's last word, on my horse, on my order. And under it, Cosmin: stood the vigil. Squire. (He blows on the page.) Vladimir can argue with the squires if he likes. I wouldn't.
+-> squire_gift
+
+# The shield is given in one place for both endings (a lasting item is placed once: tests/unit/test_loot_distinct.gd).
+~ squire_gift
 Sir Godfrey Gwilym: This was Ioan's. He left it at the gate the night he rode, because a shield slows a horse. It's caught every arrow that's come at the Order's gate for four hundred years. Take it. Our squire has a wooden sword and the right idea, and that'll do him for now.
 give arrow_catching_shield
 gold +150
-approve godrick_pendlebrook +3 thistle +1 liriel_dawnsong +2 wren_featherfoot +1 ratatoille +1: You stood the squire's vigil with Cosmin
+approve godrick_pendlebrook +3 thistle +1 liriel_dawnsong +2 wren_featherfoot +1 ratatoille +1: You stood by Cosmin and cleared Ioan's name
 -> END
+
+# --- Without a fight: the Order's table hears Ioan's case (NPC plan batch 5; docs/plans/npc_depth_and_quests.md) ---
+# Cosmin asks the table to hear his ancestor at the graves, the oldest form of petition. Evidence in Ioan's favour: the words on
+# the back of the headstone, the dragon's last words, Godfrey's own memory, History (the Order's rolls) and Persuasion. Three
+# votes carry it; short of that the table isn't moved, and the vigil above is still open.
+
+~ hearing_intro
+set hearing_held
+set hearing_votes = 0
+Narrator: Five dead knights take their places among the small graves, seating themselves on the frost as if a long oak table still stood between them.
+Vladimir Horngaard: A petition at the stones has not been called since the first winter of our order. State your business, boy, before the wind takes my patience.
+Sir Godfrey Gwilym: You have the right of it, lad. Speak plainly. We have no chairs out here, and the commander's knees were bad even when he had blood in them.
+Cosmin [afraid]: I ask the table to hear the matter of Ioan, your last squire, whom your book names a coward. I have his blood, and I say the book lies.
+Vladimir Horngaard [weary]: It is my hand in that book, cooper's son. Sit in the snow, if you must, and we will hear what you have brought to prove me a liar.
+-> hearing_case
+
+~ hearing_case
+Narrator: A heavy ledger rests on Vladimir's armoured knee, its vellum stiff with frost. He does not need to look down to read the line.
+Vladimir Horngaard: Ioan, son of the mason. Left his post on the night the hall fell. One word stands beside his name, and I wrote it when the roof was still smoking.
+Vladimir Horngaard: Who speaks for a boy four hundred years dead, and what have you brought into the cold besides his descendant's stubbornness?
+-> hearing_menu
+
+~ hearing_menu
+* [if flag.ioan_stone_read and not flag.hear_stone] (Read the words cut on the back of the last headstone.) -> hear_stone
+* [if flag.vladimir_last_words_known and not flag.hear_words] (Give the dragon's last words: let them go home.) -> hear_words
+* [if not flag.hear_godfrey] (Ask Sir Godfrey Gwilym what he did.) -> hear_godfrey
+* [if not flag.hear_history] [History DC 13] (Argue from the Order's own rolls.) -> hear_history_ok | hear_history_miss
+* [if not flag.hear_persuade] [Persuasion DC 14] (Speak for Ioan.) -> hear_persuade_ok | hear_persuade_miss
+* (That is all we have.) -> hearing_vote
+
+~ hear_stone
+set hear_stone
+set hearing_votes += 1
+Narrator: You brush the rime from the back of the last marker and read the cramped, hurried letters chipped into the rough slate.
+Vladimir Horngaard: He cut every stone while the vanguard was breaking at the gate. His chisel work was always crooked when he was in a hurry.
+Cosmin: He stayed until the others had their names over them. A boy running for his life does not stop to spell all his dead friends properly.
+-> hearing_menu
+
+~ hear_words
+set hear_words
+set hearing_votes += 1
+Narrator: You repeat the words that lingered in the ruin's cold air. Around the graves, five grey heads lift at once.
+Vladimir Horngaard [sad]: Let them go home. He spoke that in the courtyard with his last breath, when the smoke was in our throats, and I would not hear it.
+Vladimir Horngaard [weary]: A squire would not know our lord's last command unless a knight gave it to him to carry. And I set his name down in the ash for obeying.
+Sir Godfrey Gwilym [sad]: It was a word for the valley, and we would not carry it. We were very proud, then, and very loud, and only the boy listened.
+-> hearing_menu
+
+~ hear_godfrey
+set hear_godfrey
+set hearing_votes += 1
+Sir Godfrey Gwilym [sad]: That was my mare. The grey one with the white pastern. I put the reins in his hand myself at the postern gate, because his own pony was lame.
+Sir Godfrey Gwilym: I meant to tell the clerk in the morning, Vladimir. Only by morning there was no clerk, and the house was falling, and it went from me.
+Vladimir Horngaard [weary]: Four centuries at the same table, Godfrey, and you might have mentioned the horse before the boy's kin came freezing to our door.
+-> hearing_menu
+
+~ hear_history_ok
+set hear_history
+set hearing_votes += 1
+Narrator: You cite the Order's own rolls: no brother or squire is marked fled unless two witnesses saw his back on the road.
+Vladimir Horngaard: You have read our law better than our clerk did. Nobody saw him go, because everyone who looked toward the road that night was already dead.
+-> hearing_menu
+
+~ hear_history_miss
+set hear_history
+Narrator: You reach for a precedent in the old rolls, but the names and the winters tangle in the telling, and the knights only stare at you.
+Vladimir Horngaard: That was a rule of the Order's third chapter, stranger, and it was struck before the hall fell. Keep to what you know.
+-> hearing_menu
+
+~ hear_persuade_ok
+set hear_persuade
+set hearing_votes += 1
+Narrator: You speak quietly of the stone-cutter's boy who rode into the dark alone, and the cooper's boy who has slept many nights on the frost to clear him.
+Cosmin: I do not care if I freeze, my lord. Only don't let my family go on being the ones who left their brothers in the fire.
+Vladimir Horngaard [sad]: We have kept our anger warm a long time, and it has done nothing for the dead. Perhaps it is time it did some small thing for the living.
+-> hearing_menu
+
+~ hear_persuade_miss
+set hear_persuade
+Narrator: Your plea runs on into the wind, and the dead knights look away toward the dark trees, where speeches have never mended anything.
+Vladimir Horngaard [weary]: Spare us the sermon. We know what honour costs, stranger. We are sitting in it.
+-> hearing_menu
+
+~ hearing_vote
+Narrator: Hooves drum without sound across the crusted snow, and a sixth phantom reins in hard beside the graves, his cloak still half-unclasped.
+Sir Ottokar the Late [weary]: Did I miss it?
+if flag.hearing_votes >= 3
+-> hearing_won
+endif
+-> hearing_lost
+
+~ hearing_won
+quest the_squire done
+Narrator: One by one, five grey gauntlets rise from the snow and lay themselves flat upon the empty air where the table would be.
+Vladimir Horngaard: Five voices for the squire. Let the word be struck from the roll. Ioan of the stones kept his post, and rode by order of this house.
+Narrator: Vladimir rises, the frost cracking from his greaves, and looks down at the shivering boy.
+Cosmin [afraid]: Does that mean I may go home and tell my mother, my lord?
+Sir Godfrey Gwilym [smile]: You may go home and fetch a thicker coat, Squire Cosmin. We have no beds left, and you are no good to the Order with your toes black.
+Cosmin [smile]: Yes, Sir Godfrey. I have a coat at the inn. It has three buttons left, if the rats haven't had them.
+Narrator: With a dry quill that leaves a faint grey crease in the vellum, Sir Godfrey draws a single straight line through the old word.
+Sir Godfrey Gwilym [smile]: Ioan: rode with my lord's last word, on my horse, on my order. And under it, Cosmin: squire. Go on, lad, before I forget how to spell Vallaki.
+-> squire_gift
+
+~ hearing_lost
+Vladimir Horngaard: A grave and a story are not enough to unwrite the book of this house. The roll stands as it was written.
+Sir Godfrey Gwilym [sad]: Keep your coat close tonight, lad. My memory is a sieve, and it may be that more comes back to me before the dawn.
+Cosmin: I can stand the vigil instead, my lord. If you will not hear his name cleared, you can see how his blood holds a sword.
+-> cosmin

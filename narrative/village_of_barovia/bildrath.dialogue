@@ -24,6 +24,7 @@ interject background:criminal: What a lovely, sturdy counter. Very... sturdy.
 * We have things to sell. -> sell
 * [if not flag.bildrath_discount and not flag.bildrath_haggle_failed] Surely we can come to a better arrangement. -> haggle
 * Heard anything interesting? -> news
+* [if flag.fourth_rumour_seed == "tuesday" and flag.fourth_rumour_echoed and not flag.bildrath_discount and not flag.bildrath_tuesday_done] They're saying it's Tuesday. -> village_of_barovia/the_fourth_rumour:bildrath_tuesday
 * [if quest.cut_after_noon and not flag.bildrath_wood_taken and not flag.late_wood_burned and not flag.woodpile_beaten] The wood you bought from Grigore. Show us. -> village_of_barovia/cut_after_noon:bildrath_wood
 * [if (flag.late_wood_burned or flag.woodpile_beaten) and not flag.bildrath_hush] About that firewood. -> village_of_barovia/cut_after_noon:hush
 * [if flag.burial_agreed and not flag.parriwimple_pallbearer and not flag.burgomaster_buried] We need help carrying a coffin. -> hire
@@ -81,6 +82,7 @@ Bildrath: News costs nothing, which is what it's worth. Ask.
 * [if not quest.cut_after_noon or quest.cut_after_noon == rumored] Grigore the woodcutter. -> news_grigore
 * [if not quest.the_burgomasters_hound or quest.the_burgomasters_hound == rumored] The dog at the burgomaster's house. -> village_of_barovia/the_burgomasters_hound:bildrath_news
 * Your stock. -> village_of_barovia/the_oat_thief:bildrath_news
+* [if not flag.bildrath_ledger_known] The ledger on your counter. -> ledger
 * Enough news. -> menu
 
 ~ news_morgantha
@@ -113,6 +115,28 @@ quest cut_after_noon rumored
 endif
 Bildrath: Grigore sold me a load of firewood at a price I could not refuse, being very nearly nothing. Beautiful wood. White. It's in the back.
 Bildrath: It creaks at night. Wood creaks; I've told Parriwimple so. Parriwimple tells me it doesn't usually creak toward the door.
+-> news
+
+~ ledger
+Bildrath: That is an account book. It contains accounts. None of them are yours.
+Bildrath [neutral]: I keep a tidy counter and a tidy record. A shop without records is merely a barn with shelves.
+Bildrath: If you are not buying rope, step back from the inkwell. Ink is forty copper a drop.
+* [Insight DC 13] (Read his face while he talks about the accounts.) -> ledger_insight | ledger_miss
+* Leave it. -> news
+
+~ ledger_insight
+set bildrath_ledger_known
+Narrator: Before the cover shuts, you catch the columns: half the village by name, with old sums beside them in neat, narrow ink.
+Narrator: None are crossed out as paid. Beside every single figure, in the same cramped hand, he has written: "lost, wolves."
+Bildrath: You have very long necks for travellers. I do not charge for looking, which is an oversight I shall correct.
+Bildrath [weary]: A merchant must balance his books. If a customer is eaten, or near enough, the ledger still requires a reason.
+Bildrath [neutral]: Wolves are a very expensive animal. Now, did you want the tallow candles or not?
+approve godrick_pendlebrook +1 liriel_dawnsong +1: You saw what Bildrath writes beside the debts
+-> news
+
+~ ledger_miss
+Narrator: His face is as flat and dry as a cellar board. You learn nothing from it except that he dislikes being stared at.
+Narrator: He closes the ledger with two fingers and squares its spine precisely to the edge of the counter.
 -> news
 
 ~ hire

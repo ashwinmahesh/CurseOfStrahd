@@ -1,0 +1,65 @@
+# The rescued Vadu children in Krezk (NPC plan batch 4; docs/plans/npc_depth_and_quests.md): Ioana and Zamfir, the twins, who
+# stay close together (Zamfir was the one who cried in the den, and Ioana says it was her), and Codruta, who lost her rag
+# doll on the hillside (she hid it under a gorse root so the wolves wouldn't take it too; if the party found it, she gets
+# it back here). They stand in the lanes by day once the pack's children are free (flag den_children_freed). No fight,
+# nothing behind a roll. Lines drafted by Gemini through the ai-bridge, edited; every line here is unvoiced for now.
+
+~ ioana
+Ioana [smile]: Ma gave us warm milk with lard in it. Do you want half of my bread? It only fell in the snow once.
+Narrator: Behind her, a smaller shadow in an identical wool coat clutches two fistfuls of her hem and stares at your boots.
+-> ioana_menu
+
+~ ioana_menu
+* Who cried, in the den? -> ioana_cried
+* Goodbye. -> END
+
+~ ioana_cried
+set twins_cry_heard
+Ioana: That was me you heard down in the rocks. I have very loud lungs when I'm cross.
+Narrator: Beside her, Zamfir keeps both eyes fixed on the mud and says nothing at all, though a small thumb hooks tighter into Ioana's sleeve.
+Ioana: I'm older by a whole minute, so it was my turn to make the noise. That's how we do it.
+-> ioana_menu
+
+~ zamfir
+Zamfir [afraid]: Your cloak smells like wet dog and iron, just like the dark place, only nicer.
+Narrator: Having spent all that bravery in a single breath, Zamfir disappears behind Ioana's shoulder again.
+-> zamfir_menu
+
+~ zamfir_menu
+* [if flag.twins_cry_heard] Ioana says she cried in the den. Was it her? -> zamfir_cried
+* Goodbye. -> END
+
+~ zamfir_cried
+Zamfir [sly]: I cried the whole time in the dark, right until you came. I was ever so loud.
+Ioana [weary]: It was me. I was the loud one, and that is all anyone needs to know. Now hush and eat your crust before the crows get it.
+Narrator: Ioana reaches back without looking to tug Zamfir's hood straight, keeping the lie between them like a shared blanket.
+-> zamfir_menu
+
+~ codruta
+if flag.ana_doll_returned
+Narrator: She holds a damp, button-eyed rag doll by the neck with both hands, glaring up at you as if you might ask to borrow it.
+Codruta [angry]: Her skirt got torn on the thorns, and she's missing an ear, and nobody is allowed to touch her but me.
+else
+Narrator: Her mittens are empty, and she keeps opening and closing her fingers as if checking whether something has come back to them.
+Codruta [sad]: Linen doesn't have any fur on it. She's going to freeze out there on the hill all by herself.
+endif
+-> codruta_menu
+
+~ codruta_menu
+* [if flag.den_doll_found and not flag.ana_doll_returned] We found your doll on the hillside. -> codruta_returned
+* [if not flag.codruta_hid_told] Where did you lose her? -> codruta_hid
+* Goodbye. -> END
+
+~ codruta_returned
+set ana_doll_returned
+Narrator: She holds a damp, button-eyed rag doll by the neck with both hands, glaring up at you as if you might ask to borrow it.
+Codruta [angry]: Her skirt got torn on the thorns, and she's missing an ear, and nobody is allowed to touch her but me.
+approve thistle +1 kip_smudgewick +1 godrick_pendlebrook +1: You gave Codruta back her rag doll
+-> codruta_menu
+
+~ codruta_hid
+set codruta_hid_told
+Codruta [afraid]: When the big gray one picked me up, I pushed her under the gorse root by the ditch. I didn't drop her.
+Narrator: She wipes her nose on her sleeve and looks toward the gate, where the mist presses white against the timber.
+Codruta: If the wolves took both of us, there'd be nobody left to know where we lived. So I made her stay behind.
+-> codruta_menu

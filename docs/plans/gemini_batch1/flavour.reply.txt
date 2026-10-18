@@ -1,0 +1,60 @@
+== bildrath_ledger_ask
+Bildrath: That is an account book. It contains accounts. None of them are yours.
+Bildrath [neutral]: I keep a tidy counter and a tidy record. A shop without records is merely a barn with shelves.
+Bildrath: If you are not buying rope, step back from the inkwell. Ink is forty copper a drop.
+
+== bildrath_ledger_insight
+Narrator: Before the cover shuts, you catch the columns: half the village by name, with old sums beside them in neat, narrow ink.
+Narrator: None are crossed out as paid. Beside every single figure, in the same cramped hand, he has written: "lost, wolves."
+Bildrath: You have very long necks for travellers. I do not charge for looking, which is an oversight I shall correct.
+Bildrath [weary]: A merchant must balance his books. If a customer is eaten, or near enough, the ledger still requires a reason.
+Bildrath [neutral]: Wolves are a very expensive animal. Now, did you want the tallow candles or not?
+
+== bildrath_ledger_miss
+Narrator: His face is as flat and dry as a cellar board. You learn nothing from it except that he dislikes being stared at.
+Narrator: He closes the ledger with two fingers and squares its spine precisely to the brass tacks on the counter's edge.
+
+== mirabel_intro
+Mirabel [smile]: What would I call you? Oh, my sisters, listen to this, they want to be christened before they've even bought a round.
+Mirabel [sly]: Hold still and let me look at the mud on your boots. A good name has to fit like a wet coat.
+
+== mirabel_paladin
+Mirabel [sly]: You in the tin coat, you're "Kettle," because you shine like a scullery pot and you're already whistling at the boil.
+
+== mirabel_cleric
+Mirabel [smile]: And the soft one with the morning eyes is "Candle-end," still trying to light a whole church with an inch of tallow.
+
+== mirabel_ranger
+Mirabel [sly]: The woman checking the floorboards for badger prints is "Bramble," all briar on the hem and nowhere to sit.
+
+== mirabel_wizard
+Mirabel [smile]: The fussy one smelling of sage and scorched paper is "Soup-bone," because he looks like he'd lecture a turnip before peeling it.
+
+== mirabel_monk
+Mirabel [smile]: That little nimble thing is "Thimble," small enough to lose in a pocket and sharp enough to catch your thumb.
+
+== mirabel_warlock
+Mirabel [sly]: And you with the horns and the counting-house frown, you're "Farthing," always checking the rim to see who clipped you.
+
+== mirabel_rest
+Mirabel [sly]: Anyone left over gets "Pockets" until they do something worth a syllable. Don't look crestfallen, it's a perfectly dry name.
+Mirabel [sad]: I called little Sorvia "Mouse" when she started here. That is the only one I'd take back, if names came back.
+
+== sorina_doru_ask
+Goodwife Sorina [weary]: The usual list. The dead, the missing, the roof, the cabbages, and Father Donavich's knees. Not in that order.
+Goodwife Sorina: When you have been on the bench an hour, you start throwing in the neighbours' goats just to fill the quiet.
+
+== sorina_doru_told
+Goodwife Sorina [sad]: His boy, Doru. He had good hands for mending latches, and he used to whistle by our gate when he had no business on our lane.
+Goodwife Sorina [weary]: A man came through with a bright coat and big talk, and Doru went up the castle road behind him like a dog after a cart.
+Goodwife Sorina [sad]: He didn't go because he was brave. He went because he was twenty, and tired of turnips, and wanted me to look at him.
+
+== iulian_dream
+Iulian [smile]: I have an oven with a red brick arch. The flour is dry and white, no weevils in it, and the loaves come out singing.
+Iulian [sad]: People queue down the street with clean cloths over their arms. They call me Master Iulian and ask for the crusty heel.
+Iulian [afraid]: Tell me truly, you've walked the lanes today. Does anyone down there still eat bread, if a man were to bake it?
+
+== lucia_second
+Lucia [weary]: One husband, yes. Toma has a bad chest and hasn't slept since the frost, so I told him I would fetch one.
+Lucia [sad]: Then I got to the door and my hand brought out the silver for two. It was already on the stone before I looked at it.
+Lucia: You don't have to say what that makes me. I'll eat mine in the ditch by the milestones so he doesn't smell the sugar on my shawl.

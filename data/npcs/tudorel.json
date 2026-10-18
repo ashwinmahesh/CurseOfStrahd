@@ -1,0 +1,18 @@
+{
+  "id": "tudorel",
+  "name": "Tudorel",
+  "title": "A Footman at Wachterhaus",
+  "summary": "Old Florin's grandson, who went up the castle road two winters ago to ask for work. He is a footman in Lady Wachter's household in the count's grey-and-black livery, warm and fed, and ashamed: he sends his grandfather one coin a month by the carter, with no name on it.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "servant",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

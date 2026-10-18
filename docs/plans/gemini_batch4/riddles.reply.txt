@@ -1,0 +1,44 @@
+== riddle_offer
+Granny Ash [smile]: Riddles? Oh, listen to that, my pretties. The little meats want to play a game with old Granny.
+Narrator: She leans down until her iron teeth click in the frost, smelling of wet wool and cellar mould. The great grey dogs sit at her heels.
+Granny Ash [sly]: Three questions, then, and answer two. Win, and Granny leaves her basket in the snow and walks back into the trees alone.
+Granny Ash [smile]: Lose, dearie, and we do it the old way. The noisy way.
+== riddle_1
+Granny Ash: Here is the first, my clever ones. Listen close.
+Granny Ash: I have a mouth that never eats, and a cold dark bed where I never sleep.
+Granny Ash [sly]: I run all day and I run all night, yet never take a single step. What am I?
+== riddle_1_right
+Granny Ash [smile]: Oh, sharp as needles! You have ears on you after all, dearie.
+== riddle_1_wrong
+Granny Ash [sly]: Tut, tut. No, my sweet. Your little brains are frozen through.
+== riddle_2
+Granny Ash: Now for the second, and mind your tongue.
+Granny Ash: I speak without a mouth, and I have no body to warm by the fire.
+Granny Ash [sly]: Call to me across the stones and I will always answer, though I am never there. What am I?
+== riddle_2_right
+Granny Ash [sly]: Clever, clever. You might spoil Granny's supper yet.
+== riddle_2_wrong
+Granny Ash [smile]: Wrong again, dearie. The kettle is almost singing.
+== riddle_3
+Granny Ash [smile]: And the last. What did old Granny eat twelve years ago that was so sweet and delicious?
+Granny Ash: It was the very first thing the child was ever given.
+Granny Ash [sly]: And the only thing she could not keep.
+Narrator: Behind you, Mouse stops shivering in the snow and lifts her head to listen.
+== riddle_3_name
+Narrator: Granny Ash goes quite still, her long blue fingers tightening on the handle of the cradle-basket.
+Mouse [afraid]: Zamfira. That was mine. You took it out of my mouth when I was little.
+Granny Ash [angry]: Hush your noise, Mousie! Who told them that? Nothing in these hills remembers what Granny has swallowed!
+== riddle_3_wrong
+Granny Ash [smile]: No, dearie. Oh, no. Granny swallowed it down, lick and crumb, and nobody remembers it now.
+== riddle_won
+Granny Ash [smile]: Well, well. A bargain is a bargain, and the wood keeps its word better than the town.
+Narrator: She lets the great wicker basket drop into the drift with a dry creak, and clicks her tongue to the pony-sized hounds.
+Granny Ash [sly]: Keep your meat and keep your bones, little Zamfira. You would have been stringy anyway.
+Narrator: The mist takes her between one pine and the next, until only the deep paw-prints in the snow remain.
+== riddle_lost
+Granny Ash [smile]: Oh, poor dearies. You tried so hard, and that is what counts.
+Granny Ash: Stand by the hut, Mousie, and cover your ears. Granny won't be long.
+== riddle_dawn
+Narrator: When the trees are quiet again, the girl steps out from behind the hut and looks down the empty, rutted lane.
+Mouse: My head stopped hurting. I thought it would always hurt like that.
+Mouse [weary]: Come inside by the stove. There's cabbage left from yesterday, and I don't feel so hungry anymore.

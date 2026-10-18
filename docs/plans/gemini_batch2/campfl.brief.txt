@@ -1,0 +1,24 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. The Vistani of the Tser Pool camp are warm, shrewd, theatrical and watchful, with a grudge against the road; the others are as described. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Stanimir: Guests! Off the road, out of the dark, into the light! I am Stanimir. The fire is free, the wine is cheap, and the music is the best in Barovia, because it is the only music in Barovia.
+Radu: Ah! Travellers with good boots and no horse. Tragic. I have a cure for that.
+Old Dorina: Sit, sit. Nobody walks past my pot hungry, not even strangers. Strangers least of all; they never know when they'll eat next.
+Zora: I count everyone. People coming, people going. Most nights the numbers match.
+Big Tobar: Hold still, you. Hold still. There. Oh! Hello. Sorry. I was talking to the wheel.
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS: Old Dorina cooks the same stew for sixty years. Zora is the young archer who counts everyone; she keeps a knot in a cord for every stranger who has come through and unpicks it when they die. Petru is the quiet grinder who knows every blade in camp. Big Tobar talks to wheels. Bogdan is a farmer carrying his mother's coffin to be blessed. Iancu throws knives at a stump and is never satisfied.
+
+LABELS AND BEATS:
+== dorina_stew (3 lines, Old Dorina: the party asks again about her pot after eating; she says a pot is a family, and you don't take from a family, you add to it)
+== zora_knots (4 lines, Zora: the party notices the cord at her belt with tiny knots; she says it's a knot for everyone who has come through the camp; she unpicks one when they die; she looks at the party and does not say how many knots they have)
+== zora_knots_count (2 lines, Zora: a later visit; she says the party's knots are still tied and that this is the best news she has had in a week)
+== petru_blade (3 lines, Petru: the party asks him about a blade nobody could sharpen; he says there is no such blade, only blades nobody has tried hard enough on; he looks at the sword the party carries and then at their faces)
+== iancu_stump (3 lines, Iancu: the party watches his knives; he says he hit the knot nine times of ten and the tenth one still bothers him; he asks, quietly, whether the party has ever missed a throw that mattered)

@@ -1,0 +1,110 @@
+# Exethanter's Notes (side quest, NPC plan batch 5; docs/plans/npc_depth_and_quests.md): a gentle puzzle in the Amber Temple, no fight.
+# Five of the notes pinned to Exethanter have come unpinned, out of order, and he can't remember what he was doing this
+# morning. Putting them in order (choose each next scrap; a wrong one only earns a mild correction, and an Investigation
+# roll shows which was written first) shows he was making tea. Dialogue and data only: it is reached from one option in
+# amber_temple/exethanter:menu and touches no map. Lines drafted by Gemini through the ai-bridge, edited; every line here
+# is unvoiced for now.
+
+~ intro
+Narrator: Parchment scraps hang from his tea-coloured robe on bent brass pins. Five have fallen into his lap, and he sorts them with dry, clicking fingers.
+Exethanter: This morning? Oh, I was quite busy this morning, I'm almost certain of it.
+Exethanter [weary]: The pins work loose when I walk, you see, and then the morning gets out of order.
+Exethanter [smile]: If you've a moment, perhaps you might look them over. My hand is clear enough, I'm told, even when the rest of me isn't.
+-> read
+
+~ read
+Narrator: A scrap reads: "Stay by the hearth until the kettle whistles. If you go to the library while the leaves wait in the pot, the kettle will boil dry."
+Narrator: A scrap reads: "Set the full kettle on the hob and speak the small word of kindling. Not the large word. The soot is still on the ceiling."
+Narrator: A scrap reads: "When the whistle sounds, take the kettle from the flame and pour the water over the leaves. Set a cup out, in case someone calls."
+Narrator: A scrap reads: "Take the copper kettle down the stair to the well. Break the ice before dipping, or you will only bring up the lid again."
+Narrator: A scrap reads: "While the kettle warms, measure two spoons from the grey tin into the pot. The blue tin is cemetery dust. Do not use the blue tin."
+-> step_1
+
+~ step_1
+set notes_step = 1
+* [Investigation DC 12] (Check which scrap was written first.) -> hint | step_1
+* The scrap about the well. -> right_1
+* The scrap about waiting for the whistle. -> wrong_a
+* The scrap about pouring. -> wrong_b
+
+~ hint
+Narrator: The ink on the well note is grey and watered down, and its corner still holds a crumb of fresh red sealing wax. The others were written slightly later, as the nib dried.
+Exethanter [smile]: Oh, well spotted. The ink-pot freezes in the night, so the earliest line is always the palest.
+-> right_1
+
+~ right_1
+Exethanter [smile]: Ah, yes, the well. My knees always tell me when I've been down the stair, though they never mention why.
+-> step_2
+
+~ step_2
+set notes_step = 2
+* The scrap about the small word of kindling. -> right_2
+* The scrap about the grey tin. -> wrong_b
+* The scrap about pouring. -> wrong_c
+
+~ right_2
+Exethanter: The small word of kindling, quite right. It's a very gentle syllable, once one remembers not to shout it.
+-> step_3
+
+~ step_3
+set notes_step = 3
+* The scrap about waiting for the whistle. -> wrong_c
+* The scrap about the grey tin. -> right_3
+* The scrap about pouring. -> wrong_a
+
+~ right_3
+Exethanter [smile]: The grey tin, of course. I really ought to move the blue one to another shelf, or at least label it more firmly.
+-> step_4
+
+~ step_4
+set notes_step = 4
+* The scrap about pouring. -> wrong_b
+* The scrap about waiting for the whistle. -> right_4
+
+~ right_4
+Exethanter [weary]: Do not leave the room. Yes. I have ruined three good kettles by going to look up a name I no longer needed.
+-> finished
+
+~ wrong_a
+Exethanter: Hm. No, I don't think that can be right. That doesn't sound like the sort of thing one starts the morning with.
+-> back
+
+~ wrong_b
+Exethanter [weary]: Pardon me, no, I believe something else had to happen before that. Otherwise the kettle is quite empty, you see.
+-> back
+
+~ wrong_c
+Exethanter: Oh dear, no. I'm sure I tried them in that order once, in the winter of the great snow, and nothing came of it.
+-> back
+
+~ back
+if flag.notes_step == 1
+-> step_1
+elif flag.notes_step == 2
+-> step_2
+elif flag.notes_step == 3
+-> step_3
+endif
+-> step_4
+
+~ finished
+quest exethanters_notes done
+Narrator: The five scraps lie in a neat row across his knees. He reads them through twice, his bone fingers tracing the faded ink.
+Exethanter [smile]: Tea. I was making tea.
+Exethanter: How marvellous. I knew it was something civilised.
+Exethanter [sad]: I used to make a pot every morning, when there were wardens in the lower halls. They liked it very strong, with honey from the valley.
+Exethanter [weary]: The honey has been gone for some centuries, I'm afraid, and the wardens longer still. But the grey tin is half full.
+Narrator: He shuffles to the cold hearth, speaks a quiet syllable that smells of cedar, and measures dry leaves from a dented grey tin.
+Narrator: Presently the copper kettle gives a thin, reedy whistle that echoes a little way down the amber hall and dies.
+Exethanter [smile]: There we are. It isn't very hot, and it tastes mostly of the tin, if I recall.
+Exethanter: Do take a cup, if you drink. It does the room good to have steam in it.
+inspire party: Exethanter's tea in the cold of the Amber Temple
+approve wren_featherfoot +1 liriel_dawnsong +1 kip_smudgewick +1: You put Exethanter's notes in order, and he made tea
+-> amber_temple/exethanter:menu
+
+# --- Later (exethanter:menu jumps here) ---
+
+~ after
+Exethanter [smile]: Ah, hello again. Or is it still this morning? Regardless, the kettle is warm.
+Exethanter: I've pinned the five notes to my left cuff, in order, with two pins each. One can't be too careful with tea.
+-> amber_temple/exethanter:menu

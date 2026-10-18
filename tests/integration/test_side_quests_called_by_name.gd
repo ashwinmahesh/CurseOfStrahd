@@ -17,7 +17,7 @@ func test_the_rumour_the_voices_and_the_way_home() -> void:
 	st.location = "tser_falls"
 	assert_true(SideQuestPlay.shown(st, "tser_falls", "gorge_voices"))
 	beats = SideQuestPlay.play(st, "svalich_road/called_by_name:falls")
-	assert_true(SideQuestPlay.text(beats).contains("nothing calling"), "by day the gorge is quiet")
+	assert_true(SideQuestPlay.text(beats).contains("No lights drift in the grey daylight"), "by day the gorge is quiet (and you can see the ledge)")
 	assert_eq(SideQuestPlay.combat_of(beats), "")
 	st.minute_of_day = 22 * 60
 	beats = SideQuestPlay.play(st, "svalich_road/called_by_name:falls")

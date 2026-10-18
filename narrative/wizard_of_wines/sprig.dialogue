@@ -1,0 +1,54 @@
+# Sprig, a twig blight from Yester Hill that will not fight (NPC plan batch 4; docs/plans/npc_depth_and_quests.md): it has
+# decided it is a dog. It follows people, sits, wants to be patted and brings back a different stick every time. The
+# druids sent it to spy on the winery and it is very bad at it; Speak with Plants lets it say so. It has no spoken lines:
+# the Narrator speaks for it. Gentle comedy, no check, no quest. Lines drafted by Gemini through the ai-bridge, edited;
+# every line here is unvoiced for now.
+
+~ start
+if flag.winery_reclaimed
+Narrator: Under the Martikovs' trestle table, the bundle of twigs lies curled on the floorboards with its chin resting on a boot-toe.
+Narrator: Stefania has set a shallow clay bowl of rainwater beside it, and every so often it dips one root in with great dignity.
+-> menu
+endif
+if flag.sprig_met
+Narrator: At the end of the vine-row, the little heap of sticks is already sitting in the mud where you left it.
+Narrator: A fresh leaf has been wedged crookedly into its crown, and its root-tip taps the dirt once as you approach.
+-> menu
+endif
+set sprig_met
+Narrator: Something small and wooden trots out from between two rows of dead vines and comes to a halt at your boots.
+Narrator: It is a knot of dry sticks and thorns, crowned with a single brown leaf that twitches when the wind moves.
+Narrator: It folds its twig-thin legs beneath itself, sits very straight in the mud, and tilts its head up at you.
+-> menu
+
+~ menu
+* (Pat it.) -> pat
+* (Throw a stick.) -> stick
+* [if spell:speak_with_plants] Speak with it. -> plants
+* [if not spell:speak_with_plants] [knows:speak_with_plants] (Cast Speak with Plants, and ask it what it is doing here.) -> plants_cast
+* (Leave it.) -> END
+
+~ pat
+Narrator: You reach down and pat the crown of dry twigs, and the whole bundle trembles from root to thorn with fierce, silent effort.
+Narrator: Its lone leaf detaches and drifts to the dirt; the blight stares at the fallen leaf, then back up at you, waiting.
+-> menu
+
+~ stick
+Narrator: You toss a dead branch down the row, and the creature scrambles after it in a dry clatter of small wooden knees.
+Narrator: It trots back past the branch you threw and lays a completely different stick across your boot with solemn pride.
+-> menu
+
+~ plants_cast
+cast speak_with_plants
+if check.last
+-> plants
+endif
+-> menu
+
+# Speak with Plants (2024 PHB): plants tell what passed them, and a twig blight can say who sent it.
+~ plants
+Narrator: Its voice is a tiny, dry rustle in the back of your skull: "The tall ones on the hill told me to watch the house."
+Narrator: A twig shifts where its shoulder ought to be: "I have watched very hard. There are people here, and most of them have legs."
+Narrator: It tilts its head, creaking faintly: "There was another thing I had to look for, a very important thing, like a stone or a bird."
+Narrator: The dry rustle brightens as its root-tail taps the mud: "I forgot it on the way down. Do you have another stick?"
+-> menu

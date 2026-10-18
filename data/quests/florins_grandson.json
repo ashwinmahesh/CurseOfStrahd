@@ -1,0 +1,33 @@
+{
+  "id": "florins_grandson",
+  "name": "Florin's Grandson",
+  "summary": "Old Florin prays every day that his grandson, who went up the castle road for work two winters ago, doesn't come back.",
+  "giver": "barovia_worshipper_mihai",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Old Florin's grandson Tudorel went up the castle road to ask for work two winters ago and never came back. Florin says he prays the boy doesn't. A coin comes by the carter every month, with no name on it.",
+      "objectives": [
+        "Find out what became of Tudorel"
+      ],
+      "hint": "Look for Tudorel among the servants of Vallaki: Lady Wachter's household at Wachterhaus keeps footmen in grey-and-black livery.",
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "Tudorel is alive: a footman in Lady Wachter's house in Vallaki, in the count's livery, warm and fed and ashamed. He sends his grandfather a coin a month by the carter. He asked us to tell Florin whatever will be kindest.",
+      "objectives": [
+        "Decide what to tell Old Florin"
+      ],
+      "hint": "Go back to Old Florin, praying in the church in the Village of Barovia, and tell him what became of his grandson.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "We told Old Florin what we chose to tell him about Tudorel. He took it the way he took it, and the coin still comes every month.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

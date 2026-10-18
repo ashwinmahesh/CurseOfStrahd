@@ -134,6 +134,17 @@ hunters come up the trail of oats; spotting it (Survival DC 12) catches them una
   level 3. The sharp autopilot wins 5 of 8 in each (2026-10-13).
 - Reward: Agafia's grandmother's bag, a Bag of Tricks (Tan) (uncommon), whose fuzzy balls get up as beasts that fight
   for the party until dawn; and Bildrath decides it's charity.
+- **Reshaped (NPC plan batch 1, 2026-10-18):** the quest can be played by day as a small detective story. "Your stock"
+  now offers the back room (Bildrath's storeroom): three clues, each a roll (Investigation DC 10 for the husks leading
+  to the back door, Perception DC 11 for the enormous boot with the dragging left heel and the key hung high, Insight
+  DC 12 for Bildrath talking about the thief like a relative; two clues move the journal to the new `suspect` stage),
+  then "Name the thief": Arik, the village goat or the raven on the roof each cost ten minutes (and the Arik guess a
+  little approval) and are spent; after two wrong guesses Bildrath names Parriwimple himself, and naming him needs no
+  roll at all. Parriwimple confesses in the back room (Persuasion DC 10 asks Bildrath to go easy; failing it or saying
+  nothing only docks his pay) and the hollow opens by day. At Agafia's door, once the trail is read (Survival DC 12),
+  the fight can be avoided by laying a false trail to the river (Survival or Stealth DC 12): no fight (`xp fight`
+  pays it), the same Bag of Tricks, a different thanks. A failed false trail, a missed trail or standing in the door
+  is the fight, as before. The night meeting with Parriwimple on the north path is unchanged.
 
 ### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
 
@@ -185,6 +196,29 @@ wolves come out of the fog after her.
   8); level 2 and up two dire wolves and four wolves.
 - Snowdrop goes down to Petra's kitchen (with `ilarion_home`, to her father by the fire), or back into the mists. A
   Potion of Animal Friendship (uncommon) and 25 gp either way.
+- **Reshaped (NPC plan batch 1, 2026-10-18):** reading the bell now starts a race against the dusk instead of the
+  fight: three beats (stragglers up the slope: Animal Handling or Athletics DC 10; a gap in the wall: Survival or
+  Investigation DC 10; the cracked bell: Sleight of Hand DC 10 with Erno's scarf, or Animal Handling DC 12), each also
+  open with no roll at all. Every miss or shrug loses a goat to the fog (`goat_strays`). Two lost and the mist sends
+  the wolves, the fight as before; fewer and the flock is in, the white finds nothing to push at, no fight (`xp fight`
+  pays it), and the choice for Snowdrop is the same. One goat lost is Erno's quiet line about the fog giving back
+  what it likes.
+
+### The Fourth Rumour (`the_fourth_rumour`, narrative/village_of_barovia/the_fourth_rumour.dialogue; NPC plan batch 1, level 1 on)
+
+Vasile and Petre, who trade the same three rumours outside the Blood of the Vine "in turns", have never thought a
+rumour could be made; they think it happens to you. The party offers them a fourth: the Baron of Vallaki is bald under
+his wig, the burgomaster's old dog Lupu can count, or Bildrath gives discounts on Tuesdays. Sell it with a straight
+face (Deception DC 11) or as a story (Performance DC 11), or just say it plainly (half-believed, no roll). A rumour
+that isn't believed gets Vasile's own instead (the well has a bottom) and the party can try again. **Twist:** it
+comes back wrong. Arik says it in one word (Wig. Counting dog. Tuesday.) and Goodwife Petra has it garbled (two
+wigs, one to keep the other warm; the hound counts the dead in the churchyard; Tuesday only for those christened on one).
+Back at Vasile and Petre the quest is done.
+
+- No fight. Reward: 10 gp, Heroic Inspiration for the party, and a nod from Kip and Wren.
+- The Tuesday rumour makes Bildrath honour it once, out of spite (`bildrath_discount`: the same 10% as haggling him
+  down, for good), unless the party already has it.
+- Later batches let the rumour come back from other regions.
 
 ## The Tser Pool camp (level 4)
 
@@ -210,6 +244,11 @@ bolts home and the carriage comes early; failed or left alone, she is black by m
   below 4 the lead horse at 50 HP with specters and zombies. An attention mark (`black_carriage`, +1).
 - Back at the camp Radu pays either way (`home` if she lived, given to Radu or Luminita; `mourned` if not): 120 gp of
   the castle's gold and a Rod of the Pact Keeper, +1 (uncommon).
+- **A decoy (NPC plan batch 2, 2026-10-18):** Radu can lend the troupe's Winter Horse (a cloth-and-straw play horse),
+  and with lamp soot it can stand in the dark in Steaua's place. At the milestone the swap is offered before any
+  calming is tried (a failed one-try calm loses her; the swap never does): Sleight of Hand DC 13, or Stealth DC 13 from
+  the ditch. Clean, the carriage takes the straw horse and goes (`carriage_fooled`, no fight, `xp fight` pays it) and
+  Steaua is home, `saved`; fumbled, or switched in plain sight, it is the escort fight with Steaua already away.
 
 ### Called by Name (`called_by_name`, narrative/svalich_road/called_by_name.dialogue; batch 2)
 
@@ -228,6 +267,11 @@ decides whether someone is lured toward the edge, which starts the fight with th
   leave the autopilot with no target). tests/integration/test_scaled_fights_barovia.gd holds all six at 4 to 6.
 - Then Nelu comes up (Athletics DC 13 on a rope, Misty Step or Spider Climb), and Tobar pays at the camp: 100 gp and an
   Efficient Quiver (uncommon). Nelu stays by the fire afterwards (`tser_nelu`).
+- **By day (NPC plan batch 2, 2026-10-18):** the same ledge is there in daylight, with no lights. From the lip a party
+  member sees the boy, who hails them (he tells them the voices only come at dark); Athletics DC 13 on a rope, Survival
+  DC 12 for the old goat path, Misty Step or Spider Climb all get him up, and the wisps are never met (`xp fight` pays
+  the fight). A failed climb costs half an hour and he says to try again; "come back after dark" is the night fight as
+  before. Once he's out, the falls are quiet at night.
 
 ### The Dancing Bear (`the_dancing_bear`, narrative/svalich_road/the_dancing_bear.dialogue; batch 7, level 3)
 
@@ -262,6 +306,37 @@ unawares).
   6, the reading's reward (2026-10-13).
 - Tsura goes back to the camp to tell her mother herself, or on to Krezk; Iancu's line says which. She gives the party
   the wedding rings, Boon Companion's Bands (uncommon), and 40 gp.
+
+### Stanimir's Fire (`stanimirs_fire`, narrative/svalich_road/stanimirs_fire.dialogue; NPC plan batch 2)
+
+Once Stanimir has told his story, "We have a tale of our own" takes up his bet: a cask of plum wine against the claim that
+nobody tells a better tale at his fire. Three rounds: a tale (Performance or Deception DC 12, or told plainly), a true
+tale of the valley (History or Nature DC 12, or plainly), then the camp bangs its cups. Two good rounds win; an
+entertainer in the party (Wren) works the crowd for one more. Lose and the forfeit is a dance on Lavinia's plank stage
+in front of the camp. **Twist:** both prizes end the quest; the cask comes either way (Stanimir's Plum Wine, a small
+cask, consumable).
+
+- No fight, nothing locked: the plain tellings need no roll.
+
+### Radu's Unsellable Horse (`radus_unsellable_horse`, narrative/svalich_road/radus_horse.dialogue; NPC plan batch 2)
+
+Radu can't sell Dinte ("tooth"), a handsome dun gelding who bites everyone, and offers 15 gp to whoever finds him a home
+(the pen prop `tser_dinte`; Animal Handling DC 12, a ranger or a druid is let near; a bite only costs a sleeve). The
+party leads him out on a rope (no roll) to a buyer on the road: Costica, who has no horse and 3 gp and whom Dinte
+doesn't bite, or Ambrose Fennimore, who pays 25 gp and is bitten at once. Radu pays when told.
+
+- No fight. Reward: the buyer's gold and Radu's 15 gp, and Radu's version of the story, in which the party is very tall.
+
+### Fennimore's Guide: The Tser Pool (`fennimores_guide`, narrative/svalich_road/fennimore.dialogue; NPC plan batch 2)
+
+Ambrose Fennimore (new NPC, at the Old Svalich crossroads signpost by day), a travel writer eleven years into the
+valley and nine hundred pages into a guidebook, has rated the Tser Pool camp three stars and its plum stew excellent,
+and isn't sure the stew is plum. Old Dorina (Persuasion DC 12 gently, or just tasting it, no roll) admits the pot has
+not been emptied in sixty years and her wedding spoon is at the bottom. Fennimore rewrites the entry. His other chapters
+come with the later regions.
+
+- No fight. Reward: 10 gp. Costica, the worst highwayman in Barovia, shares the crossroads (new NPC, svalich_road/
+  costica.dialogue; no quest of his own), and the camp has new flavour: Dorina's pot, Zora's cord of knots, Petru's blades.
 
 ## Vallaki (level 5)
 
@@ -319,6 +394,45 @@ leave the list blank to make the rider turn on him.
 - Daciana comes running after the fight: the satchel gives 250 gp of castle silver and an Arcane Grimoire, +2 (rare),
   and the lists go to Lucian and Urwin (the stocks empty), to the Baron (+100 gp, Dobre in his own stocks) or into the
   fire. Attention mark `lists` (+1).
+- **A forged list and a hearing (NPC plan batch 3, 2026-10-18):** at the lamp the party can rewrite the list with names
+  that don't exist (Horatiu Cornel, Mirela Nobody, Zamfir the Glad), wait for morning, and watch where it turns up: the
+  Baron's clerk has a warrant for a man who isn't there (Persuasion DC 12), Lady Wachter's ladies have left a basket and a
+  card at an empty stock (Investigation DC 12), and at dusk the castle's rider pays Dobre for a name that doesn't exist
+  (Stealth DC 12). Two proofs of three win the hearing before the Baron: Dobre goes into his own stocks (`dobre_arrested`;
+  no fight, `xp fight` pays it, and no mark on Strahd's attention), and Daciana comes next day for the same satchel, grimoire
+  and choice of what becomes of the lists. Fewer proofs, or none, and Dobre laughs it off: the street fight, as before.
+
+### Florin's Grandson (`florins_grandson`, narrative/vallaki/florins_grandson.dialogue; NPC plan batch 3)
+
+Old Florin prays in the Village of Barovia's church that his grandson Tudorel, who went up the castle road two winters ago,
+doesn't come back. He told the boy the castle pays well (Insight DC 12, or just ask). **Twist:** Tudorel is alive, a
+footman in Lady Wachter's house in Vallaki (new NPC, in her parlour), warm, fed and ashamed, and sends his grandfather one
+unsigned coin a month by Old Kolya's cart. Back at the church the party chooses what to tell Florin: the whole truth, that
+the boy is dead and at peace, or that he is well and warm without whose livery. Each takes it differently (the truth and
+the half-truth get the monthly coin that smells of good tea; the lie gets a candle).
+
+- No fight, no rolls needed. Approval splits: Godrick, Thistle and Liriel for the truth, Kip and Wren for the lie, Ratatouille
+  and Liriel for the half.
+
+### Emanoil Wants to Be Bitten (`emanoil_wants_to_be_bitten`, narrative/vallaki/emanoil.dialogue; NPC plan batch 3)
+
+Emanoil, a Vallaki clerk in black he can't afford, writes long bad poems to the castle and sleeps in a coffin from Henrik's
+because he wants to be chosen and bitten (new NPC, outside Henrik's coffin shop by day). Three ways to end it: help him
+write his letter to the castle (the carriage never stops for the post), read his poems and see they are about being unseen
+(Insight DC 12) and send him to read them at the Blue Water Inn, or tell him what the castle's court is really like. He
+sleeps with a candle burning in the coffin; he wants to be chosen, not bitten. Next time he has written an ode to the party.
+
+- No fight. Reward: Heroic Inspiration for the party.
+
+### The Sun-Cake (`the_sun_cake`, narrative/vallaki/the_sun_cake.dialogue; NPC plan batch 3)
+
+Leontina, the Baron's cook (new NPC, in the burgomaster's mansion), has made four hundred and thirteen round suns for his
+festivals and wants to make one that isn't. She needs eggs (Goodwife Marta, 1 gp or Persuasion DC 11), honey (Old Paraschiva
+at the Vistani camp, 2 gp or Persuasion DC 11) and saffron (Vadoma, 5 gp or 3 with Persuasion DC 12). Baking: Ratatouille takes
+over if he is along; otherwise Dexterity or Wisdom DC 12; or leave it to her. A good cake is a triumph (60 gp, Heroic
+Inspiration); a collapsed one the Baron calls the Liquid Dawn and orders four hundred and fourteen of (20 gp).
+
+- No fight. A gold piece buys each ingredient, so no roll stands in the way.
 
 ### The Hunters at the Inn (`hunters_at_the_inn`, narrative/vallaki/hunters_at_the_inn.dialogue; batch 2, the book's pair)
 
@@ -475,6 +589,21 @@ battle come out of the courtyard for the only living things on the ridge.
   eight men-at-arms; level 7 one knight and five; below 7 the Warden at 90 HP and four.
 - Godfrey writes Ioan's name right and Cosmin's under it, and gives the party Ioan's shield, left at the gate the night
   he rode: an Arrow-Catching Shield (rare), and 150 gp from the Order's chest. Not offered once the Order rests.
+- NPC plan batch 5, without a fight: once Godfrey has remembered (stage `truth`), Cosmin can ask the Order's table to hear
+  Ioan's case at the graves, once. Evidence is worth a vote each: the words on the back of the headstone, the dragon's last
+  words, Godfrey's own account (always open), History DC 13 (the Order's rolls) and Persuasion DC 14. Three votes carry it,
+  with the same reward as the vigil; short of that the table isn't moved and the vigil is still open. Sir Ottokar the Late
+  rides in as the vote is called.
+
+### Sir Ottokar the Late (`argynvostholt/ottokar`; NPC plan batch 5, comedy)
+
+A dead knight (new NPC) who was late to the Order's last battle and has been late to everything since. He stands in the
+grounds after any fight at Argynvostholt (the courtyard phantoms, the mausoleum watch, the lamp, the duel, the beacon, the
+vigil) and asks whether he missed it, with three different apologies. He wants to be on time once. **Secret** (Insight DC 12
+after he has said so): he was late because he stopped to help a farmer's wife with her cart, and would again. He goes when the
+Order rests. No quest, no fight. The Phantom Warden (a reason for his door, then, on Insight, the herald he let in under a flag
+of truce) and the Phantom Watchman at Tsolenka (who nods at any watchword, because he forgot it two centuries ago) have a
+want and a secret in the same way.
 
 ### The Silver Hoard (`the_silver_hoard`, narrative/argynvostholt/the_silver_hoard.dialogue; batch 7, level 9)
 
@@ -534,6 +663,11 @@ smoke last time. The Baron, Izek, the festival and Ireena are only read (`vallak
   toughs, and something in the reeds (a giant constrictor snake). The sharp autopilot wins 5 of 8 at level 5.
 - The castaways keep the boatmen's boat hidden and stay, or row home to Vallaki in daylight, singing. Either way Ostap
   gives the party the shackles the boatmen brought: Dimensional Shackles (rare) and 80 gp.
+- NPC plan batch 4, without a fight: Ostap offers the vote (Persuasion DC 12 argues either side, or the castaways decide).
+  To go home, the party rows them across in three crossings with a roll each (Athletics on the oars, Stealth to stay dark,
+  Acrobatics to bail); two crossings seen and the boatmen land on the shingle as above. To stay, the party hides the
+  island (Stealth or Survival DC 12); a missed roll and the boat lands. Either unseen ending is the same reward, and pays
+  the fight's XP once.
 
 ## The Gates of Barovia (levels 6 and up)
 
@@ -584,6 +718,11 @@ DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins a
   `keepers` (unnamed: Ilinca takes the girl with half-iron teeth) or `given` (the basket; the quest fails and the
   companions disapprove).
 - Granny's basket: 300 gp and a Robe of Eyes (rare). The basket alone pays the 300 gp.
+- NPC plan batch 4, without a fight: in her offer, "Hags bargain" plays Granny at riddles. She asks three (a river, an
+  echo, and the name she ate); the party answers each from a short list or works it out (Investigation DC 12). Two right win:
+  she keeps her word, leaves the basket and goes back to the deep wood, and the girl goes home or to the Keepers as the name
+  decides. The third riddle is won by saying Zamfira, which only a party that learned the name can. Two wrong and it is the
+  old fight, with the old options still there.
 
 ## The Wizard of Wines (level 6)
 
@@ -729,6 +868,33 @@ are only read (`wolf_pack_leader` for one line).
 - Then Yanko comes into the light. Talked down (Persuasion DC 13) he's a boy again, and goes with Lark to Great-uncle
   Pavel in Krezk if Mother's Ninth Improvement found him; otherwise he lies down at her feet as a wolf. Lark gives the
   party the Abbot's Wand of Slumber (rare), and Yanko a traveller's old purse, 120 gp. Clovin's news says how it ended.
+- NPC plan batch 4, by day: the tracks in the mud (prop `waystone_tracks`, Survival DC 12, retried freely) lead to
+  Yanko's lair under a fallen pine and show that Lark comes to the stone at noon, during the Abbot's prayers. Lark
+  (day placement once the tracks are followed) can sing him out in daylight: Persuasion DC 12 steadies her, Stealth DC 13
+  keeps the pack off. A missed Stealth roll is the old fight at the stone; a missed Persuasion roll only shakes the song.
+  The reward is the same. After a won fight Lark waits by day as well as by night.
+
+### Dumitru's Visitor (`dumitrus_visitor`, narrative/krezk/dumitrus_visitor.dialogue; NPC plan batch 4)
+
+Dumitru, the boy who waits inside Krezk's gate for visitors who never come (talk to him: "Who are you waiting for?"),
+writes weekly letters to his Uncle Marius in Vallaki, who died long ago, and keeps them in a tin. He wants one real
+visitor. The party can come as Marius's old friends (Deception DC 12; he sees through it kindly, and the quest goes on),
+or ask Ambrose Fennimore at the Old Svalich crossroads to walk up the road. Fennimore then stands inside Krezk's gate until
+the visit, and leaves the tin a rating (four stars). Nothing is behind a roll that has no plain way round.
+
+- No fight. Reward: 20 gp (cousins) or 40 gp (Fennimore), companions' approval.
+
+### Old Silviu's Wedding Cask (`silvius_wedding_cask`, narrative/wizard_of_wines/silvius_cask.dialogue; NPC plan batch 4)
+
+Once the winery is the family's again, Old Silviu the cooper (at his casks by day) wants the last cask of the year Elvir
+was born carried to Vallaki for his daughter Dana's wedding at noon in the square. The road is bad, and there are three
+precautions: padding the cask against the ruts (Athletics DC 12, or 3 gp for good straw and rope), a wolf that has
+learned carts mean food (Animal Handling DC 12, or 2 gp for scraps), and thirsty hands (Persuasion DC 12, or 1 gp for
+Silviu's lead and tallow seal). How many held decides how the cask arrives: all three is a triumph (60 gp), one or two a
+little shaken (40 gp), none vinegar (25 gp). Dana (new NPC, in Vallaki's square while the cask is on the road) takes it and
+Master Costel makes a speech about it, whatever it is. The wedding happens regardless.
+
+- No fight. Every precaution has a plain coin way, and skipping them all only turns the wine to vinegar.
 
 ## The Tsolenka Pass (level 10)
 
@@ -1017,6 +1183,16 @@ drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the to
 
 ## The Amber Temple (level 10)
 
+### Exethanter's Notes (`exethanters_notes`, narrative/amber_temple/exethanters_notes.dialogue; NPC plan batch 5)
+
+Exethanter, who forgets nearly everything, has five notes unpinned and out of order, and cannot recall what he was doing this
+morning. Ask him (option in his menu): the party puts the scraps in order, choosing each next one (a wrong choice only earns a
+mild correction and the same step again; an Investigation roll shows which was written first). The right order, read from the
+notes alone, is water, fire, leaves, waiting, pouring: he was making tea. He makes a cup for the party in the cold temple.
+
+- No fight and no roll that matters. Reward: Heroic Inspiration, companions' approval. Dialogue and data only: it touches
+  no Amber Temple map.
+
 ### The Amber Debt (`the_amber_debt`, narrative/amber_temple/the_amber_debt.dialogue; batch 5, an owner-asked boss)
 
 Exethanter, from level 10: under all the notes pinned to his sleeve is an old one in his own hand, "DO NOT GO BELOW THE
@@ -1174,4 +1350,30 @@ and a kind interject) and narrator/barovia_high_pasture.dialogue. Batch 10,
 Van Richten's Tower and Lake Baratok: the_drowned_library.dialogue in full (new speaker Xaver; also Mordenkainen,
 the Narrator and a blunt interject) and narrator/drowned_library.dialogue. Batch 10,
 Mount Ghakis and Yester Hill: the_mountains_heart.dialogue in full (new speaker the Mountain Captive; also Freydis,
-the Narrator and a blunt interject) and narrator/ghakis_quarry.dialogue.
+the Narrator and a blunt interject) and narrator/ghakis_quarry.dialogue. NPC plan batch 1 (2026-10-18), the Village of
+Barovia: the_fourth_rumour.dialogue in full (Vasile, Petre, Arik, Goodwife Petra, Bildrath); in townsfolk.dialogue the
+gossip's nothing-new nodes and the wrong rumour, petra_correction, Petre's coat, Anca's letters and secret, and the
+goat in the shop, the church and at the gate; indoor_folk.dialogue's Goodwife Viorica (candle, secret) and Goodwife
+Sorina; customers.dialogue's Iulian and Lucia; arik.dialogue's three nothings; bildrath.dialogue's ledger;
+parriwimple.dialogue's book; vistani.dialogue's nicknames; and the new back-room, confession, false-trail and
+getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 5 (2026-10-18), Argynvostholt, the Tsolenka watch and the Amber Temple:
+ottokar.dialogue and exethanters_notes.dialogue in full (new speaker Sir Ottokar the Late; also Exethanter, Vladimir Horngaard,
+Sir Godfrey Gwilym, Cosmin, the Phantom Warden, the Phantom Watchman and the Narrator); the hearing nodes of the_squire.dialogue;
+the Warden's reasons in mausoleum.dialogue and the Watchman's watchword in watch.dialogue. NPC plan batch 4 (2026-10-18), Krezk and
+the lake, the winery and the den: silvius_cask.dialogue, sprig.dialogue and vadu_children.dialogue in full (new speakers Dana
+and the rescued children Ioana, Zamfir and Codruta; also Old Silviu, Master Costel, Kip and the Narrator); the winery
+hands in hands.dialogue; the riddle nodes of the_fourth_sister.dialogue (Granny Ash and Mouse); and, in Krezk,
+profira.dialogue and dumitrus_visitor.dialogue in full (new speaker Madam Profira; also Dumitru, Fennimore, the
+Krezk Watchman and the companions' interjects); in gate.dialogue the Watchman's refusals, his wish to say yes and the
+burgomaster's list; in townsfolk.dialogue Stefan, Goodwife Rodica, Goodwife Sanda and Cezar; in pool_folk.dialogue Old
+Simion and Widow Catrina; Ilarie's secret in trail_hunter.dialogue; the Belviews at the gate and the well; the by-day
+nodes of the_waystone.dialogue; and the vote, crossings and hiding nodes of the_barons_island.dialogue. NPC plan batch 3 (2026-10-18), Vallaki: florins_grandson.dialogue, emanoil.dialogue and the_sun_cake.dialogue in full
+(new speakers Emanoil, Leontina and Tudorel; also Old Florin, Goodwife Marta, Old Paraschiva, Vadoma, the Baron and the
+Narrator); the forged-list, proof and hearing nodes in ribbons.dialogue; the Baron's decrees; Lydia's key; the Town Guard's
+inspection of cheer; Anton, Old Smaranda, Gheorghe, Old Kolya, Master Costel, the Festival Herald, the Lockup Warden,
+Gunther, Vadoma and Old Varvara; and Piccolo's admission in blinsky.dialogue. The Count's Portraitist (level 9) was not
+reshaped: its boss fight is tuned to the sharp party and was left alone for the later batches. NPC plan batch 2 (2026-10-18),
+the Tser Pool camp and the crossroads: stanimirs_fire.dialogue, radus_horse.dialogue, fennimore.dialogue and
+costica.dialogue in full (new speakers Costica and Ambrose Fennimore); in called_by_name.dialogue the by-day nodes; in
+grey_mare.dialogue the decoy nodes; in tser_camp.dialogue Dorina's pot, Zora's cord and Petru's blades; and one new
+option in stanimir.dialogue.

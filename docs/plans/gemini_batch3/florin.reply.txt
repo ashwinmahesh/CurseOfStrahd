@@ -1,0 +1,54 @@
+== florin_ask
+Old Florin [weary]: Tudorel? He went up the castle road two winters back to ask the steward for work.
+Old Florin: The roof was leaking through onto the straw, and a boy of sixteen eats like a horse.
+Old Florin: People think I come here every morning to pray that he walks back through that door.
+Old Florin [sad]: I know what walks down from that hill, so I pray he stays wherever he fell.
+Narrator: He clasps his hands together on the pew in front of him, but you can still see them shaking.
+
+== florin_secret
+Old Florin [weary]: We had boiled turnip peelings for three days running, and my knees had gone too stiff for the ditching.
+Old Florin: I told him the castle pays in silver and never lacks for firewood.
+Old Florin [sad]: I have not said that aloud to a living soul, not even the priest.
+Old Florin: Do not waste your breath forgiving me for it, because I will not forgive myself.
+
+== tudorel_meet
+Narrator: A young footman in good grey-and-black wool pours pale tea into thin porcelain cups without spilling a drop.
+Tudorel: Dry your boots by the fender if you like; her ladyship does not mind the steam.
+Narrator: He catches you looking at his face, and his hand pauses on the silver pot for just a breath.
+Tudorel [weary]: I know what you are thinking, and you may think it, only keep your voices down in the hall.
+Tudorel: I have been warm for two winters here, and there is mutton in the kitchen every Tuesday.
+Narrator: Fixed neatly to the high collar of his coat is a small silver crest, the raven and crown of the castle.
+
+== tudorel_coin
+Narrator: When you mention the old man in the village church, the boy goes quite still.
+Tudorel [sad]: I give Old Kolya a silver piece every month when he comes up with the wicker, wrapped in a bit of tea-paper with no name on it.
+Tudorel: If my grandfather knew whose coat I was wearing to earn it, he would throw it in the well.
+Tudorel [afraid]: Please do not tell him where you saw me, or whose bread I am eating.
+Tudorel: Tell him I died clean in the ditch if you have to, or whatever you think will let him sleep.
+
+== florin_truth
+Narrator: Old Florin sits very straight on the narrow bench for a long moment after you finish speaking.
+Old Florin [weary]: Well. Better a grandson in a count's coat than a grandson in a count's cellar, I suppose.
+Old Florin [angry]: The young fool always did care more for a warm belly than a clean name.
+Old Florin [sad]: And God help me, I am glad he has the mutton.
+Old Florin: Wait a moment before you go back down the road.
+Old Florin [smile]: Do any of you happen to have a stub of pencil I could borrow?
+
+== florin_lie
+Narrator: Old Florin takes the news like a blow he has been bracing his shoulders against for two years.
+Old Florin [sad]: Thank you for coming all this way to tell me plainly.
+Old Florin: In my heart I knew it before the first snow melted, though a man still looks at the road.
+Old Florin [weary]: It is a great courtesy to know he is at peace and out of the cold.
+Old Florin: Would you mind lighting one of the tallow candles by the door on your way out?
+
+== florin_half
+Narrator: Old Florin looks at your faces for a long, quiet time without blinking.
+Old Florin [weary]: Warm, fed, and in honest service, and you did not think to ask the master's name.
+Old Florin: That is either a very good lie or a very careful truth.
+Old Florin [sad]: At my age, I do not think I need to pry into which one you brought me.
+Old Florin: Thank you for the kindness, travellers, and mind the ruts on the road back.
+
+== florin_after
+Narrator: Old Florin sits near the brazier, turning a single silver coin over and over between his crooked fingers.
+Old Florin [weary]: Old Kolya left a twist of paper on my windowsill this morning before the mist lifted.
+Old Florin [smile]: Strange thing about castle silver: the paper it comes in always smells of good tea.

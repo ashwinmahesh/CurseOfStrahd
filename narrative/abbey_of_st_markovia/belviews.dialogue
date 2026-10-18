@@ -5,6 +5,8 @@
 ~ courtyard
 Narrator: A Belview crouches by the well, picking at the ice on the rope. Her face is a girl's, mostly, with a goat's slotted eyes, and when she speaks it's in your own voice, a beat behind you.
 Belview: Hello. Hello. Who are you? Who are you? That's what you were going to say. I heard you think it.
+Narrator: She repeats the tail end of everything you say, always a heartbeat behind.
+Narrator: It puts a doubtful little turn on your own words, like an echo that isn't sure it agrees with you.
 * Who are you? -> courtyard_who
 * What does the Abbot do to you? -> courtyard_abbot
 * Goodbye. -> END

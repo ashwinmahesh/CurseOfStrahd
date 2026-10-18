@@ -1,0 +1,63 @@
+== decree_1
+Baron [smile]: Hear ye! By order of the Burgomaster, no citizen shall be seen to wipe their eyes in the public square.
+Baron: Should the morning wind cause your eyes to water, you are required by law to laugh about it openly!
+
+== decree_2
+Baron [smile]: Notice to all households! From this hour forth, every dog in Vallaki shall wear a yellow festival ribbon.
+Baron: A dog without a ribbon is a dog with an opinion, and we have no room for either in a happy town!
+
+== decree_3
+Baron [smile]: Hear ye! It is hereby a fineable misdemeanour to utter the word 'wolves' in a discouraging or negative tone.
+Baron: If wolves must be mentioned at all, let them be spoken of in a spirit of neighbourly optimism!
+
+== decree_4
+Baron [smile]: By municipal proclamation, the sky over Vallaki shall henceforth be considered a bright and cheering blue!
+Baron: Anyone who disagrees with this observation is welcome to take the matter up with the sky from the stocks.
+
+== decree_5
+Baron [smile]: Citizens, rejoice! All clocks and watches within the walls are to be set immediately to 'festive'.
+Baron: The town clock in the square has already complied, and I expect no less from the rest of you!
+
+== lydia_key
+Lydia Petrovna [smile]: Oh, this little thing? I keep it on a yellow ribbon so it looks like trim, dear, right against the collar.
+Lydia Petrovna: It opens the stocks in the square. The wood gets terribly damp after midnight, and it ruins a good coat.
+Lydia Petrovna [sly]: I let them out once the watch turns and have them locked back in by dawn. Vargas never counts the same man twice.
+Lydia Petrovna [afraid]: Do keep it to yourselves, though. He means so well, and it would break his heart to know they were comfortable.
+
+== guard_stop
+Vallaki Town Guard: Halt there, friends, and mind the puddle. Routine inspection of public morale, by order of the Baron.
+Vallaki Town Guard: If the lot of you could just demonstrate a bit of cheerfulness before you pass, we can all get out of the rain.
+Vallaki Town Guard [weary]: Not you at the back. That smile is structurally unconvincing. You're only using the bottom half of your face.
+Vallaki Town Guard: That'll be a one-gold fine for insufficient rejoicing, or you can sing me a lively song right here.
+
+== guard_song
+Vallaki Town Guard: Well now. Wait a moment. My grandmother used to sing the second verse of that when the apples came in.
+Vallaki Town Guard [sad]: Go on, then, before I have to ask where you learned it. And keep your chins up past the square.
+Narrator: He taps his spear twice against his boot and hums the tune under his breath for the rest of his shift.
+
+== guard_fine
+Vallaki Town Guard: One gold piece, duly noted. Mind the ink on your receipt; the damp gets into the paper something awful.
+Vallaki Town Guard [smile]: Move along now, and thank you. It has been a genuine pleasure taking your money so cheerfully.
+
+== anton_stocks
+Anton the Cooper [weary]: Good day to you. I've been locked in since the six o'clock bell, and I have never been so well in my life.
+Anton the Cooper: Out there it's ribbons and teeth from dawn till dark, until your jaw aches worse than your back.
+Anton the Cooper [smile]: In the stocks, nobody asks you to smile. You're already being punished, so your face is your own business.
+Anton the Cooper: Besides, my wife brings cabbage soup at noon and feeds it to me with a wooden spoon. Could be worse.
+
+== smaranda_parsley
+Old Smaranda: Does the wolfsbane work? It works as well as anything else in Barovia, dear, which is to say you're still breathing.
+Old Smaranda: Go on, take a good sniff of the bundle. Don't be shy; I don't charge for the smell.
+Old Smaranda [sly]: Parsley? Listen to the scholar. That is genuine mountain wolfsbane that has simply been through a very hard winter.
+Old Smaranda: Put it on the sill and shut the latch tight. It's the latch that does most of the work anyway.
+
+== smaranda_honest
+Old Smaranda [weary]: Keep your voice down, then. Half of it is parsley, yes, because real wolfsbane grows where the wolves are.
+Old Smaranda [sly]: It still keeps the beasts off the porch, mind. They smell a window full of soup greens and get as confused as the customers.
+Old Smaranda: Here, take the bundle from the bottom of the basket. That's the true root, and I'll charge you the usual price.
+
+== varvara_milivoj
+Old Varvara [sad]: I kneel here every morning and ask St. Andral for his bones to come home, though the stones are hard on the knees.
+Old Varvara: I knew Milivoj's mother when she was a girl, you know. Seven mouths in that cottage, and never enough bread.
+Old Varvara [afraid]: Now the relics are gone from under the altar, and the boy is walking the yard in a pair of new leather boots.
+Old Varvara [sad]: A new iron spade, too, and he won't meet my eyes. If you speak to him, be gentle; he's only a frightened boy.
