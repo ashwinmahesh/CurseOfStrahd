@@ -2218,9 +2218,9 @@
       "released": true
     },
     "sarkhaza": {
-      "voice_id": "OI7sy82UrODIkirrlGKB",
+      "voice_id": "kJyEDCfZflSfWHIddyU3",
       "name": "Barovia Sarkhaza",
-      "description": "An immense, ancient red dragoness, chained and starved for forty years, speaking English in a deep, smoky, resonant female voice with a crackle of fire in the throat. Regal, sly and amused, every courtesy a hunger; slow, purring menace that can rise to a roar.",
+      "description": "Sarkhaza, an immense ancient red dragoness: a thunderous, booming, imposing, sinister voice, regal and predatory, brisk and fluid. Designed 2026-10-18 (Ashwin picked booming voice E).",
       "settings": {},
       "model": "eleven_v3",
       "generated_voice_id": "OI7sy82UrODIkirrlGKB",
