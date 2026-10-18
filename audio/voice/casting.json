@@ -2556,12 +2556,12 @@
     },
     "castle_ghost_servant_3": {
       "settings": {},
-      "description": "Anghel Daskal: the count's thin, precise, stiff ghost secretary. Library voice picked 2026-10-15.",
-      "voice_id": "lQqvnBXwXksgKqT9o1di",
-      "name": "Library voice: Daniel Calder - Measured & Relaxed",
-      "library": true,
+      "description": "Anghel Daskal, the count's ghost secretary: a thin, reedy, hollow, ghostly male voice with precise clerkly diction, eerie and otherworldly; a strong Eastern European (Romanian) accent. Designed 2026-10-16 (Ashwin's pick, voice C).",
+      "voice_id": "43egffjPBeHXbYSNUi79",
+      "name": "Barovia Anghel",
       "model": "eleven_v3",
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "castle_ghost_servant_4": {
       "settings": {},

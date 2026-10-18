@@ -6,7 +6,7 @@
   "when": "flag.strahd_destroyed and flag.ireena_pool_choice == promised",
   "narration": "endings/ireena_at_peace:start",
   "tone": "dawn",
-  "music": "ending",
+  "music": "sorrow",
   "epilogue_from": "strahd_destroyed",
   "epilogue": [
     {

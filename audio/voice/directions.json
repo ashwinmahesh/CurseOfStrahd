@@ -666,15 +666,15 @@
   "f7743e9a5e859857": "[warm, hospitable, pleased]"
  },
  "castle_ghost_servant_3": {
-  "122ae60f6e093f9a": "[stiff, pained, precise]",
-  "13426a44fc31809e": "[hollow, quiet, haunted]",
-  "1b5d365cc40680e4": "[dry, resentful, thin]",
-  "37e60aad9dcb9176": "[flat, grim, precise]",
-  "6de92d9f2f2e58dd": "[quiet, formal, grateful]",
-  "78aa333ee4692790": "[formal, proud, thin]",
-  "b0aa31ae5c376767": "[thin, dry, wry]",
-  "b618475449572855": "[precise, dry, vague]",
-  "fd9e667551acc97c": "[stiff, formal, curt]"
+  "122ae60f6e093f9a": "[ghostly, pained, precise]",
+  "13426a44fc31809e": "[hollow, haunted, eerie]",
+  "1b5d365cc40680e4": "[ghostly, resentful, thin]",
+  "37e60aad9dcb9176": "[flat, eerie, precise]",
+  "6de92d9f2f2e58dd": "[hollow, formal, grateful]",
+  "78aa333ee4692790": "[ghostly, formal, thin]",
+  "b0aa31ae5c376767": "[eerie, dry, wry]",
+  "b618475449572855": "[ghostly, precise, vague]",
+  "fd9e667551acc97c": "[cold, formal, ghostly]"
  },
  "castle_ghost_servant_4": {
   "103cd78537f5e8db": "[quiet, formal, solemn]",

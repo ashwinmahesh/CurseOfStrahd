@@ -222,6 +222,55 @@ func test_every_talk_mood_is_complete() -> void:
 			assert_false(Compendium.shared().get_entry("npcs", str(npc)).is_empty(), "%s is an NPC" % npc)
 
 
+# --- A scene's own music (owner's music audit, 2026-10-17: docs/assets/music_audit.md) ----------------------------------
+
+## A cutscene can bring its own music to the conversation under it (art/audio.json "scenes"): every entry names a
+## cutscene a conversation plays and a mood with several recordings, none of them a fight's.
+func test_every_scene_mood_is_complete() -> void:
+	var scenes := Audio._data.get("scenes", {}) as Dictionary
+	assert_false(scenes.is_empty(), "some scene has its own music")
+	for id: String in scenes:
+		var m := str(scenes[id])
+		assert_false(Cutscenes.get_cutscene(id).is_empty(), "%s is a cutscene" % id)
+		assert_eq(str(Cutscenes.get_cutscene(id).get("trigger", "")), "", "%s plays in a conversation, not from a place" % id)
+		assert_true(Audio.files("music", m).size() >= 2, "%s: %s has several recordings to play" % [id, m])
+		assert_false(Audio.is_fight_mood(m), "%s: %s is not a fight's music" % [id, m])
+		assert_eq(Audio.scene_mood(id), m)
+	assert_eq(Audio.scene_mood("no_such_scene"), "", "a scene without its own leaves the music alone")
+	assert_eq(Audio.scene_mood(""), "", "nor does taking a picture away")
+
+
+## Strahd brings the dread wherever he turns up, not only in his castle: the window of a lively inn, the camp's fire, the
+## road; the moments the place's music would fight get theirs (the audit's picks).
+func test_the_scenes_the_audit_turned() -> void:
+	for id: String in ["strahd_watcher", "strahd_camp", "ireena_window", "church_gate", "black_carriage", "marina_rose"]:
+		assert_eq(Audio.scene_mood(id), "dread", id)
+	assert_eq(Audio.scene_mood("festival_standoff"), "tension", "Vallaki draws steel to no folk tune")
+	assert_eq(Audio.scene_mood("elvir_burial"), "sorrow", "a burial, not the freed vineyard's dance")
+	assert_eq(Audio.scene_mood("chapel_dawn"), "dawn", "real dawn in the castle chapel")
+	assert_eq(Audio.scene_mood("vines_feast"), "", "the feast keeps the vineyard's own")
+	assert_eq(Audio.scene_mood("burial_strahd"), "", "the village's mournful gloom suits a funeral")
+
+
+## Every ending plays music, and Dawn over Barovia isn't a funeral march (the audit).
+func test_every_ending_has_music() -> void:
+	for e in Endings.all():
+		var m := str(e.get("music", "ending"))
+		assert_true(Audio.files("music", m).size() >= 2, "%s: %s has music" % [e.get("id", ""), m])
+	assert_eq(str(Endings.get_ending("strahd_destroyed").get("music", "")), "dawn")
+
+
+## The castle's lively swing tune went (owner, 2026-10-17: it sounded like a tavern); its file and credit stay.
+func test_the_castle_has_no_tavern_swing() -> void:
+	var swing := "res://art/sourced/oga_isao/short_A New World Order!!_0.mp3"
+	for id: String in (Audio._data["music"] as Dictionary):
+		assert_false(Audio.files("music", id).has(swing), "%s plays Swing Jazz Band Gothic Dance" % id)
+	assert_true(Audio.files("music", "castle").has(
+			"res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg"),
+			"the lonely piano stays")
+	assert_true(Audio.files("music", "castle").has("res://art/sourced/oga_tausdei/stronghold.mp3"), "and Stronghold")
+
+
 ## Region themes (A1, lane 11): a region's places play its theme, but taverns and the like keep their own mood.
 func test_regions_play_their_theme() -> void:
 	var c := Compendium.shared()
