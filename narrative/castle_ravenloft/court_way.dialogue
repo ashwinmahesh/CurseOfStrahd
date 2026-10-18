@@ -7,7 +7,8 @@
 ~ grate
 if not flag.court_hearth_found
 Narrator: Red embers mutter behind the iron grate, casting pale light over a bed of grey ash. You hold your hands close, and feel no warmth at all.
--> END
+* Spend an hour dismantling the hearth, piece by sooty piece. -> dismantle
+* Leave the hearth alone. -> END
 endif
 if flag.court_hearth_out
 -> cold
@@ -17,6 +18,12 @@ Narrator: Behind the burning logs, an iron plate stands slightly ajar at the bac
 * [knows:create_or_destroy_water] Cast Create or Destroy Water on the fire. -> water
 * [if item:bucket] Throw a bucket of water on the fire. -> bucket
 * Leave the hearth alone. -> END
+
+~ dismantle
+time +60
+set court_hearth_found
+Narrator: Behind the logs, an iron plate sits loose against the back of the firebox. A thin draught of freezing air leaks around its edge, flowing the wrong way for a chimney.
+-> grate
 
 ~ cold
 Narrator: The ashes lie cold and grey in the grate, and the iron plate behind them hangs open of its own weight. A narrow, dark gap waits inside the wall.
@@ -101,7 +108,7 @@ Narrator: Both sconces hold their torches steady against the stone. Between them
 endif
 Narrator: Two iron sconces flank the north wall, one holding a sputtering torch and the other empty. Old black soot crusts the empty bracket, as if its light was only lately taken.
 * [if item:torch] Set a torch in the empty sconce. -> sconce_set
-* Leave it. -> END
+* Leave the empty iron sconce to the bare wall. -> END
 
 ~ sconce_set
 take torch 1
@@ -118,7 +125,7 @@ Narrator: The thick rope hangs slack and still against the dusty air. Far above,
 endif
 Narrator: A rope as thick as a man's wrist hangs straight down from the blackness overhead, furred with grey web. Its frayed end swings a hand's breadth above the floor.
 * Pull the hanging rope. -> pull
-* Leave it. -> END
+* Leave the hanging rope where it is. -> END
 
 ~ pull
 set court_way_bell_rung
@@ -129,8 +136,8 @@ combat court_way_spiders
 
 ~ stack
 narrate examine:spires_smokestack
-* [if flag.court_stack_climbed] Climb down the smokestack. -> down
-* Leave it. -> END
+* [if flag.court_stack_climbed] Follow the cleared path down into the smokestack. -> down
+* Step back from the smokestack and leave it be. -> END
 
 ~ down
 move castle_ravenloft_court:from_chimney

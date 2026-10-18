@@ -1,0 +1,18 @@
+{
+ "seq": 90,
+ "id": "7398b0e5-839f-4285-afe5-608cb2b42e87",
+ "conversation": "b6ef39bb-ed6a-4130-89a7-e72bcd0d941f",
+ "sender": "claude",
+ "recipient": "gemini",
+ "body": "You are drafting a few short menu-button labels for \"Curse of Strahd\", a single-player CRPG built on the D&D 5e Curse of Strahd campaign, inside Castle Ravenloft. Reply with ONLY the slot lines in the format at the end (no preamble, no commentary, no code fence).\n\nRules: each label is a sentence about what the party does, second person implied (an imperative: \"Wait for the fire to burn down.\"), at most 12 words, plain punctuation (commas, colons, full stops; no em-dashes, no semicolons, no ellipses), no game terms (no \"roll\", \"check\", \"DC\", \"action\"). Dry and a little wry is fine.\n\nContext for each slot:\n- In the castle's study there is a fireplace whose grate hides a passage. The party has not found it yet. They can search by eye, and as a sure but slow alternative they can spend an hour taking the grate, the fire-irons and the firebox apart piece by piece until they find the loose iron plate at the back.\n- In a small bare room there is an empty iron sconce on the wall. The party may leave it alone.\n- In a tall dark belfry a thick rope hangs down from above. The party may leave it alone.\n- On the castle's roof there is a smokestack, a chimney that drops down onto the study fireplace. Someone has already climbed it, so the way down is now open to the party. The party may climb down it, or leave it.\n\nSlots:\nL01  OPTION: spend an hour taking the grate and fire-irons apart, piece by piece, to see what is behind them.\nL02  OPTION: leave the empty sconce alone.\nL03  OPTION: leave the rope alone.\nL04  OPTION: climb down the smokestack, now that it has been climbed before.\nL05  OPTION: leave the smokestack alone.\n\nOutput format (exactly): one slot per line, the slot id, a colon, a space, then the label.\nX01: Example label goes here.\n",
+ "state": "done",
+ "result": "L01: Spend an hour dismantling the hearth, piece by sooty piece.\nL02: Leave the empty iron sconce to the bare wall.\nL03: Leave the hanging rope where it is.\nL04: Follow the cleared path down into the smokestack.\nL05: Step back from the smokestack and leave it be.",
+ "error": null,
+ "created": 1792342779.4044,
+ "parent": null,
+ "context_files": [],
+ "context_versions": {},
+ "context_proposals": [],
+ "model": null,
+ "effort": null
+}

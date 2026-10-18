@@ -20,13 +20,17 @@ It answered all 56 slots. Where the lane changed a line, the lane's text is what
 - T01, T02 and T04 (a conversation at the tower's door). The tower is clickable through its exit instead, whose menu line
   is generated, so only T03 is used, as the door's `locked_text`.
 
-## Mechanical lines that Gemini did not draft
+## Second request: five more labels
 
-Two option labels that only leave a conversation or read the state: "Leave it." (the sconce and the rope) and "Climb down
-the smokestack." (the roof stack). Not narration, never voiced.
+The first conversation menus left every way out but one to a plain "Leave it." and had no sure way to find the passage
+if every look at the hearth failed (the plan's rule 8). A second, short brief (brief2.md, reply in gemini_reply2.json)
+asked Gemini for five option labels: L01 (spend an hour taking the hearth apart: finds the passage with no roll, costs
+`time +60`, and plays S09a's line as it is), L02 and L03 (leave the sconce and the rope alone), L04 and L05 (climb down
+the smokestack, leave it). All five are used as drafted. The only text in the conversations that Gemini did not draft is
+the two syntax-only words in the unused slots' place: nothing.
 
 ## Not voiced
 
 None of these lines is voiced. For the voice thread, the Narrator lines (everything in narrative/narrator that this lane
 added, and every `Narrator:` line in narrative/castle_ravenloft/court_way.dialogue) are listed in the hand-off. Option
-labels (G03 to G06, G08, H02 to H05, K02, R02) are never voiced.
+labels (G03 to G06, G08, H02 to H05, K02, R02, L01 to L05) are never voiced.

@@ -172,6 +172,18 @@ func test_the_hearth_gives_nothing_away_until_the_passage_is_found() -> void:
 	assert_eq(SideQuestPlay.missing(beats), "")
 	assert_true(_moved(beats).is_empty(), "nothing to crawl into yet")
 	assert_false(st.get_flag("court_hearth_out"))
+	assert_false(st.get_flag("court_hearth_found"), "and leaving it alone finds nothing")
+
+
+func test_an_hour_taking_the_hearth_apart_finds_the_passage_with_no_roll() -> void:
+	var st := _party()
+	var before := st.total_minutes()
+	var beats := SideQuestPlay.play(st, FILE + "grate", ["Spend an hour"], TestChars.seed_for_d20(1))
+	assert_eq(SideQuestPlay.missing(beats), "")
+	assert_true(st.get_flag("court_hearth_found"), "a sure way when every look has failed")
+	assert_eq(st.total_minutes() - before, 60, "it takes an hour")
+	assert_true(_moved(beats).is_empty(), "and the fire still has to go out before anyone crawls in")
+	assert_false(st.get_flag("court_hearth_out"))
 
 
 func test_waiting_out_the_fire_costs_three_hours_and_then_the_way_is_open() -> void:
@@ -357,10 +369,10 @@ func test_the_smokestack_burns_only_while_the_study_fire_does() -> void:
 
 func test_the_way_down_the_stack_opens_once_someone_has_climbed_it() -> void:
 	var st := _party(ROOFS)
-	var shut := SideQuestPlay.play(st, FILE + "stack", ["Climb down"])
+	var shut := SideQuestPlay.play(st, FILE + "stack", ["Follow the cleared path"])
 	assert_true(SideQuestPlay.missing(shut) != "", "not before somebody has climbed it")
 	st.set_flag("court_stack_climbed")
-	var beats := SideQuestPlay.play(st, FILE + "stack", ["Climb down"])
+	var beats := SideQuestPlay.play(st, FILE + "stack", ["Follow the cleared path"])
 	assert_eq(SideQuestPlay.missing(beats), "")
 	assert_eq(str(_moved(beats).get("location", "")), COURT)
 	assert_eq(str(_moved(beats).get("spawn", "")), "from_chimney")
