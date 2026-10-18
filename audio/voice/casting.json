@@ -473,12 +473,13 @@
       "released": true
     },
     "tsolenka_sergeant": {
-      "voice_id": "kxXQw0P125LSped4budN",
-      "name": "Barovia tsolenka_sergeant",
-      "description": "A dead soldier's voice, hollow, rasping and dutiful, with a strong, clearly audible Eastern European (Romanian) accent: clipped military speech, endlessly keeping a watch that ended long ago.",
+      "voice_id": "CVxlWAA0AszlSsA18sdH",
+      "name": "Barovia Valcu",
+      "description": "Sergeant Dorin Valcu, ghost of the Tsolenka Watch: a flat, gruff, hollow military voice worn down to a weary echo; a strong Eastern European (Romanian) accent. Designed 2026-10-17 (Ashwin's pick, voice A).",
       "settings": {},
       "model": "eleven_v3",
       "generated_voice_id": "kxXQw0P125LSped4budN",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "mad_mary": {
@@ -905,12 +906,12 @@
       "model": "eleven_v3"
     },
     "amber_sentinel": {
-      "voice_id": "wXvR48IpOq9HACltTmt7",
-      "name": "Library voice: Dante - Growly and Menacing Monster",
-      "description": "Library voice chosen for amber_sentinel (2026-10-08, v3 re-record). Was: A vast, booming, inhuman voice speaking in short commands, like stone grinding under a mountain; slow, absolute, echoing.",
+      "voice_id": "GrflfM79dJxB5EECYrF6",
+      "name": "Barovia Amber Sentinel",
+      "description": "The Amber Sentinel: an extremely deep, booming, resonant bass voice, vast, imposing and emotionless. Designed 2026-10-17 (Ashwin's pick, voice A).",
       "settings": {},
       "model": "eleven_v3",
-      "library": true
+      "released": true
     },
     "tsolenka_watchman": {
       "voice_id": "0s9GTYcLxh8HoEj7IyHj",
@@ -989,11 +990,12 @@
     },
     "cyrus_belview": {
       "settings": {},
-      "description": "Library voice chosen for Cyrus Belview: Viktor - Bold, Slavic and Impatient.",
-      "voice_id": "Xh5OictnmgRO4dff7pLm",
-      "name": "Viktor - Bold, Slavic and Impatient",
-      "library": true,
-      "model": "eleven_v3"
+      "description": "Cyrus Belview, the castle's mongrelfolk cook: a deep, thick, rumbling, gruff voice, eager to feed and faintly menacing; a strong Eastern European (Romanian) accent. Designed 2026-10-17 (Ashwin's pick, voice B).",
+      "voice_id": "1c1mniCXDmbL5rdP3GOd",
+      "name": "Barovia Cyrus",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "pidlwick_ii": {
       "settings": {},
@@ -1006,12 +1008,12 @@
     },
     "lief_lipsiege": {
       "settings": {},
-      "description": "Library voice chosen for Lief Lipsiege: Alexei – Eastern European Business Voice.",
-      "voice_id": "NQJnREzQtnAHHZnia0tY",
-      "name": "Alexei – Eastern European Business Voice",
-      "library": true,
+      "description": "Lief Lipsiege, the count's accountant shackled to his desk: a thin, tired, precise voice of quiet desperation; a strong Eastern European (Romanian) accent. Designed 2026-10-17 (Ashwin's pick, voice B).",
+      "voice_id": "lwF074jg5UnLUxsbkyXK",
+      "name": "Barovia Lief",
       "accent_tag": "[strong Romanian accent]",
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "released": true
     },
     "gertruda": {
       "settings": {},
@@ -2520,12 +2522,12 @@
     },
     "castle_courtier_2": {
       "settings": {},
-      "description": "Lady Celestine Morrow: a lady of fashion who came for a ball two hundred years ago; vain, flirtatious, wistful, dangerous. Library voice picked 2026-10-15 (smooth British woman, around 220 Hz).",
-      "voice_id": "rhS7yjXTU4uIlRxXhNW7",
-      "name": "Library voice: Charlotte",
-      "library": true,
+      "description": "Lady Celestine Morrow: a low, smooth, velvety woman's voice, sinister, with the quiet resignation of having lost something she can never get back; a refined upper-class English accent. Designed 2026-10-17 (Ashwin's pick, voice B).",
+      "voice_id": "9LKaD0P8mAHDLWIOVFZq",
+      "name": "Barovia Celestine",
       "model": "eleven_v3",
-      "accent_tag": "[refined English accent]"
+      "accent_tag": "[refined upper-class English accent]",
+      "released": true
     },
     "castle_courtier_3": {
       "settings": {},

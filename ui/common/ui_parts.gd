@@ -557,11 +557,15 @@ static func gap() -> Control:
 
 
 ## A row card: content on a faint crimson ground with a fine gilt edge; `lit` marks the chosen one. With `tip`,
-## hovering anywhere on the row shows it.
-static func row(content: Control, tip: Callable = Callable(), lit: bool = false, margin: int = 7) -> Control:
+## hovering anywhere on the row shows it. `edge` (when it isn't clear) is a heavier border colour: a magic item's rarity
+## (ItemTile.rarity_edge).
+static func row(content: Control, tip: Callable = Callable(), lit: bool = false, margin: int = 7, edge: Color = Color.TRANSPARENT) -> Control:
 	var c := card("ui_wine" if lit else "ui_oxblood", "gilt_light" if lit else "gilt_dark", 0.75 if lit else 0.55, margin)
-	if lit:
-		(c.get_theme_stylebox("panel") as StyleBoxFlat).set_border_width_all(2)
+	var style := c.get_theme_stylebox("panel") as StyleBoxFlat
+	if lit or edge.a > 0.0:
+		style.set_border_width_all(2)
+	if edge.a > 0.0:
+		style.border_color = edge
 	c.add_child(content)
 	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if not tip.is_valid():

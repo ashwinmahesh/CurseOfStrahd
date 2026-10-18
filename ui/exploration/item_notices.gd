@@ -20,9 +20,11 @@ const FADE := 0.4
 ## Below the minimap and the place's name (the HUD's top right).
 const TOP := 304.0
 const MARGIN := 16.0
-## A magic item's name in its rarity's colour (art/palette); anything else in parchment.
-const RARITY_COLOURS := {"common": "vellum", "uncommon": "emerald_light", "rare": "moon_blue", "very_rare": "orchid",
-	"legendary": "flame", "artifact": "crimson"}
+## A magic item's name in its rarity's colour (art/palette); anything else in parchment. The inventory's rows and the
+## shop's edge and tag magic items in the same colours (ItemTile.rarity_colour), so rare and artifact use the lighter
+## blue and red: moon blue and crimson are too dark to read on the screens' crimson panels.
+const RARITY_COLOURS := {"common": "vellum", "uncommon": "emerald_light", "rare": "moonlight", "very_rare": "orchid",
+	"legendary": "flame", "artifact": "vampire_red"}
 
 var _box: VBoxContainer
 var _waiting: Array[Dictionary] = []
