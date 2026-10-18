@@ -21,6 +21,8 @@ endif
 * Show us your wares. -> wares
 * Where does it all come from? -> source
 * Why don't you sell the same things twice? -> rotation
+* [if quest.the_sun_cake == asked and not flag.cake_saffron] The Baron's cook needs saffron for a sun-cake. -> vallaki/the_sun_cake:vadoma_saffron
+* Do you read the cards? -> vadoma_cards
 * Goodbye. -> END
 
 ~ wares
@@ -36,4 +38,10 @@ Vadoma: Then bring me a family, and I'll make them a very fair offer.
 
 ~ rotation
 Vadoma: A wagon that sells the same thing twice is a shop, and a shop is a place where the wolves know where to find you. Come back in a few days. Everything will be different. Except me.
+-> menu
+
+~ vadoma_cards
+Vadoma: I used to lay the painted cards out on the velvet, back when they still had the manners to speak when spoken to.
+Vadoma [sad]: Six months ago they went quiet under my thumbs, every king and knave as blank as a river stone, though I have told no one in the tents.
+Vadoma [weary]: Now I sell brass lockets and bottled teeth from the wagon tail, because a dead man's trinket cannot lie to me.
 -> menu

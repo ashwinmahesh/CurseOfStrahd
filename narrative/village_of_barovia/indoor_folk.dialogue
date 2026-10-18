@@ -47,13 +47,23 @@ Narrator: Her expression gives nothing away at all. She slides the same few copp
 -> shopper_menu
 
 ~ mihai
+if quest.florins_grandson == done and flag.florin_told != "lie"
+-> vallaki/florins_grandson:florin_after
+endif
 if flag.burgomaster_buried
 Old Florin: They buried Kolyan properly. I prayed for him too. I'd not have, a year ago. You find the list gets longer as you get older, and less fussy.
--> END
+-> mihai_menu
 endif
 Old Florin: My grandson went up the road to the castle to ask for work. That was two winters ago. I don't pray he comes back. I pray he doesn't.
+* [if not quest.florins_grandson] Tell us about your grandson. -> vallaki/florins_grandson:florin_ask
+* [if quest.florins_grandson == found] We found Tudorel. -> vallaki/florins_grandson:florin_choice
 * We're sorry. -> END
 * Why come here, if the priest can't help? -> mihai_why
+
+~ mihai_menu
+* [if not quest.florins_grandson] Tell us about your grandson. -> vallaki/florins_grandson:florin_ask
+* [if quest.florins_grandson == found] We found Tudorel. -> vallaki/florins_grandson:florin_choice
+* Goodbye. -> END
 
 ~ mihai_why
 Old Florin: The roof keeps the rain off and the Morninglord keeps His opinions to Himself. That's more than I get at home.

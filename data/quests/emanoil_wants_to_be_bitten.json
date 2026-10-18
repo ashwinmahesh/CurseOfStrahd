@@ -1,0 +1,24 @@
+{
+  "id": "emanoil_wants_to_be_bitten",
+  "name": "Emanoil Wants to Be Bitten",
+  "summary": "A Vallaki clerk who sleeps in a coffin writes long poems to the castle and wants to be chosen by the lord of the valley.",
+  "giver": "emanoil",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "met",
+      "journal": "Emanoil, a clerk in black he can't afford, writes bad poems to the castle and sleeps in a coffin from Henrik's, because he wants to be chosen and bitten. He asked if we were from the castle, and was disappointed.",
+      "objectives": [
+        "Help Emanoil, or talk him out of it"
+      ],
+      "hint": "Talk to Emanoil outside Henrik's coffin shop in Vallaki, by day.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Emanoil is a little less alone than he was. Whatever we did, he will remember that someone asked what he wanted, and the next poem is about us.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

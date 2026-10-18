@@ -394,6 +394,45 @@ leave the list blank to make the rider turn on him.
 - Daciana comes running after the fight: the satchel gives 250 gp of castle silver and an Arcane Grimoire, +2 (rare),
   and the lists go to Lucian and Urwin (the stocks empty), to the Baron (+100 gp, Dobre in his own stocks) or into the
   fire. Attention mark `lists` (+1).
+- **A forged list and a hearing (NPC plan batch 3, 2026-10-18):** at the lamp the party can rewrite the list with names
+  that don't exist (Horatiu Cornel, Mirela Nobody, Zamfir the Glad), wait for morning, and watch where it turns up: the
+  Baron's clerk has a warrant for a man who isn't there (Persuasion DC 12), Lady Wachter's ladies have left a basket and a
+  card at an empty stock (Investigation DC 12), and at dusk the castle's rider pays Dobre for a name that doesn't exist
+  (Stealth DC 12). Two proofs of three win the hearing before the Baron: Dobre goes into his own stocks (`dobre_arrested`;
+  no fight, `xp fight` pays it, and no mark on Strahd's attention), and Daciana comes next day for the same satchel, grimoire
+  and choice of what becomes of the lists. Fewer proofs, or none, and Dobre laughs it off: the street fight, as before.
+
+### Florin's Grandson (`florins_grandson`, narrative/vallaki/florins_grandson.dialogue; NPC plan batch 3)
+
+Old Florin prays in the Village of Barovia's church that his grandson Tudorel, who went up the castle road two winters ago,
+doesn't come back. He told the boy the castle pays well (Insight DC 12, or just ask). **Twist:** Tudorel is alive, a
+footman in Lady Wachter's house in Vallaki (new NPC, in her parlour), warm, fed and ashamed, and sends his grandfather one
+unsigned coin a month by Old Kolya's cart. Back at the church the party chooses what to tell Florin: the whole truth, that
+the boy is dead and at peace, or that he is well and warm without whose livery. Each takes it differently (the truth and
+the half-truth get the monthly coin that smells of good tea; the lie gets a candle).
+
+- No fight, no rolls needed. Approval splits: Godrick, Thistle and Liriel for the truth, Kip and Wren for the lie, Ratatouille
+  and Liriel for the half.
+
+### Emanoil Wants to Be Bitten (`emanoil_wants_to_be_bitten`, narrative/vallaki/emanoil.dialogue; NPC plan batch 3)
+
+Emanoil, a Vallaki clerk in black he can't afford, writes long bad poems to the castle and sleeps in a coffin from Henrik's
+because he wants to be chosen and bitten (new NPC, outside Henrik's coffin shop by day). Three ways to end it: help him
+write his letter to the castle (the carriage never stops for the post), read his poems and see they are about being unseen
+(Insight DC 12) and send him to read them at the Blue Water Inn, or tell him what the castle's court is really like. He
+sleeps with a candle burning in the coffin; he wants to be chosen, not bitten. Next time he has written an ode to the party.
+
+- No fight. Reward: Heroic Inspiration for the party.
+
+### The Sun-Cake (`the_sun_cake`, narrative/vallaki/the_sun_cake.dialogue; NPC plan batch 3)
+
+Leontina, the Baron's cook (new NPC, in the burgomaster's mansion), has made four hundred and thirteen round suns for his
+festivals and wants to make one that isn't. She needs eggs (Goodwife Marta, 1 gp or Persuasion DC 11), honey (Old Paraschiva
+at the Vistani camp, 2 gp or Persuasion DC 11) and saffron (Vadoma, 5 gp or 3 with Persuasion DC 12). Baking: Ratatouille takes
+over if he is along; otherwise Dexterity or Wisdom DC 12; or leave it to her. A good cake is a triumph (60 gp, Heroic
+Inspiration); a collapsed one the Baron calls the Liquid Dawn and orders four hundred and fourteen of (20 gp).
+
+- No fight. A gold piece buys each ingredient, so no roll stands in the way.
 
 ### The Hunters at the Inn (`hunters_at_the_inn`, narrative/vallaki/hunters_at_the_inn.dialogue; batch 2, the book's pair)
 
@@ -1255,7 +1294,12 @@ gossip's nothing-new nodes and the wrong rumour, petra_correction, Petre's coat,
 goat in the shop, the church and at the gate; indoor_folk.dialogue's Goodwife Viorica (candle, secret) and Goodwife
 Sorina; customers.dialogue's Iulian and Lucia; arik.dialogue's three nothings; bildrath.dialogue's ledger;
 parriwimple.dialogue's book; vistani.dialogue's nicknames; and the new back-room, confession, false-trail and
-getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 2 (2026-10-18),
+getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 3 (2026-10-18), Vallaki: florins_grandson.dialogue, emanoil.dialogue and the_sun_cake.dialogue in full
+(new speakers Emanoil, Leontina and Tudorel; also Old Florin, Goodwife Marta, Old Paraschiva, Vadoma, the Baron and the
+Narrator); the forged-list, proof and hearing nodes in ribbons.dialogue; the Baron's decrees; Lydia's key; the Town Guard's
+inspection of cheer; Anton, Old Smaranda, Gheorghe, Old Kolya, Master Costel, the Festival Herald, the Lockup Warden,
+Gunther, Vadoma and Old Varvara; and Piccolo's admission in blinsky.dialogue. The Count's Portraitist (level 9) was not
+reshaped: its boss fight is tuned to the sharp party and was left alone for the later batches. NPC plan batch 2 (2026-10-18),
 the Tser Pool camp and the crossroads: stanimirs_fire.dialogue, radus_horse.dialogue, fennimore.dialogue and
 costica.dialogue in full (new speakers Costica and Ambrose Fennimore); in called_by_name.dialogue the by-day nodes; in
 grey_mare.dialogue the decoy nodes; in tser_camp.dialogue Dorina's pot, Zora's cord and Petru's blades; and one new

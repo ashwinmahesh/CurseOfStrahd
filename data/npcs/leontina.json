@@ -1,0 +1,18 @@
+{
+  "id": "leontina",
+  "name": "Leontina",
+  "title": "The Baron's Cook",
+  "summary": "The Baron's cook: brisk, proud, sixty, in a spotless apron. She has made four hundred and thirteen sun-shaped dishes for his festivals, every one of them round, and wants to make one that isn't. She trained in a great kitchen beyond the mists, which nobody in Vallaki believes.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

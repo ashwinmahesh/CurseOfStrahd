@@ -790,6 +790,15 @@
       ],
       "dialogue": "vallaki/gate:mansion_guard",
       "when": "flag.vallaki_backed != \"neither\""
+    },
+    {
+      "npc": "leontina",
+      "cell": [
+        18,
+        5
+      ],
+      "dialogue": "vallaki/the_sun_cake:leontina",
+      "facing": "west"
     }
   ],
   "encounters": [

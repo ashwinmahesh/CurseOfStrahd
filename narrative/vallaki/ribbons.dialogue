@@ -10,6 +10,9 @@
 if flag.ribbons_resolved
 -> daciana_after
 endif
+if flag.forged_collected and not flag.dobre_arrested and not flag.dobre_beaten
+-> sting
+endif
 if flag.ribbons_list_known
 Daciana: The lamp on Main Street. Every dusk. Please don't make me watch.
 -> END
@@ -57,7 +60,7 @@ Daciana: The lamp on Main Street, by the cooper's. At dusk. Please don't make me
 # --- The lamp on Main Street (prop ribbon_lamp) ---
 
 ~ lamp
-if flag.ribbons_resolved or flag.dobre_beaten
+if flag.ribbons_resolved or flag.dobre_beaten or flag.dobre_arrested
 Narrator: An ordinary lamp. Nothing under it but mud and somebody's dropped yellow ribbon.
 -> END
 endif
@@ -67,6 +70,8 @@ Narrator: A lamp post on Main Street, with a loose stone at its foot that's been
 endif
 Narrator: A lamp post on Main Street, with a loose stone at its foot. Under it, folded small, a paper of names in a careful round hand.
 * Wait for whoever comes for it, after dusk. -> wait
+* [if not flag.ribbons_list_forged] (Rewrite the list: names that don't exist.) -> forged_list
+* [if flag.ribbons_list_forged and not flag.forged_collected] (Wait for morning, and see if the list is gone.) -> forged_wait
 * Leave it. -> END
 
 ~ wait
@@ -179,3 +184,115 @@ else
 Daciana: I still give them out, when people ask. Hardly anybody asks.
 endif
 -> END
+
+# --- A forged list, a sting and a hearing (NPC plan batch 3): the party has Daciana write names that don't exist, watches
+# where they turn up, and brings Dobre before the Baron. Two proofs of three win it; otherwise the old fight stands. ---
+
+~ forged_list
+set ribbons_list_forged
+set ribbons_proofs = 0
+quest ribbons forged
+Narrator: You dictate the names under Daciana's lamp, and her pencil shakes so badly the lead nearly snaps on 'Zamfir the Glad.'
+Narrator: 'Horatiu Cornel' goes down next, followed by 'Mirela Nobody,' each one more improbable than the last.
+Daciana [afraid]: No one will believe these are real people, not even Dobre, and when he sees them he will come for my brother.
+Narrator: The street lamp gutters in the damp, and the loose stone at its foot waits for the paper.
+-> END
+
+~ forged_wait
+time until 8
+set forged_collected
+Narrator: By morning the paper is gone from beneath the loose stone, and a dull copper coin sits in the mud where it lay.
+Narrator: Daciana's face is the colour of lard as she ties her shawl with fingers that will not stop trembling.
+Daciana [afraid]: They locked someone in the square before dawn, and no one will look closely enough to see who isn't in there.
+-> END
+
+# Daciana, once the list is taken (townsfolk:ribbon_girl -> daciana jumps here): where to look.
+~ sting
+* [if not flag.proof_clerk] [Persuasion DC 12] (Ask the Baron's clerk about Horatiu Cornel.) -> proof_clerk_ok | proof_clerk_miss
+* [if not flag.proof_ladies] [Investigation DC 12] (Look at the stocks where Lady Wachter's ladies called.) -> proof_ladies_ok | proof_ladies_miss
+* [if not flag.proof_rider] [Stealth DC 12] (Watch the west gate at dusk.) -> proof_rider_ok | proof_rider_miss
+* Bring Dobre before the Baron. -> hearing_intro
+* Not yet. -> END
+
+~ proof_clerk_ok
+set proof_clerk
+set ribbons_proofs += 1
+time +30
+Narrator: The clerk, wearily: "Horatiu Cornel. I have had four watchmen looking for his house since six o'clock, and the street he lives on does not exist."
+Narrator: The clerk: "I assumed he was being clever. People in this town are very clever until the stocks are mentioned, and then they remember where they live."
+Narrator: His ledger lies open on the blotter, with 'Horatiu Cornel, seditious refusal of yellow' inked in a neat, furious hand.
+Narrator: The clerk, nervously: "Watchman Dobre swore he saw the man spit on a marigold. I have already reserved the middle stock, so someone had better be him."
+-> sting
+
+~ proof_clerk_miss
+time +30
+Narrator: The clerk shuts his ledger with a dry snap and rests both ink-stained hands flat upon the leather cover.
+Narrator: The clerk, wearily: "The Baron's happiness is a matter of public record, friend, and the Baron's book of names is not."
+-> sting
+
+~ proof_ladies_ok
+set proof_ladies
+set ribbons_proofs += 1
+time +30
+Narrator: A wicker basket sits before an empty set of stocks, holding a loaf of caraway bread and a folded card for 'Zamfir the Glad.'
+Narrator: A townsman, slyly: "Lady Wachter's ladies came by at nine with a teapot and a very improving sermon on fortitude."
+Narrator: A townsman: "They read the first two pages to the padlock before the short one noticed there were no feet in the holes."
+Narrator: The card is written in violet ink and advises Zamfir that true sunshine is found only in patience and a change of leadership.
+-> sting
+
+~ proof_ladies_miss
+time +30
+Narrator: The stocks stand open and damp in the morning mist, and the townsfolk hurry past with their eyes fixed on their boots.
+Narrator: A townsman, nervously: "Nobody visited, nobody stopped, and I have three yards of yellow ribbon on my coat, so good morning to you."
+-> sting
+
+~ proof_rider_ok
+set proof_rider
+set ribbons_proofs += 1
+time until 21
+Narrator: At dusk a rider on a black horse waits beside the west gate while Dobre holds a lantern up to the folded slip of paper.
+Narrator: The rider: "'Mirela Nobody.' You have sold my master a very small joke, watchman, or you cannot read what you steal."
+Narrator: Dobre's regulation smile goes stiff and grey around the edges as the horseman stares down at him for a long, quiet minute.
+Narrator: A leather purse of heavy castle silver drops into Dobre's palm without another word, and the black horse turns back into the mist.
+-> sting
+
+~ proof_rider_miss
+time until 21
+Narrator: The heavy timbers of the west gate are barred for the night, and the road toward the mountains is empty save for the drifting fog.
+Narrator: Whatever business Watchman Dobre keeps beyond the walls, he is not keeping it here this evening.
+-> sting
+
+~ hearing_intro
+Narrator: A small, nervous crowd gathers by the stocks as you lay your business before the Baron in his coat of forty yellow ribbons.
+Baron [smile]: A plot! A municipal plot, right here in the square! How marvellously instructive for the townsfolk. Proceed at once.
+Narrator: Watchman Dobre stands beside the platform with his thumbs in his belt, wearing the broad, fixed smile required by town ordinance.
+Watchman Dobre [smile]: Happy to assist the inquiry, my lord. Nobody loves an honest accounting more than I do.
+Baron: Quite right, Dobre! Now then, tell me all about this Horatiu Cornel and why he isn't wearing his ribbon.
+if flag.ribbons_proofs >= 2
+-> hearing_won
+endif
+-> hearing_lost
+
+~ hearing_won
+xp fight ribbons_street
+set dobre_arrested
+set ribbons_twist_known
+quest ribbons sold_three_times
+Narrator: You lay what you found side by side upon the Baron's bunting-draped table.
+Watchman Dobre [afraid]: Wait now, my lord. A watchman hears all sorts of names in the dark, and if a few girls from Lady Wachter's kitchen took a copy...
+Narrator: The square goes so quiet you can hear the rain dripping from the noses of the wooden sun-faces overhead.
+Baron [angry]: My lists! My good, corrective, municipal lists, peddled to Fiona Wachter's tea-table and the devil on the hill for three sets of silver!
+Baron [angry]: That is the least cheerful thing I have ever heard in my life! Put him in the middle stock and tie a double bow on him!
+Watchman Dobre [weary]: Mind the collar, lads. It's new wool, and the rain's coming on.
+Narrator: Watchman Dobre sits in the middle stock with a soggy yellow ribbon behind his ear and a placard reading 'INSUFFICIENTLY SINCERE' around his neck.
+Narrator: He is still smiling the regulation smile, mostly because the Baron's pikeman is standing four paces behind him with a dry stick.
+Narrator: On the Baron's table lies the contents of Dobre's satchel: three months of pencilled lists and a small, heavy purse of old Barovian gold.
+approve godrick_pendlebrook +2 thistle +1 liriel_dawnsong +2 wren_featherfoot +1: You brought Watchman Dobre before the Baron
+-> END
+
+~ hearing_lost
+Watchman Dobre [sly]: A loaf of bread and a story about a horse. If that were enough to lock up the watch, half the square would be in timber by supper.
+Baron [weary]: Quite so, quite so. All very spirited, I am sure, but a watchman is a watchman and we have six hundred yards of yellow to hang before dusk.
+Narrator: Dobre's regulation smile widens by a fraction as he catches the eye of two heavy-shouldered lads by the pump.
+Narrator: The crowd melts back into the side streets without looking at you, one hand held carefully over the ribbons on their coats.
+-> fight

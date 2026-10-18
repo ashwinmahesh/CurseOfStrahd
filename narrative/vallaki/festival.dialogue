@@ -20,6 +20,7 @@ endif
 ~ herald_menu
 * What happens at a festival? -> what
 * How often does the Baron hold these? -> how_often
+* Who writes the proclamations? -> herald_jokes
 * [if flag.baron_met or flag.lady_wachter_met or flag.lucian_met] We're ready. Let the festival begin. -> at_noon
 * [if not flag.baron_met and not flag.lady_wachter_met and not flag.lucian_met] We're ready. Let the festival begin. -> not_yet
 * Not yet. -> END
@@ -331,3 +332,9 @@ interject tag:blunt: Hold the line here. Nobody gets past to the crowd.
 endif
 set festival_climax
 combat festival_izek_rampage
+
+~ herald_jokes
+Festival Herald: I write the proclamations myself, you know, in the dry room above the cistern before the guards wake up.
+Festival Herald [sly]: The last six have been jokes, including the one declaring rainwater a form of applause, and the Baron signed every page.
+Festival Herald [weary]: Excuse my cough; shouting about mandatory joy in the damp takes the lining right off a man's throat.
+-> herald_menu

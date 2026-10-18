@@ -1458,7 +1458,7 @@
       "dialogue": "vallaki/ribbons:after",
       "facing": "west",
       "approach": 8,
-      "when": "flag.dobre_beaten and not flag.ribbons_resolved"
+      "when": "(flag.dobre_beaten or flag.dobre_arrested) and not flag.ribbons_resolved"
     },
     {
       "npc": "vallaki_ribbon_girl",
@@ -1535,7 +1535,7 @@
           "face": "east"
         }
       ],
-      "when": "not flag.dobre_beaten"
+      "when": "not flag.dobre_beaten and not flag.dobre_arrested"
     },
     {
       "npc": "vallaki_raker",
@@ -1657,6 +1657,19 @@
         21
       ],
       "facing": "west"
+    },
+    {
+      "npc": "emanoil",
+      "cell": [
+        8,
+        24
+      ],
+      "dialogue": "vallaki/emanoil:start",
+      "facing": "north",
+      "hours": [
+        9,
+        19
+      ]
     }
   ],
   "encounters": [

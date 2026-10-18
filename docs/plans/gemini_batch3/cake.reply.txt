@@ -1,0 +1,93 @@
+== leontina_meet
+Narrator: Leontina stands at the long table in a spotless apron, surrounded by a hundred identical round pastries.
+Leontina: Don't touch the trays. Wipe your boots if you're staying, and speak up if you aren't.
+Leontina [weary]: The Baron wants a great sun cake for the festival. I have baked four hundred and thirteen suns in this house, every one of them round.
+Leontina: A disk is not a sun. A plate is round. A coin is round. If I roll out one more circle, I'll put my head in the oven.
+Leontina: This one will have proper rays and corners, or I'm done. Only the pantry is bare of what makes a crust hold its shape.
+Leontina: I need fresh eggs from Goodwife Marta, dark honey from Old Paraschiva at the camp, and saffron from Vadoma's wagon. I cannot leave the stove.
+
+== leontina_secret
+Leontina: You're staring at my hands. Yes, I know how to hold a paring blade. I didn't learn that boiling turnips in Barovia.
+Leontina [sad]: Before the mists took the road, I was third pastry cook in a great kitchen where the copper pots shone like mirrors.
+Leontina: The mistress there could make puff pastry sing in the pan. Nobody in Vallaki believes a word of it, of course.
+Leontina: See this white line across my thumb? A Damascus blade that could split a hair cleanly in two. You don't get that scar from a dull bread knife.
+
+== marta_eggs
+Goodwife Marta [smile]: Eggs for the mansion? Of course! Wonderful! It is a blessing to feed the Baron's household.
+Goodwife Marta: One gold piece for the dozen, brown and speckled, laid this very morning before the fog lifted.
+Goodwife Marta [weary]: She'll be making another of those blessed yellow circles, I suppose. Round tarts, round loaves, round biscuits.
+Goodwife Marta: I pray every night that someone in this town bakes a square, just once, before I die.
+
+== marta_eggs_haggle
+Goodwife Marta [sly]: You drive a hard bargain, and if it's truly to help Leontina break the mould, keep your coin.
+Goodwife Marta: Take the basket for nothing. For the Baron's cook, and for a crust with proper corners, my hens are happy to oblige.
+
+== paraschiva_honey
+Old Paraschiva: For the burgomaster's kitchen, is it? Tell him my bees don't care about his decrees or his wicker suns.
+Old Paraschiva [weary]: Still, Leontina knows what to do with a comb, which is more than I can say for the rest of that town.
+Old Paraschiva: Two gold pieces for the clay pot. Mind the string, I've wrapped the stopper in a fresh dock leaf to keep the damp out.
+Old Paraschiva: Don't spill a drop on the road. That's the very last of last year's heather, and this summer gave us nothing but rain.
+
+== paraschiva_honey_haggle
+Old Paraschiva [sly]: Hmph. You have a Vistani tongue in a stranger's mouth. Keep your gold, then.
+Old Paraschiva: Give me a copper and a decent song by the fire tonight, and you can carry the pot away.
+
+== vadoma_saffron
+Vadoma [sly]: Saffron, in this valley? You might as well ask me to bottle the morning star for your kitchen.
+Vadoma: It is dearer than gold here, friend, where nothing yellow grows unless the Baron paints it himself.
+Vadoma: I have one pinch left, taken from the lining of a dead gentleman's velvet coat. Five gold pieces, and not a copper less.
+Narrator: She opens a painted cedar box and lifts a tiny twist of crimson silk between two ringed fingers.
+
+== vadoma_saffron_haggle
+Vadoma [weary]: Three gold, then, and take it before I remember how far I rode to find that coat.
+Vadoma [sly]: Looking at the silk again, the pinch is a little smaller than I thought anyway.
+
+== bake_start
+Narrator: The mansion kitchen smells of woodsmoke and warm butter. Your eggs, honey and saffron sit lined up on the scrubbed oak board.
+Narrator: Behind Leontina, the great brick oven glows a sullen, steady red.
+Narrator: On the shelf sits the battered round tin of four hundred festivals. Beside it rests an iron frame hammered into eight sharp, stubborn points.
+Leontina: Everything is measured. The butter is cold, the honey is warm, and the saffron is steeping in cream.
+Leontina: Pick up the rolling pin. It is time we made something in this house that has an edge to it.
+
+== bake_ratatouille
+Ratatouille [smile]: Stand back, please, everyone. The ambient humidity in this kitchen is appalling, and the dough requires a delicate hand.
+Narrator: Ratatouille takes the board with the fussy, serene confidence of a man who has waited years for someone to hand him an apron.
+Leontina: Look at the way he turns the wrist on the fold. Stop talking, all of you; he trained somewhere real.
+Narrator: Through the iron grating of the oven door, the saffron crust rises evenly into eight crisp, golden points.
+
+== bake_ok
+Narrator: You press the chilled pastry into the iron angles with a steady thumb, watching the heat of your hands and the draught from the door.
+Narrator: You judge the embers by their ash and pull the tin three breaths before the honey can catch.
+Narrator: It turns out onto the platter a little lopsided, bright with saffron, and unmistakably, gloriously eight-pointed.
+Leontina [sad]: Look at the points on that crust. Excuse me a moment, the woodsmoke has gotten into my eyes.
+
+== bake_flat
+Narrator: A draught catches the oven door, or perhaps the honey was too heavy for the flour. A dull sigh comes from inside the bricks.
+Narrator: When you draw the iron frame out, the points have surrendered into a wide, bubbling golden puddle.
+Narrator: Down the hall, the Baron's herald is already blowing his brass horn to announce the festival centerpiece.
+Leontina [weary]: Leontina stands in the kitchen doorway with her floury arms folded tight across her apron, and says nothing at all for a very long time.
+
+== verdict_good
+Narrator: The Baron takes a forkful before the assembled household, chewing while his guards watch his eyebrows.
+Baron [smile]: Magnificent! Look at the points on it! Like rays of glory bursting through the abominable fog!
+Baron: A triumph, I say! A masterpiece! A culinary scandal in the very finest sense of the word!
+Baron: From this day forward, Leontina, you have my full permission to abandon the circle whenever inspiration strikes!
+Narrator: Behind his shoulder, Leontina catches your eye and gives a single, brisk nod.
+
+== verdict_flat
+Narrator: The Baron spoons up a warm drip of the golden puddle while the household holds its breath.
+Baron [smile]: Extraordinary! It has melted from the sheer, uncontainable heat of its own joy! A triumph!
+Baron: Why, it is the most innovative piece of confectionery in the history of Vallaki! A sun upon the waters!
+Narrator: Leontina's face does not move by so much as the breadth of a hair.
+Baron [smile]: We shall call it the Liquid Dawn! Leontina, my treasure, you must bake four hundred and fourteen of these before winter!
+
+== leontina_thanks_good
+Leontina: Here is what I promised from the housekeeping purse, and a warm corner of the crust wrapped in linen for the road.
+Leontina: You have steady hands and you know when to leave an oven door shut. That is rarer than saffron.
+Leontina [smile]: Take another look at my thumb before you go. That white line is the only proof I have left that I wasn't born in the dark.
+Leontina: Today, for the first time in twenty years, I think the old mistress would have recognized my work.
+
+== leontina_thanks_flat
+Leontina [weary]: Here is your coin. It's what I can spare from the kitchen tallow fund, and you did fetch what I asked.
+Leontina: Next week I will hammer the iron into a simple square and use one less egg yolk in the wash.
+Leontina: Don't look so mournful. A cake that collapses in the pan has still been baked, and at least it wasn't round.

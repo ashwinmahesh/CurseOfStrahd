@@ -1715,6 +1715,101 @@
       "id": "zora_knots_seen",
       "type": "bool",
       "summary": "Zora showed the party the cord of knots at her belt."
+    },
+    {
+      "id": "ribbons_list_forged",
+      "type": "bool",
+      "summary": "The party had Daciana write a list of names that don't exist and left it under the lamp on Main Street (Ribbons)."
+    },
+    {
+      "id": "forged_collected",
+      "type": "bool",
+      "summary": "The forged list was taken from under the lamp overnight (Ribbons)."
+    },
+    {
+      "id": "ribbons_proofs",
+      "type": "int",
+      "summary": "How many of the three proofs of where the forged list went the party has found (the clerk, the ladies, the rider); two win the hearing."
+    },
+    {
+      "id": "proof_clerk",
+      "type": "bool",
+      "summary": "The Baron's clerk admitted he has a warrant for Horatiu Cornel, who doesn't exist (Ribbons)."
+    },
+    {
+      "id": "proof_ladies",
+      "type": "bool",
+      "summary": "The party saw Lady Wachter's ladies' basket and card at an empty stock (Ribbons)."
+    },
+    {
+      "id": "proof_rider",
+      "type": "bool",
+      "summary": "The party watched the castle's rider pay Dobre for a list of names that don't exist (Ribbons)."
+    },
+    {
+      "id": "dobre_arrested",
+      "type": "bool",
+      "summary": "Watchman Dobre was brought before the Baron and put in his own stocks; no fight, no mark on Strahd's attention (Ribbons)."
+    },
+    {
+      "id": "tudorel_met",
+      "type": "bool",
+      "summary": "The party has met Tudorel, Old Florin's grandson, a footman at Wachterhaus."
+    },
+    {
+      "id": "florin_told",
+      "type": "string",
+      "summary": "What the party told Old Florin about his grandson: truth, lie or half."
+    },
+    {
+      "id": "emanoil_met",
+      "type": "bool",
+      "summary": "The party has met Emanoil outside Henrik's coffin shop."
+    },
+    {
+      "id": "emanoil_poems_heard",
+      "type": "bool",
+      "summary": "Emanoil read the party a canto."
+    },
+    {
+      "id": "emanoil_lonely",
+      "type": "bool",
+      "summary": "A party member saw that Emanoil's poems are about being unseen."
+    },
+    {
+      "id": "emanoil_truth_told",
+      "type": "bool",
+      "summary": "The party told Emanoil what the castle's court is really like."
+    },
+    {
+      "id": "cake_eggs",
+      "type": "bool",
+      "summary": "The party has the eggs for Leontina's sun-cake (Goodwife Marta)."
+    },
+    {
+      "id": "cake_honey",
+      "type": "bool",
+      "summary": "The party has the honey for Leontina's sun-cake (Old Paraschiva)."
+    },
+    {
+      "id": "cake_saffron",
+      "type": "bool",
+      "summary": "The party has the saffron for Leontina's sun-cake (Vadoma)."
+    },
+    {
+      "id": "cake_result",
+      "type": "string",
+      "summary": "How the sun-cake came out: good (Ratatouille, a steady hand or a good eye) or flat (the Baron calls it a triumph anyway)."
+    },
+    {
+      "id": "baron_decrees",
+      "type": "int",
+      "summary": "How many of the Baron's decrees the party has heard (five, then the last again)."
+    },
+    {
+      "id": "piccolo_paid",
+      "type": "bool",
+      "summary": "Piccolo took the party's admission, one gold piece, and it is not coming back."
     }
   ]
 }

@@ -141,6 +141,7 @@
         1
       ],
       "kind": "examine",
+      "dialogue": "vallaki/blinsky:piccolo",
       "label": "A small perch",
       "model": "perch"
     },

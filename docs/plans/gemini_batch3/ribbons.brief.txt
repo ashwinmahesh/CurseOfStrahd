@@ -1,0 +1,34 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. The people of Vallaki are frightened and hold it behind a compulsory smile; the Baron's town runs on cheerful decrees, ribbons and the stocks; the Vistani camp outside the walls is wry and watchful; the others are as described. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Baron: Back again! Wonderful. Have you been enjoying Vallaki? Say yes; it's the law.
+Goodwife Marta: Good morning! It is a good morning. The Baron says so, and the Baron's men are standing right over there, so it is.
+Old Kolya: Mind the cart. That's a sun, that is. Will be. Every week I bring the wicker up, every week they burn it, every week the sky stays grey.
+Old Smaranda: Sage for sleep, garlic for the door, wolfsbane for the window. And a ribbon, dear, yellow, for your coat. They're watching who wears one.
+Master Costel: Bunting! Festival bunting, by the yard or the bolt! I have sold yellow to every house in Vallaki and three of them twice. Business has never been better, which worries me more than you'd think.
+Lydia Petrovna: Isn't it? Forty yards for the Blazing Sun. Sixty for the Swallows, but the swallows didn't come, so I've unpicked it for the sun. Nothing's ever wasted in this house.
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS: Daciana is the ribbon girl of Vallaki's square: a widow who hands out compulsory yellow festival ribbons and writes down in pencil everyone who refuses one, for the Baron's men; she is frightened and her brother stays out of the stocks as long as she writes. Watchman Dobre is the corrupt watchman who collects her lists and sells each one three times: to the Baron's clerk (the stocks), to Lady Wachter's back door (her book club's ladies visit whoever is in the stocks), and to a rider on a black horse at the west gate (the castle). Baron Vargas Vallakovich is a round, florid, cheerful man who orders happiness by decree. Lady Wachter is a poised noblewoman who holds a book club that is not a book club.
+
+THE SCENE (a sting and a hearing, no fight needed): the party has Daciana write a list of people who do not exist ("Horatiu Cornel", "Mirela Nobody", "Zamfir the Glad" and the like), and watches where the list turns up: the Baron's clerk arrests an empty stock, Lady Wachter's ladies visit it with a basket, a rider waits at the west gate for a name that is not there. Then Dobre stands before the Baron in the square and the party lays out three pieces of proof (the clerk's empty-stocks entry, the ladies' basket, the rider's silver); any two win. Won, Dobre goes into his own stocks in a yellow ribbon and the lists go to the Baron or the town or the fire as before. Not won, Dobre laughs it off and the old fight stands. Comedy first, with the threat underneath.
+
+LABELS AND BEATS:
+== forged_list (4 lines: the party writes the invented list under Daciana's lamp, as she watches; Narrator describes the names, each more ridiculous than the last, and Daciana's shaking pencil; Daciana says, in a whisper, that no one will believe in these names; the lamp flickers)
+== forged_taken (3 lines, Narrator: in the morning the list is gone from under the stone and there are three coins in its place; Daciana is white; she says the stocks have a new occupant, and nobody has seen who)
+== proof_clerk_ok (4 lines: at the Baron's clerk's desk, the clerk, flustered, admits he has a warrant for the arrest of Horatiu Cornel; he cannot find him; he assumed he was clever; the party sees the entry in his ledger)
+== proof_clerk_miss (2 lines: the clerk is too wary to say anything, and shuts his ledger, saying the Baron's law is private; nothing gained)
+== proof_ladies_ok (4 lines: at the stocks, Lady Wachter's ladies have left a basket of bread and a card for 'Zamfir the Glad' in an empty stock; a bystander says the ladies came with tea and a sermon and were very put out to find nobody in it)
+== proof_ladies_miss (2 lines: the stocks are empty and the street is busy; no one will say who visited; nothing gained)
+== proof_rider_ok (4 lines: at dusk by the west gate the rider on the black horse waits, unfolds the list, reads a name aloud, and looks at it for a long time; Dobre's face; the rider tucks a purse of castle silver into Dobre's hand and says nothing; the party watches from cover)
+== proof_rider_miss (2 lines: the gate is shut and quiet; the rider does not come this evening; nothing gained)
+== hearing_intro (5 lines, Narrator and the Baron: the party brings the matter to the Baron in the square before a small crowd; the Baron, in his festival ribbons, says it is the most delightful scandal he has ever been told and asks them to proceed; Dobre stands there smiling the regulation smile)
+== hearing_won (6 lines: the party lays out the proofs; Dobre protests; the crowd goes quiet; the Baron's face goes purple; he orders Dobre into his own stocks with a yellow ribbon and says that selling the Baron's own lists to the castle and to Lady Wachter is the least cheerful thing he has ever heard of)
+== hearing_lost (4 lines: the proofs are not enough; Dobre laughs; the Baron says it is all very festive but a watchman is a watchman; Dobre looks at the party and signals his lads; the crowd melts away)
+== dobre_taken (3 lines, Narrator: Dobre is in the stocks in a yellow ribbon, smiling the regulation smile, with a sign on him; his satchel has been emptied onto the Baron's table and holds three months of lists and a purse of old gold)
