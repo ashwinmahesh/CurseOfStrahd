@@ -6,6 +6,7 @@ extends RefCounted
 ## condition holds, plays once per playthrough, and at most one per file (one per companion) is offered at a time.
 ## Other nodes are the talks' own scenes, even when one happens to open with an `if` (Wiki finding 87: Kip's
 ## settling-up, opening with its stage guard, was offered to every party at its first rest).
+## A story ally travelling with the party asks too (docs/story/camp.md): a talk whose condition names `guest:<npc>`.
 ## The rest screen shows them as buttons; choosing one starts the conversation.
 
 const FOLDER := "camp"
@@ -26,16 +27,23 @@ static func available(st: StoryState) -> Array[Dictionary]:
 		var df := DialogueFile.load_key(FOLDER + "/" + f.get_basename())
 		if df == null:
 			continue
-		for node in df.order:
-			var ref := "%s:%s" % [df.key, node]
-			if not node.begins_with(TALK) or bool(st.flags.get("_camp/" + ref, false)):
-				continue
-			var cond := opening_condition(df, node)
-			if cond == "" or not StoryConditions.check(cond, st):
-				continue
-			out.append({"ref": ref, "label": label_for(cond, st)})
-			break
+		var talk := offered(df, st)
+		if not talk.is_empty():
+			out.append(talk)
 	return out
+
+
+## The first talk of `df` that could start now, as `available` lists it ({ref, label}), or {} if it has none.
+static func offered(df: DialogueFile, st: StoryState) -> Dictionary:
+	for node in df.order:
+		var ref := "%s:%s" % [df.key, node]
+		if not node.begins_with(TALK) or bool(st.flags.get("_camp/" + ref, false)):
+			continue
+		var cond := opening_condition(df, node)
+		if cond == "" or not StoryConditions.check(cond, st):
+			continue
+		return {"ref": ref, "label": label_for(cond, st)}
+	return {}
 
 
 ## Marks a talk as had, so it isn't offered again.
@@ -52,11 +60,25 @@ static func opening_condition(df: DialogueFile, node: String) -> String:
 	return str(first.get("cond", "")) if str(first.get("t", "")) == "if" else ""
 
 
-## "<First name> wants a word", for the first `name:` in the condition who is in the party.
-static func label_for(cond: String, st: StoryState) -> String:
-	var re := RegEx.create_from_string("name:([a-z0-9_]+)")
+## Who asks for a talk with this opening condition: the first companion (`name:<id>`, in the party or waiting at camp)
+## or story ally travelling with the party (`guest:<npc>`) it names who is here, in the order it names them, so the
+## one asking is written first. {id, name}, or {} if none of them is here. `id` is what the camp seats them by: a
+## companion's character id, a guest's creature id (`guest_<npc>`, StoryState.make_guest).
+static func who_asks(cond: String, st: StoryState) -> Dictionary:
+	var re := RegEx.create_from_string("\\b(name|guest):([a-z0-9_]+)")
 	for m in re.search_all(cond):
-		var who := st.find_member("name:" + m.get_string(1))
+		if m.get_string(1) == "guest":
+			var i := st.guest_ids.find(m.get_string(2))
+			if i >= 0 and i < st.guests.size():
+				return {"id": st.guests[i].id, "name": st.guests[i].name}
+			continue
+		var who := st.find_member("name:" + m.get_string(2))
 		if who != null:
-			return "%s wants a word" % who.name.get_slice(" ", 0)
-	return "Someone wants a word"
+			return {"id": who.id, "name": who.name}
+	return {}
+
+
+## "<First name> wants a word", for whoever asks (who_asks).
+static func label_for(cond: String, st: StoryState) -> String:
+	var who := who_asks(cond, st)
+	return "%s wants a word" % str(who["name"]).get_slice(" ", 0) if not who.is_empty() else "Someone wants a word"

@@ -286,8 +286,8 @@ static func retired(ch: Character) -> bool:
 		and not bool((ch.build.get("appearance", {}) as Dictionary).get("custom", false))
 
 
-## The talks waiting at camp, by who asks (CampTalk, narrative/camp/): {character id: talk ref}, one each, leaving out
-## anyone in `had` (who has had their word this evening, or this morning).
+## The talks waiting at camp, by who asks (CampTalk, narrative/camp/): {asker's id (a character id, or `guest_<npc>`):
+## talk ref}, one each, leaving out anyone in `had` (who has had their word this evening, or this morning).
 static func talks(st: StoryState, had: Dictionary) -> Dictionary:
 	var out := {}
 	for t in CampTalk.available(st):
@@ -298,19 +298,15 @@ static func talks(st: StoryState, had: Dictionary) -> Dictionary:
 	return out
 
 
-## Who asks for a talk: the first companion its condition names who is here (as CampTalk.label_for reads it), as a
-## character id; "" if none of them is.
+## Who asks for a talk: the first companion or travelling guest its condition names who is here (CampTalk.who_asks, as
+## CampTalk.label_for reads it), as the id the camp seats them by (`people`): a character id, or `guest_<npc>` for a
+## story ally; "" if none of them is.
 static func asker(st: StoryState, ref: String) -> String:
 	var df := DialogueFile.load_key(ref.get_slice(":", 0))
 	if df == null:
 		return ""
 	var cond := CampTalk.opening_condition(df, ref.get_slice(":", 1))
-	var re := RegEx.create_from_string("name:([a-z0-9_]+)")
-	for m in re.search_all(cond):
-		var who := st.find_member("name:" + m.get_string(1))
-		if who != null:
-			return who.id
-	return ""
+	return str(CampTalk.who_asks(cond, st).get("id", ""))
 
 
 ## The Narrator's triggers for what someone at camp in `where` (setting()) is doing when they've nothing particular to
