@@ -27,10 +27,12 @@ endif
 
 ~ first
 set escher_met
+cutscene escher_mirror
 Narrator: The suite is all velvet and dust. A young man in a beautiful coat lounges in an armchair with one leg over the arm, and doesn't get up. The tall mirror behind him shows an empty chair.
 Escher: Well. Visitors. Has our host sent you up to look at me? I'm not on display today. Come back when I've been dusted.
 interject class:cleric: He's dead. Walking dead. One of Strahd's.
 Escher: One of Strahd's former. Do keep up.
+cutscene end
 -> menu
 
 ~ menu

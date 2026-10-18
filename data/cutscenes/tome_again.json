@@ -1,0 +1,22 @@
+{
+  "id": "tome_again",
+  "title": "Generation After Generation",
+  "summary": "The Tome's last scene: Tatyana is born again in the valley with the same face, and each time he tries to make her love him; the ledger of names and the unfinished last entry.",
+  "images": [
+    {
+      "image": "tome_again",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:tome_again",
+  "more": [
+    "scene:tome_again_2",
+    "scene:tome_again_3",
+    "scene:tome_again_4",
+    "scene:tome_again_5"
+  ]
+}

@@ -22,6 +22,8 @@ var _dialogue_ref := ""
 var _talk_mood := ""
 ## The music a cutscene in the conversation brought (_scene_music); it holds over whoever speaks until the end.
 var _scene_mood := ""
+## The music a place cutscene's picture brought (_cutscene_music); the place's own comes back when it closes.
+var _cutscene_mood := ""
 ## Banter that came while the Narrator was speaking; it plays a moment after the box clears (_process).
 var _banter_waiting: Array = []
 var _banter_quiet_since := -1   ## msec ticks since the box cleared, while banter waits
@@ -1163,6 +1165,7 @@ func play_cutscene(id: String, caption: String) -> CutscenePlayer:
 	close_screen()
 	var player := CutscenePlayer.new()
 	add_child(player)
+	player.scene_shown.connect(_cutscene_music)   # before play_scenes: the first picture's music too
 	if not player.play_scenes(Cutscenes.scenes(id, caption, st, narrator, st.leader_character()), st):
 		player.queue_free()
 		hud.narrate(caption)
@@ -1174,8 +1177,40 @@ func play_cutscene(id: String, caption: String) -> CutscenePlayer:
 		if screen == player:
 			screen = null
 			get_tree().paused = false
+		if _cutscene_mood != "":
+			_cutscene_mood = ""
+			Audio.play_music(_place_mood())
 		_refresh())
 	return player
+
+
+## A cutscene an item's power plays (story/cutscenes.gd `read:<item>`: reading the Tome of Strahd): the Narrator's line for
+## `key` reads over its first picture, and `after` is what the HUD says when it closes. False, and nothing shown, when no
+## cutscene fits now (it plays once).
+func play_item_cutscene(key: String, after: String = "") -> bool:
+	var cut := Cutscenes.for_trigger(key, st)
+	if cut == "":
+		return false
+	var player := play_cutscene(cut, narrator.line(key, st, st.leader_character()))
+	if player == null:
+		return false
+	if after != "":
+		# A beat after the world wakes: its clock may narrate the weather the hours brought, and the reading's own
+		# words (Strahd knows) should be the ones left up.
+		player.finished.connect(func() -> void:
+			await get_tree().create_timer(0.4, true, false, true).timeout
+			if is_instance_valid(hud):
+				hud.narrate(after))
+	return true
+
+
+## A place cutscene's picture with its own music (art/audio.json "place_scenes", as a conversation's "scenes": _scene_music)
+## plays until the cutscene closes; play_cutscene brings the place's own back.
+func _cutscene_music(cutscene_id: String) -> void:
+	var m := Audio.place_scene_mood(cutscene_id)
+	if m != "":
+		_cutscene_mood = m
+		Audio.play_music(m)
 
 
 ## Plays a Narrator trigger here (rests, dreams). Returns the line, or "".

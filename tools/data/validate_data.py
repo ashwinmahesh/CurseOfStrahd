@@ -704,7 +704,8 @@ def schedule_checks(data, errors, cond, flags_set, dialogue_refs):
 
 def cutscene_checks(data, parsed, errors):
     """Story cutscenes (story/cutscenes.gd, docs/ui/cutscenes.md): every picture is in art/cutscenes, every trigger is a
-    Narrator key some narrator file has, every `then` names a scene with a `caption` Narrator key some file has, and every
+    Narrator key some narrator file has (`read:<magic item>` names an item and has its first caption), every `then` names a
+    scene with a `caption` Narrator key some file has, every `more` caption is a Narrator key too, and every
     `cutscene <id>` in a conversation names one (or is `end`)."""
     narrator_keys = {n for key, p in parsed.items() if key.startswith("narrator/") for n in p["nodes"]}
     for cid, c in data.get("cutscenes", {}).items():
@@ -716,6 +717,11 @@ def cutscene_checks(data, parsed, errors):
         if trig.startswith("find:"):
             if trig[5:] not in data.get("magic_items", {}):
                 errors.append(f"{w}: trigger '{trig}' names no magic item")
+        elif trig.startswith("read:"):
+            if trig[5:] not in data.get("magic_items", {}):
+                errors.append(f"{w}: trigger '{trig}' names no magic item")
+            if trig not in narrator_keys:
+                errors.append(f"{w}: trigger '{trig}' isn't a node in any narrative/narrator file (its first caption)")
         elif trig and trig not in narrator_keys:
             errors.append(f"{w}: trigger '{trig}' isn't a node in any narrative/narrator file")
         nxt = c.get("then", "")
@@ -727,6 +733,9 @@ def cutscene_checks(data, parsed, errors):
         cap = c.get("caption", "")
         if cap and cap not in narrator_keys:
             errors.append(f"{w}: caption '{cap}' isn't a node in any narrative/narrator file")
+        for more in c.get("more", []):
+            if more not in narrator_keys:
+                errors.append(f"{w}: more '{more}' isn't a node in any narrative/narrator file")
         if cap and trig:
             errors.append(f"{w}: a scene with a `caption` follows another (`then`) and has no trigger of its own")
     for key, p in parsed.items():
