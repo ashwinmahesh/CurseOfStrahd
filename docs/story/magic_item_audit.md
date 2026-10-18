@@ -173,16 +173,13 @@ first-sight line now hints that it keeps more than lamps.
 ## 6. Found spellbooks (2026-10-18)
 
 Ashwin: found spellbooks should always hold spells a Wizard can learn. The warden's chest at the Amber Temple held the
-PHB's blank Spellbook, and the Arcane Grimoires (books that work as a spellbook) and the Enduring Spellbook held
-nothing either. Now:
+PHB's blank Spellbook, and the Enduring Spellbook held nothing either (the Arcane Grimoires were listed here as spellbooks
+too, until the same night they stopped being: see the end of this section). Now:
 
 | Book | Where | Spells (all on the Wizard list, in play) |
 |---|---|---|
 | A Warden's Spellbook (new, data/items/amber_warden_spellbook.json) | Amber Temple, a warden's chest (level 10) | Alarm, See Invisibility, Counterspell, Dispel Magic, Glyph of Warding, Banishment, Mordenkainen's Private Sanctum, Otiluke's Resilient Sphere, Wall of Force |
 | The Dursts' Spellbook (unchanged; it already passed) | Death House, the Dursts' footlocker (level 2) | Comprehend Languages, Disguise Self, False Life, Ray of Sickness, Unseen Servant, Darkness, Gentle Repose |
-| Arcane Grimoire, +1 | sold (Kasimir, Xaver) | Mage Armor, Magic Missile, Shield, Misty Step, Scorching Ray |
-| Arcane Grimoire, +2 | Dobre's satchel (Ribbons, Vallaki, level 5); sold | Sleep, Thunderwave, Mirror Image, Web, Fireball, Haste |
-| Arcane Grimoire, +3 | sold (Xaver) | Fly, Lightning Bolt, Dimension Door, Greater Invisibility, Ice Storm, Cone of Cold, Hold Monster |
 | Enduring Spellbook | sold (Blinsky) | Detect Magic, Find Familiar, Identify, Magic Missile, Levitate |
 
 A shop's blank Spellbook stays blank (it's paper to write in). Mordenkainen's book from the Baratok cairn isn't an
@@ -191,6 +188,24 @@ learn (off the list, out of play, a cantrip, twice, or above what a Wizard two l
 blank spellbook is ever loot, or if random treasure could roll an empty one; test_spellbook_copy.gd copies from the
 warden's book on the inventory card. A save whose warden's chest still holds the blank book, or whose non-Wizard took
 it, gets the warden's book (StoryState._upgrade_found_spellbook, which now does the Dursts' book too).
+
+### The Arcane Grimoires are not spellbooks (2026-10-18)
+
+Ashwin: the Arcane Grimoire is a focus for Wizards, not a spellbook. The three Arcane Grimoires
+(data/magic_items/arcane_grimoire_plus_1 to _3.json) are a Wizard's Spellcasting Focus: attuned by a Wizard, held in a
+hand or kept as the focus, +1, +2 or +3 to Wizard spell attack rolls and save DCs, and Arcane Recovery brings back one
+more slot level (`arcane_grimoire` flag, Character.arcane_recovery_levels, which the rest screen reads; it had been a
+flag nothing read). They no longer list `spells`, so the inventory card shows no "Spells in this book" and no Copy
+buttons, and test_spellbook_loot.gd no longer counts them. Dobre's satchel (Ribbons) and the shops (Kasimir, Xaver) still
+hand them out; their prices and places are unchanged. Source: the item is printed in Tasha's Cauldron of Everything
+(p.120); the 2024 DMG lists seen online do not show it, so its 2024 wording is not confirmed here (each item's
+`source.note` says so). The spell lists they held, kept here instead of deleted:
+
+| Item | Spells it held as a spellbook (retired) |
+|---|---|
+| Arcane Grimoire, +1 | Mage Armor, Magic Missile, Shield, Misty Step, Scorching Ray |
+| Arcane Grimoire, +2 | Sleep, Thunderwave, Mirror Image, Web, Fireball, Haste |
+| Arcane Grimoire, +3 | Fly, Lightning Bolt, Dimension Door, Greater Invisibility, Ice Storm, Cone of Cold, Hold Monster |
 
 ## Lines left unvoiced
 

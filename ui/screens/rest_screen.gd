@@ -485,12 +485,13 @@ func _narrate(key: String) -> void:
 
 
 ## Arcane Recovery (Wizard 1, 2024): once per Long Rest, after a Short Rest, recover expended slots whose levels add up
-## to at most half the Wizard level (rounded up), none of level 6 or higher. One button per slot level to recover.
+## to at most half the Wizard level (rounded up; one more with an Arcane Grimoire), none of level 6 or higher. One button
+## per slot level to recover.
 func _arcane_recovery_row(ch: Character) -> void:
 	var wiz := ch.class_level_of("wizard")
 	if wiz <= 0 or not _short_done or ch.resource_left("arcane_recovery") <= 0 or ch.dead:
 		return
-	var budget := int(ch.get_meta("arcane_budget", (wiz + 1) / 2))
+	var budget := int(ch.get_meta("arcane_budget", ch.arcane_recovery_levels()))
 	if not _has_recoverable(ch, budget):
 		return
 	var row := HBoxContainer.new()

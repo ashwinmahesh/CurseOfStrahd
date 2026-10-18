@@ -122,6 +122,15 @@ func class_level_of(class_id: String) -> int:
 	return int(class_levels.get(class_id, 0))
 
 
+## The spell slot levels Arcane Recovery brings back (Wizard 1, 2024): half the Wizard level, rounded up, and one more
+## with an Arcane Grimoire the Wizard is attuned to (its `arcane_grimoire` flag). 0 for anyone who isn't a Wizard.
+func arcane_recovery_levels() -> int:
+	var wiz := class_level_of("wizard")
+	if wiz <= 0:
+		return 0
+	return (wiz + 1) / 2 + (1 if has_flag("arcane_grimoire") else 0)
+
+
 func proficiency_bonus() -> int:
 	# Ioun Stone of Mastery: +1.
 	return Abilities.proficiency_bonus(maxi(1, character_level())) + (1 if has_flag("proficiency_plus_1") else 0)

@@ -6,11 +6,11 @@ extends TestCase
 ## spells in it; and a Wizard copies them from the inventory (tests/integration/test_spellbook_copy.gd shows the card).
 
 
-## A spellbook: anything listing `spells`, the PHB's blank Spellbook, and the magic items that are spellbooks.
+## A spellbook: anything listing `spells`, the PHB's blank Spellbook, and the magic items that are spellbooks. The Arcane
+## Grimoires aren't: they are Wizards' Spellcasting Focuses (tests/integration/test_arcane_grimoire.gd).
 func _is_spellbook(id: String) -> bool:
 	var data := Compendium.shared().item_data(id)
-	return data.has("spells") or id == "spellbook" or id.ends_with("_spellbook") or id.begins_with("arcane_grimoire") \
-		or id == "tome_of_the_stilled_tongue"
+	return data.has("spells") or id == "spellbook" or id.ends_with("_spellbook") or id == "tome_of_the_stilled_tongue"
 
 
 ## Why `id`'s spells aren't all learnable by a Wizard, or "".
@@ -91,13 +91,14 @@ func test_every_book_with_spells_holds_spells_a_wizard_can_learn() -> void:
 			if d.has("spells"):
 				n += 1
 				assert_eq(_problem(str(d["id"])), "")
-	assert_true(n >= 5, "the Dursts', the warden's and the three Arcane Grimoires (%d)" % n)
+	assert_true(n >= 3, "the Dursts', the warden's and the Enduring Spellbook (%d)" % n)
 
 
 func test_every_spellbook_found_as_loot_has_spells_for_its_place() -> void:
 	var placed := _placed_books()
-	for id: String in ["durst_spellbook", "amber_warden_spellbook", "arcane_grimoire_plus_2"]:
+	for id: String in ["durst_spellbook", "amber_warden_spellbook"]:
 		assert_true(placed.has(id), "%s is found somewhere" % id)
+	assert_false(placed.has("arcane_grimoire_plus_2"), "Dobre's grimoire is a focus, not a spellbook")
 	assert_false(placed.has("spellbook"), "no blank spellbook is loot (the Amber Temple warden's chest had one)")
 	for id: String in placed:
 		var lvl := int(placed[id])
@@ -129,10 +130,6 @@ func test_a_wizard_copies_a_found_books_spells() -> void:
 		assert_true(why == "" or why == "Already in the spellbook", "%s: %s" % [sid, why])
 		rat.copy_spell(str(sid))
 		assert_true(str(sid) in (rat.spellcasting_entry("wizard")["spellbook"] as Array), "%s is in his book" % sid)
-	var low := Pregens.build("ratatoille", 5)
-	for sid2: Variant in Compendium.shared().item_data("arcane_grimoire_plus_2")["spells"]:
-		var why2 := low.copy_spell_problem(str(sid2))
-		assert_true(why2 == "" or why2 == "Already in the spellbook", "Dobre's grimoire at level 5, %s: %s" % [sid2, why2])
 
 
 func test_an_older_save_gets_the_wardens_book() -> void:

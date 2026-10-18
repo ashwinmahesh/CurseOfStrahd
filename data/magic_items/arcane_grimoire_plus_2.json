@@ -3,7 +3,7 @@
   "name": "Arcane Grimoire, +2",
   "source": {
     "book": "DMG2024",
-    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+    "note": "Entered from knowledge (personal build); text and summary are ours. The Arcane Grimoire is printed in Tasha's Cauldron of Everything (p.120); the 2024 DMG's item lists (aidedd's index, D&D Beyond's chapter 7 lists) do not show it, so the 2024 wording is not confirmed here. What the sources agree on and the item now follows (owner, 2026-10-18: a focus for Wizards, not a spellbook): attunement by a Wizard; uncommon +1, rare +2, very rare +3; while held it is a Spellcasting Focus for Wizard spells and adds its bonus to their spell attack rolls and save DCs; Arcane Recovery restores one more slot level. Check against the owner's copy; it is not a spellbook and holds no spells."
   },
   "category": "wondrous",
   "weight_lb": 3,
@@ -15,6 +15,8 @@
   "theme": "arcana",
   "icon": "book",
   "variant_of": "arcane_grimoire",
+  "focus": "arcane",
+  "held": true,
   "modifiers": [
     {
       "stat": "spell_attack",
@@ -32,10 +34,10 @@
     },
     {
       "stat": "flag",
-      "value": "arcane_grimoire"
+      "value": "arcane_grimoire",
+      "attuned_only": true
     }
   ],
-  "summary": "+2 to your Wizard spell attacks and save DC; Arcane Recovery brings back one more slot level.",
-  "text": "This leather-bound tome works as a spellbook. While it is in your hand, your Wizard spells can channel through it as a Spellcasting Focus and gain +2 to their spell attack rolls and their saving throw DCs. Whenever you use Arcane Recovery, the total of spell slot levels you get back rises by 1. Its pages still hold its last owner's spells, which a Wizard can copy into their own book.",
-  "spells": ["sleep", "thunderwave", "mirror_image", "web", "fireball", "haste"]
+  "summary": "A Wizard's Spellcasting Focus: +2 to your Wizard spell attack rolls and save DCs while you hold it, and Arcane Recovery brings back one more slot level.",
+  "text": "A leather-bound book of arcane lore, made for Wizards. A Wizard attuned to it can use it as a Spellcasting Focus for their Wizard spells, and while they hold it those spells gain +2 to their spell attack rolls and their saving throw DCs. Whenever they use Arcane Recovery, the total of spell slot levels they regain rises by 1. It is not a spellbook: it holds no spells, no spell can be copied into it or out of it, and it cannot stand in for the Wizard's own spellbook."
 }
