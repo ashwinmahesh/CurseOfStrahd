@@ -319,3 +319,25 @@ None beyond data/monsters and the Phase 6 list: `strahd_von_zarovich`, `strahds_
   household.dialogue); voice docs/voice/castle_steward.md
 - Dialogue: narrative/castle_ravenloft/{gates_dinner, gates_hearth, gates_castle, gates_household}.dialogue;
   narrative/narrator/castle_ravenloft_gates.dialogue; narrative/banter/castle_ravenloft_gates.dialogue
+
+## 14. The Dungeon Expansion's C7 (the main floor and the chapel)
+
+Package C7 of the Dungeon Expansion Plan (2026-10-18) adds seven of the book's set pieces to the main floor, the chapel and the
+overlook. Nothing that stood before moved: the new rooms are cut out of solid wall blocks and one new map joins the chapel by an
+exit. Book source: R. C. Veeder's survey of the 2016 text (K6, K7, K10, K11, K14, K28, K29, K88). Lines: Gemini's, unvoiced
+(docs/plans/gemini_dungeon/C7). Tests: tests/integration/test_c7_main_floor.gd, test_scaled_fights_c7.gd.
+
+| Piece | Where | What |
+|---|---|---|
+| K7, the entry's dragons | main floor, `crg_entry` (22,16) (29,16) (24,23) (27,23) | Four small stone dragons on plinths (`gargoyle` piece until the paid art). The two plinths beside the great doors call `castle_ravenloft/entry_dragons:wake` (approach 2) once the party has been to `crg_great_entry` and the dinner truce isn't holding: the dragons wake, `crg_entry_dragons` (4 `red_dragon_wyrmling`, 65, 52 and 47 HP at levels 11, 10 and 9) is the fight. The book's survey calls them child-sized dragons; Master Quest and Reloaded make them red wyrmlings that don't follow anyone out (the colour is theirs, the count and Hit Points are ours). The walk along row 20 to the chapel and the crypt stair never comes within 2 squares of a plinth. |
+| K10 and K11, the archers' post | main floor, south of the dining hall: `crg_archers_post` (2..13, 16..21), door `crg_post_door` (10,15), secret DC 14 | A room in the solid block under the dining hall: arrow slits, bow racks, four mirrors on the walls and two under dust sheets, all taken down from round the castle (he casts no reflection). Ours: the book's door is behind the organ; our organ stands on the north wall against the servery, so the panel is in the south wall. `furnish: false`. |
+| K14, the Hall of Faith | main floor, `crg_chapel_access`: knights at (36,14) (36,16) (36,18) (44,13) (44,15) (44,21) | Six statues whose eyes seem to follow; the book calls it an optical illusion. Investigation DC 13 (one try each) works out the trick (codex "The Watching Stone Knights"). |
+| K28 and K29, the king's balcony | new map `castle_ravenloft_chapel_balcony` (22 x 11, `church`, dark), reached by `chapel_stair_up` (19,2) (19,3) in the chancel's east wall (spawn `from_chapel` (3,8); the way back `from_balcony` (18,2) in the chapel) | The creaking landing (`crg_balcony_landing`) and the gallery over the nave with two thrones (9,3) (13,3). The book puts a couple of zombies in the thrones as an ambush: `crg_balcony_zombies` (the two Strahd zombies, with Strahd's spawn along the rail, 7, 6 and 6 of them at levels 11, 10 and 9: ours, since the sharp party beats the two zombies alone 8 in 8; the party is surprised). Both fights: docs/story/fight_tuning_dungeon_c7.md. The plan put the gallery in "the chapel's north wall block", but the chapel map has one wall row there, so the gallery is a map of its own (rule 2). |
+| K6 to K88, the window below the overlook | overlook (19,7), search DC 15; tombs spawn `from_overlook` (26,23) | The book's passive Perception 15 is the game's Search DC 15 (traps and hidden things aren't noticed passively here). The window opens `castle_ravenloft/overlook_window:start`: a rope (no roll) or Athletics DC 15 down the rock, or leave it; a slip costs an hour, never a spent check. The climb lands in King Barov and Queen Ravenovia's tomb. |
+
+Flags (data/flags/castle_ravenloft_main_floor.json): `crg_entry_dragons_woken`, `crg_entry_dragons_broken`,
+`crg_balcony_zombies_down`. Files: data/locations/{castle_ravenloft_main_floor, castle_ravenloft_chapel,
+castle_ravenloft_overlook, castle_ravenloft_catacombs_tombs, castle_ravenloft_chapel_balcony}.json,
+data/monsters/red_dragon_wyrmling.json, narrative/castle_ravenloft/{entry_dragons, overlook_window}.dialogue,
+narrative/narrator/castle_ravenloft_main_floor.dialogue; the balcony's atmosphere and music are the chapel's (art/atmosphere/moods.json,
+art/audio.json).

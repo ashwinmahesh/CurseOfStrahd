@@ -1,0 +1,87 @@
+# Narrator: Castle Ravenloft's main floor, chapel and overlook, the lines of the Dungeon Expansion's C7 package (K6, K7,
+# K10, K11, K14, K28, K29). Second person, present tense, one or two sentences. Drafted by Gemini through the ai-bridge
+# (docs/plans/gemini_dungeon/C7: the briefs, the raw replies, and the edits made here); no clip is recorded yet.
+
+# ---------------------------------------------------------------- K7, the entry's small stone dragons
+
+~ examine:crg_entry_dragon
+| A stone dragon the size of a child crouches on the high ledge, wings folded tight against its ribs.
+| Its claws are cut deep into the marble plinth, as if it were afraid of being blown away.
+cooldown 5
+
+~ examine:crg_entry_rubble
+| Chunks of grey stone lie scattered across the marble floor, looking no different from any other broken masonry.
+cooldown 5
+
+# ---------------------------------------------------------------- K10 and K11, the archers' post and its mirrors
+
+~ open:crg_post_door
+| The wooden panel swings aside to reveal a narrow guard room smelling of old dust and dry linen.
+
+~ enter:crg_archers_post
+| Every spare inch of the room is crowded with tall mirrors, some draped in grey sheets and others facing the stone.
+| Arrow slits pierce the outer wall, though no bowman could easily stand at them now.
+once
+
+~ examine:crg_post_mirror
+| You lift the corner of a heavy dust sheet and find yourself staring into tarnished silver glass.
+| The frame is gilded oak, fine enough for a state bedroom, left here to rot in the dark.
+| The master of the house casts no reflection, and it seems he grew tired of glass that only showed him empty rooms.
+cooldown 5
+
+~ examine:crg_post_mirror_turned
+| This mirror has been stood with its face pressed flat against the cold masonry, showing only its bare wooden backing.
+| Whoever carried it in here did not even want the wall to look at itself.
+cooldown 5
+
+~ examine:crg_post_rack
+| The wooden racks meant for longbows stand bare, their pegs polished smooth by hands now three centuries dead.
+cooldown 5
+
+# ---------------------------------------------------------------- K14, the knights of the chapel passage
+
+~ examine:crg_faith_knights
+| Armed knights in full plate stand along both walls of the passage, their stone hands resting on their sword hilts.
+| As you walk between them, their visored heads seem to turn by slow degrees to watch you pass.
+| Even when you stop dead in your tracks, you feel their cold gaze lingering on the back of your neck.
+cooldown 5
+
+~ check:investigation:faith_knights_study:success
+| Looking closer at the visor, you see the eyes are not rounded at all, but carved as shallow, concave hollows.
+| It is an old mason's trick of light and shadow: there is no ghost in the stone, only clever chisel work.
+
+~ check:investigation:faith_knights_study:failure
+| You stare back into the visor until your eyes water, yet you cannot tell how the stone manages to follow you.
+
+# ---------------------------------------------------------------- K28 and K29, the king's balcony
+
+~ enter:castle_ravenloft_chapel_balcony
+| A narrow stair rises from the gloom, its timber landing groaning under the first boot.
+| Above, the rail of a private gallery looks out over the hollow dark of the chapel.
+once
+
+~ enter:crg_balcony_landing
+| Your boot comes down on the narrow landing, and the dry floorboards let out a long, sharp groan.
+| In the dead quiet of the chapel, the sound carries like a dropped tray of ironware.
+| If anything waits in the gallery above, it knows you are coming.
+cooldown 10
+
+~ enter:crg_balcony
+| The stair opens onto a private gallery overlooking the dark nave of the chapel far below.
+| Two high-backed wooden thrones stand at the rail, where the lord of the castle once sat to hear his prayers.
+| A figure sits slumped in each chair, heads bowed as if they fell asleep during a very long sermon.
+| [flag.crg_balcony_zombies_down] The two high thrones stand empty at the rail, their former occupants finally still upon the dark boards.
+| [flag.crg_balcony_zombies_down] Below the gallery, the chapel nave keeps its silence, indifferent to the change in seating.
+cooldown 20
+
+~ examine:crg_balcony_throne
+| The high throne is carved from dark timber, its velvet cushion rotted through and stained by what last sat in it.
+| From here, the lord could look down upon the altar without ever having to kneel among the congregation.
+cooldown 5
+
+# ---------------------------------------------------------------- K6, the window below the overlook
+
+~ search:crg_overlook_low_window
+| Leaning out over the low parapet, you peer down the sheer rock of the cliff into the swirling mist.
+| More than a hundred feet straight down, a tall lancet window is set directly into the mountain stone.
+| Its glass is so thick with old grime and swallow droppings that it blends almost completely into the crag.

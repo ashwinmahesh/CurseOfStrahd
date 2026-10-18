@@ -1,0 +1,11 @@
+# Castle Ravenloft, the entry hall (K7): four small stone dragons on plinths wake when the party turns to leave. In the
+# book's survey (Veeder on the 2016 text, Master Quest and Reloaded) they are red dragon wyrmlings that don't follow
+# anyone out of the room. Called by the plinths beside the great doors (call_when: the party has been further in and
+# the dinner truce is not holding); the lines are Gemini's (docs/plans/gemini_dungeon/C7). Nobody to talk to: no menu.
+
+~ wake
+Narrator: As you turn back toward the great doors, a dry grinding sound echoes from the ledges above.
+Narrator: Dust spills from the ceiling as the little stone dragons uncurl their tails and stretch their cramped wings.
+Narrator: They have waited very patiently for you to come in, and they have no intention of letting you leave.
+set crg_entry_dragons_woken
+combat crg_entry_dragons

@@ -1,0 +1,37 @@
+# Castle Ravenloft, the overlook (K6): a window caked with dirt a hundred and ten feet down the cliff face lights King
+# Barov and Queen Ravenovia's tomb (K88). The party finds it with a Search (the book's passive Perception 15, the
+# game's Search DC 15) and can climb down by rope or by hand into the tomb (spawn from_overlook). Lines are Gemini's
+# (docs/plans/gemini_dungeon/C7). Leaving it is always an option; a failed climb costs an hour, not a spent check.
+
+~ start
+Narrator: Far down the sheer rock, half-choked with ancient grime, a single window clings to the cliffside.
+* [if item:rope] Make fast a rope and lower yourselves to the window. -> rope
+* [Athletics DC 15] Climb down the bare rock face by hand. -> bare | slip
+* Step back from the parapet and leave the drop alone. -> END
+
+~ rope
+Narrator: You make the rope fast to the cold stone of the parapet and let the coil drop into the mist below.
+Narrator: Bracing your boots against the cliff face, you walk yourself backward down the rock, hand over hand.
+Narrator: The wind tugs at your cloak as the castle wall rises above you and the dirty glass draws near.
+-> landing
+
+~ bare
+Narrator: You swing your legs over the parapet and hunt with your boots for the first narrow seam in the rock.
+Narrator: The stone is damp with mist and slick under your fingers, offering only shallow cracks and cold ledges.
+Narrator: With the drop yawning beneath your heels, you work your way down the cliff one careful inch at a time.
+-> landing
+
+~ slip
+Narrator: Your fingers skitter off a patch of wet lichen, and for one sickening heartbeat you are falling.
+Narrator: You slam hard against a lower ledge and catch hold with bruised ribs and scraped knuckles, breathing fast.
+Narrator: The stone offers only greased holds and cold wind, forcing a slow, bruising retreat to the parapet.
+Narrator: An hour is lost to scraped knuckles and heaving lungs before you stand once more behind the wall.
+time +60
+-> start
+
+~ landing
+Narrator: You pry the grimy casement open and drop through, your boots ringing loud against a floor of cold stone.
+Narrator: Above you, a ceiling of tarnished gold mosaic glimmers dimly in the grey light filtering through tall stained glass.
+Narrator: You have landed squarely between two stone coffins, where King Barov and Queen Ravenovia lie side by side.
+time +30
+move castle_ravenloft_catacombs_tombs:from_overlook

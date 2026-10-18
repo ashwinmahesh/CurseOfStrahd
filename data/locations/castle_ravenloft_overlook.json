@@ -175,6 +175,19 @@
       ],
       "kind": "decor",
       "model": "crow"
+    },
+    {
+      "id": "crg_overlook_low_window",
+      "cell": [
+        19,
+        7
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "perception",
+      "label": "a dirt-caked window far below",
+      "model": "bridge_parapet",
+      "dialogue": "castle_ravenloft/overlook_window:start"
     }
   ],
   "encounters": [

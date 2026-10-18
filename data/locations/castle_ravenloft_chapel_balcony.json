@@ -1,0 +1,447 @@
+{
+  "id": "castle_ravenloft_chapel_balcony",
+  "name": "Castle Ravenloft, the King's Balcony",
+  "region": "castle_ravenloft",
+  "summary": "A private timber gallery high above the chapel nave, where two tall thrones stand behind a low rail so the lord of the house might hear his prayers in solitude.",
+  "text": "Dark timber boards run out to a low rail looking down into the dim well of the chapel nave. Two high thrones stand side by side in the dust, facing the cold stone below.",
+  "map": {
+    "rows": [
+      "######################",
+      "#22222222222222222222#",
+      "#22222222222222222222#",
+      "#22222222222222222222#",
+      "#22222===============#",
+      "#11111=               ",
+      "#11111=               ",
+      "#.....#               ",
+      "#.....#               ",
+      "#.....#               ",
+      "###..###              "
+    ],
+    "theme": "church",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "crg_balcony",
+      "name": "The king's balcony",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          20,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "crg_balcony_landing",
+      "name": "The creaking landing",
+      "cells": [
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "crg_balcony_stair_foot",
+      "name": "The foot of the narrow stair",
+      "cells": [
+        [
+          1,
+          7
+        ],
+        [
+          5,
+          10
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      8
+    ],
+    "from_chapel": [
+      3,
+      8
+    ]
+  },
+  "exits": [
+    {
+      "id": "balcony_stair_down",
+      "cell": [
+        3,
+        10
+      ],
+      "to": "castle_ravenloft_chapel",
+      "spawn": "from_balcony",
+      "label": "The narrow stair down to the chapel"
+    },
+    {
+      "id": "balcony_stair_down_east",
+      "cell": [
+        4,
+        10
+      ],
+      "to": "castle_ravenloft_chapel",
+      "spawn": "from_balcony",
+      "label": "The narrow stair down to the chapel"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "crg_balcony_throne_1",
+      "cell": [
+        9,
+        3
+      ],
+      "kind": "examine",
+      "label": "A high throne",
+      "model": "throne",
+      "say": "examine:crg_balcony_throne",
+      "facing": "south"
+    },
+    {
+      "id": "crg_balcony_throne_2",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "examine",
+      "label": "A high throne",
+      "model": "throne",
+      "say": "examine:crg_balcony_throne",
+      "facing": "south"
+    },
+    {
+      "id": "crg_balcony_window_1",
+      "cell": [
+        4,
+        0
+      ],
+      "kind": "decor",
+      "label": "A coloured window, black now",
+      "model": "window_stained"
+    },
+    {
+      "id": "crg_balcony_window_2",
+      "cell": [
+        10,
+        0
+      ],
+      "kind": "decor",
+      "label": "A coloured window, black now",
+      "model": "window_stained"
+    },
+    {
+      "id": "crg_balcony_window_3",
+      "cell": [
+        16,
+        0
+      ],
+      "kind": "decor",
+      "label": "A coloured window, black now",
+      "model": "window_stained"
+    },
+    {
+      "id": "crg_balcony_candles_1",
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "decor",
+      "label": "Candle stands",
+      "model": "candelabra"
+    },
+    {
+      "id": "crg_balcony_candles_2",
+      "cell": [
+        19,
+        2
+      ],
+      "kind": "decor",
+      "label": "Candle stands",
+      "model": "candelabra"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        19,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "crg_balcony_zombies",
+      "trigger": "enter_area:crg_balcony",
+      "when": "level >= 11",
+      "text": "The two corpses slumped in the high thrones stiffen and rise as you step out onto the gallery. Along the rail, pale shapes in the dark turn their heads toward you as one.",
+      "surprise": "party",
+      "flag": "crg_balcony_zombies_down",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            9,
+            2
+          ],
+          "name": "A figure in the king's throne"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            13,
+            2
+          ],
+          "name": "A figure in the queen's throne"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            3
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            2
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            2
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            1
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            1
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            1
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        }
+      ]
+    },
+    {
+      "id": "crg_balcony_zombies",
+      "trigger": "enter_area:crg_balcony",
+      "when": "level >= 10",
+      "text": "The two corpses slumped in the high thrones stiffen and rise as you step out onto the gallery. Along the rail, pale shapes in the dark turn their heads toward you as one.",
+      "surprise": "party",
+      "flag": "crg_balcony_zombies_down",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            9,
+            2
+          ],
+          "name": "A figure in the king's throne"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            13,
+            2
+          ],
+          "name": "A figure in the queen's throne"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            3
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            2
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            2
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            1
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            1
+          ],
+          "name": "A watcher at the rail",
+          "hp": 103
+        }
+      ]
+    },
+    {
+      "id": "crg_balcony_zombies",
+      "trigger": "enter_area:crg_balcony",
+      "text": "The two corpses slumped in the high thrones stiffen and rise as you step out onto the gallery. Along the rail, pale shapes in the dark turn their heads toward you as one.",
+      "surprise": "party",
+      "flag": "crg_balcony_zombies_down",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            9,
+            2
+          ],
+          "name": "A figure in the king's throne"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            13,
+            2
+          ],
+          "name": "A figure in the queen's throne"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            3
+          ],
+          "name": "A watcher at the rail"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "A watcher at the rail"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            2
+          ],
+          "name": "A watcher at the rail"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            2
+          ],
+          "name": "A watcher at the rail"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            1
+          ],
+          "name": "A watcher at the rail"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            1
+          ],
+          "name": "A watcher at the rail"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_chapel_balcony"
+  },
+  "rest": "risky"
+}

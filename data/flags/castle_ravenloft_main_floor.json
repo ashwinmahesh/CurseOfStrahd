@@ -1,0 +1,20 @@
+{
+  "region": "castle_ravenloft",
+  "flags": [
+    {
+      "id": "crg_entry_dragons_woken",
+      "type": "bool",
+      "summary": "The small stone dragons of the castle's entry hall (K7) woke as the party turned to leave (castle_ravenloft/entry_dragons:wake, set before the fight crg_entry_dragons): their plinths stand empty from then on."
+    },
+    {
+      "id": "crg_entry_dragons_broken",
+      "type": "bool",
+      "summary": "The party won crg_entry_dragons: the four dragons of the entry hall are broken stone, and the way out is free."
+    },
+    {
+      "id": "crg_balcony_zombies_down",
+      "type": "bool",
+      "summary": "The party won crg_balcony_zombies: the two dead in the thrones of the king's balcony above the chapel (K28) have fallen."
+    }
+  ]
+}

@@ -21,13 +21,13 @@
       "#............#....#..............###.........#######",
       "#.~..........#....#..............###.........#######",
       "#............#....#..............###.........#######",
-      "#########################..#########.........#######",
-      "######################........######.........#######",
-      "#################....#........#....#..........######",
-      "#################....#........#....#..........######",
-      "#################....#........#....#.........#######",
-      "#################............................#######",
-      "#################....#........#....#.........#######",
+      "##########.##############..#########.........#######",
+      "##########.###########........######.........#######",
+      "##............###....#........#....#..........######",
+      "##............###....#........#....#..........######",
+      "##............###....#........#....#.........#######",
+      "##............###............................#######",
+      "##............###....#........#....#.........#######",
       "#################....#........#....#....~....#######",
       "#################....#........#....#.........#######",
       "#########################..#########################"
@@ -213,6 +213,24 @@
       ],
       "floor": "interior/marble_floor",
       "walls": "castle/ashlar"
+    },
+    {
+      "id": "crg_archers_post",
+      "name": "The south archers' post",
+      "cells": [
+        [
+          2,
+          16
+        ],
+        [
+          13,
+          21
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall",
+      "light": "dark",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -419,6 +437,15 @@
       "label": "a seam beside the firebox",
       "secret_dc": 13,
       "when": "flag.crg_ever_hearth_out"
+    },
+    {
+      "id": "crg_post_door",
+      "cell": [
+        10,
+        15
+      ],
+      "label": "a panel set into the wall",
+      "secret_dc": 14
     }
   ],
   "props": [
@@ -866,6 +893,304 @@
         10
       ],
       "kind": "decor"
+    },
+    {
+      "id": "crg_entry_dragon_1",
+      "cell": [
+        22,
+        16
+      ],
+      "kind": "examine",
+      "label": "A small stone dragon",
+      "model": "gargoyle",
+      "say": "examine:crg_entry_dragon",
+      "when": "not flag.crg_entry_dragons_woken"
+    },
+    {
+      "id": "crg_entry_dragon_2",
+      "cell": [
+        29,
+        16
+      ],
+      "kind": "examine",
+      "label": "A small stone dragon",
+      "model": "gargoyle",
+      "say": "examine:crg_entry_dragon",
+      "when": "not flag.crg_entry_dragons_woken"
+    },
+    {
+      "id": "crg_entry_dragon_3",
+      "cell": [
+        24,
+        23
+      ],
+      "kind": "examine",
+      "label": "A small stone dragon",
+      "model": "gargoyle",
+      "say": "examine:crg_entry_dragon",
+      "when": "not flag.crg_entry_dragons_woken",
+      "call": "castle_ravenloft/entry_dragons:wake",
+      "approach": 2,
+      "call_when": "(visited:crg_great_entry or visited:crg_dining_hall or visited:crg_chapel_access or visited:crg_turret_post_east or visited:crg_turret_post_west) and not (flag.strahd_invitation == \"accepted\" and not flag.castle_dinner)"
+    },
+    {
+      "id": "crg_entry_dragon_4",
+      "cell": [
+        27,
+        23
+      ],
+      "kind": "examine",
+      "label": "A small stone dragon",
+      "model": "gargoyle",
+      "say": "examine:crg_entry_dragon",
+      "when": "not flag.crg_entry_dragons_woken",
+      "call": "castle_ravenloft/entry_dragons:wake",
+      "approach": 2,
+      "call_when": "(visited:crg_great_entry or visited:crg_dining_hall or visited:crg_chapel_access or visited:crg_turret_post_east or visited:crg_turret_post_west) and not (flag.strahd_invitation == \"accepted\" and not flag.castle_dinner)"
+    },
+    {
+      "id": "crg_entry_rubble_1",
+      "cell": [
+        23,
+        16
+      ],
+      "kind": "examine",
+      "label": "Broken stone",
+      "model": "rubble",
+      "say": "examine:crg_entry_rubble",
+      "when": "flag.crg_entry_dragons_broken"
+    },
+    {
+      "id": "crg_entry_rubble_2",
+      "cell": [
+        28,
+        16
+      ],
+      "kind": "examine",
+      "label": "Broken stone",
+      "model": "rubble",
+      "say": "examine:crg_entry_rubble",
+      "when": "flag.crg_entry_dragons_broken"
+    },
+    {
+      "id": "crg_entry_rubble_3",
+      "cell": [
+        23,
+        23
+      ],
+      "kind": "examine",
+      "label": "Broken stone",
+      "model": "rubble",
+      "say": "examine:crg_entry_rubble",
+      "when": "flag.crg_entry_dragons_broken"
+    },
+    {
+      "id": "crg_entry_rubble_4",
+      "cell": [
+        28,
+        23
+      ],
+      "kind": "examine",
+      "label": "Broken stone",
+      "model": "rubble",
+      "say": "examine:crg_entry_rubble",
+      "when": "flag.crg_entry_dragons_broken"
+    },
+    {
+      "id": "crg_post_mirror_1",
+      "cell": [
+        3,
+        16
+      ],
+      "kind": "examine",
+      "label": "A tall mirror, dull with dust",
+      "model": "mirror_full",
+      "say": "examine:crg_post_mirror"
+    },
+    {
+      "id": "crg_post_mirror_2",
+      "cell": [
+        6,
+        16
+      ],
+      "kind": "examine",
+      "label": "A tall mirror, dull with dust",
+      "model": "mirror_full",
+      "say": "examine:crg_post_mirror"
+    },
+    {
+      "id": "crg_post_mirror_3",
+      "cell": [
+        12,
+        16
+      ],
+      "kind": "examine",
+      "label": "A tall mirror, dull with dust",
+      "model": "mirror_full",
+      "say": "examine:crg_post_mirror"
+    },
+    {
+      "id": "crg_post_mirror_4",
+      "cell": [
+        14,
+        18
+      ],
+      "kind": "examine",
+      "label": "A mirror in a gilded frame",
+      "model": "mirror",
+      "say": "examine:crg_post_mirror"
+    },
+    {
+      "id": "crg_post_sheeted_1",
+      "cell": [
+        5,
+        19
+      ],
+      "kind": "examine",
+      "label": "A mirror under a dust sheet",
+      "model": "sheeted_furniture",
+      "say": "examine:crg_post_mirror_turned"
+    },
+    {
+      "id": "crg_post_sheeted_2",
+      "cell": [
+        9,
+        20
+      ],
+      "kind": "examine",
+      "label": "A mirror under a dust sheet",
+      "model": "sheeted_furniture",
+      "say": "examine:crg_post_mirror_turned"
+    },
+    {
+      "id": "crg_post_rack_1",
+      "cell": [
+        13,
+        19
+      ],
+      "kind": "examine",
+      "label": "A bow rack",
+      "model": "weapon_rack",
+      "say": "examine:crg_post_rack"
+    },
+    {
+      "id": "crg_post_rack_2",
+      "cell": [
+        2,
+        18
+      ],
+      "kind": "examine",
+      "label": "A bow rack",
+      "model": "weapon_rack",
+      "say": "examine:crg_post_rack"
+    },
+    {
+      "id": "crg_post_slit_1",
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "decor",
+      "label": "An arrow slit",
+      "model": "window_shuttered"
+    },
+    {
+      "id": "crg_post_slit_2",
+      "cell": [
+        14,
+        20
+      ],
+      "kind": "decor",
+      "label": "An arrow slit",
+      "model": "window_shuttered"
+    },
+    {
+      "id": "crg_faith_knight_1",
+      "cell": [
+        36,
+        14
+      ],
+      "kind": "examine",
+      "label": "A knight in stone",
+      "model": "statue_knight",
+      "say": "examine:crg_faith_knights",
+      "facing": "east",
+      "checks": [
+        {
+          "id": "faith_knights_study",
+          "skill": "investigation",
+          "dc": 13,
+          "label": "Study the visor",
+          "success": {
+            "codex": {
+              "id": "hall_of_faith_knights",
+              "title": "The Watching Stone Knights",
+              "text": "The eyes of the carved knights are not enchanted, only hollowed out with a curved chisel so the shadows shift as you pass. It is an old mason's trick, meant to keep the living honest at very little expense."
+            }
+          },
+          "failure": {}
+        }
+      ]
+    },
+    {
+      "id": "crg_faith_knight_2",
+      "cell": [
+        36,
+        16
+      ],
+      "kind": "examine",
+      "label": "A knight in stone",
+      "model": "statue_knight",
+      "say": "examine:crg_faith_knights",
+      "facing": "east"
+    },
+    {
+      "id": "crg_faith_knight_3",
+      "cell": [
+        36,
+        18
+      ],
+      "kind": "examine",
+      "label": "A knight in stone",
+      "model": "statue_knight",
+      "say": "examine:crg_faith_knights",
+      "facing": "east"
+    },
+    {
+      "id": "crg_faith_knight_4",
+      "cell": [
+        44,
+        13
+      ],
+      "kind": "examine",
+      "label": "A knight in stone",
+      "model": "statue_knight",
+      "say": "examine:crg_faith_knights",
+      "facing": "west"
+    },
+    {
+      "id": "crg_faith_knight_5",
+      "cell": [
+        44,
+        15
+      ],
+      "kind": "examine",
+      "label": "A knight in stone",
+      "model": "statue_knight",
+      "say": "examine:crg_faith_knights",
+      "facing": "west"
+    },
+    {
+      "id": "crg_faith_knight_6",
+      "cell": [
+        44,
+        21
+      ],
+      "kind": "examine",
+      "label": "A knight in stone",
+      "model": "statue_knight",
+      "say": "examine:crg_faith_knights",
+      "facing": "west"
     }
   ],
   "containers": [
@@ -1791,6 +2116,131 @@
           ],
           "name": "Captain Merrow",
           "hp": 110
+        }
+      ]
+    },
+    {
+      "id": "crg_entry_dragons",
+      "trigger": "dialogue",
+      "when": "level >= 11",
+      "text": "Four pairs of stone eyes turn to you, and the little dragons drop from their perches.",
+      "surprise": "",
+      "flag": "crg_entry_dragons_broken",
+      "monsters": [
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            22,
+            16
+          ],
+          "hp": 65
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            29,
+            16
+          ],
+          "hp": 65
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            24,
+            23
+          ],
+          "hp": 65
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            27,
+            23
+          ],
+          "hp": 65
+        }
+      ]
+    },
+    {
+      "id": "crg_entry_dragons",
+      "trigger": "dialogue",
+      "when": "level >= 10",
+      "text": "Four pairs of stone eyes turn to you, and the little dragons drop from their perches.",
+      "surprise": "",
+      "flag": "crg_entry_dragons_broken",
+      "monsters": [
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            22,
+            16
+          ],
+          "hp": 52
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            29,
+            16
+          ],
+          "hp": 52
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            24,
+            23
+          ],
+          "hp": 52
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            27,
+            23
+          ],
+          "hp": 52
+        }
+      ]
+    },
+    {
+      "id": "crg_entry_dragons",
+      "trigger": "dialogue",
+      "text": "Four pairs of stone eyes turn to you, and the little dragons drop from their perches.",
+      "surprise": "",
+      "flag": "crg_entry_dragons_broken",
+      "monsters": [
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            22,
+            16
+          ],
+          "hp": 47
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            29,
+            16
+          ],
+          "hp": 47
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            24,
+            23
+          ],
+          "hp": 47
+        },
+        {
+          "monster": "red_dragon_wyrmling",
+          "cell": [
+            27,
+            23
+          ],
+          "hp": 47
         }
       ]
     }

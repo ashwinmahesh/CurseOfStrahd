@@ -8,8 +8,8 @@
     "rows": [
       "####################",
       "#.....________.....#",
-      "#...~.________.....#",
-      "#.....________..~..#",
+      "#...~.________......",
+      "#.....________..~...",
       "#..................#",
       "##................##",
       "#.======....======.#",
@@ -84,6 +84,10 @@
     "from_main_floor": [
       9,
       19
+    ],
+    "from_balcony": [
+      18,
+      2
     ]
   },
   "exits": [
@@ -106,6 +110,26 @@
       "to": "castle_ravenloft_main_floor",
       "spawn": "from_chapel",
       "label": "Back to the chapel passage"
+    },
+    {
+      "id": "chapel_stair_up",
+      "cell": [
+        19,
+        2
+      ],
+      "to": "castle_ravenloft_chapel_balcony",
+      "spawn": "from_chapel",
+      "label": "The narrow stair up to the king's balcony"
+    },
+    {
+      "id": "chapel_stair_up_south",
+      "cell": [
+        19,
+        3
+      ],
+      "to": "castle_ravenloft_chapel_balcony",
+      "spawn": "from_chapel",
+      "label": "The narrow stair up to the king's balcony"
     }
   ],
   "doors": [
