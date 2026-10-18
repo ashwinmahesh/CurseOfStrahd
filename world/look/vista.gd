@@ -63,7 +63,7 @@ static func build(board: ArenaBoard, set_id: String) -> Vista:
 	v.centre = Vector3(board.grid.width / 2.0, 0.0, board.grid.depth / 2.0)
 	var styles := cfg.get("styles", {}) as Dictionary
 	v._ring(styles.get(set_id, styles.get("forest", {})) as Dictionary, float(cfg.get("radius", 230.0)))
-	var castle := cfg.get("castle", {}) as Dictionary
+	var castle := seen_from(cfg.get("castle", {}) as Dictionary, board.place)   # (its `from` for a place that sees it from afar)
 	var c_at := Vector2(float((castle["at"] as Array)[0]), float((castle["at"] as Array)[1]))
 	var c_far := (here as Vector2).distance_to(c_at)
 	var taken: Array[float] = []

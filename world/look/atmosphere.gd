@@ -1375,7 +1375,8 @@ func _scan_lights() -> void:
 ## `energy` and `reach` scale its strength and range in the Modern finish (the target frames: hearths and candelabras
 ## throw warm pools across a room; the party's own lantern is gentler, so a room's lights lead). `dark_out` scales it
 ## further outdoors after dark, where the moon, the sky's fill and the lit mist would otherwise drown a campfire.
-## Each kind that isn't steady flickers in its own way (LightFlicker.STYLES).
+## Each kind that isn't steady flickers in its own way (LightFlicker.STYLES). `no_shadow` that it never casts a shadow:
+## the Amber Temple's amber, a slow breath of light in every room that is lit from inside the stone (not a flame).
 const LIGHT_KINDS := {
 	"candle": {"size": 0.03, "fog": 1.0, "energy": 1.3, "reach": 1.15, "dark_out": 1.5},
 	"lamp": {"size": 0.06, "fog": 1.2, "energy": 1.25, "reach": 1.15, "dark_out": 1.5},
@@ -1383,6 +1384,7 @@ const LIGHT_KINDS := {
 	"torch": {"size": 0.12, "fog": 1.8, "energy": 1.3, "reach": 1.2, "dark_out": 2.5},
 	"fire": {"size": 0.25, "fog": 2.0, "energy": 1.6, "reach": 1.4, "dark_out": 3.5},
 	"magic": {"size": 0.12, "fog": 1.6, "steady": true},
+	"amber": {"size": 0.2, "fog": 1.5, "energy": 1.0, "reach": 1.1, "no_shadow": true},
 	"window": {"size": 0.4, "fog": 0.5, "steady": true},
 	"lit_window": {"size": 0.3, "fog": 1.0},
 	"spell": {"size": 0.1, "fog": 1.5},
@@ -1405,6 +1407,8 @@ func _light_kind(l: OmniLight3D) -> String:
 		return "lantern"
 	if str(l.name).begins_with("WindowLight"):
 		return "lit_window"
+	if l.has_meta("amber"):
+		return "amber"   # the light inside a block of the temple's amber (AmberGlow)
 	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
 	if _data_lights.has(c):
 		var k := str(_data_lights[c])
@@ -1429,6 +1433,8 @@ func _dress_light(light: Variant) -> void:
 	var kind := str(l.get_meta("light_kind")) if l.has_meta("light_kind") else _light_kind(l)
 	var spec := LIGHT_KINDS[kind] as Dictionary
 	l.set_meta("light_kind", kind)
+	if bool(spec.get("no_shadow", false)):
+		l.set_meta("no_shadow", true)   # (_update_lamp_shadows leaves it out of its budget)
 	l.light_size = float(spec["size"]) if Graphics.lamp_soft() else 0.0
 	l.light_volumetric_fog_energy = float(spec["fog"])
 	l.omni_range *= float(spec.get("reach", 1.0))

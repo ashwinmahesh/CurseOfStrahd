@@ -54,6 +54,32 @@ func test_no_two_regions_share_a_daylight() -> void:
 	Look.set_style(was, false)
 
 
+## The Amber Temple's maps each have a look of their own (the Amber Temple Look Plan, step 1): the great hall's violet
+## void with ash in the air, the library's lamplight with parchment dust, the vaults' cold dark with amber motes, and the
+## doors' cooler day.
+func test_the_amber_temples_rooms_have_their_own_moods() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var ids := {}
+	var motes := {}
+	for loc_id: String in ["amber_temple_faceless_god", "amber_temple_library", "amber_temple_vault"]:
+		ids[loc_id] = Atmosphere.mood_for(loc_id, Compendium.shared().get_entry("locations", loc_id))
+		var dust := ""
+		for w: Variant in _dressed(loc_id).get("weather", []):
+			if str((w as Dictionary).get("kind", "")) == "dust":
+				dust = str((w as Dictionary).get("core", ""))
+		motes[loc_id] = dust
+	assert_eq(str(ids["amber_temple_faceless_god"]), "faceless_void", "the great hall is the void")
+	assert_eq(str(ids["amber_temple_library"]), "amber_library", "the library has its own light")
+	assert_eq(str(ids["amber_temple_vault"]), "amber_vault", "so have the vaults")
+	assert_eq(str(motes["amber_temple_faceless_god"]), "lilac", "violet ash in the void")
+	assert_eq(str(motes["amber_temple_library"]), "parchment", "parchment dust in the library")
+	assert_eq(str(motes["amber_temple_vault"]), "wick", "amber motes in the vaults")
+	var void_tint := (_dressed("amber_temple_faceless_god")["flame_tint"] as Dictionary)
+	assert_true(float(void_tint["mix"]) <= 0.25, "the void's candles are no longer dragged to plum")
+	Look.set_style(was, false)
+
+
 func test_classic_keeps_its_frozen_look() -> void:
 	var was := Look.style()
 	Look.set_style("classic", false)

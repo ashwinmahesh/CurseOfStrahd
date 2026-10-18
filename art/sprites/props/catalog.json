@@ -164,31 +164,108 @@
     },
     "standing_stones": "standing_stones",
     "ritual_offerings": "offering_circle",
-    "sarc_khirad": "amber_sarcophagus",
-    "sarc_norganas": "amber_sarcophagus",
-    "sarc_savnok": "amber_sarcophagus",
-    "sarc_seriach": "amber_sarcophagus",
-    "sarc_sykane": "amber_sarcophagus",
-    "sarc_tarakamedes": "amber_sarcophagus",
-    "sarc_tenebrous": "amber_sarcophagus",
-    "sarc_yrrga": "amber_sarcophagus",
-    "sarc_zhudun": "amber_sarcophagus",
-    "sarc_dahlver_nar": "amber_sarcophagus",
-    "cracked_sarcophagus": "amber_sarcophagus",
-    "hollow_sarcophagus": "amber_sarcophagus",
-    "sarc_zantras": "amber_sarcophagus",
-    "sarc_fekre": "amber_sarcophagus",
-    "sarc_taar_haak": "amber_sarcophagus",
-    "sarc_shami_amourae": "amber_sarcophagus",
-    "sarc_yog": "amber_sarcophagus",
-    "sarc_drizlash": "amber_sarcophagus",
+    "sarc_khirad": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_norganas": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_savnok": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_seriach": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_sykane": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_tarakamedes": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_tenebrous": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_yrrga": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_zhudun": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_dahlver_nar": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "cracked_sarcophagus": {
+      "art": "amber_case",
+      "case": "cracked",
+      "classic": "amber_sarcophagus"
+    },
+    "hollow_sarcophagus": {
+      "art": "amber_case",
+      "case": "hollow",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_zantras": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_fekre": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_taar_haak": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_shami_amourae": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_yog": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_drizlash": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
     "cracked_colossus": {
       "art": "colossus",
       "see_through": true
     },
+    "castle_model": {
+      "art": "castle_model",
+      "classic": "table"
+    },
     "faceless_statue": {
       "art": "statue_faceless",
-      "see_through": true
+      "see_through": true,
+      "god": true
     },
     "berez_hut": {
       "art": "hut_lysaga",
@@ -352,6 +429,74 @@
     "ambush_lookout_tree": {
       "art": "hunters_tree_stand",
       "fade": true
+    },
+    "empty_plinth": {
+      "art": "amber_case",
+      "case": "plinth",
+      "classic": "altar_stone"
+    },
+    "sleeper_1": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_2": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_3": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_4": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_5": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_6": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_7": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_8": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "eye_block": {
+      "art": "amber_case",
+      "case": "block",
+      "classic": "rubble"
+    },
+    "pact_ledger": {
+      "art": "copper_ledger"
+    },
+    "pilgrim_candles_3": {
+      "art": "offering_candles"
+    },
+    "pilgrim_candles_5": {
+      "art": "offering_candles"
+    },
+    "eye_shards_a": {
+      "art": "amber_shards"
+    },
+    "eye_shards_b": {
+      "art": "amber_shards"
+    },
+    "eye_spire": {
+      "art": "amber_spire"
     }
   },
   "low_cover": {
@@ -605,7 +750,9 @@
         "width": 1.16
       },
       "honey_doors": {
-        "art": "amber_doors"
+        "art": "amber_doors",
+        "height": 2.1,
+        "width": 0.95
       }
     }
   },
@@ -1888,7 +2035,7 @@
         "timber": "village/cobbles",
         "church": "village/grass",
         "castle": "castle/courtyard",
-        "amber": "mountain/snow",
+        "amber": "mountain/cliff",
         "tent": "village/grass"
       },
       "outside": {
@@ -1942,6 +2089,9 @@
         },
         "castle_ravenloft_main_floor": {
           "ground": "castle/courtyard"
+        },
+        "amber_temple_entrance": {
+          "ground": "mountain/snow"
         }
       }
     },
@@ -4036,6 +4186,444 @@
           ],
           "max": 4
         }
+      ],
+      "amber_temple_faceless_god": [
+        {
+          "decals": [
+            "floor_cracks"
+          ],
+          "on": "floor",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.1
+          ],
+          "max": 30
+        },
+        {
+          "decals": [
+            "floor_stains"
+          ],
+          "on": "floor",
+          "chance": 0.025,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 14
+        },
+        {
+          "decals": [
+            "floor_blood"
+          ],
+          "on": "floor",
+          "chance": 0.006,
+          "size": [
+            0.6,
+            1.1
+          ],
+          "max": 3
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "edge",
+          "chance": 0.08,
+          "size": [
+            0.5,
+            0.9
+          ],
+          "max": 25
+        },
+        {
+          "decals": [
+            "wall_damp"
+          ],
+          "on": "wall",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 20
+        },
+        {
+          "decals": [
+            "wall_seeps"
+          ],
+          "on": "wall",
+          "chance": 0.12,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 28,
+          "rooms": [
+            "ring of amber",
+            "vestiges",
+            "great hall",
+            "vault of offerings"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_1"
+          ],
+          "on": "floor",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.4
+          ],
+          "max": 22,
+          "rooms": [
+            "echoes",
+            "cells",
+            "sanctum",
+            "stair"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_4"
+          ],
+          "on": "edge",
+          "chance": 0.12,
+          "size": [
+            0.7,
+            1.2
+          ],
+          "max": 24,
+          "rooms": [
+            "echoes",
+            "cells",
+            "sanctum",
+            "stair"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_3"
+          ],
+          "on": "floor",
+          "chance": 0.018,
+          "size": [
+            0.9,
+            1.4
+          ],
+          "max": 4,
+          "rooms": [
+            "sanctum",
+            "great hall"
+          ]
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_bones",
+            "kit_scatter_debris"
+          ],
+          "on": "edge",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 40
+        }
+      ],
+      "amber_temple_library": [
+        {
+          "decals": [
+            "floor_cracks"
+          ],
+          "on": "floor",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.1
+          ],
+          "max": 30
+        },
+        {
+          "decals": [
+            "floor_stains"
+          ],
+          "on": "floor",
+          "chance": 0.025,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 14
+        },
+        {
+          "decals": [
+            "floor_blood"
+          ],
+          "on": "floor",
+          "chance": 0.006,
+          "size": [
+            0.6,
+            1.1
+          ],
+          "max": 3
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "edge",
+          "chance": 0.08,
+          "size": [
+            0.5,
+            0.9
+          ],
+          "max": 25
+        },
+        {
+          "decals": [
+            "wall_damp"
+          ],
+          "on": "wall",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 20
+        },
+        {
+          "decals": [
+            "wall_seeps"
+          ],
+          "on": "wall",
+          "chance": 0.12,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 28,
+          "rooms": [
+            "ring of amber",
+            "vestiges",
+            "great hall",
+            "vault of offerings"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_1"
+          ],
+          "on": "floor",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.4
+          ],
+          "max": 22,
+          "rooms": [
+            "echoes",
+            "cells",
+            "sanctum",
+            "stair"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_4"
+          ],
+          "on": "edge",
+          "chance": 0.12,
+          "size": [
+            0.7,
+            1.2
+          ],
+          "max": 24,
+          "rooms": [
+            "echoes",
+            "cells",
+            "sanctum",
+            "stair"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_3"
+          ],
+          "on": "floor",
+          "chance": 0.018,
+          "size": [
+            0.9,
+            1.4
+          ],
+          "max": 4,
+          "rooms": [
+            "sanctum",
+            "great hall"
+          ]
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_bones",
+            "kit_scatter_debris"
+          ],
+          "on": "edge",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 40
+        }
+      ],
+      "amber_temple_vault": [
+        {
+          "decals": [
+            "floor_cracks"
+          ],
+          "on": "floor",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.1
+          ],
+          "max": 30
+        },
+        {
+          "decals": [
+            "floor_stains"
+          ],
+          "on": "floor",
+          "chance": 0.025,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 14
+        },
+        {
+          "decals": [
+            "floor_blood"
+          ],
+          "on": "floor",
+          "chance": 0.006,
+          "size": [
+            0.6,
+            1.1
+          ],
+          "max": 3
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "edge",
+          "chance": 0.08,
+          "size": [
+            0.5,
+            0.9
+          ],
+          "max": 25
+        },
+        {
+          "decals": [
+            "wall_damp"
+          ],
+          "on": "wall",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 20
+        },
+        {
+          "decals": [
+            "wall_seeps"
+          ],
+          "on": "wall",
+          "chance": 0.12,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 28,
+          "rooms": [
+            "ring of amber",
+            "vestiges",
+            "great hall",
+            "vault of offerings"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_1"
+          ],
+          "on": "floor",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.4
+          ],
+          "max": 22,
+          "rooms": [
+            "echoes",
+            "cells",
+            "sanctum",
+            "stair"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_4"
+          ],
+          "on": "edge",
+          "chance": 0.12,
+          "size": [
+            0.7,
+            1.2
+          ],
+          "max": 24,
+          "rooms": [
+            "echoes",
+            "cells",
+            "sanctum",
+            "stair"
+          ]
+        },
+        {
+          "decals": [
+            "floor_temple_3"
+          ],
+          "on": "floor",
+          "chance": 0.018,
+          "size": [
+            0.9,
+            1.4
+          ],
+          "max": 4,
+          "rooms": [
+            "sanctum",
+            "great hall"
+          ]
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_bones",
+            "kit_scatter_debris"
+          ],
+          "on": "edge",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 40
+        }
       ]
     }
   },
@@ -4883,17 +5471,14 @@
       "amber_hall": {
         "floor": [
           "rubble",
-          "statue_head",
-          "snowdrift",
           "bones",
           "candle_cluster",
-          "rubble"
+          "rubble",
+          "bones"
         ],
         "centre": [
           "rubble",
-          "snowdrift",
-          "bones",
-          "statue_head"
+          "bones"
         ],
         "floor_fill": 0.65,
         "centre_fill": 0.4
@@ -4971,7 +5556,7 @@
       "cold_sanctum": {
         "floor": [
           "brazier_cold",
-          "statue_head",
+          "rubble",
           "rubble"
         ],
         "centre": [

@@ -30,8 +30,8 @@ static func on() -> bool:
 
 
 ## The conversation with `npc_id` opened in `view`: the camera eases in toward the leader and the speaker (the leader
-## alone when the speaker isn't on the map).
-static func open(view: LocationView, npc_id: String) -> void:
+## alone when the speaker isn't on the map; or the prop that speaks, a vestige's block of amber).
+static func open(view: LocationView, npc_id: String, prop_id: String = "") -> void:
 	if not on() or view == null or view.rig == null or view.in_combat or not view.is_inside_tree():
 		return
 	var rig := view.rig
@@ -39,6 +39,8 @@ static func open(view: LocationView, npc_id: String) -> void:
 	var tok: Variant = view.npc_tokens.get(npc_id, view._staged.get(npc_id))   # a person of the place, or one a scene brought on
 	if is_instance_valid(tok) and (tok as Node3D).is_inside_tree():
 		focus = (focus + (tok as Node3D).global_position) / 2.0
+	elif prop_id != "" and view.prop_cell(prop_id) != null:
+		focus = (focus + view.board.cell_center(view.prop_cell(prop_id) as Vector2i)) / 2.0   # a vestige's block speaks
 	# The rig leans toward shot_focus by shot_weight: a point toward the player, so the pair sits above the box.
 	focus += rig.global_basis * Vector3(0.0, 0.0, RAISE / LEAN)
 	var tw := _tween(rig)

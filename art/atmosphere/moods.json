@@ -70,7 +70,9 @@
     "vallaki_st_andrals": "rich_chapel",
     "abbey_of_st_markovia_shrine": "stark_chapel",
     "berez_marinas_monument": "drowned_shrine",
-    "amber_temple_faceless_god": "faceless_void"
+    "amber_temple_faceless_god": "faceless_void",
+    "amber_temple_library": "amber_library",
+    "amber_temple_vault": "amber_vault"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -2817,12 +2819,12 @@
         "times": {
           "day": {
             "sky": "silver",
-            "fog": "vellum",
-            "ambient": "silver",
-            "ambient_energy": 0.65,
-            "key": "ivory",
-            "key_energy": 1.0,
-            "mist": "vellum",
+            "fog": "frost",
+            "ambient": "mist_blue",
+            "ambient_energy": 0.6,
+            "key": "frost",
+            "key_energy": 0.85,
+            "mist": "frost",
             "mist_strength": 0.5
           },
           "dusk": {
@@ -3777,8 +3779,84 @@
         },
         "flame_tint": {
           "colour": "plum",
-          "mix": 0.5,
+          "mix": 0.2,
           "energy": 0.7
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "lilac",
+            "rim": "orchid",
+            "amount": 70
+          }
+        ]
+      }
+    },
+    "amber_library": {
+      "like": "amber_temple",
+      "modern": {
+        "tone": {
+          "shade": "ember_deep",
+          "amount": 0.35,
+          "ambient_tint": "candle",
+          "ambient_mix": 0.5
+        },
+        "times": {
+          "any": {
+            "ambient": "candle",
+            "ambient_energy": 0.8
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "parchment",
+            "rim": "flame",
+            "amount": 90
+          }
+        ],
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.3,
+          "energy": 1.1
+        }
+      }
+    },
+    "amber_vault": {
+      "like": "amber_temple",
+      "modern": {
+        "tone": {
+          "shade": "night_deep",
+          "amount": 0.5,
+          "ambient_tint": "moon_blue",
+          "ambient_mix": 0.5
+        },
+        "times": {
+          "any": {
+            "ambient": "moon_blue",
+            "ambient_energy": 0.6,
+            "mist": "frost",
+            "mist_strength": 0.4
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "wick",
+            "rim": "flame",
+            "amount": 90
+          }
+        ],
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.25,
+          "energy": 1.0
         }
       }
     }

@@ -69,6 +69,25 @@ func test_landmarks_stand_where_they_are() -> void:
 	gates.queue_free()
 
 
+## From the Amber Temple's doors (Amber Temple Look Plan, step 1) Castle Ravenloft lies far below: the castle's own `from`
+## entry for that place lets it show from farther than anywhere else sees it, drawn larger and sunk deeper; the road
+## below the doors keeps to the castle's usual reach.
+func test_the_castle_lies_far_below_the_amber_temples_doors() -> void:
+	Look.set_style("modern", false)
+	var cfg := (Vista.config()["castle"] as Dictionary)
+	var doors := _view("amber_temple_entrance")
+	var castle := doors.atmosphere.land.vista.get_node_or_null("CastleRavenloft") as Node3D
+	assert_true(castle != null, "Castle Ravenloft seen from the doors")
+	var seen := Vista.seen_from(cfg, "amber_temple_entrance")
+	assert_true(float(seen["within"]) > float(cfg["within"]), "from farther than any other place sees it")
+	assert_true(float(seen["height"]) > float(cfg["height"]), "drawn larger")
+	assert_eq(float(Vista.seen_from(cfg, "village_of_barovia")["within"]), float(cfg["within"]), "other places keep its reach")
+	doors.queue_free()
+	var road := _view("amber_temple_road")
+	assert_true(road.atmosphere.land.vista.get_node_or_null("CastleRavenloft") == null, "not from the road below the doors")
+	road.queue_free()
+
+
 ## Each region's own landmark on the horizon (the vault's Region Variety Plan): Van Richten's tower toward its bearing
 ## from the lake shore, the windmill from the village, none from its own place nor a mountain from its own slopes, and
 ## never more than Vista.MAX_LANDMARKS at once.

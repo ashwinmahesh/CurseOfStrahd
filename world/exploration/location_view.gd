@@ -109,6 +109,8 @@ var _solo_before := false
 var solo := false                    ## move only the leader (split the party)
 var busy := false                    ## walking, talking or fighting
 var in_combat := false
+## The id of the fight on now ("" when none): the Amber Temple's sanctum flares its braziers for the fight with Vosk (AmberGlow).
+var fight_id := ""
 var combat_view: CombatView = null
 ## The encounter spec of the fight that ended last (the game reads its `final_battle` when combat_ended fires).
 var last_encounter: Dictionary = {}
@@ -126,6 +128,10 @@ var _step_t := 0.0
 var _glides: Dictionary = {}
 var _areas_in: Dictionary = {}
 var _exit_check := 0.0
+## The prop whose own conversation is starting or playing (LocationInteraction), and whoever's line is on screen now
+## (GameRoot hands it over beat by beat): the temple's amber flares for a vestige speaking and the camera leans to it.
+var dialogue_prop := ""
+var speaking := ""
 ## The party crouches while sneaking (CombatToken.sneaking; sprites with the fuller animation set show it).
 var _shown_sneaking := false
 var _spawn_name := ""
@@ -158,6 +164,7 @@ func _ready() -> void:
 	LocationBuilder._build_props(self)
 	LocationBuilder.open_small_decor(self)
 	LocationBuilder._build_lights(self)
+	AmberGlow.dress_place(self)   # the Amber Temple's own small things: glints on the offerings, the sanctum's braziers
 	LocationNpcs._build_npcs(self)
 	LocationParty._place_party(self)
 	LocationTraps._mark_found_traps(self)
@@ -204,6 +211,7 @@ func _process(delta: float) -> void:
 	if _exit_check <= 0.0:
 		_exit_check = 0.25
 		refresh_exits()
+		AmberGlow.refresh(self)   # the temple's amber: waiting, speaking, sated or sealed
 		LocationStealth.refresh_waiting(self)   # a door opened, a lamp lit: foes come into view
 	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.mesh_occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
@@ -264,6 +272,20 @@ func time_phase() -> String:
 
 func refresh_exits() -> void:
 	LocationBuilder.refresh_exits(self)
+
+
+## Whose line is on screen now ("" when none): the amber of a vestige speaking flares (AmberGlow).
+func set_speaking(speaker_id: String) -> void:
+	speaking = speaker_id
+	AmberGlow.refresh(self)
+
+
+## The square of a location prop by its id, or null.
+func prop_cell(prop_id: String) -> Variant:
+	for p: Variant in loc.get("props", []):
+		if str((p as Dictionary).get("id", "")) == prop_id:
+			return _cell((p as Dictionary)["cell"])
+	return null
 
 
 # --- The people here (LocationNpcs) -----------------------------------------------------------------

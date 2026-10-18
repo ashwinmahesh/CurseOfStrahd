@@ -84,6 +84,7 @@ static func dress(view: LocationView, trap: Dictionary) -> Array[Node3D]:
 			var piece := SetDressing.place(view.board, {"id": "trap_%s_%d" % [trap["id"], i], "cell": [cells[i].x, cells[i].y], "model": art})
 			if piece != null:
 				out.append(piece)
+	out.append_array(TrapGlow.dress(view, trap, cells))   # the temple's traps glow once found (step 13)
 	# A pit's border runs just outside its pale lip; any other trap's just inside its squares.
 	out.append(_border(view, cells, -0.07 if PitFall.is_pit(trap) else INSET))
 	return out

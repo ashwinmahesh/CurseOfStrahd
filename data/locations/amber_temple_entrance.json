@@ -109,7 +109,9 @@
         ]
       ],
       "light": "dark",
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "church/frosted_flags",
+      "raised": true
     },
     {
       "id": "west_guardroom",
@@ -124,7 +126,9 @@
           7
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "church/frosted_flags",
+      "raised": true
     },
     {
       "id": "east_guardroom",
@@ -139,7 +143,9 @@
           7
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "church/frosted_flags",
+      "raised": true
     }
   ],
   "spawns": {
@@ -492,16 +498,17 @@
         15,
         5
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
-      "dim_ft": 15
+      "dim_ft": 15,
+      "color": "mist_blue"
     },
     {
       "cell": [
         16,
         9
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10
     },
@@ -510,9 +517,39 @@
         18,
         11
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        15,
+        2
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        3,
+        5
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        27,
+        5
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
     }
   ],
   "traps": [

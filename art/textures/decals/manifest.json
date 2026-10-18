@@ -448,6 +448,70 @@
       "aspect": 1.406,
       "sheet": "floor_ruts",
       "subject": "a straight stretch of two parallel wheel ruts running from left to right, shallow and grassy at the edges, fading away at both ends"
+    },
+    "wall_seeps_1": {
+      "file": "art/textures/decals/wall_seeps_1.webp",
+      "normal_file": "art/textures/decals/wall_seeps_1_n.webp",
+      "view": "wall",
+      "aspect": 0.611,
+      "sheet": "wall_seeps",
+      "subject": "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: a thick wet ribbon of amber that starts as a thin crack-shaped seam at the top and runs down in three slow tongues of different length, the longest ending in a heavy drop"
+    },
+    "wall_seeps_2": {
+      "file": "art/textures/decals/wall_seeps_2.webp",
+      "normal_file": "art/textures/decals/wall_seeps_2_n.webp",
+      "view": "wall",
+      "aspect": 0.788,
+      "sheet": "wall_seeps",
+      "subject": "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: a broad slow sheet of amber that is thin and ragged at the top and pools thick at the bottom with three short drips hanging from its lower edge"
+    },
+    "wall_seeps_3": {
+      "file": "art/textures/decals/wall_seeps_3.webp",
+      "normal_file": "art/textures/decals/wall_seeps_3_n.webp",
+      "view": "wall",
+      "aspect": 0.122,
+      "sheet": "wall_seeps",
+      "subject": "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: one single long thin tear of amber running straight down with a small round bead caught at its end"
+    },
+    "wall_seeps_4": {
+      "file": "art/textures/decals/wall_seeps_4.webp",
+      "normal_file": "art/textures/decals/wall_seeps_4_n.webp",
+      "view": "wall",
+      "aspect": 0.726,
+      "sheet": "wall_seeps",
+      "subject": "only the glossy honey-gold amber itself, no stone and no wall drawn behind it: a loose scatter of small beads and drops of amber, some joined by thin glossy threads"
+    },
+    "floor_temple_1": {
+      "file": "art/textures/decals/floor_temple_1.webp",
+      "normal_file": "art/textures/decals/floor_temple_1_n.webp",
+      "view": "floor",
+      "aspect": 1.024,
+      "sheet": "floor_temple",
+      "subject": "a patch of pale blue-white frost rime, delicate crystal ferns spreading out in all directions from a cold centre with soft ragged edges"
+    },
+    "floor_temple_2": {
+      "file": "art/textures/decals/floor_temple_2.webp",
+      "normal_file": "art/textures/decals/floor_temple_2_n.webp",
+      "view": "floor",
+      "aspect": 0.977,
+      "sheet": "floor_temple",
+      "subject": "a curved arc of thin inlaid gold line set into black stone, a quarter of a circle with a small engraved diamond at its middle, worn and a little dull"
+    },
+    "floor_temple_3": {
+      "file": "art/textures/decals/floor_temple_3.webp",
+      "normal_file": "art/textures/decals/floor_temple_3_n.webp",
+      "view": "floor",
+      "aspect": 0.992,
+      "sheet": "floor_temple",
+      "subject": "a set of four long parallel scrape marks gouged across stone, where something heavy was dragged, pale scratched grooves with grit"
+    },
+    "floor_temple_4": {
+      "file": "art/textures/decals/floor_temple_4.webp",
+      "normal_file": "art/textures/decals/floor_temple_4_n.webp",
+      "view": "floor",
+      "aspect": 0.992,
+      "sheet": "floor_temple",
+      "subject": "a drift of fine white frost dust and a few tiny ice crystals scattered unevenly with soft edges"
     }
   }
 }

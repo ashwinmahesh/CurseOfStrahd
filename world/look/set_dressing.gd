@@ -102,6 +102,18 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 		bank.position = board.cell_center(cell)
 		root.add_child(bank)
 		return root
+	if art == "amber_case":
+		# The Amber Temple's amber (AmberGlow): built in code and lit from inside in the Modern finish; Classic keeps the
+		# lying box it was frozen with (the catalog entry's `classic`).
+		if Look.modern():
+			return AmberGlow.place(board, root, cell, look)
+		art = str(look.get("classic", "amber_sarcophagus"))
+	if art == "castle_model":
+		# The table model of Castle Ravenloft in Exethanter's study (CastleModel), built from the castle kit in the Modern
+		# finish; Classic keeps the round table's picture (the catalog entry's `classic`).
+		if Look.modern():
+			return CastleModel.place(board, root, cell)
+		art = str(look.get("classic", "table"))
 	var on_wall_square := _wall_at(board, cell)
 	if on_wall_square and has_art(str(look.get("on_wall", ""))):
 		art = str(look["on_wall"])
@@ -166,6 +178,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 			if piece != null and int(spec.get("stand_ft", 0)) > 0:
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
 				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET
+			if piece != null and bool(look.get("god", false)):
+				FacelessGod.dress(board, root, piece, cell)   # the faceless god (step 7): on its steps, a void for a face, a shaft of light
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
 			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):
@@ -286,6 +300,8 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 		sp.position = Vector3(0, 0, 0)
 		sp.name = "Leaf"
 		leaf.add_child(sp)
+	if art == "amber_doors" and Look.modern():
+		AmberGlow.dress_door(leaf, w, h)   # the honey-glow doors' panes are amber, pulsing, lighting both sides
 	var statue := str(look.get("statue", ""))
 	if bool(look.get("pillars", false)):
 		# A gateway between two stone pillars (the Gates of Barovia), each with a statue on top where there's art:
@@ -495,9 +511,11 @@ static func flame(size: float, tint: String = "") -> Node3D:
 
 
 ## The palette colours a flame's surfaces are drawn in (its body, its red tongues, its white-hot heart), as the 2D flame
-## has them; a green fire's ("bile") in its own.
+## has them; a green fire's ("bile") and a violet one's ("violet": the Amber Temple's braziers) and a frost-blue one's ("frost": the hall of echoes' candles) in their own.
 const FLAME_TINTS := {"": {"glow_flame": "candle", "glow_ember": "vampire_red", "glow_candle": "wick"},
-	"bile": {"glow_flame": "bile", "glow_ember": "moss", "glow_candle": "frost"}}
+	"bile": {"glow_flame": "bile", "glow_ember": "moss", "glow_candle": "frost"},
+	"violet": {"glow_flame": "orchid", "glow_ember": "plum", "glow_candle": "frost"},
+	"frost": {"glow_flame": "moonlight", "glow_ember": "mist_blue", "glow_candle": "frost"}}
 
 
 ## A location light's colour: its data `color` (a palette colour: a witch's green hearth), else candlelight.
@@ -519,6 +537,23 @@ static func tint_flames(root: Node, tint: String) -> void:
 				var name := src.resource_name if src != null else ""
 				if name.begins_with("glow_"):
 					mi.set_surface_override_material(i, _flame_material(str(swap.get(name, name.trim_prefix("glow_")))))
+
+
+## Recolours the flames modelled into the pieces under `root` (a desk's candle, a cluster of candles: their own `glow_*`
+## surfaces, not a Flame node) as FLAME_TINTS[`tint`] has them: the hall of echoes' frost-blue candles.
+static func tint_candles(root: Node, tint: String) -> void:
+	if not FLAME_TINTS.has(tint):
+		return
+	var swap := FLAME_TINTS[tint] as Dictionary
+	for n: Node in root.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		if mi.mesh == null:
+			continue
+		for i in mi.mesh.get_surface_count():
+			var src := mi.mesh.surface_get_material(i)
+			var name := src.resource_name if src != null else ""
+			if name.begins_with("glow_"):
+				mi.set_surface_override_material(i, _flame_material(str(swap.get(name, name.trim_prefix("glow_")))))
 
 
 static func _flame_3d(size: float, tint: String) -> Node3D:

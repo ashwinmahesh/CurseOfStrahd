@@ -259,7 +259,7 @@ broker is dealt with, by any outcome. A party at 9 leaves at 10; at 10, leaves a
 
 ## 10. Flags (data/flags/amber_temple.json) and what later regions read
 
-59 flags, all set and read (`make validate`). For Phase 6 (the castle, the endings):
+63 flags, all set and read (`make validate`). For Phase 6 (the castle, the endings):
 
 - **`strahd_pact_known`** (`ledger` / `full`): the party knows the terms (and, with the Tome, why). An option against
   Strahd; the endings.
@@ -312,6 +312,38 @@ codex entry (it is a prop conversation today).
   amber colossus), `vestige_amber` (one shared portrait: a glow in amber).
 - **Effects**: amber glow light (the `magic` light kind is used), grey corpse-light for Zhudun's bearer, green fire for
   the flameskulls and braziers.
+
+### Built (the Look Plan, 2026-10-18; docs/art/interiors.md, "The Amber Temple", has the detail)
+
+Modern finish only; Classic keeps what it had. Nothing here changes a rule, a flag's meaning or a fight.
+
+- **Rooms**: each room has its own light by colour (frost-blue vestibule, guardrooms, cells and sanctum; a violet fill in
+  the great hall; honey down the nave; green flameskull points in the library), frosted flags in the cold rooms, rock (not
+  a snowfield) round the three inside maps, polished black stone that mirrors the glow, and the `amber` light kind (one
+  slow breath about every five seconds).
+- **The amber** (`AmberGlow`): the sixteen vestiges stand upright, two squares tall, lit from inside, each holding its own
+  shape (game-icons.net silhouettes, art/amber_shapes.json, `make vestige_shapes`) with a touch of its own; the hollow
+  sarcophagus is the largest block of all, dead and clouded, with a thin crimson thread rising out of it (bright once
+  `amber_thread_seen`); the Eye's block is the size of a cottage, broken open like an egg; the sleepers lie down. A block
+  waits (brighter as the party nears), flares while its vestige speaks, settles once its gift is taken (`gift_of_<name>`)
+  and goes dark when the temple is sealed. Each vestige calls once as the party comes within three squares, before anyone
+  touches it (`call` on its prop, `~ <name>_call` in vestiges.dialogue, flag `amber_calls_begun` for the opener).
+- **The great hall**: the faceless god stands on three steps of black stone with a violet-ringed void for a face and a
+  cold shaft of light on its hands and the pilgrims' candles at its feet (`FacelessGod`); the hall of echoes is the cold
+  room (frost-blue candles but Patrina's, falling paper flakes, `AmberMotion`); the ring of amber is the warmest room.
+- **The vaults and the library**: the honey-glow doors are two amber panes with a light on both sides; the heaps of the
+  vault of offerings glint; the sanctum's cold braziers flare violet for the fight with Vosk; amber seeps from the weeping
+  crack; Vosk's cup steams, Exethanter's notes stir, Yrrga's eye follows the leader; a model of Castle Ravenloft (the
+  castle kit at a fiftieth) stands on the table in Exethanter's study; the glyph line, the god's gaze and the frost vent
+  glow once found (`TrapGlow`).
+- **Still to do**: the doors outside (the dead twin colossus dark, the Sentinel's dais and eye light, the warm wedge of
+  light from the doors' seams, the shards once it is destroyed) and the Sentinel stepping down as a 30 ft figure (plan
+  items 12 and 25) wait for the scale-ups work (per-prop `tint`/`scale`, the Sentinel's height) to land on main; the
+  pillar strips and wall seams do not go dark when the temple is sealed; the icicle props (cut from the paid art) wait for
+  the doors.
+- **Paid art** (plan section 6, Ashwin's yes 2026-10-18): violet-black marble floors and amber-glazed walls in the great hall, the
+  ring and the hall of vestiges; amber seeps down their walls, frost and scrapes in the cold rooms, and a gold inlaid ring in the
+  ring of amber; the copper pact ledger, offering-candle dishes and amber shards.
 
 ## 14. The critical path (story bot)
 
@@ -370,3 +402,7 @@ should choose **"No one"** (the last entry). With no gift taken, the Sentinel le
 - Travel: data/travel/amber_temple.json; random encounters: data/random_encounters/amber_temple_road.json
 - Dialogue: narrative/amber_temple/{sentinel, vestiges, exethanter, library, vosk, patrina, vault, road}.dialogue;
   narrative/narrator/amber_temple.dialogue; narrative/banter/amber_temple.dialogue
+- The look: world/look/{amber_glow, amber_motion, faceless_god, castle_model, trap_glow}.gd; shaders/world/{amber, amber_shape,
+  amber_thread, amber_seep, glint, faceless_void, trap_glow}.gdshader; art/amber_shapes.json and art/textures/amber/shapes/
+  (`make vestige_shapes`); tests/integration/test_{amber_glow, amber_calls, amber_sanctum, amber_motion, faceless_god,
+  castle_model, trap_glow}.gd; Gemini's drafts in docs/story/drafts/{amber-calls, amber-castle-model}/

@@ -350,6 +350,8 @@ class Story:
                             self.changed |= self.add(("flag", f, True), f"{w} prop {p['id']}")
                     self._check_flags(p, f"{w} prop {p['id']}")
                     self.walk_ref(p.get("dialogue"), f"{w} prop {p['id']}")
+                    if self.possible(p.get("call_when", "")):
+                        self.walk_ref(p.get("call"), f"{w} prop {p['id']} call")
             for c in loc.get("containers", []):
                 if not self.beside(cells, c["cell"]) or not self.possible(c.get("when", "")):
                     continue

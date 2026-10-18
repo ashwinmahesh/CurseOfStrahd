@@ -53,7 +53,8 @@
           28
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble"
     },
     {
       "id": "amber_great_hall",
@@ -68,7 +69,8 @@
           21
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble"
     },
     {
       "id": "ring_of_amber",
@@ -83,7 +85,9 @@
           21
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble",
+      "walls": "amber/glazed_wall"
     },
     {
       "id": "hall_of_echoes",
@@ -98,7 +102,8 @@
           21
         ]
       ],
-      "furnish": "frozen_reading"
+      "furnish": "frozen_reading",
+      "floor": "church/frosted_flags"
     },
     {
       "id": "wardens_cells",
@@ -113,7 +118,8 @@
           5
         ]
       ],
-      "furnish": "wardens_cells"
+      "furnish": "wardens_cells",
+      "floor": "church/frosted_flags"
     }
   ],
   "spawns": {
@@ -176,6 +182,11 @@
       ],
       "kind": "examine",
       "label": "The faceless god",
+      "span": [
+        2,
+        2
+      ],
+      "facing": "south",
       "model": "statue_knight",
       "checks": [
         {
@@ -218,7 +229,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a crowned figure)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:zantras"
+      "dialogue": "amber_temple/vestiges:zantras",
+      "approach": 3,
+      "call": "amber_temple/vestiges:zantras_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_zantras_heard and not gift:gift_of_zantras"
     },
     {
       "id": "sarc_fekre",
@@ -229,7 +243,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a swollen shape)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:fekre"
+      "dialogue": "amber_temple/vestiges:fekre",
+      "approach": 3,
+      "call": "amber_temple/vestiges:fekre_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_fekre_heard and not gift:gift_of_fekre"
     },
     {
       "id": "sarc_taar_haak",
@@ -240,7 +257,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (five heads)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:taar_haak"
+      "dialogue": "amber_temple/vestiges:taar_haak",
+      "approach": 3,
+      "call": "amber_temple/vestiges:taar_haak_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_taar_haak_heard and not gift:gift_of_taar_haak"
     },
     {
       "id": "sarc_shami_amourae",
@@ -251,7 +271,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a smiling figure)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:shami_amourae"
+      "dialogue": "amber_temple/vestiges:shami_amourae",
+      "approach": 3,
+      "call": "amber_temple/vestiges:shami_amourae_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_shami_amourae_heard and not gift:gift_of_shami_amourae"
     },
     {
       "id": "sarc_yog",
@@ -262,7 +285,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a horned hulk)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:yog"
+      "dialogue": "amber_temple/vestiges:yog",
+      "approach": 3,
+      "call": "amber_temple/vestiges:yog_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_yog_heard and not gift:gift_of_yog"
     },
     {
       "id": "sarc_drizlash",
@@ -273,7 +299,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (something spidery)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:drizlash"
+      "dialogue": "amber_temple/vestiges:drizlash",
+      "approach": 3,
+      "call": "amber_temple/vestiges:drizlash_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_drizlash_heard and not gift:gift_of_drizlash"
     },
     {
       "id": "echo_desks",
@@ -341,6 +370,66 @@
       "label": "a drawer in the desk kept clear of frost",
       "model": "scattered_notes",
       "item": "tome_of_leadership_and_influence"
+    },
+    {
+      "id": "pilgrim_candles_1",
+      "cell": [
+        17,
+        9
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_2",
+      "cell": [
+        17,
+        11
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_3",
+      "cell": [
+        18,
+        10
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_4",
+      "cell": [
+        22,
+        9
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_5",
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_6",
+      "cell": [
+        21,
+        10
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
     }
   ],
   "containers": [
@@ -440,7 +529,7 @@
         19,
         9
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 5,
       "dim_ft": 20
     },
@@ -449,27 +538,30 @@
         35,
         14
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 5,
-      "dim_ft": 20
+      "dim_ft": 20,
+      "color": "flame"
     },
     {
       "cell": [
         37,
         9
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
-      "dim_ft": 10
+      "dim_ft": 10,
+      "color": "flame"
     },
     {
       "cell": [
         37,
         20
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
-      "dim_ft": 10
+      "dim_ft": 10,
+      "color": "flame"
     },
     {
       "cell": [
@@ -479,6 +571,176 @@
       "kind": "candle",
       "bright_ft": 5,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        19,
+        14
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 40,
+      "color": "orchid"
+    },
+    {
+      "cell": [
+        19,
+        19
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 25,
+      "color": "plum"
+    },
+    {
+      "cell": [
+        14,
+        11
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        26,
+        11
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        26,
+        17
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        16,
+        25
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        23,
+        25
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        4,
+        10
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        2,
+        12
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        6,
+        17
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        4,
+        19
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        23,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        35,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        19,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 30,
+      "color": "frost"
     }
   ],
   "traps": [
@@ -948,5 +1210,20 @@
     "amber_temple_faceless_god": {
       "container": "statue_offerings"
     }
-  }
+  },
+  "wall_styles": [
+    {
+      "cells": [
+        [
+          19,
+          8
+        ],
+        [
+          20,
+          9
+        ]
+      ],
+      "plinth": true
+    }
+  ]
 }

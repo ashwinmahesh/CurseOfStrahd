@@ -517,6 +517,7 @@ static func _use_prop(view: LocationView, prop: Dictionary) -> void:
 		view.st.gain_item(str(prop["item"]), 1, view.leader().creature as Character)   # shown on the side (ItemNotices)
 	used[id] = true
 	if str(prop.get("dialogue", "")) != "":
+		view.dialogue_prop = id   # (the camera leans to it, a vestige's amber flares: GameRoot, TalkCamera, AmberGlow)
 		view.dialogue_requested.emit(str(prop["dialogue"]), "")
 		return
 	# A prop's own `say` first (a camp's fire indoors: examine:camp_fire:indoors), then examine:<id> or search:<id>.

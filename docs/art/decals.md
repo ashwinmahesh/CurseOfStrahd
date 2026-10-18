@@ -8,7 +8,7 @@ left as it was (frozen, owner 2026-10-07).
 
 ## The marks (`art/textures/decals/`)
 
-`tools/art/decal_recipes.json` names 13 sheets of four marks each; Gemini paints each sheet at 2K on plain white
+`tools/art/decal_recipes.json` names 15 sheets of four marks each (the last two, `wall_seeps` and `floor_temple`, are the Amber Temple's); Gemini paints each sheet at 2K on plain white
 (`art/prompts/decal_preamble.txt`, a look target frame as the style reference), kept as WebP in
 `art/generated/decals/`. `blender/make_decals.py` cuts a sheet into its quarters and makes each a decal: alpha from
 how far each pixel is from the sheet's white (eased, so paper texture drops out), the colour unmixed from the white,

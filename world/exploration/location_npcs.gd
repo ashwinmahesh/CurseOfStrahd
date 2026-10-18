@@ -416,3 +416,30 @@ static func _check_approach(view: LocationView) -> bool:
 		view.dialogue_requested.emit(str(spec["dialogue"]), str(spec["npc"]))
 		return true
 	return false
+
+
+## A prop entry with `approach: n` and a `call` speaks first, once, when the leader comes within n squares and can see it,
+## before anyone uses it (a vestige in its amber calling to the party: Amber Temple Look Plan 6b). Its `when` and
+## `call_when` say when it still may (not once the temple is sealed or the talk was had). The prop is the one the talk is
+## about, so its amber flares and the camera leans to it.
+static func _check_calls(view: LocationView) -> bool:
+	var seen := view.st.loc_state(view.loc_id)["props"] as Dictionary
+	for p: Variant in view.loc.get("props", []):
+		var spec := p as Dictionary
+		var reach := int(spec.get("approach", 0))
+		if reach <= 0 or str(spec.get("call", "")) == "":
+			continue
+		var key := "call:%s" % spec["id"]
+		if bool(seen.get(key, false)):
+			continue
+		if not StoryConditions.check(str(spec.get("when", "")), view.st) or not StoryConditions.check(str(spec.get("call_when", "")), view.st):
+			continue
+		var at := LocationView._cell(spec["cell"])
+		if view.grid.distance_ft(view.leader().cell, 1, at, 1) > reach * 5 or not view.grid.can_see(view.leader().cell, 1, at, 1):
+			continue
+		seen[key] = true
+		view._queue.clear()
+		view.dialogue_prop = str(spec["id"])
+		view.dialogue_requested.emit(str(spec["call"]), "")
+		return true
+	return false

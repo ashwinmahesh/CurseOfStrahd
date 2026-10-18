@@ -194,7 +194,7 @@ static func _check_cell_events(view: LocationView) -> bool:
 		return true
 	if _check_areas(view):
 		return true
-	if LocationNpcs._check_approach(view):
+	if LocationNpcs._check_approach(view) or LocationNpcs._check_calls(view):
 		return true
 	for ex: Variant in view.loc.get("exits", []):
 		var exit := ex as Dictionary

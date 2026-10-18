@@ -176,7 +176,7 @@ static func _build_lights(view: LocationView) -> void:
 		omni.light_color = SetDressing.light_colour(li)
 		var dim := float(li.get("dim_ft", 20)) / 5.0
 		omni.omni_range = maxf(2.0, dim)
-		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
+		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else (1.9 if str(li["kind"]) == "amber" else 2.2)   # (amber: lit from inside the stone, a gentler breath)
 		omni.position = view.board.cell_center(LocationView._cell(li["cell"])) + Vector3(0, 1.2, 0)
 		view.add_child(omni)
 		if str(li.get("kind", "")) == "torch" and ModelPiece.for_art(view.board, "torch") != "":

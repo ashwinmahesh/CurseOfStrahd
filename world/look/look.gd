@@ -197,6 +197,7 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 		m.set_shader_parameter("roughness", float(spec.get("roughness", 0.8)))
 		m.set_shader_parameter("metallic", float(spec.get("metallic", 0.0)))
 		m.set_shader_parameter("roughness_spread", float(spec.get("spread", 0.35)))
+		m.set_shader_parameter("roughness_cap", float(spec.get("gloss", 1.0)))   # a polished surface's cap, over its ORM map
 		_set_variants(m, info, path)
 		var macro := str(textures().get("macro_file", ""))
 		if macro != "" and ResourceLoader.exists("res://" + macro) and float(spec.get("macro", MACRO_STRENGTH)) > 0.0:

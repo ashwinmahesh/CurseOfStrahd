@@ -1,0 +1,88 @@
+{
+  "about": "What is held in each vestige's block of amber (Amber Temple Look Plan §3.2, AmberGlow, `make vestige_shapes`). Each entry is keyed by the vestige's id (its prop `sarc_<id>` without the prefix). `layers` are game-icons.net silhouettes (art/sourced/game_icons, CC BY 3.0, artists credited on the Credits screen) composed into one white-on-transparent texture, art/textures/amber/shapes/<id>.png (`plane: orbit` layers go in <id>_orbit.png, which turns slowly in the block): {icon: \"artist/name\", at: [x, y] (the middle of the silhouette, 0 to 1 over the picture), size (its longer side, 0 to 1), rot (degrees), flip, mode: \"cut\" (a hole in what is under it, a mouth in a face)}. `tint` is the colour the shape is drawn in, dark, inside the amber (a palette colour); `core` and `edge` recolour the block's glass and its light (palette colours, the honey and the ember by default); `touch` is the block's own touch (shaders/world/amber_shape.gdshader and AmberGlow): flecks, bubbles, twitch, cracks, glints, stars_down, fade, sparks_up, ring, orbit, void; `locked` stops the block's light breathing; `cloud` and `cloud_tint` murk the glass, `alpha` how dense it is. A vestige with no `layers` holds no shape.",
+  "size": 256,
+  "shapes": {
+    "zantras": {
+      "layers": [{"icon": "delapouite/throne-king", "at": [0.5, 0.5], "size": 0.94}],
+      "tint": "ember_deep", "core": "wick", "touch": "flecks"
+    },
+    "fekre": {
+      "layers": [{"icon": "skoll/fat", "at": [0.5, 0.5], "size": 0.9}],
+      "tint": "umber", "edge": "moss", "touch": "bubbles", "cloud": 0.55, "cloud_tint": "bile"
+    },
+    "taar_haak": {
+      "layers": [{"icon": "lorc/hydra", "at": [0.5, 0.5], "size": 0.96}],
+      "tint": "blood_deep", "core": "flame", "edge": "blood", "touch": "twitch"
+    },
+    "shami_amourae": {
+      "layers": [
+        {"icon": "delapouite/person", "at": [0.5, 0.5], "size": 0.92},
+        {"icon": "lorc/lips", "at": [0.5, 0.2], "size": 0.2, "mode": "cut"}
+      ],
+      "tint": "blood_deep", "core": "rose", "edge": "blood"
+    },
+    "yog": {
+      "layers": [{"icon": "lorc/minotaur", "at": [0.5, 0.5], "size": 0.94}],
+      "tint": "void", "core": "candle", "edge": "ember_deep", "touch": "cracks", "alpha": 0.75, "cloud": 0.35
+    },
+    "drizlash": {
+      "layers": [{"icon": "carl-olsen/spider-alt", "at": [0.5, 0.5], "size": 0.94}],
+      "tint": "void", "touch": "glints"
+    },
+    "khirad": {
+      "layers": [{"icon": "delapouite/wizard-face", "at": [0.5, 0.46], "size": 0.86, "rot": -24}],
+      "tint": "umber", "touch": "stars_down"
+    },
+    "norganas": {
+      "layers": [{"icon": "delapouite/person", "at": [0.5, 0.5], "size": 0.9}],
+      "tint": "umber", "touch": "fade", "soft": 2.6
+    },
+    "savnok": {
+      "layers": [
+        {"icon": "lorc/lips", "at": [0.5, 0.5], "size": 0.86},
+        {"icon": "lorc/stitched-wound", "at": [0.5, 0.5], "size": 0.8, "rot": 90, "mode": "cut"}
+      ],
+      "tint": "void", "locked": true
+    },
+    "seriach": {
+      "layers": [
+        {"icon": "lorc/hound", "at": [0.3, 0.56], "size": 0.58, "flip": true},
+        {"icon": "lorc/hound", "at": [0.7, 0.5], "size": 0.58}
+      ],
+      "tint": "blood_deep", "core": "flame", "edge": "vampire_red", "touch": "sparks_up"
+    },
+    "sykane": {
+      "layers": [{"icon": "lorc/ribcage", "at": [0.5, 0.5], "size": 0.92}],
+      "tint": "umber", "touch": "ring"
+    },
+    "tarakamedes": {
+      "layers": [{"icon": "lorc/horned-skull", "at": [0.5, 0.5], "size": 0.94}],
+      "tint": "void", "edge": "moon_blue", "alpha": 0.7
+    },
+    "tenebrous": {
+      "tint": "void", "touch": "void", "core": "ember_deep", "edge": "ink", "glow": 0.3
+    },
+    "yrrga": {
+      "layers": [{"icon": "lorc/eyeball", "at": [0.5, 0.5], "size": 0.96}],
+      "tint": "void"
+    },
+    "zhudun": {
+      "layers": [{"icon": "lorc/star-prominences", "at": [0.5, 0.5], "size": 0.96}],
+      "tint": "slate", "core": "silver", "edge": "slate", "light": "silver"
+    },
+    "dahlver_nar": {
+      "layers": [
+        {"icon": "lorc/jawbone", "at": [0.5, 0.5], "size": 0.62},
+        {"icon": "lorc/tooth", "at": [0.5, 0.17], "size": 0.16, "plane": "orbit"},
+        {"icon": "lorc/tooth", "at": [0.83, 0.5], "size": 0.14, "rot": 90, "plane": "orbit"},
+        {"icon": "lorc/tooth", "at": [0.5, 0.83], "size": 0.16, "rot": 180, "plane": "orbit"},
+        {"icon": "lorc/tooth", "at": [0.17, 0.5], "size": 0.14, "rot": 270, "plane": "orbit"},
+        {"icon": "lorc/tooth", "at": [0.73, 0.27], "size": 0.12, "rot": 45, "plane": "orbit"},
+        {"icon": "lorc/tooth", "at": [0.73, 0.73], "size": 0.12, "rot": 135, "plane": "orbit"},
+        {"icon": "lorc/tooth", "at": [0.27, 0.73], "size": 0.12, "rot": 225, "plane": "orbit"},
+        {"icon": "lorc/tooth", "at": [0.27, 0.27], "size": 0.12, "rot": 315, "plane": "orbit"}
+      ],
+      "tint": "umber", "touch": "orbit"
+    }
+  }
+}

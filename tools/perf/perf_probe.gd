@@ -37,6 +37,9 @@ var cycles := 10                     ## off/on switches per effect in the effect
 ## The effects phases' list (--effects=a,b; default EFFECTS). A name that isn't one of EFFECTS is a class with a
 ## `static func set_enabled(on: bool)` (SpriteReflection), switched off through it: a new effect needs no line here.
 var effects: Array = EFFECTS
+## The places the effects phases visit (--effect_places=a@night,b; default EFFECT_PLACES): a place with its own heavy
+## new effect (the Amber Temple's amber) is measured where it stands.
+var effect_places: Array = EFFECT_PLACES
 var cover := false                   ## the transitions phase goes through the game's loading cover (--cover=1)
 var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "fights": [], "foe_memory": [], "screens": [],
 	"meta": {}}
@@ -61,6 +64,8 @@ func _ready() -> void:
 	cycles = int(args.get("cycles", cycles))
 	if str(args.get("effects", "")) != "":
 		effects = Array(str(args["effects"]).split(","))
+	if str(args.get("effect_places", "")) != "":
+		effect_places = Array(str(args["effect_places"]).split(","))
 	cover = str(args.get("cover", "")) == "1"
 	fight_settle_s = float(args.get("settle", fight_settle_s))
 	if cover:
@@ -544,7 +549,7 @@ func _combat(p: int) -> void:
 ## The three graphics presets (Graphics, W17) in the same places, each place built again under each.
 func _presets(p: int) -> void:
 	var root := await _story_root(5)
-	for spec: String in EFFECT_PLACES:
+	for spec: String in effect_places:
 		var where := spec.get_slice("@", 0)
 		for preset: String in ["high", "medium", "low", "high"]:
 			Graphics.set_preset(preset, false)
@@ -563,7 +568,7 @@ func _presets(p: int) -> void:
 ## weighs on both halves of a pair alike; tools/perf/perf_effects.py turns the pairs into a cost per effect.
 func _effects(p: int) -> void:
 	var root := await _story_root(5)
-	for spec: String in EFFECT_PLACES:
+	for spec: String in effect_places:
 		var where := spec.get_slice("@", 0)
 		GameState.story.minute_of_day = NIGHT if spec.ends_with("night") else DAY
 		_phase("move: " + where)
@@ -589,7 +594,7 @@ func _effects_fast(p: int) -> void:
 	var root := await _story_root(5)
 	const RUN := 12
 	const SKIP := 4
-	for spec: String in EFFECT_PLACES:
+	for spec: String in effect_places:
 		var where := spec.get_slice("@", 0)
 		GameState.story.minute_of_day = NIGHT if spec.ends_with("night") else DAY
 		_phase("move: " + where)

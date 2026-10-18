@@ -2905,6 +2905,19 @@
       "saturate": 1.2,
       "slot": 1
     },
+    "amber_case": {
+      "file": "art/sprites/props/amber_sarcophagus.png",
+      "width_px": 316,
+      "height_px": 288,
+      "world_height": 1.1,
+      "world_width": 1.213,
+      "pixel_size": 0.003901,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_pair_amber_sarcophagus_altar_stone.png",
+      "saturate": 1.2,
+      "note": "The Amber Temple's amber, built in code (world/look/amber_glow.gd) in the Modern finish; this is the lying box Classic keeps, so the art checks pass (as fog_bank's)."
+    },
     "altar_stone_back": {
       "file": "art/sprites/props/altar_stone_back.png",
       "width_px": 288,
@@ -5975,6 +5988,116 @@
       "source": "art/generated/props/model_jester_plaster.png",
       "mount": "wall",
       "world_width": 0.698
+    },
+    "castle_model": {
+      "file": "art/sprites/props/table.png",
+      "width_px": 240,
+      "height_px": 184,
+      "world_height": 0.7,
+      "world_width": 0.919,
+      "pixel_size": 0.003911,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_pair_table_table_chairs.png",
+      "slot": 0,
+      "back": "table_back",
+      "note": "The table model of Castle Ravenloft in Exethanter's study, built in code (world/look/castle_model.gd) in the Modern finish; this is the table Classic keeps, so the art checks pass (as fog_bank's)."
+    },
+    "copper_ledger": {
+      "file": "art/sprites/props/copper_ledger.png",
+      "width_px": 208,
+      "height_px": 196,
+      "world_height": 0.75,
+      "world_width": 0.797,
+      "pixel_size": 0.003906,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_amber_props_a.png",
+      "slot": 0
+    },
+    "amber_shards": {
+      "file": "art/sprites/props/amber_shards.png",
+      "width_px": 184,
+      "height_px": 120,
+      "world_height": 0.45,
+      "world_width": 0.697,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_amber_props_a.png",
+      "slot": 1
+    },
+    "offering_candles": {
+      "file": "art/sprites/props/offering_candles.png",
+      "width_px": 112,
+      "height_px": 96,
+      "world_height": 0.35,
+      "world_width": 0.42,
+      "pixel_size": 0.003889,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_amber_props_a.png",
+      "slot": 2
+    },
+    "amber_spire": {
+      "file": "art/sprites/props/amber_spire.png",
+      "width_px": 160,
+      "height_px": 236,
+      "world_height": 0.9,
+      "world_width": 0.599,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_amber_props_a.png",
+      "slot": 3
+    },
+    "icicles_long": {
+      "file": "art/sprites/props/icicles_long.png",
+      "width_px": 184,
+      "height_px": 160,
+      "world_height": 0.6,
+      "world_width": 0.697,
+      "pixel_size": 0.003896,
+      "anchor": "bottom_center",
+      "mount": "wall",
+      "source": "art/generated/props/sheet_amber_props_b.png",
+      "slot": 0
+    },
+    "icicles_short": {
+      "file": "art/sprites/props/icicles_short.png",
+      "width_px": 396,
+      "height_px": 108,
+      "world_height": 0.4,
+      "world_width": 1.529,
+      "pixel_size": 0.003922,
+      "anchor": "bottom_center",
+      "mount": "wall",
+      "source": "art/generated/props/sheet_amber_props_b.png",
+      "slot": 1
+    },
+    "icicles_cluster": {
+      "file": "art/sprites/props/icicles_cluster.png",
+      "width_px": 92,
+      "height_px": 132,
+      "world_height": 0.5,
+      "world_width": 0.336,
+      "pixel_size": 0.003906,
+      "anchor": "bottom_center",
+      "mount": "wall",
+      "source": "art/generated/props/sheet_amber_props_b.png",
+      "slot": 2
+    },
+    "icicles_single": {
+      "file": "art/sprites/props/icicles_single.png",
+      "width_px": 24,
+      "height_px": 120,
+      "world_height": 0.45,
+      "world_width": 0.07,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "wall",
+      "source": "art/generated/props/sheet_amber_props_b.png",
+      "slot": 3
     }
   }
 }

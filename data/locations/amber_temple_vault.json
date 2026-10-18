@@ -83,7 +83,9 @@
           16
         ]
       ],
-      "furnish": "amber_hall"
+      "furnish": "amber_hall",
+      "floor": "amber/violet_marble",
+      "walls": "amber/glazed_wall"
     },
     {
       "id": "sanctum",
@@ -170,7 +172,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a face turned up)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:khirad"
+      "dialogue": "amber_temple/vestiges:khirad",
+      "approach": 3,
+      "call": "amber_temple/vestiges:khirad_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_khirad_heard and not gift:gift_of_khirad"
     },
     {
       "id": "sarc_norganas",
@@ -181,7 +186,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a rubbed-out shape)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:norganas"
+      "dialogue": "amber_temple/vestiges:norganas",
+      "approach": 3,
+      "call": "amber_temple/vestiges:norganas_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_norganas_heard and not gift:gift_of_norganas"
     },
     {
       "id": "sarc_savnok",
@@ -192,7 +200,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a sewn mouth)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:savnok"
+      "dialogue": "amber_temple/vestiges:savnok",
+      "approach": 3,
+      "call": "amber_temple/vestiges:savnok_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_savnok_heard and not gift:gift_of_savnok"
     },
     {
       "id": "sarc_seriach",
@@ -203,7 +214,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (chained hounds)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:seriach"
+      "dialogue": "amber_temple/vestiges:seriach",
+      "approach": 3,
+      "call": "amber_temple/vestiges:seriach_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_seriach_heard and not gift:gift_of_seriach"
     },
     {
       "id": "sarc_sykane",
@@ -214,7 +228,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (an empty ribcage)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:sykane"
+      "dialogue": "amber_temple/vestiges:sykane",
+      "approach": 3,
+      "call": "amber_temple/vestiges:sykane_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_sykane_heard and not gift:gift_of_sykane"
     },
     {
       "id": "sarc_tarakamedes",
@@ -225,7 +242,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a dragon's skull)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:tarakamedes"
+      "dialogue": "amber_temple/vestiges:tarakamedes",
+      "approach": 3,
+      "call": "amber_temple/vestiges:tarakamedes_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_tarakamedes_heard and not gift:gift_of_tarakamedes"
     },
     {
       "id": "sarc_tenebrous",
@@ -236,7 +256,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a dark absence)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:tenebrous"
+      "dialogue": "amber_temple/vestiges:tenebrous",
+      "approach": 3,
+      "call": "amber_temple/vestiges:tenebrous_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_tenebrous_heard and not gift:gift_of_tenebrous"
     },
     {
       "id": "sarc_yrrga",
@@ -247,7 +270,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a great eye)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:yrrga"
+      "dialogue": "amber_temple/vestiges:yrrga",
+      "approach": 3,
+      "call": "amber_temple/vestiges:yrrga_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_yrrga_heard and not gift:gift_of_yrrga"
     },
     {
       "id": "sarc_zhudun",
@@ -258,7 +284,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a grey star)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:zhudun"
+      "dialogue": "amber_temple/vestiges:zhudun",
+      "approach": 3,
+      "call": "amber_temple/vestiges:zhudun_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_zhudun_heard and not gift:gift_of_zhudun"
     },
     {
       "id": "sarc_dahlver_nar",
@@ -269,7 +298,10 @@
       "kind": "examine",
       "label": "A sarcophagus of amber (a jaw of teeth)",
       "model": "coffin",
-      "dialogue": "amber_temple/vestiges:dahlver_nar"
+      "dialogue": "amber_temple/vestiges:dahlver_nar",
+      "approach": 3,
+      "call": "amber_temple/vestiges:dahlver_nar_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_dahlver_nar_heard and not gift:gift_of_dahlver_nar"
     },
     {
       "id": "empty_plinth",
@@ -408,34 +440,37 @@
         20,
         8
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 5,
-      "dim_ft": 20
+      "dim_ft": 20,
+      "color": "flame"
     },
     {
       "cell": [
         20,
         2
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 10,
-      "dim_ft": 20
+      "dim_ft": 20,
+      "color": "wick"
     },
     {
       "cell": [
         20,
         22
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
-      "dim_ft": 20
+      "dim_ft": 20,
+      "color": "mist_blue"
     },
     {
       "cell": [
         5,
         12
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15
     },
@@ -444,9 +479,49 @@
         33,
         12
       ],
-      "kind": "magic",
+      "kind": "amber",
       "bright_ft": 0,
       "dim_ft": 15
+    },
+    {
+      "cell": [
+        4,
+        7
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        13,
+        12
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        20,
+        12
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        27,
+        12
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
     }
   ],
   "traps": [

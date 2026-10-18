@@ -251,6 +251,67 @@ braziers burning in the antechamber and either side of the altar.
   shelves (`chained_bookcase`); the warden's study is buried in pinned notes (set `buried_study`); the wardens' cells
   each hold a cot; the vault of offerings is heaped with coins, crowns, swords and toys (`offering_pile`, set
   `offerings`); the guardroom and the sanctum have cold braziers (`brazier_cold`; the sanctum's had been lit green).
+- The Look Plan (vault "Amber Temple Look Plan.md", 2026-10-18), built in steps:
+  - Each room has its own light by colour (frost-blue vestibule, guardrooms, cells and sanctum, a violet fill in the great
+    hall, honey at its pillars and down the nave, green flameskull points in the library) and the halls hold no snow lumps
+    or statue heads; the vestibule, guardrooms, cells and hall of echoes lie on frosted flags (an area's `floor` with
+    `raised: true`, since the doors' ledge stands 25 ft up); rock, not a snowfield, lies round the three inside maps
+    (building_kit `ground.amber`; the doors keep their snow); the library and the vaults have their own moods and dust.
+  - The black stone is polished: its texture-manifest `material` has a `gloss` (a cap on roughness after the ORM map),
+    so the party and the glow mirror in it.
+  - The temple's lights are the `amber` kind (Atmosphere.LIGHT_KINDS, LightFlicker.STYLES): one slow swell about every
+    five seconds, no flutter, no shadow.
+  - The amber is `AmberGlow` (world/look/amber_glow.gd, shaders/world/amber.gdshader), built in code in the Modern finish
+    (Classic keeps the lying box): the catalog id's `case` picks `vestige` (upright, two squares tall, lit from inside by
+    a light that breathes and the glass follows), `cracked`, `sleeper` (lying, under the vaults), `hollow` (the Thirst's
+    empty sarcophagus, lying across the squares of cover it covers, the largest block of all), `plinth` (the empty
+    plinth, frost ring, scrape marks toward the nearest exit) and `block` (the cottage-sized block of amber in the Eye's
+    chamber, broken open from the inside). A case stands on its prop's '=' squares and changes no rule.
+  - Every vestige's block holds a dark silhouette (art/amber_shapes.json: the game-icons.net outlines, CC BY 3.0, artists on
+    the Credits screen, composed into art/textures/amber/shapes/ by `make vestige_shapes`), softened by depth, with a touch
+    of its own (gold flecks, rising bubbles, a twitch, cracks, glints, stars, sparks, a ring, an orbiting plane, a lightless core).
+  - The temple answers (AmberGlow.refresh, a few times a second from LocationView._process): a block is `waiting` (it
+    breathes, brighter as the party comes within five squares), `speaking` (its vestige's `vestige_<name>` line is on
+    screen: it flares and pulses, LocationView.set_speaking, and the conversation camera leans to the block,
+    TalkCamera.open's `prop_id`), `attending` (its conversation is open while another voice speaks), `sated` (a party
+    member carries its `gift_of_<name>`: held low and still, the shape sharper) or `sealed` (`flag.amber_temple_sealed`:
+    dark brown glass, no light, the shape faint; a sealed temple opens dark). The looks are AmberGlow.LOOKS.
+  - Each vestige calls to the party once as it comes near, before anyone touches the amber: a prop's `approach: 3`, `call`
+    and `call_when` (the location data), played by `LocationNpcs._check_calls` from the step's cell events
+    (`LocationWalk._check_cell_events`), the `~ <name>_call` nodes of narrative/amber_temple/vestiges.dialogue. Drafted by
+    Gemini and edited (docs/story/drafts/amber-calls/); unvoiced.
+  - The faceless god (`FacelessGod`, world/look/faceless_god.gd; Modern only): the great hall's 2 x 2 block of wall is a
+    `wall_styles` entry with `plinth: true`, drawn as three steps of the temple's black stone (the squares still block);
+    the statue prop (`span: [2, 2]`, facing south, the catalog's `god: true`) stands on the top step (SetDressing.place),
+    a void (shaders/world/faceless_void.gdshader) takes the place of its face with a violet corona turning slowly round
+    it, shown while the camera looks at its front, and a cold shaft (sun_shaft.gdshader) falls onto its hands and the
+    offerings at its feet, where six pilgrims' candles (`candle_cluster` props) burn.
+  - The vaults' small things (AmberGlow, step 10): the hollow's crimson thread (shaders/world/amber_thread.gdshader) rises out
+    of the dead amber into the dark, faint always and bright once the party has read the hollow (flag `amber_thread_seen`,
+    set in amber_temple/vosk:hollow_ok); the honey-glow doors (catalog `honey_doors`, 2.1 high) are two amber panes with a
+    light on both sides, dark once the temple is sealed (AmberGlow.dress_door, from SetDressing.door); the heaps of the vault
+    of offerings glint (shaders/world/glint.gdshader, AmberGlow.dress_place); and the sanctum's cold braziers flare
+    violet (SetDressing.FLAME_TINTS `violet`) while the fight with Vosk (`vosk_unmasked`) is on.
+  - Small motion (AmberMotion, world/look/amber_motion.gd, step 11): the hall of echoes is the cold room, its desks' candles
+    burn frost-blue (SetDressing.tint_candles, FLAME_TINTS `frost`) and so do their lights, but for Patrina's clear desk, where
+    paper flakes fall over her book (a particle sheet); in the library Vosk's cup steams and Exethanter's pinned notes stir;
+    Yrrga's eye moves in its block toward the leader (Case.set_gaze); and in the vaults amber seeps from the weeping crack
+    (shaders/world/amber_seep.gdshader), when the crack shows.
+  - The model of Castle Ravenloft on the table in Exethanter's study (`castle_model` prop at (23,3), CastleModel, world/look/
+    castle_model.gd): the castle's own kit pieces (crenellated wall tops, round towers with spires, the gate, the keep's lit
+    windows) merged into one mesh at 0.022 on a plain table; Classic keeps the table's picture. Its examine line
+    (`examine:castle_model`) was drafted by Gemini (docs/story/drafts/amber-castle-model/); unvoiced.
+  - The temple's found traps glow (TrapGlow, world/look/trap_glow.gd, from TrapSight.dress; shaders/world/trap_glow.gdshader): the
+    line of warding glyphs pulses runes along the floor, the faceless god's gaze is a slow violet ring of light on the
+    squares it looks at, the frost vent breathes pale wisps. They go with the trap when it is disarmed; Modern only.
+  - The paid art (Look Plan P1 to P3, six Gemini sheets, 2026-10-18, about $0.70; Ashwin's typed yes in the thread): two surfaces,
+    `amber/violet_marble` (the great hall, its ring and the hall of vestiges: area `floor`) and `amber/glazed_wall` (the ring
+    and the hall of vestiges: area `walls`); two decal sheets, `wall_seeps` (amber running down the glazed walls) and
+    `floor_temple` (frost rime, scrapes and frost dust in the cold rooms by the catalog's `clutter.places` rules for the three
+    inside maps; its gold arc, four of them turned a quarter each, is the inlaid ring in the ring of amber, AmberMotion._inlay);
+    two prop sheets: the copper pact ledger (the sanctum's lectern, with a low copper light and glints), a dish of offering candles
+    (two of the god's pilgrim candles), amber shards and a standing shard (by the Eye's broken block), and four icicle pieces
+    (cut, not yet hung: they wait for the doors' look).
 
 ### Castle Ravenloft
 

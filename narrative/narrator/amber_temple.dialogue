@@ -137,6 +137,9 @@ once
 ~ examine:restricted_shelves
 | The chained books have titles like instructions. Some of the instructions are for things that should never be done twice.
 
+~ examine:castle_model
+| A miniature of Castle Ravenloft, exact down to the slate tiles on the round towers and the iron teeth of the gate. Someone has worn the paint from the highest window with the tip of a finger.
+
 # ---------------------------------------------------------------- The vaults
 
 ~ enter:amber_temple_vault

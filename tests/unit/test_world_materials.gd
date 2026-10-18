@@ -43,6 +43,21 @@ func test_material_settings_resolve() -> void:
 	assert_eq(float(Look.material_for("nowhere/unknown")["roughness"]), 0.8, "an unknown surface is matte")
 
 
+## A polished surface (Amber Temple Look Plan, step 2): the temple's black stone has a `gloss` in the texture manifest, which
+## the Modern material passes to the shader as a cap on its roughness (its ORM map otherwise wins over any roughness
+## number), so the floor mirrors the amber and the party; a surface with no gloss is uncapped, and Classic has none.
+func test_a_polished_surface_caps_its_roughness() -> void:
+	Look.set_style("modern", false)
+	var gloss := float(Look.material_for("amber/black_stone").get("gloss", 1.0))
+	assert_true(gloss >= 0.1 and gloss <= 0.3, "the black stone is polished (%.2f): glossy, but never read as water" % gloss)
+	var stone := Look.cel_textured("amber/black_stone")
+	assert_eq(float(stone.get_shader_parameter("roughness_cap")), gloss, "its shader gets the cap")
+	assert_eq(float(Look.cel_textured("village/cobbles").get_shader_parameter("roughness_cap")), 1.0, "cobbles aren't capped")
+	assert_eq(float(Look.cel_textured("amber/amber_wall").get_shader_parameter("roughness_cap")), 1.0, "nor the temple's walls")
+	Look.set_style("classic", false)
+	assert_true(Look.cel_textured("amber/black_stone").shader == Look.CEL_WORLD_SHADER, "Classic's floor stays its cel bands")
+
+
 func test_the_colour_key_is_found_in_either_finish() -> void:
 	for s: String in ["modern", "classic"]:
 		Look.set_style(s, false)

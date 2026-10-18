@@ -467,6 +467,27 @@
       "variants": 1,
       "ref": "death_house_hall_ab",
       "new": true
+    },
+    "amber/violet_marble": {
+      "subject": "a temple floor of polished purplish-black marble slabs, deep violet-black with fine pale lilac veining and a few cold glints, a few hairline cracks, thin frost in the joints",
+      "view": "floor",
+      "variants": 2,
+      "ref": "castle_hall_ab",
+      "new": true,
+      "material": {
+        "gloss": 0.2,
+        "relief": 0.4
+      }
+    },
+    "amber/glazed_wall": {
+      "subject": "a temple wall of dark stone blocks glazed over with a thick layer of translucent honey-gold amber, small dark shapes trapped in the glaze (a moth, a hand, a feather, a few coins, a curl of bone), the glaze dripping in places, rimed with frost at the joints",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab",
+      "new": true,
+      "material": {
+        "roughness": 0.3
+      }
     }
   },
   "derived": {

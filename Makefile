@@ -21,7 +21,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null; s=$$?; \
              case $$s in 75|129|130|137|143) exit $$s ;; esac; touch $(STAMP); fi
 
-.PHONY: run run-main arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens plants vistas
+.PHONY: run run-main arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons vestige_shapes cursors voice creator pregens plants vistas
 
 ## make run plays the edge build (owner, 2026-10-17; tools/edge/edge.py): main plus every lane branch that has been
 ## handed off but not merged yet, assembled in a throwaway worktree (CurseOfStrahdGame-edge, in the SSD lanes' image), so
@@ -291,6 +291,12 @@ ui_art:
 ## Spell and item icons (game-icons.net silhouettes framed in the menu colours; keys in art/icons.json): make icons
 icons:
 	$(G) --headless --script res://tools/art/build_icons.gd $(if $(KIND),-- --kind=$(KIND),) 2>&1 | $(LOGCHK)
+	$(MAKE) import
+
+## The shapes held in the Amber Temple's amber (game-icons silhouettes composed by art/amber_shapes.json into
+## art/textures/amber/shapes/): make vestige_shapes
+vestige_shapes:
+	$(G) --headless --script res://tools/art/build_vestige_shapes.gd 2>&1 | $(LOGCHK)
 	$(MAKE) import
 
 ## Mouse cursors from the game-icons silhouettes (tools/art/build_cursors.gd -> art/ui/cursors).

@@ -480,6 +480,36 @@
       "kind": "decor",
       "label": "A crack",
       "model": "floor_crack"
+    },
+    {
+      "id": "eye_shards_a",
+      "cell": [
+        15,
+        5
+      ],
+      "kind": "decor",
+      "label": "Shards of amber",
+      "model": "amber_shards"
+    },
+    {
+      "id": "eye_shards_b",
+      "cell": [
+        19,
+        5
+      ],
+      "kind": "decor",
+      "label": "Shards of amber",
+      "model": "amber_shards"
+    },
+    {
+      "id": "eye_spire",
+      "cell": [
+        14,
+        4
+      ],
+      "kind": "decor",
+      "label": "A standing shard of amber",
+      "model": "amber_spire"
     }
   ],
   "lights": [
