@@ -20,7 +20,8 @@ needs a data format the validator can check, and the engine reads.
   built yet are ids the validator lists as pending, like other later-phase references.
 - **Travel is a node map.** `data/travel/barovia.json` holds places (each an entry into a location and spawn) and
   roads (hours, a random-encounter table). Travelling advances the clock; each leg rolls its table's day or night
-  chance. A random fight plays on a road map with the table's monsters; an event plays a conversation.
+  chance (40% of it on a road already walked or a journey to a place already visited, 2026-10-18). A random fight
+  plays on a road map with the table's monsters; an event plays a conversation.
 - **Day and night** come from `StoryState.minute_of_day`: outdoor light follows the hour, and data uses `night`,
   `day` and `hour >= n` conditions (shops close, the dead walk).
 - **Guests are story allies the player commands.** A guest is an NPC with a stat block (or a fixed character build)

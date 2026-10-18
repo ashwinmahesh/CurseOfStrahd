@@ -12,7 +12,8 @@ extends RefCounted
 ##            calls answer_guidance(), which rolls the check and returns its beat
 ##        {kind: "notice", text}
 ##        {kind: "cutscene", id, image, focus}: a full-screen picture under what follows (id "" takes it away)
-##        {kind: "end", combat: encounter id or "", end_game: the conversation ended the campaign (`end_game`)}
+##        {kind: "end", combat: encounter id or "", end_game: the conversation ended the campaign (`end_game`),
+##            move: {location, spawn} where `move` sends the party (only present then)}
 
 ## The Narrator's portrait (art/portraits/narrator.png), on their lines here and in the exploration box.
 const NARRATOR_PORTRAIT := "narrator"
@@ -30,6 +31,8 @@ var node: String = ""
 var pc: int = 0
 var finished: bool = false
 var combat: String = ""
+## Where `move` sends the party when the conversation ends, {location, spawn} (GameRoot._dialogue_ended); {} for nowhere.
+var move_to: Dictionary = {}
 ## The conversation reached `end_game` (ADR 0014): the campaign's ending is recorded (Endings) and the game shows it.
 var ended_game: bool = false
 ## The party member speaking for the party (the leader unless an option's tag picks someone).
@@ -66,6 +69,7 @@ func start(ref: String) -> bool:
 	_picking = false
 	finished = false
 	combat = ""
+	move_to = {}
 	ended_game = false
 	return _goto(ref)
 
@@ -116,7 +120,7 @@ func next() -> Dictionary:
 			push_warning("Dialogue: runaway loop in %s:%s" % [file.key, node])
 			finished = true
 		if finished:
-			return {"kind": "end", "combat": combat, "end_game": ended_game}
+			return _end_beat()
 		var list := _stmts()
 		if pc >= list.size():
 			finished = true
@@ -212,6 +216,10 @@ func next() -> Dictionary:
 					return beat)
 			"combat":
 				combat = str(s["encounter"])
+				finished = true
+			"move":
+				# Ends the conversation like a fight does; the party goes as through an exit (GameRoot._dialogue_ended).
+				move_to = {"location": str(s["location"]), "spawn": str(s["spawn"])}
 				finished = true
 			"time":
 				pc += 1
@@ -351,7 +359,14 @@ func next() -> Dictionary:
 				finished = true
 			_:
 				pc += 1
-	return {"kind": "end", "combat": combat, "end_game": ended_game}
+	return _end_beat()
+
+
+func _end_beat() -> Dictionary:
+	var beat := {"kind": "end", "combat": combat, "end_game": ended_game}
+	if not move_to.is_empty():
+		beat["move"] = move_to
+	return beat
 
 
 func _living() -> Array[Character]:

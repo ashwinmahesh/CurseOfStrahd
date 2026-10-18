@@ -367,7 +367,7 @@ this game.
   Demon", "Inner Sanctum", "Lachaim", "Land of the Dead", "Long Road Ahead", "Lord of the Land", "Lost Frontier",
   "Malicious", "Midnight Tale", "Mirage", "Moorland", "Mystery Bazaar", "Ossuary 2 - Turn", "Pippin the Hunchback",
   "Relent", "Rites", "Shadowlands 1 - Horizon", "Tenebrous Brothers Carnival - Snake Lady", "Thatched Villagers", "The
-  Britons", "Virtutes Instrumenti", "Volatile Reaction" and "Willow and the Light", under [CC BY
+  Britons", "Virtutes Instrumenti", "Volatile Reaction", "Willow and the Light" and "Wounded", under [CC BY
   4.0](https://creativecommons.org/licenses/by/4.0/).
 - Scott Buckley ([scottbuckley.com.au](https://www.scottbuckley.com.au/)): "Memories Of Stone", "Anabasis I", "Eyes
   In The Void", "Nightfall", "Penumbra" and "Unraveling", under CC BY 4.0.
@@ -377,6 +377,12 @@ this game.
   1.0, via Wikimedia Commons.
 - Marche funèbre (Chopin) and Night on Bald Mountain (Mussorgsky), recordings from Musopen. CC0 and public domain,
   via Wikimedia Commons.
+- Prelude in E minor, Op. 28 No. 4 (Chopin), played by Ivan Ilić. CC BY 3.0, via Wikimedia Commons.
+- Nocturne in C minor, Op. 48 No. 1 and Nocturne in E minor, Op. 72 No. 1 (Chopin), played by Luke Faulkner,
+  recordings from Musopen. CC0 and public domain, via Wikimedia Commons.
+- Nocturne in C-sharp minor, Op. posth. (Chopin), recording from Musopen. CC BY 3.0, via Wikimedia Commons.
+- Moonlight Sonata, first movement (Beethoven), played by Paul Pitman, recording from Musopen. Public domain, via
+  Wikimedia Commons.
 - "Dark Gothic Haunted Masquerade", "Swing Jazz Band Gothic Dance", "Dark Solemn Choral with Organ" and "Final Boss Appearance Dark Fantasy" by ISAo
   (airyluvs.com). OGA-BY 3.0, via OpenGameArt.org.
 - "In Darkness" by Of Far Different Nature (fardifferent.carrd.co). CC BY 4.0, via OpenGameArt.org.
@@ -401,6 +407,7 @@ this game.
 - "Footsteps on different surfaces" by congusbongus. CC BY 3.0, via OpenGameArt.org.
 - "Stream Sounds" by kurt. CC BY 3.0, via OpenGameArt.org.
 - "Open Chest" by spookymodem. CC BY 3.0, via OpenGameArt.org.
+- "Crying female low tone Voice Over" by JeanMyna_VA. CC BY 3.0, via OpenGameArt.org.
 - OpenGameArt.org, CC0 (world sounds): Different steps on wood, stone, leaves, gravel and mud by TinyWorlds;
   Mechanical Sounds by BMacZero.
 

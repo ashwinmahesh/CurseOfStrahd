@@ -536,6 +536,37 @@ static func add_icon(row: Container, kind: String, id: String, side: float = 32.
 		row.add_child(slot)
 
 
+## An icon slot with a box round the picture in `edge` (a magic item's rarity colour, ItemTile.rarity_edge), or the same
+## space left bare when `edge` is clear, so a list's icons line up whether the item has a rarity or not. Null while
+## the project has no icon art. The box is named "RarityFrame", two pixels thick with two clear round the picture (the
+## icons carry a gilt frame of their own, which a box touching it would blend into), `side` + 8 across.
+static func framed_icon(kind: String, id: String, edge: Color, side: float = 32.0) -> Control:
+	var slot := icon_slot(kind, id, side)
+	if slot == null:
+		return null
+	var box := PanelContainer.new()
+	box.name = "RarityFrame"
+	var s := StyleBoxFlat.new()
+	s.bg_color = Color(0, 0, 0, 0)
+	s.border_color = edge
+	s.set_border_width_all(2)
+	s.set_corner_radius_all(5)
+	s.corner_detail = 1
+	s.set_content_margin_all(2)
+	box.add_theme_stylebox_override("panel", s)
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	box.add_child(slot)
+	return box
+
+
+## Adds a framed icon (framed_icon) to `row` when there is icon art.
+static func add_framed_icon(row: Container, kind: String, id: String, edge: Color, side: float = 32.0) -> void:
+	var box := framed_icon(kind, id, edge, side)
+	if box != null:
+		row.add_child(box)
+
+
 # --- Layout pieces every screen shares ------------------------------------------------------------
 
 ## Engraved small capitals ("HIT POINTS").
@@ -557,15 +588,11 @@ static func gap() -> Control:
 
 
 ## A row card: content on a faint crimson ground with a fine gilt edge; `lit` marks the chosen one. With `tip`,
-## hovering anywhere on the row shows it. `edge` (when it isn't clear) is a heavier border colour: a magic item's rarity
-## (ItemTile.rarity_edge).
-static func row(content: Control, tip: Callable = Callable(), lit: bool = false, margin: int = 7, edge: Color = Color.TRANSPARENT) -> Control:
+## hovering anywhere on the row shows it.
+static func row(content: Control, tip: Callable = Callable(), lit: bool = false, margin: int = 7) -> Control:
 	var c := card("ui_wine" if lit else "ui_oxblood", "gilt_light" if lit else "gilt_dark", 0.75 if lit else 0.55, margin)
-	var style := c.get_theme_stylebox("panel") as StyleBoxFlat
-	if lit or edge.a > 0.0:
-		style.set_border_width_all(2)
-	if edge.a > 0.0:
-		style.border_color = edge
+	if lit:
+		(c.get_theme_stylebox("panel") as StyleBoxFlat).set_border_width_all(2)
 	c.add_child(content)
 	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if not tip.is_valid():

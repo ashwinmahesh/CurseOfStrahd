@@ -5,7 +5,8 @@ extends Node
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
 ## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
 ## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts), the Wait
-## screen (UI_ONLY=wait), the journal's quests: Other, Main and a search (UI_ONLY=journal_quests), and XP levelling's strip,
+## screen (UI_ONLY=wait), the journal's quests: Other, Main and a search (UI_ONLY=journal_quests), the Other tab by region
+## (UI_ONLY=journal_regions), and XP levelling's strip,
 ## and level-up line (UI_ONLY=xp).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
@@ -102,6 +103,31 @@ func capture_shots(tool: Node, out: String) -> void:
 		box.text = "burgomaster"
 		box.text_changed.emit(box.text)
 		await _shoot(tool, "%s_journal_search.png" % out)
+		root.call("close_screen")
+	if _wants("journal_regions"):
+		# The Other tab filed by region (2026-10-18): side quests taken across the valley, some of them finished.
+		for id: String in ["last_muster", "the_oat_thief", "the_priests_son", "the_nursemaids_grave", "the_grey_mare",
+				"the_roadhouse_lantern", "toymakers_masterpiece", "the_ravens_ransom", "victors_circle", "the_black_row",
+				"the_witch_of_berez", "the_amber_debt", "the_ladle", "the_locket"]:
+			var stages := Compendium.shared().get_entry("quests", id)["stages"] as Array
+			var stage := stages[0] as Dictionary
+			if id in ["the_priests_son", "victors_circle", "the_locket"]:
+				for sg: Variant in stages:
+					if str((sg as Dictionary).get("ends", "")) != "":
+						stage = sg as Dictionary
+						break
+			st.advance_minutes(5)
+			st.set_quest_stage(id, str(stage["id"]))
+		QuestLog.track(st, "toymakers_masterpiece")
+		root.call("open_screen", "journal", 0)
+		var jr := root.get("screen") as JournalScreen
+		jr.quest_tab = "Other"
+		jr.picked = ""
+		jr.call("_draw")
+		await _shoot(tool, "%s_journal_regions.png" % out)
+		var list := jr.find_child("QuestList", true, false) as ScrollContainer
+		list.scroll_vertical = 100000
+		await _shoot(tool, "%s_journal_regions_end.png" % out)
 		root.call("close_screen")
 	if _wants("spellbook"):
 		# A found spellbook (the Dursts'): its spells, and the party's Wizard copying them.

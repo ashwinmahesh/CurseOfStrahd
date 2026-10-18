@@ -5,14 +5,20 @@ extends RefCounted
 ## who is best at a skill.
 
 
-## Places the party at the spawn (or the saved positions when loading into this location).
+## How far (squares) a saved square that is no longer open looks for the nearest one that is, before the party goes to the
+## default spawn instead (the load guard, Dungeon Expansion Plan E1).
+const NEAREST_OPEN_REACH := 8
+
+
+## Places the party at the spawn (or the saved positions when loading into this location, any of them that a map edited
+## since the save has closed swapped for open squares).
 static func _place_party(view: LocationView) -> void:
 	var spawns := view.loc.get("spawns", {}) as Dictionary
 	var start := LocationView._cell(spawns.get(view._spawn_name, spawns.get("default", [1, 1])))
 	var use_saved := view._spawn_name == "" and view.st.location == view.loc_id and view.st.positions.size() == view.st.party.size()
 	var cells: Array[Vector2i] = []
 	if use_saved:
-		cells = view.st.positions.duplicate()
+		cells = open_squares(view, view.st.positions, start)
 	else:
 		cells = _cells_around(view, start, view.st.party.size())
 	view.members.clear()
@@ -28,6 +34,68 @@ static func _place_party(view: LocationView) -> void:
 	place_guests(view)
 	if view.lantern != null and not view.members.is_empty():
 		(view.tokens[view.members[0].id] as Node3D).add_child(view.lantern)
+
+
+## Whether a creature can stand on `c` in the map as it is now.
+static func is_open(view: LocationView, c: Vector2i) -> bool:
+	return view.grid.in_bounds(c) and not view.grid.is_solid(c)
+
+
+## The load guard: `saved` as squares the party can stand on in the map as it is now. A square a later edit made a wall, a
+## prop or water, or that lies outside a smaller map, becomes the nearest open square nobody else stands on (equally near
+## ones: the topmost, then the leftmost), or one beside the default spawn `start` when none is within NEAREST_OPEN_REACH.
+## Open squares are kept as saved.
+static func open_squares(view: LocationView, saved: Array[Vector2i], start: Vector2i) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	var taken := {}
+	for c in saved:
+		if is_open(view, c):
+			taken[c] = true
+	var around: Array[Vector2i] = []
+	for c in saved:
+		if is_open(view, c):
+			out.append(c)
+			continue
+		var best := Vector2i(-1, -1)
+		var best_d := INF
+		for r in range(1, NEAREST_OPEN_REACH + 1):
+			for dy in range(-r, r + 1):
+				for dx in range(-r, r + 1):
+					if maxi(absi(dx), absi(dy)) != r:
+						continue
+					var n := c + Vector2i(dx, dy)
+					var d := float(dx * dx + dy * dy)
+					if d < best_d and is_open(view, n) and not taken.has(n):
+						best = n
+						best_d = d
+			if best_d < INF and best_d <= float((r + 1) * (r + 1)):
+				break   # nothing on a wider ring is nearer than this
+		if best_d == INF:   # nothing open in reach: beside the default spawn
+			if around.is_empty():
+				around = _cells_around(view, start, saved.size())
+			best = start
+			for n in around:
+				if not taken.has(n):
+					best = n
+					break
+		taken[best] = true
+		out.append(best)
+	return out
+
+
+## Whether a fight saved at the start of a round (a round-start save) still fits the map as it is now: nobody on the
+## party's side stands on a square that has since closed (a flyer over a chasm or water, or one who left the fight, is
+## where it should be). A fight that doesn't fit begins again from its own squares (LocationFights.resume_encounter).
+static func snapshot_fits(view: LocationView, snapshot: Dictionary) -> bool:
+	for cdv: Variant in (snapshot.get("data", {}) as Dictionary).get("combatants", []):
+		var cd := cdv as Dictionary
+		if str(cd.get("side", "")) not in ["party", "guest"] or int(cd.get("altitude", 0)) > 0 \
+				or bool((cd.get("meta", {}) as Dictionary).get("left_fight", false)):
+			continue
+		var a := cd["cell"] as Array
+		if not is_open(view, Vector2i(int(a[0]), int(a[1]))):
+			return false
+	return true
 
 
 ## Swaps in party members whose character changed (Madam Eva's respec, a swap on the roster screen) where the old ones

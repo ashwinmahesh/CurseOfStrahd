@@ -46,3 +46,22 @@ func test_every_container_makes_a_sound() -> void:
 			assert_false(Audio.files("sfx", WorldSounds.container_sound(model)).is_empty(), "%s's %s" % [id, model])
 	for id: String in ["lever", "trap", "chest", "cupboard", "rummage"]:
 		assert_false(Audio.files("sfx", id).is_empty(), id)
+
+
+## A person with a bed of her own (Patrina's weeping in the Amber Temple): the bed is a loop that exists, it belongs to a
+## real NPC who stands in a place, and it has a quiet level of its own.
+func test_people_with_beds_have_recordings() -> void:
+	var c := Compendium.shared()
+	var beds := Audio._data.get("npc_beds", {}) as Dictionary
+	assert_true(beds.has("patrina_velikovna"), "Patrina weeps")
+	for npc_id: String in beds:
+		assert_false(c.get_entry("npcs", npc_id).is_empty(), "%s is an NPC" % npc_id)
+		assert_eq(WorldSounds.npc_bed_for(npc_id), str(beds[npc_id]))
+		assert_false(Audio.files("loops", str(beds[npc_id])).is_empty(), "%s's bed %s has a recording" % [npc_id, beds[npc_id]])
+		assert_true((Audio._data.get("levels", {}) as Dictionary).has(str(beds[npc_id])), "%s has its own level" % beds[npc_id])
+		var placed := false
+		for id: String in c.table("locations"):
+			for n: Variant in c.get_entry("locations", id).get("npcs", []):
+				placed = placed or str((n as Dictionary).get("npc", "")) == npc_id
+		assert_true(placed, "%s stands somewhere" % npc_id)
+	assert_eq(WorldSounds.npc_bed_for("kasimir_velikov"), "", "most people have none")

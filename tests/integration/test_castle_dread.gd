@@ -86,7 +86,7 @@ func _frames(n: int) -> void:
 
 ## Reads the conversation to its end.
 func _finish() -> void:
-	for i in 12:
+	for i in 30:
 		var d := root.get("dialogue") as DialogueUI
 		if d == null:
 			return
@@ -177,3 +177,19 @@ func test_a_scene_turns_a_town_too() -> void:
 	assert_eq(Audio.mood, "sorrow", "a scene's music plays wherever the conversation is")
 	await _finish()
 	assert_eq(Audio.mood, "town", "and the town's own comes back")
+
+
+## The Amber Temple's copper pact ledger (amber_temple/vault:pact_text, the Bargain): Strahd's signature for the Thirst
+## joining him plays somber music over the temple's own, and the temple's returns when the reading is done (owner,
+## 2026-10-18: "somber music to highlight the gravity of what we are learning").
+func test_the_pact_ledger_plays_somber_music_and_the_temple_returns() -> void:
+	(Audio._data["places"] as Dictionary)["test_dread"] = "amber_temple"
+	Audio.play_music("amber_temple")
+	root.call("start_dialogue", "amber_temple/vault:pact_text", "")
+	await _frames(3)
+	assert_eq(Audio.mood, "somber", "the picture of the bargain brings its music")
+	assert_true(Audio.playing_track in Audio.files("music", "somber"), Audio.playing_track)
+	assert_false(Audio.playing_track.contains("Toccata"), "no organ")
+	await _finish()
+	assert_true(root.get("dialogue") == null, "the reading is over")
+	assert_eq(Audio.mood, "amber_temple", "the temple's own music is back")

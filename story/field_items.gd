@@ -7,6 +7,54 @@ extends RefCounted
 ## Alchemy Jug, a Robe of Useful Items' patches, Daern's Instant Fortress, a Deck of Many Things.
 
 
+## Copying a Spell Scroll into a Wizard's spellbook (Ashwin, 2026-10-18; 2024 PHB Wizard, "Copying a Spell into the
+## Book", and 2024 DMG, Spell Scroll): a Wizard spell of a level the Wizard can prepare, not already in the book, for 2
+## hours and 50 GP of inks per spell level, outside fights; then an Intelligence (Arcana) check against DC 10 plus the
+## spell's level. On a success the spell goes into the book; success or failure, the scroll is destroyed, and the inks
+## and hours are spent. {spell, level, dc, gp, minutes} for the inventory card to show before it's tried.
+static func scroll_copy_terms(scroll_id: String) -> Dictionary:
+	var sid := Character.scroll_spell_of(Compendium.shared().item_data(scroll_id))
+	var lv := int(Compendium.shared().spell_data(sid).get("level", 0)) if sid != "" else 0
+	return {"spell": sid, "level": lv, "dc": Character.SCROLL_COPY_DC_BASE + lv, "gp": lv * Character.COPY_GP_PER_LEVEL,
+		"minutes": lv * Character.COPY_MINUTES_PER_LEVEL}
+
+
+## Why `wizard` can't copy `scroll_id` now, or "": the spellbook rules (Character.copy_scroll_problem), then the inks.
+static func copy_scroll_problem(st: StoryState, wizard: Character, scroll_id: String) -> String:
+	var why := wizard.copy_scroll_problem(scroll_id)
+	if why != "":
+		return why
+	var t := scroll_copy_terms(scroll_id)
+	if st.gold < float(t["gp"]):
+		return "Needs %d gp of inks; the party has %d" % [int(t["gp"]), int(st.gold)]
+	return ""
+
+
+## `wizard` copies the scroll `entry` (one of `holder`'s, `scroll_id`): pays the inks and the hours, rolls the Arcana
+## check with `dice`, and uses the scroll up either way. {ok, copied, text, test}; ok false (nothing spent) if
+## copy_scroll_problem says no or the scroll isn't there.
+static func copy_scroll(st: StoryState, holder: Character, scroll_id: String, wizard: Character, dice: DiceRoller,
+		entry: Dictionary = {}) -> Dictionary:
+	var why := copy_scroll_problem(st, wizard, scroll_id)
+	if why == "" and not holder.carries(scroll_id):
+		why = "Not carried"
+	if why != "":
+		return {"ok": false, "copied": false, "text": why, "test": null}
+	var t := scroll_copy_terms(scroll_id)
+	var spell_name := Compendium.shared().display_name("spells", str(t["spell"]))
+	var who := wizard.name.get_slice(" ", 0)
+	st.gold -= float(t["gp"])
+	st.advance_minutes(int(t["minutes"]))
+	var test := wizard.roll_check(dice, &"arcana", int(t["dc"]), [], [], "%s copies %s (Arcana)" % [who, spell_name])
+	holder.remove_one(scroll_id, entry)
+	if test.success:
+		wizard.copy_spell(str(t["spell"]))
+		return {"ok": true, "copied": true, "test": test,
+			"text": "%s copies %s into the spellbook (Arcana %d against DC %d). The scroll crumbles as the last line dries." % [who, spell_name, test.total, test.target]}
+	return {"ok": true, "copied": false, "test": test,
+		"text": "%s loses the thread of %s (Arcana %d against DC %d), and the scroll crumbles to dust." % [who, spell_name, test.total, test.target]}
+
+
 ## What `ch` can do with `item_id` right now: [{power_id, label, legal, reason, targeting, spell_id}] for powers marked
 ## `field` (or potions and scrolls, which are field powers by nature).
 static func options(party: Array[Character], ch: Character, item_id: String, dice: DiceRoller) -> Array[Dictionary]:

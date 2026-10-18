@@ -5,8 +5,9 @@ extends CanvasLayer
 ##   with a quick swap, the quiver and the spellcasting focus, four quick slots for consumables (the fight's hotbar
 ##   shows them on its Common tab), the load and attunements;
 ## - the backpack as a list with filters (Potions and Quest items have tabs of their own), the New, Junk and Attuned
-##   marks, sorting and a search box (U3), a magic item's row edged in the colour of its rarity, and the party stash
-##   under it: things go in from anywhere and come out only at a safe place (Q7, owner 2026-10-07);
+##   marks, a Rarity filter (any of the six, with the rest), sorting and a search box (U3), a box in the colour of an
+##   item's rarity round its picture, and the party stash under it: things go in from anywhere and come out only at a
+##   safe place (Q7, owner 2026-10-07);
 ## - the item card: what the item does for this character compared with what's equipped, and its actions (equip, use,
 ##   give, split the stack, send to the stash, mark as junk, drop). Quest items can't be dropped, stashed or sold.
 ## Everything drags: a pack item onto a doll slot, a weapon set or a quick slot; anything onto another character's chip
@@ -14,10 +15,11 @@ extends CanvasLayer
 ## the character's page was last opened (Character.add_item marks it; closing this screen clears it for every page shown).
 ## The bag is always a list (owner 2026-10-09: "keep the inventory as list always").
 
-const FILTERS := ["All", "Weapons", "Armor", "Potions", "Consumables", "Magic", "Gear", "Quest"]
+const FILTERS := ["All", "Weapons", "Armor", "Potions", "Scrolls", "Consumables", "Magic", "Gear", "Quest"]
 const SORTS := ["name", "weight", "value", "newest"]
 ## Item categories each filter keeps. Magic is any magic item, whatever its category, and Quest any quest item (is_quest),
-## whatever it is otherwise; Gear is everything else that isn't a quest item. Potions are not Consumables.
+## whatever it is otherwise; Gear is everything else that isn't a quest item. Potions and Scrolls (the Spell Scrolls,
+## is_spell_scroll, of every level) are not Consumables.
 const FILTER_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armor", "shield", "clothing"],
 	"Potions": ["potion"], "Consumables": ["consumable", "scroll"]}
 ## The paper doll: where each slot's tile sits on the figure (its middle, in the doll's own pixels), every worn slot of
@@ -37,6 +39,10 @@ const CARRY_SLOTS: Array[String] = ["ammo", "focus"]
 const QUICK_SLOTS := 4
 ## The Attuned filter's value of `marks` (the New and Junk marks are keys on the entry itself).
 const MARK_ATTUNED := "attuned"
+## The rarities of magic items, from the least to the most, for the Rarity filter (MagicItems.rarity's values).
+const RARITIES: Array[String] = ["common", "uncommon", "rare", "very_rare", "legendary", "artifact"]
+## The picture's side in a pack row, inside its rarity box.
+const ROW_ICON := 30.0
 const QUICK_CATEGORIES: Array[String] = ["potion", "consumable", "scroll"]
 const DOLL_TILE := Vector2(54, 58)
 const STASH_TILE := Vector2(50, 56)
@@ -53,6 +59,9 @@ var search := ""
 ## "new" or "junk" shows only items with that mark, "attuned" (MARK_ATTUNED) only what the character is attuned to;
 ## "" shows everything the filter keeps.
 var marks := ""
+## The Rarity filter: only magic items of these rarities (any of them) show; empty shows every item. It combines with
+## the tab, the mark and the search.
+var rarities: Array[String] = []
 var _frame: VBoxContainer
 var _card: VBoxContainer
 ## The pack's rows.
@@ -67,6 +76,8 @@ var _amount := 1
 ## A line the card shows after a drag (what happened, or why not).
 var _note := ""
 var _note_colour := "bile"
+## The Wizard whose copy of the picked Spell Scroll waits for a second press to confirm ("" for none).
+var _scroll_confirm := ""
 ## The characters whose page was shown: their New marks clear when the screen closes.
 var _viewed := {}
 ## PrepareScreen.snapshot() as an item's Long Rest ended (Daern's Instant Fortress, Rod of Security): while this screen
@@ -440,7 +451,6 @@ func _row(ch: Character, e: Dictionary, from: Dictionary, content: Control) -> I
 	var data := Compendium.shared().item_data(str(e["id"]))
 	var shown := MagicItems.shown_data(data, e)
 	r.icon = UiParts.icon_texture("item", str(shown.get("id", e["id"])))
-	r.rarity = InventoryScreen.rarity_of(shown)
 	r.payload = {"from": "pack", "ch": index, "id": str(e["id"]), "entry": e}
 	r.payload.merge(from, true)
 	var tip_data := shown.duplicate()
@@ -456,13 +466,16 @@ func _row(ch: Character, e: Dictionary, from: Dictionary, content: Control) -> I
 	return r
 
 
-## A pack row's content: icon, name and count, its marks (new, junk, equipped, quest, attuned, rarity, charges) and weight.
+## A pack row's content: icon (in a box of its rarity's colour, for a magic item), name and count, its marks (new, junk,
+## equipped, quest, attuned, rarity, charges) and weight.
 func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
 	var id := str(e["id"])
 	var junk := InventoryScreen.is_junk(e)
+	var shown := MagicItems.shown_data(data, e)
+	var rarity := InventoryScreen.rarity_of(shown)
 	var line := HBoxContainer.new()
 	line.add_theme_constant_override("separation", 10)
-	UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", id)))
+	UiParts.add_framed_icon(line, "item", str(shown.get("id", id)), InventoryScreen.rarity_box(rarity), ROW_ICON)
 	var nm := UiKit.label(MagicItems.display_name(data, e) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15,
 		"bone" if junk else "vellum")
 	nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -479,11 +492,10 @@ func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
 		line.add_child(UiParts.pill("Quick", "bile"))
 	if InventoryScreen.is_quest(data):
 		line.add_child(UiParts.pill("Quest", "flame"))
-	var rarity := InventoryScreen.rarity_of(MagicItems.shown_data(data, e))
 	if InventoryScreen.is_attuned(ch, e):
 		line.add_child(UiParts.pill("Attuned", "lilac"))
 	if rarity != "":
-		line.add_child(UiParts.pill(rarity.replace("_", " ").capitalize(), ItemTile.rarity_colour(rarity)))
+		line.add_child(UiParts.pill(InventoryScreen.rarity_name(rarity), ItemTile.rarity_colour(rarity)))
 	if MagicItems.has_charges(data):
 		line.add_child(UiParts.pill("%d/%d" % [int(e.get("charges", 0)), MagicItems.max_charges(data, e)], "moonlight"))
 	var wt := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment")
@@ -498,8 +510,8 @@ func _stash_row(se: Dictionary, i: int, at_safe: bool, tip: Callable) -> Control
 	var sid := str(se["id"])
 	var line := HBoxContainer.new()
 	line.add_theme_constant_override("separation", 8)
-	UiParts.add_icon(line, "item", sid, 24.0)
 	var data := Compendium.shared().item_data(sid)
+	UiParts.add_framed_icon(line, "item", sid, InventoryScreen.rarity_box(InventoryScreen.rarity_of(MagicItems.shown_data(data, se))), 24.0)
 	var sn := UiKit.label("%s ×%d" % [MagicItems.display_name(data, se), int(se["qty"])], 14, "vellum" if at_safe else "bone")
 	sn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	line.add_child(sn)
@@ -542,6 +554,7 @@ func _pack(ch: Character) -> Control:
 	inner.add_theme_constant_override("separation", 6)
 	pane.add_child(inner)
 	inner.add_child(_search_row(ch))
+	inner.add_child(_rarity_row(ch))
 	var sorts := HBoxContainer.new()
 	sorts.add_theme_constant_override("separation", 4)
 	var sort_cap := UiParts.caption("Sort", 11)
@@ -836,6 +849,7 @@ func _pick(e: Dictionary) -> void:
 	selected = str(e["id"])
 	_amount = 1
 	_note = ""
+	_scroll_confirm = ""
 	for t in _tiles:
 		if is_instance_valid(t):
 			t.set("lit", is_same((t.get("payload") as Dictionary).get("entry"), e))
@@ -962,10 +976,17 @@ func _open_menu(acts: Array[Dictionary], at: Vector2) -> void:
 
 # --- Search, filters and marks (U3) ---------------------------------------------------------------------
 
-## Whether the filter tab, the New, Junk or Attuned mark and the search box all keep this entry. `data` is what it shows
-## as (a disguised item is found by what it passes for).
+## Whether the filter tab, the New, Junk or Attuned mark, the Rarity filter and the search box all keep this entry.
+## `data` is what it shows as (a disguised item is found by what it passes for).
 func _passes(e: Dictionary, data: Dictionary) -> bool:
-	return InventoryScreen.in_filter(filter, data) and _has_mark(e) and InventoryScreen.matches(search, data, e)
+	return InventoryScreen.in_filter(filter, data) and _has_mark(e) and _has_rarity(data) \
+		and InventoryScreen.matches(search, data, e)
+
+
+## Whether the Rarity filter keeps an item shown as `data`: no filter keeps everything, else the item has to be magic
+## and of one of the chosen rarities.
+func _has_rarity(data: Dictionary) -> bool:
+	return rarities.is_empty() or InventoryScreen.rarity_of(data) in rarities
 
 
 ## Whether entry `e` has the mark `marks` asks for: New or Junk on the entry, or Attuned for the character shown.
@@ -985,6 +1006,10 @@ static func in_filter(name_: String, data: Dictionary) -> bool:
 			return not (data.get("magic", {}) as Dictionary).is_empty()
 		"Quest":
 			return is_quest(data)
+		"Scrolls":
+			return is_spell_scroll(data)
+		"Consumables":
+			return cat in (FILTER_CATEGORIES["Consumables"] as Array) and not is_spell_scroll(data)
 		"Gear":
 			if is_quest(data):
 				return false
@@ -1010,9 +1035,28 @@ static func matches(text: String, data: Dictionary, e: Dictionary = {}) -> bool:
 	return true
 
 
+## Whether an item is a Spell Scroll of any level: the bare Spell Scroll, a scroll that only says its level ("Spell Scroll
+## (Level 1)", found in the story's loot before it picks a spell) or one holding a particular spell
+## ("spell_scroll__fireball", found or bought). A Scroll of Protection is a scroll but no Spell Scroll.
+static func is_spell_scroll(data: Dictionary) -> bool:
+	if str(data.get("category", "")) != "scroll":
+		return false
+	return data.has("scroll_spell") or str(data.get("template_id", "")) == "spell_scroll" or str(data.get("id", "")).begins_with("spell_scroll")
+
+
 ## A magic item's rarity as it shows ("common" to "artifact"); "" for anything that isn't magic.
 static func rarity_of(shown: Dictionary) -> String:
 	return "" if (shown.get("magic", {}) as Dictionary).is_empty() else MagicItems.rarity(shown)
+
+
+## The colour of the box round a picture (UiParts.framed_icon): its rarity's, clear for an item with none.
+static func rarity_box(rarity: String) -> Color:
+	return ItemTile.rarity_edge(rarity) if rarity != "" else Color.TRANSPARENT
+
+
+## "Very Rare" for "very_rare", as the tags and the item card say it.
+static func rarity_name(rarity: String) -> String:
+	return rarity.replace("_", " ").capitalize()
 
 
 ## Whether `ch` is attuned to entry `e`'s item, for the Attuned filter and tag: it needs attunement and they are
@@ -1094,6 +1138,51 @@ func _search_row(ch: Character) -> Control:
 	return row
 
 
+## The Rarity filter: a chip for each rarity, in its colour, that keeps only magic items of the chosen ones (any
+## number; none chosen keeps everything). A rarity nothing in the pack has is greyed out. Tooltips give the counts.
+func _rarity_row(ch: Character) -> Control:
+	var row := HBoxContainer.new()
+	row.name = "RarityRow"
+	row.add_theme_constant_override("separation", 4)
+	var cap := UiParts.caption("Rarity", 11)
+	# Room for a lit chip's glow, as the Sort caption has.
+	cap.custom_minimum_size.x = cap.get_minimum_size().x + 6.0
+	row.add_child(cap)
+	var counts := {}
+	for r in RARITIES:
+		counts[r] = 0
+	for e in ch.inventory:
+		if int(e["qty"]) > 0:
+			var r := InventoryScreen.rarity_of(MagicItems.shown_data(Compendium.shared().item_data(str(e["id"])), e))
+			if counts.has(r):
+				counts[r] = int(counts[r]) + 1
+	for r in RARITIES:
+		var on := r in rarities
+		var chip := UiParts.small_button(InventoryScreen.rarity_name(r), func() -> void:
+			if r in rarities:
+				rarities.erase(r)
+			else:
+				rarities.append(r)
+			_draw())
+		chip.name = "Rarity_%s" % r
+		# Close-set chips: six of them have to fit the pack's width beside the caption.
+		for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+			var sb := chip.get_theme_stylebox(state) as StyleBoxFlat
+			sb.content_margin_left = 7
+			sb.content_margin_right = 7
+		chip.add_theme_font_size_override("font_size", 12)
+		if on:
+			UiParts.light_up(chip)
+		chip.add_theme_color_override("font_color", Look.color(ItemTile.rarity_colour(r)))
+		chip.add_theme_color_override("font_disabled_color", Color(Look.color(ItemTile.rarity_colour(r)), 0.35))
+		var n := int(counts[r])
+		chip.disabled = n == 0 and not on
+		chip.tooltip_text = "%d %s item%s in %s's pack%s" % [n, InventoryScreen.rarity_name(r).to_lower(), "" if n == 1 else "s",
+			ch.name.get_slice(" ", 0), ". Press again to clear it." if on else ""]
+		row.add_child(chip)
+	return row
+
+
 ## The backpack's tiles the filter, marks and search keep, sorted; with Junk shown, what the junk adds up to.
 func _fill_list() -> void:
 	if _grid == null:
@@ -1137,6 +1226,9 @@ func _fill_list() -> void:
 			why = "Nothing new since you last looked."
 		elif marks == MARK_ATTUNED:
 			why = "Nothing attuned here. Pick a magic item that needs it and choose Attune."
+		elif not rarities.is_empty():
+			why = "No %s items here in %s's pack." % [" or ".join(rarities.map(func(r: String) -> String: return InventoryScreen.rarity_name(r).to_lower())),
+				ch.name.get_slice(" ", 0)]
 		_list_foot.add_child(UiKit.label(why, 15, "bone", 540))
 	for r in rows:
 		_grid.add_child(_row(ch, r["e"] as Dictionary, {"from": "pack"}, _pack_line(ch, r["e"] as Dictionary, r["d"] as Dictionary)))
@@ -1241,6 +1333,9 @@ func _draw_card() -> void:
 	_card.add_child(UiKit.label(str(shown.get("text", shown.get("summary", ""))), 14, "vellum", 420))
 	if not (data.get("spells", []) as Array).is_empty():
 		_spellbook_card(data.get("spells", []) as Array)
+	var scroll_spell := Character.scroll_spell_of(data)
+	if scroll_spell != "" and "wizard" in (Compendium.shared().spell_data(scroll_spell).get("classes", []) as Array):
+		_scroll_copy_card(data)
 	# Magic items: rarity and attunement (three items at most; attuning and ending it are instant: owner house rule
 	# 2026-10-07, docs/contracts/magic_items.md).
 	var magic := shown.get("magic", {}) as Dictionary
@@ -1504,6 +1599,59 @@ func _spellbook_card(book: Array) -> void:
 			b.tooltip_text = why if why != "" else "Into %s's spellbook; prepare it from there after a Long Rest." % w.name.get_slice(" ", 0)
 			acts.add_child(b)
 		_card.add_child(acts)
+
+
+## A Spell Scroll of a Wizard spell (Ashwin, 2026-10-18; FieldItems.copy_scroll): a Copy button for each Wizard in the
+## party, with the hours, the inks and the Arcana check on it, and a second press to confirm, because the scroll is
+## used up whether the check succeeds or fails. Outside fights and conversations, as copying from a book is.
+func _scroll_copy_card(data: Dictionary) -> void:
+	_card.add_child(UiParts.section("Copy into a spellbook"))
+	var terms := FieldItems.scroll_copy_terms(str(data["id"]))
+	var spell_name := Compendium.shared().display_name("spells", str(terms["spell"]))
+	var wizards: Array[Character] = []
+	for m in st.party:
+		if m.spellbook_class() != "":
+			wizards.append(m)
+	if wizards.is_empty():
+		_card.add_child(UiKit.label("Nobody in the party keeps a spellbook. A Wizard could copy %s from this scroll into theirs." % spell_name, 13, "parchment", 420))
+		return
+	_card.add_child(UiKit.label("%d h and %d gp of inks, then an Arcana check, DC %d. Pass or fail, the scroll is used up." % [
+		int(terms["minutes"]) / 60, int(terms["gp"]), int(terms["dc"])], 13, "parchment", 420))
+	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+	var holder := _ch()
+	var entry := _entry(selected)
+	var acts := HFlowContainer.new()
+	acts.add_theme_constant_override("h_separation", 6)
+	for w in wizards:
+		var why := FieldItems.copy_scroll_problem(st, w, str(data["id"]))
+		if why == "" and not calm:
+			why = "Not during a fight or a conversation"
+		var first := w.name.get_slice(" ", 0)
+		var bonus := w.skill_bonus(&"arcana").total()
+		if why == "" and _scroll_confirm == w.id:
+			var go := UiParts.small_button("Copy it: %s rolls Arcana (%+d) against DC %d" % [first, bonus, int(terms["dc"])], func() -> void:
+				var res := FieldItems.copy_scroll(st, holder, str(data["id"]), w, Dice.roller, entry)
+				_scroll_confirm = ""
+				_say(str(res["text"]), "bile" if bool(res.get("copied", false)) else "flame")
+				_draw())
+			go.tooltip_text = "Spends %d gp and %d hours; on a success %s goes into %s's spellbook." % [int(terms["gp"]), int(terms["minutes"]) / 60, spell_name, first]
+			go.set_meta("pad_first", true)
+			acts.add_child(go)
+			go.call_deferred("grab_focus")
+			var back := UiParts.small_button("Keep the scroll", func() -> void:
+				_scroll_confirm = ""
+				_draw())
+			acts.add_child(back)
+			continue
+		var label := "In %s's book" % first if why == "Already in the spellbook" else "%s copies it (%d h, %d gp, Arcana DC %d)" % [first,
+			int(terms["minutes"]) / 60, int(terms["gp"]), int(terms["dc"])]
+		var b := UiParts.small_button(label, func() -> void:
+			_scroll_confirm = w.id
+			_draw())
+		b.disabled = why != ""
+		b.tooltip_text = why if why != "" else "%s has %+d to Arcana. Press again to confirm." % [first, bonus]
+		acts.add_child(b)
+	_card.add_child(acts)
 
 
 ## Things come out of the stash only where it's safe to rest (an inn, a home); they go in from anywhere.
