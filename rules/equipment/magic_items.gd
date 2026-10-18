@@ -23,8 +23,10 @@ const SCROLL_DC: Array[int] = [13, 13, 13, 15, 15, 17, 17, 18, 18, 19]
 const SCROLL_RARITY: Array[String] = ["common", "common", "uncommon", "uncommon", "rare", "rare", "very_rare", "very_rare",
 	"very_rare", "legendary"]
 ## Spell Scroll price by the spell's level: Sane Magical Prices, the guide Ashwin picked for magic item prices
-## (2026-10-14; data/treasure/magic_prices.json `scrolls`, which tools/data/magic_prices.py writes into other items).
-const SCROLL_PRICE: Array[float] = [10.0, 60.0, 120.0, 200.0, 320.0, 640.0, 1280.0, 2560.0, 5120.0, 10240.0]
+## (2026-10-14; data/treasure/magic_prices.json `scrolls`), held in the band for the scroll's rarity (2026-10-17, the
+## table's `bands`: a level 6 to 8 scroll is very rare) except the cantrip and level 1 scrolls, which keep the PHB's
+## 30 and 50 gp (the table's `book`).
+const SCROLL_PRICE: Array[float] = [30.0, 50.0, 120.0, 200.0, 625.0, 640.0, 6250.0, 6250.0, 6250.0, 45000.0]
 const SPECIES: Array[String] = ["aasimar", "dragonborn", "dwarf", "elf", "gnome", "goliath", "halfling", "human", "orc",
 	"tiefling"]
 
@@ -76,7 +78,8 @@ static func is_consumable(item: Dictionary) -> bool:
 
 
 ## The 2024 DMG's price in gp for a rarity (half for consumables). The game prices its magic items by Sane Magical
-## Prices instead (each item's cost_gp, data/treasure/magic_prices.json; a Spell Scroll by SCROLL_PRICE).
+## Prices instead, held in a band around this value (each item's cost_gp, data/treasure/magic_prices.json; a Spell
+## Scroll by SCROLL_PRICE).
 static func price_for(rarity_: String, consumable: bool) -> float:
 	var p := float(PRICE.get(rarity_, 0))
 	return p / 2.0 if consumable else p

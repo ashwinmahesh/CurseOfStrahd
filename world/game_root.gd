@@ -551,11 +551,13 @@ func _ask_guidance(offer: Dictionary, answered: Callable) -> void:
 
 
 func _dialogue_ended(combat: String) -> void:
+	# `move <location>[:<spawn>]` ended the conversation: where the party goes once it has closed (story/dialogue_runner.gd).
+	var moved: Dictionary = dialogue.runner.move_to if dialogue != null and dialogue.runner != null else {}
 	dialogue = null
 	_scene_mood = ""
 	if view != null:
 		view.clear_staged()   # whoever stepped into the scene leaves with it
-		TalkCamera.close(view, combat != "")
+		TalkCamera.close(view, combat != "" or not moved.is_empty())
 	# `end_game`, or the parley's yield or ireena, ends the campaign (ADR 0014).
 	if Endings.reached(st) != "" or (Endings.parley_ends(st) and Endings.request(st) != ""):
 		show_ending()
@@ -584,8 +586,20 @@ func _dialogue_ended(combat: String) -> void:
 	if combat != "":
 		view.hide_npcs_of(_dialogue_ref)
 		view.start_encounter(combat)
+	elif not moved.is_empty():
+		_move_party(str(moved["location"]), str(moved["spawn"]))
 	elif not view.check_flag_encounters() and not st.travel_resume.is_empty():
 		_continue_journey.call_deferred()
+
+
+## A conversation's `move <location>[:<spawn>]`: the party goes there as through an exit, behind the same cover, to
+## another map or to another square of this one (a trap's drop from cell to cell). The place then does what it does for any
+## arrival: its Narrator line, the autosave, a fight whose area they land in.
+func _move_party(location_id: String, spawn: String) -> void:
+	if not Compendium.shared().has("locations", location_id):
+		push_warning("Dialogue: move to unknown location '%s'" % location_id)
+		return
+	_covered.call_deferred(location_id, enter_location.bind(location_id, spawn))
 
 
 ## A road meeting's reward, in the loot window.
@@ -705,7 +719,8 @@ func travel(from: String, to: String) -> void:
 		st.miles_since_long_rest += float(leg["hours"]) * 3.0
 		if _strahd_on_road(leg, to):
 			return
-		var ev := Travel.roll(leg["road"] as Dictionary, st, Dice.roller)
+		var ev := Travel.roll(leg["road"] as Dictionary, st, Dice.roller, to)
+		RoadFamiliarity.note(st, leg["road"] as Dictionary)   # walked now: the next time along it is familiar ground
 		if ev.is_empty():
 			continue
 		st.travel_resume = {"to": to, "at": str(leg["to"])}

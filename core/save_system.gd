@@ -626,14 +626,18 @@ static func _remove_dir(dir: String) -> void:
 ## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn: useful items of
 ## the same rarity (and the same price by the 2024 DMG's table; Sane Magical Prices prices each its own way since
 ## 2026-10-14). The Amulet of Proof against Detection and Location did nothing here and turned up far
-## too often (owner, 2026-10-12); the four items that cast Detect Thoughts left with the spell (Ashwin, 2026-10-13).
+## too often (owner, 2026-10-12); the four items that cast Detect Thoughts left with the spell (Ashwin, 2026-10-13); the
+## Rings of Mind Shielding and Water Walking did nothing here either (magic item audit, 2026-10-17).
 ## Each one a save holds, carried, stashed or waiting in a chest, becomes the next one on its list.
 const WITHDRAWN := {"amulet_of_proof_against_detection_and_location":
 	["periapt_of_wound_closure", "cloak_of_protection", "stone_of_good_luck"],
 	"helm_of_telepathy": ["circlet_of_blasting", "headband_of_intellect"],
 	"medallion_of_thoughts": ["eyes_of_minute_seeing", "brooch_of_shielding"],
 	"potion_of_mind_reading": ["potion_of_healing_superior", "potion_of_heroism"],
-	"crystal_ball_of_mind_reading": ["crystal_ball_of_true_seeing", "crystal_ball_of_telepathy"]}
+	"crystal_ball_of_mind_reading": ["crystal_ball_of_true_seeing", "crystal_ball_of_telepathy"],
+	# Rings that did nothing in the game (magic item audit, 2026-10-17).
+	"ring_of_mind_shielding": ["ring_of_warmth", "ring_of_jumping"],
+	"ring_of_water_walking": ["ring_of_warmth", "ring_of_jumping"]}
 ## What an item entry holds of its own (MagicItems.init_state's charges and the like): the old item's goes with it, so
 ## its replacement starts fresh when it's next picked up.
 const ITEM_STATE := ["charges", "max_charges", "gems", "beads", "patches", "stored", "artifact_properties", "made"]

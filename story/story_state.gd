@@ -622,12 +622,19 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	var data := Compendium.shared().item_data(item_id)
 	if data.is_empty() or str(data.get("category", "")) == "quest":
 		return -1.0
+	# One piece of a pair is half the pair's price.
+	var pieces := 0.5 if bool(data.get("pair", false)) else float(StoryState.shop_lot(data))
+	# A merchant who sells magic items buys them, at half price, whatever else they buy (Ashwin, 2026-10-17); never a
+	# story item or an artifact, which have no price.
+	if MagicItems.is_magic(data) and Trade.buys_magic(self, npc_id):
+		if float(data.get("cost_gp", 0)) <= 0.0 or bool(data.get("quest_locked", false)):
+			return -1.0
+		var rate := float(shop.get("magic_sell_rate", Trade.MAGIC_SELL_RATE))
+		return Trade.sell_price(self, npc_id, snappedf(float(data["cost_gp"]) * pieces * rate, 0.01))
 	var buys := shop.get("buys", []) as Array
 	# No `buys`: anything; an empty list: nothing (the Order of the Silver Dragon has no use for coin).
 	if (shop.has("buys") and buys.is_empty()) or (not buys.is_empty() and not str(data.get("category", "")) in buys):
 		return -1.0
-	# One piece of a pair is half the pair's price.
-	var pieces := 0.5 if bool(data.get("pair", false)) else float(StoryState.shop_lot(data))
 	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * pieces * float(shop.get("sell_rate", 0.5)), 0.01))
 
 
@@ -881,7 +888,8 @@ static func from_dict(d: Dictionary) -> StoryState:
 			cr.state_from_dict(gd.get("state", {}) as Dictionary)
 			st.guest_ids.append(str(gd["npc"]))
 			st.guests.append(cr)
-	_upgrade_durst_spellbook(st)
+	_upgrade_found_spellbook(st, "death_house_dungeon_1", "durst_footlocker", "durst_spellbook")
+	_upgrade_found_spellbook(st, "amber_temple_faceless_god", "warden_cell_chest", "amber_warden_spellbook")
 	_upgrade_quests(st)
 	return st
 
@@ -944,21 +952,22 @@ static func _upgrade_quests(st: StoryState) -> void:
 	st._settle_ally()
 
 
-## Saves from before found spellbooks listed their spells (owner, 2026-10-07): the Dursts' footlocker in Death House
-## held a plain "spellbook". Swap it for the Dursts' book wherever it went: still in the footlocker, carried by
-## someone who isn't a Wizard (a Wizard's own book stays theirs), or in the stash.
-static func _upgrade_durst_spellbook(st: StoryState) -> void:
-	var ls := st.location_states.get("death_house_dungeon_1", {}) as Dictionary
+## Saves from before found spellbooks listed their spells: a container that held a plain "spellbook" now holds a
+## book with spells in it (owner, 2026-10-07: the Dursts' footlocker in Death House; Ashwin, 2026-10-18: a warden's chest
+## at the Amber Temple). Swap it for that book wherever it went: still in the container, carried by someone who isn't a
+## Wizard (a Wizard's own book stays theirs), or in the stash.
+static func _upgrade_found_spellbook(st: StoryState, loc_id: String, container_id: String, book_id: String) -> void:
+	var ls := st.location_states.get(loc_id, {}) as Dictionary
 	if ls.is_empty():
 		return
-	var left := (ls.get("contents", {}) as Dictionary).get("durst_footlocker", {}) as Dictionary
+	var left := (ls.get("contents", {}) as Dictionary).get(container_id, {}) as Dictionary
 	for it: Variant in left.get("items", []):
 		if str((it as Dictionary)["id"]) == "spellbook":
-			(it as Dictionary)["id"] = "durst_spellbook"
+			(it as Dictionary)["id"] = book_id
 			return
-	if left.is_empty() and not bool((ls.get("looted", {}) as Dictionary).get("durst_footlocker", false)):
+	if left.is_empty() and not bool((ls.get("looted", {}) as Dictionary).get(container_id, false)):
 		return
-	if st.party_has_item("durst_spellbook"):
+	if st.party_has_item(book_id):
 		return
 	var everyone: Array[Character] = []
 	everyone.append_array(st.party)
@@ -968,9 +977,9 @@ static func _upgrade_durst_spellbook(st: StoryState) -> void:
 			continue
 		for e: Dictionary in ch.inventory:
 			if str(e["id"]) == "spellbook" and int(e.get("qty", 1)) == 1:
-				e["id"] = "durst_spellbook"
+				e["id"] = book_id
 				return
 	for e: Dictionary in st.stash:
 		if str(e["id"]) == "spellbook" and int(e.get("qty", 1)) == 1:
-			e["id"] = "durst_spellbook"
+			e["id"] = book_id
 			return

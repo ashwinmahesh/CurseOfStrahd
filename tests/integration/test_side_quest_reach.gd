@@ -125,4 +125,4 @@ func test_every_side_quest_can_be_finished() -> void:
 			for m in give.search_all(texts["res://narrative/" + f + ".dialogue"]):
 				var item := m.get_string(1)
 				assert_true(not c.get_entry("magic_items", item).is_empty() or not c.get_entry("items", item).is_empty()
-					or item.begins_with("spell_scroll__"), "%s: %s is an item" % [qid, item])
+					or not c.item_data(item).is_empty(), "%s: %s is an item" % [qid, item])   # an item made on a base too

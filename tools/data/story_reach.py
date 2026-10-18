@@ -30,6 +30,7 @@ RE_QUEST = re.compile(rf"^quest\s+({ID})\s+({ID})$")
 RE_GIVE = re.compile(rf"^give\s+({ID})")
 RE_CHECK = re.compile(r"^check\s+.*?->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?$")
 RE_COMBAT = re.compile(rf"^combat\s+({ID})$")
+RE_MOVE = re.compile(rf"^move\s+({ID})(?::({ID}))?$")
 RE_IF = re.compile(r"^(if|elif)\s+(.+)$")
 RE_JOIN = re.compile(rf"^join\s+({ID})$")
 RE_ATT = re.compile(rf"^attitude\s+({ID})\s+(hostile|indifferent|friendly)$")
@@ -116,6 +117,8 @@ def parse_dialogue(path):
             st.update(t="give", item=m.group(1))
         elif (m := RE_COMBAT.match(line)):
             st.update(t="combat", enc=m.group(1))
+        elif (m := RE_MOVE.match(line)):
+            st.update(t="move", loc=m.group(1), spawn=m.group(2) or "default")
         elif (m := RE_JOIN.match(line)):
             st.update(t="join", npc=m.group(1))
         elif (m := RE_ATT.match(line)):
@@ -204,6 +207,10 @@ class Story:
                 self.changed |= self.add(("attitude", s["npc"], s["value"]), here)
             elif t == "combat":
                 self.changed |= self.add(("combat", s["enc"]), here)
+            elif t == "move":
+                # `move` takes the party to a spawn like an exit does (story/dialogue_runner.gd).
+                self.changed |= self.add(("loc", s["loc"]), here)
+                self.changed |= self.add(("spawn", s["loc"], s["spawn"]), here)
             elif t == "gift":
                 self.changed |= self.add(("gift", s["gift"]), here)
             elif t == "option" and not all(self.possible(c) for c in s["conds"]):

@@ -7,7 +7,7 @@
   },
   "category": "wand",
   "weight_lb": 1,
-  "cost_gp": 8000,
+  "cost_gp": 1250,
   "magic": {
     "rarity": "uncommon",
     "attunement": "by a Spellcaster",

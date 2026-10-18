@@ -7,7 +7,7 @@
   },
   "category": "scroll",
   "weight_lb": 0,
-  "cost_gp": 10,
+  "cost_gp": 30,
   "magic": {
     "rarity": "common",
     "attunement": false

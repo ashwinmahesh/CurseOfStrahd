@@ -271,6 +271,56 @@ func test_the_castle_has_no_tavern_swing() -> void:
 	assert_true(Audio.files("music", "castle").has("res://art/sourced/oga_tausdei/stronghold.mp3"), "and Stronghold")
 
 
+## The castle's lonely piano (owner, 2026-10-18): the Marche funebre and the six more he picked from the listening page.
+## Piano is quiet, so each carries a track level from its whole-file loudness against the Marche funebre's.
+func test_the_castle_plays_the_lonely_piano() -> void:
+	var piano: Array[String] = [
+		"wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg",
+		"wikimedia_commons/Chopin_Prelude_Op28_No4_Ivan_Ilic.ogg",
+		"wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg",
+		"wikimedia_commons/Chopin_Nocturne_Op72_No1_Luke_Faulkner.mp3",
+		"wikimedia_commons/Beethoven_Moonlight_Sonata_I_Paul_Pitman.ogg",
+		"kevin_macleod/Wounded.mp3"]
+	var levels := Audio._data["track_levels"] as Dictionary
+	for f: String in piano:
+		var path := "res://art/sourced/" + f
+		assert_true(Audio.files("music", "castle").has(path), "the castle plays %s" % f)
+		assert_true(levels.has(path), "%s has its own level" % f)
+		assert_true(absf(float(levels.get(path, 99.0))) <= 12.0, "%s: a level that big would clip or vanish" % f)
+
+
+## The copper pact ledger in the Amber Temple vault (the Bargain, and the Tome read beside it) plays the somber mood: the
+## lonely piano and the slowest strings, none of them an organ, each with its own level (owner, 2026-10-18).
+func test_the_pact_ledger_has_somber_music() -> void:
+	assert_eq(Audio.scene_mood("amber_pact"), "somber")
+	assert_eq(Audio.scene_mood("pact_two_books"), "somber")
+	var levels := Audio._data["track_levels"] as Dictionary
+	assert_true(Audio.files("music", "somber").size() >= 4, "several to shuffle")
+	for path: String in Audio.files("music", "somber"):
+		assert_true(levels.has(path), "%s has its own level" % path)
+		assert_false(path.contains("organ") or path.contains("Toccata") or path.contains("Fugue"), "%s is no organ piece" % path)
+	assert_true(Audio.files("music", "somber").has(
+			"res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg"),
+			"his favourite is among them")
+
+
+## The farewells and burials (art/audio.json "scenes" -> sorrow) share the piano with the castle (owner, 2026-10-18):
+## Wounded and the three nocturnes, with the strings the mood had. Every recording of the mood has its own level.
+func test_sorrow_shares_the_piano_with_the_castle() -> void:
+	var sorrow := Audio.files("music", "sorrow")
+	var castle := Audio.files("music", "castle")
+	var levels := Audio._data["track_levels"] as Dictionary
+	for f: String in ["kevin_macleod/Wounded.mp3", "wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg",
+			"wikimedia_commons/Chopin_Nocturne_Op72_No1_Luke_Faulkner.mp3",
+			"wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg"]:
+		var path := "res://art/sourced/" + f
+		assert_true(sorrow.has(path), "sorrow plays %s" % f)
+		assert_true(castle.has(path), "and the castle still does")
+	assert_true(sorrow.has("res://art/sourced/kevin_macleod/Relent.mp3"), "the strings stay")
+	for path: String in sorrow:
+		assert_true(levels.has(path), "%s has its own level" % path)
+
+
 ## Region themes (A1, lane 11): a region's places play its theme, but taverns and the like keep their own mood.
 func test_regions_play_their_theme() -> void:
 	var c := Compendium.shared()

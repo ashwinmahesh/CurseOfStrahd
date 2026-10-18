@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Magic item prices from Sane Magical Prices (Ashwin, 2026-10-14; data/treasure/magic_prices.json).
+"""Magic item prices from Sane Magical Prices (Ashwin, 2026-10-14; data/treasure/magic_prices.json), each held inside
+its rarity's band around the 2024 DMG's value (Ashwin, 2026-10-17; the table's `bands`).
 
     python3 tools/data/magic_prices.py           # check: every priced item's cost_gp is what the table makes it
     python3 tools/data/magic_prices.py --apply   # write those prices into the item files (make magic-prices)
@@ -49,6 +50,24 @@ def price(item, how, guide, med):
     raise ValueError(f"{item['id']}: no way to price {how}")
 
 
+def band_price(item, gp, table):
+    """`gp` held inside the band for the item's rarity (`bands`; half for a consumable, ammunition by the stack)."""
+    band = table["bands"].get(item.get("magic", {}).get("rarity", ""))
+    if band is None:
+        return gp
+    ammo = item.get("category") == "ammunition"
+    share = (0.5 if is_consumable(item) or ammo else 1) / (table["ammunition_stack"] if ammo else 1)
+    return min(max(gp, band[0] * share), band[1] * share)
+
+
+def table_price(item, how, table, med):
+    """The item's price: a 2024 book's own price if it prints one, else the guide's (price) held in its band."""
+    names = how.get("guide")
+    if isinstance(names, str) and names in table["book"] and how.get("times", 1) == 1:
+        return table["book"][names]
+    return band_price(item, price(item, how, table["guide"], med), table)
+
+
 def tidy(gp):
     return int(gp) if float(gp).is_integer() else round(float(gp), 2)
 
@@ -66,7 +85,7 @@ def run(apply=False):
         f = files[id_]
         text = f.read_text()
         item = json.loads(text)
-        want = tidy(price(item, how, guide, med))
+        want = tidy(table_price(item, how, table, med))
         if float(item.get("cost_gp", -1)) == float(want):
             continue
         if not apply:

@@ -44,14 +44,18 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
   card's How many stepper sets how many of a stack Give, Send to the stash and Split off move.
 - **Backpack**: a list, always (owner 2026-10-09; the icon grid and the view switch are gone): a row per stack with its
   icon, name and count, its marks (New, Junk, Equipped, Readied for the quiver, Focus, Quick, Quest, Attuned, its
-  rarity, charges) and weight; filters (All, Weapons, Armor, Potions, Consumables, Magic, Gear, Quest), the New, Junk
+  rarity, charges) and weight; filters (All, Weapons, Armor, Potions, Scrolls, Consumables, Magic, Gear, Quest), the New, Junk
   and Attuned marks as toggles with their counts, sort by name, weight, value or newest, and a search box (every word
   must appear in the item's name, kind or rarity); columns Item / Qty / Weight / Value; packs open as containers (▸).
-  **Potions** and **Quest** items have tabs of their own (owner 2026-10-17): a potion is no longer under Consumables
-  (scrolls and anything else used up), and a quest item is not Gear (the Sunsword is under Weapons and Magic as well).
-  A magic item's row has a border in the colour of its rarity (common, uncommon, rare, very rare, legendary,
-  artifact: `ItemTile.rarity_colour`, the same colours as the item notices and the shop), a plain item's the fine gilt
-  one; the picked row keeps its colour with a heavier edge, and the doll's tiles take it too. **Attuned** keeps what
+  **Potions**, **Scrolls** and **Quest** items have tabs of their own (owner 2026-10-17, Scrolls 2026-10-18): a potion
+  is no longer under Consumables (anything else used up, a Scroll of Protection too), **Scrolls** keeps the Spell
+  Scrolls of every level (`InventoryScreen.is_spell_scroll`: the bare Spell Scroll, the two that only say a level, and
+  one for each spell, found or bought), and a quest item is not Gear (the Sunsword is under Weapons and Magic as well).
+  A magic item's picture has a box in the colour of its rarity (common, uncommon, rare, very rare, legendary,
+  artifact: `ItemTile.rarity_colour`, the same colours as the item notices and the shop), never the row round it;
+  the stash's rows and the doll's tiles do the same (owner 2026-10-18). **Rarity** chips under the search box keep
+  only magic items of the chosen rarities (any number of the six, in their colours; one nothing in the pack has is
+  greyed out) and combine with the tab, the marks and the search. **Attuned** keeps what
   the character is attuned to (`InventoryScreen.is_attuned`: an item that needs attunement and works for them, so
   with the attunement limit lifted it lists every worn magic item that would have needed it). Quest items (and the
   three treasures) show Quest and can't be sold, stashed, dropped or marked as junk. **New** is what arrived since the
@@ -77,10 +81,10 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 - **Merchant**: Buy and Sell columns; prices change with the NPC's attitude (Hostile/Indifferent/Friendly, 2024
   Influence) and an optional Persuasion haggle that rolls in the open; "Sell all junk" sells everything the party
   marked as junk that this merchant buys, from every pack at once (equipped things stay); quest items can't be sold.
-  The Sell side has the backpack's filter tabs (All, Weapons, Armor, Potions, Consumables, Magic, Gear, Quest; LB/RB on a pad) and
+  The Sell side has the backpack's filter tabs (All, Weapons, Armor, Potions, Scrolls, Consumables, Magic, Gear, Quest; LB/RB on a pad) and
   **Only what <merchant> buys**, on at first, which hides what that merchant won't take and says how many it hid.
-  Both choices hold at every counter until the game is closed (owner, 2026-10-13). The Sell rows and the wares are
-  edged by rarity as in the backpack, and the wares' tabs split Potions off Consumables the same way.
+  Both choices hold at every counter until the game is closed (owner, 2026-10-13). The Sell rows and the wares have
+  the rarity box round their pictures as in the backpack, and the wares' tabs split Potions and Scrolls off Consumables the same way.
 - **Stash** shows under the backpack everywhere; its Take buttons work only at safe places.
 
 ## Combat hooks (Phase 2)

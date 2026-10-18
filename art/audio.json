@@ -130,6 +130,7 @@
     "hearth": -14.0,
     "river": -6.0,
     "waterfall": -6.0,
+    "weeping": -10.0,
     "combat_hard": -4.0,
     "strahd": -2.0,
     "dread": -4.0,
@@ -243,7 +244,13 @@
       "res://art/sourced/kevin_macleod/Danse Macabre.mp3",
       "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
       "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3",
-      "res://art/sourced/oga_tausdei/stronghold.mp3"
+      "res://art/sourced/oga_tausdei/stronghold.mp3",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Prelude_Op28_No4_Ivan_Ilic.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op72_No1_Luke_Faulkner.mp3",
+      "res://art/sourced/wikimedia_commons/Beethoven_Moonlight_Sonata_I_Paul_Pitman.ogg",
+      "res://art/sourced/kevin_macleod/Wounded.mp3"
     ],
     "dread": [
       "res://art/sourced/kevin_macleod/Inner Sanctum.mp3",
@@ -314,7 +321,11 @@
       "res://art/sourced/kevin_macleod/Relent.mp3",
       "res://art/sourced/scott_buckley/Unraveling.mp3",
       "res://art/sourced/scott_buckley/Penumbra.mp3",
-      "res://art/sourced/scott_buckley/MemoriesOfStone.mp3"
+      "res://art/sourced/scott_buckley/MemoriesOfStone.mp3",
+      "res://art/sourced/kevin_macleod/Wounded.mp3",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op72_No1_Luke_Faulkner.mp3",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg"
     ],
     "tension": [
       "res://art/sourced/kevin_macleod/Gloom Horizon.mp3",
@@ -330,6 +341,13 @@
       "res://art/sourced/kevin_macleod/Virtutes Instrumenti.mp3",
       "res://art/sourced/kevin_macleod/Ancient Rite.mp3",
       "res://art/sourced/kevin_macleod/Gregorian Chant.mp3"
+    ],
+    "somber": [
+      "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg",
+      "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg",
+      "res://art/sourced/wikimedia_commons/Beethoven_Moonlight_Sonata_I_Paul_Pitman.ogg",
+      "res://art/sourced/scott_buckley/Unraveling.mp3"
     ]
   },
   "sfx": {
@@ -1459,7 +1477,13 @@
     ],
     "waterfall": [
       "res://art/sourced/oga_stream_kurt/waterfall2.ogg"
+    ],
+    "weeping": [
+      "res://art/sourced/oga_crying_jeanmyna/weeping_loop.wav"
     ]
+  },
+  "npc_beds": {
+    "patrina_velikovna": "weeping"
   },
   "water": {
     "tser_falls": "waterfall"
@@ -1593,7 +1617,13 @@
     "res://art/sourced/oga_tausdei/stronghold.mp3": -3.2,
     "res://art/sourced/oga_wolfgang/Bone Yard Waltz - Loopable.ogg": -0.6,
     "res://art/sourced/oga_inspectorj/Spinning Tavern - MP3.mp3": -3.0,
-    "res://art/sourced/oga_viktor_kraus/Viktor Kraus - Into the Ruins.mp3": -5.1
+    "res://art/sourced/oga_viktor_kraus/Viktor Kraus - Into the Ruins.mp3": -5.1,
+    "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg": -0.7,
+    "res://art/sourced/wikimedia_commons/Chopin_Prelude_Op28_No4_Ivan_Ilic.ogg": 6.3,
+    "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg": -0.9,
+    "res://art/sourced/wikimedia_commons/Chopin_Nocturne_Op72_No1_Luke_Faulkner.mp3": 2.6,
+    "res://art/sourced/wikimedia_commons/Beethoven_Moonlight_Sonata_I_Paul_Pitman.ogg": 10.0,
+    "res://art/sourced/kevin_macleod/Wounded.mp3": -4.0
   },
   "regions": {
     "vallaki": "town",
@@ -1678,6 +1708,8 @@
     "strahd_end": "dawn",
     "knights_at_the_stair": "dawn",
     "church_vigil": "sacred",
-    "arabelle_shore": "camp"
+    "arabelle_shore": "camp",
+    "amber_pact": "somber",
+    "pact_two_books": "somber"
   }
 }

@@ -43,7 +43,7 @@ and kenney.nl.
 ## Lonely piano, like the castle's Marche funèbre (2026-10-17, for approval)
 
 The owner's favourite in the castle is the Chopin funeral march (Musopen's piano recording); these are more like it.
-Nothing is downloaded. Descriptions are from the composers' or hosts' own notes, not from listening.
+Descriptions are from the composers' or hosts' own notes, not from listening. Picked on the listening page, 2026-10-18: Use for the C minor nocturne (Op. 48 No. 1), the E minor prelude, the C-sharp minor nocturne (Op. posth.), the E minor nocturne (Op. 72 No. 1), the Moonlight Sonata and Wounded, all six now in the castle's list; Skip for Gymnopédie No. 1, Cryptic Sorrow, Loss and Quinn's Song.
 
 | Track | By | Licence | Credit as | Source | Size |
 |---|---|---|---|---|---|

@@ -17,6 +17,11 @@ each at their peak) for right now, between 2 and 8, since other threads' tests, 
 the Mac. Past 8 the two longest files (the spell sweep and the Phase 5 exit) set the time anyway. JOBS=1 runs the
 single process make test used to.
 
+Across all lanes at most TEST_SLOTS (8) of these processes run at once, and so at most IMPORT_SLOTS (3) import editors
+(tools/godot_slot.sh has why and how): a process takes a slot before it starts and waits for one if they are all in
+use, and a process still waiting when another has run out of files gives up, since there is nothing left for it.
+GODOT_SLOTS=off turns the cap off.
+
 make test [ONLY=substr] [FILES=a.gd,b.gd] [JOBS=n]   Stdlib only.
 """
 from __future__ import annotations
@@ -24,6 +29,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import random
 import re
 import shutil
 import signal
@@ -39,6 +45,7 @@ LOCAL_TIMES = os.path.join(ROOT, ".godot", "test_times.json")
 REPO_TIMES = os.path.join(ROOT, "tests", "support", "test_times.json")
 MAX_JOBS = 8
 WORKER_GB = 1.5
+SLOT_ROOT = os.environ.get("STRAHD_SLOT_ROOT", "/tmp/strahd-godot-slots-%d" % os.getuid())
 SUMMARY = re.compile(r"^\d+ tests, \d+ passed, \d+ failed$")
 # What tools/logcheck.sh fails a run on, besides FAIL lines.
 ERROR = re.compile(r"SCRIPT ERROR|ERROR:|Parse Error|Failed loading|WARNING: .*GDScript")
@@ -99,6 +106,70 @@ def default_jobs() -> int:
     except (OSError, AttributeError, ValueError, subprocess.SubprocessError):
         pass
     return max(2, min(MAX_JOBS, jobs))
+
+
+def _slot_stale(slot: str) -> bool:
+    """A slot is stale when its holder is gone, or it never got to write its PID (for a minute)."""
+    try:
+        with open(os.path.join(slot, "pid")) as f:
+            pid = int(f.read().strip())
+    except (OSError, ValueError):
+        try:
+            return time.time() - os.stat(slot).st_mtime > 60
+        except OSError:
+            return False
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return True
+    except OSError:
+        pass
+    return False
+
+
+_told = threading.Event()  # the "waiting" note comes once a run, not once a process
+
+
+def take_slot(pool: str, limit: int, giveup: threading.Event) -> str | None:
+    """Waits for a free slot of the pool (the folders tools/godot_slot.sh makes) and returns its folder; "" when slots
+    are off or can't be made (no cap); None when `giveup` was set while it waited."""
+    if os.environ.get("GODOT_SLOTS") == "off":
+        return ""
+    root = os.path.join(SLOT_ROOT, pool)
+    try:
+        os.makedirs(root, mode=0o700, exist_ok=True)
+    except OSError:
+        return ""
+    while True:
+        order = list(range(1, limit + 1))
+        random.shuffle(order)
+        for i in order:
+            slot = os.path.join(root, str(i))
+            if os.path.isdir(slot) and _slot_stale(slot):
+                shutil.rmtree(slot, ignore_errors=True)
+            try:
+                os.mkdir(slot)
+            except FileExistsError:
+                continue
+            except OSError:
+                return ""
+            with open(os.path.join(slot, "pid"), "w") as f:
+                f.write(str(os.getpid()))
+            with open(os.path.join(slot, "where"), "w") as f:
+                f.write(ROOT)
+            return slot
+        if giveup.is_set():
+            return None
+        if not _told.is_set():
+            _told.set()
+            print("make test: waiting for a Godot slot (%d at once across all lanes; TEST_SLOTS=n changes it)" % limit,
+                  flush=True)
+        giveup.wait(random.uniform(2, 4))
+
+
+def free_slot(slot: str | None) -> None:
+    if slot:
+        shutil.rmtree(slot, ignore_errors=True)
 
 
 def user_dir() -> str:
@@ -171,9 +242,14 @@ class Output:
 class Worker:
     """One Godot process: reads its output, prints each file's lines together, and notes what it ran."""
 
-    def __init__(self, n: int, cmd: list[str], out: Output) -> None:
+    def __init__(self, n: int, cmd: list[str], out: Output, limit: int, giveup: threading.Event) -> None:
         self.n = n
         self.out = out
+        self.giveup = giveup  # set when a process has run out of files: a worker still waiting for a slot isn't needed
+        self.limit = limit
+        self.skipped = False  # it gave up waiting for a slot, so it never started
+        self.proc: subprocess.Popen[str] | None = None
+        self.slot: str | None = None
         self.files: list[str] = []  # in the order it ran them
         self.times: dict[str, int] = {}
         self.current = ""  # the file it is in the middle of
@@ -181,14 +257,26 @@ class Worker:
         self.failed: set[str] = set()  # file:test, or the file when it didn't load
         self.troubled = False  # a test failed or something printed an error
         self.finished = False  # it printed its summary
-        self.proc = subprocess.Popen(cmd, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
-                                     errors="replace", bufsize=1)
-        self.thread = threading.Thread(target=self._read, daemon=True)
+        self.thread = threading.Thread(target=self._run, args=(cmd,), daemon=True)
         self.thread.start()
+
+    def _run(self, cmd: list[str]) -> None:
+        self.slot = take_slot("test", self.limit, self.giveup)
+        if self.slot is None:
+            self.skipped = True
+            return
+        try:
+            self.proc = subprocess.Popen(cmd, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+                                         errors="replace", bufsize=1)
+            self._read()
+        finally:
+            free_slot(self.slot)
+            if self.finished:
+                self.giveup.set()
 
     def _read(self) -> None:
         block: list[str] = []
-        assert self.proc.stdout is not None
+        assert self.proc is not None and self.proc.stdout is not None
         for raw in self.proc.stdout:
             line = raw.rstrip("\n")
             if line.startswith("@@ start "):
@@ -267,18 +355,22 @@ def main() -> int:
     started = time.monotonic()
     out = Output()
     workers: list[Worker] = []
+    giveup = threading.Event()
+    limit = max(1, int(os.environ.get("TEST_SLOTS", "8")))
 
     def stop(*_: object) -> None:
+        giveup.set()
         for w in workers:
-            if w.proc.poll() is None:
+            if w.proc is not None and w.proc.poll() is None:
                 w.proc.terminate()
+            free_slot(w.slot)
         sys.exit(1)
 
     signal.signal(signal.SIGTERM, stop)
     try:
         for n in range(jobs):
             workers.append(Worker(n + 1, base + ["--claim=" + claim, "--files=" + ",".join(files)]
-                                  + (["--split=" + ",".join(split)] if split else []), out))
+                                  + (["--split=" + ",".join(split)] if split else []), out, limit, giveup))
         for w in workers:
             w.thread.join()
     except KeyboardInterrupt:
@@ -286,7 +378,9 @@ def main() -> int:
     finally:
         shutil.rmtree(claim, ignore_errors=True)
     elapsed = time.monotonic() - started
-    clean_leftovers([w.proc.pid for w in workers])
+    workers = [w for w in workers if not w.skipped]   # the ones that never started have nothing to report
+    jobs = len(workers)
+    clean_leftovers([w.proc.pid for w in workers if w.proc is not None])
 
     ran: dict[str, int] = {}
     for w in workers:

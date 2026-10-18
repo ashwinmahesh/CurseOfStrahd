@@ -760,6 +760,16 @@ def approval_checks(data, p, errors):
             errors.append(f"narrative/{where}: inspire {sel}: no pregen called that")
 
 
+def move_checks(locations, p, errors):
+    """`move <location>[:<spawn>]` in one parsed dialogue file (story/dialogue_runner.gd, docs/contracts/dialogue.md): the
+    party goes to a real map location, to a spawn that map has ("default" when none is named)."""
+    for loc_id, spawn, where in p.get("moves", []):
+        if loc_id not in locations:
+            errors.append(f"narrative/{where}: move: '{loc_id}' isn't a location (data/locations/{loc_id}.json)")
+        elif spawn not in locations[loc_id].get("spawns", {}):
+            errors.append(f"narrative/{where}: move: {loc_id} has no spawn '{spawn}'")
+
+
 def world_check_checks(loc, w, data, need, cond, flags_set, check_lines, errors, on_floor):
     """Skill checks on things (story/world_checks.gd, docs/story/world_checks.md): unique ids, real items, a codex entry
     whole, things revealed, disarmed, unlocked and opened that exist, a square to move to that's open floor, and side flags
@@ -1046,6 +1056,7 @@ def story_checks(data, errors, need):
         for fid, wh in p["flags_set"].items():
             flags_set.setdefault(fid, []).extend(wh)
         approval_checks(data, p, errors)
+        move_checks(locations, p, errors)
     narrator_keys = set()
     for key, p in parsed.items():
         if key.startswith("narrator/"):

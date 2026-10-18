@@ -78,7 +78,7 @@ Narrator: She comes down off the step and takes each of your hands in turn, the 
 interject name:liriel_dawnsong: You carried it too, you know. All the way up here. I could never have got it up those stairs on my own.
 cutscene dawn_sunburst
 Narrator: She unclasps the little sunburst she has worn since her first vows and presses it into the hand of whoever is nearest. It is still faintly gold, as if it had kept a little of the morning back for later.
-give amulet_of_the_devout_plus_1
+give amulet_of_the_devout_plus_3
 inspire party: stood in the dawn in Strahd's own chapel
 endif
 quest carry_the_dawn the_dawn

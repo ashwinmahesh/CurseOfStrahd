@@ -4,7 +4,9 @@ extends RefCounted
 ## level there (data/treasure/levels.json, after the 2024 DMG's treasure guidance), different in every playthrough.
 ## They're rolled the first time the location is entered, from the playthrough's seed, and kept in its saved state, so
 ## a save always holds the same treasure. Curse of Strahd's own fixed treasures and the Tarokka's stay where the story
-## put them. Generic scrolls ("a level 1 spell scroll") become a particular spell here too.
+## put them. Generic scrolls ("a level 1 spell scroll") become a particular spell here too. Each lasting item turns up
+## once (Ashwin, 2026-10-17): a roll never gives a kind of item the story places, or one already rolled or carried
+## (taken_kinds), and items with no use in a fight come up a quarter as often (levels.json `support_items`).
 
 const PATH := "res://data/treasure/levels.json"
 const THEMES: Array[String] = ["arcana", "armaments", "implements", "relics"]
@@ -12,6 +14,9 @@ const THEMES: Array[String] = ["arcana", "armaments", "implements", "relics"]
 static var _cfg: Dictionary = {}
 ## rarity -> theme -> [{id, weight}] built once from the magic item data.
 static var _pools: Dictionary = {}
+## Kinds of item the story places for good (placed_kinds): kind -> true, built once.
+static var _placed: Dictionary = {}
+static var _placed_built := false
 
 
 static func config() -> Dictionary:
@@ -25,6 +30,8 @@ static func config() -> Dictionary:
 static func reset() -> void:
 	_cfg = {}
 	_pools = {}
+	_placed = {}
+	_placed_built = false
 
 
 ## The party level a location's treasure is chosen for.
@@ -75,6 +82,8 @@ static func pools() -> Dictionary:
 			groups[key] = {"ids": [], "rarity": MagicItems.rarity(d), "theme": theme_of(d), "category": str(d.get("category", ""))}
 		(groups[key]["ids"] as Array).append(id)
 	var gw := config().get("group_weights", {}) as Dictionary
+	var support := config().get("support_items", []) as Array
+	var support_weight := float(config().get("support_weight", 1.0))
 	for key: String in groups:
 		var g := groups[key] as Dictionary
 		for id: Variant in g["ids"]:
@@ -88,6 +97,8 @@ static func pools() -> Dictionary:
 			if not by_theme.has(th):
 				by_theme[th] = []
 			var w := float(gw.get(str(g["category"]), 1.0)) / float((g["ids"] as Array).size())
+			if str(id) in support:
+				w *= support_weight
 			(by_theme[th] as Array).append({"id": str(id), "weight": w})
 	# Spell Scrolls: one entry per rarity, the spell picked when it's rolled.
 	for r2: String in ["common", "uncommon", "rare", "very_rare", "legendary"]:
@@ -114,14 +125,15 @@ static func _weighted(rng: DiceRoller, choices: Array, label: String) -> Diction
 	return choices.back() as Dictionary
 
 
-## One random magic item for a party of `level`: {id, qty, ...its own state}; both of a pair.
-static func roll_item(rng: DiceRoller, level: int) -> Dictionary:
+## One random magic item for a party of `level`: {id, qty, ...its own state}; both of a pair. Never one of the `taken`
+## kinds (taken_kinds), so each lasting item turns up once; {} when nothing of the rarity is left.
+static func roll_item(rng: DiceRoller, level: int, taken: Dictionary = {}) -> Dictionary:
 	var weights := rarity_weights(level)
 	var rchoices: Array = []
 	for r: String in weights:
 		rchoices.append({"r": r, "weight": float(weights[r])})
 	var rarity := str(_weighted(rng, rchoices, "Treasure rarity").get("r", "uncommon"))
-	var by_theme := pools().get(rarity, {}) as Dictionary
+	var by_theme := _untaken(pools().get(rarity, {}) as Dictionary, taken)
 	# Each kind of item (theme) gets an even share, except one with only a handful of items to give: its share shrinks
 	# with its pool (theme_full_weight), so none of them turns up in one roll in five (owner, 2026-10-12: the Amulet of
 	# Proof against Detection and Location was 3 of every 4 uncommon relics).
@@ -143,7 +155,8 @@ static func roll_item(rng: DiceRoller, level: int) -> Dictionary:
 	var data := Compendium.shared().item_data(pick)
 	var id := pick
 	if MagicItems.is_template(data):
-		var bases := Compendium.shared().template_bases(pick)
+		var bases := Compendium.shared().template_bases(pick).filter(func(b: String) -> bool:
+			return not taken.has(kind_of("%s%s%s" % [pick, MagicItems.SEP, b])))
 		if bases.is_empty():
 			return {}
 		id = "%s%s%s" % [pick, MagicItems.SEP, bases[rng.roll_one(bases.size(), "Treasure base") - 1]]
@@ -193,10 +206,12 @@ static func placed(st: StoryState, loc_id: String) -> Dictionary:
 		if containers.size() >= int(per.get("extra_if_containers", 4)) and rng.roll_one(100, "Extra treasure") <= int(per.get("extra_chance", 30)):
 			n += 1
 		var level := level_for(loc_id)
+		var taken := taken_kinds(st)
 		for i in n:
-			var it := roll_item(rng, level)
+			var it := roll_item(rng, level, taken)
 			if it.is_empty():
 				continue
+			_add_kind(taken, str(it["id"]))
 			var cid := containers[rng.roll_one(containers.size(), "Treasure container") - 1]
 			if not out.has(cid):
 				out[cid] = []
@@ -214,6 +229,126 @@ static func placed(st: StoryState, loc_id: String) -> Dictionary:
 				out[pcid] = []
 			(out[pcid] as Array).append(pot)
 	ls["treasure"] = out
+	return out
+
+
+## `by_theme` (theme -> [{id, weight}]) without the entries whose kind is `taken`. An item made on a base stays while
+## any of its bases is free (roll_item picks among those).
+static func _untaken(by_theme: Dictionary, taken: Dictionary) -> Dictionary:
+	if taken.is_empty():
+		return by_theme
+	var out := {}
+	for th: String in by_theme:
+		out[th] = (by_theme[th] as Array).filter(func(e: Dictionary) -> bool: return _free(str(e["id"]), taken))
+	return out
+
+
+static func _free(id: String, taken: Dictionary) -> bool:
+	if id == "spell_scroll":
+		return true
+	var data := Compendium.shared().item_data(id)
+	if MagicItems.is_template(data) and str(data.get("variant_of", "")) in (config().get("kind_by_base", []) as Array):
+		return Compendium.shared().template_bases(id).any(func(b: String) -> bool:
+			return not taken.has(kind_of("%s%s%s" % [id, MagicItems.SEP, b])))
+	return not taken.has(kind_of(id))
+
+
+## An item's kind, for keeping lasting treasure distinct (Ashwin, 2026-10-17; levels.json `_distinct_note`): a +1, +2
+## or +3 of one item, or variants that work the same way (Belt of Giant Strength, Ring of Resistance, Bag of Tricks),
+## are one kind, except the `distinct_variants` (each Ioun Stone, each Figurine); a plain +N weapon, armor or shield
+## counts by its base ("weapon_plus:longsword"); any other item made on a base by its template ("flame_tongue"). "" for
+## what can repeat: anything mundane or consumable (potions, scrolls, ammunition, oils and dusts).
+static func kind_of(id: String) -> String:
+	if id == "":
+		return ""
+	var comp := Compendium.shared()
+	var data := comp.item_data(id)
+	if data.is_empty() or not MagicItems.is_magic(data) or MagicItems.is_consumable(data):
+		return ""
+	if str(data.get("category", "")) in ["ammunition", "potion", "scroll"]:
+		return ""
+	var tid := id.get_slice(MagicItems.SEP, 0)
+	var tdata := comp.item_data(tid) if tid != id else data
+	var group := str(tdata.get("variant_of", tid))
+	if group in (config().get("distinct_variants", []) as Array):
+		group = tid
+	if group in (config().get("kind_by_base", []) as Array):
+		var base := id.get_slice(MagicItems.SEP, 1) if id.contains(MagicItems.SEP) else \
+			str((tdata.get("template", {}) as Dictionary).get("default", ""))
+		return "%s:%s" % [group, base]
+	return group
+
+
+static func _add_kind(kinds: Dictionary, id: String) -> void:
+	var k := kind_of(id)
+	if k != "":
+		kinds[k] = true
+
+
+## The kinds of item the story places for good: every location's search finds, check rewards and containers, and
+## every dialogue's `give` (gifts, rewards, hoards handed over). Built once.
+static func placed_kinds() -> Dictionary:
+	if _placed_built:
+		return _placed
+	_placed_built = true
+	for loc: Dictionary in Compendium.shared().all("locations"):
+		if not str(loc["id"]).begins_with("test_"):
+			_collect_location_items(loc, _placed)
+	for path in _dialogue_paths(DialogueFile.ROOT):
+		for line: String in FileAccess.get_file_as_string(path).split("\n"):
+			var l := line.strip_edges()
+			if l.begins_with("give "):
+				_add_kind(_placed, l.get_slice(" ", 1))
+	return _placed
+
+
+## Every item a location's data hands out: a prop's `item`, and the `items` of its containers and checks.
+static func _collect_location_items(v: Variant, kinds: Dictionary) -> void:
+	if v is Dictionary:
+		var d := v as Dictionary
+		if d.get("item", null) is String:
+			_add_kind(kinds, str(d["item"]))
+		for k: Variant in d:
+			if str(k) == "items" and d[k] is Array:
+				for it: Variant in d[k]:
+					if it is Dictionary:
+						_add_kind(kinds, str((it as Dictionary).get("id", "")))
+			elif d[k] is Dictionary or d[k] is Array:
+				_collect_location_items(d[k], kinds)
+	elif v is Array:
+		for e: Variant in v:
+			_collect_location_items(e, kinds)
+
+
+static func _dialogue_paths(dir: String) -> Array[String]:
+	var out: Array[String] = []
+	var da := DirAccess.open(dir)
+	if da == null:
+		return out
+	for f in da.get_files():
+		if f.ends_with(".dialogue"):
+			out.append(dir.path_join(f))
+	for sub in da.get_directories():
+		out.append_array(_dialogue_paths(dir.path_join(sub)))
+	return out
+
+
+## The kinds random treasure won't roll this playthrough: what the story places, what's already been rolled into a
+## place's chests, and what the party carries or keeps in the stash (a road's find among them).
+static func taken_kinds(st: StoryState) -> Dictionary:
+	var out := placed_kinds().duplicate()
+	if st == null:
+		return out
+	for loc_id: Variant in st.location_states:
+		var tr := (st.location_states[loc_id] as Dictionary).get("treasure", {}) as Dictionary
+		for items: Variant in tr.values():
+			for it: Variant in items:
+				_add_kind(out, str((it as Dictionary).get("id", "")))
+	for ch in st.party:
+		for e: Dictionary in ch.inventory:
+			_add_kind(out, str(e.get("id", "")))
+	for e2: Dictionary in st.stash:
+		_add_kind(out, str(e2.get("id", "")))
 	return out
 
 

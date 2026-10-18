@@ -43,6 +43,12 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   needs before it opens at all (a portcullis a story flag raises; until then it won't budge), and `unlocked_when` one
   that takes its lock off (the church undercroft's bar once Father Donavich lifts it; until then it can be picked or
   forced). `flag` is set when the door opens.
+- **Spawns:** `default` is where a plain arrival lands, and where an exit that names no `spawn` and a dialogue's
+  `move <location>` go; an exit's `spawn` and `move <location>:<spawn>` (docs/contracts/dialogue.md) name another, on
+  this map or a different one (`make validate` checks both). A load puts the party back on its saved squares; any that
+  a later edit to the map has closed (a wall, a prop, water, outside a smaller map) are replaced by the nearest open
+  square, or by squares beside the default spawn when none is within 8 squares (`LocationParty.open_squares`), and a
+  round-start save whose fight no longer fits the map begins that fight again from its own squares.
 - **Natural ground:** `map.elevation` (optional), rows beside `rows`, lays hills and hollows under the squares: one
   character a square, `0`-`9` then `a`-`z` for 0 to 175 ft in 5 ft steps, `.` or a space for a square left as built.
   Neighbouring natural squares 5 ft apart are a gentle slope, 10 ft a steep one, 15 ft or more a cliff (climbed or
@@ -141,6 +147,10 @@ or false for a pocket nobody can pick).
 
 `id`, `name`, `summary`, `giver`, `kind`, `stages: [{id, journal, objectives: [text], hint, ends: false|"success"|"failure"}]`.
 `kind: "main"` puts a quest under the journal's Main tab (the story's spine); every other quest is under Other.
+The Other tab files its quests under a heading for each `region` (Ashwin, 2026-10-18; story/quest_regions.gd): the
+region ids of data/locations, in the order the campaign reaches them, then `companions` (the party members' own quests)
+last; open quests come first under each heading, the finished ones after. A quest's `region` must be in
+`QuestRegions.ORDER` (tests/unit/test_quest_regions.gd checks), so a new region adds its name and place there.
 The journal shows each reached stage's text in order. `hint` says what to do next at that stage, behind the journal's
 Hint button: the place and the person or action, never the twist (`{tarokka.<slot>.hint}` fills in the party's
 reading). Every stage that doesn't end its quest has one; `make validate` fails without it.

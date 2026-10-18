@@ -1230,6 +1230,9 @@ func extra_spell_lists(class_id: String) -> Array[String]:
 ## goes into the spellbook for 2 hours and 50 GP of inks per spell level. The UI pays the time and the gold.
 const COPY_MINUTES_PER_LEVEL := 120
 const COPY_GP_PER_LEVEL := 50
+## 2024 DMG (Spell Scroll): copying a Wizard spell from a scroll takes an Intelligence (Arcana) check against DC 10 plus
+## the spell's level, and the scroll is destroyed whether it succeeds or fails (FieldItems.copy_scroll).
+const SCROLL_COPY_DC_BASE := 10
 
 
 ## The class that keeps a spellbook ("" for none: only a Wizard copies spells).
@@ -1260,6 +1263,20 @@ func copy_spell_problem(spell_id: String) -> String:
 	if lv > Spellcasting.highest_slot_level(slots):
 		return "Level %d: too high to prepare yet" % lv
 	return ""
+
+
+## The spell on a Spell Scroll ("spell_scroll__fireball" holds "fireball"), or "" for anything else.
+static func scroll_spell_of(scroll: Dictionary) -> String:
+	return str(scroll.get("scroll_spell", ""))
+
+
+## Why the spell on `scroll_id` can't be copied into this character's spellbook, or "" if it can (copy_spell_problem's
+## rules: a Wizard, a Wizard spell of level 1 or more they can prepare, not already in the book).
+func copy_scroll_problem(scroll_id: String) -> String:
+	var sid := scroll_spell_of(compendium.item_data(scroll_id))
+	if sid == "":
+		return "Not a scroll of one spell"
+	return copy_spell_problem(sid)
 
 
 ## Copies `spell_id` into the spellbook (it can then be prepared like any other). False if copy_spell_problem says no.

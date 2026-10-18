@@ -28,6 +28,9 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   screen (NOFOCUS_HIDE=1 in tools/godot): textures import about twice as fast as headless, and the project.godot the
   editor rewrites is put back. IMPORT_HEADLESS=1 imports headless. A folder with no import cache yet starts from an
   APFS clone of the main checkout's (same volume only); a full import with under 20 GB free is refused (exit 75).
+- At most 3 import editors and 8 headless test processes run at once across all lanes (tools/godot_slot.sh and
+  tools/run_tests.py; IMPORT_SLOTS, TEST_SLOTS, GODOT_SLOTS=off): the Mac has 24 GB, and a dozen editors at ~1.8 GB
+  each swapped it (load 82, 20 GB swap, 2026-10-18). A run past the cap waits its turn and says so; it isn't stuck.
 - `make run` and `make arena` are for the owner to play: run them only when asked. `make run` is the edge build (tools/edge/edge.py):
   the local main plus the lane branches listed in ~/.curse-of-strahd/edge/branches.txt (handed off, not merged yet), merged in
   a throwaway worktree, on its own copy of the saves and settings (the real ones are never written). The build thread adds a
@@ -50,8 +53,9 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   (owner, 2026-10-08). `make lane-reclone NAME=<name>` turns an older lane's unchanged files back into clones;
   `make lane-done NAME=<name>` removes the folder once the branch is merged and clean. `SSD=1` on any of the three puts
   the lane on the external SSD's disk image (/Volumes/StrahdLanes, attached when it isn't), cloned from a seed there
-  that `make lane` brings up to main and imports first. Never write into the main checkout, and clean up your own
-  folders and scratch files when you finish.
+  that `make lane` brings up to main and imports only when it has drifted (over 1500 files or 40 textures from the lane's base;
+  `make lane-seed SSD=1` refreshes it once, e.g. after a landing); lanes clone from it in parallel.
+  Never write into the main checkout, and clean up your own folders and scratch files when you finish.
 
 ## Rules engine (ADR 0003, 0005, 0006)
 - Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract

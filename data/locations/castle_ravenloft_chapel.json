@@ -252,7 +252,7 @@
       "skill": "investigation",
       "label": "something under the altar's dust",
       "model": "gold_spill",
-      "item": "amulet_of_the_devout_plus_3"
+      "item": "ioun_stone_fortitude"
     },
     {
       "id": "chapel_candle_stubs_1",
