@@ -233,3 +233,10 @@ Each visit: `id`, `summary`, `trigger` (`on`: travel, arrive, rest, ...), `when`
 usually with `withdraw`), a `go` (`location:spawn`) or a `dialogue`. `story/strahd_presence.gd` runs them; the design is
 docs/regions/strahd_presence.md. `make validate` checks every dialogue node, monster, withdrawing foe, `go` target and
 the flags the visits read and set.
+
+**Ally visits** (data/visits/<npc id>.json, schema `ally_visits.schema.json`): the same visits for another character's
+letters and road meetings, one file per NPC. The game loads them after his and marks each `ally: true` (the files don't).
+They skip his wards (`Wards.hides_from_strahd`) and his attention tier's shorter gap, share his `last` visit and his
+`gap_hours`, and keep `quiet_regions` and holy ground. Each needs a unique id (across all visit files), a `dialogue` and
+a limit (`once`, `max` or `cooldown_hours`). The story bot answers their conversations by the exit
+(`tests/support/ally_visit_answer.gd`).
