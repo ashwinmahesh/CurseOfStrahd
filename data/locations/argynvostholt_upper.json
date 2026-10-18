@@ -432,8 +432,8 @@
     {
       "id": "dragon_desk_wand",
       "cell": [
-        16,
-        4
+        17,
+        5
       ],
       "kind": "search",
       "search_dc": 16,
@@ -446,12 +446,13 @@
       "id": "holt_dragon_chair",
       "cell": [
         17,
-        3
+        2
       ],
       "label": "A chair too big for a man",
       "model": "throne",
       "facing": "south",
-      "kind": "decor"
+      "kind": "decor",
+      "scale": 3.0
     },
     {
       "id": "holt_godfrey_writing_2",
@@ -607,7 +608,8 @@
           "qty": 3
         }
       ],
-      "gold": 35
+      "gold": 35,
+      "scale": 3.0
     },
     {
       "id": "holt_godfrey_chest",

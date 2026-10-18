@@ -387,7 +387,8 @@
       "label": "A dragon's skull",
       "model": "dragon_bones",
       "flag": "argynvost_skull_found",
-      "dialogue": "castle_ravenloft/court_skull:skull"
+      "dialogue": "castle_ravenloft/court_skull:skull",
+      "scale": 2.2
     },
     {
       "id": "court_lady_portrait",
@@ -663,8 +664,8 @@
       "model": "stag_head",
       "id": "court_trophy_5",
       "cell": [
-        37,
-        0
+        43,
+        4
       ],
       "kind": "decor"
     },
@@ -683,8 +684,8 @@
       "model": "stag_head",
       "id": "court_trophy_7",
       "cell": [
-        39,
-        0
+        43,
+        7
       ],
       "kind": "decor"
     },

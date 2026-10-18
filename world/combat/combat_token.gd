@@ -30,7 +30,7 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"stefania_martikov": 1.2, "kostin": 1.25, "dmitri_krezkov": 1.32, "anna_krezkova": 1.1, "ilya_krezkov": 0.8,
 	"kasha_varo": 0.95, "krezk_guard": 1.3, "clovin_belview": 1.1, "belview": 1.15, "mirela": 0.85,
 	"ilka_sarnov": 0.82, "toma_sarnov": 0.65, "order_knight": 1.32, "phantom_warden": 1.3, "tsolenka_sergeant": 1.3,
-	"tsolenka_watchman": 1.28, "patrina_velikovna": 1.25, "amber_sentinel": 2.3, "argynvost_echo": 1.7,
+	"tsolenka_watchman": 1.28, "patrina_velikovna": 1.25, "amber_sentinel": 3.6, "argynvost_echo": 4.0,
 	"sergei_von_zarovich": 1.3,
 	"amber_golem": 2.0, "arcanaloth": 1.35, "baba_lysagas_creeping_hut": 3.8, "banshee": 1.25, "deva": 1.45,
 	"flameskull": 0.6, "flesh_golem": 1.6, "gargoyle": 1.3, "ghost": 1.25, "giant_spider": 1.3,

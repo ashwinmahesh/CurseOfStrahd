@@ -142,6 +142,10 @@ func test_models_stay_in_their_square() -> void:
 				var n := m.global_basis.z.normalized()
 				var front := v.grid.cell_at(m.global_position + n * 0.5)
 				room = Rect2(front.x - 0.06, front.y - 0.06, 1.12, 1.12)
+			if m.has_meta("scaled"):
+				# A prop asked to be bigger (its `scale`) reaches as far past its square as its extra size asks, no further.
+				var size := info.get("size", [1, 1, 1]) as Array
+				room = room.grow(maxf(0.0, float(m.get_meta("scaled")) - 1.0) * maxf(float(size[0]), float(size[2])) / 2.0)
 			var flat := Rect2(box.position.x, box.position.z, box.size.x, box.size.z)
 			if not room.encloses(flat):
 				problems.append("%s: %s at %s spills out of its square (%s)" % [loc_id, m.get_meta("model"), cell, flat])
@@ -171,7 +175,7 @@ func test_models_are_their_real_size() -> void:
 			if not feet.has(art) or mount.begins_with("stairs") or not m.is_visible_in_tree():
 				continue   # stairs climb a full 7.5 ft storey (test_set_dressing checks them)
 			var tall := _bounds_all(m).size.y
-			var real := float(feet[art]) / 5.0
+			var real := float(feet[art]) / 5.0 * float(m.get_meta("scaled", 1.0))   # a prop's `scale` asks for more
 			if tall < real * 0.5 or tall > real * 1.35:
 				var msg := "%s: %s %.2f units tall, really %.2f" % [loc_id, art, tall, real]
 				if not msg in problems:
@@ -244,6 +248,70 @@ func test_3d_pieces_dont_overlap() -> void:
 		v.queue_free()
 		await _frames(1)
 	assert_eq(problems, [] as Array[String], "overlaps")
+
+
+## Owner todos (2026-10-17): the dragon's desk and chair, his skull in Castle Ravenloft and his bones in the mausoleum are
+## drawn as big as a dragon's things. A prop's data `scale` draws its piece that many times its modelled size, marks it
+## `scaled`, and keeps everything else off the squares it covers; a piece with no `scale` is as modelled.
+func test_a_props_scale_draws_its_piece_that_big() -> void:
+	var asked := {"argynvostholt_upper": {"holt_dragon_desk": 3.0, "holt_dragon_chair": 3.0},
+		"argynvostholt_mausoleum": {"holt_dragon_bones": 2.6}, "castle_ravenloft_court": {"court_dragon_skull": 2.2}}
+	for loc_id: String in asked:
+		var v := _view(loc_id)
+		await _frames(1)
+		for id: String in asked[loc_id]:
+			var node := (v.prop_nodes.get(id, v.container_nodes.get(id)) as Node)
+			assert_true(node != null, "%s: %s is built" % [loc_id, id])
+			var held := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_false(held.is_empty(), "%s: %s is a 3D piece" % [loc_id, id])
+			if held.is_empty():
+				continue
+			var m := held[0] as Node3D
+			var want := float((asked[loc_id] as Dictionary)[id])
+			assert_eq(float(m.get_meta("scaled", 1.0)), want, "%s: %s is marked as asked" % [loc_id, id])
+			var size := (ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary)["size"] as Array
+			var box := _bounds(m)
+			assert_true(box.size.x > float(size[0]) * want * 0.95 or box.size.z > float(size[0]) * want * 0.95,
+				"%s: %s is drawn %.1f times its size (%.2f wide, modelled %.2f)" % [loc_id, id, want, maxf(box.size.x, box.size.z), float(size[0])])
+		if loc_id == "argynvostholt_upper":
+			# Nothing is furnished under the desk: the squares round it are reserved, and the chair keeps clear of it.
+			for c: Vector2i in [Vector2i(16, 4), Vector2i(18, 4), Vector2i(17, 5)]:
+				assert_true(v.board.occupied.has(c), "%s is kept clear under the dragon's desk" % c)
+			var desk := _bounds(v.container_nodes["holt_dragon_desk"] as Node3D)
+			var chair := _bounds(v.prop_nodes["holt_dragon_chair"] as Node3D)
+			assert_false(Rect2(desk.position.x, desk.position.z, desk.size.x, desk.size.z).intersects(
+				Rect2(chair.position.x, chair.position.z, chair.size.x, chair.size.z)), "the dragon's chair doesn't sit in his desk")
+		v.queue_free()
+		await _frames(1)
+	var plain := _view("argynvostholt_upper")
+	await _frames(1)
+	for m in _models(plain.board):
+		if str(m.get_meta("model")) == "bed":
+			assert_false(m.has_meta("scaled"), "a bed with no `scale` is as modelled")
+	plain.queue_free()
+
+
+## Owner todo (2026-10-17): "show real big piles of silver on the ground" in the Argynvostholt undercroft: its drifts are
+## heaps of coins (CoinHeap, the catalog's `silver_heap`), the biggest "taller than you are" (its Narrator line), not
+## the little spills of gold they were.
+func test_the_undercrofts_silver_is_big_heaps() -> void:
+	var v := _view("argynvostholt_undercroft")
+	await _frames(1)
+	var heaps: Array[Node3D] = []
+	for n in v.board.find_children("CoinHeap", "Node3D", true, false):
+		heaps.append(n as Node3D)
+	assert_true(heaps.size() >= 8, "the vault holds at least eight heaps of silver (%d)" % heaps.size())
+	var tallest := 0.0
+	for h in heaps:
+		var top := 0.0
+		for mi in h.find_children("*", "VisualInstance3D", true, false):
+			top = maxf(top, ((mi as VisualInstance3D).global_transform * (mi as VisualInstance3D).get_aabb()).end.y)
+		tallest = maxf(tallest, top)
+		assert_true(top >= 0.9, "a heap of silver stands at least a man's chest high (%.2f)" % top)
+	assert_true(tallest >= 1.4, "the biggest drift is taller than a man (%.2f units)" % tallest)
+	for h in heaps:
+		assert_true(h.find_children("Coins*", "MultiMeshInstance3D", true, false).size() >= 2, "a heap is made of coins")
+	v.queue_free()
 
 
 ## A footprint less 0.03 all round (touching isn't overlapping), never below a sliver.

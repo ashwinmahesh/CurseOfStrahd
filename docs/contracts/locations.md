@@ -121,7 +121,12 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   (a Narrator trigger tried before `examine:<id>`: a camp's fire indoors says `examine:camp_fire:indoors`), and
   `facing` (north, south, east, west or between: which way the piece's front looks, instead of away from the wall
   beside it or south) and `span` ([across, down] squares, its own cell the north-west one: a wagon stands over the middle
-  of its two-by-two block of low cover).
+  of its two-by-two block of low cover). A prop's or container's `scale` (0.25 to 8; owner 2026-10-17) draws its piece
+  that many times its modelled size: the dragon's desk and chair are three times a desk and a chair, his skull in the
+  trophy room 2.2, his bones in the mausoleum 2.6. A 3D piece keeps its square at its middle and spills over its
+  neighbours, whose squares stay unfurnished (SetDressing.scaled_squares); the rules' grid never changes, so give it
+  room by where you put it (nothing else of the prop's own should stand in the squares it covers). A `model` of
+  `silver_heap` is a heap of coins built from the coins (CoinHeap), `scale` times the gold heap's size.
   A prop's `stand_ft` (5 to 60, in 5 ft steps) makes it something stood on: its squares (its cell, or all its `span`)
   are that many feet above the ground underneath (LocationView.grid_for, CombatGrid.raise). 5 ft is a step up (a
   podium); 10 ft or more is a ledge: climbed (1 extra foot per foot), jumped down from (5 ft and the fall), high ground

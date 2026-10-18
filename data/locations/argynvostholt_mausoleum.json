@@ -101,7 +101,8 @@
       "kind": "examine",
       "label": "The dragon's bones",
       "model": "bones",
-      "dialogue": "argynvostholt/mausoleum:bones"
+      "dialogue": "argynvostholt/mausoleum:bones",
+      "scale": 2.6
     },
     {
       "id": "holt_empty_skull_place",

@@ -83,6 +83,23 @@ static func look_for(spec: Dictionary, is_container: bool = false) -> Dictionary
 ## Builds the piece for a location prop or container at its square; null if the catalog has no art for it. The
 ## returned node owns everything drawn for it, so freeing it removes the piece (and gives back a square it took).
 static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = false) -> Node3D:
+	var root := _place(board, spec, is_container)
+	if root != null:
+		_finish(root, spec)
+	return root
+
+
+## What a prop's data asks of its built piece beyond where it stands: its `scale` is marked on the 3D pieces, so the
+## size tests know they were asked to be this big.
+static func _finish(root: Node3D, spec: Dictionary) -> void:
+	var scaled := float(spec.get("scale", 1.0))
+	if is_equal_approx(scaled, 1.0):
+		return
+	for m in root.find_children("Model_*", "Node3D", true, false):
+		m.set_meta("scaled", scaled)
+
+
+static func _place(board: ArenaBoard, spec: Dictionary, is_container: bool) -> Node3D:
 	var look := look_for(spec, is_container)
 	if look.is_empty():
 		return null
@@ -118,27 +135,35 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 	if on_wall_square and has_art(str(look.get("on_wall", ""))):
 		art = str(look["on_wall"])
 	var mount := str(look.get("mount", (manifest()[art] as Dictionary).get("mount", "stand")))
-	var scale_ := float(look.get("scale", 1.0))
+	# A prop's own `scale` (data) draws its piece that many times its real size: a dragon's desk, a dragon's skull.
+	var prop_scale := clampf(float(spec.get("scale", 1.0)), 0.25, 8.0)
+	var scale_ := float(look.get("scale", 1.0)) * prop_scale
+	if look.has("heap"):
+		# A heap of coins is built from the coins (CoinHeap), at its `scale` times the gold heap model's size.
+		var heap := CoinHeap.build(str(look["heap"]), prop_scale, ModelPiece.hash_cell(cell))
+		heap.position = board.cell_center(cell)
+		root.add_child(heap)
+		return root
 	if _stairs(board, root, art, cell):
 		if not on_wall_square and (board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT)):
 			_take_square(board, root, cell)
 		return root
 	match mount:
 		"wall":
-			var hung := _hang(board, root, art, cell, scale_)
+			var hung := _hang(board, root, art, cell, scale_, prop_scale)
 			if not on_wall_square and (board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT)):
 				# It is the furniture on its square (a stove on a '=' square by the wall), whether it hangs on the wall
 				# beside it or, with no wall there, stands: the board's own furniture there goes.
 				_take_square(board, root, cell)
 			if not hung:
-				_stand(board, root, art, cell, scale_)
+				_stand(board, root, art, cell, scale_, prop_scale)
 		"floor":
 			if on_wall_square or board.grid.has_flag(cell, CombatGrid.LOW):
 				_take_square(board, root, cell)   # it lies in place of the board's furniture there
 			var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 			if model != "":
 				# A 3D piece (docs/art/models.md), over the middle of the squares it spans (a spiral of nails across a floor).
-				ModelPiece.stand(board, root, model, art, cell, null, 1.0, facing_yaw(spec), span_centre(board, spec))
+				ModelPiece.stand(board, root, model, art, cell, null, prop_scale, facing_yaw(spec), span_centre(board, spec))
 			else:
 				_lay(board, root, art, cell, scale_)
 		_:
@@ -165,7 +190,7 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 			var front := str(look.get("front", "")) if has_art(str(look.get("front", ""))) else front_of(art)
 			if on_wall_square and (board.house_cells.has(cell) or front != ""):
 				# On a house, or furniture set into a wall (a bookcase on a wall square): its front, hung on the wall.
-				if _hang(board, root, front if front != "" else art, cell, scale_):
+				if _hang(board, root, front if front != "" else art, cell, scale_, prop_scale):
 					return root
 			if on_wall_square:
 				_take_square(board, root, cell)
@@ -174,7 +199,7 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 			# A catalog `big` piece (a horse) keeps its size; spanning squares, it clears only what stands under them.
 			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false))
 				or bool(look.get("see_through", false)),
-				facing_yaw(spec), span_centre(board, spec), span_foot(spec) if bool(look.get("big", false)) else Rect2())
+				facing_yaw(spec), span_centre(board, spec), span_foot(spec) if bool(look.get("big", false)) else Rect2(), prop_scale)
 			if piece != null and int(spec.get("stand_ft", 0)) > 0:
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
 				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET
@@ -619,8 +644,8 @@ static func _sprite(art: String) -> Sprite3D:
 	return sp
 
 
-static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, scale_: float) -> void:
-	stand_piece(board, root, art, cell, scale_)
+static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, scale_: float, model_scale: float = 1.0) -> void:
+	stand_piece(board, root, art, cell, scale_, null, "", false, null, null, Rect2(), model_scale)
 
 
 ## A standing piece on `cell` with a fixed place and facing (owner request 2026-10-06: environment pieces show the
@@ -633,10 +658,11 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## board's own scenery around it, or with `foot` (span_foot) only what stands under it (a horse keeps its pen's rails).
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
 		at_override: Variant = null, front_override: String = "", big: bool = false, yaw: Variant = null,
-		centre: Variant = null, foot := Rect2()) -> Node3D:
+		centre: Variant = null, foot := Rect2(), model_scale: float = 1.0) -> Node3D:
 	var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 	if model != "":
-		return ModelPiece.stand(board, parent, model, art, cell, at_override, 1.0, yaw, centre)   # a 3D piece (docs/art/models.md)
+		# A 3D piece (docs/art/models.md), at its modelled size times the prop's own `scale`.
+		return ModelPiece.stand(board, parent, model, art, cell, at_override, model_scale, yaw, centre)
 	if art == "flame" and Look.modern():
 		var fire := flame(float((manifest().get("flame", {}) as Dictionary).get("world_height", 0.9)) * scale_)
 		if fire != null:
@@ -768,6 +794,33 @@ static func reserve(board: ArenaBoard, loc: Dictionary) -> void:
 			var c := (t as Dictionary).get("cell", []) as Array
 			if c.size() == 2:
 				board.occupied[Vector2i(int(c[0]), int(c[1]))] = key
+				if key == "props" or key == "containers":
+					for extra: Vector2i in scaled_squares(board, t as Dictionary, key == "containers"):
+						if not board.occupied.has(extra):
+							board.occupied[extra] = key
+
+
+## The squares round a prop's own that its `scale` makes its piece cover (a dragon's desk three times a desk's size, his
+## skull hung on a trophy wall), so nothing else is furnished under it: the open squares within its reach, for a 3D
+## piece; empty for a prop with no `scale` above one.
+static func scaled_squares(board: ArenaBoard, spec: Dictionary, is_container: bool = false) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	var scale_ := float(spec.get("scale", 1.0))
+	if scale_ <= 1.0 or (spec.get("cell", []) as Array).size() != 2:
+		return out
+	var id := ModelPiece.for_art(board, str(look_for(spec, is_container).get("art", "")))
+	var info := ModelPiece.manifest().get(id, {}) as Dictionary
+	if info.is_empty():
+		return out
+	var size := info.get("size", [1, 1, 1]) as Array
+	var reach := maxi(0, int(ceil(maxf(float(size[0]), float(size[2])) * scale_ / 2.0 - 0.5)))
+	var cell := Vector2i(int((spec["cell"] as Array)[0]), int((spec["cell"] as Array)[1]))
+	for dx: int in range(-reach, reach + 1):
+		for dy: int in range(-reach, reach + 1):
+			var c := cell + Vector2i(dx, dy)
+			if c != cell and board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL):
+				out.append(c)
+	return out
 
 
 ## The value of the first rule in `rules` ([[words], value], as the catalog's "rooms" are) whose words are in the
@@ -870,7 +923,7 @@ static func _lay(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, s
 
 ## Hangs a wall piece on the wall face between `cell` and its open neighbour (or, for a piece on an open square,
 ## on the wall beside it). False if there's no such face.
-static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, scale_: float) -> bool:
+static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, scale_: float, model_scale: float = 1.0) -> bool:
 	var wall := cell
 	var normal := Vector2i.ZERO
 	if _wall_at(board, cell):
@@ -899,7 +952,7 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	board.used_faces[key] = true
 	var model := ModelPiece.for_art(board, art)
 	if model != "":
-		var held := ModelPiece.hang(board, root, model, art, wall, normal, cell)
+		var held := ModelPiece.hang(board, root, model, art, wall, normal, cell, model_scale)
 		board.attach_to_building(wall, root)
 		TownBuilder.face_taken(board, wall, normal, held, art)   # a house's window goes; a door makes a door bay
 		return true

@@ -29,6 +29,10 @@
       "art": "fog_bank",
       "scale": 0.7
     },
+    "silver_heap": {
+      "art": "gold_heap",
+      "heap": "silver"
+    },
     "rope": null,
     "rags": "refuse_mound",
     "altar": "altar_church",

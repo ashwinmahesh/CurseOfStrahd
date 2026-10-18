@@ -192,7 +192,7 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	holder.rotation.y = atan2(float(faces.x), float(faces.y)) if yaw == null else float(yaw)   # a prop's own `facing`
 	if mount == "against_wall" or mount == "wall":
 		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
-		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
+		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2]) * scale_
 		holder.set_meta("against_wall", true)
 		if back != Vector2i.ZERO:
 			model.position = Vector3(0, 0, -0.5 + GAP + board.wall_inset)
@@ -208,7 +208,7 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		var size := info.get("size", [1, 1, 1]) as Array
 		var foot := footprint_of(model, holder.rotation.y)
 		var mid := Vector2(holder.position.x, holder.position.z)
-		var fit := big_fit(board, cell, foot, mid)
+		var fit := 1.0 if scale_ > 1.0 else big_fit(board, cell, foot, mid)   # a piece asked for bigger (its `scale`) stays that big
 		model.scale *= fit
 		var mine := [cell, Rect2(mid + foot.position * fit, foot.size * fit), id]
 		var feet: Array = board.get_meta("big_feet", [])
@@ -217,7 +217,7 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		holder.tree_exiting.connect(func() -> void:
 			if is_instance_valid(board):
 				(board.get_meta("big_feet", []) as Array).erase(mine))   # props rebuilt after a talk stand again
-		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit, mine[1] as Rect2)
+		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit * scale_, mine[1] as Rect2)
 	_extras(model, info)
 	return holder
 
@@ -354,9 +354,10 @@ static func footprint_of(model: Node3D, yaw: float) -> Rect2:
 
 
 ## A wall piece (a fireplace) on the face of wall square `wall` looking along `normal`, under `root`. Where the square
-## in front of it holds something else (a table, a brazier), a deep piece is flattened to keep clear of it.
+## in front of it holds something else (a table, a brazier), a deep piece is flattened to keep clear of it. `scale_`
+## draws it that many times its modelled size (a prop's `scale`: the dragon's skull in the trophy room).
 static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall: Vector2i, normal: Vector2i,
-		own := Vector2i(-9999, -9999)) -> Node3D:
+		own := Vector2i(-9999, -9999), scale_: float = 1.0) -> Node3D:
 	var info := manifest()[id] as Dictionary
 	var holder := Node3D.new()
 	holder.name = "Model_" + id
@@ -369,16 +370,18 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	holder.set_meta("hung", true)
 	root.add_child(holder)
 	var model := instance(id)
+	model.scale = Vector3.ONE * scale_
 	holder.add_child(model)
-	var depth := float((info.get("size", [1, 1, 0.1]) as Array)[2])
+	var modelled := float((info.get("size", [1, 1, 0.1]) as Array)[2])
+	var depth := modelled * scale_
 	var front := wall + normal
-	var tall := float((info.get("size", [1, 1, 0.1]) as Array)[1]) >= 0.85
+	var tall := float((info.get("size", [1, 1, 0.1]) as Array)[1]) * scale_ >= 0.85
 	if board.occupied.has(front) and front != own and not tall and depth > 0.03:
 		# A small piece (a crest, a plaque) over something standing against this wall (a throne) lies flat on it.
-		model.scale.z = 0.03 / depth
+		model.scale.z = 0.03 / modelled
 		depth = 0.03
 	elif depth > 0.2 and (board.grid.has_flag(front, CombatGrid.LOW) or (board.occupied.has(front) and front != own)):
-		model.scale.z = 0.2 / depth
+		model.scale.z = 0.2 / modelled
 		depth = 0.2
 	if str(info.get("mount", "wall")) != "wall":
 		# A piece modelled round its middle (a door leaf hung as a picture) stands just in front of the face.

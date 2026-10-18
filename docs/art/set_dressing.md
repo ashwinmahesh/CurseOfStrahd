@@ -231,6 +231,28 @@ things to find, more people to talk to", and "the great tent... should be wayyy 
   squares by five, painted with suns, moons and eyes, glowing at its flap. Its 2D fallback is a render of the model.
   The camp's stew pot (`stewpot`) is a black pot of stew on a tripod over coals, not the witch's cauldron.
 
+## Scale-ups (owner todos 2026-10-17)
+
+"The dragon's desk and chair ... should be made bigger to represent the scale they are." The sizes follow the book's
+dragon, an adult silver dragon, Huge (a 15 ft space), rearing 20 ft; the book gives no length, only "enormous" for the
+skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's silver (our Narrator line).
+
+- **A prop's `scale`** (data/schemas/location.schema.json; props and containers) draws its 3D piece that many times its
+  modelled size (ModelPiece.stand and hang take it; SetDressing.place marks the holder `scaled`). The squares round it
+  that it covers are reserved (`SetDressing.scaled_squares`), so Furnish and clutter keep off them; test_models_3d's
+  size checks allow the extra reach a `scale` asks for and no more. Nothing in the rules grid changes.
+- **Argynvostholt's study:** the dragon's desk and chair are three times a desk's and a chair's size (a 15 ft desk, its
+  top at 7.5 ft; a 19 ft chair back). The chair moved from [17, 3] to [17, 2] so it doesn't sit in the desk, and the
+  hidden-drawer notes from [16, 4] to [17, 5], in front of the desk where they show.
+- **The dragon's skull** (Castle Ravenloft's trophy room) is drawn 2.2 times the trophy it was, 8.8 ft across, among the
+  stag and wolf heads (two stag heads moved from the north wall to the east wall to make room for it). **The mausoleum's bones** are 2.6 times: 32 ft long over the bier's 40 by 25 ft. Both are the
+  sculpted-from-the-sprite pieces; a real 3D skull and skeleton replace them when the models are made.
+- **Silver heaps** (`silver_heap`, `world/look/coin_heap.gd`): the Undercroft's eight heaps of silver are built from
+  about a thousand coins each over a lumpy dune. The gold heap model scaled up was a smooth blob with a few big discs
+  on it. Pillars and fight squares keep clear of them; the biggest, at [19, 5], is 7.5 ft tall.
+- **Sprites** are sized by `CombatToken.HEIGHTS`: the Amber Sentinel stands 3.6 units (18 ft, "three times a man's
+  height" in its Narrator line, was 11.5 ft) and Argynvost's echo 4.0 (20 ft, was 8.5 ft).
+
 ## Not right yet
 
 - A long piece (a bar, a pew) drawn on each square of a run reads as a row of pieces rather than one long one.

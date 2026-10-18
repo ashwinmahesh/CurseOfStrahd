@@ -350,6 +350,12 @@
             "items": {"type": "integer", "minimum": 1, "maximum": 4},
             "description": "[across, down]: a piece bigger than its square stands over the middle of this many squares, its own cell the north-west one (a wagon over its two-by-two block of low cover)."
           },
+          "scale": {
+            "type": "number",
+            "minimum": 0.25,
+            "maximum": 8,
+            "description": "How many times its modelled size its piece is drawn: a dragon's desk is three times a desk, its skull some twice the trophy it hangs among. The squares round it that it covers stay unfurnished (SetDressing.scaled_squares)."
+          },
           "hangs": {
             "type": "object",
             "description": "A chandelier hanging over `cells` (its piece is drawn up there): in a fight its chain can be broken to drop it on whoever is below (data/objects/kinds.json chandelier; world/combat/battle_scenery.gd). `trap`: the location trap that is this chandelier falling (sprung, it's down); `flag`: set once it has fallen (it's drawn lying on the floor from then on).",
@@ -426,6 +432,12 @@
           },
           "model": {
             "type": "string"
+          },
+          "scale": {
+            "type": "number",
+            "minimum": 0.25,
+            "maximum": 8,
+            "description": "How many times its modelled size its piece is drawn (the dragon's desk, three times a desk)."
           },
           "when": {
             "type": "string"

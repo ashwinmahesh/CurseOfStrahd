@@ -92,52 +92,90 @@
     {
       "id": "tithe_drift_1",
       "cell": [
-        4,
-        4
+        3,
+        5
       ],
       "kind": "decor",
       "label": "Silver",
-      "model": "gold_spill"
+      "model": "silver_heap",
+      "scale": 2.6
     },
     {
       "id": "tithe_drift_2",
       "cell": [
         12,
-        4
+        6
       ],
       "kind": "decor",
       "label": "Silver",
-      "model": "gold_spill"
+      "model": "silver_heap",
+      "scale": 2.6
     },
     {
       "id": "tithe_drift_3",
       "cell": [
-        15,
+        14,
         9
       ],
       "kind": "decor",
       "label": "Silver",
-      "model": "gold_spill"
+      "model": "silver_heap",
+      "scale": 2.6
     },
     {
       "id": "tithe_drift_4",
       "cell": [
-        6,
+        7,
         9
       ],
       "kind": "decor",
       "label": "Silver",
-      "model": "gold_spill"
+      "model": "silver_heap",
+      "scale": 2.6
     },
     {
       "id": "tithe_drift_5",
       "cell": [
         19,
-        2
+        5
       ],
       "kind": "examine",
       "label": "Silver",
-      "model": "gold_spill"
+      "model": "silver_heap",
+      "scale": 3.2
+    },
+    {
+      "id": "tithe_drift_6",
+      "cell": [
+        9,
+        7
+      ],
+      "kind": "decor",
+      "label": "Silver",
+      "model": "silver_heap",
+      "scale": 2.4
+    },
+    {
+      "id": "tithe_drift_7",
+      "cell": [
+        16,
+        6
+      ],
+      "kind": "decor",
+      "label": "Silver",
+      "model": "silver_heap",
+      "scale": 2.4
+    },
+    {
+      "id": "tithe_drift_8",
+      "cell": [
+        2,
+        8
+      ],
+      "kind": "decor",
+      "label": "Silver",
+      "model": "silver_heap",
+      "scale": 2.4
     },
     {
       "id": "tithe_sacks",
