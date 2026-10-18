@@ -164,9 +164,9 @@ and silvain_aster at the playthrough's own level).
 | `bone_watch` | argynvostholt_mausoleum | L8v0 | 8 | 4 phantom warrior | 15 phantom warrior | 5 |
 | `berez_drowned_lights` | berez | L7v1 | 7 | 2 will o wisp, swarm of insects | 9 will o wisp, 7 swarm of insects | 5 |
 | `berez_drowned_lights` | berez | L8v0 | 8 | 3 will o wisp, 2 swarm of insects | 6 will o wisp, 5 swarm of insects | 6 |
-| `berez_scarecrows` | berez | L7v2 | 7 | 4 scarecrow, 2 swarm of insects | 10 scarecrow, 12 swarm of insects, 4 will o wisp | 5 |
-| `berez_scarecrows` | berez | L8v1 | 8 | 5 scarecrow, will o wisp, 2 swarm of insects | 12 scarecrow, 7 will o wisp, 8 swarm of insects | 5 |
-| `berez_scarecrows` | berez | L9v0 | 9 | 6 scarecrow, 2 will o wisp, 2 swarm of insects | 12 scarecrow, 7 will o wisp, 7 swarm of insects | 5 |
+| `berez_scarecrows` | berez | L7v2 | 7 | 4 scarecrow, 2 swarm of insects | 10 scarecrow, 12 swarm of insects, 4 will o wisp | 6 |
+| `berez_scarecrows` | berez | L8v1 | 8 | 5 scarecrow, will o wisp, 2 swarm of insects | 12 scarecrow, 7 will o wisp, 8 swarm of insects | 4 |
+| `berez_scarecrows` | berez | L9v0 | 9 | 6 scarecrow, 2 will o wisp, 2 swarm of insects | 12 scarecrow (35 HP), 7 will o wisp (35 HP), 7 swarm of insects (25 HP) | 6 |
 | `gate_wolves` | krezk | L6v1 | 6 | werewolf, 2 dire wolf, wolf | 4 werewolf, 5 dire wolf, 4 wolf | 4 |
 | `gate_wolves` | krezk | L7v0 | 7 | werewolf, 3 dire wolf, 2 wolf | 4 werewolf, 6 dire wolf, 5 wolf | 4 |
 | `sorin_pursuers` | krezk_pool_of_the_white_sun | L6v2 | 6 | flesh golem, 2 berserker, 4 mongrelfolk | 2 flesh golem, 4 berserker, 6 mongrelfolk | 6 |

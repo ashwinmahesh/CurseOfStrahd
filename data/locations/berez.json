@@ -776,6 +776,7 @@
     {
       "id": "berez_scarecrows",
       "trigger": "enter_area:berez_scarecrow_field",
+      "waiting": true,
       "when": "not flag.lysaga_guests and not flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_lured and level >= 9",
       "text": "The scarecrows in the reeds turn their sacking heads all at once, and climb down off their poles.",
       "monsters": [
@@ -784,182 +785,234 @@
           "cell": [
             25,
             12
-          ]
+          ],
+          "hp": 35,
+          "facing": "northwest"
         },
         {
           "monster": "scarecrow",
           "cell": [
             36,
             12
-          ]
+          ],
+          "hp": 35,
+          "facing": "northeast"
         },
         {
           "monster": "scarecrow",
           "cell": [
             26,
             18
-          ]
+          ],
+          "hp": 35,
+          "facing": "southwest"
         },
         {
           "monster": "scarecrow",
           "cell": [
             36,
             18
-          ]
+          ],
+          "hp": 35,
+          "facing": "southeast"
         },
         {
           "monster": "scarecrow",
           "cell": [
             24,
             21
-          ]
+          ],
+          "hp": 35,
+          "facing": "southwest"
         },
         {
           "monster": "scarecrow",
           "cell": [
             37,
             21
-          ]
+          ],
+          "hp": 35,
+          "facing": "southeast"
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             30,
             10
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             34,
             21
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             27,
             15
-          ]
+          ],
+          "hp": 25,
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             35,
             14
-          ]
+          ],
+          "hp": 25,
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             31,
             31
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             21,
             31
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             41,
             31
-          ]
+          ],
+          "hp": 25,
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             44,
             13
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             44,
             20
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             19,
             15
-          ]
+          ],
+          "hp": 25,
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             29,
             23
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             36,
             29
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             24,
             26
-          ]
+          ],
+          "hp": 25,
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             19,
             21
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             26,
             31
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             42,
             25
-          ]
+          ],
+          "hp": 25,
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             19,
             26
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             20,
             10
-          ]
+          ],
+          "hp": 35,
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             30,
             19
-          ]
+          ],
+          "hp": 25,
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             31,
             15
-          ]
+          ],
+          "hp": 35,
+          "facing": "east"
         }
       ],
       "surprise": "",
@@ -968,6 +1021,7 @@
     {
       "id": "berez_scarecrows",
       "trigger": "enter_area:berez_scarecrow_field",
+      "waiting": true,
       "when": "not flag.lysaga_guests and not flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_lured and level >= 8",
       "text": "The scarecrows in the reeds turn their sacking heads all at once, and climb down off their poles.",
       "monsters": [
@@ -976,189 +1030,216 @@
           "cell": [
             25,
             12
-          ]
+          ],
+          "facing": "northwest"
         },
         {
           "monster": "scarecrow",
           "cell": [
             36,
             12
-          ]
+          ],
+          "facing": "northeast"
         },
         {
           "monster": "scarecrow",
           "cell": [
             26,
             18
-          ]
+          ],
+          "facing": "southwest"
         },
         {
           "monster": "scarecrow",
           "cell": [
             36,
             18
-          ]
+          ],
+          "facing": "southeast"
         },
         {
           "monster": "scarecrow",
           "cell": [
             24,
             21
-          ]
+          ],
+          "facing": "southwest"
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             30,
             10
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             27,
             15
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             35,
             14
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             39,
             28
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             29,
             31
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             19,
             31
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             44,
             19
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             44,
             11
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             30,
             24
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             19,
             15
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             38,
             23
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             34,
             29
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             25,
             26
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             19,
             21
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             20,
             26
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             24,
             32
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             44,
             24
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             39,
             33
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             44,
             29
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             20,
             10
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             31,
             20
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             31,
             16
-          ]
+          ],
+          "facing": "southeast"
         }
       ],
       "surprise": "",
@@ -1167,6 +1248,7 @@
     {
       "id": "berez_scarecrows",
       "trigger": "enter_area:berez_scarecrow_field",
+      "waiting": true,
       "when": "not flag.lysaga_guests and not flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_lured",
       "text": "The scarecrows in the reeds turn their sacking heads all at once, and climb down off their poles.",
       "monsters": [
@@ -1175,182 +1257,208 @@
           "cell": [
             25,
             12
-          ]
+          ],
+          "facing": "northwest"
         },
         {
           "monster": "scarecrow",
           "cell": [
             36,
             12
-          ]
+          ],
+          "facing": "northeast"
         },
         {
           "monster": "scarecrow",
           "cell": [
             26,
             18
-          ]
+          ],
+          "facing": "southwest"
         },
         {
           "monster": "scarecrow",
           "cell": [
             36,
             18
-          ]
+          ],
+          "facing": "southeast"
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             27,
             15
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             35,
             14
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             31,
             28
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             41,
             28
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             21,
             30
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             44,
             19
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             44,
             11
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             19,
             19
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             25,
             24
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             19,
             13
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             31,
             20
-          ]
+          ],
+          "facing": "south"
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             30,
             10
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "scarecrow",
           "cell": [
             38,
             23
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             36,
             29
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             26,
             29
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             20,
             25
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             31,
             16
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             30,
             24
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             40,
             19
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             31,
             32
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             42,
             23
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
             40,
             15
-          ]
+          ],
+          "unseen": true
         }
       ],
       "surprise": "",

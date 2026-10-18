@@ -133,17 +133,17 @@ func test_berez_drowned_lights_v0_at_level_8() -> void:
 
 ## berez_scarecrows, berez variant 2 at level 7.
 func test_berez_scarecrows_v2_at_level_7() -> void:
-	await _held("berez", 12, 7, "berez_scarecrows", [Vector2i(33, 23), Vector2i(34, 24), Vector2i(35, 25), Vector2i(36, 26)], 4, 6, [])
+	await _held("berez", 12, 7, "berez_scarecrows", [Vector2i(38, 24), Vector2i(39, 25), Vector2i(39, 26), Vector2i(39, 27)], 4, 6, [])
 
 
 ## berez_scarecrows, berez variant 1 at level 8.
 func test_berez_scarecrows_v1_at_level_8() -> void:
-	await _held("berez", 12, 8, "berez_scarecrows", [Vector2i(33, 23), Vector2i(34, 24), Vector2i(35, 25), Vector2i(36, 26)], 4, 6, [])
+	await _held("berez", 12, 8, "berez_scarecrows", [Vector2i(38, 24), Vector2i(39, 25), Vector2i(39, 26), Vector2i(39, 27)], 4, 6, [])
 
 
 ## berez_scarecrows, berez variant 0 at level 9.
 func test_berez_scarecrows_v0_at_level_9() -> void:
-	await _held("berez", 12, 9, "berez_scarecrows", [Vector2i(33, 23), Vector2i(34, 24), Vector2i(35, 25), Vector2i(36, 26)], 4, 6, [])
+	await _held("berez", 12, 9, "berez_scarecrows", [Vector2i(39, 27), Vector2i(39, 28), Vector2i(39, 29), Vector2i(39, 30)], 4, 6, [])
 
 
 ## gate_wolves, krezk variant 1 at level 6.
