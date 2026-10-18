@@ -249,6 +249,9 @@ func decide(o: Dictionary, st: Dictionary = {}) -> String:
 		decision = "auto" if e.d20.sync_allows(o) else "never"
 	if decision == "ask" and o.has("helps") and not (o["helps"] as Callable).call():
 		decision = "never"
+	# A hero's Reaction with more than one way to cast it asks even on Automatic (owner, 2026-10-18; Hellish Rebuke's rule).
+	if decision == "auto" and bool(o.get("asks_when_several", false)) and (o["reactor"] as Combatant).is_player_controlled() and _own_choices(o).size() > 1:
+		decision = "ask"
 	return decision
 
 

@@ -209,6 +209,72 @@ func test_backlash_cuts_an_attack_and_lashes_back() -> void:
 	assert_false(c.reaction_available)
 
 
+## Backlash upcasts (4d6 and 1d6 a slot level above 4th), so it asks which slot to pay with, as Hellish Rebuke does
+## (owner, 2026-10-18), each pick showing what it does; even on Automatic when there is a choice.
+func _backlash_prompt(rule: String) -> Array:
+	var e := TestCombat.open_field(4)
+	var c := TestCombat.caster_with(e, ["backlash"], Vector2i(2, 3), 9)
+	var foe := TestCombat.foe(e, "zombie", Vector2i(3, 3))
+	_order(e, foe, [c])
+	c.reaction_rules["backlash"] = rule
+	c.reaction_rules["shield"] = "never"
+	TestCombat.next_d20(e, 19)
+	e.monster_attack(foe, c, "slam")
+	return [e, c, foe]
+
+
+func test_backlash_lists_each_slot_level_with_its_dice() -> void:
+	var r := _backlash_prompt("ask")
+	var e := r[0] as Encounter
+	var c := r[1] as Combatant
+	assert_true(e.pending != null and e.pending.kind == "backlash", "asked")
+	if e.pending == null:
+		return
+	var labels: Array = e.pending.target_choices.map(func(o: Dictionary) -> String: return str(o["label"]))
+	assert_eq(labels.size(), 2, str(labels))
+	assert_true(str(labels[0]).contains("Level 4") and str(labels[0]).contains("4d6"), str(labels))
+	assert_true(str(labels[1]).contains("Level 5") and str(labels[1]).contains("5d6"), str(labels))
+	assert_eq(e.pending.selected_ids, ["4"] as Array[String], "the lowest slot is what the prompt starts on")
+	var level4 := (c.creature as Character).slots_left(4)
+	var level5 := (c.creature as Character).slots_left(5)
+	e.pending.selected_ids.assign(["5"])
+	e.answer_reaction(true)
+	assert_eq((c.creature as Character).slots_left(5), level5 - 1, "the level 5 slot picked")
+	assert_eq((c.creature as Character).slots_left(4), level4, "not the level 4 one")
+	assert_true(e.log.dump().contains("Backlash (level 5 slot)"), e.log.dump())
+	assert_true(e.log.dump().contains("5d6"), "5d6 rolled: " + e.log.dump())
+	while e.pending != null:
+		e.answer_reaction(false)
+
+
+func test_backlash_on_automatic_still_asks_when_there_is_a_choice() -> void:
+	var r := _backlash_prompt("auto")
+	var e := r[0] as Encounter
+	assert_true(e.pending != null and e.pending.kind == "backlash", "asked even on Automatic")
+	while e.pending != null:
+		e.answer_reaction(false)
+
+
+func test_backlash_on_automatic_with_one_slot_level_casts_without_asking() -> void:
+	var e := TestCombat.open_field(4)
+	var c := TestCombat.caster_with(e, ["backlash"], Vector2i(2, 3), 9)
+	var ch := c.creature as Character
+	for l in range(5, 10):
+		while ch.slots_left(l) > 0:
+			ch.expend_slot(l)
+	var foe := TestCombat.foe(e, "zombie", Vector2i(3, 3))
+	_order(e, foe, [c])
+	c.reaction_rules["backlash"] = "auto"
+	c.reaction_rules["shield"] = "never"
+	var level4 := ch.slots_left(4)
+	TestCombat.next_d20(e, 19)
+	e.monster_attack(foe, c, "slam")
+	assert_true(e.pending == null or e.pending.kind != "backlash", "nothing asked")
+	assert_eq(ch.slots_left(4), level4 - 1, "the level 4 slot, the only way to cast it")
+	while e.pending != null:
+		e.answer_reaction(false)
+
+
 func test_effulgent_spheres_hurl_and_ward() -> void:
 	var e := TestCombat.open_field(4)
 	var c := TestCombat.caster_with(e, ["elminsters_effulgent_spheres"], Vector2i(2, 3), 20)

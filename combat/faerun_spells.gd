@@ -225,11 +225,24 @@ func against_damage(st: Dictionary, parts: Dictionary, total: Callable, cut: Cal
 	fr.subclasses._subclass_against_damage(target, source, total, cut, out)
 	if e.spells.can_cast_reaction(target, "backlash") and int(total.call()) > 0:
 		responded.append("backlash")
+		# Which way to cast it (owner, 2026-10-18, as Hellish Rebuke's): each slot level and a free casting left, with what each does.
+		var options := _backlash_options(target)
+		var choice := {"slot": int(options[0]["slot"]) if not options.is_empty() else 0}
+		var picks: Array[Dictionary] = []
+		for o: Dictionary in options:
+			picks.append({"id": str(o["id"]), "label": str(o["label"])})
 		out.append({"kind": "backlash", "reactor": target, "trigger": source.id, "title": "Reaction: Backlash?",
-			"text": "%s hits %s for %d. Cut it by 4d6 + your spellcasting modifier and lash back for 4d6 Force?" % [source.name(), target.name(), int(total.call())],
-			"cost": "Reaction and a level 4+ spell slot",
+			"text": "%s hits %s for %d. Cut it by 4d6 + your spellcasting modifier and lash back for 4d6 Force? Both gain 1d6 for each slot level above 4th." % [source.name(), target.name(), int(total.call())],
+			"cost": "Reaction and the casting you choose" if options.size() > 1 else "Reaction and a level 4+ spell slot",
+			"asks_when_several": true,
+			"target_choices": picks if picks.size() > 1 else [], "selected_ids": [str(picks[0]["id"])] if picks.size() > 1 else [],
+			"min_targets": 1 if picks.size() > 1 else 0, "max_targets": 1 if picks.size() > 1 else 0,
+			"select": func(selected: Array[String]) -> void:
+				for o: Dictionary in options:
+					if not selected.is_empty() and str(o["id"]) == selected[0]:
+						choice["slot"] = int(o["slot"]),
 			"still": func() -> bool: return e.spells.can_cast_reaction(target, "backlash") and int(total.call()) > 0,
-			"use": func() -> void: _backlash(target, source, cut)})
+			"use": func() -> void: _backlash(target, source, cut, int(choice["slot"]))})
 	var ty := ""
 	for k: String in parts:
 		if k in FaerunFeatures.ELEMENTS and int(parts[k]) > 0:
@@ -275,13 +288,33 @@ func synchronous_damage(source: Combatant, target: Combatant, parts: Array, deta
 	return out
 
 
-func _backlash(c: Combatant, source: Combatant, cut: Callable) -> void:
+## The ways `c` could pay for Backlash now, the pact slot or lowest first and a free casting where SpellReactions.free_first
+## puts it: {id, slot (-1 for the free casting), label} with the dice each cuts and lashes with.
+func _backlash_options(c: Combatant) -> Array[Dictionary]:
+	var e := enc()
+	var rs := e.spells.reaction_spells
+	var ch := _ch(c)
+	var out: Array[Dictionary] = []
+	var pact := int(ch.pact_magic()["level"])
+	for l in SpellReactions.slot_levels(ch, 4):
+		out.append({"id": str(l), "slot": l, "label": "Level %d slot%s · cut %dd6 + modifier, %dd6 Force" % [l, " (Pact Magic)" if l == pact else "", l, l]})
+	if rs.free_casting(c, "backlash"):
+		var at := rs.free_level(c, "backlash")
+		var free := {"id": "free", "slot": -1, "label": "Free casting, no slot · cut %dd6 + modifier, %dd6 Force" % [at, at]}
+		if rs.free_first(c, "backlash"):
+			out.push_front(free)
+		else:
+			out.append(free)
+	return out
+
+
+func _backlash(c: Combatant, source: Combatant, cut: Callable, slot_choice: int = 0) -> void:
 	var e := enc()
 	var ch := _ch(c)
 	if e.spells._lowest_slot(ch, 4) == 0 and not e.spells.reaction_spells.free_casting(c, "backlash"):
 		return
 	c.reaction_available = false
-	var paid := e.spells.reaction_spells.pay(c, "backlash")
+	var paid := e.spells.reaction_spells.pay(c, "backlash", slot_choice)
 	var slot := int(paid["level"])
 	var s := Compendium.shared().spell_data("backlash")
 	var nums := e.spells.numbers(c, e.spells._entry_any(c, "backlash"))
