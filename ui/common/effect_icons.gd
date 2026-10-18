@@ -85,7 +85,7 @@ static func _when(fx: Effect) -> String:
 		Effect.Ends.ROUNDS:
 			return _rounds(fx.rounds_left)
 		Effect.Ends.MINUTES:
-			return "%d minute%s left" % [fx.minutes_left, "" if fx.minutes_left == 1 else "s"] if fx.minutes_left > 0 else ""
+			return "%s left" % Effect.minutes_text(fx.minutes_left) if fx.minutes_left > 0 else ""
 		Effect.Ends.START_OF_TURN, Effect.Ends.END_OF_TURN:
 			return "Until their next turn"
 		Effect.Ends.SHORT_REST:

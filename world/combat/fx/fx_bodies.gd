@@ -1,7 +1,7 @@
 class_name FxBodies
 extends RefCounted
-## Effects that play on a creature (docs/art/spell_effects.md): healing welling up, a blessing, a curse settling, a
-## mind assailed, a ward closing round it, a smite landing, a summoning circle, a jump through space, a change of
+## Effects that play on a creature (docs/art/spell_effects.md): healing welling up, a blessing, a feast laid out, a curse
+## settling, a mind assailed, a ward closing round it, a smite landing, a summoning circle, a jump through space, a change of
 ## shape, a small working of magic, a blow landing.
 
 
@@ -55,6 +55,36 @@ static func buff(fx: SpellFx, cue: Dictionary, t: CombatToken) -> void:
 	FxKit.tween_param(crown, "radius", 0.9, 0.55, 0.35 * fx.pace())
 	fx.pulse(crown, 0.25, 0.3, 0.5)
 	FxKit.flash(fx, SpellFx.chest(t) + Vector3(0, 0.4, 0), cols["light"], 2.4, 2.6, 0.2, 0.8)
+
+
+## A table laid for `t` (Heroes' Feast): a wide circle of warm light at its feet, steam curling up, motes of gold
+## rising round it and a glow at its heart.
+static func feast(fx: SpellFx, cue: Dictionary, t: CombatToken) -> void:
+	var cols := cue["colours"] as Dictionary
+	var size := float(cue.get("size", 1.0))
+	var feet := t.global_position
+	var circle := FxKit.ring(fx, feet, 2.2 * size, cols, 0.0, 1.8)
+	var cm := circle.material_override as ShaderMaterial
+	cm.set_shader_parameter("spin", 0.3)
+	cm.set_shader_parameter("width", 0.09)
+	cm.set_shader_parameter("fill", 0.5)
+	FxKit.tween_param(circle, "radius", 0.2, 0.62, 0.45 * fx.pace())
+	fx.pulse(circle, 0.25, 0.8, 0.9)
+	var steam := FxKit.particles({"amount": 14, "lifetime": 1.9, "emit": "ring", "radius": 0.5 * size, "inner": 0.1, "explosiveness": 0.15,
+		"dir": Vector3.UP, "spread": 14.0, "speed": Vector2(0.35, 0.7), "damping": Vector2(0.1, 0.3), "turbulence": 0.3, "size": 0.5 * size,
+		"grow": FxKit.curve(0.3, 1.0, 1.3, 0.4), "fade_in": true,
+		"colours": [Color(cols["smoke"], 0.55), Color(cols["smoke"], 0.0)], "material": FxKit.smoke_material(0.45)})
+	var motes := FxKit.particles({"amount": 40, "lifetime": 1.6, "emit": "ring", "radius": 0.55 * size, "inner": 0.25 * size,
+		"explosiveness": 0.3, "dir": Vector3.UP, "spread": 10.0, "speed": Vector2(0.5, 1.1), "damping": Vector2(0.2, 0.5),
+		"orbit": Vector2(0.2, 0.4), "size": 0.15, "grow": FxKit.curve(0.2, 1.0, 0.0, 0.3),
+		"colours": [cols["core"], cols["glow"], cols["edge"]], "fade_in": true, "material": FxKit.glow_material(FxKit.Shape.GLINT, cols["core"], 2.8)})
+	var heart := FxKit.particles({"amount": 6, "lifetime": 1.1, "emit": "sphere", "radius": 0.2, "speed": Vector2(0.05, 0.2),
+		"dir": Vector3.UP, "size": 0.7 * size, "grow": FxKit.curve(0.4, 1.0, 0.5, 0.4), "explosiveness": 0.7,
+		"colours": [cols["glow"], cols["edge"]], "fade_in": true, "material": FxKit.glow_material(FxKit.Shape.GLOW, cols["glow"], 0.7)})
+	fx.emit(steam, feet + Vector3(0, 0.1, 0))
+	fx.emit(motes, feet + Vector3(0, 0.05, 0))
+	fx.emit(heart, SpellFx.chest(t))
+	FxKit.flash(fx, SpellFx.chest(t) + Vector3(0, 0.3, 0), cols["light"], 1.8, 3.2, 0.3, 1.1)
 
 
 ## A curse settling on `t`: dark wisps sinking onto it from above, a band of the flavour's light closing round its feet.

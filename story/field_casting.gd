@@ -702,6 +702,18 @@ static func _feast(st: StoryState, caster: Character) -> String:
 		caster.name.get_slice(" ", 0), ", ".join(fed)]
 
 
+## Who has eaten at Heroes' Feast and what each gained, read from the effect they carry: ["Ilse +12", ...] (the Hit
+## Points and the maximum rose by that much). The world's toast and Narrator note tell it (LocationMagic).
+static func feast_shares(party: Array[Character]) -> Array[String]:
+	var out: Array[String] = []
+	for ch in party:
+		for fx: Effect in ch.effects:
+			if fx.source_id == "heroes_feast" and not fx.modifiers.is_empty():
+				out.append("%s +%d" % [ch.name.get_slice(" ", 0), fx.modifiers[0].number("value")])
+				break
+	return out
+
+
 ## Casts an exploring spell from a Spell Scroll (story/field_items.gd): no slot and no preparation, in the spell's own
 ## casting time. The scroll's own rules (the class list, the check for a level above the reader's) come first, there.
 static func cast_from_scroll(st: StoryState, caster: Character, spell_id: String) -> Dictionary:

@@ -76,6 +76,8 @@
     "blade_flesh": -0.2,
     "blade_flesh_light": -4.2,
     "blessing": -2.0,
+    "feast_clink": -6.0,
+    "feast_plates": -9.0,
     "blood_wet": -4.0,
     "body_blow": -4.0,
     "body_blow_hard": -1.2,
@@ -460,6 +462,14 @@
     "heal": [
       "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_2.ogg",
       "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_5.ogg"
+    ],
+    "feast_clink": [
+      "res://art/sourced/kenney_interface_sounds/Audio/glass_001.ogg",
+      "res://art/sourced/kenney_interface_sounds/Audio/glass_004.ogg"
+    ],
+    "feast_plates": [
+      "res://art/sourced/kenney_rpg_audio/Audio/metalPot2.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/metalPot3.ogg"
     ],
     "victory": [
       "res://art/sourced/oga_fanfares_spring/VICTORY_0.ogg"
@@ -1327,6 +1337,14 @@
         "cast": [
           "hunters_mark_1",
           "hunters_mark_2@0.1"
+        ]
+      },
+      "heroes_feast": {
+        "cast": [
+          "feast_plates",
+          "feast_clink@0.25",
+          "heal@0.5",
+          "blessing@0.6"
         ]
       }
     },

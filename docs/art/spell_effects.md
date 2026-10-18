@@ -33,6 +33,7 @@ The descriptions live in `art/vfx/effects.json` (`families`); every one is built
 | burst, cone, line, nova | over the spell's squares (FxAreas): explosion, spray, bolt along a line, shockwave from the caster | Fireball, Burning Hands, Lightning Bolt, Thunderwave, Thunder Step (round the space it leaves, ahead of the jump) |
 | strike, cloud, wall, ground, aura | from the sky, billowing, rising, erupting, settling round the caster | Flame Strike, Cloudkill, Wall of Fire, Entangle, Spirit Guardians |
 | heal, buff, debuff, psychic, ward, transform | on each creature (FxBodies) | Cure Wounds, Bless, Hex, Vicious Mockery, Shield of Faith, Polymorph |
+| feast | on each creature that eats (FxBodies): a wide warm circle, steam, rising gold motes; the exploring view plays it with its own table sounds (`combat.keys.heroes_feast`) when the feast lands | Heroes' Feast |
 | smite, slash | on a blow that lands | Divine Smite, a zombie's slam, a longsword |
 | summon, teleport, glimmer | where a creature appears, both ends of a jump, a small working | Summon Undead, Misty Step, Far Step, Detect Magic |
 

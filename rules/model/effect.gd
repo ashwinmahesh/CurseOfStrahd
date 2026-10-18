@@ -265,9 +265,21 @@ func describe_duration() -> String:
 		Ends.END_OF_TURN:
 			return "until the end of the next turn"
 		Ends.MINUTES:
-			return "%d min" % minutes_left
+			return minutes_text(minutes_left, true)
 		Ends.SHORT_REST:
 			return "until a rest"
 		Ends.LONG_REST:
 			return "until a Long Rest"
 	return "until removed"
+
+
+## A stretch of game time in words ("45 minutes", "2 hours", "22 hours 30 minutes"; `short`: "45 min", "2 h", "22 h 30 min"):
+## minutes under an hour, hours and the minutes over after it, so a day-long effect (Heroes' Feast) isn't "1440 minutes".
+static func minutes_text(minutes: int, short: bool = false) -> String:
+	var h := minutes / 60
+	var m := minutes % 60
+	var mins := "%d min" % m if short else "%d minute%s" % [m, "" if m == 1 else "s"]
+	if h == 0:
+		return mins
+	var hours := "%d h" % h if short else "%d hour%s" % [h, "" if h == 1 else "s"]
+	return hours if m == 0 else "%s %s" % [hours, mins]

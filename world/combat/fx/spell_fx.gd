@@ -15,8 +15,8 @@ const DATA := "res://art/vfx/effects.json"
 const MISSILES: Array[String] = ["bolt", "beam", "ray", "touch", "drain", "shot"]
 ## Every family with an effect.
 const FAMILIES: Array[String] = ["bolt", "beam", "ray", "touch", "drain", "shot", "burst", "cone", "line", "nova", "strike",
-	"cloud", "wall", "ground", "aura", "heal", "buff", "debuff", "psychic", "ward", "smite", "summon", "teleport", "transform",
-	"glimmer", "slash", "pattern"]
+	"cloud", "wall", "ground", "aura", "heal", "buff", "feast", "debuff", "psychic", "ward", "smite", "summon", "teleport",
+	"transform", "glimmer", "slash", "pattern"]
 ## Damage types that take a magical look on a monster's attack (a Fire Ray is a bolt of fire; a Claw is a slash).
 const MAGIC_TYPES: Array[String] = ["fire", "cold", "lightning", "thunder", "acid", "poison", "necrotic", "radiant", "force", "psychic"]
 
@@ -316,6 +316,8 @@ func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cel
 						FxBodies.heal(self, cue, t)
 					"buff":
 						FxBodies.buff(self, cue, t)
+					"feast":
+						FxBodies.feast(self, cue, t)
 					"debuff":
 						if is_instance_valid(caster):
 							FxBodies.debuff(self, cue, caster, t)
@@ -327,7 +329,7 @@ func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cel
 					"transform":
 						FxBodies.transform(self, cue, t)
 				await wait(0.06)
-			await wait(0.3 if family in ["heal", "buff", "debuff", "psychic"] else 0.15)
+			await wait(0.3 if family in ["heal", "buff", "feast", "debuff", "psychic"] else 0.15)
 
 
 ## A missile family flies to each target (Magic Missile's darts: `count` of them at a lone target); a chain jumps on

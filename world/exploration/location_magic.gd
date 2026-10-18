@@ -43,6 +43,8 @@ static func apply_spell_effect(view: LocationView, spell_id: String) -> void:
 			view._say("item:fortress:fold", view.leader().creature as Character)
 		"find_familiar", "find_steed":
 			LocationParty.refresh_familiars(view)   # it appears beside the party and follows from now on
+		"heroes_feast":
+			_heroes_feast(view)
 		"knock":
 			var nearest := {}
 			var nearest_ft := 61
@@ -109,6 +111,32 @@ static func apply_spell_effect(view: LocationView, spell_id: String) -> void:
 						n += 1
 						break
 			view.narration.emit("You sense %s." % ("no traps in sight" if n == 0 else "%d trap%s" % [n, "" if n == 1 else "s"]))
+
+
+## Heroes' Feast was just laid (FieldCasting._feast; owner's playtest, 2026-10-18: it worked and nothing said so): a toast
+## and a note in the Narrator's box that tell who gained what and for how long, and the feast's light and sounds on each
+## hero who ate (the party frames and the sheet's Effects tab carry it after, with the time left).
+static func _heroes_feast(view: LocationView) -> void:
+	var shares := FieldCasting.feast_shares(view.st.party)
+	if shares.is_empty():
+		return
+	view.toast.emit("Heroes' Feast: the party is fed for 24 hours")
+	view.narration.emit("The party sits down to Heroes' Feast. For 24 hours they shrug off poison and fear and keep their wits, and their Hit Point maximum and current Hit Points rise: %s." % ", ".join(shares))
+	var fed: Array[CombatToken] = []
+	for cb in view.members:
+		var token := view.tokens.get(cb.id) as CombatToken
+		if token != null and cb.creature.effects.any(func(eff: Effect) -> bool: return eff.source_id == "heroes_feast"):
+			fed.append(token)
+	var cue := SpellFx.spell_cue("heroes_feast")
+	if fed.is_empty() or cue.is_empty() or not SpellFx.enabled:
+		return
+	var fx := SpellFx.new()
+	view.add_child(fx)
+	fx.cast(cue, fed[0], fed, [], null, false)
+	# On a tween of the effect's own, so a scene that goes away mid-feast takes it along.
+	var tw := fx.create_tween()
+	tw.tween_interval(5.0)
+	tw.tween_callback(fx.queue_free)
 
 
 ## Wand of Secrets (2024 DMG): it pulses and points at the nearest secret door or trap within 30 ft, which the party
