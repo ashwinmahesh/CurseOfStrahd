@@ -514,6 +514,76 @@
       "kind": "magic",
       "bright_ft": 0,
       "dim_ft": 15
+    },
+    {
+      "cell": [
+        1,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        28,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        1,
+        17
+      ],
+      "kind": "lamp",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        28,
+        17
+      ],
+      "kind": "lamp",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        14,
+        14
+      ],
+      "kind": "lamp",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        14,
+        5
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 5,
+      "color": "bile"
+    },
+    {
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 5,
+      "color": "bile"
     }
   ],
   "traps": [],

@@ -1862,7 +1862,7 @@
         "timber": "village/cobbles",
         "church": "village/grass",
         "castle": "castle/courtyard",
-        "amber": "mountain/snow",
+        "amber": "mountain/cliff",
         "tent": "village/grass"
       },
       "outside": {
@@ -1916,6 +1916,9 @@
         },
         "castle_ravenloft_main_floor": {
           "ground": "castle/courtyard"
+        },
+        "amber_temple_entrance": {
+          "ground": "mountain/snow"
         }
       }
     },
@@ -4851,17 +4854,14 @@
       "amber_hall": {
         "floor": [
           "rubble",
-          "statue_head",
-          "snowdrift",
           "bones",
           "candle_cluster",
-          "rubble"
+          "rubble",
+          "bones"
         ],
         "centre": [
           "rubble",
-          "snowdrift",
-          "bones",
-          "statue_head"
+          "bones"
         ],
         "floor_fill": 0.65,
         "centre_fill": 0.4
@@ -4939,7 +4939,7 @@
       "cold_sanctum": {
         "floor": [
           "brazier_cold",
-          "statue_head",
+          "rubble",
           "rubble"
         ],
         "centre": [

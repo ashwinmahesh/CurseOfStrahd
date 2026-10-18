@@ -53,6 +53,8 @@ const SHOTS := {
 	"lake": {"loc": "lake_zarovich", "hour": 12, "zoom": 18.0},
 	"vallaki": {"loc": "vallaki", "hour": 12},
 	"gates": {"loc": "castle_ravenloft_gates", "hour": 18, "zoom": 18.0},
+	"amber_doors_tilt": {"loc": "amber_temple_entrance", "hour": 12, "zoom": 30.0, "tilt": 1.0, "face": "castle"},
+	"amber_doors_tilt_night": {"loc": "amber_temple_entrance", "hour": 22, "zoom": 30.0, "tilt": 1.0, "face": "castle"},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 

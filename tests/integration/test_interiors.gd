@@ -643,8 +643,8 @@ func test_baba_lysagas_fire_is_green() -> void:
 	await _frames(1)
 
 
-## The Amber Temple (the audit, docs/art/interiors.md): black stone and amber in every room (place_looks `keep`), not
-## parquet, panelling or marble; its great hall plays its own line, not the Vallaki mansion's bunting; desks in the hall
+## The Amber Temple (the audit, docs/art/interiors.md): black stone and amber in the rooms (place_looks `keep`; frosted
+## flags in the cold ones), not parquet, panelling or marble; its great hall plays its own line, not the Vallaki mansion's bunting; desks in the hall
 ## of echoes and lecterns in the reading room; books chained in the stacks, cold braziers, and no rug or armchair.
 func test_the_amber_temple_keeps_its_own_look() -> void:
 	Look.set_style("modern", false)
@@ -656,8 +656,12 @@ func test_the_amber_temple_keeps_its_own_look() -> void:
 	var want := {"amber_temple_library": {"stacks_chained_1": "chained_bookcase"},
 		"amber_temple_entrance": {"west_cold_brazier": "brazier_cold"},
 		"amber_temple_vault": {"sanctum_braziers": "brazier_cold"}}
-	var floors := {"amber_temple_library": [Vector2i(6, 3), Vector2i(23, 5)], "amber_temple_faceless_god": [Vector2i(20, 14), Vector2i(5, 14)],
+	var floors := {"amber_temple_library": [Vector2i(6, 3), Vector2i(23, 5)], "amber_temple_faceless_god": [Vector2i(20, 14)],
 		"amber_temple_vault": [Vector2i(20, 12)]}
+	# The cold rooms lie on frosted flags (Amber Temple Look Plan step 1): the doors' vestibule and guardrooms, the hall
+	# of echoes and the wardens' cells. Every other room is the temple's black stone.
+	var frosted := {"amber_temple_entrance": [Vector2i(15, 4), Vector2i(4, 5), Vector2i(26, 5)],
+		"amber_temple_faceless_god": [Vector2i(5, 14), Vector2i(5, 3), Vector2i(30, 3)]}
 	for loc_id: String in ["amber_temple_library", "amber_temple_entrance", "amber_temple_vault", "amber_temple_faceless_god"]:
 		var v := _view(loc_id)
 		await _frames(1)
@@ -670,6 +674,9 @@ func test_the_amber_temple_keeps_its_own_look() -> void:
 		for c: Vector2i in floors.get(loc_id, []):
 			var f := board.floor_box(c)
 			assert_true(f != null and _surface(f) == "amber/black_stone", "%s %s is the temple's black stone" % [loc_id, c])
+		for c: Vector2i in frosted.get(loc_id, []):
+			var f := board.floor_box(c)
+			assert_true(f != null and _surface(f) == "church/frosted_flags", "%s %s is frosted flags" % [loc_id, c])
 		for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
 			assert_true(false, "%s: no rug in the temple" % loc_id)
 		for n in board.get_children():

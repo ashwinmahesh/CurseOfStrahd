@@ -219,7 +219,7 @@ func _build() -> void:
 			elif (x + z * 3) % 7 < 3:
 				mat = stone
 			var room := _room_at(c)
-			if room.has("floor") and (f & CombatGrid.DIFFICULT) == 0 and h <= 0.0:
+			if room.has("floor") and (f & CombatGrid.DIFFICULT) == 0 and (h <= 0.0 or bool(room.get("raised", false))):
 				mat = room["floor"] as Material
 			if (f & CombatGrid.NATURAL) != 0:
 				_floors[c] = _terrain_column("Floor", c, mat)
@@ -406,6 +406,8 @@ func _plan_rooms(loc: Dictionary) -> void:
 		if style == null:
 			continue
 		var room := {"rect": r}
+		if bool(area.get("raised", false)):
+			room["raised"] = true   # its own floor shows on raised ground too (the Amber Temple's vestibule)
 		if str((style as Dictionary).get("floor", "")) != "" and Look.cel_textured(str(style["floor"]), 0.22) != null:
 			room["floor"] = Look.cel_textured(str(style["floor"]), 0.22)
 		if str((style as Dictionary).get("wall", "")) != "" and Look.cel_textured(str(style["wall"])) != null:

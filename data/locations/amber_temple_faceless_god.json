@@ -98,7 +98,8 @@
           21
         ]
       ],
-      "furnish": "frozen_reading"
+      "furnish": "frozen_reading",
+      "floor": "church/frosted_flags"
     },
     {
       "id": "wardens_cells",
@@ -113,7 +114,8 @@
           5
         ]
       ],
-      "furnish": "wardens_cells"
+      "furnish": "wardens_cells",
+      "floor": "church/frosted_flags"
     }
   ],
   "spawns": {
@@ -451,7 +453,8 @@
       ],
       "kind": "magic",
       "bright_ft": 5,
-      "dim_ft": 20
+      "dim_ft": 20,
+      "color": "flame"
     },
     {
       "cell": [
@@ -460,7 +463,8 @@
       ],
       "kind": "magic",
       "bright_ft": 0,
-      "dim_ft": 10
+      "dim_ft": 10,
+      "color": "flame"
     },
     {
       "cell": [
@@ -469,7 +473,8 @@
       ],
       "kind": "magic",
       "bright_ft": 0,
-      "dim_ft": 10
+      "dim_ft": 10,
+      "color": "flame"
     },
     {
       "cell": [
@@ -479,6 +484,166 @@
       "kind": "candle",
       "bright_ft": 5,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        19,
+        14
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 40,
+      "color": "orchid"
+    },
+    {
+      "cell": [
+        19,
+        19
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 25,
+      "color": "plum"
+    },
+    {
+      "cell": [
+        14,
+        11
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        26,
+        11
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        26,
+        17
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        16,
+        25
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        23,
+        25
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "flame"
+    },
+    {
+      "cell": [
+        4,
+        10
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        2,
+        12
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        6,
+        17
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        4,
+        19
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "moonlight"
+    },
+    {
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        23,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        35,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
     }
   ],
   "traps": [

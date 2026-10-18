@@ -123,6 +123,10 @@
             "pattern": "^[a-z_]+/[a-z_]+$",
             "description": "The room's walls: a texture surface, theme/surface in art/textures/manifest.json. Optional."
           },
+          "raised": {
+            "type": "boolean",
+            "description": "true: this area's own `floor` shows on raised ground too (ArenaBoard draws it only at 0 ft otherwise): the Amber Temple's vestibule and guardrooms, whose ledge stands 25 ft up."
+          },
           "furnish": {
             "type": [
               "boolean",
