@@ -1,0 +1,73 @@
+~ yard_first
+Narrator: The stable yard smells of wet straw, lamp oil, and something restless behind the crimson wagon's padlocked door. The horses in their stalls keep their ears pinned back.
+Narrator: Across from the steps, a woman in a long dark coat sits on a hay bale with a crossbow over her knee. By the dent in the straw, she has been waiting for hours.
+Ezmerelda: Quietly, and keep out of the lantern light. Look at that lock - one grey hair laid across the hasp, same as always.
+Ezmerelda [smile]: You weren't lying about the feathers. I looked through the taproom window and saw him standing on a chair, singing to a turnip.
+Ezmerelda: After twelve years, a woman needs a minute in the dark before she walks into a room with that hat.
+* We can bring him out here to you.
+* Why haven't you gone inside?
+
+~ yard_again
+Ezmerelda: Still here, still counting feathers through the glass. My good leg's gone to sleep and the wooden one's bored.
+
+~ yard_why
+Ezmerelda [smile]: Because if I walk into that taproom, I'll shoot the hat first and ask questions when it stops twitching. The innkeepers seem nice; I'd hate to ruin their floor.
+Ezmerelda: Besides, out here he has to walk through one door to leave me behind again, and I'm sitting in front of it.
+
+~ yard_leave
+Ezmerelda: Keep your voices down in the hall. I'll be right here until the hay gives out.
+
+~ reunion_unmasked
+Narrator: He steps into the yard with his scarlet collar turned up against the damp, then freezes with his hand still on the latch. The lantern catches the burn scars on his knuckles.
+Rictavio [weary]: Close the door behind you. I told myself it would take you another week to read my tracks.
+Rictavio: Don't point that at my knees, Ezmerelda. Come into the shadow where the windows can't see you.
+
+~ reunion_costume
+Narrator: He sweeps into the yard hat-first, his painted smile ready for an audience, and stops dead beside the lantern. The showman drains out of his shoulders in a single breath.
+Rictavio [smile]: Friends, I must warn you, the beasts of Rictavio's menagerie do not perform after dark, not even for - 
+Rictavio [weary]: Ezmerelda. Put the bolt down, child, before you wake the whole inn.
+
+~ reunion_scene
+Ezmerelda: Stop right by the steps, old man. Say something a vampire wouldn't say.
+Rictavio [sly]: A vampire would never wear a coat this colour. He has far too much vanity and no sense of theatre.
+Ezmerelda [angry]: Try again, Rudolph, and leave the showman in the taproom. Say something a vampire wouldn't say.
+Rictavio [weary]: I was wrong to leave you at the river, and wrong to lock the tower against you. I was afraid that if you stayed near me, the dark would take you too, and I am sorry.
+Ezmerelda: Something heavy hits the inside of the wagon door with a low, wet snarl. Even your luggage has better manners than you do.
+Rictavio: Do not tap the woodwork. Whatever is in that box has had a very long day, and so have I.
+Ezmerelda: Twelve years, and you're hiding behind a stage moustache and a stray cat while the castle sits on the hill. Did you really think a lake was going to keep me out?
+Rictavio [weary]: No. I think I only hoped it would slow you down until the work was finished.
+Narrator: She steps up to him, hits him hard in the arm with her closed fist, and he stands still and takes it. Neither of them looks away.
+
+~ reunion_promise
+Rictavio: Turning to you, he keeps his voice flat. You gave me your word my name would not leave that room.
+Ezmerelda: Leave them alone, Rudolph; I had a crossbow on them at the lake and I got it out of them.
+
+~ reunion_end
+Rictavio: You brought her to a quiet door instead of shouting in the taproom. Thank you for that much.
+Ezmerelda [smile]: Don't mind him; that's the closest he gets to weeping with joy. Come back when I've finished lecturing him.
+
+~ gift
+Ezmerelda: Take these before you go back on the road - silver-headed bolts, holy water, and a draught that'll stitch a throat shut. I pack for bad weather, and you look like you walk into plenty of it.
+Ezmerelda [smile]: Take this coat too; the weave takes whatever shape you ask of it, ball gown or beggar's rags. It got me through three towns without anyone looking twice at my leg.
+
+~ yard_after
+Ezmerelda: I'm keeping watch on the wagon until we decide our next move. Somebody has to make sure he doesn't slip out the back with his lute.
+Ezmerelda [smile]: My arm's still sore from hitting him, which means he's real enough. What do you need?
+* How is Rudolph holding up?
+
+~ yard_rudolph
+Ezmerelda: He has a false moustachedrying on his washstand and three books of terrible jokes by his bed. Twelve years of hunting him, and the hardest part is not laughing.
+Ezmerelda [smile]: He's thinner than he was, and his hands shake when he thinks I'm not looking. Don't tell him I noticed; he'll lock me out of another house.
+
+~ join
+Ezmerelda: You're walking toward the castle sooner or later, and stopping's the one thing I'm bad at. Give me room for my crossbow and I'll walk with you.
+Ezmerelda [smile]: Remember the rule: I go first through doors, and if the lord of this valley shows his teeth, save a piece for me.
+
+~ shore_gone
+Narrator: The campfire by the water is down to grey ash, and wagon ruts in the mud have filled with rain. She sits on a crate with her spyglass trained on the tower door.
+Ezmerelda [angry]: All the way to Vallaki to see a man in a feathered hat, and the bird had already flown. The innkeepers wouldn't say a word, which means he paid them well.
+Ezmerelda: So I walked every muddy mile back, because an old man who runs from an inn goes back to his bolt-hole. He's in that tower right now, pretending he can't hear me.
+Ezmerelda [smile]: Go up those steps and tell him Ezmerelda is on the shore. Tell him if he doesn't come down in five minutes, I'm chopping the door into kindling.
+
+~ shore_with_him
+Ezmerelda [angry]: I just walked all the way to Vallaki and back in the rain, and you had him in your pocket the whole time? Wait until I get my boots off.

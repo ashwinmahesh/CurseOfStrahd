@@ -1,0 +1,67 @@
+{
+  "id": "ezmerelda",
+  "summary": "Ezmerelda on the hunt (Story Allies Presence Plan, package M1): three meetings in the middle of her own work, while she is met and not travelling with the party. The Svalich road at night with a spawn she has just staked, the drowned fields of Berez with the witch's scarecrows, the road below Argynvostholt watching the revenants. Each is words only, raises her trust by one (ezmerelda_trust) and ends in a short menu that offers 'Hunt with us' once her trust is 2. Lines: narrative/allies/ezmerelda_hunt.dialogue.",
+  "visits": [
+    {
+      "id": "ezmerelda_svalich_staking",
+      "summary": "On the Old Svalich Road at night, or at a camp beside it, the party comes upon Ezmerelda over a vampire spawn she has just staked.",
+      "trigger": {
+        "on": [
+          "arrive",
+          "rest"
+        ],
+        "night": true,
+        "outdoors": true,
+        "at": [
+          "svalich_crossroads",
+          "svalich_roadhouse",
+          "roadside_graves",
+          "road_fork",
+          "road_forest",
+          "road_ravine",
+          "road_ambush",
+          "stream_ford",
+          "wayside_shrine",
+          "forest_clearing"
+        ]
+      },
+      "when": "flag.ezmerelda_met and not guest:ezmerelda",
+      "once": true,
+      "dialogue": "allies/ezmerelda_hunt:road_svalich"
+    },
+    {
+      "id": "ezmerelda_berez_scarecrows",
+      "summary": "In the drowned fields of Berez, before the witch's scarecrows have been burned or the witch is dead, the party comes upon Ezmerelda cutting scarecrows off their posts.",
+      "trigger": {
+        "on": [
+          "arrive"
+        ],
+        "outdoors": true,
+        "at": [
+          "berez",
+          "berez_marsh_track",
+          "bog_causeway"
+        ]
+      },
+      "when": "flag.ezmerelda_met and not guest:ezmerelda and not flag.berez_scarecrows_burned and not flag.lysaga_dead",
+      "once": true,
+      "dialogue": "allies/ezmerelda_hunt:road_berez"
+    },
+    {
+      "id": "ezmerelda_manor_watch",
+      "summary": "On the road below Argynvostholt, while the beacon is dark, the party comes upon Ezmerelda watching the revenants through her spyglass.",
+      "trigger": {
+        "on": [
+          "arrive"
+        ],
+        "outdoors": true,
+        "at": [
+          "argynvostholt"
+        ]
+      },
+      "when": "flag.ezmerelda_met and not guest:ezmerelda and not flag.argynvost_beacon_lit",
+      "once": true,
+      "dialogue": "allies/ezmerelda_hunt:road_manor"
+    }
+  ]
+}

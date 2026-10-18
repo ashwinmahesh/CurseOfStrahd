@@ -809,6 +809,17 @@
       "dialogue": "vallaki/the_ravens_ransom:bray",
       "when": "quest.the_ravens_ransom == home or quest.the_ravens_ransom == done",
       "facing": "south"
+    },
+    {
+      "npc": "ezmerelda",
+      "cell": [
+        12,
+        14
+      ],
+      "dialogue": "allies/ezmerelda_hunt:yard",
+      "approach": 8,
+      "facing": "east",
+      "when": "flag.ezmerelda_left_tower and not guest:ezmerelda and ((not flag.van_richten_reunited and not flag.ezmerelda_back_at_camp and not flag.rictavio_gone and not guest:rictavio and (flag.vallaki_backed != \"wachter\" or tarokka.ally.npc == rictavio)) or (flag.ezmerelda_reunited_in_vallaki and not flag.rictavio_gone))"
     }
   ],
   "narration": {

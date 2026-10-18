@@ -1,0 +1,20 @@
+{
+  "region": "allies_ezmerelda",
+  "flags": [
+    {
+      "id": "ezmerelda_yard_met",
+      "type": "bool",
+      "summary": "The party has spoken with Ezmerelda in the Blue Water Inn's stable yard, where she waits by Rictavio's wagon after leaving her camp on Lake Baratok (Story Allies Presence Plan, package M1)."
+    },
+    {
+      "id": "ezmerelda_reunited_in_vallaki",
+      "type": "bool",
+      "summary": "Van Richten and Ezmerelda were reunited in the Blue Water Inn's stable yard, not at the tower. It sets the Hunter's Tower's own van_richten_reunited and its reunited stage too. Later allies packages and the finale may tell the two venues apart."
+    },
+    {
+      "id": "ezmerelda_back_at_camp",
+      "type": "bool",
+      "summary": "Ezmerelda walked to Vallaki and found the showman gone (he went home to his tower, or he walks with the party), and is back at her camp on Lake Baratok. The tower's own scenes then treat her as if she never left (they read this beside ezmerelda_left_tower)."
+    }
+  ]
+}

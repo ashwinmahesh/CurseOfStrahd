@@ -136,6 +136,12 @@ two holy water and advice (the spawn sleep by day). He confronts the party if th
 Wachter's town (`rictavio_gone`). **If the Tarokka names him** (`tarokka.ally.npc == rictavio`) he joins as the ally
 (`join rictavio`, `find_the_ally found`), unless the party handed the town to Lady Wachter, when it takes Persuasion 15.
 
+**Ezmerelda in the yard** (Story Allies Presence Plan, package M1). Once the party has told her at Van Richten's Tower where
+he is (`ezmerelda_left_tower`), she sits on the hay across from his wagon (one more NPC entry in the inn; it stands while
+he is still at the inn and until the two are reunited) and the reunion the tower would have played happens here:
+narrative/allies/ezmerelda_hunt.dialogue, `yard`. If he has left the inn first (`rictavio_gone`, he walks with the party,
+or the Baron's town sent him away) she is back at her camp on Lake Baratok instead. Details in docs/regions/van_richtens_tower.md §4.2.
+
 ### 4.6 Blinsky, the Martikovs, Arasek
 
 - **Blinsky Toys:** a shop (dice, cards, whistles, marbles, caltrops, tools, 1.5x), gloom as a brand, Izek's dolls.

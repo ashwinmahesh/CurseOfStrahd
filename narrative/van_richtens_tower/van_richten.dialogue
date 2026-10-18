@@ -17,7 +17,7 @@ endif
 -> menu
 
 ~ menu
-* [if not flag.ezmerelda_left_tower and tarokka.ally.npc != ezmerelda and not guest:ezmerelda] Ezmerelda is outside. She's been waiting for days. -> ezm
+* [if (not flag.ezmerelda_left_tower or flag.ezmerelda_back_at_camp) and tarokka.ally.npc != ezmerelda and not guest:ezmerelda] Ezmerelda is outside. She's been waiting for days. -> ezm
 * [if guest:ezmerelda] She's right behind us, Doctor. -> ezm_here
 * Why did you leave Vallaki? -> why
 * We could use your arsenal, Doctor. -> arsenal
@@ -100,7 +100,7 @@ Rictavio: Stay in the light where you can. And when you can't, stay together.
 
 ~ shore
 Rictavio: She has made me promise never to key a ward to anyone again. I have agreed to nothing. She knows I have agreed to nothing.
-if not flag.ezmerelda_left_tower
+if (not flag.ezmerelda_left_tower or flag.ezmerelda_back_at_camp)
 Ezmerelda: He's agreed. He just doesn't know it yet.
 endif
 * [if tarokka.ally.npc == rictavio and not guest:rictavio] The cards still name you, Doctor. -> ally_again

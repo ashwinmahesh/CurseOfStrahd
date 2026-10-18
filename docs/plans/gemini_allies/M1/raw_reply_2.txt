@@ -1,0 +1,44 @@
+~ reunion_cat
+Narrator: Behind the shut door, the great cat presses its heavy head against the wood with a low, rumbling purr.
+Ezmerelda [dry]: Even the cat forgives you faster than it should, and you locked it in a box.
+
+~ shore_with_him
+Ezmerelda [angry]: I walked to Vallaki and back for an empty yard, so spare me any fresh rumors about that damned showman.
+
+~ road_svalich
+Narrator: Fog curls between the black pines along the Old Svalich Road, smelling of wet ash and old rot.
+Narrator: A woman in a long dark coat wipes a wooden mallet on her hem beside a staked, crumbling corpse.
+Ezmerelda [dry]: Try not to tread on him; he took an hour to track and five seconds to ruin my boots.
+Ezmerelda [wary]: The castle sends them down this road in ones and twos after dark, so listen for dragging feet before looking.
+Ezmerelda [quiet]: My left hand always aches before the mist thickens, though Rudolph used to say I only imagined it.
+
+~ road_berez
+Narrator: Low clouds hang over the drowned fields of Berez, where reed beds rot in black, knee-deep water.
+Narrator: Standing in the muck, Ezmerelda hacks a grinning scarecrow off its wooden post with a heavy hatchet.
+Ezmerelda [dry]: Do not mind me; I am only ruining the local ambush before it gets a chance to walk.
+Ezmerelda [wary]: Witches feed you before they hurt you, and anything posing in these fields is watching when you turn your back.
+Ezmerelda [quiet]: I have hunted alone for years, and I still check my straps three times so I will not die stupidly.
+
+~ road_manor
+Narrator: Below the ruined walls of Argynvostholt, pale lights drift past broken windows beneath a dark beacon tower.
+Narrator: Ezmerelda lies flat on her stomach in the wet heather, her spyglass steadied against a mossy stone.
+Ezmerelda [dry]: Keep your heads down unless you want the dead upstairs to think you brought them a tournament.
+Ezmerelda [wary]: Walk up as guests, not thieves, and never draw steel on a revenant you have no way to finish.
+Ezmerelda [quiet]: Rudolph taught me how to watch a house for three days, though he never mentioned how cold the heather gets.
+
+~ road_rudolph_reunited
+Ezmerelda [fond]: Quite well and completely unbearable, lecturing me on silver edges as if I were twelve again.
+
+~ road_rudolph_waiting
+* Have you gone in to speak with Rudolph yet?
+Ezmerelda [guarded]: He is inside the Blue Water Inn, and I am out here hunting so I do not have to knock.
+
+~ road_rudolph_seeking
+* Have you found any sign of your teacher yet?
+Ezmerelda [dry]: Only cold ashes and bad lies, which means the old fox is still very much alive.
+
+~ road_not_yet
+Ezmerelda [firm]: Not until I have looked Rudolph in the eye; find me later in the Blue Water Inn stable yard.
+
+~ road_bye
+Ezmerelda [dry]: Keep to the crown of the road, and do not answer anything that calls your name from the trees.

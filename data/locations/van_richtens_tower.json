@@ -493,7 +493,17 @@
       ],
       "dialogue": "van_richtens_tower/ezmerelda:start",
       "approach": 8,
-      "when": "not guest:ezmerelda and tarokka.ally.npc != ezmerelda and not flag.ezmerelda_left_tower"
+      "when": "not guest:ezmerelda and tarokka.ally.npc != ezmerelda and (not flag.ezmerelda_left_tower or flag.ezmerelda_back_at_camp or (flag.ezmerelda_reunited_in_vallaki and flag.rictavio_gone))"
+    },
+    {
+      "npc": "ezmerelda",
+      "cell": [
+        11,
+        23
+      ],
+      "dialogue": "allies/ezmerelda_hunt:shore_return",
+      "approach": 8,
+      "when": "flag.ezmerelda_left_tower and not flag.ezmerelda_back_at_camp and not flag.van_richten_reunited and not guest:ezmerelda and tarokka.ally.npc != ezmerelda and (flag.rictavio_gone or guest:rictavio or (flag.vallaki_backed == \"wachter\" and tarokka.ally.npc != rictavio))"
     },
     {
       "npc": "rictavio",
@@ -502,7 +512,7 @@
         25
       ],
       "dialogue": "van_richtens_tower/van_richten:shore",
-      "when": "flag.van_richten_reunited and not guest:rictavio and not flag.ezmerelda_left_tower"
+      "when": "flag.van_richten_reunited and not guest:rictavio and (not flag.ezmerelda_left_tower or flag.ezmerelda_back_at_camp or (flag.ezmerelda_reunited_in_vallaki and flag.rictavio_gone))"
     }
   ],
   "encounters": [

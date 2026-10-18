@@ -138,7 +138,7 @@ conversation has an exit). A conversation the bot walks up to itself (a talk, a 
 **Adding one.** Write the character's file (or add a visit to it), name its conversation, give it a limit, run
 `make validate`, and answer it in the phase tests that could reach it (compare with main first: a visit that moves
 where the party stands or what time it is can move a fight; close every conversation, since an unanswered letter
-leaks an open prompt into logcheck). The first ally files are Ireena's (I3), Izek's (Z1) and Ezmerelda's (M1).
+leaks an open prompt into logcheck). The first ally files are Ireena's (I3), Izek's (Z1) and Ezmerelda's (M1; `data/visits/ezmerelda.json`: three meetings on the road, words only. A travel leg cannot be told from another by a visit's trigger (`trigger.at` and `region` are empty on the road), so hers are `arrive` and `rest` visits at named open places, each once).
 
 ## His attention (F9, data/strahd/attention.json)
 

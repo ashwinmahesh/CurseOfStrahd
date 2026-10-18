@@ -1,0 +1,214 @@
+# Ezmerelda d'Avenir on the hunt (docs/voice/ezmerelda.md; Story Allies Presence Plan, package M1). In four parts:
+#   yard, reunion, gift, join: she waits in the Blue Water Inn's stable yard by Rictavio's wagon after the party told her
+#   where he is (ezmerelda_left_tower), and the reunion the tower would have played happens here. Her entry in
+#   data/locations/vallaki_blue_water_inn.json stands only while he is at the inn or the two are reunited.
+#   shore_return: if he had left the inn before she found him, she is back at her camp on Lake Baratok (the tower's
+#   entry in data/locations/van_richtens_tower.json), and the tower's own scenes go on from there.
+#   road_*: three meetings on the road while she is met and not travelling with the party (data/visits/ezmerelda.json).
+# Lines here were drafted by Gemini through the ai-bridge (docs/plans/gemini_allies/M1/) and edited. All unvoiced.
+
+# ---------------------------------------------------------------- The stable yard
+
+~ yard
+if flag.ezmerelda_reunited_in_vallaki
+-> yard_after
+endif
+if not flag.ezmerelda_yard_met
+-> yard_first
+endif
+Ezmerelda: Still here, still counting feathers through the glass. My good leg's gone to sleep and the wooden one's bored.
+-> yard_menu
+
+~ yard_first
+set ezmerelda_yard_met
+Narrator: The stable yard smells of wet straw, lamp oil, and something restless behind the crimson wagon's padlocked door. The horses in their stalls keep their ears pinned back.
+Narrator: Across from the steps, a woman in a long dark coat sits on a hay bale with a crossbow over her knee. By the dent in the straw, she has been waiting for hours.
+Ezmerelda: Quietly, and keep out of the lantern light. Look at that lock - one grey hair laid across the hasp, same as always.
+Ezmerelda [smile]: You weren't lying about the feathers. I looked through the taproom window and saw him standing on a chair, singing to a turnip.
+Ezmerelda: After twelve years, a woman needs a minute in the dark before she walks into a room with that hat.
+-> yard_menu
+
+~ yard_menu
+* We can bring him out here to you. -> reunion
+* Why haven't you gone inside? -> yard_why
+* Goodbye. -> yard_leave
+
+~ yard_why
+Ezmerelda [smile]: Because if I walk into that taproom, I'll shoot the hat first and ask questions when it stops twitching. The innkeepers seem nice; I'd hate to ruin their floor.
+Ezmerelda: Besides, out here he has to walk through one door to leave me behind again, and I'm sitting in front of it.
+-> yard_menu
+
+~ yard_leave
+Ezmerelda: Keep your voices down in the taproom. I'll be right here until the hay gives out.
+-> END
+
+# ---------------------------------------------------------------- The reunion
+
+~ reunion
+if flag.rictavio_unmasked
+-> reunion_unmasked
+endif
+-> reunion_costume
+
+~ reunion_unmasked
+Narrator: He steps into the yard with his scarlet collar turned up against the damp, then freezes with his hand still on the latch. The lantern catches the burn scars on his knuckles.
+Rictavio [weary]: Shut the door behind me. I told myself it would take you another week to find me.
+if flag.rictavio_secret_kept
+Rictavio: You gave me your word that name would not leave that room.
+Ezmerelda: Leave them be, Rudolph. I wrung it out of them. You taught me how.
+endif
+Rictavio: Don't point that at my knees, Ezmerelda. Come into the shadow where the windows can't see you.
+-> reunion_scene
+
+~ reunion_costume
+Narrator: He sweeps into the yard hat-first, his painted smile ready for an audience, and stops dead beside the lantern. The showman drains out of his shoulders in a single breath.
+Rictavio [smile]: Friends, I must warn you, the beasts of Rictavio's menagerie do not perform after dark, not even for...
+Rictavio [weary]: Ezmerelda. Put the bolt down before you wake the whole inn.
+-> reunion_scene
+
+~ reunion_scene
+Ezmerelda: Stop right by the steps, old man. Say something a vampire wouldn't say.
+Rictavio [sly]: A vampire would never wear a coat this colour. He has far too much vanity and no sense of theatre.
+Ezmerelda [angry]: Try again, Rudolph, and leave the showman in the taproom. Say something a vampire wouldn't say.
+Rictavio [weary]: I was wrong to leave without a word, and wrong to ward the tower against you. I was afraid the dark would take you too. I am sorry.
+Narrator: Behind the shut door, the great cat presses its heavy head against the wood with a low, rumbling purr.
+Ezmerelda: Even the cat forgives you faster than it should, and you locked it in a box.
+Ezmerelda: Twelve years, and you hid behind a stage moustache. Did you really think a lake would keep me out?
+Rictavio [weary]: No. I think I only hoped it would slow you down until the work was finished.
+Narrator: She steps up to him, hits him hard in the arm with her closed fist, and he stands still and takes it. Neither of them looks away.
+set van_richten_reunited
+set ezmerelda_reunited_in_vallaki
+set ezmerelda_trust += 2
+quest the_hunters_tower reunited
+-> reunion_end
+
+~ reunion_end
+Rictavio: You brought me out the quiet way instead of shouting across the taproom. Thank you for that much.
+Ezmerelda [smile]: Don't mind him; that's the closest he gets to weeping with joy.
+-> gift
+
+# What she gives the party once she trusts them (trust 2), the same gift as at the tower: given once, whichever way
+# the party earned it. The yard's reunion, the road meetings and joining all end here.
+~ gift
+if flag.ezmerelda_trust >= 2 and not flag.ezmerelda_gift_given
+set ezmerelda_gift_given
+Ezmerelda: Take these: silver-headed bolts, holy water and a draught that'll stitch a throat shut. You look like you walk into plenty of weather.
+give holy_water 2
+give potion_of_healing_greater 1
+give crossbow_bolt 10
+Ezmerelda [smile]: And the coat. The weave takes any shape you ask, ball gown or beggar's rags. Nobody ever looked twice at my leg in it.
+give glamoured_studded_leather__studded_leather_armor
+endif
+-> END
+
+# ---------------------------------------------------------------- After the reunion
+
+~ yard_after
+Ezmerelda: I'm keeping watch on the wagon until we decide our next move. Somebody has to make sure he doesn't slip out the back with his lute.
+Ezmerelda [smile]: My arm's still sore from hitting him, which means he's real enough. What do you need?
+-> yard_after_menu
+
+~ yard_after_menu
+* How is Rudolph holding up? -> yard_rudolph
+* [if flag.ezmerelda_trust >= 2 and not guest:ezmerelda] Hunt with us. -> join
+* Goodbye. -> yard_leave
+
+~ yard_rudolph
+Ezmerelda: He has a false moustache drying on his washstand and three books of terrible jokes by his bed. Twelve years of hunting him, and the hardest part is not laughing.
+Ezmerelda [smile]: He's thinner than he was, and his hands shake when he thinks I'm not looking. Don't tell him I noticed; he'll lock me out of another house.
+-> yard_after_menu
+
+# Joining the party, from the yard or from the road at night. As at the tower, the Hunter's Tower ends with her when the
+# party searched the tower and found it empty.
+~ join
+Ezmerelda: You're walking toward the castle sooner or later, and stopping's the one thing I'm bad at. Give me room for my crossbow and I'll walk with you.
+Ezmerelda [smile]: I go first through doors, and if the lord of this valley shows his teeth, save a piece for me.
+join ezmerelda
+if quest.the_hunters_tower == inside and not flag.rictavio_gone
+quest the_hunters_tower with_her
+endif
+-> gift
+
+# ---------------------------------------------------------------- If he had left the inn first
+
+# She walked to Vallaki and he was gone: home to his tower (rictavio_gone), or walking with the party. Either way the
+# tower's own scenes go on from here as if she had never left (ezmerelda_back_at_camp).
+~ shore_return
+set ezmerelda_back_at_camp
+if guest:rictavio
+Ezmerelda [angry]: I walked to Vallaki and back for an empty yard, so spare me any fresh rumours about that damned showman.
+-> van_richtens_tower/ezmerelda:start
+endif
+Narrator: The campfire by the water is down to grey ash, and the wagon ruts in the mud have filled with rain. She sits on a crate with her spyglass trained on the tower door.
+Ezmerelda [angry]: All the way to Vallaki to see a man in a feathered hat, and the bird had already flown. The innkeepers wouldn't say a word, which means he paid them well.
+Ezmerelda: So I walked every muddy mile back, because an old man who runs from an inn goes back to his bolt-hole. He's in that tower right now, pretending he can't hear me.
+Ezmerelda [smile]: Go in and tell him Ezmerelda is on the shore. Tell him if he doesn't come down in five minutes, I'm chopping the door into kindling.
+if flag.ezmerelda_wagon_robbed and not flag.ezmerelda_robbery_noticed
+-> van_richtens_tower/ezmerelda:robbed
+endif
+-> van_richtens_tower/ezmerelda:menu
+
+# ---------------------------------------------------------------- On the road
+
+~ road_svalich
+set ezmerelda_trust += 1
+Narrator: Fog curls between the black pines along the Old Svalich Road, smelling of wet ash and old rot.
+Narrator: A woman in a long dark coat wipes a wooden mallet on her hem beside a staked, crumbling corpse.
+Ezmerelda [smile]: Try not to tread on him; he took an hour to track and five seconds to ruin my boots.
+Ezmerelda: The castle sends them down this road in ones and twos after dark, so listen for dragging feet before looking.
+Ezmerelda: My left hand always aches before the mist thickens, though Rudolph used to say I only imagined it.
+-> road_menu
+
+~ road_berez
+set ezmerelda_trust += 1
+Narrator: Low clouds hang over the drowned fields of Berez, where reed beds rot in black, knee-deep water.
+Narrator: Standing in the muck, Ezmerelda hacks a grinning scarecrow off its wooden post with a heavy hatchet.
+Ezmerelda: Don't mind me. I'm ruining the local ambush before it gets the chance to walk.
+Ezmerelda: Witches feed you before they hurt you, and anything posing in these fields is watching when you turn your back.
+Ezmerelda: I've hunted alone for years, and I still check my straps three times so I won't die stupidly.
+-> road_menu
+
+~ road_manor
+set ezmerelda_trust += 1
+Narrator: Below the ruined walls of Argynvostholt, pale lights drift past broken windows beneath a dark beacon tower.
+Narrator: Ezmerelda lies flat on her stomach in the wet heather, her spyglass steadied against a mossy stone.
+Ezmerelda: Keep your heads down unless you want the dead upstairs to think you brought them a tournament.
+Ezmerelda: Walk up as guests, not thieves, and never draw steel on a revenant you can't finish.
+Ezmerelda: Rudolph taught me how to watch a house for three days, though he never mentioned how cold the heather gets.
+-> road_menu
+
+# What the party can say after any of the three. The answer about Rudolph depends on where the two of them stand: the
+# reunion has happened, she is waiting at the inn for the nerve to knock, or she is still looking.
+~ road_menu
+* [if flag.van_richten_reunited] How is Rudolph holding up? -> road_rudolph_reunited
+* [if not flag.van_richten_reunited and flag.ezmerelda_left_tower and not flag.ezmerelda_back_at_camp and not flag.rictavio_gone and not guest:rictavio and (flag.vallaki_backed != "wachter" or tarokka.ally.npc == rictavio)] Have you gone in to speak with Rudolph yet? -> road_rudolph_waiting
+* [if not flag.van_richten_reunited and not (flag.ezmerelda_left_tower and not flag.ezmerelda_back_at_camp and not flag.rictavio_gone and not guest:rictavio and (flag.vallaki_backed != "wachter" or tarokka.ally.npc == rictavio))] Have you found any sign of your teacher yet? -> road_rudolph_seeking
+* [if flag.ezmerelda_trust >= 2 and not guest:ezmerelda] Hunt with us. -> road_join
+* Goodbye. -> road_bye
+
+~ road_rudolph_reunited
+Ezmerelda: Quite well and completely unbearable. He's lecturing me on silver edges as if I were still an apprentice.
+-> road_menu
+
+~ road_rudolph_waiting
+Ezmerelda: He's inside the Blue Water Inn, and I'm out here hunting so I don't have to knock.
+-> road_menu
+
+~ road_rudolph_seeking
+Ezmerelda: Only cold ashes and bad lies, which means the old fox is still very much alive.
+-> road_menu
+
+# Waiting at the inn for the nerve to knock: she will not leave before she has looked him in the eye.
+~ road_join
+if flag.ezmerelda_left_tower and not flag.van_richten_reunited and not flag.ezmerelda_back_at_camp and not flag.rictavio_gone and not guest:rictavio and (flag.vallaki_backed != "wachter" or tarokka.ally.npc == rictavio)
+-> road_not_yet
+endif
+-> join
+
+~ road_not_yet
+Ezmerelda: Not until I've looked Rudolph in the eye. Find me in the Blue Water Inn's stable yard.
+-> road_menu
+
+~ road_bye
+Ezmerelda: Keep to the crown of the road, and don't answer anything that calls your name from the trees.
+-> gift

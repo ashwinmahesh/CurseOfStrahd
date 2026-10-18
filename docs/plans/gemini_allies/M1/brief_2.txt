@@ -1,0 +1,33 @@
+Thank you, that was a good draft: the "say something a vampire wouldn't say" turn works. Same game, same characters, same format and rules as before (plain text, `~ node_name`, one line per row, `Speaker [mood]: Text`, 1-2 sentences, under 22 words, spoken aloud, plain ASCII, no stage directions inside a speaker's line, no names beyond the brief). Now I need two small redrafts and the second scene set.
+
+## Part 1: two redrafts
+
+Redraft A, `reunion_scene` (only the cat's moment). In your reply, "Something heavy hits the inside of the wagon door with a low, wet snarl. Even your luggage has better manners than you do." was spoken by Ezmerelda but describes the world, and the next line ("Do not tap the woodwork") then makes no sense. Give me, under `~ reunion_cat`: Narrator x1 (the great cat in the wagon reacts, from behind the closed door, to Rictavio's apology; it does not attack, speak or escape; a dry, warm beat), then Ezmerelda x1 (one dry line to him about the cat or about the apology, no stage direction inside it). It comes straight after his "I am sorry" line and before her "Twelve years..." line.
+
+Redraft B, `shore_with_him`. She must NOT see him yet. She is bent over her bolts at her camp on the lake shore and speaks, without looking up, to the party: she walked to Vallaki and back for an empty stable yard (the innkeepers said the showman had gone), and she is in no mood for news about where he went. One line, angry, funny. After your line the game's existing scene continues with: "The woman by the wagon looks up from her bolts, sees who is walking behind you, and goes completely still." (so he is standing right behind the party, which she has not noticed).
+
+## Part 2: three meetings on the road
+
+Ezmerelda is a companion-in-waiting: the party has met her, but she is not travelling with them, and now and then they come across her in the middle of her own hunting. Each of the three scenes below is a short, self-contained conversation opener; after it the game shows a menu (is Rudolph well, hunt with us, goodbye), so do not end any scene on a question to the party. In every scene, Ezmerelda: (1) says something first on seeing them, in her dry voice; (2) gives her hunter's view of what lies ahead for them on this road or in this place, practical and a little funny, WITHOUT giving puzzle answers or telling them what to do in a quest; (3) lets slip one small true thing about herself that she has not said to anyone (a quiet trust moment, shown not stated: her hands, her fear of being useless, her teacher). Keep each of these three beats to one line. Narrator x2 sets the scene BEFORE she speaks (what the party sees: where she is, what she is doing, a concrete sense).
+
+road_svalich: the Old Svalich Road at night, fog between black pines, the party coming on a woman in a long dark coat standing over a body in the road. The body is a vampire spawn (one of the lord of the valley's former victims, now his servant) and she has just staked it: the stake still stands in its chest, the corpse is already collapsing into dust and rags, and she is wiping a mallet on her coat. Spawn walk the roads at night, sent from the castle; they sleep by day. Her view of the road: whoever is sending them is sending them down this road, in ones and twos, to watch for travellers; listen for the dragging feet before you see anything.
+
+road_berez: the drowned fields of Berez, the ruined village in the marsh south-west of Vallaki, in daylight under low cloud. The witch Baba Lysaga lives here in a hut that stands on a giant stump and walks when it likes, and scarecrows stand in the reeds around her stump; the scarecrows move when nobody is looking. Ezmerelda is in the reeds with a hatchet, chopping a scarecrow off its post. Her view: witches feed you before they hurt you; keep your hands full of something other than her food; and anything that stands in a field in a pose is not decoration here.
+
+road_manor: the road below Argynvostholt, the ruined manor of the dead Order of the Silver Dragon on a hill above the valley. The knights are revenants (the dead who rise to settle a score and do not stop until it is settled), led by Vladimir Horngaard; pale lights move in the manor's broken windows and the beacon tower on its roof is dark. She is lying on her stomach in the heather with her spyglass, watching the windows. Her view: they are not hunting travellers on the road; walk up as guests, not as thieves, and do not draw steel on a revenant you cannot finish, since it will get up again.
+
+road_svalich: Narrator x2, Ezmerelda x3
+road_berez: Narrator x2, Ezmerelda x3
+road_manor: Narrator x2, Ezmerelda x3
+
+## Part 3: the short answers after the three scenes
+
+The menu after any of the three scenes has these options. Write the option texts (what the party says, under 12 words, in the party's voice) and her answers:
+
+road_rudolph_reunited: Ezmerelda x1 (answer to "How is Rudolph holding up?" when the two of them are reconciled; he is well and unbearable; neutral about where he is)
+road_rudolph_waiting: Ezmerelda x1 (answer when she knows where he is - at the Blue Water Inn in Vallaki - but has not yet gone in to him; she is working up to it and goes out at night to hunt so that she does not think about it) with the option text `* ` ask whether she has spoken to him yet
+road_rudolph_seeking: Ezmerelda x1 (answer when she has not yet found him at all; still looking) with the option text `* ` ask whether she has found her teacher yet
+road_not_yet: Ezmerelda x1 (she is asked to hunt with the party but will not come before she has looked Rudolph in the eye; she is staying at the Blue Water Inn's stable yard in Vallaki, find her there)
+road_bye: Ezmerelda x1 (a hunter's parting on the road, dry; works day or night)
+
+That is 3 redraft lines, 15 scene lines, 5 answer lines and 2 option texts.

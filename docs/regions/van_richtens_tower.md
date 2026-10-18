@@ -124,6 +124,24 @@ Six maps (data/locations/). Map themes are existing ones; §13 lists the themes 
   night, `ezmerelda_left_tower`, unless he has already gone home to the tower, in which case she realises he's inside);
   keep his secret (`ezmerelda_secret_kept`); or lie (Deception 15, `ezmerelda_lied`). Give her the letter. Bring him
   to her (as a guest: the reunion plays at her fire).
+- **After she leaves for Vallaki** (Story Allies Presence Plan, package M1; narrative/allies/ezmerelda_hunt.dialogue):
+  she waits in the Blue Water Inn's stable yard by Rictavio's wagon (`vallaki_blue_water_inn`, an entry that stands
+  while `ezmerelda_left_tower` holds, he is still at the inn and she is not with the party) and speaks first when the
+  party comes into the yard. "We can bring him out here to you" plays the reunion there (his act if the party never
+  unmasked him, his own voice if they did; if they promised to keep his secret and told her anyway she takes the blame):
+  her test "Say something a vampire wouldn't say", his apology, the arm. It sets the tower's own `van_richten_reunited`
+  and `the_hunters_tower reunited`, trust +2 and her gift as the tower's reunion does, and the side flag
+  `ezmerelda_reunited_in_vallaki` (data/flags/allies_ezmerelda.json). Afterwards she stays in the yard as a short hub
+  and joins on "Hunt with us" (trust 2). If he has gone before she finds him (`rictavio_gone`, he walks with the party,
+  or the Baron's town sent him away) she is back at her camp (`allies/ezmerelda_hunt:shore_return`): the side flag
+  `ezmerelda_back_at_camp` tells the tower's own scenes she never left (Van Richten's "Ezmerelda is outside" and the
+  fire on the shore read it beside `ezmerelda_left_tower`), and Van Richten at home sends himself down to her as before.
+  After a reunion in the yard, if he later goes home, she goes with him and the pair sit by the fire on the shore.
+- **On the road** (ally visits, data/visits/ezmerelda.json, while she is met and not with the party; each once, words
+  only, trust +1 and a menu that offers "Hunt with us" at trust 2): the Old Svalich Road at night with a spawn she has
+  just staked (arriving at, or resting beside, the road's open places), the drowned fields of Berez cutting down the
+  witch's scarecrows (not once they are burned or Lysaga is dead), and below Argynvostholt watching the revenants (not
+  once the beacon burns). While she waits at the inn she will not leave before she has looked him in the eye.
 - **Trust** (`ezmerelda_trust`): +1 letter, +1 the truth, +2 reunion, +1 Kiril dead (he took her leg; his trophy
   wall has her boot), +1 the children home; -1 a failed lie, -1 Kiril on top, -2 her wagon robbed. At 2 she gives
   holy water, a potion and silver-headed bolts, and **"Hunt with us."** lets her join as a guest even when she isn't the
@@ -239,8 +257,9 @@ All 64 flags are registered, set and read. For later regions:
   from the farms below Krezk: Mirela, Codruta, Petru, Zamfir and Ioana; untreated, Mirela turns at the next moon), epilogue.
 - `emil_dead`, `emil_betrayed`, `kiril_defeated`, `den_broken`, `kiril_bribed`: epilogue, Strahd's remarks.
 - **`ezmerelda_trust`** (int), `ezmerelda_told_rictavio`, `ezmerelda_left_tower`, `ezmerelda_secret_kept`,
-  **`van_richten_reunited`**: the abbey's Ezmerelda, Vallaki (if she arrives looking for Rictavio), the castle, the
-  epilogue.
+  **`van_richten_reunited`**: the abbey's Ezmerelda, Vallaki (she arrives looking for Rictavio: M1), the castle, the
+  epilogue. Package M1 adds three side flags, `ezmerelda_yard_met`, `ezmerelda_reunited_in_vallaki` and
+  `ezmerelda_back_at_camp` (data/flags/allies_ezmerelda.json).
 - `bluto_fate`: Vallaki's Vistani camp and the epilogue.
 - Quests: `wolves_in_the_hills`, `the_stolen_children`, `the_hunters_tower`; `find_the_ally found`/`lost`.
 
@@ -336,7 +355,8 @@ the casebook says."; the lantern room's strongbox at (7, 33). By day, to skip th
   children from the Vadu and neighbouring farms below Krezk; an untreated bite means a wolf at the next moon). My
   travel file adds a road `tower_to_krezk` (4 h) to their place `krezk`.
 - **Vallaki (lead):** `bluto_fate = "vistani"` could show in the camp (Luvash's people dealt with him);
-  `ezmerelda_left_tower` could bring Ezmerelda to the Blue Water Inn looking for Rictavio. No Vallaki file was changed.
+  `ezmerelda_left_tower` could bring Ezmerelda to the Blue Water Inn looking for Rictavio (done by package M1: one NPC
+  entry in `vallaki_blue_water_inn`, see §4.2).
   data/npcs/arabelle.json already has `guest: true` and a `guest_build` (commoner): no change needed.
 - **Tarokka outcomes:** the Broken One's ally (`mordenkainen`) has `region: van_richtens_tower`, but Mount Baratok is
   region 9b's (`mount_baratok`); the lead may want to change that region. The Stars master hint ("on Lake Baratok")
@@ -364,7 +384,8 @@ the casebook says."; the lantern room's strongbox at (7, 33). By day, to skip th
 - Locations: data/locations/{lake_zarovich, lake_zarovich_trail, van_richtens_tower, van_richtens_tower_interior,
   werewolf_den, werewolf_den_caves}.json
 - Dialogue: narrative/werewolf_den/{zuleika, emil, kiril, aftermath, children, shrine}.dialogue;
-  narrative/van_richtens_tower/{ezmerelda, tower, van_richten}.dialogue;
+  narrative/van_richtens_tower/{ezmerelda, tower, van_richten}.dialogue; narrative/allies/ezmerelda_hunt.dialogue (M1);
+  data/visits/ezmerelda.json (M1);
   narrative/lake_zarovich/{landing, arabelle_ally, events}.dialogue;
   narrative/narrator/{lake_zarovich, van_richtens_tower, werewolf_den}.dialogue;
   narrative/banter/{lake_zarovich, van_richtens_tower, werewolf_den}.dialogue
