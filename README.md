@@ -112,10 +112,10 @@ git config lfs.fetchexclude "art/generated/**"
 Start the game from the repo root:
 
 ```bash
-make run
+make run-main
 ```
 
-The first run imports every asset, which takes a while. After that `make run` only re-imports when files have
+The first run imports every asset, which takes a while. After that `make run-main` only re-imports when files have
 changed since the last import, so a merge that adds scripts or images doesn't stop the game at a parse error.
 
 `make play` runs a stable copy of the game instead (`~/Documents/CurseOfStrahdGame-play`), which only moves forward
@@ -135,7 +135,8 @@ Godot). All three must pass with a clean log.
 
 | Command | What it does |
 |---|---|
-| `make run` | Starts the game at the title screen. |
+| `make run-main` | Starts the game at the title screen, from this checkout. |
+| `make run` | The owner's edge build: `main` plus the lane branches handed off but not merged yet (`tools/edge/edge.py`), on a copy of the saves and settings. Needs the SSD lane image; `make run-main` does not. |
 | `make play` | Updates the stable play copy to the newest `main` that passed `make ci`, then starts it. |
 | `make check` | The quick check while working: lint, a compile of every script, and the tests and data checks that cover what changed. |
 | `make arena` | Opens the combat test arena: four level 3 pregens against wolves and zombies. |
