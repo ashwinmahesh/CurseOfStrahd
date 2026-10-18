@@ -12745,12 +12745,33 @@
   "recipe": "3a41b7b8c7",
   "text": "Somebody has been in my wagon. Don't. Don't say anything. I know who's been up and down this shore this week, and it's a very short list."
  },
+ "ezmerelda/0138d08b91221164": {
+  "chars": 86,
+  "direction": "[resolute, terse, hard]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Not until I've looked Rudolph in the eye. Find me in the Blue Water Inn's stable yard."
+ },
+ "ezmerelda/02e0b86c95503481": {
+  "chars": 162,
+  "direction": "[cold, disgusted, controlled anger]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Morgantha and her two daughters keep Old Bonegrinder, the windmill between Barovia and Vallaki. They cage the children whose parents can't pay for dream pastries."
+ },
  "ezmerelda/034d813733368223": {
   "chars": 91,
   "direction": "[relieved, gruff]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "And the children are going home. Good. That's a better day than this valley usually allows."
+ },
+ "ezmerelda/0464b299d42fff2a": {
+  "chars": 90,
+  "direction": "[crisp, approving, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The Eye Below is struck out. Take the scroll against aberrations and the rest; it's yours."
  },
  "ezmerelda/0545627be7ab614b": {
   "chars": 102,
@@ -12766,6 +12787,20 @@
   "recipe": "3a41b7b8c7",
   "text": "Four. The fourth is his handwriting."
  },
+ "ezmerelda/05ff8c9fbde1adf0": {
+  "chars": 105,
+  "direction": "[exasperated, fond, wry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Quite well and completely unbearable. He's lecturing me on silver edges as if I were still an apprentice."
+ },
+ "ezmerelda/061f5ffacf5d630d": {
+  "chars": 119,
+  "direction": "[matter-of-fact, dry, knowing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I pay in what a hunter has: silver, holy water, remedies. Rudolph taught me to count the teeth before I count the coin."
+ },
  "ezmerelda/078ec7a045f3c2dd": {
   "chars": 37,
   "direction": "[dry, knowing]",
@@ -12779,6 +12814,20 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Rudolph? A showman? In feathers?"
+ },
+ "ezmerelda/07c6421aa6421a9f": {
+  "chars": 82,
+  "direction": "[sheepish, dry, guarded]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "He's inside the Blue Water Inn, and I'm out here hunting so I don't have to knock."
+ },
+ "ezmerelda/08a90c932691e984": {
+  "chars": 115,
+  "direction": "[low, tense, intent]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Quietly, and keep out of the lantern light. Look at that lock - one grey hair laid across the hasp, same as always."
  },
  "ezmerelda/0928fe3d145c3574": {
   "chars": 81,
@@ -12815,12 +12864,33 @@
   "recipe": "3a41b7b8c7",
   "text": "I've been taking them back two at a time ever since. Lately they've been carrying children up there, from the farms under Krezk. I'd go in after them, if Rudolph would let me into his armoury."
  },
+ "ezmerelda/0c842842a20ea2fb": {
+  "chars": 71,
+  "direction": "[hard, controlled, testing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Stop right by the steps, old man. Say something a vampire wouldn't say."
+ },
+ "ezmerelda/0caa4e8045c0668c": {
+  "chars": 101,
+  "direction": "[pensive, rueful, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "It's easier to track a werewolf in the dark than to find out whether your teacher wanted to be found."
+ },
  "ezmerelda/0f1d986cc90c285b": {
   "chars": 187,
   "direction": "[grim, disgusted]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "The abbey. The locals call the man in charge an angel. Angels don't stitch, and somebody up there stitches a great deal. I've seen a sack carried in at night that was shaped like a woman."
+ },
+ "ezmerelda/10ab4ad4351b163d": {
+  "chars": 82,
+  "direction": "[brisk, gallows humour, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Silver first, questions never, and don't die between here and the next crossroads."
  },
  "ezmerelda/12fb2b58cfcfa3db": {
   "chars": 79,
@@ -12843,6 +12913,20 @@
   "recipe": "3a41b7b8c7",
   "text": "In a taproom, pretending to be loud. I trained under that man for six years and never once heard him raise his voice. Did he do the lute? Please say he did the lute."
  },
+ "ezmerelda/1589b4adf27fbf73": {
+  "chars": 103,
+  "direction": "[sardonic, disgusted, wry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Druids plant one black stick and the whole row tries to drink you. I can smell the sour wine from here."
+ },
+ "ezmerelda/15aa2be698bb57d0": {
+  "chars": 132,
+  "direction": "[guarded, measured, respectful]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "They're my people when the wagons will have me. Guiding travellers through a valley that eats them is a tightrope, and they walk it."
+ },
  "ezmerelda/173f4db7f71eec28": {
   "chars": 91,
   "direction": "[incredulous, hard]",
@@ -12857,12 +12941,47 @@
   "recipe": "3a41b7b8c7",
   "text": "\"If you are reading this, I am dead, or you are more stubborn than I hoped.\" I am more stubborn. I am always more stubborn. He knows that. He wrote it anyway."
  },
+ "ezmerelda/19362fa4a051d91f": {
+  "chars": 105,
+  "direction": "[somber, bitter, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Every quarry he ran down became one of his hounds. My people scratched their names on cairns by the road."
+ },
+ "ezmerelda/194cb4dab2c23f52": {
+  "chars": 119,
+  "direction": "[wary, grim, warning]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Beyond it is the Amber Temple, where old powers sell gifts for a price. Take one, and I'll be counting my silver twice."
+ },
+ "ezmerelda/1adf08ce7f551403": {
+  "chars": 107,
+  "direction": "[stubborn, rueful, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Besides, out here he has to walk through one door to leave me behind again, and I'm sitting in front of it."
+ },
  "ezmerelda/1b1cb32a7e3e4156": {
   "chars": 49,
   "direction": "[sharp, testing]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Stop there. Say something a vampire wouldn't say."
+ },
+ "ezmerelda/1b4e6df0dca6d121": {
+  "chars": 119,
+  "direction": "[dark humour, brisk, warning]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "She casts like a wizard and fusses over her boy. Burn the straw men early, refuse supper, and tell me when she's quiet."
+ },
+ "ezmerelda/1c4a38ca53a85cdf": {
+  "chars": 117,
+  "direction": "[offhand, wry, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Take this spare light crossbow from the wagon. I've stopped using it, and it shoots straighter than most people talk."
  },
  "ezmerelda/1d5951aad77f0ca6": {
   "chars": 124,
@@ -12871,12 +12990,47 @@
   "recipe": "3a41b7b8c7",
   "text": "Feathers. A hat full of feathers. Forty years of monographs, and he hid in a hat. I'll be laughing about that when I'm dead."
  },
+ "ezmerelda/23ba04f61f612435": {
+  "chars": 90,
+  "direction": "[brisk, satisfied, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The old witch is struck from the page. Take the alchemist's fire and the rest; it's yours."
+ },
+ "ezmerelda/248c805691865df4": {
+  "chars": 104,
+  "direction": "[low, suspicious, darkly wry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "And watch the abbey hardest. Whatever's playing at holiness up there has a butcher's hand with a needle."
+ },
+ "ezmerelda/2583704a340cf688": {
+  "chars": 76,
+  "direction": "[dry, exasperated, fond]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Even the cat forgives you faster than it should, and you locked it in a box."
+ },
+ "ezmerelda/259b729899aff669": {
+  "chars": 161,
+  "direction": "[determined, dry, stubborn]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "So I walked every muddy mile back, because an old man who runs from an inn goes back to his bolt-hole. He's in that tower right now, pretending he can't hear me."
+ },
  "ezmerelda/25f5c13fb5193318": {
   "chars": 66,
   "direction": "[dry, weary]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Back again. Has the tower spoken to you yet? It won't speak to me."
+ },
+ "ezmerelda/2705fd5e0d8af09b": {
+  "chars": 85,
+  "direction": "[wry, impressed, dry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The wardens settled for a lullaby, and you lot went down there and finished the song."
  },
  "ezmerelda/2730342751aa7168": {
   "chars": 72,
@@ -12892,12 +13046,47 @@
   "recipe": "3a41b7b8c7",
   "text": "He's in there. He came home. He's been in there the whole time, listening to me shout."
  },
+ "ezmerelda/28c064e9089ec25e": {
+  "chars": 119,
+  "direction": "[matter-of-fact, wary, descriptive]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The pack's eldest: white with age, one ear, big as a cart horse. At night he comes over Krezk's wall for the goat pens."
+ },
+ "ezmerelda/28ef4334a54e14bc": {
+  "chars": 89,
+  "direction": "[sly, amused, dry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Take this dagger from my wagon. It's got a very good name for ruining a mage's afternoon."
+ },
+ "ezmerelda/2c665208aafbea50": {
+  "chars": 132,
+  "direction": "[commanding, menacing, wry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Go in and tell him Ezmerelda is on the shore. Tell him if he doesn't come down in five minutes, I'm chopping the door into kindling."
+ },
+ "ezmerelda/2d09877651edfb4b": {
+  "chars": 98,
+  "direction": "[wary, uneasy, rueful]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "My left hand always aches before the mist thickens, though Rudolph used to say I only imagined it."
+ },
  "ezmerelda/2f6b2d7e9e7b70e3": {
   "chars": 94,
   "direction": "[dry, brisk]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "A vampire would have said something about my eyes. Fine. Sit down before you fall in the lake."
+ },
+ "ezmerelda/2fb0856cc06fb41d": {
+  "chars": 66,
+  "direction": "[cold, steady, unrepentant]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Leave them be, Rudolph. I wrung it out of them. You taught me how."
  },
  "ezmerelda/30db28a2aebd4cc9": {
   "chars": 81,
@@ -12927,12 +13116,33 @@
   "recipe": "3a41b7b8c7",
   "text": "Where?"
  },
+ "ezmerelda/38225d80461779c2": {
+  "chars": 140,
+  "direction": "[grim, low, foreboding]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Toader, the count's Huntsman, hunts the Svalich woods on cold nights. A horn sounds; by morning someone lies run to death under the gallows."
+ },
  "ezmerelda/382d7df69e575f0c": {
   "chars": 37,
   "direction": "[dry, sardonic]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Says someone who still has both feet."
+ },
+ "ezmerelda/3851d55edc1465d5": {
+  "chars": 84,
+  "direction": "[deadpan, dark humour, offhand]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Try not to tread on him; he took an hour to track and five seconds to ruin my boots."
+ },
+ "ezmerelda/385c47d369203fed": {
+  "chars": 143,
+  "direction": "[blunt, resolute, wry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "You're walking toward the castle sooner or later, and stopping's the one thing I'm bad at. Give me room for my crossbow and I'll walk with you."
  },
  "ezmerelda/38a1dbb8e528e984": {
   "chars": 96,
@@ -12955,6 +13165,20 @@
   "recipe": "3a41b7b8c7",
   "text": "Rictavio. Rudolph is calling himself Rictavio. In a taproom."
  },
+ "ezmerelda/3a902e671c5b0deb": {
+  "chars": 121,
+  "direction": "[wry, uneasy, grim]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Baba Lysaga keeps house in drowned Berez, in a hut on a walking stump. Scarecrows guard it, and she keeps swarms in jars."
+ },
+ "ezmerelda/3b3aa5004e1feb86": {
+  "chars": 112,
+  "direction": "[disgusted, dry, tight]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "That green tinker's wagon at the crossroads is a mimic the size of a wagon, with old Iosif on the board as bait."
+ },
  "ezmerelda/3c03031cc4eb046f": {
   "chars": 15,
   "direction": "[steady, wry, emotional]",
@@ -12968,6 +13192,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Ha. All right. A vampire would have said something charming. That was the least charming thing I've heard all month."
+ },
+ "ezmerelda/3e6e878b44a4c713": {
+  "chars": 118,
+  "direction": "[ominous, dry, steady]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Sealed in amber under the Amber Temple's vaults lies the Eye Below, a floating orb with a mouth like a sack of knives."
  },
  "ezmerelda/3e7ed5cfd49794f1": {
   "chars": 112,
@@ -12990,6 +13221,27 @@
   "recipe": "3a41b7b8c7",
   "text": "Then you should have stayed alive near me, so you could keep an eye on me. That was always the deal."
  },
+ "ezmerelda/4028d12c2f9f9831": {
+  "chars": 78,
+  "direction": "[casual, cold, smirking]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Don't mind me. I'm ruining the local ambush before it gets the chance to walk."
+ },
+ "ezmerelda/4092885bc5accc66": {
+  "chars": 89,
+  "direction": "[reflective, wry, satisfied]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Eight names down, and the pages are starting to look more like crossings-out than a list."
+ },
+ "ezmerelda/435a8d27d062ead5": {
+  "chars": 93,
+  "direction": "[low, warning, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Keep to the crown of the road, and don't answer anything that calls your name from the trees."
+ },
  "ezmerelda/45588df5ad8d1c63": {
   "chars": 83,
   "direction": "[brisk, wry]",
@@ -12997,12 +13249,33 @@
   "recipe": "3a41b7b8c7",
   "text": "Go carefully. If anything in these hills hums, growls or compliments you, shoot it."
  },
+ "ezmerelda/46f807bde5a07510": {
+  "chars": 110,
+  "direction": "[curt, instructing, steady]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Put silver in him first, keep your back off that drop, and come tell me when the rock only holds tokens again."
+ },
+ "ezmerelda/473e3b922d77dce2": {
+  "chars": 104,
+  "direction": "[wry, relaxed, wistful]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The book is closed, and for once I'm not even in a hurry, though Rudolph will think I've caught a fever."
+ },
  "ezmerelda/4795d83d09ae3cb0": {
   "chars": 40,
   "direction": "[firm, tender]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "You'd have done the same. You taught me."
+ },
+ "ezmerelda/4813472526738702": {
+  "chars": 123,
+  "direction": "[measured, uneasy, dry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Under Rudolph's tower on Lake Baratok sits Khazan, an archmage who made himself a lich with his own name cut over the door."
  },
  "ezmerelda/4904794cce3aad39": {
   "chars": 169,
@@ -13018,12 +13291,33 @@
   "recipe": "3a41b7b8c7",
   "text": "Keep what you took. You'll need it. And then stay out of my way."
  },
+ "ezmerelda/4e80df562a1f5889": {
+  "chars": 122,
+  "direction": "[dry, knowing, wry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "But remember Rudolph's first rule for the count's house: know which window you're jumping out of before you open the door."
+ },
  "ezmerelda/508bc9c788225f28": {
   "chars": 46,
   "direction": "[dry, rueful]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "He was always thorough about the wrong things."
+ },
+ "ezmerelda/50a7c2c633180970": {
+  "chars": 110,
+  "direction": "[flat, candid, tired]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Nothing in reach that's worth your boots, and the rest would eat you whole. Come back once the valley's moved."
+ },
+ "ezmerelda/516ae33856a4f4ed": {
+  "chars": 107,
+  "direction": "[wry, weary, reminiscent]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Rudolph taught me how to watch a house for three days, though he never mentioned how cold the heather gets."
  },
  "ezmerelda/516ff1a8f3ec4c8f": {
   "chars": 83,
@@ -13032,12 +13326,54 @@
   "recipe": "3a41b7b8c7",
   "text": "A pack that leaves children alone. I'll believe it when I've watched it for a year."
  },
+ "ezmerelda/51ff30c8cd984834": {
+  "chars": 74,
+  "direction": "[dry, rueful, amused]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "We're speaking, mostly in arguments. That's how Rudolph says he missed me."
+ },
  "ezmerelda/526f22de71998d0f": {
   "chars": 61,
   "direction": "[sharp, testing]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Say something a vampire wouldn't. Good. You're all still you."
+ },
+ "ezmerelda/5560240460e5c315": {
+  "chars": 118,
+  "direction": "[quiet, wry, proud]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "And the coat. The weave takes any shape you ask, ball gown or beggar's rags. Nobody ever looked twice at my leg in it."
+ },
+ "ezmerelda/5645c0793c6c961a": {
+  "chars": 96,
+  "direction": "[quiet, satisfied, weary]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "That name has been in this book longer than any other, and the ink was wearing through the page."
+ },
+ "ezmerelda/576190177a111a31": {
+  "chars": 105,
+  "direction": "[proud, quiet, steady]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Thirteen names struck, and there isn't another killer in this valley I trust enough to ink onto the page."
+ },
+ "ezmerelda/581a3f2c5972f4e8": {
+  "chars": 110,
+  "direction": "[firm, curt, instructing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Don't touch its pots, and stay clear of the tailboard. Burn it from range, and let Iosif go home to Tser Pool."
+ },
+ "ezmerelda/58f35097a8f203ac": {
+  "chars": 109,
+  "direction": "[brisk, gruff, almost warm]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "His name comes out of the book. Take the silver-headed bolts and a healing draught, and stitch yourselves up."
  },
  "ezmerelda/59055ddbddfab085": {
   "chars": 111,
@@ -13046,12 +13382,33 @@
   "recipe": "3a41b7b8c7",
   "text": "Peace. From him. I've heard monsters plan a great many things. That's the first time one's planned a honeymoon."
  },
+ "ezmerelda/591cb59a719451ba": {
+  "chars": 129,
+  "direction": "[dry, crisp, satisfied]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "One less courteous corpse under the tower. Take the scroll against the undead, the draught against grave-cold and the holy water."
+ },
  "ezmerelda/5a849a10edf551c9": {
   "chars": 107,
   "direction": "[sharp, thinking]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Wait. If he'd left Vallaki, where would he go to lick his wounds? Where would he go that I couldn't follow?"
+ },
+ "ezmerelda/5bf190216f805984": {
+  "chars": 110,
+  "direction": "[warning, curt, practical]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "His howl empties your nerve and his bite puts you on your back. Thin the old wolves first, and bring me proof."
+ },
+ "ezmerelda/5c7dc13dcec40b51": {
+  "chars": 104,
+  "direction": "[tactical, firm, hard]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Don't take on all three hags at once. Hold a holy symbol up in the sun if you can, and break that coven."
  },
  "ezmerelda/5cc24579eb0db2fd": {
   "chars": 78,
@@ -13066,6 +13423,27 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Now go away. I have a wagon to hitch and an old man to shout at."
+ },
+ "ezmerelda/6050ef9e4ccd9053": {
+  "chars": 107,
+  "direction": "[brisk, matter-of-fact, approving]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The Vine Mother is crossed out. Take the scroll against plants, the alchemist's fire and a healing draught."
+ },
+ "ezmerelda/6273cdf8f746134f": {
+  "chars": 139,
+  "direction": "[tender, low, worried]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "He's thinner than he was, and his hands shake when he thinks I'm not looking. Don't tell him I noticed; he'll lock me out of another house."
+ },
+ "ezmerelda/6381aee89d67b8f5": {
+  "chars": 107,
+  "direction": "[blunt, businesslike, unimpressed]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Every killer in this valley I trust enough to ink, with a price beside each. I pay for proof, not promises."
  },
  "ezmerelda/63e56d28ba5312f0": {
   "chars": 93,
@@ -13088,6 +13466,20 @@
   "recipe": "3a41b7b8c7",
   "text": "Nobody with fangs has ever asked to buy silver. Not twice, anyway. Sit."
  },
+ "ezmerelda/657378244aee4118": {
+  "chars": 129,
+  "direction": "[serious, tactical, tense]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The wardens could only sing it to sleep, and its ten small eyes will unmake you. Blind the stalks, and bring me proof it's still."
+ },
+ "ezmerelda/66628990038e2058": {
+  "chars": 100,
+  "direction": "[urgent, clipped, instructing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Don't let the druids pin you against their stacked skulls. Aim for the split wood and bring it down."
+ },
  "ezmerelda/686aacd960666b3b": {
   "chars": 87,
   "direction": "[firm, hurt, fierce]",
@@ -13109,12 +13501,54 @@
   "recipe": "3a41b7b8c7",
   "text": "She would. Tell her I ate a whole sausage last week. Don't tell her it was the only thing I ate. Fine. Fine, you've got honest faces, and she sent you."
  },
+ "ezmerelda/6bab2d46dd552180": {
+  "chars": 79,
+  "direction": "[brisk, matter-of-fact, practical]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Nothing's owed yet, so these are the hunts I'd take in your boots. Pick a name."
+ },
+ "ezmerelda/6db52c2df1fdeaf7": {
+  "chars": 126,
+  "direction": "[brisk, tactical, grim]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Wolves on the hill roads, a witch in the drowned village, dead knights in their manor. Pick your fights before you draw steel."
+ },
  "ezmerelda/6e1c969898073421": {
   "chars": 174,
   "direction": "[wry, resigned, proud]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "The cards said I'd find friends on this road. I told Eva the cards had never met me. Fine. I'll come. I go first through doors, I take the silver, and nobody calls me \"girl\"."
+ },
+ "ezmerelda/6e3c7b386e0d81dd": {
+  "chars": 109,
+  "direction": "[low, alert, instructing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The castle sends them down this road in ones and twos after dark, so listen for dragging feet before looking."
+ },
+ "ezmerelda/6e405617ab366b6b": {
+  "chars": 134,
+  "direction": "[grim, practical, hard]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "She's starved on grave-salt, and the count's cart brings a cage every new moon. Mind the chain's reach, and bring me proof she's cold."
+ },
+ "ezmerelda/7131d05dc1047a18": {
+  "chars": 124,
+  "direction": "[flat, wry, remembering]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The hills above Lake Zarovich, back when I was young and quick and stupid. Kiril took it laughing, with his black jaws wide."
+ },
+ "ezmerelda/71e8af39807207e6": {
+  "chars": 154,
+  "direction": "[sour, sardonic, tired]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "All the way to Vallaki to see a man in a feathered hat, and the bird had already flown. The innkeepers wouldn't say a word, which means he paid them well."
  },
  "ezmerelda/75ca530b83bcee6e": {
   "chars": 125,
@@ -13130,12 +13564,40 @@
   "recipe": "3a41b7b8c7",
   "text": "He's making tea. He's terrible at tea. Don't tell him; he thinks it's the only thing he's good at besides killing."
  },
+ "ezmerelda/783ebeeb1a2e8e24": {
+  "chars": 117,
+  "direction": "[revolted, quiet, hard]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "They dug the mountain folk out of their mounds to stack skulls for a walking tree. Even for this valley, that's ugly."
+ },
+ "ezmerelda/79a04459c47f8368": {
+  "chars": 111,
+  "direction": "[matter-of-fact, grudging, dry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Rudolph built this brace, and it kicks harder than the old one. With the wolf dead, I mostly just feel lighter."
+ },
  "ezmerelda/7ccbc137ce55c437": {
   "chars": 96,
   "direction": "[wry, resigned]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Eva's cards, I suppose. They've been dealing me into other people's games since I was six. Fine."
+ },
+ "ezmerelda/7f28e5c4a8c41491": {
+  "chars": 78,
+  "direction": "[dry, sardonic, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Still breathing, all of you. What do you need, before my luck rubs off on you?"
+ },
+ "ezmerelda/8123631812385de4": {
+  "chars": 94,
+  "direction": "[sardonic, curt, warning]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Keep your heads down unless you want the dead upstairs to think you brought them a tournament."
  },
  "ezmerelda/824b39ba4a3920e6": {
   "chars": 126,
@@ -13144,12 +13606,33 @@
   "recipe": "3a41b7b8c7",
   "text": "...Fine. Keep his secret. You're the first people in this valley who've kept anything. I'll keep looking. I'm good at looking."
  },
+ "ezmerelda/82927d4240ecc447": {
+  "chars": 125,
+  "direction": "[crisp, satisfied, businesslike]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Toader's hunt is struck from the book. Take the scroll against the undead, the draught against grave-cold and the holy water."
+ },
+ "ezmerelda/8329d61a5fe6b1ca": {
+  "chars": 99,
+  "direction": "[stung, tight, resentful]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Twelve years I've followed him, right up to a door he keyed to my name alone, and still no Rudolph."
+ },
  "ezmerelda/864273b8e9c33ebf": {
   "chars": 74,
   "direction": "[brisk, wry]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "I've lost bits of me to worse than that. Keep your bits. You'll miss them."
+ },
+ "ezmerelda/86c4f5d04bce8b5e": {
+  "chars": 63,
+  "direction": "[dry, softened, amused]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Don't mind him; that's the closest he gets to weeping with joy."
  },
  "ezmerelda/892ea3188bdc2292": {
   "chars": 39,
@@ -13158,12 +13641,61 @@
   "recipe": "3a41b7b8c7",
   "text": "Finally. Silver first, questions never."
  },
+ "ezmerelda/8d271938761a0859": {
+  "chars": 85,
+  "direction": "[wry, gruff, tired]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "My arm's still sore from hitting him, which means he's real enough. What do you need?"
+ },
+ "ezmerelda/8df7243bf95bbb3b": {
+  "chars": 81,
+  "direction": "[curt, dry, watchful]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Keep your voices down in the taproom. I'll be right here until the hay gives out."
+ },
+ "ezmerelda/8ee66b2f1cbbc85b": {
+  "chars": 121,
+  "direction": "[bitter, contemptuous, grim]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "She talked sugar the whole time she was locking children in cages. A hag alone is a coward, and a dead coven stays quiet."
+ },
+ "ezmerelda/90825bca8cbaea10": {
+  "chars": 93,
+  "direction": "[candid, dry, rueful]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I've hunted alone for years, and I still check my straps three times so I won't die stupidly."
+ },
+ "ezmerelda/93812ebcca01a2fc": {
+  "chars": 109,
+  "direction": "[crisp, businesslike, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The fowlers are struck from the page. Take the holy water and the silver-headed bolts, and a healing draught."
+ },
  "ezmerelda/94341c516677c5de": {
   "chars": 68,
   "direction": "[dry, deadpan]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "I'm going to pretend I didn't watch that. I'm a very good pretender."
+ },
+ "ezmerelda/9532cf8be0bdd51d": {
+  "chars": 80,
+  "direction": "[quiet, brisk, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Her name is struck. Take the fire draughts and the bolts with it; they're yours."
+ },
+ "ezmerelda/9728774021ebc26d": {
+  "chars": 111,
+  "direction": "[warning, grim, knowing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Witches feed you before they hurt you, and anything posing in these fields is watching when you turn your back."
  },
  "ezmerelda/9803f3e1e122c7a6": {
   "chars": 114,
@@ -13186,12 +13718,26 @@
   "recipe": "3a41b7b8c7",
   "text": "Two of Kiril's. Tell me I chose badly."
  },
+ "ezmerelda/9d17a7a58a28ffc9": {
+  "chars": 79,
+  "direction": "[wry, tense, relieved]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Only cold ashes and bad lies, which means the old fox is still very much alive."
+ },
  "ezmerelda/9da1397c7c7d181d": {
   "chars": 45,
   "direction": "[exasperated, fond]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Remind me to kill him. After I've hugged him."
+ },
+ "ezmerelda/9daab2c968109992": {
+  "chars": 104,
+  "direction": "[irritated, flat, weary]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I walked to Vallaki and back for an empty yard, so spare me any fresh rumours about that damned showman."
  },
  "ezmerelda/9e10bd1e2297dd18": {
   "chars": 104,
@@ -13214,12 +13760,33 @@
   "recipe": "3a41b7b8c7",
   "text": "I could go in on my own. I've decided I'm not that brave. Which, for me, is new."
  },
+ "ezmerelda/a070f41ef849f20b": {
+  "chars": 117,
+  "direction": "[weary, wry, grim]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I've cut her scarecrows down on that marsh before, and there were always three more watching before my blade was dry."
+ },
+ "ezmerelda/a149066d966cd922": {
+  "chars": 127,
+  "direction": "[grave, hushed, disturbed]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Sarkhaza, a red dragon, chained by the neck under Mount Ghakis with her wings riveted shut. She lies on a hoard of gilded lead."
+ },
  "ezmerelda/a18b16078cbdc951": {
   "chars": 119,
   "direction": "[wry, rueful]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "My people's wagons. They'll pretend not to know me. I left young, and they've never forgiven me for coming back taller."
+ },
+ "ezmerelda/a451d28d2e6bafa5": {
+  "chars": 111,
+  "direction": "[sardonic, pointed, wry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "He taught Kiril everything he knows and answered to nobody after. Sounds like another old teacher I could name."
  },
  "ezmerelda/a5f5ea5d5dedfbc0": {
   "chars": 55,
@@ -13256,12 +13823,47 @@
   "recipe": "3a41b7b8c7",
   "text": "Ezmerelda d'Avenir. Vistani, when the wagons will have me. I hunt the things that hunt people. Right now I'm hunting one stubborn old man who taught me how, and who has locked me out of his house."
  },
+ "ezmerelda/acb34bcddbd6fe91": {
+  "chars": 131,
+  "direction": "[grim, incredulous, dry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "A cutting of the old Gulthias tree grew into that vineyard's Seventh Row, tall as two houses. It drags you in and spits black wine."
+ },
  "ezmerelda/b11d4fe5ad05701a": {
   "chars": 71,
   "direction": "[dry, amused]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Save them for the walk. It's a long walk, and he wrote very long books."
+ },
+ "ezmerelda/b1d073ef2338b2e0": {
+  "chars": 127,
+  "direction": "[incredulous, deadpan, amused]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "You weren't lying about the feathers. I looked through the taproom window and saw him standing on a chair, singing to a turnip."
+ },
+ "ezmerelda/b212c96caa4fac6f": {
+  "chars": 117,
+  "direction": "[wary, dry, distant]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Between Madam Eva at Tser Pool dealing me into other people's games and the camp outside Vallaki, I keep my distance."
+ },
+ "ezmerelda/b2cba9d27c23a073": {
+  "chars": 85,
+  "direction": "[approving, dry, smirking]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "That's four names struck from the book, which means you're no longer lucky beginners."
+ },
+ "ezmerelda/b3016220c5829148": {
+  "chars": 95,
+  "direction": "[exasperated, wry, fond]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "My knuckles still ache from hitting his arm, and he's already correcting how I oil my crossbow."
  },
  "ezmerelda/b3d382a77a4c0c2e": {
   "chars": 59,
@@ -13270,6 +13872,27 @@
   "recipe": "3a41b7b8c7",
   "text": "I came up here to kill you. I'm still not sure I shouldn't."
  },
+ "ezmerelda/b48ff91762100402": {
+  "chars": 95,
+  "direction": "[sharp, impatient, testing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Try again, Rudolph, and leave the showman in the taproom. Say something a vampire wouldn't say."
+ },
+ "ezmerelda/b4d1f349e49140c6": {
+  "chars": 127,
+  "direction": "[hard, contemptuous, clipped]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "He laughs with his mouth open and calls armed men meat with swords. Silver first, give him no room, and tell me when he's done."
+ },
+ "ezmerelda/b5d72066649b80ce": {
+  "chars": 131,
+  "direction": "[dry, sardonic, vigilant]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I'm keeping watch on the wagon until we decide our next move. Somebody has to make sure he doesn't slip out the back with his lute."
+ },
  "ezmerelda/b6261334bc43f3c7": {
   "chars": 112,
   "direction": "[gruff, reluctant, sincere]",
@@ -13277,12 +13900,47 @@
   "recipe": "3a41b7b8c7",
   "text": "I hunt alone. Usually. But this valley's too big for one pair of eyes, and too dark. All right. Until it's done."
  },
+ "ezmerelda/b6477d8c60434595": {
+  "chars": 100,
+  "direction": "[relieved, gruff, sober]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Seven years on that board, bait for his own wagon. I'm glad Iosif walked back to the Tser Pool camp."
+ },
+ "ezmerelda/b77c4e5d9e832898": {
+  "chars": 114,
+  "direction": "[wry, self-mocking, clipped]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "A big black wolf named Kiril, in the hills above Lake Zarovich, while I was busy being young and quick and stupid."
+ },
  "ezmerelda/b9908670f41e471c": {
   "chars": 33,
   "direction": "[deadpan, amused]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Rudolph. You're wearing feathers."
+ },
+ "ezmerelda/bab573bc6c579674": {
+  "chars": 102,
+  "direction": "[final, satisfied, brisk]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Morgantha's name is struck for good. Take the scroll against fiends, the holy water and the antitoxin."
+ },
+ "ezmerelda/bb440f4448516196": {
+  "chars": 91,
+  "direction": "[satisfied, gruff, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "One less of Kiril's on the hills, and nothing left at the falls but scratches in the stone."
+ },
+ "ezmerelda/bcb86337cce9d4db": {
+  "chars": 94,
+  "direction": "[cold, grim, eager]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I go first through doors, and if the lord of this valley shows his teeth, save a piece for me."
  },
  "ezmerelda/bde7766e517e6bc3": {
   "chars": 36,
@@ -13298,12 +13956,47 @@
   "recipe": "3a41b7b8c7",
   "text": "Here. You've earned better than thanks. Silver-headed bolts, holy water and my last good potion. Don't waste them on anything that doesn't deserve them."
  },
+ "ezmerelda/c238859198280753": {
+  "chars": 161,
+  "direction": "[amused, incredulous, fond]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "He has a false moustache drying on his washstand and three books of terrible jokes by his bed. Twelve years of hunting him, and the hardest part is not laughing."
+ },
+ "ezmerelda/c2ea323707e43b7e": {
+  "chars": 109,
+  "direction": "[steady, firm, warning]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Steady your nerve when the horn goes. Watch his boar spear and black arrows, and end the hunt at the gallows."
+ },
  "ezmerelda/c38e4b18966f6f9c": {
   "chars": 72,
   "direction": "[dry, firm]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "I go first through doors, I take the silver, and nobody calls me \"girl\"."
+ },
+ "ezmerelda/c3fbbc342ad2f1a4": {
+  "chars": 115,
+  "direction": "[brisk, businesslike, approving]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The wagon's crossed off. Take the alchemist's fire and the silver-headed bolts, and a healing draught for the road."
+ },
+ "ezmerelda/c69b31c7be5decbb": {
+  "chars": 110,
+  "direction": "[bored, dry, amused]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Still here, still counting feathers through the glass. My good leg's gone to sleep and the wooden one's bored."
+ },
+ "ezmerelda/c70149562cc7bd98": {
+  "chars": 101,
+  "direction": "[clipped, informative, ominous]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Tsolenka Pass is a cliff road. A roc hunts the gorge by day, and a ghostly watch keeps the gate shut."
  },
  "ezmerelda/c8f1c5e95047c8d4": {
   "chars": 41,
@@ -13326,6 +14019,20 @@
   "recipe": "3a41b7b8c7",
   "text": "It's a terrible costume. You look like a chicken that's been to a wedding. You keyed your ward to me."
  },
+ "ezmerelda/cc95ac88f7090196": {
+  "chars": 104,
+  "direction": "[hard, dry, grim]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Rudolph built the brace. The lesson I built myself: never swing at a mouth that's still laughing at you."
+ },
+ "ezmerelda/ccb136300a2d0eea": {
+  "chars": 98,
+  "direction": "[stung, accusing, trembling anger]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Twelve years, and you hid behind a stage moustache. Did you really think a lake would keep me out?"
+ },
  "ezmerelda/ccf3991adf711fdb": {
   "chars": 92,
   "direction": "[worried, gruff]",
@@ -13340,6 +14047,27 @@
   "recipe": "3a41b7b8c7",
   "text": "Rudolph's tower. He left it to rot and me to find it. Mind my wagon; it bites. I built half the traps myself."
  },
+ "ezmerelda/cd4a9e1468d0f5fc": {
+  "chars": 88,
+  "direction": "[businesslike, sharp, approving]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "You smell like smoke and fresh work. Point to the name you finished and let's settle up."
+ },
+ "ezmerelda/ce08df5edf7c0efe": {
+  "chars": 98,
+  "direction": "[tight, wry, guarded]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "After twelve years, a woman needs a minute in the dark before she walks into a room with that hat."
+ },
+ "ezmerelda/cf85db45d20bc481": {
+  "chars": 93,
+  "direction": "[practical, firm, clipped]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Clear the blights round it first, stay out of its reach, and tell me when the row stays down."
+ },
  "ezmerelda/d199657c944d659c": {
   "chars": 33,
   "direction": "[cold, defiant, contemptuous]",
@@ -13347,12 +14075,75 @@
   "recipe": "3a41b7b8c7",
   "text": "Then I'll come and fetch it, dog."
  },
+ "ezmerelda/d1bef96612b3e499": {
+  "chars": 114,
+  "direction": "[warning, taut, sardonic]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "He's polite right up until his touch freezes you. Don't offer him your name, and tell me when the cellar is quiet."
+ },
+ "ezmerelda/d3151e38a8fee116": {
+  "chars": 129,
+  "direction": "[warning, clipped, watchful]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The count's fowlers wait in the branches: vampire spawn and bats. Look up before you touch the cage, and tell me when it's quiet."
+ },
+ "ezmerelda/d5f15691d1e7053e": {
+  "chars": 91,
+  "direction": "[gruff, brisk, generous]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The Grandsire is crossed out. Take these keener bolts and a healing draught; they're yours."
+ },
+ "ezmerelda/d6114ad29f7c669e": {
+  "chars": 45,
+  "direction": "[curt, guarded, hard-edged]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Hands where I can see them. What do you need?"
+ },
+ "ezmerelda/d6b055d744d70d00": {
+  "chars": 97,
+  "direction": "[brisk, approving, terse]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Wintersplinter is out of the ledger. Take the alchemist's fire and some bolts with a keener edge."
+ },
+ "ezmerelda/d74d3e686a6ef1b0": {
+  "chars": 122,
+  "direction": "[rueful, bitter, reflective]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I camped on that shore for months, knowing the lock answered to his name and never guessing what the name had made of him."
+ },
  "ezmerelda/d9575e7830c3796b": {
   "chars": 36,
   "direction": "[restless, dry]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Stopping's the one thing I'm bad at."
+ },
+ "ezmerelda/d9d26f42a9e2662d": {
+  "chars": 84,
+  "direction": "[firm, clipped, cautionary]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Walk up as guests, not thieves, and never draw steel on a revenant you can't finish."
+ },
+ "ezmerelda/dbf09c94b5f6dea2": {
+  "chars": 160,
+  "direction": "[deadpan, dark humour, restrained fury]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Because if I walk into that taproom, I'll shoot the hat first and ask questions when it stops twitching. The innkeepers seem nice; I'd hate to ruin their floor."
+ },
+ "ezmerelda/dbf3332d243f4458": {
+  "chars": 90,
+  "direction": "[wry, tired, clipped]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Three names at a time, though. Four is a chore list, and I've had a lifetime of Rudolph's."
  },
  "ezmerelda/dc1f752ddf5e8b09": {
   "chars": 194,
@@ -13368,12 +14159,33 @@
   "recipe": "3a41b7b8c7",
   "text": "Yes, yes. I know. I love you too."
  },
+ "ezmerelda/df1b6527b87173ea": {
+  "chars": 84,
+  "direction": "[low, wary, intent]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "On the hill trail above Lake Zarovich a silver cage hangs in a dead pine. It's bait."
+ },
+ "ezmerelda/e02dffccc6f21090": {
+  "chars": 85,
+  "direction": "[final, gruff, grimly pleased]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "He's struck out for good. Take the keener bolts and a healing draught; they're yours."
+ },
  "ezmerelda/e253dbe176179a95": {
   "chars": 92,
   "direction": "[grudging, gruff]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "You got the children out, at least. I'll give you that. I'll give you that and nothing else."
+ },
+ "ezmerelda/e467a6f1c6e36307": {
+  "chars": 86,
+  "direction": "[bitter, weary, low]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Twelve years of following him, and all that's left is a painted wagon and an inn door."
  },
  "ezmerelda/e6abbeb081029ab1": {
   "chars": 34,
@@ -13389,12 +14201,26 @@
   "recipe": "3a41b7b8c7",
   "text": "Then Rudolph's own ward threw me twenty feet into the lake. He wove my name into it. Mine. Nobody else's. Months of work, to keep out one person."
  },
+ "ezmerelda/e73ceeb6f710613c": {
+  "chars": 143,
+  "direction": "[grave, steady, ominous]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Up on Yester Hill, in the druids' stone circle, stands Wintersplinter: a walking tree blight with a green stone pulsing in its split heartwood."
+ },
  "ezmerelda/e75d4b51dae5107a": {
   "chars": 97,
   "direction": "[brisk, dry]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Good. Say the name, mind your feet, and don't touch anything that hums. He likes things that hum."
+ },
+ "ezmerelda/eab1a75889a9032f": {
+  "chars": 117,
+  "direction": "[sorrowful, bitter, restrained]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Forty years in the dark on false gold, eating what came in cages. A ledger only asks who ate, not who held the leash."
  },
  "ezmerelda/f0861d3aa596faa1": {
   "chars": 184,
@@ -13403,12 +14229,26 @@
   "recipe": "3a41b7b8c7",
   "text": "Of course I trapped it. There's a werewolf pack two hours up the ridge, and a castle that reads over everyone's shoulder. You found it. Good eyes. Most people find it with their faces."
  },
+ "ezmerelda/f0fdd17a57bce13b": {
+  "chars": 134,
+  "direction": "[brisk, gruff, warm underneath]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Take these: silver-headed bolts, holy water and a draught that'll stitch a throat shut. You look like you walk into plenty of weather."
+ },
  "ezmerelda/f3680ef16e2120ff": {
   "chars": 176,
   "direction": "[brisk, matter-of-fact, proud]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "It's Rudolph's. Rudolph van Richten. An archmage built it centuries ago, and the old lock still opens to that wizard's name. I found the name under the moss in an hour: KHAZAN."
+ },
+ "ezmerelda/f3a2299c1a4ecdf2": {
+  "chars": 113,
+  "direction": "[sharp, focused, grim]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Dragan, one of Kiril's pack. He waits at the lip of Tser Falls at night, with wolves and a dire wolf for company."
  },
  "ezmerelda/f5269b9946f345d9": {
   "chars": 154,
@@ -13417,6 +14257,20 @@
   "recipe": "3a41b7b8c7",
   "text": "And he's left Vallaki already. Of course he has. He never stays where people might start to depend on him. It's his only real flaw, and he has it in bulk."
  },
+ "ezmerelda/f7bfd5f9ddf64b76": {
+  "chars": 93,
+  "direction": "[knowing, cautionary, terse]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Pay what they ask, leave their horses alone, and never mistake a warm fire for a free favour."
+ },
+ "ezmerelda/f803228502001444": {
+  "chars": 128,
+  "direction": "[cold, angry, controlled]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Kiril Stoyanovich dens in the hills above Lake Zarovich and steals farm children from below Krezk to grow a pack for the castle."
+ },
  "ezmerelda/fbf8caa5e851f617": {
   "chars": 104,
   "direction": "[restless, dry]",
@@ -13424,12 +14278,33 @@
   "recipe": "3a41b7b8c7",
   "text": "Stopping's the one thing I'm bad at. Rudolph says it'll kill me. Rudolph says a lot, from very far away."
  },
+ "ezmerelda/fd13ba216baca2db": {
+  "chars": 90,
+  "direction": "[blunt, dismissive, confident]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I don't plan the castle until I'm looking at its gates. Paper plans die on the drawbridge."
+ },
+ "ezmerelda/fdb67697e71d031b": {
+  "chars": 76,
+  "direction": "[wry, hard, knowing]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "A cage in a dead pine is a baited hook. Whoever hung it was fishing for you."
+ },
  "ezmerelda/febaa65324ff0e11": {
   "chars": 180,
   "direction": "[curious, grim]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "And there's a strongbox in his lantern room he never let me near. He called what was in it \"the thing the cards keep moving\". Eva would know what that means. So, I suspect, do you."
+ },
+ "ezmerelda/ff78e281ce467881": {
+  "chars": 110,
+  "direction": "[cold, determined, smirking]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Don't worry about him. I'm very good at looking, and when I find him he'll wish a monster had got there first."
  },
  "ezmerelda/fff850fc551107b7": {
   "chars": 61,
@@ -42599,6 +43474,12 @@
   "recipe": "dd92281f92",
   "text": "Grass, weeds and mounds. The hanged keep their own counsel."
  },
+ "narrator/0a5bd82fa3bf30e5": {
+  "chars": 185,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Your boots ring on the upper floor, which is as bare as the one below, with the seamless dark walls and the thin slits of light. In the ceiling over one corner, a square trapdoor waits."
+ },
  "narrator/0a5e756cf9c0dd43": {
   "chars": 90,
   "model": "eleven_v4",
@@ -43210,6 +44091,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The oldest marks at the bottom aren't names but a Vistani promise: the pool's people may pass the mists, and owe the castle for it."
+ },
+ "narrator/0ef6fbe2443f5e48": {
+  "chars": 196,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You push through the trapdoor onto a flat square of dark metal ringed by a toothed parapet, thirty feet above the ground. From up here, the valley mist looks almost like a country you could leave."
  },
  "narrator/0f024c90a51b1a19": {
   "chars": 158,
@@ -45371,6 +46258,12 @@
   "recipe": "dd92281f92",
   "text": "Against the east wall stands a rack of small casks, each sealed with wax and stamped with a pointed hat. The dust on them is undisturbed, as if even the druids felt they shouldn't."
  },
+ "narrator/1c0626c17bcfa64b": {
+  "chars": 222,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You speak the word, and the little statuette swells with a sound like a dropped anvil, shaking the ground under your boots. Thirty feet of dark metal now stands where there was only mist, its heavy door turned to face you."
+ },
  "narrator/1c14b3c3a10a030d": {
   "chars": 245,
   "model": "eleven_v4",
@@ -47147,6 +48040,12 @@
   "recipe": "dd92281f92",
   "text": "From the rock the lake is a sheet of lead, and wedged behind the rock itself someone has left a satchel."
  },
+ "narrator/278a0694b484dad1": {
+  "chars": 203,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The heavy door shuts behind you with a boom, sealing you in four walls of bare blue-grey metal, cut by thin blades of pale light from the arrow slits. A stair climbs the east wall toward the floor above."
+ },
  "narrator/278b93f555aa53f5": {
   "chars": 225,
   "model": "eleven_v4",
@@ -48760,6 +49659,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A high-backed chair of black wood on a step, its arms worn pale where hands have rested on them for a very long time."
+ },
+ "narrator/3252ee99e12a9f78": {
+  "chars": 185,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You lay your bedrolls on the cold metal of the lower floor, a few paces from the sealed door. Nothing comes through it, though old habits keep you sleeping with your boots within reach."
  },
  "narrator/325390fc45aeb010": {
   "chars": 31,
@@ -53015,6 +53920,12 @@
   "recipe": "dd92281f92",
   "text": "Blades and needles, very clean. What they're for is beyond you, and you're grateful."
  },
+ "narrator/4f9b6d419e2f68ae": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Across from the steps, a woman in a long dark coat sits on a hay bale with a crossbow over her knee. By the dent in the straw, she has been waiting for hours."
+ },
  "narrator/4fa13955385ddf18": {
   "chars": 171,
   "model": "eleven_v4",
@@ -54382,6 +55293,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "It takes the rest of the day, in turns, with a knife and a stone and then a borrowed chisel from the hunter's stores. The letters fight you. Each one, as it goes, is a little colder than the last."
+ },
+ "narrator/586b5ff9f9eab818": {
+  "chars": 164,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The campfire by the water is down to grey ash, and the wagon ruts in the mud have filled with rain. She sits on a crate with her spyglass trained on the tower door."
  },
  "narrator/586d4e6f4ea722f1": {
   "chars": 133,
@@ -55817,6 +56734,12 @@
   "recipe": "dd92281f92",
   "text": "The raven in your hands shakes itself, and all at once there's a skinny boy of ten in its place, naked and blue with cold, holding on to you."
  },
+ "narrator/60de2fcedcdd2242": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Your packs and road-stained gear are stacked in a trunk against the wall. For one night, at least, you do not have to sleep with a hand on your scabbard."
+ },
  "narrator/610141688cacbf30": {
   "chars": 190,
   "model": "eleven_v4",
@@ -56050,6 +56973,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The tower's one lit window throws a long yellow line across the black water, all the way to your feet, like an invitation nobody actually sent."
+ },
+ "narrator/62acf2dead78a011": {
+  "chars": 129,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She steps up to him, hits him hard in the arm with her closed fist, and he stands still and takes it. Neither of them looks away."
  },
  "narrator/62b8715e19f3aa9a": {
   "chars": 81,
@@ -56999,6 +57928,12 @@
   "recipe": "dd92281f92",
   "text": "On top of the furthest bookcase, flattened against the ceiling, something grey and thin with arms too long for it and one great eye where a face should be. It's holding its claws over its eye as if that might make it smaller."
  },
+ "narrator/68e83d9066809840": {
+  "chars": 95,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A woman in a long dark coat wipes a wooden mallet on her hem beside a staked, crumbling corpse."
+ },
  "narrator/68f1d3429159816e": {
   "chars": 89,
   "model": "eleven_v4",
@@ -57076,6 +58011,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A neat little chamber hung with drying herbs, with a swept floor and a real bed. Somebody in this den still lives like a person."
+ },
+ "narrator/69743859ab3220ad": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A barrel of valley water with a tin dipper hooked over its rim. It tastes of oak staves and cold iron, which is a great improvement on the local ditches."
  },
  "narrator/697993b6d9f7dbdd": {
   "chars": 105,
@@ -58618,6 +59559,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A woodcutter's axe left sunk in a stump, its handle dark with use. Nobody leaves a good axe behind unless something made them."
+ },
+ "narrator/72605731606ef1a4": {
+  "chars": 205,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You stretch out on the upper floor behind a door that answers to one voice in all the world. Nothing scratches at it, nothing breathes at the seam, and for eight hours the valley has to manage without you."
  },
  "narrator/72631b0d9be9fea2": {
   "chars": 101,
@@ -63503,6 +64450,12 @@
   "recipe": "dd92281f92",
   "text": "The trail is worn smooth and wide, the way paths get when a great many feet use them. Some of the prints in the mud are boots. Most of them aren't."
  },
+ "narrator/93c0049447c477ed": {
+  "chars": 99,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ezmerelda lies flat on her stomach in the wet heather, her spyglass steadied against a mossy stone."
+ },
  "narrator/93c5b812e88fb119": {
   "chars": 92,
   "model": "eleven_v4",
@@ -65303,6 +66256,12 @@
   "recipe": "dd92281f92",
   "text": "Under a straw pallet, where an initiate hid it from the others, a red stone the size of a hen's egg. It is hot, and something inside it is moving."
  },
+ "narrator/a0420e35d397dc2b": {
+  "chars": 100,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Standing in the muck, Ezmerelda hacks a grinning scarecrow off its wooden post with a heavy hatchet."
+ },
  "narrator/a0469950da7d7eae": {
   "chars": 111,
   "model": "eleven_v4",
@@ -65392,6 +66351,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Black water to the brim, still as glass. Your reflection in it moves a moment after you do."
+ },
+ "narrator/a0aa075b4abeea46": {
+  "chars": 164,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Cold wind finds you on the flat roof, where the toothed battlements cut black shapes against the mist. Below, the valley keeps its wolves and its silence to itself."
  },
  "narrator/a0ac0b06763dbef5": {
   "chars": 128,
@@ -66491,6 +67456,12 @@
   "recipe": "dd92281f92",
   "text": "You sleep in the lee of the crag. The ravens keep watch in the oak above you, and twice in the night they all shout at once, at something you never see."
  },
+ "narrator/a784e85ec6270b32": {
+  "chars": 191,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A miniature of Castle Ravenloft, exact down to the slate tiles on the round towers and the iron teeth of the gate. Someone has worn the paint from the highest window with the tip of a finger."
+ },
  "narrator/a7967176ed2b79bb": {
   "chars": 132,
   "model": "eleven_v4",
@@ -66646,6 +67617,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The workshop smells of pine and varnish and nothing else. Henrik is whistling. Badly, but whistling."
+ },
+ "narrator/a8bfa9511448efbf": {
+  "chars": 168,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The stable yard smells of wet straw, lamp oil, and something restless behind the crimson wagon's padlocked door. The horses in their stalls keep their ears pinned back."
  },
  "narrator/a8c2f279fe68614e": {
   "chars": 204,
@@ -67721,6 +68698,12 @@
   "recipe": "dd92281f92",
   "text": "The dressing table in the corner stands empty. Morgantha glances at it once, and goes on smiling, and goes on shelling."
  },
+ "narrator/b014959d5fb54c3b": {
+  "chars": 96,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Low clouds hang over the drowned fields of Berez, where reed beds rot in black, knee-deep water."
+ },
  "narrator/b018411a3c3c7908": {
   "chars": 115,
   "model": "eleven_v4",
@@ -68261,6 +69244,12 @@
   "recipe": "dd92281f92",
   "text": "The first of the line swore this house to a patron who would give the family anything it asked, for as long as the house was fed."
  },
+ "narrator/b4140bcd850a040b": {
+  "chars": 187,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The statuette groans and climbs thirty feet into the dark, shoving the mist aside as the earth shudders under your heels. Whatever was following you now has a very large wall to consider."
+ },
  "narrator/b421c3fcb3f5d7e8": {
   "chars": 74,
   "model": "eleven_v4",
@@ -68272,6 +69261,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "North, the mountains, and on a ridge below them a cold silver light that doesn't flicker."
+ },
+ "narrator/b42f5e38bf9e6fa4": {
+  "chars": 102,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind the shut door, the great cat presses its heavy head against the wood with a low, rumbling purr."
  },
  "narrator/b4382fc1b565f139": {
   "chars": 115,
@@ -68374,6 +69369,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The boards in front of the tower door sag a finger's breadth when you lean on the one before them. Rotten through, and only the carpet holding them."
+ },
+ "narrator/b4e3f66ea1647980": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A plain table stands in the middle of the metal floor, a lantern at its edge. It is not much of a hall, though the walls are thicker than most castles manage."
  },
  "narrator/b4e648786152a5d1": {
   "chars": 89,
@@ -69298,6 +70299,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "It is a knot of dry sticks and thorns, crowned with a single brown leaf that twitches when the wind moves."
+ },
+ "narrator/bc3e58b68c31ef34": {
+  "chars": 209,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The lantern burns low against the unmarked walls while you sleep the strange, heavy sleep of people who cannot be reached. Outside the slits the mist presses on the metal and finds nothing worth coming in for."
  },
  "narrator/bc43349d6caa0c1f": {
   "chars": 132,
@@ -72659,6 +73666,12 @@
   "recipe": "dd92281f92",
   "text": "A gibbet cage hung out over the water on a crooked post, low enough that the bog could reach it at high water. That was the idea."
  },
+ "narrator/d2847ea55b63e5d3": {
+  "chars": 106,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours."
+ },
  "narrator/d28894eea9f240e0": {
   "chars": 136,
   "model": "eleven_v4",
@@ -73114,6 +74127,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The book on the desk is closed now. It hasn't crumbled."
+ },
+ "narrator/d5c0d81807183406": {
+  "chars": 192,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The tower collapses at your word into something you could lose in a glove, leaving a square of bare earth and a sudden rush of night air. The dark comes straight back to where it was standing."
  },
  "narrator/d5c47bed947398d7": {
   "chars": 175,
@@ -73763,6 +74782,12 @@
   "recipe": "dd92281f92",
   "text": "You talk through the door until the bolt slides back. He wants to be persuaded; he wants someone to talk to."
  },
+ "narrator/daf1497c48f800d2": {
+  "chars": 131,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She unwraps a battered book from its oilcloth. The pages are crowded with names, and the best ones are struck through in black ink."
+ },
  "narrator/dafd44fe6303ce5b": {
   "chars": 173,
   "model": "eleven_v4",
@@ -73913,6 +74938,12 @@
   "recipe": "dd92281f92",
   "text": "Cold ashes and a stone that won't move. The fishers who lived here took everything with them."
  },
+ "narrator/dc31c805d1d79f13": {
+  "chars": 173,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He steps into the yard with his scarlet collar turned up against the damp, then freezes with his hand still on the latch. The lantern catches the burn scars on his knuckles."
+ },
  "narrator/dc33205799badf9f": {
   "chars": 115,
   "model": "eleven_v4",
@@ -73996,6 +75027,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She is not afraid, and she is not resigned. She is waiting for nightfall, and for a visitor, with the calm of someone who has never once been let down by him."
+ },
+ "narrator/dc96883d19b45b85": {
+  "chars": 94,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Fog curls between the black pines along the Old Svalich Road, smelling of wet ash and old rot."
  },
  "narrator/dca3acde1b4fb492": {
   "chars": 139,
@@ -75641,6 +76678,12 @@
   "recipe": "dd92281f92",
   "text": "You dream of a lullaby sung through a floor, and a door that never opens."
  },
+ "narrator/e6f24184c81b8f16": {
+  "chars": 107,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Below the ruined walls of Argynvostholt, pale lights drift past broken windows beneath a dark beacon tower."
+ },
  "narrator/e6f6545282915037": {
   "chars": 74,
   "model": "eleven_v4",
@@ -76739,6 +77782,12 @@
   "recipe": "dd92281f92",
   "text": "Across the water, a horn lantern swings up into a bow and holds steady, pointing straight at your wake."
  },
+ "narrator/ee8cda3f067dd339": {
+  "chars": 171,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At your word the tower folds in upon itself with one sharp clap of displaced air. You pick the cold metal thing off the bare ground and put your house back in your pocket."
+ },
  "narrator/eea8f456e1e86daa": {
   "chars": 190,
   "model": "eleven_v4",
@@ -77836,6 +78885,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You take the knife and the stick and show him: thumb behind the blade, little cuts, away from yourself. He watches with his tongue between his teeth. By the end of the watch the dog is a spoon, and a fairly good one."
+ },
+ "narrator/f65313f0a5365c9a": {
+  "chars": 170,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He sweeps into the yard hat-first, his painted smile ready for an audience, and stops dead beside the lantern. The showman drains out of his shoulders in a single breath."
  },
  "narrator/f65488b00e0cfcdb": {
   "chars": 130,
@@ -83841,6 +84896,13 @@
   "recipe": "d445951711",
   "text": "Take what will keep you alive, and pay what you can. I have outlived most of the people I armed. I'd like to outlive fewer."
  },
+ "rictavio/12e0cd49513f02a0": {
+  "chars": 76,
+  "direction": "[quiet, rueful, honest]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "No. I think I only hoped it would slow you down until the work was finished."
+ },
  "rictavio/132578667bee3dfe": {
   "chars": 37,
   "direction": "[startled, quiet]",
@@ -83964,6 +85026,13 @@
   "recipe": "d445951711",
   "text": "I know. I can hear her. Everyone within a mile can hear her."
  },
+ "rictavio/3e14c2517b37ed2a": {
+  "chars": 98,
+  "direction": "[dry, wry, precise]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "A vampire would never wear a coat this colour. He has far too much vanity and no sense of theatre."
+ },
  "rictavio/467601bb062c58f9": {
   "chars": 117,
   "model": "eleven_v4",
@@ -83990,6 +85059,13 @@
   "model": "eleven_v3",
   "recipe": "d445951711",
   "text": "Then he means to send his spawn for the church, and whoever is sheltering in it. They'll be close by, somewhere dark, somewhere nobody looks. Spawn sleep by day like anyone who works nights. Find their beds while the sun is up, and you choose the fight."
+ },
+ "rictavio/57afc8892786f608": {
+  "chars": 58,
+  "direction": "[low, reproachful, tight]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "You gave me your word that name would not leave that room."
  },
  "rictavio/59542027a13df3cf": {
   "chars": 41,
@@ -84024,6 +85100,13 @@
   "model": "eleven_v3",
   "recipe": "d445951711",
   "text": "Both of them will get people killed. Vargas from fear, Fiona from faith. One of them only wants the town to be quiet. The other wants it quiet for him. I'd want neither in charge of a dog kennel."
+ },
+ "rictavio/64132051ab829b59": {
+  "chars": 103,
+  "direction": "[booming, theatrical, florid]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "Friends, I must warn you, the beasts of Rictavio's menagerie do not perform after dark, not even for..."
  },
  "rictavio/647e2132f89bfcd3": {
   "chars": 199,
@@ -84139,6 +85222,13 @@
   "recipe": "d445951711",
   "text": "My tower. I built it to keep things out. It turns out it kept me out as well."
  },
+ "rictavio/951ba21e4b24b690": {
+  "chars": 131,
+  "direction": "[grave, sincere, heavy-hearted]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "I was wrong to leave without a word, and wrong to ward the tower against you. I was afraid the dark would take you too. I am sorry."
+ },
  "rictavio/95ea5aff4073a43b": {
   "chars": 131,
   "model": "eleven_v4",
@@ -84207,6 +85297,13 @@
   "recipe": "d445951711",
   "text": "I'm going home to think: a tower on the little lake under the mountain, west of Zarovich. If you do something worth hearing about, come and tell me there. Bring proof. Not speeches."
  },
+ "rictavio/b560303525511972": {
+  "chars": 97,
+  "direction": "[soft, grateful, tired]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "You brought me out the quiet way instead of shouting across the taproom. Thank you for that much."
+ },
  "rictavio/bb288d78f7331c27": {
   "chars": 97,
   "direction": "[weary, evasive]",
@@ -84255,6 +85352,13 @@
   "recipe": "3bd70588c7",
   "text": "Eva. Of course it was Eva. That old woman has been shuffling me about this valley for longer than I care to count."
  },
+ "rictavio/db1197c7c4b147cf": {
+  "chars": 94,
+  "direction": "[dry, urgent, cautious]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "Don't point that at my knees, Ezmerelda. Come into the shadow where the windows can't see you."
+ },
  "rictavio/dca72d665817cb97": {
   "chars": 167,
   "direction": "[cold, disgusted]",
@@ -84262,11 +85366,25 @@
   "recipe": "d445951711",
   "text": "This town has chosen its master, and I watched who helped it choose. I won't sleep another night under a roof that bows to him. I'll be gone by morning, wagon and all."
  },
+ "rictavio/e286edf300011272": {
+  "chars": 59,
+  "direction": "[sharp, hushed, urgent]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "Ezmerelda. Put the bolt down before you wake the whole inn."
+ },
  "rictavio/e4e11422151775ac": {
   "chars": 178,
   "model": "eleven_v4",
   "recipe": "3bd70588c7",
   "text": "He thanked me, beautifully. Then he asked the way to the mountains, because the index was kept in a temple of amber and he wanted to see the shape of the thing before he read it."
+ },
+ "rictavio/e528ae51aacf611b": {
+  "chars": 81,
+  "direction": "[quiet, weary, resigned]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
+  "text": "Shut the door behind me. I told myself it would take you another week to find me."
  },
  "rictavio/e62b6f69eea2ff48": {
   "chars": 46,
@@ -94701,6 +95819,13 @@
   "recipe": "e617f8887f",
   "text": "Mouths. Teeth. Voices. We collect, you see. We're collectors."
  },
+ "vestige_dahlver_nar/db7b754286e0546b": {
+  "chars": 150,
+  "direction": "[many voices, giddy, chattering]",
+  "model": "eleven_v3",
+  "recipe": "e617f8887f",
+  "text": "Teeth, teeth, teeth, such lovely straight teeth you brought us today. Open your mouths, open your mouths, open your mouths and let us hear them click."
+ },
  "vestige_dahlver_nar/e3f29d164ae90f38": {
   "chars": 135,
   "direction": "[many voices, gleeful, tempting]",
@@ -94764,6 +95889,13 @@
   "recipe": "fb0f2f38ee",
   "text": "My eyes. You'll wear four of mine. They don't close, and they don't like the sun. And people stare. People always stare at eyes."
  },
+ "vestige_drizlash/97455035637c3e35": {
+  "chars": 130,
+  "direction": "[rapid, skittering, creeping]",
+  "model": "eleven_v3",
+  "recipe": "fb0f2f38ee",
+  "text": "I see, I see, I see your shadows creeping across the frost. You never look up at the ceiling, do you, never look inside the walls?"
+ },
  "vestige_drizlash/caaa432bcb5b9a29": {
   "chars": 38,
   "direction": "[whispering, gleeful]",
@@ -94812,6 +95944,13 @@
   "model": "eleven_v3",
   "recipe": "10f9a5a052",
   "text": "And yet they all call for mother, at the end. Ask any child with a fever."
+ },
+ "vestige_fekre/61aec3368557e68b": {
+  "chars": 139,
+  "direction": "[cooing, soothing, sickly sweet]",
+  "model": "eleven_v3",
+  "recipe": "10f9a5a052",
+  "text": "Hush now, sweetling, I can hear you shivering all the way through the glass. Let me wrap you up where the frost can never reach your bones."
  },
  "vestige_fekre/97e563fced679c76": {
   "chars": 62,
@@ -94868,6 +96007,13 @@
   "model": "eleven_v3",
   "recipe": "a098829d40",
   "text": "You came. I read that you would, eleven centuries ago, in a star that has since gone out. Sit. Let me tell you how this ends."
+ },
+ "vestige_khirad/4b67ac127eab9bfe": {
+  "chars": 127,
+  "direction": "[weary, sorrowful, resigned]",
+  "model": "eleven_v3",
+  "recipe": "a098829d40",
+  "text": "Forgive me, I wept for your names long before your mothers bore you. The dead stars already know which of you will step closer."
  },
  "vestige_khirad/7336c78fb9e93693": {
   "chars": 52,
@@ -94967,6 +96113,13 @@
   "recipe": "8d041828c1",
   "text": "Goodbye. I won't remember you. You'll find it harder to return the favour."
  },
+ "vestige_norganas/f4084b6b2653f932": {
+  "chars": 132,
+  "direction": "[soft, dreamy, drifting]",
+  "model": "eleven_v3",
+  "recipe": "8d041828c1",
+  "text": "You carry a memory that aches, right behind your eyes... Come closer, and I will rub it clean before you even recall... what was it?"
+ },
  "vestige_norganas/f50f47cdc4d1e57a": {
   "chars": 23,
   "direction": "[soft, contented]",
@@ -95001,6 +96154,13 @@
   "model": "eleven_v3",
   "recipe": "9215950e03",
   "text": "...Kept."
+ },
+ "vestige_savnok/54a7a4783a3b427b": {
+  "chars": 128,
+  "direction": "[secretive, hushed, tempting]",
+  "model": "eleven_v3",
+  "recipe": "9215950e03",
+  "text": "...Your tongue is loose, and your friends are listening... Press your ear to the lid, and tell no one what rattles inside you..."
  },
  "vestige_savnok/6eae3a5b062c6d0d": {
   "chars": 3,
@@ -95071,6 +96231,13 @@
   "recipe": "cf7325ac46",
   "text": "Back. The dogs knew. They always know."
  },
+ "vestige_seriach/427fdf6bf778ee8a": {
+  "chars": 139,
+  "direction": "[proud huntsman, mocking, rough]",
+  "model": "eleven_v3",
+  "recipe": "cf7325ac46",
+  "text": "Easy, boys, easy, let the two-legged meat catch its breath first. You walk like hunters, yet you smell like the stag at the end of the run."
+ },
  "vestige_seriach/4c3a1e582fa7667d": {
   "chars": 26,
   "direction": "[growling, eager]",
@@ -95105,6 +96272,13 @@
   "model": "eleven_v3",
   "recipe": "af4bf4b745",
   "text": "Nobody? Not even a little? You'll lie awake wondering. I'll know."
+ },
+ "vestige_shami_amourae/4bc4c405d51c3e26": {
+  "chars": 139,
+  "direction": "[honeyed, tender, seductive]",
+  "model": "eleven_v3",
+  "recipe": "af4bf4b745",
+  "text": "You carry such heavy iron on your shoulders, darling, and nobody has thanked you once. Lay your head against the glass and breathe with me."
  },
  "vestige_shami_amourae/4f4225398f6276fb": {
   "chars": 62,
@@ -95190,6 +96364,13 @@
   "recipe": "f1bf121b87",
   "text": "A hand that drinks. Touch them and take their life into you, warm, warm, warm. And death's cold won't bite you the way it used to."
  },
+ "vestige_sykane/77bab0cd05418fcd": {
+  "chars": 130,
+  "direction": "[whining, hungry, pleading]",
+  "model": "eleven_v3",
+  "recipe": "f1bf121b87",
+  "text": "Please, your breath steams so sweetly, and my belly has been hollow for an age. Stand near the glass and let me drink your warmth."
+ },
  "vestige_sykane/98244e7a8f1e9799": {
   "chars": 29,
   "direction": "[gasping, satisfied]",
@@ -95231,6 +96412,13 @@
   "model": "eleven_v3",
   "recipe": "f1bf121b87",
   "text": "Have you eaten? You haven't. I can tell. Go and eat."
+ },
+ "vestige_taar_haak/247ae5ef2e62106e": {
+  "chars": 124,
+  "direction": "[roaring, savage, bickering]",
+  "model": "eleven_v3",
+  "recipe": "d490ed9e7c",
+  "text": "BLOOD ON YOUR BOOTS, WE SMELL IT! WE TAKE THE TALL ONE. No, the broad one hits harder. Step up, step up, show us your teeth!"
  },
  "vestige_taar_haak/63bb053fb3f84298": {
   "chars": 73,
@@ -95386,6 +96574,13 @@
   "recipe": "c8f4397167",
   "text": "Not yet, little one. Not yet. But I'm keeping your place."
  },
+ "vestige_tarakamedes/de06c8e4fccccbf9": {
+  "chars": 137,
+  "direction": "[slow, deep, patient menace]",
+  "model": "eleven_v3",
+  "recipe": "c8f4397167",
+  "text": "Every step you take only carries your bones a little nearer to the dirt. Come look upon the dragon who waits at the bottom of all things."
+ },
  "vestige_tenebrous/2b00b9df5dd6f43c": {
   "chars": 30,
   "direction": "[soothing whisper]",
@@ -95413,6 +96608,13 @@
   "model": "eleven_v3",
   "recipe": "f342c20a34",
   "text": "Shh. Keep the lights low. You and I don't need them."
+ },
+ "vestige_tenebrous/6f70ebe4b14bb748": {
+  "chars": 126,
+  "direction": "[soft, hushing, coaxing]",
+  "model": "eleven_v3",
+  "recipe": "f342c20a34",
+  "text": "Shh, put out that dreadful light before it blinds us both. Your eyes are aching from the glare, so come rest them in the dark."
  },
  "vestige_tenebrous/768c19c89c1edf92": {
   "chars": 129,
@@ -95469,6 +96671,13 @@
   "model": "eleven_v3",
   "recipe": "e70a32f857",
   "text": "...Soft."
+ },
+ "vestige_yog/67b5a40cd4fc0e28": {
+  "chars": 89,
+  "direction": "[enormous, slow, rumbling]",
+  "model": "eleven_v3",
+  "recipe": "e70a32f857",
+  "text": "Stone cracks. Flesh tears. Still you... walk. Come. Stand. Learn how a mountain... holds."
  },
  "vestige_yog/68e35f5c7e4d563a": {
   "chars": 59,
@@ -95561,6 +96770,13 @@
   "recipe": "872b25ae45",
   "text": "Oh. You can't see it. You can't see any of it. The masks, the borrowed skins, the thing standing just behind the one you love. How do you live like that?"
  },
+ "vestige_yrrga/a9224762c40fc4cc": {
+  "chars": 161,
+  "direction": "[cold, clinical, pitying]",
+  "model": "eleven_v3",
+  "recipe": "872b25ae45",
+  "text": "Poor little things, walking through a slaughterhouse with your eyelids stitched together. Look into my pupil, if you dare see what is actually holding your hand."
+ },
  "vestige_yrrga/eddb8fe4320e3096": {
   "chars": 71,
   "direction": "[cold, faintly mocking]",
@@ -95631,6 +96847,13 @@
   "recipe": "65196e978c",
   "text": "No one? A crowd of nobodies. How fitting. Off you go, then. Nobody will notice."
  },
+ "vestige_zantras/8465620d2a7ae686": {
+  "chars": 136,
+  "direction": "[grand, theatrical, beckoning]",
+  "model": "eleven_v3",
+  "recipe": "65196e978c",
+  "text": "Do not walk past the stage, my darlings, when the whole hall was built for your entrance. Step into the light and let me see your faces."
+ },
  "vestige_zantras/aaa6be5856cdc0cc": {
   "chars": 68,
   "direction": "[grand, delighted]",
@@ -95658,6 +96881,13 @@
   "model": "eleven_v3",
   "recipe": "65196e978c",
   "text": "And you, my dear. You already have it, don't you? Everyone looks at you. Strangers, wolves, lords on hills. Do you hate it yet?"
+ },
+ "vestige_zhudun/0086bc34289e2200": {
+  "chars": 150,
+  "direction": "[grand, lonely, wistful]",
+  "model": "eleven_v3",
+  "recipe": "c56b29d702",
+  "text": "How small your lanterns are, guttering in the wind like dying sparks. Gather round my glass, you freezing things, and remember what a sky looked like."
  },
  "vestige_zhudun/05042fe9323a438d": {
   "chars": 171,
