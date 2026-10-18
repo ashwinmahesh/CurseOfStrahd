@@ -19,6 +19,15 @@ const EDITED_ROWS := [
 	"#.........#",
 	"###########"]
 
+## A hall split by a wall with one gap, (5, 2), where the door stands.
+const DOOR_ROWS := [
+	"###########",
+	"#....#....#",
+	"#.........#",
+	"#....#....#",
+	"###########"]
+const DOOR_AT := Vector2i(5, 2)
+
 ## A long hall whose far end is solid for ten squares round the saved square.
 const LONG_ROWS := [
 	"####################",
@@ -31,12 +40,14 @@ var root: Node
 var _fights: Array = []
 
 
-func _loc(rows: Array, with_fight: bool = false) -> Dictionary:
+func _loc(rows: Array, with_fight: bool = false, doors: Array = []) -> Dictionary:
 	var d := {
 		"id": "test_guard_hall", "name": "Test Guard Hall", "region": "test", "summary": "A fixture.",
 		"map": {"rows": rows, "light": "dim"},
 		"spawns": {"default": [1, 1]},
 	}
+	if not doors.is_empty():
+		d["doors"] = doors
 	if with_fight:
 		d["encounters"] = [{"id": "guard_wolves", "trigger": "flag:never", "monsters": [{"monster": "wolf", "cell": [9, 1]}]}]
 	return d
@@ -65,8 +76,8 @@ func _frames(n: int) -> void:
 
 
 ## The game loaded into the hall with the party's squares already saved, as a load leaves them.
-func _load_into(rows: Array, saved: Array[Vector2i], with_fight: bool = false) -> void:
-	Compendium.shared().tables["locations"]["test_guard_hall"] = _loc(rows, with_fight)
+func _load_into(rows: Array, saved: Array[Vector2i], with_fight: bool = false, doors: Array = []) -> void:
+	Compendium.shared().tables["locations"]["test_guard_hall"] = _loc(rows, with_fight, doors)
 	GameState.story.location = "test_guard_hall"
 	GameState.story.positions = saved.duplicate()
 	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
@@ -132,6 +143,49 @@ func test_arriving_by_a_spawn_ignores_saved_squares() -> void:
 	root.call("enter_location", "test_guard_hall", "default")
 	await _frames(3)
 	assert_eq(_view().members[0].cell, Vector2i(1, 1), "the spawn, as always")
+
+
+# --- Doorways ---------------------------------------------------------------------------------------------------------
+
+func _door(extra: Dictionary = {}) -> Array:
+	var d := {"id": "guard_door", "cell": [DOOR_AT.x, DOOR_AT.y], "label": "The hall door"}
+	d.merge(extra)
+	return [d]
+
+
+## A shut door is a wall in the grid, but a hero can stand in its doorway (holding it open in a fight), so a save made
+## there keeps them there.
+func test_a_hero_saved_in_a_shut_doorway_stays_in_it() -> void:
+	await _load_into(DOOR_ROWS, [DOOR_AT, Vector2i(4, 2)], false, _door())
+	var v := _view()
+	assert_true(v.grid.is_solid(DOOR_AT), "the shut door is a wall in the grid")
+	assert_true(LocationParty.is_open(v, DOOR_AT), "but a hero can stand in its doorway")
+	assert_eq(v.members[0].cell, DOOR_AT, "the leader stays in the doorway")
+	assert_eq(v.members[1].cell, Vector2i(4, 2))
+
+
+## The doorway is the door's square only: the wall beside it still moves a saved hero out.
+func test_the_wall_beside_a_doorway_still_moves_them() -> void:
+	var beside := Vector2i(5, 1)
+	await _load_into(DOOR_ROWS, [beside, Vector2i(4, 2)], false, _door())
+	var v := _view()
+	assert_false(LocationParty.is_open(v, beside), "the wall beside the door is closed")
+	assert_ne(v.members[0].cell, beside, "not in the wall")
+	assert_true(LocationParty.is_open(v, v.members[0].cell))
+
+
+## A secret door nobody has found is still wall; once found, its doorway is a place to stand.
+func test_a_secret_door_is_a_doorway_only_once_found() -> void:
+	await _load_into(DOOR_ROWS, [DOOR_AT, Vector2i(4, 2)], false, _door({"secret_dc": 15}))
+	var v := _view()
+	assert_false(LocationParty.is_open(v, DOOR_AT), "unfound, it is wall")
+	assert_ne(v.members[0].cell, DOOR_AT, "so the saved hero is moved out")
+	(GameState.story.loc_state("test_guard_hall")["found"] as Dictionary)["guard_door"] = true
+	assert_true(LocationParty.is_open(v, DOOR_AT), "found, it is a doorway")
+	root.queue_free()
+	await _frames(2)
+	await _load_into(DOOR_ROWS, [DOOR_AT, Vector2i(4, 2)], false, _door({"secret_dc": 15}))
+	assert_eq(_view().members[0].cell, DOOR_AT, "and a save in it stays")
 
 
 # --- A round-start save in a map that has changed ---------------------------------------------------------------------

@@ -36,9 +36,26 @@ static func _place_party(view: LocationView) -> void:
 		(view.tokens[view.members[0].id] as Node3D).add_child(view.lantern)
 
 
-## Whether a creature can stand on `c` in the map as it is now.
+## Whether a creature can stand on `c` in the map as it is now. A shut door's square is a wall in the grid, but a hero can
+## stand in its doorway (holding it open: LocationFights._combat_grid), so a door's square is open when the door is one the
+## party can see; a secret door not yet found is still wall.
 static func is_open(view: LocationView, c: Vector2i) -> bool:
-	return view.grid.in_bounds(c) and not view.grid.is_solid(c)
+	if not view.grid.in_bounds(c):
+		return false
+	if not view.grid.is_solid(c):
+		return true
+	return (view.grid.flags(c) & (CombatGrid.LOW | CombatGrid.VOID)) == 0 and _doorway(view, c)
+
+
+## Whether `c` is the square of a door the party can see (not a secret door nobody has found yet).
+static func _doorway(view: LocationView, c: Vector2i) -> bool:
+	for d: Variant in view.loc.get("doors", []):
+		var door := d as Dictionary
+		if LocationView._cell(door["cell"]) != c:
+			continue
+		var found := bool((view.st.loc_state(view.loc_id)["found"] as Dictionary).get(str(door["id"]), false))
+		return int(door.get("secret_dc", 0)) <= 0 or found
+	return false
 
 
 ## The load guard: `saved` as squares the party can stand on in the map as it is now. A square a later edit made a wall, a
