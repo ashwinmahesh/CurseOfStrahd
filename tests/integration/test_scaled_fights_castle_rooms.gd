@@ -4,7 +4,9 @@ extends FightSeriesCase
 ## test_scaled_boss_fights.gd, the Hall of Faces and the portrait gallery in test_scaled_fights_castle.gd.
 ## Over seeds 1-8 the four pregens on the sharp autopilot (smiting, opening with Spirit Guardians, throwing Fireball, as he
 ## plays) win 5, give or take one, on Balanced (owner, 2026-10-13 18:05), each fight played from where walking in or
-## talking sets it off, with its foes starting spread out (tests/unit/test_fight_spread.gd). Every fight finishes.
+## talking sets it off, with its foes starting spread out (tests/unit/test_fight_spread.gd). Every fight finishes. A fight
+## that waits in plain view (docs/rules/stealth.md) starts where its foes first notice a party walking in from the spawn
+## the story uses, not sneaking: the squares and the doors opened on the way are those, walked and read off.
 
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -49,7 +51,7 @@ func test_court_accountant_rug_v0_at_level_10() -> void:
 
 ## court_post_watch, castle_ravenloft_court variant 0 at level 10.
 func test_court_post_watch_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_court", 12, 10, "court_post_watch", [Vector2i(17, 19), Vector2i(18, 19), Vector2i(19, 19), Vector2i(20, 20)], 4, 6, [])
+	await _held("castle_ravenloft_court", 12, 10, "court_post_watch", [Vector2i(18, 19), Vector2i(19, 19), Vector2i(20, 20), Vector2i(21, 21)], 4, 6, [], [], ["court_guardroom_door"])
 
 
 ## crg_courtyard_gargoyles, castle_ravenloft_gates variant 0 at level 10 (strahd_invitatio).

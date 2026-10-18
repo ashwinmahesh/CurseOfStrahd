@@ -1410,6 +1410,7 @@
     {
       "id": "court_post_watch",
       "trigger": "enter_area:court_guard_post",
+      "waiting": true,
       "text": "The armour on its stand turns its helm toward the door. Behind it, more suits step down from the wall pegs with nobody inside them.",
       "monsters": [
         {
@@ -1419,7 +1420,8 @@
             17
           ],
           "name": "The count's armour",
-          "hp": 190
+          "hp": 190,
+          "facing": "east"
         },
         {
           "monster": "helmed_horror",
@@ -1427,7 +1429,8 @@
             12,
             21
           ],
-          "hp": 102
+          "hp": 102,
+          "facing": "northeast"
         },
         {
           "monster": "helmed_horror",
@@ -1435,7 +1438,8 @@
             17,
             22
           ],
-          "hp": 102
+          "hp": 102,
+          "facing": "north"
         },
         {
           "monster": "helmed_horror",
@@ -1443,7 +1447,8 @@
             16,
             18
           ],
-          "hp": 102
+          "hp": 102,
+          "facing": "east"
         },
         {
           "monster": "helmed_horror",
@@ -1451,7 +1456,8 @@
             26,
             21
           ],
-          "hp": 102
+          "hp": 102,
+          "unseen": true
         }
       ],
       "surprise": "",
