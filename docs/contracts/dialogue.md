@@ -41,7 +41,10 @@ Speaker [away]: Text               The speaker turns their back on the other sid
                                    later (saved). So a menu must never depend on one such check: give another way
                                    on (another skill, an offer, a price, a fight, or simply moving on). Where it
                                    fits the scene, failure should cost something: a cooler `attitude`, a flag that
-                                   closes a door or raises a price, a fight, an alarm, lost time or gold.
+                                   closes a door or raises a price, a fight, an alarm, lost time or gold. `make
+                                   validate` enforces it (tools/data/fail_routes.py): walk the conversation with every
+                                   roll failed, and a side quest's stage must still be reachable; a choice between
+                                   two endings is fine, and an exception goes in that file's ALLOWED with its reason.
 * [if <condition>] Text -> node    Shown only when the condition holds.
 * [Cleric] Text -> node            Shown only if a party member is a Cleric; that character speaks it. Also
                                    [Elf], [Criminal] (background), [tag:blunt] and [knows:remove_curse] (a spell that character can cast
