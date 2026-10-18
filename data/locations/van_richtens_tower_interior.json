@@ -115,7 +115,10 @@
           11,
           45
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -578,7 +581,7 @@
       ],
       "kind": "examine",
       "label": "A clay figure holding a chain",
-      "model": "statue_faceless",
+      "model": "statue_knight",
       "dialogue": "van_richtens_tower/the_lift:statues_f1"
     },
     {
@@ -589,7 +592,7 @@
       ],
       "kind": "examine",
       "label": "A clay figure holding a chain",
-      "model": "statue_faceless",
+      "model": "statue_knight",
       "dialogue": "van_richtens_tower/the_lift:statues_f1"
     },
     {
@@ -600,7 +603,7 @@
       ],
       "kind": "examine",
       "label": "A clay figure holding a chain",
-      "model": "statue_faceless",
+      "model": "statue_knight",
       "dialogue": "van_richtens_tower/the_lift:statues_f1"
     },
     {
@@ -611,7 +614,7 @@
       ],
       "kind": "examine",
       "label": "A clay figure holding a chain",
-      "model": "statue_faceless",
+      "model": "statue_knight",
       "dialogue": "van_richtens_tower/the_lift:statues_f1"
     },
     {
