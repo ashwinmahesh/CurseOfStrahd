@@ -181,6 +181,26 @@ func test_tsolenka_watch_v0_at_level_8() -> void:
 	await _held("tsolenka_pass_guard_tower", 12, 8, "tsolenka_watch", [Vector2i(10, 10), Vector2i(10, 11), Vector2i(11, 11), Vector2i(9, 11)], 4, 6, [])
 
 
+## tsolenka_vrocks, tsolenka_pass variant 3 at level 7 (the gate raised after the watch was fought; the party comes out of the tower).
+func test_tsolenka_vrocks_v3_at_level_7() -> void:
+	await _held("tsolenka_pass", 12, 7, "tsolenka_vrocks", [Vector2i(26, 8), Vector2i(25, 8), Vector2i(26, 9), Vector2i(25, 9)], 4, 6, ["tsolenka_gate_open", "tsolenka_watch_fate=fought"], [], ["tsolenka_portcullis_w", "tsolenka_portcullis_e"])
+
+
+## tsolenka_vrocks, tsolenka_pass variant 2 at level 8 (the gate raised after the watch was fought; the party comes out of the tower).
+func test_tsolenka_vrocks_v2_at_level_8() -> void:
+	await _held("tsolenka_pass", 12, 8, "tsolenka_vrocks", [Vector2i(26, 8), Vector2i(25, 8), Vector2i(26, 9), Vector2i(25, 9)], 4, 6, ["tsolenka_gate_open", "tsolenka_watch_fate=fought"], [], ["tsolenka_portcullis_w", "tsolenka_portcullis_e"])
+
+
+## tsolenka_vrocks, tsolenka_pass variant 1 at level 9 (the gate raised after the watch was fought; the party comes out of the tower).
+func test_tsolenka_vrocks_v1_at_level_9() -> void:
+	await _held("tsolenka_pass", 12, 9, "tsolenka_vrocks", [Vector2i(26, 8), Vector2i(25, 8), Vector2i(26, 9), Vector2i(25, 9)], 4, 6, ["tsolenka_gate_open", "tsolenka_watch_fate=fought"], [], ["tsolenka_portcullis_w", "tsolenka_portcullis_e"])
+
+
+## tsolenka_vrocks, tsolenka_pass variant 0 at level 10 (the gate raised after the watch was fought; the party comes out of the tower).
+func test_tsolenka_vrocks_v0_at_level_10() -> void:
+	await _held("tsolenka_pass", 12, 10, "tsolenka_vrocks", [Vector2i(26, 8), Vector2i(25, 8), Vector2i(26, 9), Vector2i(25, 9)], 4, 6, ["tsolenka_gate_open", "tsolenka_watch_fate=fought"], [], ["tsolenka_portcullis_w", "tsolenka_portcullis_e"])
+
+
 ## tower_night_visitors, van_richtens_tower variant 2 at level 6 (van_richten_notes_read).
 func test_tower_night_visitors_v2_at_level_6() -> void:
 	await _held("van_richtens_tower", 23, 6, "tower_night_visitors", [Vector2i(15, 20), Vector2i(16, 20), Vector2i(15, 21), Vector2i(15, 19)], 4, 6, ["van_richten_notes_read"])

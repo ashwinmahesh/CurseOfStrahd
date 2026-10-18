@@ -551,7 +551,8 @@
       ],
       "kind": "examine",
       "label": "A stone demon on the gate wall",
-      "model": "gargoyle"
+      "model": "gargoyle",
+      "when": "not flag.tsolenka_vrocks_woke"
     },
     {
       "id": "tsolenka_vrock_e",
@@ -561,7 +562,8 @@
       ],
       "kind": "examine",
       "label": "A stone demon on the gate wall",
-      "model": "gargoyle"
+      "model": "gargoyle",
+      "when": "not flag.tsolenka_vrocks_woke"
     },
     {
       "id": "tsolenka_arch_w",
@@ -1028,6 +1030,118 @@
         "id": "the_last_egg",
         "stage": "defended"
       }
+    },
+    {
+      "id": "tsolenka_vrocks",
+      "trigger": "enter_area:tsolenka_gate_road",
+      "when": "flag.tsolenka_gate_open and flag.tsolenka_watch_fate == \"fought\" and not flag.tsolenka_vrocks_woke and level >= 10",
+      "text": "Grey stone cracks like old ice along the two carved beasts beside the gate, flaking off wet flesh. They wrench their talons free and drop at you with a screech.",
+      "monsters": [
+        {
+          "monster": "vrock",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 420
+        },
+        {
+          "monster": "vrock",
+          "cell": [
+            33,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 420
+        }
+      ],
+      "surprise": "",
+      "flag": "tsolenka_vrocks_woke"
+    },
+    {
+      "id": "tsolenka_vrocks",
+      "trigger": "enter_area:tsolenka_gate_road",
+      "when": "flag.tsolenka_gate_open and flag.tsolenka_watch_fate == \"fought\" and not flag.tsolenka_vrocks_woke and level >= 9",
+      "text": "Grey stone cracks like old ice along the two carved beasts beside the gate, flaking off wet flesh. They wrench their talons free and drop at you with a screech.",
+      "monsters": [
+        {
+          "monster": "vrock",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 380
+        },
+        {
+          "monster": "vrock",
+          "cell": [
+            33,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 380
+        }
+      ],
+      "surprise": "",
+      "flag": "tsolenka_vrocks_woke"
+    },
+    {
+      "id": "tsolenka_vrocks",
+      "trigger": "enter_area:tsolenka_gate_road",
+      "when": "flag.tsolenka_gate_open and flag.tsolenka_watch_fate == \"fought\" and not flag.tsolenka_vrocks_woke and level >= 8",
+      "text": "Grey stone cracks like old ice along the two carved beasts beside the gate, flaking off wet flesh. They wrench their talons free and drop at you with a screech.",
+      "monsters": [
+        {
+          "monster": "vrock",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 280
+        },
+        {
+          "monster": "vrock",
+          "cell": [
+            33,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 280
+        }
+      ],
+      "surprise": "",
+      "flag": "tsolenka_vrocks_woke"
+    },
+    {
+      "id": "tsolenka_vrocks",
+      "trigger": "enter_area:tsolenka_gate_road",
+      "when": "flag.tsolenka_gate_open and flag.tsolenka_watch_fate == \"fought\" and not flag.tsolenka_vrocks_woke",
+      "text": "Grey stone cracks like old ice along the two carved beasts beside the gate, flaking off wet flesh. They wrench their talons free and drop at you with a screech.",
+      "monsters": [
+        {
+          "monster": "vrock",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 200
+        },
+        {
+          "monster": "vrock",
+          "cell": [
+            33,
+            8
+          ],
+          "name": "A Stone Demon",
+          "hp": 200
+        }
+      ],
+      "surprise": "",
+      "flag": "tsolenka_vrocks_woke"
     }
   ],
   "narration": {

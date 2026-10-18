@@ -174,6 +174,10 @@ and silvain_aster at the playthrough's own level).
 | `sorin_pursuers` | krezk_pool_of_the_white_sun | L8v0 | 8 | 3 flesh golem, 3 berserker, 4 mongrelfolk | 4 flesh golem, 3 berserker, 4 mongrelfolk | 6 |
 | `tsolenka_watch` | tsolenka_pass_guard_tower | L7v1 | 7 | 4 phantom warrior | 11 phantom warrior | 4 |
 | `tsolenka_watch` | tsolenka_pass_guard_tower | L8v0 | 8 | 5 phantom warrior | 15 phantom warrior | 5 |
+| `tsolenka_vrocks` | tsolenka_pass | L7v3 | 7 | 2 vrock (152 HP each) | 2 vrock at 200 HP | 5 |
+| `tsolenka_vrocks` | tsolenka_pass | L8v2 | 8 | 2 vrock (152 HP each) | 2 vrock at 280 HP | 5 |
+| `tsolenka_vrocks` | tsolenka_pass | L9v1 | 9 | 2 vrock (152 HP each) | 2 vrock at 380 HP | 5 |
+| `tsolenka_vrocks` | tsolenka_pass | L10v0 | 10 | 2 vrock (152 HP each) | 2 vrock at 420 HP | 5 |
 | `tower_night_visitors` | van_richtens_tower | L6v2 | 6 | vampire spawn, 2 swarm of bats | 4 vampire spawn, 6 swarm of bats | 4 |
 | `tower_night_visitors` | van_richtens_tower | L7v1 | 7 | 2 vampire spawn, 2 swarm of bats | 4 vampire spawn, 4 swarm of bats | 5 |
 | `tower_night_visitors` | van_richtens_tower | L8v0 | 8 | 2 vampire spawn, wight, 2 swarm of bats | 3 vampire spawn, wight, 3 swarm of bats | 6 |

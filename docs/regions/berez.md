@@ -182,10 +182,13 @@ Eleven maps (data/locations/). Map themes use only existing ones; §11 lists the
    squares, 4d10 fire, Dexterity 15 for half, spent when the first one walks in). `tsolenka_pass/events:green_fire` puts
    it out for good (`tsolenka_green_fire_out`) by Arcana 15 (one try for the party: a failure shuts that way) or Dispel
    Magic (any caster who has it prepared, no roll, no slot); stepping back or walking in always works.
-5. **Two stone demons** (props `tsolenka_vrock_w` and `_e`) stand against the wall either side of the gate: the book's
-   two petrified vrocks, which wake if anyone climbs the wall. They are scenery until the vrock sprite is drawn (a paid
-   step, waiting on the owner), then they wake if the party forced the gate past the watch (`tsolenka_watch_fate` =
-   `fought`). The two arches (props `tsolenka_arch_w` and `_e`) mark the bridge's ends; no square moved for any of this.
+5. **Two stone demons** (props `tsolenka_vrock_w` and `_e`, drawn with the gargoyle's art until the vrock's own sprite
+   is done) stand against the wall either side of the gate: the book's two petrified vrocks, which wake if anyone climbs
+   the wall. Ours wake when the party forced the gate past the watch (`tsolenka_watch_fate` = `fought`) and steps out of
+   the tower onto the road before it: `tsolenka_vrocks` (stat block `vrock`, the 2025 Monster Manual's, with Hit Points
+   tuned by level), and the statues are gone once it is won (`tsolenka_vrocks_woke`). A party the watch let through, or
+   released, never wakes them. Climbing the wall, the book's other way, isn't built. The two arches (props
+   `tsolenka_arch_w` and `_e`) mark the bridge's ends; no square moved for any of this.
 6. **The tower's upper floors.** A stair niche in the guardroom's south wall leads up to the lookout
    (`tsolenka_pass_guard_tower_upper`), whose hatch leads to the roof (`tsolenka_pass_guard_tower_roof`).
 
@@ -255,6 +258,7 @@ insects 100).
 | `lysaga_scorned` | berez | dialogue (after Strahd) | Lysaga at 60 HP, no hut | same | same | Low in effect |
 | `roc_of_ghakis` | tsolenka_pass | enter `tsolenka_bridge` by day | roc 190 HP and its mate at 85 (14400) | 160 HP | 130 HP | above High at 9 (two rocs); Low-Moderate below |
 | `tsolenka_watch` | tower | dialogue | sergeant + 4 phantom warriors (3500) | same | sergeant + 3 | Low |
+| `tsolenka_vrocks` | tsolenka_pass | enter `tsolenka_gate_road` once the gate is up and the watch was fought (dungeon expansion P1) | 2 vrocks (CR 6, the 2025 Monster Manual's block; 4,600 nominal) at 420 HP each at level 10 | 380 HP at 9, 280 at 8 | 200 at 7 | High: tuned to 5 wins in 8 for the sharp party at each version's first level |
 
 Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
 Fireball as he plays, and wins 5 in 8 on Balanced; foes with spells now cast their best one on Balanced, so Baba Lysaga

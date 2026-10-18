@@ -16,4 +16,8 @@ Gemini wrote it. The lines in the game are these, trimmed and checked for canon 
 - Menu choices and prop names (for example "Study the weave for the knot that holds it", "A curtain of green fire") are
   labels, not dialogue; Claude wrote them.
 
+- The vrock wake line (the fight's opening text) was drafted separately: "shedding from wet flesh" became "flaking off wet
+  flesh", which reads better on the screen and says what the stone is doing.
+
 - tsolenka: brief `tsolenka.brief.txt`, raw reply `tsolenka.reply.txt` (message 13547fac)
+- vrocks: brief `vrocks.brief.txt`, raw reply `vrocks.reply.txt` (message ea8379bb)

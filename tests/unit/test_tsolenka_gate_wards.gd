@@ -129,3 +129,71 @@ func test_a_party_with_neither_can_still_leave_or_walk_in() -> void:
 	var beats := SideQuestPlay.play(st, "tsolenka_pass/events:green_fire", ["Step back"])
 	assert_eq(SideQuestPlay.missing(beats), "")
 	assert_false(bool(st.get_flag("tsolenka_green_fire_out", false)), "the curtain stands: walking into it is the way")
+
+
+# --- The stone demons ----------------------------------------------------------------------------------
+
+func _vrocks(level: int, fate: String, gate_up: bool = true) -> Dictionary:
+	var st := SideQuestPlay.party(["hedda_ironvow"], level, PASS, 12)
+	if gate_up:
+		st.set_flag("tsolenka_gate_open")
+	if fate != "":
+		st.set_flag("tsolenka_watch_fate", fate)
+	return SideQuestPlay.encounter(st, PASS, "tsolenka_vrocks")
+
+
+func test_the_stone_demons_wake_only_for_a_party_that_forced_the_gate_past_the_watch() -> void:
+	for fate: String in ["", "passed", "released"]:
+		assert_true(_vrocks(9, fate).is_empty(), "no wake for a watch that %s" % ("was never met" if fate == "" else fate))
+	assert_true(_vrocks(9, "fought", false).is_empty(), "the watch fought but the gate still down: not yet")
+	assert_false(_vrocks(9, "fought").is_empty(), "the watch fought and the gate up: they come down")
+
+
+func test_the_stone_demons_are_tuned_by_level_and_wake_at_the_gate() -> void:
+	for pair: Array in [[7, 200], [8, 280], [9, 380], [10, 420], [11, 420]]:
+		var enc := _vrocks(int(pair[0]), "fought")
+		var hps: Array = (enc["monsters"] as Array).map(func(m: Variant) -> int: return int((m as Dictionary)["hp"]))
+		assert_eq(hps, [int(pair[1]), int(pair[1])], "two vrocks at level %d" % int(pair[0]))
+		assert_eq(str(enc["trigger"]), "enter_area:tsolenka_gate_road")
+		for m: Variant in enc["monsters"]:
+			assert_eq(str((m as Dictionary)["monster"]), "vrock")
+			assert_true(_open(PASS, (m as Dictionary)["cell"] as Array), "a vrock starts on open ground")
+
+
+func test_the_statues_are_gone_once_the_demons_have_woken() -> void:
+	var when := str(_prop(PASS, "tsolenka_vrock_w")["when"])
+	var st := SideQuestPlay.party(["hedda_ironvow"], 9, PASS, 12)
+	assert_true(StoryConditions.check(when, st), "stone until they wake")
+	st.set_flag("tsolenka_vrocks_woke")
+	assert_false(StoryConditions.check(when, st), "and an empty wall after")
+	assert_eq(str(_prop(PASS, "tsolenka_vrock_e")["when"]), when, "both statues go together")
+
+
+## The 2025 Monster Manual's Vrock (read twice on 2026-10-18; data/monsters/vrock.json's source note says what isn't built).
+func test_the_vrock_block_is_the_2025_one() -> void:
+	var v := Compendium.shared().get_entry("monsters", "vrock")
+	assert_eq(int(v["ac"]), 15)
+	assert_eq(int((v["hp"] as Dictionary)["average"]), 152)
+	assert_eq(str((v["hp"] as Dictionary)["dice"]), "16d10+64")
+	assert_eq(int(v["cr"]), 6)
+	assert_eq(int(v["xp"]), 2300)
+	assert_eq(str(v["size"]), "large")
+	assert_eq(int((v["speed"] as Dictionary)["fly"]), 60)
+	var shred := {}
+	var spores := {}
+	var screech := {}
+	for a: Variant in v["actions"]:
+		match str((a as Dictionary)["id"]):
+			"shred":
+				shred = a as Dictionary
+			"spores":
+				spores = a as Dictionary
+			"stunning_screech":
+				screech = a as Dictionary
+	assert_eq(int((shred["attack"] as Dictionary)["bonus"]), 6, "Shred hits at +6")
+	assert_eq((shred["damage"] as Array).map(func(d: Variant) -> String: return str((d as Dictionary)["dice"])), ["2d6+3", "3d6"], "2d6+3 piercing plus 3d6 poison")
+	assert_eq(int((spores["save"] as Dictionary)["dc"]), 15)
+	assert_eq(str(spores["recharge"]), "6", "Spores recharge on a 6")
+	assert_eq(int((screech["uses"] as Dictionary)["count"]), 1, "Stunning Screech once a day")
+	assert_eq(str(((screech["damage"] as Array)[0] as Dictionary)["dice"]), "3d6")
+

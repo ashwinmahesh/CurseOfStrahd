@@ -265,6 +265,11 @@
       "id": "tsolenka_fire_unpick_tried",
       "type": "bool",
       "summary": "The party tried to unpick the green fire's weave with Arcana and failed: that way is closed (tsolenka_pass/events:green_fire); Dispel Magic or walking through still work."
+    },
+    {
+      "id": "tsolenka_vrocks_woke",
+      "type": "bool",
+      "summary": "The two stone demons on the Tsolenka gate wall woke and were beaten (encounter tsolenka_vrocks): they wake when the gate is raised after the party fought the watch, and the statues are gone after."
     }
   ]
 }
