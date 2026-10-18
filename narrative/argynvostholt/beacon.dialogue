@@ -3,6 +3,10 @@
 # light: the lighting; Godfrey's last choice if the cards named him; then vladimir:climax_end (the milestone).
 
 ~ cradle
+if flag.beacon_oath_kept
+Narrator: The cradle is cold ash and old soot, and on the plinth beside it there is a pale scorch where the silver flame went out.
+-> END
+endif
 if flag.argynvost_beacon_lit
 Narrator: The beacon burns silver in its cradle, without heat and without smoke. From up here its light lies on the treetops all the way to the castle.
 -> END
@@ -98,7 +102,26 @@ Narrator: If the beacon burns tonight, they lie down tonight, and they won't mar
 ~ pact_warning
 Narrator: The silver flame leans toward the cradle on its own. You swore an oath over Vladimir's table that this house would go on watching.
 * Light it. That oath was a mistake. -> pact_break
-* (Lower the flame.) An oath is an oath. -> END
+* (Lower the flame.) An oath is an oath. -> oath_ask
+
+# Keeping the oath is a choice that ends the beacon (sq-stuck-2): asked once more, with the echo's warning, because the flame
+# is the last of the dragon's fire and lowering it puts it out for good. order_fate stays "grudge" and nothing main is set;
+# beacon_oath_kept is the side flag that keeps the cradle, the bones and the echo shut afterwards.
+~ oath_ask
+Argynvost [weary]: Easy, friends. That small cold light is the last of what I was, and I have no second spark to give.
+Argynvost [sad]: Lower it now and it goes out, and I go out with it. The beacon will never be lit.
+Argynvost: I would rather you raised it, and let them go home. But I only ask.
+* (Let the flame die.) The oath stands. -> oath_kept
+* (Hold the flame a little longer.) Not yet. -> END
+
+~ oath_kept
+set beacon_oath_kept
+set dragon_fire_kindled = false
+quest the_dark_beacon kept_dark
+Narrator: You lower the silver flame toward the stone, and it thins to a ribbon of frost and is gone. It gave no heat, and the cold it leaves is worse.
+Argynvost [weary]: Keep the watch, friends.
+Narrator: The cradle stays black above the valley. Far below on the stair, armour shifts on a sword hilt, and the dead go on keeping their watch.
+-> END
 
 ~ pact_break
 set vladimir_pact_broken

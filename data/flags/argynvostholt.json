@@ -175,6 +175,11 @@
       "id": "beacon_light_seen",
       "type": "bool",
       "summary": "Road event (the beacon lit): the party saw the beacon burning from the road."
+    },
+    {
+      "id": "beacon_oath_kept",
+      "type": "bool",
+      "summary": "The party kept Vladimir's oath at the beacon's cradle and let the dragon's flame go out (beacon:oath_kept): The Dragon's Beacon ends as a failure, the cradle, the echo and the bones go quiet for good. A side flag; order_fate stays grudge."
     }
   ]
 }

@@ -2,6 +2,10 @@
 # The beacon and the fire in his bones (quest the_dark_beacon), the oath, the skull, his last words to Vladimir.
 
 ~ start
+if flag.beacon_oath_kept
+Narrator: Frost on the coloured glass, thick and blind. It draws no long head in it now, and nothing answers.
+-> END
+endif
 if not flag.argynvost_echo_met
 -> first
 endif

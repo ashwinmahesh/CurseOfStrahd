@@ -48,6 +48,12 @@
       ],
       "hint": "Kindle the dragon's fire at his bones in the mausoleum on Argynvostholt's grounds, then carry it to the beacon at the top of the tower.",
       "ends": ""
+    },
+    {
+      "id": "kept_dark",
+      "journal": "We kept the oath sworn at Vladimir's table and lowered the silver flame before it touched the cradle. It went out in our hands, and with it the last of Argynvost. The beacon stays dark, and the Order still keeps its watch.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

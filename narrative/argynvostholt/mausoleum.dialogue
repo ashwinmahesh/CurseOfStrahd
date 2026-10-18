@@ -87,12 +87,15 @@ Narrator: The dragon lies along the bier with his wings folded like a cloak, eve
 else
 Narrator: The dragon lies along the bier with his wings folded like a cloak, every bone in its place, except at the end of the long neck, where there is nothing at all. Frost furs the ribs and doesn't melt.
 endif
+if flag.beacon_oath_kept
+Narrator: The frost on the ribs has dulled to grey rime. Where you once took the light there is only bone.
+endif
 if flag.bone_watch_defeated and not flag.mausoleum_opened
 Narrator: The vault is quiet now. Somewhere in the stone, very faintly, a sentry is still saying the challenge to nobody.
 endif
 * [if flag.argynvost_skull_taken and not flag.argynvost_skull_home] Lay his skull at the end of the long neck. -> skull_home
-* [if flag.argynvost_echo_met] Kindle a light from the frost on his bones, as he asked. -> kindle
-* [if not flag.argynvost_echo_met] [Arcana DC 15] There's something still burning in these bones. -> arcana_ok | arcana_fail
+* [if flag.argynvost_echo_met and not flag.beacon_oath_kept] Kindle a light from the frost on his bones, as he asked. -> kindle
+* [if not flag.argynvost_echo_met and not flag.beacon_oath_kept] [Arcana DC 15] There's something still burning in these bones. -> arcana_ok | arcana_fail
 * [class:cleric] (Say a prayer for the dead.) -> prayer
 * Leave him be. -> END
 
