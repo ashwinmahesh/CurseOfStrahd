@@ -39,9 +39,10 @@ A board whose interior style is `tent` (catalog `building_kit.interiors.themes.t
 - **Pieces stand off the canvas.** The board's `wall_inset` (set by `TentWalls`) is how far in from the wall square's
   face the canvas stands at about chest height; pieces hung on the wall or backed onto it are set that far forward
   (a deep piece is squeezed to stay in its square), so nothing disappears into the leaning canvas.
-- **Cut-away.** In the Modern look each side has a full and a cut-away version and joins the room walls' cut-away
-  (`InteriorWalls.cut`): the canvas toward the camera drops to 1.15, the far sides stand. Classic builds the cut-away
-  version only, with no charms or roof.
+- **Standing.** In the Modern look the canvas stands full height on every side and opens a window round the party
+  where it hides it, as a room's walls do (`SeeThrough`, docs/art/building_kit.md); with `interiors.cut_away` on, the
+  canvas toward the camera drops to 1.15 instead (`InteriorWalls.cut`). Classic builds it at 1.15 only, with no charms
+  or roof.
 
 ### The canvas (`tent/canvas`)
 
@@ -262,7 +263,7 @@ braziers burning in the antechamber and either side of the altar.
 - The cells have straw, a bucket and chains (set `prison_cells`), the larders' guardroom pallets along its walls
   (`guard_pallets`), the spires' cauldron room herbs, pots, sacks and bones (`cauldron_room`) instead of armchairs, and
   Rahadin's room only its cot, ledger and racks of curved swords.
-- Wall pieces go on the walls the camera faces (north and east): the ones nearest it are cut away.
+- Wall pieces go on the walls the camera faces (north and east): the ones nearest it show only their backs.
 
 Rooms are never left barren (coordinator, 2026-10-08): a room its text calls bare keeps only its own things, but a
 ruined or wrecked one is furnished from a set of its own debris (`furnish: "<set>"` names one of the catalog's furnish
@@ -285,5 +286,5 @@ doesn't count the room's people already.
 shots of `INTERIORS_SPOTS`.
 
 `tests/integration/test_interiors.gd`: the tent is canvas with poles and charms and no house walls, its floor is rugs,
-it cuts away toward the camera, Classic keeps it low, and her things are the models the narration names; the inn's
+it stands toward the camera (cut away only with `interiors.cut_away` on), Classic keeps it low, and her things are the models the narration names; the inn's
 stable yard is earth and straw inside board walls, with stalls, horses, a trough, hay and tack, and no tavern furniture.
