@@ -69,12 +69,14 @@ slipping past, so what the story gates on it stays as if the fight were still to
 read `wachter_cult_broken`, and the den's inner fights still want `den_guards_cleared`, Zuleika's word or Emil freed
 (the last already a way in that needs no fight).
 
-**More waiting fights.** Ten walk-in fights whose foes are watchers, not things bursting out of hiding, become
-`waiting` with a `facing` each, so they can be seen from the doorway and planned around: wardens_camp_fight (Yester
-Hill, wardens_hoard), winery_occupation (druid_bedrolls), court_post_watch (court_post_rack), crg_turret_guard,
-larders_jailers (larders_jailers_chest), cat_gargoyle_watch (cat_champion_slab), crg_courtyard_gargoyles (the castle
-gate courtyard, on the way in), peak_guardians (spires_hollow_guardian), garden_sentry, berez_scarecrows (on the way
-to the hut stump). That makes 19 waiting fights, 5 of them on the only way through.
+**More waiting fights.** Eight walk-in fights whose foes are watchers, not things bursting out of hiding, become
+`waiting` with a `facing` each, so they can be seen from the doorway and planned around: court_post_watch
+(court_post_rack), crg_turret_guard, larders_jailers (larders_jailers_chest), cat_gargoyle_watch (cat_champion_slab),
+crg_courtyard_gargoyles (the castle gate courtyard, on the way in), peak_guardians (spires_hollow_guardian),
+garden_sentry, berez_scarecrows (on the way to the hut stump). That makes 17 waiting fights, 5 of them on the only way
+through. Yester Hill's wardens' camp and the winery's druids stay walk-in fights: F7 made them `waiting` once, and
+they spotted the story bot from the summit path and the winery door, which forced optional fights and broke
+test_phase5_exit.
 
 **UI.** Stepping into a guarded area unnoticed toasts "Unnoticed: they haven't seen you". A container in a waiting
 fight's area says on its hover hint "Guarded: taking from it where they'd see starts the fight" (the F8 owner hint).
@@ -84,10 +86,9 @@ they are.
 
 **Moves.**
 - Fights: none of the nine existing waiting fights changes for a party that fights (the series start them directly).
-  The ten converted fights can now start from up to 30 ft out, before the doorway, so each is re-measured from its
-  real entry and retuned if it leaves 5±1 (bosses 3/8): test_scaled_fights_wardens_camp, test_story_fights and
-  test_wow_levels (winery), test_scaled_fights_castle_rooms (six of them), test_scaled_fights_regions and
-  test_scaled_boss_fights (garden, scarecrows).
+  The eight converted fights can now start from up to 30 ft out, before the doorway, so each is re-measured from its
+  real entry and retuned if it leaves 5±1 (bosses 3/8): test_scaled_fights_castle_rooms (six of them),
+  test_scaled_fights_regions and test_scaled_boss_fights (garden, scarecrows).
 - Tests: test_sight_cones (slipping through, guarded containers, sleepers), test_stealing_and_crime (shared witness
   rule), test_xp_mode and test_xp (the slip-past award), phase 3-6 exits and test_storyqa_continuity (the story bot
   walks past rooms that now have foes in view; path-sensitive), side_quests_* and side_quest_bosses for the
@@ -148,14 +149,14 @@ and what going round costs; the d20 panel shows the Stealth and Perception rolls
 - Wiki: the road encounter tables (`event_words` and the fight lines) gain "can be avoided"; the travel page.
 - Docs: docs/ui/travel_map.md, deviations rows "Travel pace" and "Spotting a road encounter".
 
-## Recommendation: A, with the four fixes
+## Recommendation: A, with the four fixes (Ashwin picked it, 2026-10-18)
 
 Option A answers "there isn't a point" most directly: every guarded room becomes a choice between fighting it,
 slipping past it and robbing it, the way Baldur's Gate 3's sight cones (which the game already copies) are used. It
 keeps the 2024 Surprise rule and doesn't make any fight easier for a party that fights, so the 5/8 tuning holds; the
-cost is re-measuring ten converted fights from their new entries. B is the cheaper build but hands a sneaking player a
+cost is re-measuring eight converted fights from their new entries. B is the cheaper build but hands a sneaking player a
 free round in every fight they open, which undoes the harder fights asked for on 2026-10-13. C makes the roads better
 but only pays off when a random roll comes up, and it touches the travel UI and 43 road fights.
 
 If A is picked, the build order is: the four fixes, the slip-past rule and guarded containers on the nine existing
-waiting fights, the XP award, then the ten conversions one at a time, each re-measured and retuned before the next.
+waiting fights, the XP award, then the eight conversions one at a time, each re-measured and retuned before the next.
