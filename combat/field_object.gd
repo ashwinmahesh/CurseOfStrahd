@@ -40,6 +40,10 @@ var concentration: Concentration:
 var _concentration: WeakRef = null
 var _needs_concentration: bool = false
 var ended: bool = false
+## How many times it has hurt a creature and the square of the last one: FieldView swings the figure it draws
+## (Guardian of Faith) at it.
+var strikes: int = 0
+var struck_cell: Vector2i = Vector2i.ZERO
 
 
 func _init(kind_: Kind = Kind.ZONE, spell_id_: String = "", name_: String = "") -> void:

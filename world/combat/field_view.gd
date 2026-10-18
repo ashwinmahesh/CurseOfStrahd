@@ -51,7 +51,11 @@ func sync(objects: Array) -> void:
 				_paint_zone(n, f)
 			n.set_meta("cell", f.cell)
 			n.set_meta("cells", f.cells.duplicate())
+			n.set_meta("strikes", f.strikes)
 			continue
+		if int(n.get_meta("strikes", 0)) != f.strikes:
+			n.set_meta("strikes", f.strikes)
+			_swing(n, f)
 		if n.get_meta("cell") != f.cell:
 			n.set_meta("cell", f.cell)
 			var tw := create_tween()
@@ -252,6 +256,18 @@ func _figure(f: FieldObject) -> DirectionalSprite:
 	var at := Vector2i(floori(f.origin.x), floori(f.origin.y))
 	s.position = Vector3(f.origin.x, board.floor_y(at), f.origin.y)
 	return s
+
+
+## The figure in `zone` turns to the square `f` last struck and swings at it, then stands facing it.
+func _swing(zone: Node3D, f: FieldObject) -> void:
+	for ch in zone.get_children():
+		var s := ch as DirectionalSprite
+		if s == null:
+			continue
+		var to := Vector2(f.struck_cell) + Vector2(0.5, 0.5) - f.origin
+		if to.length() > 0.01:
+			s.facing = Vector3(to.x, 0.0, to.y).normalized()
+		s.attack()
 
 
 ## The area's squares as a translucent tint just above the floor, under the spell's own lasting look (fog, flames,

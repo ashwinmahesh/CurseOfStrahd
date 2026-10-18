@@ -41,6 +41,13 @@ func test_guardian_of_faith_stands_on_the_board() -> void:
 		assert_eq(figure.position.y, board.floor_y(Vector2i(5, 2)), "on the floor there")
 	assert_between(CombatToken.height_for("guardian_of_faith"), 1.3, 2.8, "a Large guardian")
 	assert_true(zone.get_child_count() >= 2, "the tinted area is still there with it")
+	# It swings at what it strikes: turned toward that square, the attack playing.
+	f.strikes = 1
+	f.struck_cell = Vector2i(8, 2)
+	field.sync([f])
+	if figure != null:
+		assert_true(figure.is_attacking(), "the guardian swings")
+		assert_true(figure.facing.x > 0.9, "at the square it struck")
 	# Another spell's area has no figure.
 	var other := FieldObject.new(FieldObject.Kind.ZONE, "spirit_guardians", "Spirit Guardians")
 	other.origin = Vector2(2.5, 2.5)
@@ -55,6 +62,20 @@ func test_guardian_of_faith_stands_on_the_board() -> void:
 	assert_false(is_instance_valid(zone), "gone with the spell")
 	field.queue_free()
 	board.queue_free()
+
+
+## The area counts the blows it lands and remembers where the last one fell, which FieldView swings the guardian at.
+func test_guardian_of_faith_counts_its_strikes() -> void:
+	var e := TestCombat.open_field(4)
+	var c := TestCombat.high_caster(e, ["guardian_of_faith"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "guardian_of_faith", 4, [], Vector2(5.5, 4.5)).ok)
+	var o := e.spells.zones.object_of(c.id, "guardian_of_faith")
+	assert_eq(o.strikes, 0, "no blow yet")
+	e.spells.zones._affect(o, t, "start_turn", CombatResult.new(), {})
+	assert_eq(o.strikes, 1, "one blow")
+	assert_eq(o.struck_cell, t.cell, "on the one it hurt")
 
 
 ## Every creature a spell calls up is drawn from a sprite with a walk and an attack sheet, and has a portrait for the turn

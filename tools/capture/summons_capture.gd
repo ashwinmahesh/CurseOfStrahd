@@ -29,7 +29,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	TestCombat.hero(e, "godrick_pendlebrook", Vector2i(3, 6), 9)
 	e.add(Monster.from_data(SummonBlocks.for_spell("summon_dinosaur", 6, "triceratops", {})), &"party", Vector2i(5, 12))
 	e.add(Monster.from_data(SummonBlocks.for_spell("summon_plant", 5, "tree", {})), &"party", Vector2i(8, 12))
-	TestCombat.foe(e, "zombie", Vector2i(12, 5))
+	var zombie := TestCombat.foe(e, "zombie", Vector2i(12, 5))
 	TestCombat.foe(e, "zombie", Vector2i(13, 7))
 	TestCombat.foe(e, "zombie", Vector2i(12, 9))
 	TestCombat.start_with(e, hedda)
@@ -59,3 +59,9 @@ func capture_shots(tool: Node, out: String) -> void:
 	view.hud.visible = false
 	await tool.call("wait_frames", 4)
 	tool.call("_shot", out + "_board.png")
+	# The first zombie to come within reach is struck: the guardian turns to it and swings.
+	var guardian := e.spells.zones.object_of(hedda.id, "guardian_of_faith")
+	e.spells.zones._affect(guardian, zombie, "enter", CombatResult.new(), {})
+	view.field.sync(e.spells.zones.objects)
+	await tool.call("wait_frames", 14)
+	tool.call("_shot", out + "_strike.png")

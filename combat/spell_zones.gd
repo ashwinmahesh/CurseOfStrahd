@@ -439,6 +439,8 @@ func _affected(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, s
 		details.append(str(rolled["text"]))
 		if amount > 0:
 			var dr := spells().deal_spell_damage(ctx, t, [{"amount": amount, "type": str(rolled["type"]), "spell": true}], false, label, details)
+			o.strikes += 1
+			o.struck_cell = t.cell
 			# Guardian of Faith vanishes once it has dealt its total.
 			if o.rules.has("damage_cap"):
 				o.rules["dealt"] = int(o.rules.get("dealt", 0)) + dr.final
