@@ -10,6 +10,7 @@ extends Node3D
 ## party's squares; empty: the place's own spawn), AMBER_FLAGS=amber_temple_sealed,... (story flags set first),
 ## AMBER_HOUR=12, AMBER_WINDOW=1 (keep the window round the party that walls and blocks open; off by default), AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them),
 ## AMBER_SPEAK=vestige_zantras (whose line is on screen for the stills), AMBER_GIFT=gift_of_zantras (the first of the party has taken it),
+## AMBER_LEVEL=10 (the party's level, 3 unless set),
 ## AMBER_FIGHT=vosk_unmasked (a fight of that id is on: the sanctum's braziers flare),
 ## AMBER_STAGE=6:speak=vestige_zantras,14:speak=,18:gift=gift_of_zantras,24:flag=amber_temple_sealed (in a clip, what changes at which frame).
 
@@ -54,7 +55,7 @@ func capture_shots(tool: Node, out: String) -> void:
 func _build(loc_id: String) -> void:
 	GameState.reset()
 	for pid: String in PARTY:
-		var ch := Pregens.build(pid, 3)
+		var ch := Pregens.build(pid, int(OS.get_environment("AMBER_LEVEL")) if OS.get_environment("AMBER_LEVEL") != "" else 3)
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
 	var st := GameState.story

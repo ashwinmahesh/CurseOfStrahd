@@ -292,6 +292,11 @@ braziers burning in the antechamber and either side of the altar.
     light on both sides, dark once the temple is sealed (AmberGlow.dress_door, from SetDressing.door); the heaps of the vault
     of offerings glint (shaders/world/glint.gdshader, AmberGlow.dress_place); and the sanctum's cold braziers flare
     violet (SetDressing.FLAME_TINTS `violet`) while the fight with Vosk (`vosk_unmasked`) is on.
+  - Small motion (AmberMotion, world/look/amber_motion.gd, step 11): the hall of echoes is the cold room, its desks' candles
+    burn frost-blue (SetDressing.tint_candles, FLAME_TINTS `frost`) and so do their lights, but for Patrina's clear desk, where
+    paper flakes fall over her book (a particle sheet); in the library Vosk's cup steams and Exethanter's pinned notes stir;
+    Yrrga's eye moves in its block toward the leader (Case.set_gaze); and in the vaults amber seeps from the weeping crack
+    (shaders/world/amber_seep.gdshader), when the crack shows.
 
 ### Castle Ravenloft
 

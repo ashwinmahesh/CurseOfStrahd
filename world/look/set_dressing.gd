@@ -505,10 +505,11 @@ static func flame(size: float, tint: String = "") -> Node3D:
 
 
 ## The palette colours a flame's surfaces are drawn in (its body, its red tongues, its white-hot heart), as the 2D flame
-## has them; a green fire's ("bile") and a violet one's ("violet": the Amber Temple's braziers) in their own.
+## has them; a green fire's ("bile") and a violet one's ("violet": the Amber Temple's braziers) and a frost-blue one's ("frost": the hall of echoes' candles) in their own.
 const FLAME_TINTS := {"": {"glow_flame": "candle", "glow_ember": "vampire_red", "glow_candle": "wick"},
 	"bile": {"glow_flame": "bile", "glow_ember": "moss", "glow_candle": "frost"},
-	"violet": {"glow_flame": "orchid", "glow_ember": "plum", "glow_candle": "frost"}}
+	"violet": {"glow_flame": "orchid", "glow_ember": "plum", "glow_candle": "frost"},
+	"frost": {"glow_flame": "moonlight", "glow_ember": "mist_blue", "glow_candle": "frost"}}
 
 
 ## A location light's colour: its data `color` (a palette colour: a witch's green hearth), else candlelight.
@@ -530,6 +531,23 @@ static func tint_flames(root: Node, tint: String) -> void:
 				var name := src.resource_name if src != null else ""
 				if name.begins_with("glow_"):
 					mi.set_surface_override_material(i, _flame_material(str(swap.get(name, name.trim_prefix("glow_")))))
+
+
+## Recolours the flames modelled into the pieces under `root` (a desk's candle, a cluster of candles: their own `glow_*`
+## surfaces, not a Flame node) as FLAME_TINTS[`tint`] has them: the hall of echoes' frost-blue candles.
+static func tint_candles(root: Node, tint: String) -> void:
+	if not FLAME_TINTS.has(tint):
+		return
+	var swap := FLAME_TINTS[tint] as Dictionary
+	for n: Node in root.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		if mi.mesh == null:
+			continue
+		for i in mi.mesh.get_surface_count():
+			var src := mi.mesh.surface_get_material(i)
+			var name := src.resource_name if src != null else ""
+			if name.begins_with("glow_"):
+				mi.set_surface_override_material(i, _flame_material(str(swap.get(name, name.trim_prefix("glow_")))))
 
 
 static func _flame_3d(size: float, tint: String) -> Node3D:

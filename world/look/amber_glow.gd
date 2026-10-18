@@ -145,6 +145,7 @@ static func refresh(view: LocationView) -> void:
 		return
 	var cases := view.get_tree().get_nodes_in_group(&"amber_cases")
 	if cases.is_empty():
+		AmberMotion.refresh(view)   # (a place with no blocks of amber still has its small motion)
 		return
 	var party: Array[Vector2] = []
 	for m: Combatant in view.members:
@@ -162,6 +163,7 @@ static func refresh(view: LocationView) -> void:
 		c.set_state(state_of(view, c.vestige, c.prop_id), smoothstep(0.0, 1.0, near))
 		c.set_thread(bool(view.st.get_flag("amber_thread_seen", false)))
 	_flare(view)
+	AmberMotion.refresh(view)
 
 
 ## Builds the case for a location prop at `cell` under `root` (SetDressing.place's node for it): `look` is its catalog
@@ -256,7 +258,10 @@ static func dress_door(leaf: Node3D, width: float, height: float) -> void:
 ## The Amber Temple's small things that don't belong to one prop (called once as a place is built): in the vaults, glints
 ## on the heaps of the vault of offerings and the sanctum's cold braziers, each with a violet flame waiting to flare.
 static func dress_place(view: LocationView) -> void:
-	if not Look.modern() or view.loc_id != "amber_temple_vault":
+	if not Look.modern():
+		return
+	AmberMotion.dress(view)   # the small motion: frost candles' flakes, steam, stirring notes, the weeping seep (step 11)
+	if view.loc_id != "amber_temple_vault":
 		return
 	var heaps: Array[Vector3] = []
 	var braziers: Array[Node3D] = []
@@ -446,6 +451,9 @@ static func _hold(case: Case, held: Dictionary, at: Vector3) -> void:
 		mi.material_override = m
 		case.add_child(mi)
 		case.shape_materials.append(m)
+		if id == "yrrga" and plane == "main":
+			case.gaze_quad = mi   # its eye follows the leader (AmberMotion.refresh)
+			case._gaze_base = mi.position
 
 
 ## A person asleep in amber: a low block lying on the floor.
@@ -726,6 +734,12 @@ class Case extends Node3D:
 	var _soft := 1.0
 	var _jump := false
 	var _clock := 0.0
+	## The picture that looks about (Yrrga's eye): where it hangs in the block, and how far it has moved toward the leader
+	## and is asked to (block-local).
+	var gaze_quad: MeshInstance3D = null
+	var _gaze := Vector3.ZERO
+	var _gaze_to := Vector3.ZERO
+	var _gaze_base := Vector3.ZERO
 	## The hollow's thread (its shader), and how bright it is and is asked to be (0 faint, 1 bright).
 	var thread: ShaderMaterial = null
 	var _thread := 0.0
@@ -759,6 +773,22 @@ class Case extends Node3D:
 		light.set_meta("amber", true)
 		light.set_meta("no_shadow", true)
 		add_child(light)
+
+	## The eye looks toward the world point `at` (the leader): across the way the camera looks and a little up or down.
+	func set_gaze(at: Vector3) -> void:
+		var cam := get_viewport().get_camera_3d() if is_inside_tree() else null
+		if gaze_quad == null or cam == null:
+			return
+		var to := at - global_position
+		to.y = 0.0
+		var right := cam.global_basis.x
+		right.y = 0.0
+		var ahead := -cam.global_basis.z
+		ahead.y = 0.0
+		var across := clampf(to.dot(right.normalized()) / AmberMotion.GAZE_REACH, -1.0, 1.0) * AmberMotion.GAZE_ACROSS
+		var up := clampf(to.dot(ahead.normalized()) / AmberMotion.GAZE_REACH, -1.0, 1.0) * AmberMotion.GAZE_UP
+		_gaze_to = global_basis.inverse() * (right.normalized() * across) + Vector3(0.0, up, 0.0)
+		set_process(true)
 
 	## The hollow's thread burns bright (the party has seen it) or faint.
 	func set_thread(seen: bool) -> void:
@@ -819,6 +849,9 @@ class Case extends Node3D:
 		for m in shape_materials:
 			m.set_shader_parameter("shown", _shown)
 			m.set_shader_parameter("softness", soft_base * _soft)
+		if gaze_quad != null:
+			_gaze = _gaze.lerp(_gaze_to, clampf(delta * 3.0, 0.0, 1.0))
+			gaze_quad.position = _gaze_base + _gaze
 		if thread != null:
 			_thread = lerpf(_thread, _thread_to, clampf(delta * 1.2, 0.0, 1.0))
 			thread.set_shader_parameter("strength", lerpf(AmberGlow.THREAD_FAINT, AmberGlow.THREAD_BRIGHT, _thread))
