@@ -74,12 +74,11 @@ Rules for this work:
    the comic characters' from a brief per character, every reshaped and new side quest's from a brief per scene (who
    speaks, what happens, which flags and checks, the exits), and the Sunsword's from Part D. I write the briefs and the
    dialogue file's logic (nodes, checks, flags, exits), then review and edit every drafted line for canon, tone, the
-   rules above and voice safety before it goes into game data. How: Gemini on the web (gemini.google.com, the same
-   service and model picker as the Mac app) in the Claude app's built-in browser, signed in by Ashwin once; I pick
-   the model and effort, paste each brief, and read the reply back as page text. The native Gemini.app has no
-   scripting, and this session can't drive the screen; the Gemini CLI is signed in with an API key, so it's not used
-   unless Ashwin switches it to his Google sign-in. I keep each brief and Gemini's raw reply, so what it wrote and
-   what I changed can be compared.
+   rules above and voice safety before it goes into game data. How: Ashwin's ai-bridge (~/Documents/ai-bridge, the
+   daemon on 127.0.0.1:8765), whose `gemini` participant runs Antigravity's `agy` CLI signed in with his Google account
+   (consumer OAuth, so his subscription; no API key). `agy` answers on its selected model, Gemini 4 Argon (Medium);
+   its log says so on every run, and I check it. Tested 2026-10-17 with three lines for Sprig. I keep each brief and
+   Gemini's raw reply (the bridge's transcript holds them too), so what it wrote and what I changed can be compared.
 
 ## Part A: NPCs
 
