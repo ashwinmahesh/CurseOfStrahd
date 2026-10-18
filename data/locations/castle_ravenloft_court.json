@@ -1478,7 +1478,7 @@
             17
           ],
           "name": "The count's armour",
-          "hp": 190,
+          "hp": 120,
           "facing": "east"
         },
         {
@@ -1581,7 +1581,7 @@
             13
           ],
           "name": "Rahadin",
-          "hp": 325
+          "hp": 600
         },
         {
           "monster": "strahds_animated_armor",
@@ -1589,7 +1589,7 @@
             20,
             12
           ],
-          "hp": 270
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1597,7 +1597,7 @@
             28,
             12
           ],
-          "hp": 270
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1605,7 +1605,7 @@
             22,
             12
           ],
-          "hp": 215
+          "hp": 120
         }
       ],
       "surprise": "",
@@ -1623,7 +1623,7 @@
             21
           ],
           "name": "The rug",
-          "hp": 57
+          "hp": 120
         },
         {
           "monster": "crawling_claw",
@@ -1655,7 +1655,7 @@
             8,
             19
           ],
-          "hp": 235
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1663,7 +1663,7 @@
             6,
             22
           ],
-          "hp": 235
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1671,7 +1671,15 @@
             8,
             21
           ],
-          "hp": 235
+          "hp": 120
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            3,
+            22
+          ],
+          "hp": 120
         }
       ],
       "surprise": "",

@@ -26,8 +26,8 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 | `cat_sleepers` | catacombs | L10v0 | 10 | 3 vampire spawn | 10 vampire spawn | 4 |
 | `cat_sleepers` | catacombs | L10v1 | 10 | 2 vampire spawn | 10 vampire spawn | 4 |
 | `cat_guardians` | catacombs_tombs | L10v0 | 10 | strahds animated armor, 2 helmed horror | 2 strahds animated armor, 4 helmed horror | 5 |
-| `court_accountant_rug` | court | L10v0 | 10 | rug of smothering, 3 crawling claw | rug of smothering (57 HP), 3 crawling claw (4 HP), 3 strahds animated armor (235 HP) | 5 |
-| `court_post_watch` | court | L10v0 | 10 | strahds animated armor, 3 helmed horror | strahds animated armor (190 HP), 4 helmed horror (102 HP) | 5 |
+| `court_accountant_rug` | court | L10v0 | 10 | rug of smothering, 3 crawling claw | rug of smothering (120 HP), 3 crawling claw (4 HP), 4 strahds animated armor (120 HP) | 6 |
+| `court_post_watch` | court | L10v0 | 10 | strahds animated armor, 3 helmed horror | strahds animated armor (120 HP), 4 helmed horror (102 HP) | 5 |
 | `crg_courtyard_gargoyles` | gates | L10v0 | 10 | 6 gargoyle | 16 gargoyle (64 HP) | 5 |
 | `crg_courtyard_gargoyles` | gates | L9v1 | 9 | 4 gargoyle | 14 gargoyle (68 HP) | 5 |
 | `larders_guardroom` | larders | L10v0 | 10 | 2 wight, 2 helmed horror, 4 strahd zombie | 4 wight, 4 helmed horror, 6 ghast, strahd zombie | 5 |
@@ -43,7 +43,7 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 | `spires_stair_watch` | spires | L10v1 | 10 | 3 vampire spawn, 3 swarm of bats | 8 vampire spawn, 8 swarm of bats | 6 |
 | `spires_stair_watch` | spires | L11v0 | 11 | 4 vampire spawn, 3 swarm of bats | 9 vampire spawn, 7 swarm of bats | 5 |
 | `spires_stair_watch` | spires | L9v2 | 9 | 2 vampire spawn, swarm of bats | 6 vampire spawn, 5 swarm of bats | 5 |
-| `heart_guardians` | spires_heart | L10v1 | 10 | 2 strahds animated armor, helmed horror | 3 strahds animated armor (140 HP), 2 helmed horror (75 HP) | 5 |
+| `heart_guardians` | spires_heart | L10v1 | 10 | 2 strahds animated armor, helmed horror | 3 strahds animated armor (120 HP), 2 helmed horror (75 HP) | 5 |
 | `heart_guardians` | spires_heart | L11v0 | 11 | 2 strahds animated armor, 2 helmed horror | 3 strahds animated armor, 3 helmed horror | 6 |
 | `heart_guardians` | spires_heart | L9v2 | 9 | strahds animated armor, helmed horror | 3 strahds animated armor, 2 helmed horror | 6 |
 | `peak_guardians` | spires_roofs | L10v1 | 10 | 6 gargoyle | 16 gargoyle (70 HP) | 4 |

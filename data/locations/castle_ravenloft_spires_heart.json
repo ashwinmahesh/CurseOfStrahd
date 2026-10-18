@@ -374,7 +374,7 @@
             6,
             11
           ],
-          "hp": 140
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -382,7 +382,7 @@
             11,
             11
           ],
-          "hp": 140
+          "hp": 120
         },
         {
           "monster": "helmed_horror",
@@ -398,7 +398,7 @@
             5,
             2
           ],
-          "hp": 140
+          "hp": 120
         },
         {
           "monster": "helmed_horror",

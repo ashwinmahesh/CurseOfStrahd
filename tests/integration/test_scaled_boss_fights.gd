@@ -139,32 +139,31 @@ func test_rahadin_on_the_stair_at_level_10() -> void:
 	await _held("castle_ravenloft_court", 10, "court_rahadin_fight", RAHADINS_STAIR, 2, 4, [], ["gertruda"])
 
 
-## Rahadin in the hall at level 10: Rahadin (325 HP), 2 Strahd's Animated Armors (270 HP), Strahd's Animated Armor
-## (215 HP); 3 in 8.
+## Rahadin in the hall at level 10: Rahadin (600 HP), 3 Strahd's Animated Armors (120 HP); 2 in 8.
 func test_rahadin_in_the_hall_at_level_10() -> void:
 	await _held("castle_ravenloft_court", 10, "court_rahadin_fight", RAHADINS_HALL, 2, 4)
 
 
-## Rahadin in his chamber at level 10: Rahadin (265 HP), 3 Strahd's Animated Armors (220 HP); 3 in 8.
+## Rahadin in his chamber at level 10: Rahadin (615 HP), 3 Strahd's Animated Armors (120 HP); 3 in 8.
 func test_rahadin_in_his_chamber_at_level_10() -> void:
 	await _held("castle_ravenloft_court_weeping", 10, "court_rahadin_chamber_fight", RAHADINS_CHAMBER, 2, 5)
 
 
 ## Rahadin when the footlocker's lock defeats the party at level 10 (the check:rahadin_footlocker:failure version of the chamber
-## fight): Rahadin (325 HP), 3 Strahd's Animated Armors (220 HP); 3 in 8.
+## fight): Rahadin (580 HP), 3 Strahd's Animated Armors (120 HP); 3 in 8.
 func test_rahadin_at_the_failed_footlocker_at_level_10() -> void:
 	fire_trigger = "check:rahadin_footlocker:failure"
 	await _held("castle_ravenloft_court_weeping", 10, "court_rahadin_chamber_fight", RAHADINS_CHAMBER, 2, 4)
 	fire_trigger = ""
 
 
-## Two brides at level 10: 4 Vampire Spawns (150 HP), 2 Strahd's Animated Armors (185 HP); 2 in 8, the harder side
+## Two brides at level 10: 4 Vampire Spawns (150 HP), 2 Strahd's Animated Armors (120 HP); 2 in 8, the harder side
 ## (no step lands on 3).
 func test_two_brides_at_level_10() -> void:
 	await _held("castle_ravenloft_court_weeping", 10, "court_brides_fight", BRIDES_GALLERY, 1, 4, ["court_anastrasya_story"])
 
 
-## All three brides at level 10: 3 Vampire Spawns (175 HP), 2 Strahd's Animated Armors (215 HP); 2 in 8, the harder
+## All three brides at level 10: 3 Vampire Spawns (210 HP), 2 Strahd's Animated Armors (120 HP); 2 in 8, the harder
 ## side (no step lands on 3).
 func test_all_three_brides_at_level_10() -> void:
 	await _held("castle_ravenloft_court_weeping", 10, "court_brides_fight", BRIDES_GALLERY, 1, 4)

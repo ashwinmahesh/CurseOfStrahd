@@ -32,10 +32,10 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1
 | Lysaga and her hut | 9 | Baba Lysaga's Creeping Hut (110 HP), Baba Lysaga (100 HP) | Baba Lysaga's Creeping Hut (160 HP), Baba Lysaga (145 HP) | 3/8 | 3 |
 | The masterless hut | 9 | Baba Lysaga's Creeping Hut (195 HP), 3 Swarm of Insects | Baba Lysaga's Creeping Hut (520 HP), 3 Swarm of Insects | 3/8 | 3 |
 | Rahadin on the stair (Gertruda) | 10 | Rahadin (300 HP), 2 Strahd's Animated Armors, Strahd's Animated Armor (50 HP) | Rahadin (795 HP), 3 Strahd's Animated Armors, Strahd's Animated Armor (50 HP) | 3/8 | 3 |
-| Rahadin in the hall | 10 | Rahadin, 2 Strahd's Animated Armors, Strahd's Animated Armor (90 HP) | Rahadin (325 HP), 2 Strahd's Animated Armors (270 HP), Strahd's Animated Armor (215 HP) | 3/8 | 3 |
-| Rahadin in his chamber | 10 | Rahadin, 3 Strahd's Animated Armors | Rahadin (265 HP), 3 Strahd's Animated Armors (220 HP) | 3/8 | 3 |
-| Two brides | 10 | 4 Vampire Spawns, 2 Strahd's Animated Armors | 4 Vampire Spawns (150 HP), 2 Strahd's Animated Armors (185 HP) | 2/8 | 2 |
-| All three brides | 10 | 3 Vampire Spawns, 2 Strahd's Animated Armors | 3 Vampire Spawns (175 HP), 2 Strahd's Animated Armors (215 HP) | 2/8 | 2 |
+| Rahadin in the hall | 10 | Rahadin, 2 Strahd's Animated Armors, Strahd's Animated Armor (90 HP) | Rahadin (600 HP), 3 Strahd's Animated Armors (120 HP) | 2/8 | 2 |
+| Rahadin in his chamber | 10 | Rahadin, 3 Strahd's Animated Armors | Rahadin (615 HP), 3 Strahd's Animated Armors (120 HP) | 3/8 | 3 |
+| Two brides | 10 | 4 Vampire Spawns, 2 Strahd's Animated Armors | 4 Vampire Spawns (150 HP), 2 Strahd's Animated Armors (120 HP) | 2/8 | 2 |
+| All three brides | 10 | 3 Vampire Spawns, 2 Strahd's Animated Armors | 3 Vampire Spawns (210 HP), 2 Strahd's Animated Armors (120 HP) | 2/8 | 2 |
 | Vladimir at Strahd's tomb | 10 | Vladimir Horngaard, 4 Revenants, Revenant (80 HP) | Vladimir Horngaard (275 HP), 4 Revenants (180 HP), Revenant (80 HP) | 3/8 | 3 |
 | Old Greytooth | 6 | Old Greytooth (195 HP), 2 Dire Wolfs, 3 Wolfs, Bandit Captain | Old Greytooth (435 HP), 2 Dire Wolfs, 3 Wolfs, Bandit Captain | 3/8 | 3 |
 | Old Greytooth, Szoldar turned | 6 | Old Greytooth (240 HP), 2 Dire Wolfs, 3 Wolfs, Werewolf | Old Greytooth (420 HP), 2 Dire Wolfs, 3 Wolfs, Werewolf | 2/8 | 2 |
@@ -128,7 +128,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1
 | The sentinel stops a party with a dark gift | 10 | Amber Golem | Amber Golem (375 HP), 6 Wraiths | 3/8 | 3 |
 | The vault guardian | 10 | Amber Golem, Wraith | Amber Golem (460 HP), 4 Wraiths | 3/8 | 3 |
 | Offalia in her oven (open:hag_oven) | 6 | Night Hag (80 HP) | Night Hag (200 HP), 6 Nightmares | 3/8 | 3 |
-| Rahadin at the failed footlocker | 10 | Rahadin | Rahadin (325 HP), 3 Strahd's Animated Armors (220 HP) | 3/8 | 3 |
+| Rahadin at the failed footlocker | 10 | Rahadin | Rahadin (580 HP), 3 Strahd's Animated Armors (120 HP) | 3/8 | 3 |
 | The iron knight (brazier room, from the brazier / from the alcove) | 10 | Iron Golem x2 (252 HP each, 2025 block): 1 to 2 wins in 8 at any Hit Points, so one wakes | Iron Golem (300 HP), the other knight empty armour | 3/8 / 3/8 | 3 |
 
 ## Where a fight is not at 3 in 8, and why

@@ -1053,7 +1053,7 @@
             6,
             13
           ],
-          "hp": 185
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1061,7 +1061,7 @@
             11,
             13
           ],
-          "hp": 185
+          "hp": 120
         },
         {
           "monster": "vampire_spawn",
@@ -1097,7 +1097,7 @@
             15
           ],
           "name": "Ludmilla Vilisevic",
-          "hp": 175
+          "hp": 210
         },
         {
           "monster": "vampire_spawn",
@@ -1106,7 +1106,7 @@
             15
           ],
           "name": "Volenta Popofsky",
-          "hp": 175
+          "hp": 210
         },
         {
           "monster": "vampire_spawn",
@@ -1115,7 +1115,7 @@
             15
           ],
           "name": "Anastrasya Karelova",
-          "hp": 175
+          "hp": 210
         },
         {
           "monster": "strahds_animated_armor",
@@ -1123,7 +1123,7 @@
             6,
             13
           ],
-          "hp": 215
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1131,7 +1131,7 @@
             11,
             13
           ],
-          "hp": 215
+          "hp": 120
         }
       ],
       "surprise": "",
@@ -1149,7 +1149,7 @@
             17
           ],
           "name": "Rahadin",
-          "hp": 265
+          "hp": 615
         },
         {
           "monster": "strahds_animated_armor",
@@ -1157,7 +1157,7 @@
             26,
             17
           ],
-          "hp": 220
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1165,7 +1165,7 @@
             34,
             17
           ],
-          "hp": 220
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1173,7 +1173,7 @@
             32,
             15
           ],
-          "hp": 220
+          "hp": 120
         }
       ],
       "surprise": "",
@@ -1192,7 +1192,7 @@
             17
           ],
           "name": "Rahadin",
-          "hp": 325
+          "hp": 580
         },
         {
           "monster": "strahds_animated_armor",
@@ -1200,7 +1200,7 @@
             26,
             17
           ],
-          "hp": 220
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1208,7 +1208,7 @@
             34,
             17
           ],
-          "hp": 220
+          "hp": 120
         },
         {
           "monster": "strahds_animated_armor",
@@ -1216,7 +1216,7 @@
             32,
             15
           ],
-          "hp": 220
+          "hp": 120
         }
       ],
       "surprise": "",
