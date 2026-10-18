@@ -1716,6 +1716,8 @@
     "tome_conqueror": "sorrow",
     "tome_brothers": "sorrow",
     "tome_wedding": "sorrow",
-    "tome_wall": "sorrow"
+    "tome_wall": "sorrow",
+    "tome_refused": "sorrow",
+    "tome_again": "sorrow"
   }
 }

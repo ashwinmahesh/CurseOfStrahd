@@ -15,7 +15,8 @@
   "caption": "scene:tome_brothers",
   "more": [
     "scene:tome_brothers_2",
-    "scene:tome_brothers_3"
+    "scene:tome_brothers_3",
+    "scene:tome_brothers_4"
   ],
-  "then": "tome_wedding"
+  "then": "tome_refused"
 }

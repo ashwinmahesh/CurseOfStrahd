@@ -16,7 +16,8 @@
   "once": true,
   "more": [
     "scene:tome_conqueror_2",
-    "scene:tome_conqueror_3"
+    "scene:tome_conqueror_3",
+    "scene:tome_conqueror_4"
   ],
   "then": "tome_brothers"
 }

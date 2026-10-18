@@ -75,7 +75,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	var n := 0
 	while player != null and not player.done and root.get("screen") == player:
 		var long_one := player.scene_id == "tome_wedding" and player.index == 1
-		if player.index == 0 or long_one:
+		var last_one := player.scene_id == "tome_again" and player.index == 4   # the last page, a tear in the paper
+		if player.index == 0 or long_one or last_one:
 			n += 1
 			await _shoot(tool, "%s_tome_after_%d_%s_%d.png" % [out, n, player.scene_id, player.index + 1], 14)
 		player.advance()

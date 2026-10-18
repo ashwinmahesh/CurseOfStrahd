@@ -1,9 +1,13 @@
 extends TestCase
-## Two cutscenes from the owner's todo list (2026-10-18; docs/ui/cutscenes.md): reading the Tome of Strahd plays four
-## pictures of Strahd's story, three captions each, the first time only and to the sorrow; and Escher's first meeting
-## shows the tall mirror behind him with the same armchair empty, one picture by the owner's word.
+## Two cutscenes from the owner's todo list (2026-10-18; docs/ui/cutscenes.md): reading the Tome of Strahd plays six
+## scenes of Strahd's story (24 captions: his motives, his love for Tatyana and her refusing him for his brother, the
+## bargain and the wedding, her fall, and her rebirths generation after generation), the first time only and to the
+## sorrow; and Escher's first meeting shows the tall mirror behind him with the same armchair empty, one picture by the
+## owner's word.
 
-const TOME_SCENES: Array[String] = ["tome_conqueror", "tome_brothers", "tome_wedding", "tome_wall"]
+const TOME_SCENES: Array[String] = ["tome_conqueror", "tome_brothers", "tome_refused", "tome_wedding", "tome_wall", "tome_again"]
+## How many captions each scene reads.
+const TOME_CAPTIONS := {"tome_conqueror": 4, "tome_brothers": 4, "tome_refused": 4, "tome_wedding": 4, "tome_wall": 3, "tome_again": 5}
 ## A caption is read in a click or two: long enough to teach, short enough to sit over the picture.
 const MIN_WORDS := 25
 const MAX_WORDS := 60
@@ -58,34 +62,51 @@ func test_reading_the_tome_names_its_cutscene() -> void:
 	assert_eq(Cutscenes.for_trigger("read:no_such_book", st), "")
 
 
-func test_the_tome_plays_four_pictures_of_three_captions_each() -> void:
+func test_the_tome_plays_six_scenes_and_twenty_four_captions() -> void:
 	var st := _story()
 	var narrator := Narrator.new(1)
 	var actor := st.leader_character()
 	var first := narrator.line("read:tome_of_strahd", st, actor)
 	assert_ne(first, "", "the reading has its first caption")
 	var steps := Cutscenes.scenes("tome_conqueror", first, st, narrator, actor)
-	assert_eq(steps.size(), 4, "four scenes (the owner asked for three or four, and at least two)")
+	assert_eq(steps.size(), TOME_SCENES.size(), "six scenes")
+	var total := 0
 	for i in steps.size():
 		var id := str(steps[i]["id"])
 		assert_eq(id, TOME_SCENES[i])
 		assert_true(ResourceLoader.exists(Cutscenes.image(id, st)), "%s has its picture" % id)
 		var lines := steps[i]["lines"] as Array[String]
-		assert_eq(lines.size(), 3, "%s reads three captions" % id)
+		assert_eq(lines.size(), int(TOME_CAPTIONS[id]), "%s reads %d captions" % [id, int(TOME_CAPTIONS[id])])
+		total += lines.size()
 		for line in lines:
 			var words := line.split(" ", false).size()
 			assert_true(words >= MIN_WORDS and words <= MAX_WORDS, "%s: %d words in '%s'" % [id, words, line.left(40)])
+	assert_eq(total, 24)
 
 
-## The Amber Temple's vault says it when the Tome and the copper ledger are read together (narrative/amber_temple/vault.dialogue
-## ~ pact_tome), so the Tome must not say it first.
-func test_the_tome_leaves_the_vaults_revelation_to_the_vault() -> void:
+## What the owner asked the Tome to carry (2026-10-18): Strahd's motives, his love for Tatyana and her refusing the
+## decorated war hero for his brother, and her rebirths, each time another try at making her love him; and nothing that
+## belongs to someone else: the Amber Temple vault says "stop growing older than her" when the Tome and the copper ledger
+## are read together (narrative/amber_temple/vault.dialogue ~ pact_tome), and Ireena is never named in a book written long
+## before her.
+func test_the_tome_carries_his_motives_her_refusal_and_her_rebirths() -> void:
 	var st := _story()
 	var narrator := Narrator.new(1)
-	var steps := Cutscenes.scenes("tome_conqueror", narrator.line("read:tome_of_strahd", st), st, narrator)
-	for step in steps:
-		for line in step["lines"] as Array[String]:
-			assert_false("growing older" in line, "the Tome's captions don't give the vault's line away: %s" % line.left(60))
+	var by_scene := {}
+	var every := ""
+	for step in Cutscenes.scenes("tome_conqueror", narrator.line("read:tome_of_strahd", st), st, narrator):
+		by_scene[str(step["id"])] = " ".join(step["lines"] as Array[String])
+		every += " " + str(by_scene[str(step["id"])])
+	assert_true("loved for himself" in str(by_scene["tome_conqueror"]), "what he wanted, under the medals")
+	assert_true("medals" in str(by_scene["tome_refused"]) and "pity" in str(by_scene["tome_refused"]),
+		"the decorated war hero is refused, kindly, for his brother")
+	assert_true("Sergei waited" in str(by_scene["tome_refused"]))
+	assert_true("Generation after generation" in str(by_scene["tome_again"]) and "ledger" in str(by_scene["tome_again"]),
+		"Tatyana is born again, and he tries each time")
+	assert_true("I was gentle with her" in str(by_scene["tome_again"]), "each try begins kindly")
+	assert_false("growing older" in every, "the vault's revelation is left to the vault")
+	assert_false("Ireena" in every, "the book names no one from the party's time")
+	assert_false("Dark Powers" in every or " Death" in every, "the game never names what he bargained with")
 
 
 func test_the_tome_plays_once_and_closes_back_to_the_world() -> void:
@@ -98,8 +119,8 @@ func test_the_tome_plays_once_and_closes_back_to_the_world() -> void:
 	assert_eq(root.get("_cutscene_mood"), "sorrow", "to the sorrow")
 	for i in TOME_SCENES.size():
 		assert_eq(player.scene_id, TOME_SCENES[i])
-		assert_eq(player.view.image_path, "res://art/cutscenes/%s.jpg" % TOME_SCENES[i])
-		for c in 3:
+		assert_eq(player.view.image_path, Cutscenes.image(TOME_SCENES[i], GameState.story))
+		for c in int(TOME_CAPTIONS[TOME_SCENES[i]]):
 			assert_ne(player.view.caption_text(), "", "%s caption %d" % [TOME_SCENES[i], c + 1])
 			player.advance()
 	assert_true(player.done, "closed after the last caption of the last picture")
@@ -143,7 +164,7 @@ func test_reading_the_tome_in_the_inventory_plays_the_pictures_once() -> void:
 	assert_true(root.get("screen") is InventoryScreen, "a second reading stays in the inventory, no pictures")
 
 
-func test_skip_leaves_all_four_pictures() -> void:
+func test_skip_leaves_every_scene() -> void:
 	await _game()
 	assert_true(bool(root.call("play_item_cutscene", "read:tome_of_strahd", "")))
 	var player := root.get("screen") as CutscenePlayer

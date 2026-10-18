@@ -10,42 +10,80 @@
 ~ scene:tome_page
 | The first page is in a hand you know from his letters. The candle beside you leans toward it, as if it, too, wanted to be read.
 
-# The Tome of Strahd, read through (docs/ui/cutscenes.md `read:<item>`): four pictures of three captions each, played the
-# first time the Tome is read. Drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/).
+# The Tome of Strahd, read through (docs/ui/cutscenes.md `read:<item>`): six scenes, 24 captions, played the first time the
+# Tome is read. Drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/; first script
+# 2026-10-18, the fuller second one the same night after the owner asked for more of his motives, Tatyana and her rebirths).
 # The Amber Temple vault keeps the line that he bargained to stop growing older than her: the Tome must not say it first.
+# Nothing here names Ireena. All of it is unvoiced.
 
 ~ read:tome_of_strahd
 | By candlelight you read the steady script of a prince who took this valley four hundred years ago, the elder son of the warrior King Barov and Queen Ravenovia. He calls himself "a prince of the western wars" without pride or regret. He writes like a man tallying the winter stores of a fortress.
 
 ~ scene:tome_conqueror_2
-| He tells how he took the valley by the sword and made the castle that bears his mother's name his seat. "I gave my father's banners their final ground, and the mud kept them." Far below the ridge his soldiers cheer. He writes that he did not turn round to look at them.
+| He lists his victories, his medals and the honours the court heaped on him with a clerk's dry pride. "A prince is measured by what he holds," he writes. Far below the ridge his soldiers cheer among the smoking fields, and he does not turn round to look at them.
 
 ~ scene:tome_conqueror_3
-| Then the wars end, and you read how the peace bored him. His armour felt heavy only once there was no one left to fight. "A kingdom won is merely a house to keep," he writes, "and I was not bred for keeping house."
+| He makes the castle that bears his mother's name his seat, and then the quiet comes. Peace leaves nothing to conquer and no language for the emptiness in his new halls. "A kingdom won is merely a house to keep," he writes, "and I was not bred for keeping house."
+
+~ scene:tome_conqueror_4
+| Between the neat lines of the campaign accounts you hear what the decorated war hero cannot bring himself to write. Armies obeyed him and the court honoured him, and he ached to be loved for himself, and not for what he had won.
 
 ~ scene:tome_brothers
 | On the next pages is his younger brother Sergei, who has everything the elder lacks: ease, warmth, the gift of being loved without trying. Strahd sets this down in a level hand. "My brother wore the sun as easily as linen."
 
 ~ scene:tome_brothers_2
-| Then there is Tatyana, auburn-haired and always in white, who loved Sergei and never looked toward the elder brother standing in the archway. Strahd was kind to her all that week, and says so. "Courtesy costs a ruler nothing."
+| Then a young woman with auburn hair comes to the castle, and the lord who took a country by force finds something he cannot command. He remembers her white gowns, and writes that from the hour she arrived "the light in the hall belonged to her."
 
 ~ scene:tome_brothers_3
-| Here the ink changes. The first sour thought takes root on the page, and he gives it a ruler's reasons: his brother is young, the girl is young, and he is not. "Time was the only rival I could not meet on a field."
+| You see how carefully he watched the terrace from the shadow of the corridor, his hand tight on the stone as Sergei gave her a white rose. For the first time in his life the conqueror wanted a gentle thing that could only be given freely.
+
+~ scene:tome_brothers_4
+| He tells himself it was an elder brother's concern, but a sour thought already shows through the measured words. He asks the page why a boy who never bled for a single field should win so easily what a proven commander is denied.
+
+~ scene:tome_refused
+| He writes of the night he put on his dress uniform, heavy with ribbons and campaign medals, and offered Tatyana his hand and his house. He laid ten years of hard-won glory before her, as though a heart were a fortress that must yield to honours.
+
+~ scene:tome_refused_2
+| She refused him gently, with a small, apologetic smile that hurt him worse than cruelty could have. He sets it down in one flat sentence: "She looked upon me with pity." Centuries later you can feel the humiliation burning under the calm ink.
+
+~ scene:tome_refused_3
+| While she spoke to him her eyes were already across the hall, where Sergei waited among the dancers with his easy laugh. Everything Strahd had won in ten years of war counted for nothing against a young man who had never known a battlefield.
+
+~ scene:tome_refused_4
+| That night he writes the line that decides the rest of his life: "What is mine by merit shall not be lost to softness." He could not bear to be pitied, so he chose to take what would not be given.
 
 ~ scene:tome_wedding
-| The hand grows darker as he records a long climb into the high mountains, where a courteous old warden led him into the Amber Temple. Before a hollow amber sarcophagus a voice in the dark understood him at last. "It asked only what I wanted, and I answered without ornament."
+| He describes a long, freezing climb into the high mountains, where a courteous old warden led him to a hollow sarcophagus of amber. A voice in the dark understood him at last. "It asked only what I wanted, and I answered without ornament."
 
 ~ scene:tome_wedding_2
 | You read the terms he accepted. He would stay young for as long as he wanted anything, and keep whatever he had taken. The thing in the amber would live in him, and he in it, and he and his land would be one. The price was a life he loved. The page does not say whose.
 
 ~ scene:tome_wedding_3
-| It fell due on the day he most wanted to be happy, among the white flowers Tatyana had chosen. You read how Sergei died by his hand at his own wedding feast, and never knew who struck him. "A necessary debt is best settled swiftly."
+| The price fell due on the day he most wanted to be happy. All that week he was kind to Tatyana while she chose her white flowers, and he wrote of what was coming only as "a necessary debt, best settled swiftly."
+
+~ scene:tome_wedding_4
+| Sergei fell at his own wedding feast, in his white coat, and never knew who had struck him. Strahd writes nothing of his own shaking hands above the dropped blade. He will not let himself feel what he has just broken.
 
 ~ scene:tome_wall
-| On the last leaves Tatyana runs along the high castle walls as the white mist rises from the stones. She steps off into the fog rather than be his, and leaves his reaching hand empty. "She mistook my reach for ruin, and the precipice took what was mine."
+| On the last leaves Tatyana runs along the high castle walls as the white mist rises from the stones. When he reaches for her she looks once into his face, and steps off into the fog rather than be his. "She mistook my reach for ruin, and the precipice took what was mine."
 
 ~ scene:tome_wall_2
-| In the uproar below, his own guards loose their arrows at him, and the iron goes in. He does not die. You read how he woke changed in the gathering dark. "The valley and I were already one."
+| He tells himself she fled only because the noise and the panic had confused her. Below the wall his own guards, frightened, loose their arrows at him, and the iron goes in. He does not die. He wakes changed, in the dark, as the voice in the amber keeps its word.
 
 ~ scene:tome_wall_3
-| The script ends quiet and unshaken. The hand never wavers, which is how you know the man is saying it to himself: he chose every step of it. "I chose it all, and I would choose it again."
+| The grey mist closes round the mountains and seals the valley shut, so that the lord and his land are one prison. "The valley and I are one thing now," he writes, and goes on calling his hunger a kingdom.
+
+~ scene:tome_again
+| In the centuries that follow his handwriting never alters as he sets down the one torment left to him. Generation after generation a girl is born in this valley with Tatyana's face and auburn hair, and each time he goes out to find her.
+
+~ scene:tome_again_2
+| Each time he begins again, trying to make this new life of her fall in love with him: patience, letters, gifts, rescues. "I was gentle with her at the first," he writes, and then his gentleness fails, and he goes back to the old ways.
+
+~ scene:tome_again_3
+| Each time it ends in terror, in flight or in death, or she gives her heart to someone else and he is left behind, unchanged. In the back pages he keeps a neat ledger of their names and years. He never once asks why she cannot love him.
+
+~ scene:tome_again_4
+| The last entry has no date, only a few lines about a girl in the village below the castle. The steady hand breaks here, and the ink is pressed down so hard that it tears the paper.
+
+~ scene:tome_again_5
+| The last page is a single steady line, and the only one in the book that sounds like a man talking to himself. "I chose every step of it, and I would choose it again." The hand never shakes, which is how you know.

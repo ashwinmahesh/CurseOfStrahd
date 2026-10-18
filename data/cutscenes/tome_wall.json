@@ -16,5 +16,6 @@
   "more": [
     "scene:tome_wall_2",
     "scene:tome_wall_3"
-  ]
+  ],
+  "then": "tome_again"
 }

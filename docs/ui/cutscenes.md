@@ -28,11 +28,18 @@ Two more for the endings that differ by path (2026-10-15): `ending_carriage` in 
 The drowned rising at Lake Zarovich (`drowned_rise`, then `drowned_bluto` or `drowned_nistor`) came first.
 
 Reading the Tome of Strahd plays its own cutscene (owner, 2026-10-18: "there should be a cutscene with 3-4 scenes showing
-scenes of what is learned (and Strahd's story)"): four sepia memory pictures (`tome_conqueror`, `tome_brothers`,
-`tome_wedding`, `tome_wall`: the war and the peace that bored him, Sergei and Tatyana, the wedding day, the castle wall)
-with three captions each, the first time the book is read. The owner asked for more of Strahd's background in the words
-the same day, so every picture reads three captions of two or three sentences (data `more`), drafted by Gemini through
-the ai-bridge and edited for canon. Escher's first meeting shows the tall mirror behind him with the same armchair
+scenes of what is learned (and Strahd's story)"), the first time the book is read. The same night he asked for much more
+of the story in the words ("it really should explain more about his motivations, his love for Tatyana and how she wanted
+his brother and not him even though he was a decorated war hero, and generation after generation, Tatyana is reborn and
+how each time he tries to make that version of her fall in love with him. It should be sad and tragic"), so it is six
+scenes and 24 captions (data `more`) on sepia memory pictures: `tome_conqueror` (the war hero, the hollow peace, wanting to
+be loved for himself), `tome_brothers` (Sergei, Tatyana, the watching), `tome_refused` (he offers his hand and his medals;
+she refuses him kindly, her eyes on Sergei), `tome_wedding` (the climb to the Amber Temple, the terms, the wedding day),
+`tome_wall` (her fall, the arrows, waking changed) and `tome_again` (her rebirths, the ledger, the torn last entry). The
+captions were drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/), and stay
+unvoiced. Until their own pictures are made, `tome_refused` plays over the terrace picture and `tome_again` over the
+castle wall (a scene that names the picture already up leaves it as it is): giving them their own is a change of `images`
+in their data files. Escher's first meeting shows the tall mirror behind him with the same armchair
 empty (`escher_mirror`, `castle_ravenloft/spires_escher ~ first`), one picture by the owner's word the same day: the
 one conversation that plays a single picture (test_cutscenes `ONE_PICTURE`).
 
@@ -54,8 +61,8 @@ one conversation that plays a single picture (test_cutscenes `ONE_PICTURE`).
 - `trigger` can also be `read:<magic item>`: the item's reading plays it (`FieldItems.use` returns `cutscene`, the
   inventory asks `GameRoot.play_item_cutscene`; the first reading of the Tome of Strahd). Its first caption is the
   Narrator's line for that key, and what the reading said is narrated when it closes.
-- `more`: further Narrator keys whose lines read one after another over the same picture, a click each (the Tome's
-  pictures read three captions in all: the trigger or `caption`, then two more).
+- `more`: further Narrator keys whose lines read one after another over the same picture, a click each (the trigger's
+  line or `caption` first, then these: the Tome's scenes read three to five captions each).
 - `once`: the picture shows only the first time its trigger fires (`_cutscene/<id>` in the story's flags). Every
   `enter:` and `find:` trigger has it.
 - `then`, `caption`: the scene after this one (owner rule, 2026-10-14: every cutscene is at least two scenes). `then`
@@ -108,7 +115,7 @@ own mood in `art/audio.json` `scenes` (cutscene id: mood). It plays from the pic
 over whoever speaks after, and the place's own music comes back when the conversation ends (`DialogueUI.scene_shown`,
 `GameRoot._scene_music`). A fight the conversation starts brings its own. The owner's music audit (2026-10-17,
 `docs/assets/music_audit.md`) picked them, from recordings already in the game. Place cutscenes (`enter:`, `examine:`)
-keep the place's music, except the ones `art/audio.json` `place_scenes` names (the Tome of Strahd's four pictures play
+keep the place's music, except the ones `art/audio.json` `place_scenes` names (the Tome of Strahd's scenes play
 `sorrow` until the cutscene closes, and the place's own music comes back: `GameRoot._cutscene_music`).
 
 ## Code
@@ -357,11 +364,13 @@ The backup key answered 402 (out of credit), so these ran on the primary.
 | thirst_passes | Where the Thirst Goes | `endings/new_darklord` (a later beat, ~ start) | 1 |
 | three_brides | Three Brides | `castle_ravenloft/court_brides` | 1 |
 | tinker_freed | Seven Years at the Front of That Thing | `svalich_road/the_tinkers_wagon` (a later beat, ~ freed) | 1 |
+| tome_again | Generation After Generation | the scene after `tome_wall` (`then`) | 1 |
 | tome_brothers | The Brother and the Girl | the scene after `tome_conqueror` (`then`) | 1 |
 | tome_conqueror | The Conqueror | `read:tome_of_strahd` | 1 |
 | tome_page | The First Page | the scene after `treasure_tome` (`then`) | 1 |
+| tome_refused | What He Offered | the scene after `tome_brothers` (`then`) | 1 |
 | tome_wall | The Castle Wall | the scene after `tome_wedding` (`then`) | 1 |
-| tome_wedding | The Wedding Day | the scene after `tome_brothers` (`then`) | 1 |
+| tome_wedding | The Wedding Day | the scene after `tome_refused` (`then`) | 1 |
 | tower_lamp | Someone Waiting Up | the scene after `vr_tower` (`then`) | 1 |
 | treasure_sword | The Sunsword | `find:sunsword` | 1 |
 | treasure_symbol | The Holy Symbol of Ravenkind | `find:holy_symbol_of_ravenkind` | 1 |

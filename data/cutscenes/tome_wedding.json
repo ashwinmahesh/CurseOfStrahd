@@ -15,7 +15,8 @@
   "caption": "scene:tome_wedding",
   "more": [
     "scene:tome_wedding_2",
-    "scene:tome_wedding_3"
+    "scene:tome_wedding_3",
+    "scene:tome_wedding_4"
   ],
   "then": "tome_wall"
 }
