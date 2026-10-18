@@ -75,6 +75,8 @@ var _amount := 1
 ## A line the card shows after a drag (what happened, or why not).
 var _note := ""
 var _note_colour := "bile"
+## The Wizard whose copy of the picked Spell Scroll waits for a second press to confirm ("" for none).
+var _scroll_confirm := ""
 ## The characters whose page was shown: their New marks clear when the screen closes.
 var _viewed := {}
 ## PrepareScreen.snapshot() as an item's Long Rest ended (Daern's Instant Fortress, Rod of Security): while this screen
@@ -846,6 +848,7 @@ func _pick(e: Dictionary) -> void:
 	selected = str(e["id"])
 	_amount = 1
 	_note = ""
+	_scroll_confirm = ""
 	for t in _tiles:
 		if is_instance_valid(t):
 			t.set("lit", is_same((t.get("payload") as Dictionary).get("entry"), e))
@@ -1316,6 +1319,9 @@ func _draw_card() -> void:
 	_card.add_child(UiKit.label(str(shown.get("text", shown.get("summary", ""))), 14, "vellum", 420))
 	if not (data.get("spells", []) as Array).is_empty():
 		_spellbook_card(data.get("spells", []) as Array)
+	var scroll_spell := Character.scroll_spell_of(data)
+	if scroll_spell != "" and "wizard" in (Compendium.shared().spell_data(scroll_spell).get("classes", []) as Array):
+		_scroll_copy_card(data)
 	# Magic items: rarity and attunement (three items at most; attuning and ending it are instant: owner house rule
 	# 2026-10-07, docs/contracts/magic_items.md).
 	var magic := shown.get("magic", {}) as Dictionary
@@ -1579,6 +1585,59 @@ func _spellbook_card(book: Array) -> void:
 			b.tooltip_text = why if why != "" else "Into %s's spellbook; prepare it from there after a Long Rest." % w.name.get_slice(" ", 0)
 			acts.add_child(b)
 		_card.add_child(acts)
+
+
+## A Spell Scroll of a Wizard spell (Ashwin, 2026-10-18; FieldItems.copy_scroll): a Copy button for each Wizard in the
+## party, with the hours, the inks and the Arcana check on it, and a second press to confirm, because the scroll is
+## used up whether the check succeeds or fails. Outside fights and conversations, as copying from a book is.
+func _scroll_copy_card(data: Dictionary) -> void:
+	_card.add_child(UiParts.section("Copy into a spellbook"))
+	var terms := FieldItems.scroll_copy_terms(str(data["id"]))
+	var spell_name := Compendium.shared().display_name("spells", str(terms["spell"]))
+	var wizards: Array[Character] = []
+	for m in st.party:
+		if m.spellbook_class() != "":
+			wizards.append(m)
+	if wizards.is_empty():
+		_card.add_child(UiKit.label("Nobody in the party keeps a spellbook. A Wizard could copy %s from this scroll into theirs." % spell_name, 13, "parchment", 420))
+		return
+	_card.add_child(UiKit.label("%d h and %d gp of inks, then an Arcana check, DC %d. Pass or fail, the scroll is used up." % [
+		int(terms["minutes"]) / 60, int(terms["gp"]), int(terms["dc"])], 13, "parchment", 420))
+	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+	var holder := _ch()
+	var entry := _entry(selected)
+	var acts := HFlowContainer.new()
+	acts.add_theme_constant_override("h_separation", 6)
+	for w in wizards:
+		var why := FieldItems.copy_scroll_problem(st, w, str(data["id"]))
+		if why == "" and not calm:
+			why = "Not during a fight or a conversation"
+		var first := w.name.get_slice(" ", 0)
+		var bonus := w.skill_bonus(&"arcana").total()
+		if why == "" and _scroll_confirm == w.id:
+			var go := UiParts.small_button("Copy it: %s rolls Arcana (%+d) against DC %d" % [first, bonus, int(terms["dc"])], func() -> void:
+				var res := FieldItems.copy_scroll(st, holder, str(data["id"]), w, Dice.roller, entry)
+				_scroll_confirm = ""
+				_say(str(res["text"]), "bile" if bool(res.get("copied", false)) else "flame")
+				_draw())
+			go.tooltip_text = "Spends %d gp and %d hours; on a success %s goes into %s's spellbook." % [int(terms["gp"]), int(terms["minutes"]) / 60, spell_name, first]
+			go.set_meta("pad_first", true)
+			acts.add_child(go)
+			go.call_deferred("grab_focus")
+			var back := UiParts.small_button("Keep the scroll", func() -> void:
+				_scroll_confirm = ""
+				_draw())
+			acts.add_child(back)
+			continue
+		var label := "In %s's book" % first if why == "Already in the spellbook" else "%s copies it (%d h, %d gp, Arcana DC %d)" % [first,
+			int(terms["minutes"]) / 60, int(terms["gp"]), int(terms["dc"])]
+		var b := UiParts.small_button(label, func() -> void:
+			_scroll_confirm = w.id
+			_draw())
+		b.disabled = why != ""
+		b.tooltip_text = why if why != "" else "%s has %+d to Arcana. Press again to confirm." % [first, bonus]
+		acts.add_child(b)
+	_card.add_child(acts)
 
 
 ## Things come out of the stash only where it's safe to rest (an inn, a home); they go in from anywhere.
