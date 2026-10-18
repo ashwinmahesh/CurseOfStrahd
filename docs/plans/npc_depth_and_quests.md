@@ -69,7 +69,7 @@ Rules for this work:
    Rewards don't change.
 5. **New NPCs reuse existing sprites and portraits** (169 NPCs share a portrait today), so no art is spent. Own art for
    the comic characters is optional and would need Ashwin's yes (Gemini spend).
-6. **Every new line is drafted in the Gemini app** (Gemini Argon 4, Medium effort, on Ashwin's subscription, never
+6. **Every new line is drafted with Gemini** (Gemini 4 Argon, Medium effort, on Ashwin's subscription, never
    the API key; owner, 2026-10-17): the NPCs' flavour lines and hooks from the roster row and the NPC's existing lines,
    the comic characters' from a brief per character, every reshaped and new side quest's from a brief per scene (who
    speaks, what happens, which flags and checks, the exits), and the Sunsword's from Part D. I write the briefs and the
@@ -412,7 +412,7 @@ are estimates; every one is unvoiced until the voice thread records it.
 5. The Fourth Rumour (its echoes in later regions arrive with those batches).
 6. The Goat's first three sightings (church roof, Bildrath's shop, the Death House gate), with Speak with Animals
    answers.
-7. Every new line drafted in the Gemini app, then edited.
+7. Every new line drafted with Gemini through the ai-bridge, then edited.
 8. `docs/story/side_quests.md` and the flags files updated; `make check` green; handed off by branch name.
 
 ## Voice cost
@@ -439,5 +439,3 @@ nothing else spends. Every recording waits for Ashwin's typed yes in this thread
 ## What I need from Ashwin
 
 1. Go or changes on this plan; then I build batch 1 only.
-2. Later, at the writing step: whether "Gemini Argon 4" shows in the Gemini app's model picker. If it doesn't, I'll ask
-   which model he means instead of picking one.
