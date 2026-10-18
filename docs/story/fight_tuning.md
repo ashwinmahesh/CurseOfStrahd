@@ -190,12 +190,14 @@ and silvain_aster at the playthrough's own level).
 `ward_wolves` is new: the lightning ward on Van Richten's door goes off and werewolves come down off the ridge
 (trap `vrt_door_ward_1`, flag `tower_ward_1`). The test party stands where the ward's step leaves it (the leader on the west
 leaf's front square, the others in a line behind) and the foes start spread over the island's ring
-(tests/integration/test_scaled_fights_regions.gd; tests/unit/test_fight_spread.gd). First line-ups (3, 4, 5 werewolves) won 8 of 8;
-the numbers below are the first that came down to the band.
+(tests/integration/test_scaled_fights_regions.gd; tests/unit/test_fight_spread.gd). The door's front is inside the tower's
+antimagic ring, so the leader fights in an Antimagic Field and casts nothing; the line-ups below were measured with the ring in
+the fight. Before the ring went in, 3, 4 and 5 werewolves won 8 of 8 at levels 6, 7 and 8, and 5, 5 and 6 of them came down to the
+band; with it, five werewolves at their stat block's 71 Hit Points won 2 of 8 at level 6, and 6 won 3 at level 8. Hit Points are tuned
+in single points (the 8 seeds move a lot): 62 and 63 won 5 of 8, 60 won 6, 65 and 68 won 3.
 
 | Fight | Where | Version | Level | Was | Now | Wins |
 |---|---|---|---|---|---|---|
-| `ward_wolves` | van_richtens_tower | L6v2 | 6 | new (3 werewolf won 8 of 8; 4 won 8) | 5 werewolf | 4 |
-| `ward_wolves` | van_richtens_tower | L7v1 | 7 | new (4 werewolf won 8 of 8; 5 won 6) | 5 werewolf, 78 HP each | 5 |
-| `ward_wolves` | van_richtens_tower | L8v0 | 8 | new (5 werewolf won 8 of 8) | 6 werewolf | 5 |
-
+| `ward_wolves` | van_richtens_tower | L6v2 | 6 | new | 5 werewolf, 62 HP each | 5 |
+| `ward_wolves` | van_richtens_tower | L7v1 | 7 | new | 5 werewolf, 78 HP each | 5 |
+| `ward_wolves` | van_richtens_tower | L8v0 | 8 | new | 5 werewolf, 82 HP each | 5 |

@@ -158,6 +158,7 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	Wards.bring_circle(e, view.st, view.loc_id)   # a Magic Circle cast here within the hour
 	FieldCasting.bring_risen(e, view.st)   # Animate Dead's and Create Undead's dead, for their day
 	_light_the_fight(view, e)
+	_ward_the_fight(view, e)
 	BattleScenery.for_location(view, e)   # doors, furniture and chandeliers that can be broken (F5)
 	LocationTraps.into_fight(view, e)   # traps that haven't gone off go off under whoever steps on them
 	var surprised: Array[String] = []
@@ -692,6 +693,25 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 		lo.caster_id = view.leader().id
 		lo.rules = {"light": {"bright": 30, "dim": 30}, "light_on": "caster"}
 		e.spells.zones.objects.append(lo)
+
+
+## A place's antimagic areas (`antimagic` on an area, docs/contracts/locations.md) are Antimagic Field zones for the length of a
+## fight there: over the area's open squares, the spell's own rules (no spell is cast on them, magic items go quiet), with no
+## caster and no end. Van Richten's Tower's ring, five feet round its walls (Dungeon Expansion Plan V1).
+static func _ward_the_fight(view: LocationView, e: Encounter) -> void:
+	for area in Wards.antimagic_areas(view.loc):
+		var c0 := LocationView._cell((area["cells"] as Array)[0])
+		var c1 := LocationView._cell((area["cells"] as Array)[1])
+		var o := FieldObject.new(FieldObject.Kind.ZONE, "antimagic_field", str(area.get("name", "")))
+		for x in range(mini(c0.x, c1.x), maxi(c0.x, c1.x) + 1):
+			for y in range(mini(c0.y, c1.y), maxi(c0.y, c1.y) + 1):
+				var cell := Vector2i(x, y)
+				if e.grid.in_bounds(cell) and not e.grid.has_flag(cell, CombatGrid.WALL) and not e.grid.has_flag(cell, CombatGrid.VOID):
+					o.cells.append(cell)
+		if o.cells.is_empty():
+			continue
+		o.cell = o.cells[0]
+		e.spells.zones.objects.append(o)
 
 
 ## The location's grid as it stands now (closed doors are walls; NPC squares are blocked).

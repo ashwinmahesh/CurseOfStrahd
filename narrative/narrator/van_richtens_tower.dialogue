@@ -189,3 +189,7 @@ once
 
 ~ trap:vrt_door_ward_3:triggered
 | The third bolt hurls you back across the stones, and inside the tower the floors drop through one another with a long, grinding roar. When the dust clears, the black outer wall stands empty around a choked doorway.
+
+~ enter:vrt_antimagic
+| A step from the black stone, a strange stillness presses against your temples. Every spell you carry in your mind goes out at once, like a candle pinched between wet fingers.
+cooldown 30

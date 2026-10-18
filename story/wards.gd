@@ -82,3 +82,38 @@ static func bring_circle(e: Encounter, st: StoryState, location_id: String) -> v
 	var caster := e.get_c(str((st.active_spells["magic_circle"] as Dictionary).get("caster", "")))
 	if caster != null and caster.is_alive():
 		MagicCircle.place(e, caster)
+
+
+## The location's antimagic areas (`antimagic` on an area: Van Richten's Tower's ring, Dungeon Expansion Plan V1).
+static func antimagic_areas(loc: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for a: Variant in loc.get("areas", []):
+		var area := a as Dictionary
+		var held: Variant = area.get("antimagic", false)
+		if (held is bool and bool(held)) or (held is String and str(held) != ""):
+			out.append(area)
+	return out
+
+
+## The antimagic area `cell` is in ({} if none).
+static func antimagic_area_at(loc: Dictionary, cell: Vector2i) -> Dictionary:
+	for area in antimagic_areas(loc):
+		var c0 := area["cells"][0] as Array
+		var c1 := area["cells"][1] as Array
+		if cell.x >= mini(int(c0[0]), int(c1[0])) and cell.x <= maxi(int(c0[0]), int(c1[0])) \
+				and cell.y >= mini(int(c0[1]), int(c1[1])) and cell.y <= maxi(int(c0[1]), int(c1[1])):
+			return area
+	return {}
+
+
+## The notice for a caster who stands in an antimagic area now (the party's leader, where the map left them), or "" when
+## nobody is held: no spell can be cast there out of a fight (FieldCasting), as none can in a fight there.
+static func antimagic_notice(st: StoryState) -> String:
+	if st.positions.is_empty():
+		return ""
+	var area := antimagic_area_at(Compendium.shared().get_entry("locations", st.location), st.positions[0])
+	if area.is_empty():
+		return ""
+	var held: Variant = area["antimagic"]
+	return str(held) if held is String else "No spell can be cast here."
+

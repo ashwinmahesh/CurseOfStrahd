@@ -15,7 +15,7 @@ const TOWER_ROWS_SHA := "d1a5d800b40f9bea3407aec9416c9a34f84799c6"
 const INTERIOR_ROWS_SHA := "2ecf61ee2264d4c10c21dab58046e46d1b313fae"
 ## What V1 added to those maps (the pinned lines leave these out).
 const TOWER_NEW: Array = ["vrt_scaffolding", "from_scaffold", "vrt_rubble_heap", "vrt_rubble_beam", "vrt_rubble_spill", "vrt_scaffold_wreck",
-	"vrt_rubble_notes"]
+	"vrt_rubble_notes", "vrt_antimagic"]
 const INTERIOR_NEW: Array = ["vrt_study", "lantern_from_above", "study_from_below", "lantern_from_scaffold", "lift_f1", "lift_f2", "lift_f3",
 	"lift_f4", "vrt_stairs_up_3", "vrt_stairs_down_4", "vrt_scaffold_down", "vrt_lift_platform_1", "vrt_lift_statue_1", "vrt_lift_statue_2",
 	"vrt_lift_statue_3", "vrt_lift_statue_4", "vrt_lift_platform_2", "vrt_lift_platform_3", "vrt_lift_platform_4", "vrt_scaffold_hole",
@@ -377,3 +377,61 @@ func test_the_dig_reaches_the_strongbox() -> void:
 	SideQuestPlay.play(looted, "van_richtens_tower/the_collapse:heap", picks, 3)
 	assert_true(bool(looted.get_flag("vrt_strongbox_dug", false)))
 	assert_eq(looted.gold, 0.0, "a strongbox already emptied is not paid twice")
+
+
+## The tower's ring (the book's antimagic field, 5 ft out from the walls): no spell is cast on its squares from the character sheet,
+## and a fight there is fought with an Antimagic Field over them. Inside the tower, and 10 ft from the walls, magic works.
+func test_the_antimagic_ring() -> void:
+	var tower := _loc(TOWER)
+	var ring := Wards.antimagic_areas(tower)
+	assert_eq(ring.size(), 1, "one ring")
+	var st := _caster()
+	st.location = TOWER
+	var inside: Array[Vector2i] = [Vector2i(15, 11), Vector2i(14, 11), Vector2i(12, 7), Vector2i(19, 7), Vector2i(15, 4), Vector2i(18, 11)]
+	var outside: Array[Vector2i] = [Vector2i(15, 12), Vector2i(11, 7), Vector2i(20, 7), Vector2i(15, 3), Vector2i(10, 5), Vector2i(22, 11)]
+	for c in inside:
+		st.positions = [c]
+		assert_ne(Wards.antimagic_notice(st), "", "%s is in the ring" % c)
+		var cast := FieldCasting.cast(st.party, st.party[0], "cure_wounds", 0, [st.party[1]], DiceRoller.new(1), st)
+		assert_false(bool(cast["ok"]), "no spell is cast at %s" % c)
+		assert_eq(str(cast["text"]), Wards.antimagic_notice(st))
+	for c in outside:
+		st.positions = [c]
+		assert_eq(Wards.antimagic_notice(st), "", "%s is outside it" % c)
+	st.location = INTERIOR
+	st.positions = [Vector2i(6, 8)]
+	assert_eq(Wards.antimagic_notice(st), "", "inside the tower, magic works")
+	var rows := tower["map"]["rows"] as Array
+	var area := ring[0]
+	for c: Vector2i in inside:
+		assert_ne(str(rows[c.y])[c.x], "#", "the squares the ring is tested on are open ground")
+	assert_true(area["antimagic"] is String, "and a caster is told why")
+
+
+## In the werewolves' fight at the door the ring is an Antimagic Field zone: whoever stands in it can't cast, and the others can.
+func test_the_ring_is_a_field_in_the_fight() -> void:
+	GameState.reset()
+	for id: String in FOUR:
+		var ch := Pregens.build(id, 7)
+		ch.finish_long_rest()
+		GameState.story.party.append(ch)
+	GameState.story.location = TOWER
+	GameState.story.minute_of_day = 12 * 60
+	GameState.story.positions = [Vector2i(15, 12), Vector2i(15, 13), Vector2i(15, 14), Vector2i(16, 14)]
+	var root := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	for i in 3:
+		await get_tree().process_frame
+	var v := root.get("view") as LocationView
+	v.members[0].cell = Vector2i(15, 11)
+	assert_true(LocationTraps._check_traps(v), "the ward goes off")
+	for i in 2:
+		await get_tree().process_frame
+	assert_true(v.in_combat)
+	var e := v.combat_view.e
+	var high := e.spells.specials.high
+	var leader := e.get_c(v.members[0].id)
+	assert_true(high.in_antimagic(leader), "the leader at the door is in the field")
+	assert_false(high.in_antimagic(e.get_c(v.members[1].id)), "and the one ten feet back is not")
+	root.queue_free()
+	await get_tree().process_frame

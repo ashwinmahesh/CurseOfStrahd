@@ -141,6 +141,10 @@
           "open": {
             "type": "string",
             "description": "F8: when a private room may be entered (a condition, docs/contracts/dialogue.md), e.g. \"day\"."
+          },
+          "antimagic": {
+            "type": ["boolean", "string"],
+            "description": "An antimagic area (Van Richten's Tower's ring, Dungeon Expansion Plan V1): no spell is cast on a square in it, from the character sheet (Wards.antimagic_at, FieldCasting) or in a fight there (an Antimagic Field zone over its open squares, LocationFights._ward_the_fight). A string is the notice shown to a caster who tries."
           }
         }
       }

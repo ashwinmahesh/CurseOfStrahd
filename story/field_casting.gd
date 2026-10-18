@@ -69,6 +69,8 @@ static func helpful(data: Dictionary) -> bool:
 ## minutes) takes them off the clock.
 static func cast(party: Array[Character], caster: Character, spell_id: String, slot: int, targets: Array,
 		dice: DiceRoller, st: StoryState = null) -> Dictionary:
+	if st != null and Wards.antimagic_notice(st) != "":
+		return {"ok": false, "text": Wards.antimagic_notice(st), "lines": []}   # in an antimagic area: nothing is cast
 	var guests: Array = []
 	if st != null:
 		guests.append_array(st.guests)
@@ -230,6 +232,8 @@ static func revive_with_item(st: StoryState, reader: Character, spell_id: String
 ## a Ritual), the component and the casting time are spent, and the hero comes back (Services.bring_back) or, for
 ## Gentle Repose, their body keeps for 10 days. {ok, text}.
 static func revive(st: StoryState, caster: Character, spell_id: String, slot: int, target: Character) -> Dictionary:
+	if Wards.antimagic_notice(st) != "":
+		return {"ok": false, "text": Wards.antimagic_notice(st)}
 	var data := Compendium.shared().spell_data(spell_id)
 	if data.is_empty() or not REVIVAL.has(spell_id):
 		return {"ok": false, "text": "Not a spell that brings back the dead"}
@@ -467,6 +471,8 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 ## find_traps) where the party stands. `choice`: what the spell asks for as it's cast (Find Steed's creature type).
 static func cast_utility(st: StoryState, caster: Character, spell_id: String, as_ritual: bool, slot: int = 0, resource_feature: String = "",
 		choice: String = "") -> Dictionary:
+	if Wards.antimagic_notice(st) != "":
+		return {"ok": false, "text": Wards.antimagic_notice(st)}
 	var data := Compendium.shared().spell_data(spell_id)
 	if data.is_empty():
 		return {"ok": false, "text": "Unknown spell"}
@@ -717,6 +723,8 @@ static func feast_shares(party: Array[Character]) -> Array[String]:
 ## Casts an exploring spell from a Spell Scroll (story/field_items.gd): no slot and no preparation, in the spell's own
 ## casting time. The scroll's own rules (the class list, the check for a level above the reader's) come first, there.
 static func cast_from_scroll(st: StoryState, caster: Character, spell_id: String) -> Dictionary:
+	if Wards.antimagic_notice(st) != "":
+		return {"ok": false, "text": Wards.antimagic_notice(st)}
 	var data := Compendium.shared().spell_data(spell_id)
 	if data.is_empty():
 		return {"ok": false, "text": "Unknown spell"}
