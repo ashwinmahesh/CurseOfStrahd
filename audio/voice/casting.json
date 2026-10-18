@@ -94,13 +94,13 @@
       "model": "eleven_v3"
     },
     "exethanter": {
-      "voice_id": "6sFKzaJr574YWVu4UuJF",
-      "name": "Library voice: Cornelius",
-      "description": "Library voice chosen for exethanter (2026-10-08, v3 re-record). Was: A very old man with a thin, dry, papery voice and a faded English accent, an ancient lich who keeps forgetting. Wandering, polite and confused, trailing off mid-sentence, occasionally sharp and grand for a moment before it slips away.",
+      "voice_id": "OrZL31PxJqPKbCpfgmWA",
+      "name": "Barovia Exethanter",
+      "description": "Exethanter, the last warden of the Amber Temple, a lich: ancient, aloof, courteous and fussy with a dry breathiness of age; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, option B).",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[faded English accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "vladimir_horngaard": {
       "voice_id": "rsvRsXb5tBuGivd20vw8",
@@ -273,13 +273,13 @@
       "released": true
     },
     "krezk_guard": {
-      "voice_id": "sGcPNcpR5PikknzyXcy7",
-      "name": "Library voice: Cristi Romana",
-      "description": "Library voice chosen for krezk_guard (2026-10-08, recast on v3). Was: A middle-aged farmer on watch with a plain, rough, wary voice and a strong, clearly audible Eastern European (Romanian) accent. Stubborn and nervous, repeating his orders, more neighbour than soldier.",
+      "voice_id": "4fMOCI0RM4PLfGMrPCxm",
+      "name": "Barovia Krezk Watchman",
+      "description": "A Krezk gate watchman: rough, gruff, curt and unsympathetic; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, option A).",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "vallaki_guard": {
       "voice_id": "24mnRtegLytoHN7EgEvT",
@@ -814,13 +814,13 @@
       "released": true
     },
     "phantom_warden": {
-      "voice_id": "tXxkePQsw0G69D8VeDzp",
-      "name": "Library voice: Jim Executive - Authoritative, British & Warm",
-      "description": "Library voice chosen for phantom_warden (2026-10-08, v3 re-record). Was: A man's hollow, ghostly, stern voice with an English accent, a gate guard demanding the right words; weary and suspicious.",
+      "voice_id": "Y8iVsGy34gK3cYApaPZi",
+      "name": "Barovia Phantom Warden",
+      "description": "The Phantom Warden, ghost of Argynvostholt's gate: a hollow, stern, weary English voice. Designed 2026-10-18 (Ashwin's pick, option B).",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[English accent]"
+      "accent_tag": "[English accent]",
+      "released": true
     },
     "vistana": {
       "voice_id": "HUxegdbOiMUdgRSlEJW0",
@@ -1556,8 +1556,8 @@
       "released": true
     },
     "barovia_acolyte": {
-      "voice_id": "3HlY0mcOyFbkSbYQHDGZ",
-      "name": "Library voice: Maria - Calm & Friendly",
+      "voice_id": "H8BjWxFjrzNszTO74noq",
+      "name": "Library voice: Myriam - Bright, Edgy and Gentle",
       "description": "Anca, the church's girl (15): a young adult library voice, the owner's pick (2026-10-08).",
       "settings": {},
       "model": "eleven_v3",
@@ -2586,16 +2586,28 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "silvius_dana": {
-      "shares": "barovia_acolyte",
-      "description": "Dana, Old Silviu's daughter, marrying in Vallaki: brisk, fond, a little overwhelmed. Shares Anca's library voice (Maria), chosen 2026-10-18 for a young woman from another town."
+      "description": "Dana, a young bride of Vallaki: brisk, fond, warm and a little overwhelmed; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, option A).",
+      "voice_id": "M0cbwVze7kSlBzCWtf2Z",
+      "name": "Barovia Dana",
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3",
+      "released": true
     },
     "leontina": {
-      "shares": "barovia_widow",
-      "description": "Leontina, the Baron's cook: brisk, proud, sixty. Shares Widow Ileana's library voice (Beatrice), chosen 2026-10-18 for a mature firm woman from another place."
+      "description": "Leontina, the Baron's cook, sixty: a brisk, proud, no-nonsense voice, warm underneath; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, option B).",
+      "voice_id": "prfmXvl7uek3Hz7KRieP",
+      "name": "Barovia Leontina",
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3",
+      "released": true
     },
     "tudorel": {
-      "shares": "krezk_guard",
-      "description": "Tudorel, a young footman at Wachterhaus. Shares the Krezk Watchman's library voice (Cristi Romana), chosen 2026-10-18 for a young plain man from far away."
+      "description": "Tudorel, a young footman: polite, careful, slightly nervous; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, option C).",
+      "voice_id": "3nKmMhIu7YUAVS0T7wjW",
+      "name": "Barovia Tudorel",
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3",
+      "released": true
     },
     "ioana": {
       "shares": "ilka_sarnov",
@@ -2662,6 +2674,22 @@
       "name": "Barovia Aurel",
       "description": "Aurel Mirescu, a scholar kept awake reading aloud: cultured, tired, dreamy; a mild Eastern European accent. Designed 2026-10-18 (Ashwin's pick, voice A).",
       "accent_tag": "[mild Eastern European accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "madam_profira": {
+      "voice_id": "upQMX3Kv7Upxsi5GeJmp",
+      "name": "Barovia Profira",
+      "description": "Madam Profira, Krezk's matchmaker: bossy, certain, theatrical comic timing; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, comic option A).",
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "costica": {
+      "voice_id": "JJf4wWoo88JKWv8sFhJU",
+      "name": "Barovia Costica",
+      "description": "Costica, the worst highwayman in Barovia: polite, flustered, apologetic comic delivery; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, comic option C).",
+      "accent_tag": "[strong Romanian accent]",
       "model": "eleven_v3",
       "released": true
     }
