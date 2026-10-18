@@ -1,0 +1,65 @@
+== entry_dragon_look
+Narrator: A stone dragon the size of a child crouches on the high ledge, wings folded tight against its ribs.
+Narrator: Its claws are cut deep into the marble plinth, as if it were afraid of being blown away.
+== entry_dragons_wake
+Narrator: As you turn back toward the great doors, a dry grinding sound echoes from the ledges above.
+Narrator: Dust spills from the ceiling as the little stone dragons uncurl their tails and stretch their cramped wings.
+Narrator: They have waited very patiently for you to come in, and they have no intention of letting you leave.
+Narrator: Four pairs of grey stone eyes fix on your backs, and the things drop from their perches.
+== entry_dragon_rubble
+Narrator: Chunks of grey stone lie scattered across the marble floor, looking no different from any other broken masonry.
+== archers_post_enter
+Narrator: The wooden panel swings aside to reveal a narrow guard room smelling of old dust and dry linen.
+Narrator: Arrow slits pierce the outer wall, though no bowman could easily stand at them now.
+Narrator: Every spare inch of the room is crowded with tall mirrors, some draped in grey sheets and others facing the stone.
+== post_mirror_look
+Narrator: You lift the corner of a heavy dust sheet and find yourself staring into tarnished silver glass.
+Narrator: The frame is gilded oak, fine enough for a state bedroom, left here to rot in the dark.
+Narrator: The master of the house casts no reflection, and it seems he grew tired of glass that only showed him empty rooms.
+== post_mirror_turned
+Narrator: This mirror has been stood with its face pressed flat against the cold masonry, showing only its bare wooden backing.
+Narrator: Whoever carried it in here did not even want the wall to look at itself.
+== post_rack
+Narrator: The wooden racks meant for longbows stand bare, their pegs polished smooth by hands now three centuries dead.
+== faith_knights_look
+Narrator: Armed knights in full plate stand along both walls of the passage, their stone hands resting on their sword hilts.
+Narrator: As you walk between them, their visored heads seem to turn by slow degrees to watch you pass.
+Narrator: Even when you stop dead in your tracks, you feel their cold gaze lingering on the back of your neck.
+== faith_knights_trick
+Narrator: Looking closer at the visor, you see the eyes are not rounded at all, but carved as shallow, concave hollows.
+Narrator: It is an old mason's trick of light and shadow: there is no ghost in the stone, only clever chisel work.
+== faith_knights_miss
+Narrator: You stare back into the visor until your eyes water, yet you cannot tell how the stone manages to follow you.
+== landing_creak
+Narrator: Your boot comes down on the narrow landing, and the dry floorboards let out a long, sharp groan.
+Narrator: In the dead quiet of the chapel, the sound carries like a dropped tray of ironware.
+Narrator: If anything waits in the gallery above, it knows you are coming.
+== balcony_enter
+Narrator: The stair opens onto a private gallery overlooking the dark nave of the chapel far below.
+Narrator: Two high-backed wooden thrones stand at the rail, where the lord of the castle once sat to hear his prayers.
+Narrator: A figure sits slumped in each chair, heads bowed as if they fell asleep during a very long sermon.
+== balcony_throne_look
+Narrator: The high throne is carved from dark timber, its velvet cushion rotted through and stained by what last sat in it.
+Narrator: From here, the lord could look down upon the altar without ever having to kneel among the congregation.
+== balcony_zombies_rise
+Narrator: As you step toward the rail, the two slumped corpses stiffen, wet cloth peeling away from the wood of the thrones.
+Narrator: They rise together in dead silence, dry jaws hanging open, and reach for your throats.
+== window_found
+Narrator: Leaning out over the low parapet, you peer down the sheer rock of the cliff into the swirling mist.
+Narrator: More than a hundred feet straight down, a tall lancet window is set directly into the mountain stone.
+Narrator: Its glass is so thick with old grime and swallow droppings that it blends almost completely into the crag.
+== window_climb_rope
+Narrator: You make the rope fast to the cold stone of the parapet and let the coil drop into the mist below.
+Narrator: Bracing your boots against the cliff face, you walk yourself backward down the rock, hand over hand.
+Narrator: The wind tugs at your cloak as the castle wall rises above you and the dirty glass draws near.
+== window_climb_bare
+Narrator: You swing your legs over the parapet and hunt with your boots for the first narrow seam in the rock.
+Narrator: The stone is damp with mist and slick under your fingers, offering only shallow cracks and cold ledges.
+Narrator: With the drop yawning beneath your heels, you work your way down the cliff one careful inch at a time.
+== window_climb_slip
+Narrator: Your fingers skitter off a patch of wet lichen, and for one sickening heartbeat you are falling.
+Narrator: You slam hard against a lower ledge and catch hold with bruised ribs and scraped knuckles, breathing fast.
+== window_tomb_landing
+Narrator: You pry the grimy casement open and drop through, your boots ringing loud against a floor of cold stone.
+Narrator: Above you, a ceiling of tarnished gold mosaic glimmers dimly in the grey light filtering through tall stained glass.
+Narrator: You have landed squarely between two white marble coffins, where King Barov and Queen Ravenovia lie side by side.

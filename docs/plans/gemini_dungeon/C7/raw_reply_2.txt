@@ -1,0 +1,24 @@
+== balcony_location_summary
+A private timber gallery high above the chapel nave, where two tall thrones stand behind a low rail so the lord of the house might hear his prayers in solitude.
+== balcony_location_text
+Dark timber boards run out to a low rail looking down into the dim well of the chapel nave. Two high thrones stand side by side in the dust, facing the cold stone below.
+== balcony_arrival
+Narrator: A narrow stair rises from the gloom, its timber landing groaning under the first boot.
+Narrator: Above, the rail of a private gallery looks out over the hollow dark of the chapel.
+== balcony_cleared
+Narrator: The two high thrones stand empty at the rail, their former occupants finally still upon the dark boards.
+Narrator: Below the gallery, the chapel nave keeps its silence, indifferent to the change in seating.
+== window_menu_intro
+Narrator: Far down the sheer rock, half-choked with ancient grime, a single window clings to the cliffside.
+== window_menu_rope
+Option: Make fast a rope and lower yourselves to the window.
+== window_menu_bare
+Option: Climb down the bare rock face by hand.
+== window_menu_leave
+Option: Step back from the parapet and leave the drop alone.
+== window_climb_back
+Narrator: The stone offers only greased holds and cold wind, forcing a slow, bruising retreat to the parapet.
+Narrator: An hour is lost to scraped knuckles and heaving lungs before you stand once more behind the wall.
+== faith_codex
+Title: The Watching Stone Knights
+Note: The eyes of the carved knights are not enchanted, only hollowed out with a curved chisel so the shadows shift as you pass. It is an old mason's trick, meant to keep the living honest at very little expense.
