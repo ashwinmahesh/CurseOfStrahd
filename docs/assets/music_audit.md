@@ -17,7 +17,7 @@ OpenGameArt pages), not from listening.
 
 | Mood | Recordings | For |
 |---|---|---|
-| `sorrow` | Relent (harp, clarinet: "so much sadness"), Unraveling, Penumbra, Memories of Stone | farewells, the dead laid to rest, reunions |
+| `sorrow` | Relent (harp, clarinet: "so much sadness"), Unraveling, Penumbra, Memories of Stone, and since 2026-10-18 the piano: Wounded and the Chopin nocturnes Op. 48 No. 1, Op. 72 No. 1 and Op. posth. | farewells, the dead laid to rest, reunions |
 | `tension` (level -1.5) | Gloom Horizon, Oppressive Gloom, Lost Frontier | standoffs and menace in town |
 | `dawn` | Long Road Ahead ("the aftermath of a battle between good and evil", triumphant last third), Virtutes Instrumenti (uplifting sacred viol) | real dawn, Strahd's end |
 | `sacred` (level -3) | Night Vigil, Virtutes Instrumenti, Ancient Rite, Gregorian Chant | the vigil at St. Andral's, without the Toccata's organ |
@@ -93,3 +93,8 @@ Skipped: Gymnopédie No. 1, Cryptic Sorrow, Loss and Quinn's Song: First Night.
 Each piece has a `track_levels` line from its loudness over the whole recording against the Marche funèbre's (the
 Marche plays at +4.4), capped so its peak stays under full scale. The listening page's clips were levelled on their
 first two minutes, so a piece with a loud middle (the Op. 48 nocturne) plays quieter here than in its clip.
+
+The owner also asked (2026-10-18) for the farewells and burials to get the piano: Wounded and the three nocturnes joined
+`sorrow` beside the castle (their levels are per recording, so they play as loud in both). Rose and Thorn's goodbye, Elvir's
+burial, Doru at rest, Sergei's font and the others in the `sorrow` table above now shuffle strings and piano. The prelude
+and the Moonlight Sonata stay castle-only.
