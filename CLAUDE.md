@@ -48,8 +48,9 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   (owner, 2026-10-08). `make lane-reclone NAME=<name>` turns an older lane's unchanged files back into clones;
   `make lane-done NAME=<name>` removes the folder once the branch is merged and clean. `SSD=1` on any of the three puts
   the lane on the external SSD's disk image (/Volumes/StrahdLanes, attached when it isn't), cloned from a seed there
-  that `make lane` brings up to main and imports first. Never write into the main checkout, and clean up your own
-  folders and scratch files when you finish.
+  that `make lane` brings up to main and imports only when it has drifted (over 1500 files or 40 textures from the lane's base;
+  `make lane-seed SSD=1` refreshes it once, e.g. after a landing); lanes clone from it in parallel.
+  Never write into the main checkout, and clean up your own folders and scratch files when you finish.
 
 ## Rules engine (ADR 0003, 0005, 0006)
 - Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract
