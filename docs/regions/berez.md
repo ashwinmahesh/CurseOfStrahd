@@ -94,7 +94,7 @@ the game where he grieves where the party can see it, and where they can hand hi
 
 ## 3. Layout and scenes
 
-Nine maps (data/locations/). Map themes use only existing ones; §11 lists the themes the art thread could add.
+Eleven maps (data/locations/). Map themes use only existing ones; §11 lists the themes the art thread could add.
 
 | Map | Theme | Areas (`enter:` triggers) | What happens |
 |---|---|---|---|
@@ -107,6 +107,8 @@ Nine maps (data/locations/). Map themes use only existing ones; §11 lists the t
 | `mount_baratok_trail` (32 x 20, outdoors) | wilderness | `baratok_ledge` | Battlefield for the mountain roads' random fights. |
 | `tsolenka_pass` (40 x 34, outdoors) | shrine_yard | `tsolenka_climb`, `tsolenka_landing`, `tsolenka_bridge`, `tsolenka_shelf`, `tsolenka_gate_road`, `tsolenka_beyond` | The cliff road, a frozen wayside shrine, the bridge over the gorge, the roc's shelf and its nest, the tower and its portcullis, the road beyond to the Amber Temple (exit `tsolenka_temple_road`, only once the gate is up). |
 | `tsolenka_pass_guard_tower` (20 x 13) | dungeon | `tower_vestibule`, `tower_guardroom`, `tower_gatehouse`, `tower_barracks`, `tower_captains_room` | The ghostly watch in the guardroom; the winch for the gate; bunks and footlockers; the captain's room with the watch log and strongbox. Tarokka spot. |
+| `tsolenka_pass_guard_tower_upper` (14 x 8) | dungeon | `tower_stairhead`, `tower_lookout` | The tower's upper floor (dungeon expansion P1, ours: the book gives the tower an upper floor and little in it): a bare lookout with slit windows, a bench, a signal lamp, a spyglass at the sill and a hatch to the roof. Reached by a stair niche carved into the guardroom's south wall (the ground floor gained that one square and nothing else). |
+| `tsolenka_pass_guard_tower_roof` (15 x 9, outdoors) | dungeon | `tower_roof` | The open roof in the cloud: a stone knight at each corner (the book's golden knight statues, grey stand-ins until their art is drawn), the watch's beacon cradle, a hatch down. |
 
 ### 3.1 Berez, step by step
 
@@ -174,6 +176,18 @@ Nine maps (data/locations/). Map themes use only existing ones; §11 lists the t
    (`tsolenka_watch`).
 3. **The winch** in the gatehouse (examine) raises the portcullis (`tsolenka_gate_open`): the gate doors open, the
    road north becomes a way out, and the travel road to the Amber Temple appears.
+4. **The curtain of green fire** (dungeon expansion P1; the book hangs one behind the gate and says it can be crossed or
+   dispelled, Elven Tower chapter 9, with no numbers, so the rest is ours): once the portcullis is up, two green flames
+   stand in the passage behind it (props `tsolenka_green_fire_w` and `_e`, trap `tsolenka_green_fire` on the same two
+   squares, 4d10 fire, Dexterity 15 for half, spent when the first one walks in). `tsolenka_pass/events:green_fire` puts
+   it out for good (`tsolenka_green_fire_out`) by Arcana 15 (one try for the party: a failure shuts that way) or Dispel
+   Magic (any caster who has it prepared, no roll, no slot); stepping back or walking in always works.
+5. **Two stone demons** (props `tsolenka_vrock_w` and `_e`) stand against the wall either side of the gate: the book's
+   two petrified vrocks, which wake if anyone climbs the wall. They are scenery until the vrock sprite is drawn (a paid
+   step, waiting on the owner), then they wake if the party forced the gate past the watch (`tsolenka_watch_fate` =
+   `fought`). The two arches (props `tsolenka_arch_w` and `_e`) mark the bridge's ends; no square moved for any of this.
+6. **The tower's upper floors.** A stair niche in the guardroom's south wall leads up to the lookout
+   (`tsolenka_pass_guard_tower_upper`), whose hatch leads to the roof (`tsolenka_pass_guard_tower_roof`).
 
 ### 3.4 Travel (data/travel/berez.json)
 

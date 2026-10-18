@@ -1,0 +1,38 @@
+== green_fire_look
+Narrator: Behind the iron teeth hangs a sheet of green flame, standing upright across the arch like a drawn curtain. It hums in your teeth and throws a sick, pale light over the stone.
+Narrator: Hold your hand near and your skin prickles with cold, as if the fire is taking heat instead of giving it.
+== green_fire_arcana_ok
+Narrator: Every spell has a seam if you know where to look, and this one is tied to the keystone like an old net.
+Narrator: One thread pulled loose and the green curtain folds in upon itself, vanishing with a dry click.
+== green_fire_arcana_fail
+Narrator: You trace the green weave for a loose thread, but the flame only flares higher, humming like a wasp in a jar.
+== green_fire_dispel
+Narrator: You speak the word that unmakes work, and the green curtain shrinks to a cold spark the size of a pin.
+Narrator: It goes out without smoke, leaving only dark stone and the wind coming down the pass.
+== green_fire_sprung
+Narrator: The green curtain wraps around you like a sheet of ice that burns, and having done its duty, gutters out into the stone.
+== vrock_west
+Narrator: A winged demon of grey stone crouches on the western wall, long arms braced and taloned feet locked into the parapet.
+Narrator: The wind scours the pass white with frost, yet not a flake settles on its carved shoulders.
+== vrock_east
+Narrator: Its twin grips the eastern stone in the same patient crouch, though the rock under your palm has the faint, greasy warmth of tallow.
+== arch_west
+Narrator: A weathered arch frames the western end of the bridge, its stones whistling softly as the gorge wind passes through.
+Narrator: High on the keystone, half eaten by the frost, a carved sun still rises over stone mountains.
+== arch_east
+Narrator: The eastern arch matches its brother across the drop, though the wind has taken a tooth from its crown and worn the sun nearly flat.
+== tower_top_enter
+Narrator: The stair lets out into a bare stone chamber where thin grey light comes through narrow slits in the wall.
+Narrator: Below you, the road and the bridge look very small, and the drop looks very long.
+== tower_lookout_enter
+Narrator: A wooden bench, a cold signal lamp, and a brass spyglass fixed to the sill wait in a room swept clean of dust.
+Narrator: Nothing is broken and nothing is out of place, as if the watch only stepped out a moment ago.
+== tower_spyglass
+Narrator: The brass tube turns on oiled bearings, bringing the stone bridge and the cloud-choked gorge up to your eye.
+Narrator: Far up the road beyond the gate, where the mist thickens, something the colour of old amber catches a light of its own.
+== tower_roof_enter
+Narrator: You climb out into the teeth of the wind on a flat stone roof ringed by a low parapet.
+Narrator: At each corner stands a knight of gilded stone, bright as new coin against the grey cloud.
+== tower_roof_knights
+Narrator: Four stone knights hold their swords up to the sky, their gilded faces turned back toward the valley below.
+Narrator: Whether they were set here to guard the road or to warn it, the valley has long since stopped looking up.
