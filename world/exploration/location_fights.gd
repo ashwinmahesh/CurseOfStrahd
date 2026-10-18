@@ -249,6 +249,11 @@ static func resume_encounter(view: LocationView, snapshot: Dictionary) -> bool:
 		(view.loc.get_or_add("encounters", []) as Array).append(spec)
 	if spec.is_empty() or view.in_combat:
 		return false
+	if not LocationParty.snapshot_fits(view, snapshot):
+		# The place was edited since the save (the load guard, Dungeon Expansion Plan E1): the party stood on squares that
+		# are closed now, so the fight begins again from its own squares instead of resuming on the old layout.
+		GameState.combat_snapshot = {}
+		return start_encounter(view, encounter_id)
 	view.in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, view.dice, view.st.party)

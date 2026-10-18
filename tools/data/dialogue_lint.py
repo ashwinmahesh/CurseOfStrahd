@@ -7,6 +7,7 @@ parse_file(path) -> {"nodes": {id: line_no}, "jumps": [(target, line)], "flags_r
                      "skills": [...], "encounters": [...], "selectors": [...], "errors": [str]}
                      (+ "end_games": [where] for each `end_game`, when a file has one)
                      (+ "casts": [(spell id, where)] for `cast`, "reveals": [(prop id, where)] for `reveal`)
+                     (+ "moves": [(location id, spawn name, where)] for `move`, the spawn "default" when none is named)
                      (+ "approvals": [(companion id, delta, where)] for `approve`, "inspires": [(selector, where)] for
                      `inspire`, and "approval_terms": [(companion id, rhs or "", where)] for `approval.<id>` in conditions)
 """
@@ -36,6 +37,7 @@ RE_ATT = re.compile(rf"^attitude\s+({ID})\s+(hostile|indifferent|friendly)$")
 RE_CHECK = re.compile(r"^check\s+([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)\s*->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?$")
 RE_INTERJECT = re.compile(r"^interject\s+([a-z]+:[a-z0-9_]+):\s+(.+)$")
 RE_COMBAT = re.compile(rf"^combat\s+({ID})$")
+RE_MOVE = re.compile(rf"^move\s+({ID})(?::({ID}))?$")
 RE_NARRATE = re.compile(r"^narrate\s+([a-z0-9_:]+)$")
 RE_CAST = re.compile(rf"^cast\s+({ID})$")
 RE_REVEAL = re.compile(rf"^reveal\s+({ID})$")
@@ -246,6 +248,10 @@ def parse_file(path):
         m = RE_COMBAT.match(line)
         if m:
             out["encounters"].append((m.group(1), where))
+            continue
+        m = RE_MOVE.match(line)
+        if m:
+            out.setdefault("moves", []).append((m.group(1), m.group(2) or "default", where))   # the party goes there (story/dialogue_runner.gd)
             continue
         m = RE_XP_FIGHT.match(line)
         if m:

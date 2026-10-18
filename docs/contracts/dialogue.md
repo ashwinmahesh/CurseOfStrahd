@@ -90,6 +90,15 @@ interject <selector>: Text         A party member matching the selector says Tex
                                    class/species lines so any such character could say them; use name: for a
                                    pregen's own voice.
 combat encounter_id                Ends the conversation and starts a fight from the location's encounters.
+move location[:spawn]             The party goes to a location's spawn ("move vault" is its default spawn, as for an exit
+                                   that names none), also another spawn of the map it is in: a trap's drop from cell to
+                                   cell. Like `combat` it ends the conversation, so `time +n` and the Narrator's lines
+                                   come before it and nothing after it in the node runs. Once the conversation has closed
+                                   the party goes as through an exit, behind the same loading cover, and the place does
+                                   what it does for any arrival: its `enter:` Narrator line (a flag set before the move
+                                   can pick a variant), its autosave, a fight whose area they land in. The location is a
+                                   data/locations id (not a travel place); `make validate` fails on one that does not
+                                   exist or a spawn it does not have. Not for camp talks.
 narrate trigger_key                Plays a Narrator trigger (below) inline.
 cast speak_with_dead               The one speaking for the party casts an exploring spell in the scene (story/
                                    field_casting.gd): as a Ritual when it is one, else a feature's free casting or their
