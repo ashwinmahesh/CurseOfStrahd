@@ -295,8 +295,8 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	for c: Variant in view.loc.get("containers", []):
 		var ct := c as Dictionary
 		if LocationView._cell(ct["cell"]) == cell and view.container_nodes.has(str(ct["id"])):
-			return {"kind": "container", "id": str(ct["id"]), "label": "Open %s%s%s%s" % [ct.get("label", "the chest"), " (locked)" if view._locked(ct) else "",
-				LocationCrime.owned_note(ct), LocationChecks.hint(view, ct)], "spec": ct}
+			return {"kind": "container", "id": str(ct["id"]), "label": "Open %s%s%s%s%s" % [ct.get("label", "the chest"), " (locked)" if view._locked(ct) else "",
+				LocationCrime.owned_note(ct), LocationStealth.guarded_note(view, ct), LocationChecks.hint(view, ct)], "spec": ct}
 	for p: Variant in view.loc.get("props", []):
 		var prop := p as Dictionary
 		if LocationView._cell(prop["cell"]) == cell and view.prop_nodes.has(str(prop["id"])):
@@ -458,6 +458,8 @@ static func _open_container(view: LocationView, ct: Dictionary, method: String, 
 	if bool(looted.get(id, false)):
 		view.toast.emit("Empty")
 		return
+	if LocationStealth.guard_take(view, ct):
+		return   # the foes guarding it noticed the taker: their fight starts, and nothing is taken
 	if ct.has("flag"):
 		view.st.set_flag(str(ct["flag"]))
 	var left := (view.st.loc_state(view.loc_id).get("contents", {}) as Dictionary).get(id, {}) as Dictionary

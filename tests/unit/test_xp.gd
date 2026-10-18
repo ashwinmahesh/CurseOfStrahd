@@ -252,6 +252,22 @@ func test_a_fight_talked_away_pays_what_winning_would_and_only_once() -> void:
 	assert_eq(Xp.talked_away(st, "no_such_fight"), "")
 
 
+func test_a_waiting_fight_slipped_past_pays_like_one_talked_away() -> void:
+	# LocationStealth._slipped_past asks Xp.talked_away for the fight's id when a sneaking party leaves its area unnoticed.
+	var st := _xp_state()
+	var spec := Xp.encounter_spec(st, "night_streets_dead")
+	assert_true(bool(spec.get("waiting", false)), "a fight waiting in plain view")
+	var want := Xp.spec_xp(spec)
+	assert_true(want > 0)
+	assert_eq(Xp.talked_away(st, "night_streets_dead"), "+%d XP" % want, "what winning the version it would have met pays")
+	assert_eq(Xp.talked_away(st, "night_streets_dead"), "", "slipping past it again pays nothing")
+	assert_eq(Xp.fight(st, _fight(["wolf"]), "night_streets_dead", false), "", "nor does fighting it later")
+	assert_eq(st.xp, want)
+	var milestones := StoryState.new()
+	assert_eq(Xp.talked_away(milestones, "night_streets_dead"), "", "milestone levelling pays nothing")
+	assert_eq(milestones.xp, 0)
+
+
 # --- Quests, places, lore -----------------------------------------------------------------------------------------
 
 func test_quests_pay_by_kind_and_a_region_climax_is_paid_by_its_milestone() -> void:

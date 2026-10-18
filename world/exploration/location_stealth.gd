@@ -13,6 +13,12 @@ extends RefCounted
 ## sight) is at least the member's total. Being noticed starts the fight, and nobody is surprised. The cones hold only
 ## before a fight (owner, 2026-10-07, after Baldur's Gate 3); fights keep the 2024 rules, which have no facing.
 ##
+## A sneaking party that steps into a waiting fight's area unnoticed starts nothing (step_in): the foes stand where they
+## are and keep checking every step, and a foe that notices someone starts the fight, with nobody surprised. The party
+## slips past the fight when every member has left the area again unnoticed (_check_slipped); stopping to sneak inside the
+## area starts it (start_guarded_here), as stepping in without sneaking does. Taking from a container in the area asks
+## the same notice rule (guard_take). docs/rules/stealth.md, "Slipping past".
+##
 ## When the party opens a fight (striking a waiting foe, or stepping into a fight's area) while sneaking, every foe
 ## that notices none of them is surprised (2024: Disadvantage on Initiative), and a member nobody noticed, with a
 ## total of 15 or more and Three-Quarters Cover from every foe, starts the fight hidden (the Invisible condition, as
@@ -47,7 +53,7 @@ static func show_crouch(view: LocationView) -> void:
 
 ## Starts or stops sneaking. Starting rolls Stealth for each member without a total kept from earlier in this visit
 ## (ROLL_MINUTES), so stopping and starting again is no free reroll; foes check the totals as the party moves. Stopping
-## in a waiting foe's sight gets the party noticed at once.
+## inside a waiting fight's area starts that fight; in a waiting foe's sight it gets the party noticed at once.
 static func set_sneaking(view: LocationView, on: bool) -> void:
 	if view.in_combat or view.sneaking == on:
 		return
@@ -55,7 +61,7 @@ static func set_sneaking(view: LocationView, on: bool) -> void:
 	if on:
 		_roll_totals(view)
 		refresh_waiting(view)
-	else:
+	elif not start_guarded_here(view):
 		after_step(view)
 
 
@@ -221,6 +227,7 @@ static func _drop(view: LocationView, w: Dictionary) -> void:
 
 ## The fight with `encounter_id` started: its waiting foes go (their figures were handed to the fight).
 static func clear_waiting(view: LocationView, encounter_id: String) -> void:
+	view._slipping.erase(encounter_id)
 	for w: Dictionary in view.waiting.duplicate():
 		if str(w["encounter"]) == encounter_id:
 			_drop(view, w)
@@ -417,39 +424,52 @@ static func noticed_by(view: LocationView, e: Encounter, foe: Combatant) -> Comb
 	return null
 
 
-## After the party moves (or starts or stops sneaking): figures for the foes it can now see, and a foe that notices
-## anyone starts its fight. True if a fight started.
+## After the party moves (or starts or stops sneaking): the fights it has slipped past, figures for the foes it can now
+## see, and a foe that notices anyone starts its fight. True if a fight started.
 static func after_step(view: LocationView) -> bool:
 	if view.in_combat:
 		return false
+	_check_slipped(view)
 	refresh_waiting(view)
 	if view.waiting.is_empty():
 		return false
 	var e := watch(view)
 	for w in view.waiting:
-		var spec := LocationFights.spec_for(view, str(w["encounter"]))
-		if str(spec.get("surprise", "")) == "enemies":
+		if is_asleep(view, w):
 			continue   # asleep or otherwise unaware until the fight starts
-		var foe := w["foe"] as Combatant
-		var who := noticed_by(view, e, foe)
+		var who := noticed_by(view, e, w["foe"] as Combatant)
 		if who == null:
 			continue
-		view._foes_alerted = true
-		view.toast.emit("%s spots %s" % [foe.name() if is_shown(w) else "Something", who.name()])
-		view.start_encounter(str(w["encounter"]))
-		view._foes_alerted = false
+		_alert(view, w, who)
 		return true
 	return false
 
 
+## A foe noticed `who`: it starts its fight, and that fight surprises no one.
+static func _alert(view: LocationView, w: Dictionary, who: Combatant) -> void:
+	view._foes_alerted = true
+	view.toast.emit("%s spots %s" % [(w["foe"] as Combatant).name() if is_shown(w) else "Something", who.name()])
+	view.start_encounter(str(w["encounter"]))
+	view._foes_alerted = false
+
+
+## Whether a waiting foe is asleep (`surprise: enemies`): it notices nobody before its fight starts.
+static func is_asleep(view: LocationView, w: Dictionary) -> bool:
+	return str(LocationFights.spec_for(view, str(w["encounter"])).get("surprise", "")) == "enemies"
+
+
 ## Who can see you (U10): what a foe in plain view, or (while the party sneaks) anyone standing here, would make of
 ## the leader standing on `cell` now ("<who> would see <name> there"), or "". The lantern goes with them, and a foe
-## asleep (`surprise: enemies`) sees nobody.
+## asleep (`surprise: enemies`) sees nobody. A party that isn't sneaking is told instead when `cell` is inside the area
+## of a waiting fight it can see (guarded_hint).
 static func hover_warning(view: LocationView, cell: Vector2i) -> String:
 	if view.in_combat or view.members.is_empty() or not view.grid.in_bounds(cell):
 		return ""
 	if view.waiting.is_empty() and not view.sneaking:
 		return ""
+	var guarded := guarded_hint(view, cell)   # not sneaking: a foe's area, where stepping in starts its fight
+	if guarded != "":
+		return guarded
 	var who := view.leader()
 	var was := who.cell
 	who.cell = cell
@@ -483,7 +503,7 @@ static func exposure(view: LocationView, cr: Creature) -> Dictionary:
 	var named := {"notices": [] as Array[String], "bright": [] as Array[String]}
 	for w in view.waiting:
 		var foe := w["foe"] as Combatant
-		if not is_shown(w) or not foe.can_act() or str(LocationFights.spec_for(view, str(w["encounter"])).get("surprise", "")) == "enemies":
+		if not is_shown(w) or not foe.can_act() or is_asleep(view, w):
 			continue
 		var mood := SightOverlay.eye_mood(foe, total, true)
 		if mood != "beaten" and not foe_label(foe) in (named[mood] as Array[String]):
@@ -494,20 +514,199 @@ static func exposure(view: LocationView, cr: Creature) -> Dictionary:
 
 ## What an exposure says, as the badge's hint: "Stealth 7: the Wolf would notice them in any light".
 static func exposure_text(ex: Dictionary) -> String:
-	var foes := ex["foes"] as Array
-	var who := ""
-	if foes.size() == 1:
-		who = "the %s" % foes[0]
-	elif foes.size() == 2:
-		who = "the %s and the %s" % [foes[0], foes[1]]
-	elif foes.size() > 2:
-		who = "the %s, the %s and others" % [foes[0], foes[1]]
+	var who := _the_kinds(ex["foes"] as Array)
 	match str(ex["mood"]):
 		"notices":
 			return "Stealth %d: %s would notice them in any light" % [int(ex["total"]), who]
 		"bright":
 			return "Stealth %d: %s would notice them in bright light" % [int(ex["total"]), who]
 	return "Stealth %d: no foe in view would notice them" % int(ex["total"])
+
+
+## Foe kinds as a phrase: "the Wolf", "the Wolf and the Zombie", "the Wolf, the Zombie and others".
+static func _the_kinds(kinds: Array) -> String:
+	if kinds.size() == 1:
+		return "the %s" % kinds[0]
+	if kinds.size() == 2:
+		return "the %s and the %s" % [kinds[0], kinds[1]]
+	if kinds.size() > 2:
+		return "the %s, the %s and others" % [kinds[0], kinds[1]]
+	return ""
+
+
+# --- Slipping past ------------------------------------------------------------------------------------
+
+## Whether `spec` is a fight whose foes guard their area: it waits in plain view, starts on stepping into an area, isn't an
+## ambush on the party or a final battle, and has a foe that isn't `unseen` (a fight of unseen foes only still starts on
+## the step). The fights LocationStealth.waiting_specs lists that have foes in view.
+static func guards(spec: Dictionary) -> bool:
+	if not bool(spec.get("waiting", false)) or not str(spec.get("trigger", "")).begins_with("enter_area:"):
+		return false
+	if str(spec.get("surprise", "")) == "party" or str(spec.get("final_battle", "")) != "":
+		return false
+	return (spec.get("monsters", []) as Array).any(func(m: Variant) -> bool: return not bool((m as Dictionary).get("unseen", false)))
+
+
+## The waiting fights whose foes guard their area now (`guards`, not yet fought, their `when` true).
+static func guarded_specs(view: LocationView) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for spec in waiting_specs(view):
+		if guards(spec):
+			out.append(spec)
+	return out
+
+
+## The area (its data entry) whose entering starts `spec`, or {}.
+static func area_of(view: LocationView, spec: Dictionary) -> Dictionary:
+	for a: Variant in view.loc.get("areas", []):
+		if "enter_area:" + str((a as Dictionary)["id"]) == str(spec.get("trigger", "")):
+			return a as Dictionary
+	return {}
+
+
+## The kinds of the foes of fight `encounter_id` the party can see, as "the Wolf and the Zombie" ("" if none shown: a
+## fight the party hasn't seen gives away nothing).
+static func kinds_in_view(view: LocationView, encounter_id: String) -> String:
+	var kinds: Array[String] = []
+	for w in view.waiting:
+		if str(w["encounter"]) == encounter_id and is_shown(w) and not foe_label(w["foe"] as Combatant) in kinds:
+			kinds.append(foe_label(w["foe"] as Combatant))
+	return _the_kinds(kinds)
+
+
+## The leader stepped into the area of `spec`, a fight that waits in plain view (LocationFights._trigger_encounter).
+## "" when the fight starts as it always did (the party isn't sneaking, or the fight has no foes in view to slip past);
+## "spotted" when a foe of it notices someone, and starts it (nobody surprised); "slipped" when none does: nothing starts,
+## and the party is slipping past it until every member has left the area again.
+static func step_in(view: LocationView, spec: Dictionary) -> String:
+	if not view.sneaking or not guards(spec):
+		return ""
+	refresh_waiting(view)
+	var id := str(spec["id"])
+	var foes: Array[Dictionary] = []
+	for w in view.waiting:
+		if str(w["encounter"]) == id:
+			foes.append(w)
+	if foes.is_empty():
+		return ""
+	var e := watch(view)
+	for w in foes:
+		if is_asleep(view, w):
+			continue
+		var who := noticed_by(view, e, w["foe"] as Combatant)
+		if who != null:
+			_alert(view, w, who)
+			return "spotted"
+	view._slipping[id] = true
+	var kinds := kinds_in_view(view, id)
+	if kinds != "":
+		var shown := foes.filter(func(w: Dictionary) -> bool: return is_shown(w)).size()
+		view.toast.emit("Unnoticed: %s %s seen you" % [kinds, "hasn't" if shown == 1 else "haven't"])
+	return "slipped"
+
+
+## After a step: each fight the party slipped into unnoticed that no one in the party (nor a guest) stands in the area of
+## now is slipped past, if it hasn't started. A fight that has started, was won or stopped waiting (its night is over)
+## is forgotten.
+static func _check_slipped(view: LocationView) -> void:
+	if view._slipping.is_empty():
+		return
+	var specs := guarded_specs(view)
+	for id: String in view._slipping.keys():
+		var spec := {}
+		for s in specs:
+			if str(s["id"]) == id:
+				spec = s
+		var area := area_of(view, spec) if not spec.is_empty() else {}
+		if area.is_empty():
+			view._slipping.erase(id)
+			continue
+		if _watchers(view).any(func(m: Combatant) -> bool: return LocationView._in_area(area, m.cell)):
+			continue
+		view._slipping.erase(id)
+		_slipped_past(view, spec)
+
+
+## The party slipped past waiting fight `spec`: said, and in XP mode paid as a fight talked away is (Xp.talked_away: what
+## winning the version it would have met pays, once a fight, so fighting it later pays nothing more). The fight's flag
+## isn't set, and it stays to be fought: entering again without sneaking starts it.
+static func _slipped_past(view: LocationView, spec: Dictionary) -> void:
+	var kinds := kinds_in_view(view, str(spec["id"]))
+	if kinds != "":
+		view.toast.emit("Slipped past %s" % kinds)
+	var earned := Xp.talked_away(view.st, str(spec["id"]))
+	if earned != "":
+		view.toast.emit(earned)
+
+
+## Stopping to sneak inside the area of a waiting fight starts it, as stepping in without sneaking would, whether or not
+## a foe would have noticed. True if one started.
+static func start_guarded_here(view: LocationView) -> bool:
+	if view.in_combat or view.members.is_empty():
+		return false
+	for spec in guarded_specs(view):
+		var area := area_of(view, spec)
+		if not area.is_empty() and LocationView._in_area(area, view.leader().cell):
+			return LocationFights.start_encounter(view, str(spec["id"]), spec)
+	return false
+
+
+## The waiting fight guarding the container `ct` (its square is inside the fight's area), or {}. Read off the foes waiting
+## now (the hover hint asks often).
+static func guarding_fight(view: LocationView, ct: Dictionary) -> Dictionary:
+	var at := LocationView._cell(ct["cell"])
+	var seen := {}
+	for w in view.waiting:
+		var id := str(w["encounter"])
+		if seen.has(id):
+			continue
+		seen[id] = true
+		var spec := LocationFights.spec_for(view, id)
+		var area := area_of(view, spec) if not spec.is_empty() and guards(spec) else {}
+		if not area.is_empty() and LocationView._in_area(area, at):
+			return spec
+	return {}
+
+
+## The hover hint's note for a container guarded by a waiting fight, or "" (beside LocationCrime.owned_note).
+static func guarded_note(view: LocationView, ct: Dictionary) -> String:
+	return " (Guarded: taking from it where they'd see starts the fight)" if not guarding_fight(view, ct).is_empty() else ""
+
+
+## The leader opens container `ct` to take from it. If it is guarded, the fight's foes ask the same notice rule as at every
+## step of the leader (their sight cone, the 10 ft ring, light and cover; the leader's kept Stealth total while sneaking,
+## none when not): one that would notice them starts its fight (nobody surprised) and nothing is taken. True if it did.
+static func guard_take(view: LocationView, ct: Dictionary) -> bool:
+	if view.members.is_empty():
+		return false
+	refresh_waiting(view)
+	var spec := guarding_fight(view, ct)
+	if spec.is_empty():
+		return false
+	var e := watch(view)
+	var taker := view.leader()
+	var total := total_for(view, taker.creature) if view.sneaking else 0
+	for w in view.waiting:
+		if str(w["encounter"]) == str(spec["id"]) and not is_asleep(view, w) \
+				and notices(e, w["foe"] as Combatant, taker, view.sneaking, total):
+			_alert(view, w, taker)
+			return true
+	return false
+
+
+## What hovering `cell` says to a party that isn't sneaking: inside the area of a waiting fight whose foes it can see,
+## stepping in starts the fight. "" elsewhere, and for a fight the party hasn't seen.
+static func guarded_hint(view: LocationView, cell: Vector2i) -> String:
+	if view.sneaking or view.in_combat or view.waiting.is_empty():
+		return ""
+	for w in view.waiting:
+		if not is_shown(w):
+			continue
+		var spec := LocationFights.spec_for(view, str(w["encounter"]))
+		var area := area_of(view, spec) if not spec.is_empty() and guards(spec) else {}
+		if not area.is_empty() and LocationView._in_area(area, cell):
+			return "Stepping in starts the fight; sneak to pass unseen"
+	return ""
 
 
 ## The party opens the fight with this waiting foe (a strike from plan mode or the right-click menu).

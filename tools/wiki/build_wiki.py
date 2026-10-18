@@ -1194,6 +1194,8 @@ class Wiki:
             extra = []
             if e.get("lair"):
                 extra.append("lair")
+            if e.get("waiting"):
+                extra.append("waiting")
             if e.get("surprise"):
                 extra.append(f"surprise: {e['surprise']}")
             if e.get("loot"):

@@ -41,6 +41,8 @@ A foe that turns, or walks a route, turns its cone with it. Fights keep the 2024
 
 Foes check after every square the party moves, and when it starts or stops sneaking. A foe that notices someone
 starts its fight at once, and that fight surprises no one. Foes marked `surprise: enemies` (asleep, say) never notice.
+Stepping into the fight's area starts it too, unless the party is sneaking and none of its foes notices it: see Slipping
+past a waiting fight, below.
 
 ## Sneaking
 
@@ -66,6 +68,40 @@ can act, not ones asleep, `surprise: enemies`):
 
 Hovering the badge says what it means ("Stealth 7: the Wolf would notice them in any light"), and the controls card
 (F1, the pad's Show controls) says it for the pad. Members who are down wear none.
+
+## Slipping past a waiting fight
+
+A fight that waits in plain view (a `waiting` encounter started by stepping into an area, with at least one foe that
+isn't `unseen`) is a guarded room the party may fight, rob or pass by. It starts when the leader steps into its area,
+unless the party is sneaking and no foe notices it:
+
+- **Stepping in sneaking.** Each of the fight's foes that isn't asleep checks whether it notices any member, by the rule
+  of every step (its sight cone, the 10 ft ring, light and cover, its passive Perception against the member's kept
+  Stealth total). If one does, it starts the fight ("Wolf spots Ilse"), and nobody is surprised. If none does, nothing
+  starts: "Unnoticed: the Wolf hasn't seen you". The foes stay where they are and keep checking every step.
+- **Stepping in without sneaking** starts the fight as it always did. So does **stopping sneaking** while the leader
+  stands in the area, whether or not a foe would have noticed them there. A fight whose foes are all `unseen` has no one
+  to slip past: it starts on the step, however the party moves.
+- **Slipping past.** When every member and guest who is up has left the area again, with the fight not started, the
+  party has slipped past it ("Slipped past the Wolf"). In Experience mode that pays what winning the version the party
+  would have met pays, once a fight (`Xp.talked_away`, `_xp/fight/<id>`: the 2024 DMG counts foes cleverly avoided as
+  overcome), so fighting it later pays nothing more; in Milestone mode there is only the toast. Slipping past sets no
+  flag and marks nothing done: the fight is still there, and starts when the party next steps in openly. A slip in
+  progress isn't saved; a load forgets it.
+- **Sleepers.** A foe asleep (`surprise: enemies`) notices nobody: a sneaking party steps in beside it and starts
+  nothing, and a party that isn't sneaking starts the fight with the sleepers surprised, as the fight says.
+- **Arriving.** A party that comes through an exit sneaking is sneaking when the new place looks at its areas, so it may
+  slip into a fight's area where it arrives (the village square at night, the den's mouth), and a foe that notices it at
+  the spawn starts its fight at once.
+- **Guarded containers.** A container inside a waiting fight's area says so on its hover hint ("Guarded: taking from it
+  where they'd see starts the fight"). Opening it asks the same notice rule of the leader (the kept total while
+  sneaking, none when not): a foe that would notice them starts the fight and nothing is taken; if none would, the
+  take goes through and the fight doesn't start. A sneaking party that slipped in can rob a chest the foes don't face.
+- **Hover.** While the party isn't sneaking, a square inside the area of a waiting fight whose foes it can see says
+  "Stepping in starts the fight; sneak to pass unseen". A fight the party hasn't seen gives nothing away.
+
+Code: `LocationStealth.step_in`, `_check_slipped`, `start_guarded_here`, `guard_take`, `guarded_hint`;
+`LocationFights._trigger_encounter` asks `step_in` before it starts an area's fight.
 
 ## Waiting and resting in sight
 

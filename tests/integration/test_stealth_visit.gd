@@ -255,16 +255,42 @@ func test_other_ways_in_start_walking_normally() -> void:
 	assert_false(_view().sneaking, "nor is rebuilding a place")
 
 
-func test_a_fight_area_the_party_arrives_in_starts_its_fight_as_it_always_did() -> void:
+## The wolf's passive Perception (the fight's foes are gone from the view once it starts).
+func _wolf_passive() -> int:
+	return Monster.from_data(Compendium.shared().monster_data("wolf")).passive_score(&"perception").total()
+
+
+func test_a_fight_area_the_party_arrives_in_starts_its_fight_when_they_arrive_openly() -> void:
+	await _start()
+	root.call("enter_location", "test_stealth_pit", "default", false)
+	await _frames(4)
+	var v := _view()
+	assert_true(v.in_combat, "the wolf's area is stepped into on arriving: the fight starts")
+	assert_false(v.sneaking, "begun by a party that wasn't sneaking")
+	for c in v.combat_view.e.combatants:
+		if c.side == &"enemy":
+			assert_false(c.surprised, "so nobody is surprised")
+
+
+## Sneaking carried through an exit is sneaking when the place looks at its areas (docs/rules/stealth.md, "Slipping past"):
+## the fight starts only if the wolf notices one of them, and then it surprises no one.
+func test_a_fight_area_the_party_arrives_in_sneaking_starts_its_fight_only_if_the_wolf_notices() -> void:
 	await _start()
 	root.call("enter_location", "test_stealth_pit", "default", true)
 	await _frames(4)
 	var v := _view()
-	assert_true(v.in_combat, "the wolf's area is stepped into on arriving: the fight starts")
-	assert_false(v.sneaking, "begun as it was, by a party that wasn't sneaking yet")
-	for c in v.combat_view.e.combatants:
-		if c.side == &"enemy":
-			assert_false(c.surprised, "so nobody is surprised")
+	assert_true(v.sneaking, "arrived sneaking")
+	var worst := 1 << 20
+	for m: Combatant in v.members:
+		worst = mini(worst, int(v.sneak_totals[m.creature]))
+	var noticed := worst <= _wolf_passive()   # 25 ft ahead of it, in bright light
+	assert_eq(v.in_combat, noticed, "the fight starts iff a Stealth total (%d) doesn't beat the wolf's %d" % [worst, _wolf_passive()])
+	if v.in_combat:
+		for c in v.combat_view.e.combatants:
+			if c.side == &"enemy":
+				assert_false(c.surprised, "a fight a foe starts surprises no one")
+	else:
+		assert_true(v._slipping.has("pit_wolf"), "unnoticed, they have slipped into its area")
 
 
 # --- The totals on the portraits ---------------------------------------------------------------------

@@ -297,6 +297,12 @@ good, not where it only delays it):
 Choosing not to start an optional fight (the Tser Pool brawl, Lorghoth, the dinner's affront) is not avoiding one and
 pays nothing.
 
+A fight slipped past pays like one talked away (overworld stealth, docs/rules/stealth.md "Slipping past a waiting fight"): a
+sneaking party that steps into the area of a fight waiting in plain view unnoticed, and leaves it again without the fight
+starting, has cleverly avoided it, and `LocationStealth` calls `Xp.talked_away` with its encounter id when the last member
+is out. The award is the same `_xp/fight/<id>` once-key, so slipping past twice, or fighting the fight afterwards, pays
+once; Milestone mode gets only the toast.
+
 `story/dialogue_file.gd` parses `xp fight <id>` beside `xp milestone` (today every `xp` line parses as a milestone),
 `tools/data/dialogue_lint.py` learns the form, and `tools/data/validate_data.py` checks the id names an encounter, as
 it already does for `combat <id>`.

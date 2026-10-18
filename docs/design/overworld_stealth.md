@@ -58,6 +58,10 @@ of the clock, so a rest or a long Wait rerolls on the next look); the exit carry
 (`LocationStealth.exposure`, coloured as `SightOverlay.eye_mood`); Wait and the Short Rest share `foes_in_sight`.
 Tests: test_stealth_visit, test_pad_explore, test_layout.
 
+**Built (branch `stealth`, piece 2):** Option A's slip-past rule for the nine fights that are `waiting` today (not the eight
+conversions): `LocationStealth.step_in` and `_check_slipped`, the XP award through `Xp.talked_away`, guarded containers,
+sleepers, the hover hints and the arrival rule (`LocationView.arrive_sneaking`). Tests: test_slip_past, test_xp.
+
 ## Option A: Slip past (skip a guarded room, or rob it)
 
 **Rule.** A `waiting` fight starts when one of its foes notices a party member, when the party attacks, or when the

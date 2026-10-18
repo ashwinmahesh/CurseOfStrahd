@@ -88,6 +88,12 @@ var sneaking := false
 var sneak_totals: Dictionary = {}    ## Creature -> int
 var sneak_rolled: Dictionary = {}    ## Creature -> the game minute its total was rolled (StoryState.total_minutes)
 var waiting: Array[Dictionary] = []
+## The waiting fights whose area the party stepped into unnoticed while sneaking and has not left yet (LocationStealth.
+## step_in): encounter id -> true. Not saved: a load forgets them.
+var _slipping: Dictionary = {}
+## The party walked out of the last place through an exit sneaking (GameRoot.enter_location): sneaking from the first
+## look at its areas, with this place's own Stealth rolls.
+var arrive_sneaking := false
 var _waiting_key := ""                ## what the party could see from when the waiting foes were last looked for
 ## A foe noticed the party: the fight it starts surprises no one (LocationStealth).
 var _foes_alerted := false
@@ -175,10 +181,14 @@ func _ready() -> void:
 	add_child(FoundGlow.create(self))   # what a Search or a check turns up glows orange until it's used
 	add_child(SightOverlay.create(self))   # who can see the party while it sneaks or plans (U10)
 	add_child(WorldSounds.create(self))   # footsteps, fires and running water heard from where they are (A3)
+	if arrive_sneaking:
+		LocationStealth.set_sneaking(self, true)   # before the areas are looked at: it may slip into a fight's area
 	LocationWalk._check_areas(self)
 	if LocationPlan.wanted() and not in_combat:
 		LocationPlan.start(self)
 	LocationStealth.refresh_waiting(self)
+	if arrive_sneaking and not in_combat:
+		LocationStealth.after_step(self)   # a foe that notices them where they arrive starts its fight at once
 
 
 func _process(delta: float) -> void:
