@@ -935,6 +935,18 @@
           "plinth": {"type": "boolean", "description": "The block is a plinth, not a wall: three low steps of the temple's black stone under a statue (FacelessGod), the squares still blocking. Modern finish only."}
         }
       }
+    },
+    "fortress": {
+      "type": "object",
+      "description": "A Daern's Instant Fortress already standing on this map (Strahd's, in the treasury): its 4 x 4 plot's north-west square `cell`, the door's square `door` on the `looks` face and the open square `front` before it, as story/fortress_site.gd keeps them for the party's own tower. The plot must already be solid wall in `map.rows` (the tower is drawn over it); its door is an exit named fortress_entry (docs/story/fortress.md).",
+      "required": ["cell", "door", "front", "looks"],
+      "additionalProperties": false,
+      "properties": {
+        "cell": {"$ref": "#/$defs/cell"},
+        "door": {"$ref": "#/$defs/cell"},
+        "front": {"$ref": "#/$defs/cell"},
+        "looks": {"type": "string", "enum": ["south", "east", "west", "north"]}
+      }
     }
   },
   "$defs": {

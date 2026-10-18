@@ -72,6 +72,8 @@
     "abbey_of_st_markovia_shrine": "stark_chapel",
     "berez_marinas_monument": "drowned_shrine",
     "amber_temple_faceless_god": "faceless_void",
+    "castle_ravenloft_court_belfry": "ravenloft_back_way",
+    "castle_ravenloft_court_treasury": "ravenloft_vault",
     "amber_temple_library": "amber_library",
     "amber_temple_vault": "amber_vault"
   },
@@ -3859,6 +3861,79 @@
           "mix": 0.25,
           "energy": 1.0
         }
+      }
+    },
+    "ravenloft_back_way": {
+      "like": "ravenloft_halls",
+      "times": {
+        "any": {
+          "ambient": "stone_deep",
+          "ambient_energy": 0.7,
+          "key": "candle",
+          "key_energy": 0.2,
+          "grade": {
+            "shadows": "peat",
+            "lights": "flame",
+            "amount": 0.3
+          }
+        }
+      },
+      "modern": {
+        "tone": {
+          "shade": "umber",
+          "amount": 0.55,
+          "ambient_tint": "stone",
+          "ambient_mix": 0.5,
+          "ambient": 1.1
+        },
+        "times": {
+          "any": {
+            "ambient": "stone_deep",
+            "ambient_energy": 0.85,
+            "key": "candle",
+            "key_energy": 0.25
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "bone",
+            "rim": "umber",
+            "amount": 60
+          }
+        ]
+      }
+    },
+    "ravenloft_vault": {
+      "like": "ravenloft_court",
+      "modern": {
+        "tone": {
+          "shade": "night_deep",
+          "amount": 0.55,
+          "ambient_tint": "mist_blue",
+          "ambient_mix": 0.45,
+          "ambient": 1.1
+        },
+        "times": {
+          "any": {
+            "ambient": "night",
+            "ambient_energy": 0.9,
+            "key": "moonlight",
+            "key_energy": 0.35
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "frost",
+            "rim": "moonlight",
+            "amount": 70
+          }
+        ]
       }
     }
   }

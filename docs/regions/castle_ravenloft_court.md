@@ -55,7 +55,8 @@ are global).
 |---|---|---|---|
 | `castle_ravenloft_court` (the Court of the Count, second floor) — entry map | 44 x 25 | `court_grand_landing` (the head of the grand stairs), `court_kings_hall` (K27, the long hall), `court_audience_hall` (K25), `court_study` (K37), `court_trophy_room` (K31), `court_accountant` (K30), `court_guard_post` (K26, the guards' run), `court_stair_hall` (the tower stair, standing in for K39/K40) | Rahadin receives the party in the long hall; the throne on its dais; the study with the lady over the hearth and a bookcase door into the audience hall; the dragon's skull among the trophies; Lief at his desk and the rug; Strahd's armour in the guardroom; the portrait of a young woman in an alcove of the long hall that hides the stair down to the vault; the tower stairs (spires) and the stairs up (Rooms of Weeping). |
 | `castle_ravenloft_court_weeping` (the Rooms of Weeping, third floor) | 40 x 23 | `court_weeping_landing`, `court_weeping_hall`, `court_strahds_bedchamber` (K42), `court_strahds_bath` (K43), `court_portrait_gallery` (K47), `court_lounge` (K49), `court_ludmilla_room`, `court_anastrasya_room`, `court_volenta_room`, `court_guest_room` (K50), `court_rahadin_chamber` (K53) | Strahd's bedroom (locked, lock 16) and bath; his portrait that watches the gallery; the three brides in the lounge with their rooms behind it (the book keeps them elsewhere; we keep them together); Gertruda in the guest room; Rahadin's bare room. |
-| `castle_ravenloft_court_treasury` (the vault, K41) | 16 x 13 | `court_vault_stair`, `court_treasury` | A narrow stair from behind the portrait down to a vault of heaped coin: a glyph on the bottom step, and the hoard. |
+| `castle_ravenloft_court_treasury` (the vault, K41) | 16 x 13 | `court_vault_stair`, `court_treasury` (and `court_vault_dome`, the same squares, for the line about the ceiling) | A narrow stair from behind the portrait down to a vault of heaped coin: a glyph on the bottom step, and the hoard. Daern's Instant Fortress stands in its north-east corner under a black dome of star shards (§15). |
+| `castle_ravenloft_court_belfry` (the back way, K38 to K40) | 48 x 22 | `court_way_flue`, `court_way_false_treasury` (K38), `court_way_hall_of_webs` (K39), `court_way_belfry` (K40), `court_way_vault_stair` | Behind the study's hearth: a false treasury with a trapped chest and two sconces, a hall of webs, a belfry with a rope, and a secret stair down to the vault (§15). |
 
 ### Seams
 
@@ -67,6 +68,11 @@ are global).
 | `court_vault_passage` (12, 14), the alcove (when `flag.court_treasury_found`) | `castle_ravenloft_court_treasury:from_court` | `from_treasury` (12, 13) |
 | weeping `court_weeping_stairs_down` (38, 10) | `castle_ravenloft_court:from_weeping` | weeping `from_court` (36, 10) |
 | treasury `court_vault_stairs_up` (7, 1) | `castle_ravenloft_court:from_treasury` | treasury `from_court` (8, 2) |
+| the study hearth (`court_hearth_grate`, a conversation's `move`, not an exit) | `castle_ravenloft_court_belfry:from_study` (2, 15) | court `from_hearth` (4, 2), also `from_chimney` |
+| belfry `court_way_to_study` (2, 13) | `castle_ravenloft_court:from_hearth` | |
+| belfry `court_way_stair_down` (42, 3) | `castle_ravenloft_court_treasury:from_court` (the portrait stair's own foot, (8, 2)) | belfry `from_treasury` (42, 4) |
+| the false treasury's gas (`court_way:gassed`, `move`) | `castle_ravenloft_court_weeping:from_gas` (19, 20), in the guest room | |
+| the roof's smokestack (`court_way:down`, `move`) | `castle_ravenloft_court:from_chimney` (4, 2) | |
 
 ### Secret ways, locks and traps
 
@@ -139,6 +145,7 @@ guardian portrait 200, crawling claw 10, dire wolf 200, swarm of bats 50.
 | `court_rahadin_fight` | court | dialogue (Rahadin in the hall or at the stairs) | Rahadin and 2 of Strahd's animated armour and a third, battered (at the stairs Rahadin at 300 HP and the third at 50; in the hall the third at 90) | 12800 (High) |
 | `court_accountant_rug` | court | dialogue (freeing Lief) | rug of smothering, 3 crawling claws | 480 (trivial; a scare) |
 | `court_portrait_watch` | weeping | enter `court_portrait_gallery` | guardian portrait, 2 of Strahd's animated armour | 4800 (under Low) |
+| `court_way_spiders` | belfry | dialogue (pulling the belfry's rope) | 8 giant spiders at 185 Hit Points each, round the walls of the belfry | 1600 (Low; Hit Points raised, see §15) |
 | `court_brides_fight` | weeping | dialogue (provoking the brides) | Ludmilla, Volenta, 2 of Strahd's spawn and 2 animated armours; or all three brides and 2 armours | 11800 / 10000 |
 | `court_rahadin_chamber_fight` | weeping | dialogue (Rahadin in his room) | Rahadin and 3 of Strahd's animated armour | 12800 (High) |
 
@@ -185,6 +192,10 @@ Read by later content (endings, epilogues): `gertruda_home`, `gertruda_given_bac
 `lief_met`, `court_post_cleared`, `court_gallery_cleared`, `court_brides_met`, `court_anastrasya_story`,
 `gertruda_met`, `gertruda_rescued`, `court_gertruda_warned_him`, `court_gertruda_insight`.
 
+The back way's (§15): `court_way_sconce_set`, `court_way_gas_known`, `court_way_gassed`, `court_way_chest_taken`,
+`court_way_bell_rung`, `court_way_spiders_cleared` are registered here; `court_hearth_found`, `court_hearth_out` and
+`court_stack_climbed` are set by world checks, so they are in data/flags/world_checks.json. None is read by the main story.
+
 Flags read from others: `gertruda_search_promised` (village_of_barovia: Mary's message), `guest:ireena`,
 `guest:gertruda`, `tarokka` conditions.
 
@@ -208,9 +219,12 @@ Flags read from others: `gertruda_search_promised` (village_of_barovia: Mary's m
 | `court_volenta_trunk` | weeping | dagger, playing cards, 45 gp, a Mace of Terror (rare) |
 | `court_rahadin_rack` | weeping | scimitar x2, dagger |
 | `court_rahadin_footlocker` (lock 17) | weeping | 150 gp, a Potion of Healing (Greater), a Scimitar of Speed (very rare), a Ring of X-ray Vision (rare) |
-| `court_treasury_hoard` | treasury | 1200 gp; the Tarokka treasure when the reading puts one here |
+| `court_treasury_hoard` | treasury | 5400 gp (the book's heaps of copper, silver, gold and platinum, a quarter of their worth, §15); the Tarokka treasure when the reading puts one here |
 | `court_treasury_strongbox` (lock 18) | treasury | 600 gp, the Manual of Gainful Exercise (very rare), the Rod of Lordly Might (legendary) |
-| `court_treasury_jewels` | treasury | 400 gp in gems, an Ioun Stone (Absorption) (very rare) |
+| `court_treasury_jewels` | treasury | 1000 gp in jewellery, 8 diamonds and 7 pearls (the book's fifteen 100 gp gems), an Ioun Stone (Absorption) (very rare) |
+| `court_way_chest_a`, `court_way_chest_b` | belfry (false treasury) | 14 gp, 21 gp |
+| the trapped chest (`court_way_gas_chest`, a conversation) | belfry (false treasury) | 35 gp, once |
+| `court_way_skeleton` (a prop) | belfry (false treasury) | a torch, once |
 
 The random magic-item system (ADR 0012) adds items to these containers; no story item is placed here besides the
 Tarokka treasures.
@@ -268,3 +282,30 @@ as guests", "Stand aside or fall with him", "Leave her be", "We'll deal with the
    the village of Barovia; enter `mad_marys_house`: Mary's homecoming (`gertruda_home`, `find_gertruda home`).
 5. **Enemy rooms only** (Phase 6 exit test): set the reading's enemy to the card, then `go_to` the room's map and
    walk into the area; for the treasury set `court_treasury_found` first.
+
+## 15. The back way behind the study, the smokestack and Strahd's tower (Dungeon Expansion Plan C3, K37 to K41 and K52)
+
+Source: R. C. Veeder's area-by-area survey of the 2016 text (rcveeder.net, "Paths of Pain and Torment", K37 to K41 and
+K52), read 2026-10-18. What it gives, and what we added:
+
+| Book | Ours |
+|---|---|
+| K37, the study: the fireplace hides a passage to K38; going through it while the fire burns hurts (no number given) | The grate (`court_hearth_grate`, in front of the hearth): a search finds the plate and the passage (Investigation 14 or Perception 16, a try each), and the fire has to go out before the party crawls through. Ways: wait three hours, Create or Destroy Water, a bucket of water, or beat it out with a cloak (Dexterity 12; it burns 1d6 fire, or 2d6 on a failure: ours) |
+| K38, the false treasury: a little money and a trapped chest of sleeping gas; if the whole party sleeps they wake four hours later in K50; one of two sconces lacks its torch, which a dead adventurer holds, and putting it back opens the way on | As the book. The gas: the chest's conversation rolls the party's best Constitution save (13, or 8 once the vent is found); a held breath keeps the party awake and takes the 35 gp; a failure is `time +240` and a `move` to the guest room (`from_gas`). A rope opens the lid from across the room with no roll. The torch comes from the skeleton (`court_way_skeleton`); the sconce takes any torch, which stays in it. A stone panel (the door `court_way_panel`) then opens |
+| K39, the hall (the survey calls it the Hall of Riches; we keep the plan's "hall of webs"): webs fill it, a single-file path is cut through them, to a pair of ornate bronze doors; a secret door leads to K31b | The webs are difficult squares either side of a clear path along row 14, with wall webs; the bronze doors are `court_way_bronze_doors`. The reliefs on them (cast wolves chasing a stag through iron trees) are ours. K31b is C2's: the hall's side wall has no secret door yet, and C2 adds it |
+| K40, the belfry: webs and a large rope; pulling it rings a huge bell and summons giant spiders (the number isn't given); a secret door leads to K41 | The rope (`court_way_rope`, a conversation) calls `court_way_spiders`: 8 giant spiders, at 185 Hit Points each (the stat block's 26 is for a level 3 party), spread round the walls so no burst takes more than six. 5 wins in 8 for the sharp test party at level 10 (tests/integration/test_scaled_fights_castle_belfry.gd, 12.9 rounds, 2 dropped on average). Not pulling it avoids the fight. The secret door (Search 17) at the belfry's north wall leads down a stair to the treasury's own stair, `from_court` (8, 2), so no square of the vault moved; leaving goes up the portrait stair as before |
+| K52, the smokestack: the chimney over the K37 fireplace, five feet wide at the top, smoke harmful | The keep roof's stack (`spires_smokestack`, with the ash at its foot): two Athletics 12 climbs, one with the fire out (a bruise on a failure) and one while it burns (1d6 poison on a success, 2d6 on a failure: ours). The first success (`court_stack_climbed`) leaves a rope for good and opens the conversation's way down, a `move` to the study (`from_chimney`) |
+| K41, the treasury: Daern's Instant Fortress nearly fills the room under a domed ceiling painted black with pitch and glowing crystal shards like stars; the treasure is 25,500 gp | The tower (story/fortress_site.gd's footprint and LocationFortress.stand, no fortress code of ours) stands in the north-east corner on 16 wall squares, door facing south, never opening: the door (`fortress_entry`, `when: "false"`) says it opens only at its owner's word. The dome is the vault's new mood (`ravenloft_vault`, a night blue with frost dust), four pale lights, and the line `enter:court_vault_dome`. The hoard stays where it was (the Tarokka container `court_treasury_hoard` at (7, 8)): coins at a quarter of the book's 21,500 gp (5400 + 1000 in the casket), the gems at the book's count and value, no new magic item |
+
+Nothing that existed moved: the treasury's rows are as they were (the tower sits on wall squares, tests/integration/
+test_court_back_way.gd checks every row), the court's, the roof's and the weeping's spawns and props are where they
+were, and the new things are inserts (court: two spawns and the grate prop; roofs: the stack prop; weeping: `from_gas`;
+treasury: the tower, the dome area, one exit that never opens, four lights, the hoard's gold and the casket's gems).
+
+The way in from the King's Hall's portrait stays. The belfry's stair joins the same stair, so leaving the treasury is
+always up to the King's Hall. The fight and the way back through the hearth are optional; none of it sets a main flag.
+
+Words: every line is in narrative/castle_ravenloft/court_way.dialogue and the Narrator files (castle_ravenloft_court,
+castle_ravenloft_spires). They were drafted by Gemini through the ai-bridge and edited here: the brief, the raw reply and
+the edits are in docs/plans/gemini_dungeon/C3/. None is voiced yet. Known rough edge: the guest room's arrival plays the
+Rooms of Weeping's own entering line (the stairs bringing you up), since a flag set before `move` can't be cleared again.

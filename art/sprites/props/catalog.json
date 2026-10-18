@@ -690,6 +690,9 @@
     "frozen_tarn": [
       "snowdrift",
       "ice_patch"
+    ],
+    "castle_ravenloft_court_belfry": [
+      "cobwebs"
     ]
   },
   "doors": {

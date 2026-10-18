@@ -50,7 +50,8 @@
     "castle_ravenloft_spires_roofs": "castle",
     "castle_ravenloft_spires_rooms": "castle",
     "castle_ravenloft_spires_roost": "castle",
-    "vallaki_st_andrals": "church"
+    "vallaki_st_andrals": "church",
+    "castle_ravenloft_court_belfry": "castle"
   },
   "levels": {
     "title": -2.0,
@@ -1549,7 +1550,8 @@
       "argynvostholt_upper": "stone",
       "tsolenka_pass": "snow",
       "mountain_pass": "snow",
-      "frozen_tarn": "snow"
+      "frozen_tarn": "snow",
+      "castle_ravenloft_court_belfry": "stone"
     }
   },
   "containers": {

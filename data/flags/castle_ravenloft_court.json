@@ -115,6 +115,36 @@
       "id": "gertruda_home",
       "type": "bool",
       "summary": "Gertruda is home with Mad Mary in the village of Barovia (court_gertruda:homecoming; find_gertruda home). Endings and epilogues may read it."
+    },
+    {
+      "id": "court_way_sconce_set",
+      "type": "bool",
+      "summary": "A torch was set back in the false treasury's empty sconce (court_way:sconce): the panel to the hall of webs opens."
+    },
+    {
+      "id": "court_way_gas_known",
+      "type": "bool",
+      "summary": "The party found the vent and bellows under the false treasury's trapped chest (court_way:gas_chest): opening it is easier."
+    },
+    {
+      "id": "court_way_gassed",
+      "type": "bool",
+      "summary": "The false treasury's trapped chest has gone off or been opened safely (court_way:gas_chest). If the whole party fell asleep they woke in the guest room four hours later."
+    },
+    {
+      "id": "court_way_chest_taken",
+      "type": "bool",
+      "summary": "The party took the money from the false treasury's trapped chest."
+    },
+    {
+      "id": "court_way_bell_rung",
+      "type": "bool",
+      "summary": "The belfry's rope was pulled (court_way:rope): the bell tolled and the giant spiders came."
+    },
+    {
+      "id": "court_way_spiders_cleared",
+      "type": "bool",
+      "summary": "The giant spiders the belfry's bell called were destroyed (court_way_spiders)."
     }
   ]
 }

@@ -1,0 +1,136 @@
+# The back way behind the study hearth, the false treasury, the belfry and the roof's smokestack (Dungeon Expansion Plan
+# C3, docs/regions/castle_ravenloft_court.md §15). The lines were drafted by Gemini through the ai-bridge and edited here
+# (docs/plans/gemini_dungeon/C3/); none of them is voiced yet. Our own invention, not the book's text.
+
+# ---------------------------------------------------------------- The study hearth (prop court_hearth_grate)
+
+~ grate
+if not flag.court_hearth_found
+Narrator: Red embers mutter behind the iron grate, casting pale light over a bed of grey ash. You hold your hands close, and feel no warmth at all.
+-> END
+endif
+if flag.court_hearth_out
+-> cold
+endif
+Narrator: Behind the burning logs, an iron plate stands slightly ajar at the back of the hearth. Reaching it now requires crawling through a foot of live flame.
+* Wait for the fire to burn down. -> wait
+* [knows:create_or_destroy_water] Cast Create or Destroy Water on the fire. -> water
+* [if item:bucket] Throw a bucket of water on the fire. -> bucket
+* Leave the hearth alone. -> END
+
+~ cold
+Narrator: The ashes lie cold and grey in the grate, and the iron plate behind them hangs open of its own weight. A narrow, dark gap waits inside the wall.
+* Crawl through the cold hearth. -> crawl
+* Leave the hearth alone. -> END
+
+~ wait
+time +180
+set court_hearth_out
+Narrator: Three hours pass in the cold study while the flames sink into grey ash. The castle is patient, and now the hearth is dark.
+-> cold
+
+~ water
+set court_hearth_out
+Narrator: Conjured water crashes over the grate with a sharp hiss and a blinding cloud of white steam. When it clears, only wet black logs remain.
+-> cold
+
+~ bucket
+set court_hearth_out
+Narrator: You heave the bucket into the grate, filling the study with scalding steam and the foul stink of wet soot. The fire dies at once.
+-> cold
+
+~ crawl
+Narrator: You drop to your knees in the cold ash and squeeze past the heavy iron plate. The stone passage beyond smells of soot and old dark.
+move castle_ravenloft_court_belfry:from_study
+
+# ---------------------------------------------------------------- The false treasury (prop court_way_gas_chest)
+
+~ gas_chest
+if flag.court_way_gassed
+if not flag.court_way_chest_taken
+gold +35
+set court_way_chest_taken
+endif
+Narrator: The chest stands open, its leather bellows flat and spent under the lid. A few handfuls of old coin glint at the bottom, smelling faintly of sweet pears.
+-> END
+endif
+Narrator: A fine iron-bound chest sits a little apart from the rest. Around its oiled hinge clings a faint, sickly sweet smell, like bruised orchard fruit.
+-> chest_menu
+
+~ chest_menu
+* Open the chest. -> open
+* [if not flag.court_way_gas_known] [Investigation DC 13] Look closely at the hinges and lid first. -> chest_seen | chest_unseen
+* [if item:rope] Pull the lid open from afar with a rope. -> held
+* Leave the chest shut. -> END
+
+~ chest_seen
+set court_way_gas_known
+Narrator: A tiny brass vent hides beside the hinge, linked to a leather bellows-bag tucked under the lid. Opening it carelessly will fill your face with that sweet, heavy air.
+-> chest_menu
+
+~ chest_unseen
+Narrator: The iron bands are tight and the lock is simple. If the chest harbors any malice, it hides it well.
+-> chest_menu
+
+~ open
+if flag.court_way_gas_known
+check Constitution DC 8 -> held | gassed
+endif
+check Constitution DC 13 -> held | gassed
+
+~ held
+set court_way_gassed
+set court_way_chest_taken
+gold +35
+Narrator: A sweet mist hisses from the hinge, but you clamp your mouth shut and step back before it reaches your lungs. Inside lies a modest heap of tarnished silver.
+-> END
+
+~ gassed
+set court_way_gassed
+Narrator: A sweet, heavy mist sighs out from under the rising lid and fills your throat at the first breath. The stone floor rushes up to meet you, remarkably soft.
+time +240
+Narrator: You wake four hours later on the carpet of the castle's guest room, unharmed, your packs laid neatly by the door. Whoever carried you up the stairs did not stay to be thanked.
+move castle_ravenloft_court_weeping:from_gas
+
+# ---------------------------------------------------------------- The sconces (prop court_way_sconce_empty)
+
+~ sconce
+if flag.court_way_sconce_set
+Narrator: Both sconces hold their torches steady against the stone. Between them, the open wall yawns into a webbed corridor.
+-> END
+endif
+Narrator: Two iron sconces flank the north wall, one holding a sputtering torch and the other empty. Old black soot crusts the empty bracket, as if its light was only lately taken.
+* [if item:torch] Set a torch in the empty sconce. -> sconce_set
+* Leave it. -> END
+
+~ sconce_set
+take torch 1
+set court_way_sconce_set
+Narrator: The iron bracket sinks a fraction of an inch under the torch's weight. With a dry, grinding groan, a tall stone panel in the wall slides open.
+-> END
+
+# ---------------------------------------------------------------- The belfry's rope (prop court_way_rope)
+
+~ rope
+if flag.court_way_bell_rung
+Narrator: The thick rope hangs slack and still against the dusty air. Far above, the last bronze hum fades into the stone.
+-> END
+endif
+Narrator: A rope as thick as a man's wrist hangs straight down from the blackness overhead, furred with grey web. Its frayed end swings a hand's breadth above the floor.
+* Pull the hanging rope. -> pull
+* Leave it. -> END
+
+~ pull
+set court_way_bell_rung
+Narrator: Your weight takes up the slack, and far overhead a great bronze bell tolls once in the dark. All around the shaft, the heavy webs begin to tremble and shift.
+combat court_way_spiders
+
+# ---------------------------------------------------------------- The roof's smokestack (prop spires_smokestack)
+
+~ stack
+narrate examine:spires_smokestack
+* [if flag.court_stack_climbed] Climb down the smokestack. -> down
+* Leave it. -> END
+
+~ down
+move castle_ravenloft_court:from_chimney

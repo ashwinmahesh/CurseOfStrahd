@@ -341,3 +341,56 @@ once
 
 ~ check:investigation:study_walls:failure
 | Walls, shelves, a fireplace. The study adds up, as far as you can count.
+
+# ---------------------------------------------------------------- The back way behind the study (Dungeon Expansion Plan C3)
+# Drafted by Gemini through the ai-bridge and edited here (docs/plans/gemini_dungeon/C3/); none of it is voiced yet.
+
+~ enter:castle_ravenloft_court_belfry
+| Greasy soot coats your sleeves as the castle wall closes tight around your shoulders. The air tastes of dead ash and centuries of kept secrets.
+cooldown 20
+
+~ enter:court_way_false_treasury
+| Bare stone walls enclose a few small chests and a still figure on the flags. On the north wall, one iron sconce holds a living flame beside its empty twin.
+cooldown 20
+
+~ enter:court_way_hall_of_webs
+| Thick grey webs choke the long hall from wall to wall, parted only by a narrow track sliced clean down the middle. Tall bronze doors wait at the far end.
+cooldown 20
+
+~ enter:court_way_belfry
+| A square stone shaft rises into blackness, hung with heavy webs instead of a bell. Only a thick hemp rope drops from the gloom overhead.
+cooldown 20
+
+~ enter:court_vault_dome
+| Above the drifts of coin, the pitch-black dome glitters with shards of glowing crystal like a captive sky. In the corner stands a square tower of dark adamantine, thirty feet high.
+once
+
+~ examine:court_way_skeleton
+| The dead adventurer rests against the cold stone, his fingers long since stripped to bone. He still offers a fresh, unburned torch to anyone polite enough to take it.
+cooldown 5
+
+~ examine:court_way_webs
+| Curtains of dusty silk press close on either side of the narrow, blade-cut lane. Someone walked this way before you, and took pains not to brush the walls.
+cooldown 5
+
+~ open:court_way_bronze_doors
+| Green verdigris dulls the reliefs on the tall bronze doors, where cast wolves pursue a stag through iron trees. The metal feels colder than the room.
+once
+
+~ check:investigation:hearth_flue:success
+| Behind the logs, an iron plate sits loose against the back of the firebox. A thin draught of freezing air leaks around its edge, flowing the wrong way for a chimney.
+
+~ check:investigation:hearth_flue:failure
+| You prod the back of the hearth and come away with warm ash on your knuckles. The bricks keep their counsel.
+
+~ check:perception:hearth_draught:success
+| Beneath the smell of woodsmoke, a cold current of stale cellar air breathes out from behind the burning logs. Fireplaces generally draw upward.
+
+~ check:perception:hearth_draught:failure
+| You breathe in dry heat and floating grey ash. Nothing stirs behind the flames that ought not to be there.
+
+~ check:dex:hearth_smother:success
+| You beat the burning logs flat with your cloak until the last red coal goes black. The wool smells of scorched hair, and your blistered wrists match.
+
+~ check:dex:hearth_smother:failure
+| You swing your cloak at the grate, fanning the embers into a hungry roar that sears your hands. The fire burns on, unbothered.

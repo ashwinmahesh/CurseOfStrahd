@@ -177,6 +177,14 @@
     "from_treasury": [
       12,
       13
+    ],
+    "from_hearth": [
+      4,
+      2
+    ],
+    "from_chimney": [
+      4,
+      2
     ]
   },
   "exits": [
@@ -310,6 +318,55 @@
             "reveal": [
               "court_study_bookcase"
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "court_hearth_grate",
+      "cell": [
+        4,
+        1
+      ],
+      "kind": "examine",
+      "label": "The hearth's grate",
+      "model": "ash_heap",
+      "dialogue": "castle_ravenloft/court_way:grate",
+      "checks": [
+        {
+          "id": "hearth_flue",
+          "skill": "investigation",
+          "dc": 14,
+          "label": "Look at the back of the hearth",
+          "success": {
+            "flag": "court_hearth_found"
+          },
+          "failure": {}
+        },
+        {
+          "id": "hearth_draught",
+          "skill": "perception",
+          "dc": 16,
+          "label": "Feel for a draught behind the fire",
+          "success": {
+            "flag": "court_hearth_found"
+          },
+          "failure": {}
+        },
+        {
+          "id": "hearth_smother",
+          "skill": "dex",
+          "dc": 12,
+          "label": "Beat the fire out with a cloak",
+          "when": "flag.court_hearth_found and not flag.court_hearth_out",
+          "success": {
+            "flag": "court_hearth_out",
+            "damage": "1d6",
+            "damage_type": "fire"
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "fire"
           }
         }
       ]

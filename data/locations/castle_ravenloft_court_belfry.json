@@ -1,0 +1,411 @@
+{
+  "id": "castle_ravenloft_court_belfry",
+  "name": "Castle Ravenloft, the Back Way",
+  "region": "castle_ravenloft",
+  "summary": "A way that was never meant for guests, cut into the thickness of the keep's walls behind the study fireplace: a false treasury, a hall of webs and a belfry, ending in a secret stair down to the count's vault.",
+  "text": "Soot, old webs and bare stone. The passage runs on in the dark between the walls of the keep, and whoever built it did not expect to be followed.",
+  "map": {
+    "rows": [
+      "################################################",
+      "################################################",
+      "################################################",
+      "##########################################.#####",
+      "##########################################.#####",
+      "##########################################.#####",
+      "##########################################.#####",
+      "##########################################.#####",
+      "######################################.........#",
+      "######################################.........#",
+      "######################################.........#",
+      "#######...........####################.........#",
+      "#######...........#..~~~~~~~~~~~~~~..#.........#",
+      "#...###...........#..~~~~~~~~~~~~~~..#.........#",
+      "#..............................................#",
+      "#...###...........#..~~~~~~~~~~~~~~..#.........#",
+      "#######...........#..~~~~~~~~~~~~~~..#.........#",
+      "#######...........####################.........#",
+      "#######...........####################.........#",
+      "######################################.........#",
+      "################################################",
+      "################################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "court_way_flue",
+      "name": "The flue passage",
+      "cells": [
+        [
+          1,
+          13
+        ],
+        [
+          6,
+          15
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "furnish": false
+    },
+    {
+      "id": "court_way_false_treasury",
+      "name": "The false treasury",
+      "cells": [
+        [
+          7,
+          11
+        ],
+        [
+          17,
+          18
+        ]
+      ],
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar",
+      "light": "dim",
+      "furnish": false
+    },
+    {
+      "id": "court_way_hall_of_webs",
+      "name": "The hall of webs",
+      "cells": [
+        [
+          19,
+          12
+        ],
+        [
+          36,
+          16
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/stone_wall",
+      "furnish": false
+    },
+    {
+      "id": "court_way_belfry",
+      "name": "The belfry",
+      "cells": [
+        [
+          38,
+          8
+        ],
+        [
+          46,
+          19
+        ]
+      ],
+      "floor": "castle/courtyard",
+      "walls": "castle/ashlar",
+      "furnish": false
+    },
+    {
+      "id": "court_way_vault_stair",
+      "name": "The vault stair",
+      "cells": [
+        [
+          42,
+          3
+        ],
+        [
+          42,
+          6
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "furnish": false
+    }
+  ],
+  "spawns": {
+    "default": [
+      2,
+      15
+    ],
+    "from_study": [
+      2,
+      15
+    ],
+    "from_treasury": [
+      42,
+      4
+    ]
+  },
+  "exits": [
+    {
+      "id": "court_way_to_study",
+      "cell": [
+        2,
+        13
+      ],
+      "to": "castle_ravenloft_court",
+      "spawn": "from_hearth",
+      "label": "Back up to the study hearth"
+    },
+    {
+      "id": "court_way_stair_down",
+      "cell": [
+        42,
+        3
+      ],
+      "to": "castle_ravenloft_court_treasury",
+      "spawn": "from_court",
+      "label": "Stairs down to the treasury"
+    }
+  ],
+  "doors": [
+    {
+      "id": "court_way_panel",
+      "cell": [
+        18,
+        14
+      ],
+      "label": "a panel in the wall",
+      "when": "flag.court_way_sconce_set"
+    },
+    {
+      "id": "court_way_bronze_doors",
+      "cell": [
+        37,
+        14
+      ],
+      "label": "the bronze doors"
+    },
+    {
+      "id": "court_way_vault_door",
+      "cell": [
+        42,
+        7
+      ],
+      "label": "a secret door in the north wall",
+      "secret_dc": 17
+    }
+  ],
+  "props": [
+    {
+      "id": "court_way_sconce_lit",
+      "cell": [
+        10,
+        10
+      ],
+      "kind": "decor",
+      "label": "A burning torch",
+      "model": "torch"
+    },
+    {
+      "id": "court_way_sconce_empty",
+      "cell": [
+        14,
+        10
+      ],
+      "kind": "examine",
+      "label": "An empty sconce",
+      "model": "cup_hooks",
+      "dialogue": "castle_ravenloft/court_way:sconce"
+    },
+    {
+      "id": "court_way_skeleton",
+      "cell": [
+        8,
+        17
+      ],
+      "kind": "examine",
+      "label": "A dead adventurer",
+      "model": "skeleton_leather",
+      "item": "torch"
+    },
+    {
+      "id": "court_way_gas_chest",
+      "cell": [
+        16,
+        16
+      ],
+      "kind": "examine",
+      "label": "An iron-bound chest",
+      "model": "chest_iron",
+      "dialogue": "castle_ravenloft/court_way:gas_chest"
+    },
+    {
+      "id": "court_way_webs_a",
+      "cell": [
+        24,
+        11
+      ],
+      "kind": "decor",
+      "label": "Webs",
+      "model": "cobwebs"
+    },
+    {
+      "id": "court_way_webs",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "examine",
+      "label": "Thick webs",
+      "model": "cobwebs"
+    },
+    {
+      "id": "court_way_webs_c",
+      "cell": [
+        31,
+        11
+      ],
+      "kind": "decor",
+      "label": "Webs",
+      "model": "cobwebs"
+    },
+    {
+      "id": "court_way_rope",
+      "cell": [
+        42,
+        13
+      ],
+      "kind": "examine",
+      "label": "A rope hanging from the dark",
+      "model": "rope_coils",
+      "dialogue": "castle_ravenloft/court_way:rope"
+    },
+    {
+      "id": "court_way_belfry_webs_a",
+      "cell": [
+        39,
+        7
+      ],
+      "kind": "decor",
+      "label": "Webs",
+      "model": "cobwebs"
+    },
+    {
+      "id": "court_way_belfry_webs_b",
+      "cell": [
+        45,
+        7
+      ],
+      "kind": "decor",
+      "label": "Webs",
+      "model": "cobwebs"
+    }
+  ],
+  "containers": [
+    {
+      "id": "court_way_chest_a",
+      "cell": [
+        8,
+        12
+      ],
+      "label": "A small chest",
+      "model": "chest",
+      "items": [],
+      "gold": 14
+    },
+    {
+      "id": "court_way_chest_b",
+      "cell": [
+        16,
+        12
+      ],
+      "label": "A small chest",
+      "model": "trunk",
+      "items": [],
+      "gold": 21
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        10,
+        10
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    }
+  ],
+  "traps": [],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "court_way_spiders",
+      "trigger": "dialogue",
+      "when": "not flag.court_way_spiders_cleared",
+      "text": "An iron clang shakes the stone overhead, raining grey dust and torn webbing down upon your shoulders. High in the dark, heavy legs begin to descend the walls.",
+      "surprise": "",
+      "flag": "court_way_spiders_cleared",
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            38,
+            8
+          ],
+          "hp": 185
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            45,
+            8
+          ],
+          "hp": 185
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            38,
+            18
+          ],
+          "hp": 185
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            45,
+            18
+          ],
+          "hp": 185
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            41,
+            8
+          ],
+          "hp": 185
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            41,
+            18
+          ],
+          "hp": 185
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            38,
+            13
+          ],
+          "hp": 185
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            45,
+            13
+          ],
+          "hp": 185
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_court_belfry"
+  },
+  "rest": "no",
+  "rest_text": "Not here, with a bell overhead and the webs all round."
+}

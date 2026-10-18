@@ -5,6 +5,21 @@
       "id": "abbey_scarecrows_unbound",
       "type": "bool",
       "summary": "An Arcana check unpicked the binding on the abbey garden's stitched scarecrows (abbey_of_st_markovia_garden, check scarecrows_unbind): their fight (garden_sentry) doesn't start."
+    },
+    {
+      "id": "court_hearth_found",
+      "type": "bool",
+      "summary": "A search of the study's hearth (Investigation or Perception, court_hearth_grate) found the iron plate and the passage behind the fire. Not the way to the treasury itself, which is the portrait."
+    },
+    {
+      "id": "court_hearth_out",
+      "type": "bool",
+      "summary": "The study's fire is out (waited out, doused, or beaten out with a cloak). The passage behind the hearth and the smokestack's climb no longer burn."
+    },
+    {
+      "id": "court_stack_climbed",
+      "type": "bool",
+      "summary": "Someone climbed down the keep roof's smokestack (spires_smokestack): the way down to the study's hearth is open."
     }
   ]
 }

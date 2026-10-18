@@ -254,6 +254,49 @@
       "model": "wall_low"
     },
     {
+      "id": "spires_smokestack",
+      "cell": [
+        13,
+        10
+      ],
+      "kind": "examine",
+      "label": "The smokestack",
+      "model": "ash_heap",
+      "dialogue": "castle_ravenloft/court_way:stack",
+      "checks": [
+        {
+          "id": "stack_climb",
+          "skill": "athletics",
+          "dc": 12,
+          "label": "Climb down the cold smokestack",
+          "when": "flag.court_hearth_out",
+          "success": {
+            "flag": "court_stack_climbed"
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "bludgeoning"
+          }
+        },
+        {
+          "id": "stack_smoke",
+          "skill": "athletics",
+          "dc": 12,
+          "label": "Climb down the smokestack through the smoke",
+          "when": "not flag.court_hearth_out",
+          "success": {
+            "flag": "court_stack_climbed",
+            "damage": "1d6",
+            "damage_type": "poison"
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "poison"
+          }
+        }
+      ]
+    },
+    {
       "id": "spires_ridge_crow",
       "cell": [
         10,

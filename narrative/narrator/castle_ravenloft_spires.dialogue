@@ -285,3 +285,23 @@ once
 
 ~ check:investigation:tapestry_plan:failure
 | Faded towers, faded sky. If it's a map, it's a map of somewhere else.
+
+# ---------------------------------------------------------------- The keep roof's smokestack (Dungeon Expansion Plan C3)
+# Drafted by Gemini through the ai-bridge and edited here (docs/plans/gemini_dungeon/C3/); none of it is voiced yet.
+
+~ examine:spires_smokestack
+| Acrid grey smoke curls up from the five-foot stone chimney mouth on the roof. Warmth never reaches the top, only the bitter smell of burning oak.
+| [flag.court_hearth_out] The wide stone chimney gapes open to the sky, cold and black and smelling of old soot. It drops straight down into the dark belly of the keep.
+cooldown 5
+
+~ check:athletics:stack_climb:success
+| You brace your boots against the greasy brickwork and inch down the dark throat of the chimney. You arrive at the bottom black with soot, but whole.
+
+~ check:athletics:stack_climb:failure
+| Your boot slips on a patch of slick creosote near the lip. You scrape your shins against the stone and tumble back onto the wet slates of the roof.
+
+~ check:athletics:stack_smoke:success
+| Hot smoke fills your throat and stings your eyes shut as you wedge yourself down the flue. You drop into the hearth below coughing up black phlegm.
+
+~ check:athletics:stack_smoke:failure
+| A thick billow of rising smoke catches you in the throat before you are ten feet down. Choking and blind, you claw your way back out into the open air.

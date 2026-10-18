@@ -51,6 +51,20 @@
           11
         ]
       ]
+    },
+    {
+      "id": "court_vault_dome",
+      "name": "The domed vault",
+      "cells": [
+        [
+          1,
+          3
+        ],
+        [
+          14,
+          11
+        ]
+      ]
     }
   ],
   "spawns": {
@@ -73,6 +87,18 @@
       "to": "castle_ravenloft_court",
       "spawn": "from_treasury",
       "label": "Secret stair up to the King's Hall"
+    },
+    {
+      "id": "fortress_entry",
+      "cell": [
+        13,
+        3
+      ],
+      "to": "daerns_fortress",
+      "spawn": "default",
+      "label": "The black tower's door",
+      "when": "false",
+      "locked_text": "Your tools and strength leave not so much as a scratch upon the dark metal. The door answers only to its master's voice, and he is not here to speak."
     }
   ],
   "props": [
@@ -148,7 +174,7 @@
       "label": "Heaps of coin",
       "model": "chest",
       "items": [],
-      "gold": 1200
+      "gold": 5400
     },
     {
       "id": "court_treasury_strongbox",
@@ -183,9 +209,17 @@
         {
           "id": "ioun_stone_absorption",
           "qty": 1
+        },
+        {
+          "id": "diamond",
+          "qty": 8
+        },
+        {
+          "id": "pearl",
+          "qty": 7
         }
       ],
-      "gold": 400
+      "gold": 1000
     }
   ],
   "traps": [
@@ -375,5 +409,62 @@
     "enter": "enter:castle_ravenloft_court_treasury"
   },
   "rest": "no",
-  "rest_text": "Not on his gold. Not with the stair the only way out."
+  "rest_text": "Not on his gold. Not with the stair the only way out.",
+  "fortress": {
+    "cell": [
+      12,
+      0
+    ],
+    "door": [
+      13,
+      3
+    ],
+    "front": [
+      13,
+      4
+    ],
+    "looks": "south"
+  },
+  "lights": [
+    {
+      "cell": [
+        3,
+        7
+      ],
+      "kind": "magic",
+      "color": "frost",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        11,
+        9
+      ],
+      "kind": "magic",
+      "color": "frost",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        10,
+        5
+      ],
+      "kind": "magic",
+      "color": "frost",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        5,
+        10
+      ],
+      "kind": "magic",
+      "color": "frost",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ]
 }
