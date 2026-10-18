@@ -124,8 +124,10 @@ facing its own area first. `test_no_piece_overlaps_another_or_a_wall` builds eve
 5. `scales` sizes a piece wherever it stands (stairs fill their square, beds and coffins are full length); `floors`
    gives a place its own ground (grass on Bonegrinder's hill); `town_walls` makes a walled town's wall tall (Krezk).
 6. `building: true` on an entry makes the piece stand in for the whole house on its square (Old Bonegrinder's
-   windmill, the Abbey's bell tower, Van Richten's tower); `fade: true` fades a tall piece like the trees (the
-   Gulthias Tree, the colossi).
+   windmill, the Abbey's bell tower, Van Richten's tower), standing whole and opening a window round the party where
+   it hides it, as the houses do (`SeeThrough`, docs/art/building_kit.md); `see_through: true` does the same for a
+   tall piece of stone or timber (the Amber Temple's colossus, Baba Lysaga's hut); `fade: true` fades a tall piece
+   like the trees (the Gulthias Tree).
 
 New content: give a new prop a `model` that names art, or add an entry. `tests/integration/test_set_dressing.gd`
 fails when a location has a prop, container or door without art.
@@ -138,8 +140,8 @@ fails when a location has a prop, container or door without art.
   back when the prop is freed. On a town house it hangs on the wall instead (its `on_wall` art if it has one).
 - **Wall:** flat on the face of the wall square toward its open neighbour (faces the default camera sees first),
   0.012 in front, never wider than the face. Pieces 0.85 units or taller stand on the floor; smaller ones hang at
-  about eye level. A piece on an open square hangs on the wall beside it. On a house it goes with the house when the
-  house is cut away, and hides the window it covers.
+  about eye level. A piece on an open square hangs on the wall beside it. It opens round the party with its wall
+  (`SeeThrough`); on a house it goes with the house when the house is cut away, and hides the window it covers.
 - **Floor:** flat (`axis = Y`), centred on the square.
 - **Doors:** the leaf is centred in its square, turned to lie in the wall line, scaled to 0.86 of the square and the
   wall's height (1.15 indoors, the cut-away height; 1.9 outdoors). The Gates of Barovia (`doors.ids`) use
@@ -152,8 +154,8 @@ split into rectangles (largest first, growing right then down) and each rectangl
 units tall (more for large houses), a gable along the longer side, thatch for small village houses and slate for big
 ones (Vallaki is all slate), a stone chimney on most, and windows on every third open face. Since W7 the houses, yard
 walls and Vallaki's palisade are put together from the building kit in each region's style (docs/art/building_kit.md). Roofs are flat-shaded meshes; their texture comes from world position (`cel_world.gdshader`), the same as
-the boxes. A house standing between the camera and the party's leader stands and goes see-through like the trees
-(owner, 2026-10-13); with the catalog's
+the boxes. A house standing between the camera and the party's leader stands whole and opens a window round the party
+(`SeeThrough`, owner 2026-10-17; it went see-through whole from 2026-10-13); with the catalog's
 `building_kit.cut_away` on it would be cut away: its roof and wall pieces hide and its walls drop to 0.5 units
 (`TownBuilder.cut_away`, called each frame with the tree fade).
 

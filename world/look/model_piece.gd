@@ -442,12 +442,16 @@ static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, top: 
 	var coping := "kit_%s_coping" % style
 	var kit_parts: Array = []
 	var holder: Node3D = null
+	# The holder (or the wall it goes in) stands on the wall square's own ground, so each face's foot is its floor's
+	# height over that: on a hill the floor's own height put the faces and copings a hill's height over the walls (the
+	# Amber Temple's doors: "weird long floating pillars", owner 2026-10-17).
+	var base := board.cell_center(c).y
 	for d: Vector2i in BACKS:
 		var n := c + d
 		if not board.grid.in_bounds(n) or board.grid.has_flag(n, CombatGrid.WALL) or board.grid.has_flag(n, CombatGrid.VOID):
 			continue
 		var dir := Vector3(d.x, 0, d.y)
-		var foot := dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n), 0)
+		var foot := dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n) - base, 0)
 		var yaw := atan2(dir.x, dir.z)
 		if BuildingKit.has(coping):
 			kit_parts.append([coping, Transform3D(Basis(Vector3.UP, yaw), foot + Vector3(0, top - CUT_TOP, 0))])
