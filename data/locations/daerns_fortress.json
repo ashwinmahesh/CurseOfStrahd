@@ -1,0 +1,152 @@
+{
+  "id": "daerns_fortress",
+  "name": "Daern's Instant Fortress, Ground Floor",
+  "region": "daerns_fortress",
+  "summary": "The tower's ground floor: bare adamantine walls pierced by arrow slits, one door that opens only at its owner's word, and a stair up along the east wall.",
+  "map": {
+    "rows": [
+      "######",
+      "#....#",
+      "#....#",
+      "#....#",
+      "#....#",
+      "######"
+    ],
+    "theme": "dungeon",
+    "light": "dim",
+    "ceiling_ft": 15
+  },
+  "areas": [
+    {
+      "id": "fortress_ground",
+      "name": "Daern's Instant Fortress, ground floor",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "light": "dim"
+    }
+  ],
+  "spawns": {
+    "default": [
+      2,
+      4
+    ],
+    "from_upper": [
+      3,
+      1
+    ]
+  },
+  "exits": [
+    {
+      "id": "fortress_door",
+      "cell": [
+        2,
+        5
+      ],
+      "to": "travel",
+      "spawn": "default",
+      "label": "Out through the door"
+    },
+    {
+      "id": "fortress_stairs_up",
+      "cell": [
+        4,
+        1
+      ],
+      "to": "daerns_fortress_upper",
+      "spawn": "from_ground",
+      "label": "Stairs up"
+    }
+  ],
+  "props": [
+    {
+      "id": "fortress_bench",
+      "cell": [
+        1,
+        2
+      ],
+      "kind": "decor",
+      "label": "A bench",
+      "model": "bench"
+    },
+    {
+      "id": "fortress_table",
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "decor",
+      "label": "A table",
+      "model": "table"
+    },
+    {
+      "id": "fortress_barrel",
+      "cell": [
+        1,
+        4
+      ],
+      "kind": "decor",
+      "label": "A barrel of water",
+      "model": "barrel"
+    },
+    {
+      "id": "fortress_crates",
+      "cell": [
+        4,
+        4
+      ],
+      "kind": "decor",
+      "label": "Stacked crates",
+      "model": "crate_stack"
+    },
+    {
+      "id": "fortress_lantern_north",
+      "cell": [
+        3,
+        1
+      ],
+      "kind": "decor",
+      "label": "A lantern",
+      "model": "lantern_bracket"
+    },
+    {
+      "id": "fortress_lantern_east",
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "decor",
+      "label": "A lantern",
+      "model": "lantern_bracket"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        3,
+        1
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 25
+    },
+    {
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 25
+    }
+  ],
+  "rest": "safe",
+  "rest_text": ""
+}

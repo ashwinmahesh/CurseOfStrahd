@@ -1,0 +1,39 @@
+# Narrator: Daern's Instant Fortress, raised and folded on the map, and the tower inside (docs/story/fortress.md, docs/voice/narrator.md).
+# Drafted by Gemini through the ai-bridge (brief and raw reply: docs/story/fortress/), trimmed and corrected here.
+
+~ item:fortress:rise
+| You speak the word, and the little statuette swells with a sound like a dropped anvil, shaking the ground under your boots. Thirty feet of dark metal now stands where there was only mist, its heavy door turned to face you.
+| [night] The statuette groans and climbs thirty feet into the dark, shoving the mist aside as the earth shudders under your heels. Whatever was following you now has a very large wall to consider.
+
+~ item:fortress:fold
+| At your word the tower folds in upon itself with one sharp clap of displaced air. You pick the cold metal thing off the bare ground and put your house back in your pocket.
+| [night] The tower collapses at your word into something you could lose in a glove, leaving a square of bare earth and a sudden rush of night air. The dark comes straight back to where it was standing.
+
+~ enter:daerns_fortress
+| The heavy door shuts behind you with a boom, sealing you in four walls of bare blue-grey metal, cut by thin blades of pale light from the arrow slits. A stair climbs the east wall toward the floor above.
+cooldown 30
+
+~ enter:daerns_fortress_upper
+| Your boots ring on the upper floor, which is as bare as the one below, with the seamless dark walls and the thin slits of light. In the ceiling over one corner, a square trapdoor waits.
+cooldown 30
+
+~ enter:daerns_fortress_roof
+| You push through the trapdoor onto a flat square of dark metal ringed by a toothed parapet, thirty feet above the ground. From up here, the valley mist looks almost like a country you could leave.
+| [night] Cold wind finds you on the flat roof, where the toothed battlements cut black shapes against the mist. Below, the valley keeps its wolves and its silence to itself.
+cooldown 30
+
+~ examine:fortress_packs
+| Your packs and road-stained gear are stacked in a trunk against the wall. For one night, at least, you do not have to sleep with a hand on your scabbard.
+
+~ examine:fortress_barrel
+| A barrel of valley water with a tin dipper hooked over its rim. It tastes of oak staves and cold iron, which is a great improvement on the local ditches.
+
+~ examine:fortress_table
+| A plain table stands in the middle of the metal floor, a lantern at its edge. It is not much of a hall, though the walls are thicker than most castles manage.
+
+~ rest:long:daerns_fortress_upper
+| You stretch out on the upper floor behind a door that answers to one voice in all the world. Nothing scratches at it, nothing breathes at the seam, and for eight hours the valley has to manage without you.
+| The lantern burns low against the unmarked walls while you sleep the strange, heavy sleep of people who cannot be reached. Outside the slits the mist presses on the metal and finds nothing worth coming in for.
+
+~ rest:long:daerns_fortress
+| You lay your bedrolls on the cold metal of the lower floor, a few paces from the sealed door. Nothing comes through it, though old habits keep you sleeping with your boots within reach.

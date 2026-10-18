@@ -3,14 +3,14 @@
   "name": "Daern's Instant Fortress",
   "source": {
     "book": "DMG2024",
-    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+    "note": "Read against the 2024 Dungeon Master's Guide text as aidedd.org prints it (three reads, 2026-10-18): a 1-inch adamantine statuette, a Magic action to set it down and again to shrink it (only when empty), a tower 20 ft square and 30 ft high, Bonus Action door, creatures and loose objects pushed clear (no saving throw or damage in this text), AC 20 and 100 HP for the roof, door and each wall, Wish repairs, Requires Attunement. The older cube and its 10d10 Dexterity save are gone."
   },
   "category": "wondrous",
   "weight_lb": 1,
   "cost_gp": 12500,
   "magic": {
     "rarity": "rare",
-    "attunement": false
+    "attunement": true
   },
   "theme": "arcana",
   "icon": "cube",
@@ -22,9 +22,20 @@
       "custom": "instant_fortress",
       "field": true,
       "combat": false,
-      "text": "Set it down and speak the word: a stone tower 20 ft square and 30 ft high rises. Rest inside it in safety."
+      "params": {"mode": "raise"},
+      "text": "Set the statuette on open ground and speak the word: a square adamantine tower, 20 ft on a side and 30 ft high, grows on the spot, its door facing you. Walk in at the door; rest inside in safety."
+    },
+    {
+      "id": "fold",
+      "name": "Fold the fortress",
+      "cost": "magic",
+      "custom": "instant_fortress",
+      "field": true,
+      "combat": false,
+      "params": {"mode": "fold"},
+      "text": "Speak the word again, within earshot of the tower: it shrinks back into the statuette, but only if nobody is inside."
     }
   ],
-  "summary": "A tiny cube that grows into a stone tower you can rest in safely, then shrinks back.",
-  "text": "Place the tiny metal cube (1 inch across) on the ground and say its command word (a Magic action), and it swells at once into a square tower measuring 20 feet per side and 30 feet tall, with arrow slits in every wall and a battlement on top. Inside are two floors linked by a ladder along one wall, which climbs to a trapdoor onto the roof. The single door faces you when the tower forms; it opens only on your command, given as a Bonus Action, and Knock and similar magic can't open it. Any creature where the tower appears makes a Dexterity saving throw against DC 15, suffering 10d10 Bludgeoning damage if it fails or half that if it succeeds, and is shoved into an unoccupied space just outside the walls either way. Another Magic action and command word shrinks it back into a cube, but only if nobody is inside. In the game, the party can safely take a Long Rest anywhere by setting it up."
+  "summary": "A tiny adamantine statuette that grows into a tower you can sleep safely in, and shrinks back when it is empty.",
+  "text": "Set the 1-inch adamantine statuette on the ground and speak its command word (a Magic action): it swells at once into a square adamantine tower 20 feet on a side and 30 feet high, with arrow slits in every wall and a battlement on top. Inside are two floors joined by a ladder, staircase or ramp of your choosing, and a trapdoor out onto the roof. One door stands at ground level on the side facing you, and it opens only at your command (a Bonus Action); Knock and magic like it can't open it. Creatures and loose objects where the tower appears are pushed clear to the nearest free space outside. Magic keeps it from tipping over. The roof, the door and each wall have AC 20 and 100 Hit Points, are immune to Bludgeoning, Piercing and Slashing damage except from siege equipment, and resist all other damage. Speaking the command word again turns the tower back into the statuette, but only if nobody is inside, and that mends nothing: only a Wish spell repairs it, restoring all of a part's Hit Points. In the game, use the statuette in the open air to raise the tower where the party stands (it needs clear, level ground in front of you), walk in at its door, take the stair up to the sleeping floor, and rest in perfect safety; fold it up again from outside when the party is done. Foes cannot breach it."
 }

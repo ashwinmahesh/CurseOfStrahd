@@ -613,6 +613,18 @@
     "rules": [
       [
         [
+          "fortress entry"
+        ],
+        null
+      ],
+      [
+        [
+          "fortress door"
+        ],
+        "door_barred"
+      ],
+      [
+        [
           "great doors",
           "keep doors",
           "castle doors"
