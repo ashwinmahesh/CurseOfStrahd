@@ -6,7 +6,7 @@
   "when": "flag.strahd_destroyed and gift:gift_of_the_hollow",
   "narration": "endings/new_darklord:start",
   "tone": "blood",
-  "music": "ending",
+  "music": "dread",
   "epilogue_from": "strahd_triumphant",
   "epilogue": [
     {

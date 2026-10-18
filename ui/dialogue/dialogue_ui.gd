@@ -12,6 +12,8 @@ signal ended(combat: String)
 ## A line is showing, said by `speaker_id` (an NPC's id, "narrator", or a party member's): the game's music can turn for
 ## who is speaking (Audio.talk_mood).
 signal spoke(speaker_id: String)
+## A `cutscene <id>` picture came up: the game's music can turn for the scene (Audio.scene_mood).
+signal scene_shown(cutscene_id: String)
 ## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
 signal shop_requested(npc: String)
 signal services_requested(npc: String)
@@ -670,6 +672,7 @@ func _cutscene_beat(beat: Dictionary) -> void:
 				_advance())
 		cutscene.skip_requested.connect(skip_cutscene)
 	cutscene.show_image(path, beat.get("focus", Vector2(0.5, 0.5)) as Vector2)
+	scene_shown.emit(str(beat.get("id", "")))
 
 
 ## Skip: the cutscene's lines go by unread (they stay in the History) up to the next choice, note or the end.
