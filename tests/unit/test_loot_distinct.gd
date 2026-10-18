@@ -11,6 +11,7 @@ const ONE_OF := {
 	"armor_plus:plate_armor": ["argynvostholt/godfrey"],   # Godfrey's plate, after either oath (godfrey_plate_given)
 	"helm_of_brilliance": ["castle_ravenloft/escher_petition"],   # Escher's helm, whether he sees the dawn or waits
 	"weapon_plus:rapier": ["village_of_barovia/ismark", "village_of_barovia/burial"],   # his father's (ismark_gave_father_sword)
+	"glamoured_studded_leather": ["van_richtens_tower/ezmerelda", "allies/ezmerelda_hunt"],   # her coat, once (ezmerelda_gift_given): at the tower or after the yard
 }
 
 
