@@ -981,5 +981,9 @@
   "cosmin": {"who": "Cosmin, a fourteen-year-old cooper's boy with a horse blanket rolled over his shoulder and a wooden sword",
     "attack": "wooden sword swing",
     "windup": "the wooden sword raised high over his right shoulder in both hands, a fierce stubborn face, blanket swinging",
-    "strike": "the wooden sword swung down and forward at the enemy at full arm's length, leaning into the blow"}
+    "strike": "the wooden sword swung down and forward at the enemy at full arm's length, leaning into the blow"},
+  "guardian_of_faith": {"who": "a spectral guardian, a faceless hooded figure of pale golden light hovering above the ground, with a gleaming silver longsword and a round silver shield bearing a golden sunburst",
+    "attack": "longsword strike",
+    "windup": "the longsword drawn back and raised beside its head, the shield held out in front, leaning back",
+    "strike": "the longsword swung forward and down at the enemy at full arm's length, the shield pulled in, leaning into the blow"}
 }

@@ -2,8 +2,9 @@ class_name FieldView
 extends Node3D
 ## Draws the encounter's FieldObjects (combat/field_object.gd): a spectral weapon hovering over its square, a
 ## rolling sphere of fire, floating lights, and lingering areas (Cloud of Daggers, Spirit Guardians, Web, Fog
-## Cloud, Darkness...) as tinted squares on the floor. It only shows state: `sync()` matches the nodes to the
-## encounter's objects and glides moved ones to their new square.
+## Cloud, Darkness...) as tinted squares on the floor, with a figure standing in the area when the spell calls one up
+## (FIGURES: Guardian of Faith). It only shows state: `sync()` matches the nodes to the encounter's objects and glides
+## moved ones to their new square.
 
 const GLIDE_TIME := 0.25
 ## Floor tint per spell, from the palette (anything else uses the zone's `colour` rule, then lilac).
@@ -15,6 +16,10 @@ const ZONE_COLOURS := {"darkness": "void", "fog_cloud": "mist_blue", "stinking_c
 	"conjure_animals": "bone", "conjure_woodland_beings": "moss", "conjure_minor_elementals": "ember",
 	"guardian_of_faith": "candle", "cordon_of_arrows": "silver", "ice_storm": "frost", "aura_of_life": "bile",
 	"aura_of_purity": "moonlight", "call_lightning": "moon_blue", "plant_growth": "moss", "confusion": "orchid"}
+
+## A spell whose lasting area has a figure standing at its middle, by spell id: the sprite (art/sprites/<id>) drawn there
+## at its own height (CombatToken.HEIGHTS). Guardian of Faith's spectral guardian hovers over the square it was called to.
+const FIGURES := {"guardian_of_faith": "guardian_of_faith"}
 
 var board: ArenaBoard
 var _nodes: Dictionary = {}   ## object id -> Node3D
@@ -235,11 +240,28 @@ func _vine() -> Node3D:
 	return root
 
 
+## The figure standing at the middle of `f`'s area (FIGURES), or null for a spell with none or whose sprite isn't drawn.
+func _figure(f: FieldObject) -> DirectionalSprite:
+	var art := str(FIGURES.get(f.spell_id, ""))
+	var frames := DirectionalSprite.frames_for(art) if art != "" else null
+	if frames == null:
+		return null
+	var s := DirectionalSprite.create(frames, CombatToken.height_for(art))
+	s.name = "Figure_" + art
+	s.play(&"idle_s")
+	var at := Vector2i(floori(f.origin.x), floori(f.origin.y))
+	s.position = Vector3(f.origin.x, board.floor_y(at), f.origin.y)
+	return s
+
+
 ## The area's squares as a translucent tint just above the floor, under the spell's own lasting look (fog, flames,
 ## thorns, webs... world/combat/fx/fx_zones.gd) when it has one.
 func _paint_zone(zone: Node3D, f: FieldObject) -> void:
 	for ch in zone.get_children():
 		ch.queue_free()
+	var figure := _figure(f)
+	if figure != null:
+		zone.add_child(figure)
 	var look := FxZones.pick(f.spell_id) if SpellFx.enabled else {}
 	var colour := str(ZONE_COLOURS.get(f.spell_id, f.rule("colour", "lilac")))
 	var mm := MultiMesh.new()

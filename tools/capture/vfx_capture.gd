@@ -85,6 +85,7 @@ const ZONES := {
 	"fog_cloud": {"caster": "Silvain", "targets": [[4, 0]], "cast": "fog_cloud", "zone": true},
 	"spirit_guardians": {"caster": "Hedda", "targets": [[2, 0]], "cast": "spirit_guardians", "zone": true},
 	"moonbeam": {"caster": "Hedda", "targets": [[3, 0]], "cast": "moonbeam", "zone": true},
+	"guardian_of_faith": {"caster": "Hedda", "targets": [[3, 0]], "cast": "guardian_of_faith", "zone": true},
 	"hypnotic_pattern": {"caster": "Kip", "targets": [[4, 0], [5, 1]], "cast": "hypnotic_pattern"},
 	"lightning_bolt": {"caster": "Silvain", "targets": [[3, 0], [5, 0]], "cast": "lightning_bolt"},
 	"cone_of_cold": {"caster": "Silvain", "targets": [[3, 0], [4, 1]], "cast": "cone_of_cold"},

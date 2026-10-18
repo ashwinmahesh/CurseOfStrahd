@@ -6227,6 +6227,19 @@
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Cosmin, a fourteen-year-old cooper's boy from Vallaki, thin and a full head shorter than a grown man, with short messy dark-brown hair, a smudged freckled boy's face with a stubborn chin, wearing a patched oatmeal-coloured wool jacket with rolled sleeves over a brown shirt, worn brown breeches and scuffed boots, a heavy grey-brown horse blanket rolled over one shoulder and tied across his chest with rope, and a crude wooden sword (a carved plank with a crosspiece) held in his right hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
       "notes": "Cosmin, a cooper's boy of fourteen from Vallaki (the Squire side quest at Argynvostholt; owner todo 2026-10-17: he wore the commoner woman's sprite and portrait; typed yes 2026-10-18). 5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk; wooden-sword attack from art/anim/animations.json (art/anim/art_fix_specs.json has the brief); turn-bar portrait (BG=ash_violet). Height 1.05: a head under a grown man, taller than Ilya (0.8)."
+    },
+    {
+      "id": "guardian_of_faith",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/guardian_of_faith_turnaround.png",
+      "sprites": "art/sprites/guardian_of_faith/walk.tres",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a spectral guardian from Guardian of Faith, a Large hovering figure of pale golden light, indistinct and faceless under a hood, its robes fading into wisps of light below the knees so that its feet never touch the ground, holding a gleaming silver longsword in its right hand pointed down at its side and carrying a gleaming round silver shield on its left arm emblazoned with a golden sunburst, the whole figure one uniform pale gold and cream colour in every view (hood, robe, wisps and back), with no red or purple anywhere. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "The spectral guardian Guardian of Faith puts on the board (owner todo 2026-10-17: \"should have a sprite when summoned\"; typed yes 2026-10-18): a faceless hooded figure of pale gold light hovering over its square, a silver longsword and a round silver shield with a golden sunburst (the 2024 text: indistinct except for a gleaming sword and shield with the deity's symbol). 5-view turnaround (16:9) -> make sprite BODY=float; longsword attack from art/anim/animations.json. Not a creature, so no portrait: world/combat/field_view.gd FIGURES draws it at the area's middle, height 1.8.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
     }
   ],
   "image_provider": "gemini"

@@ -8,5 +8,16 @@
     "attack": "wooden sword swing",
     "windup": "the wooden sword raised high over his right shoulder in both hands, a fierce stubborn face, blanket swinging",
     "strike": "the wooden sword swung down and forward at the enemy at full arm's length, leaning into the blow"
+  },
+  "guardian_of_faith": {
+    "shape": "person",
+    "height": 1.8,
+    "body": "float",
+    "expression": "calm, watchful",
+    "look": "a spectral guardian from Guardian of Faith, a Large hovering figure of pale golden light, indistinct and faceless under a hood, its robes fading into wisps of light below the knees so that its feet never touch the ground, holding a gleaming silver longsword in its right hand pointed down at its side and carrying a gleaming round silver shield on its left arm emblazoned with a golden sunburst, the whole figure one uniform pale gold and cream colour in every view (hood, robe, wisps and back), with no red or purple anywhere",
+    "who": "a spectral guardian, a faceless hooded figure of pale golden light hovering above the ground, with a gleaming silver longsword and a round silver shield bearing a golden sunburst",
+    "attack": "longsword strike",
+    "windup": "the longsword drawn back and raised beside its head, the shield held out in front, leaning back",
+    "strike": "the longsword swung forward and down at the enemy at full arm's length, the shield pulled in, leaning into the blow"
   }
 }
