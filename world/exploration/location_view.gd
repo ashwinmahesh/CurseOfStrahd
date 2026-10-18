@@ -149,6 +149,7 @@ func _ready() -> void:
 	LocationBuilder._build_props(self)
 	LocationBuilder.open_small_decor(self)
 	LocationBuilder._build_lights(self)
+	AmberGlow.dress_place(self)   # the Amber Temple's own small things: glints on the offerings, the sanctum's braziers
 	LocationNpcs._build_npcs(self)
 	LocationParty._place_party(self)
 	LocationTraps._mark_found_traps(self)

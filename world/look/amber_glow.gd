@@ -37,6 +37,20 @@ const FOG_ENERGY := 0.3
 const PRIORITY_INSIDE := 0
 const PRIORITY_OUTSIDE := 1
 const PRIORITY_SHAPE := 2
+## The thread out of the hollow: how brightly it burns while unseen and once the party has seen it (flag
+## amber_thread_seen, set when the Arcana read of the hollow succeeds), how thin and how long it is.
+const THREAD_SHADER := preload("res://shaders/world/amber_thread.gdshader")
+const THREAD_FAINT := 0.3
+const THREAD_BRIGHT := 1.5
+const THREAD_RADIUS := 0.03
+const THREAD_LENGTH := 11.0
+## The glint on a heap of gold (the vault of offerings), and the pieces that are heaps.
+const GLINT_SHADER := preload("res://shaders/world/glint.gdshader")
+const HEAPS: Array[String] = ["offering_pile", "gold_heap", "gold_spill", "coin_pile"]
+const GLINTS_PER_HEAP := 3
+## The fight the sanctum's cold braziers flare violet for, and the pieces that are those braziers.
+const FLARE_ENCOUNTER := "vosk_unmasked"
+const BRAZIER := "brazier_cold"
 
 static var _inside_shader: Shader = null
 static var _shapes: Dictionary = {}
@@ -146,6 +160,8 @@ static func refresh(view: LocationView) -> void:
 		for p: Vector2 in party:
 			near = maxf(near, 1.0 - clampf(p.distance_to(from) / NEAR_RANGE, 0.0, 1.0))
 		c.set_state(state_of(view, c.vestige, c.prop_id), smoothstep(0.0, 1.0, near))
+		c.set_thread(bool(view.st.get_flag("amber_thread_seen", false)))
+	_flare(view)
 
 
 ## Builds the case for a location prop at `cell` under `root` (SetDressing.place's node for it): `look` is its catalog
@@ -187,6 +203,140 @@ static func place(board: ArenaBoard, root: Node3D, cell: Vector2i, look: Diction
 			_egg(case, spec, foot)
 	case.finish()
 	return root
+
+
+# --- The sanctum, the honey doors and the offerings (Amber Temple Look Plan step 10) ------------------------------------
+
+## The hollow's thread: a thin crimson line rising from `foot` (local) out of the top of the dead amber into the dark, toward
+## the valley where the Thirst's other half still lives. Faint always; Case.set_thread brightens it.
+static func _thread(case: Case, foot: Vector3) -> void:
+	var cyl := CylinderMesh.new()
+	cyl.top_radius = THREAD_RADIUS
+	cyl.bottom_radius = THREAD_RADIUS
+	cyl.height = THREAD_LENGTH
+	cyl.radial_segments = 6
+	cyl.rings = 1
+	cyl.cap_top = false
+	cyl.cap_bottom = false
+	var mi := MeshInstance3D.new()
+	mi.name = "Thread"
+	mi.mesh = cyl
+	mi.position = foot + Vector3(0.0, THREAD_LENGTH / 2.0, 0.0)
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var m := ShaderMaterial.new()
+	m.shader = THREAD_SHADER
+	m.render_priority = 2
+	m.set_shader_parameter("colour", Look.color("vampire_red"))
+	m.set_shader_parameter("strength", THREAD_FAINT)
+	m.set_shader_parameter("thread_length", THREAD_LENGTH)
+	mi.material_override = m
+	case.add_child(mi)
+	case.thread = m
+
+
+## The honey-glow doors (SetDressing.door): their two panes are amber, pulsing, with a light that falls on both sides of
+## the doorway. `leaf` is the door's node (it turns with the door), `width` and `height` its opening.
+static func dress_door(leaf: Node3D, width: float, height: float) -> void:
+	var case := Case.new()
+	case.name = "AmberDoor"
+	case.kind = "door"
+	case.prop_id = "honey_doors"
+	leaf.add_child(case)
+	case.add_to_group(&"amber_cases")
+	var spec := {"core": "flame", "edge": "ember", "dead": 0.0, "cloud": 0.1, "alpha_core": 0.5}
+	var pane := Vector3(width / 2.0 - 0.06, height * 0.9, 0.14)   # (thick enough to hold the door's picture inside it)
+	case.body_height = pane.y
+	for side: float in [-1.0, 1.0]:
+		_glass(case, _block_mesh(pane, 0.02), Vector3(side * width / 4.0, height * 0.05, 0.0), spec, case)
+	case.glow = 1.5   # (seen at a slant through a doorway: it needs more than a block standing free)
+	case.add_light(Vector3(0.0, height * 0.55, 0.0), 4.5, 2.0, "flame")
+	case.finish()
+
+
+## The Amber Temple's small things that don't belong to one prop (called once as a place is built): in the vaults, glints
+## on the heaps of the vault of offerings and the sanctum's cold braziers, each with a violet flame waiting to flare.
+static func dress_place(view: LocationView) -> void:
+	if not Look.modern() or view.loc_id != "amber_temple_vault":
+		return
+	var heaps: Array[Vector3] = []
+	var braziers: Array[Node3D] = []
+	for n: Node in view.find_children("*", "Node3D", true, false):
+		var art := str(n.get_meta("art", ""))
+		if art == "" or not (n as Node3D).is_visible_in_tree():
+			continue   # (a piece a prop took the square from is still there, hidden)
+		if art in HEAPS:
+			heaps.append((n as Node3D).global_position)
+		elif art == BRAZIER:
+			braziers.append(n as Node3D)
+	_glints(view, heaps)
+	_braziers(view, braziers)
+
+
+## A few glints hung above each heap of gold, one shared material (each flashes on its own beat).
+static func _glints(view: LocationView, heaps: Array[Vector3]) -> void:
+	if heaps.is_empty():
+		return
+	var root := Node3D.new()
+	root.name = "OfferingGlints"
+	view.add_child(root)
+	root.add_to_group(&"amber_cases")
+	var m := ShaderMaterial.new()
+	m.shader = GLINT_SHADER
+	m.render_priority = 2
+	var quad := QuadMesh.new()
+	quad.size = Vector2(0.3, 0.3)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(view.loc_id + "/glints")
+	for at in heaps:
+		for k in GLINTS_PER_HEAP:
+			var mi := MeshInstance3D.new()
+			mi.name = "Glint"
+			mi.mesh = quad
+			mi.material_override = m
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			mi.position = at + Vector3(rng.randf_range(-0.32, 0.32), rng.randf_range(0.22, 0.62), rng.randf_range(-0.32, 0.32))
+			root.add_child(mi)
+
+
+## A violet flame and light on each cold brazier of the sanctum, hidden until the fight with Vosk starts (_flare).
+static func _braziers(view: LocationView, braziers: Array[Node3D]) -> void:
+	if braziers.is_empty():
+		return
+	var root := Node3D.new()
+	root.name = "SanctumFlare"
+	root.visible = false
+	view.add_child(root)
+	var top := float(((ModelPiece.manifest().get(BRAZIER, {}) as Dictionary).get("size", [0.7, 0.8, 0.7]) as Array)[1])
+	for b in braziers:
+		var holder := Node3D.new()
+		holder.name = "VioletFlame"
+		holder.position = b.global_position + Vector3(0.0, top * 0.9, 0.0)
+		root.add_child(holder)
+		var flame := SetDressing.flame(0.7, "violet")
+		if flame != null:
+			holder.add_child(flame)
+		var light := CandleFlicker.new()
+		light.light_color = Look.color("orchid")
+		light.omni_range = 5.0
+		light.base_energy = 1.8
+		light.position = Vector3(0.0, 0.5, 0.0)
+		light.set_meta("no_shadow", true)
+		holder.add_child(light)
+
+
+## The sanctum's braziers flare violet while the fight with Vosk is on (and are cold again after).
+static func _flare(view: LocationView) -> void:
+	var root := view.get_node_or_null("SanctumFlare") as Node3D
+	if root == null:
+		return
+	var on := view.in_combat and str(view.last_encounter.get("id", "")) == FLARE_ENCOUNTER
+	if on == root.visible:
+		return
+	root.visible = on
+	if on:
+		# It flares: up from nothing in a moment.
+		root.scale = Vector3(1.0, 0.2, 1.0)
+		root.create_tween().tween_property(root, "scale", Vector3.ONE, 0.7).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 # --- The squares and the way a case faces --------------------------------------------------------------------------------
@@ -327,6 +477,7 @@ static func _hollow(case: Case, spec: Dictionary, foot: Rect2i) -> void:
 		shape.rotation.y = PI / 2.0
 	case.add_child(shape)
 	var span := length * 0.34
+	_thread(case, shape.position + shape.basis * Vector3(-span, 0.0, 0.0))
 	_flat(shape, CylinderMesh.new(), Vector3(-span * 1.0, 0, 0), dark, Vector3(0.13, 0.012, 0.13), "Head")
 	_flat(shape, BoxMesh.new(), Vector3(-span * 0.55, 0, 0), dark, Vector3(0.2, 0.012, 0.42), "Shoulders")
 	_flat(shape, BoxMesh.new(), Vector3(span * 0.35, 0, 0), dark, Vector3(span * 1.3, 0.012, 0.24), "Body")
@@ -575,6 +726,10 @@ class Case extends Node3D:
 	var _soft := 1.0
 	var _jump := false
 	var _clock := 0.0
+	## The hollow's thread (its shader), and how bright it is and is asked to be (0 faint, 1 bright).
+	var thread: ShaderMaterial = null
+	var _thread := 0.0
+	var _thread_to := 0.0
 	## The energy written to the light last frame, and whether its breath has been set to the state's.
 	var _written := 0.0
 	var _breath := -1
@@ -604,6 +759,16 @@ class Case extends Node3D:
 		light.set_meta("amber", true)
 		light.set_meta("no_shadow", true)
 		add_child(light)
+
+	## The hollow's thread burns bright (the party has seen it) or faint.
+	func set_thread(seen: bool) -> void:
+		if thread == null:
+			return
+		var to := 1.0 if seen else 0.0
+		if is_equal_approx(to, _thread_to) and is_equal_approx(_thread, _thread_to):
+			return
+		_thread_to = to
+		set_process(true)
 
 	## Takes the state it is given and how near the party is: eased to, or at once the first time (a sealed temple opens
 	## dark; a block never fades in from a state it was not in).
@@ -654,9 +819,12 @@ class Case extends Node3D:
 		for m in shape_materials:
 			m.set_shader_parameter("shown", _shown)
 			m.set_shader_parameter("softness", soft_base * _soft)
+		if thread != null:
+			_thread = lerpf(_thread, _thread_to, clampf(delta * 1.2, 0.0, 1.0))
+			thread.set_shader_parameter("strength", lerpf(AmberGlow.THREAD_FAINT, AmberGlow.THREAD_BRIGHT, _thread))
 		# A block with no light of its own (a sleeper, the egg) is at rest once it has eased there.
 		if light == null and absf(_lift - float(look["glow"]) * near_gain) < 0.002 and absf(_dead - float(look["dead"])) < 0.002 \
-				and is_equal_approx(_near, _near_to):
+				and is_equal_approx(_near, _near_to) and absf(_thread - _thread_to) < 0.002:
 			set_process(false)
 
 	## Makes the light breathe (the `amber` kind's swell) or hold still; only once Atmosphere has given it its flicker.

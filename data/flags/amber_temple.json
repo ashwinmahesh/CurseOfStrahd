@@ -42,6 +42,11 @@
       "summary": "The frozen warden-guards (wights) in the east guardroom are destroyed (encounter frozen_watch)."
     },
     {
+      "id": "amber_thread_seen",
+      "type": "bool",
+      "summary": "The party made out the thread that still ties the hollow sarcophagus to the valley (an Arcana 16 read of the empty amber, amber_temple/vosk:hollow_ok). The thread rising out of the hollow in the sanctum burns bright (AmberGlow)."
+    },
+    {
       "id": "amber_calls_begun",
       "type": "bool",
       "summary": "Guard: the first vestige has called to the party as it came near (the opener's Narrator line plays once; narrative/amber_temple/vestiges.dialogue, the `<name>_call` nodes)."

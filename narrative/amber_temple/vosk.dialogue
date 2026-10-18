@@ -110,6 +110,9 @@ Vosk: I introduced them. He did the selling. I only took my fee.
 -> sanctum_menu
 
 ~ hollow_ok
+if not flag.amber_thread_seen
+set amber_thread_seen
+endif
 Narrator: The amber remembers its tenant the way a glove remembers a hand. It wasn't a god; it was a hunger with a name.
 Narrator: And it is still tied to this place, by a thread as fine as hair that runs out of the mountain and down into the valley.
 interject class:wizard: It isn't gone. It's in him, and still tied to its sarcophagus, and he's tied to the land. It's all one knot.

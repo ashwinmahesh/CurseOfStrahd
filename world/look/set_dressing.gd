@@ -294,6 +294,8 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 		sp.position = Vector3(0, 0, 0)
 		sp.name = "Leaf"
 		leaf.add_child(sp)
+	if art == "amber_doors" and Look.modern():
+		AmberGlow.dress_door(leaf, w, h)   # the honey-glow doors' panes are amber, pulsing, lighting both sides
 	var statue := str(look.get("statue", ""))
 	if bool(look.get("pillars", false)):
 		# A gateway between two stone pillars (the Gates of Barovia), each with a statue on top where there's art:
@@ -503,9 +505,10 @@ static func flame(size: float, tint: String = "") -> Node3D:
 
 
 ## The palette colours a flame's surfaces are drawn in (its body, its red tongues, its white-hot heart), as the 2D flame
-## has them; a green fire's ("bile") in its own.
+## has them; a green fire's ("bile") and a violet one's ("violet": the Amber Temple's braziers) in their own.
 const FLAME_TINTS := {"": {"glow_flame": "candle", "glow_ember": "vampire_red", "glow_candle": "wick"},
-	"bile": {"glow_flame": "bile", "glow_ember": "moss", "glow_candle": "frost"}}
+	"bile": {"glow_flame": "bile", "glow_ember": "moss", "glow_candle": "frost"},
+	"violet": {"glow_flame": "orchid", "glow_ember": "plum", "glow_candle": "frost"}}
 
 
 ## A location light's colour: its data `color` (a palette colour: a witch's green hearth), else candlelight.

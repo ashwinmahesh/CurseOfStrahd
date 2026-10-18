@@ -10,6 +10,7 @@ extends Node3D
 ## party's squares; empty: the place's own spawn), AMBER_FLAGS=amber_temple_sealed,... (story flags set first),
 ## AMBER_HOUR=12, AMBER_WINDOW=1 (keep the window round the party that walls and blocks open; off by default), AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them),
 ## AMBER_SPEAK=vestige_zantras (whose line is on screen for the stills), AMBER_GIFT=gift_of_zantras (the first of the party has taken it),
+## AMBER_FIGHT=vosk_unmasked (a fight of that id is on: the sanctum's braziers flare),
 ## AMBER_STAGE=6:speak=vestige_zantras,14:speak=,18:gift=gift_of_zantras,24:flag=amber_temple_sealed (in a clip, what changes at which frame).
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -73,6 +74,9 @@ func _build(loc_id: String) -> void:
 		st.party[0].accept_dark_gift(OS.get_environment("AMBER_GIFT"))
 	if OS.get_environment("AMBER_SPEAK") != "":
 		view.set_speaking(OS.get_environment("AMBER_SPEAK"))
+	if OS.get_environment("AMBER_FIGHT") != "":
+		view.in_combat = true
+		view.last_encounter = {"id": OS.get_environment("AMBER_FIGHT")}
 	AmberGlow.refresh(view)
 	if OS.get_environment("AMBER_WINDOW") != "1":
 		# No window opened in the walls and blocks nearer the camera than the party (SeeThrough puts it where the camera

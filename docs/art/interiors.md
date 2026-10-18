@@ -286,6 +286,12 @@ braziers burning in the antechamber and either side of the altar.
     a void (shaders/world/faceless_void.gdshader) takes the place of its face with a violet corona turning slowly round
     it, shown while the camera looks at its front, and a cold shaft (sun_shaft.gdshader) falls onto its hands and the
     offerings at its feet, where six pilgrims' candles (`candle_cluster` props) burn.
+  - The vaults' small things (AmberGlow, step 10): the hollow's crimson thread (shaders/world/amber_thread.gdshader) rises out
+    of the dead amber into the dark, faint always and bright once the party has read the hollow (flag `amber_thread_seen`,
+    set in amber_temple/vosk:hollow_ok); the honey-glow doors (catalog `honey_doors`, 2.1 high) are two amber panes with a
+    light on both sides, dark once the temple is sealed (AmberGlow.dress_door, from SetDressing.door); the heaps of the vault
+    of offerings glint (shaders/world/glint.gdshader, AmberGlow.dress_place); and the sanctum's cold braziers flare
+    violet (SetDressing.FLAME_TINTS `violet`) while the fight with Vosk (`vosk_unmasked`) is on.
 
 ### Castle Ravenloft
 

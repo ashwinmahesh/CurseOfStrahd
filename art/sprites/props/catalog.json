@@ -728,7 +728,9 @@
         "width": 1.16
       },
       "honey_doors": {
-        "art": "amber_doors"
+        "art": "amber_doors",
+        "height": 2.1,
+        "width": 0.95
       }
     }
   },
