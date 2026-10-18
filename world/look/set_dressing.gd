@@ -142,7 +142,7 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 					# A 3D building (docs/art/models.md) over the house's ground, facing south.
 					var b := ModelPiece.stand(board, root, building, art, cell, at)
 					b.rotation.y = 0.0
-					ModelPiece.fade_with_trees(board, b)
+					SeeThrough.mark(b)   # it stands, and opens round the party where it hides it, as houses do
 					return root
 				var tower := _sprite(art)
 				tower.pixel_size *= scale_
@@ -160,7 +160,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 			elif board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
 				_take_square(board, root, cell)   # its own art replaces the board's furniture or brambles there
 			# A catalog `big` piece (a horse) keeps its size; spanning squares, it clears only what stands under them.
-			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)),
+			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false))
+				or bool(look.get("see_through", false)),
 				facing_yaw(spec), span_centre(board, spec), span_foot(spec) if bool(look.get("big", false)) else Rect2())
 			if piece != null and int(spec.get("stand_ft", 0)) > 0:
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
@@ -169,6 +170,10 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_fade_with_trees(board, piece as Sprite3D)
 			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):
 				ModelPiece.fade_with_trees(board, piece)
+			elif bool(look.get("see_through", false)) and piece is Sprite3D:
+				_fade_with_trees(board, piece as Sprite3D)   # (a picture has no window: it fades)
+			elif bool(look.get("see_through", false)) and piece != null:
+				SeeThrough.mark(piece)   # stone and timber stand, and open round the party, as walls do
 	return root
 
 
