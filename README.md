@@ -314,7 +314,7 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 - Story, Balanced, Tactician and Honour difficulties (Honour keeps one save; a wipe ends the run).
 - Skirmish and the Character Lab (any party at levels 1 to 20 against any stat blocks on any map), an encounter
   editor, 21 achievements and run stats.
-- Five autosaves, save pictures and notes, backups, quicksave, and jump-in saves for 13 chapters.
+- Five autosaves, save pictures and notes, quicksave, and jump-in saves for 13 chapters.
 - Settings for difficulty, graphics presets, keys, text size and UI scale, fight speed, narration, depth blur, the
   Modern or Classic look, and the respec.
 - Cheat codes (pause menu → Cheat codes) that give any item to a hero; every code is in

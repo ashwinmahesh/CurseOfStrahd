@@ -19,8 +19,8 @@ Saves and settings (owner: the real ones are never touched). The build runs on i
 next to the downloaded game's `Curse of Strahd Fan Game` in ~/Library/Application Support: an override.cfg in the
 worktree switches on the project's custom user dir (Godot reads it beside project.godot; the project's own
 `.template` setting only reaches exported builds) and puts "(edge)" in the window title. Each launch replaces that
-folder's saves/ with a copy of the owner's (dev builds keep them in Godot/app_userdata/Curse of Strahd) and copies settings.cfg
-and whats_new.cfg, so a branch that migrates or swaps data on load (item-audit's SaveSystem.WITHDRAWN) only ever
+folder's saves/ with a copy of the owner's (dev builds keep them in Godot/app_userdata/Curse of Strahd) and copies settings.cfg,
+so a branch that migrates or swaps data on load (item-audit's SaveSystem.WITHDRAWN) only ever
 changes the copy; caches the build makes itself (shaders, looks) are kept. EDGE_KEEP_DATA=1 keeps the edge's own
 saves from the last run instead. The owner's folder is only read, and this script refuses a destination that is it, the
 downloaded game's or inside either. The console says which folder is in use, and warns when a merged branch raises
@@ -62,7 +62,7 @@ SSD_MOUNT = "/Volumes/StrahdLanes"
 IMPORT_KINDS = ("*.gd", "*.tscn", "*.tres", "*.png", "*.ogg", "*.wav", "*.mp3", "*.glb")
 IMPORT_ERRORS = re.compile(r"SCRIPT ERROR|ERROR:|Parse Error|Failed loading")
 IMPORT_STOPPED = (75, 129, 130, 137, 143)    # a refused or stopped import: no stamp, no game (as the Makefile)
-USER_FILES = ("settings.cfg", "whats_new.cfg")   # copied from the owner's folder beside saves/
+USER_FILES = ("settings.cfg",)   # copied from the owner's folder beside saves/
 HEADER = (
     "# Branches the edge build (make run) merges onto main, one per line, in this order. Handed-off lane work stays\n"
     "# here until it is merged: make edge-add BRANCH=<branch> / make edge-remove BRANCH=<branch>.\n"
@@ -364,7 +364,7 @@ def check_data_dirs(edge: Path, protected: Sequence[Path]) -> None:
 
 
 def refresh_data(real: Path, edge: Path, protected: Sequence[Path]) -> str:
-    """Replaces the edge folder's saves/, settings.cfg and whats_new.cfg with copies of the owner's; theirs are only read.
+    """Replaces the edge folder's saves/ and settings.cfg with copies of the owner's; theirs are only read.
     Caches the build made (shader_cache, look_cache, logs) stay. Returns a line for the console."""
     check_data_dirs(edge, [real, *protected])
     edge.mkdir(parents=True, exist_ok=True)

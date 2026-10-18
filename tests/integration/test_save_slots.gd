@@ -36,9 +36,6 @@ func after_each() -> void:
 	if root != null:
 		root.queue_free()
 		root = null
-	for b in SaveSystem.backups():
-		SaveSystem._remove_dir(SaveSystem.backups_dir().path_join(b))
-	SaveSystem._remove_dir(SaveSystem.backups_dir())
 	GameSettings.set_value("saves_sort", "newest")
 	for f in DirAccess.get_files_at(SaveSystem.save_dir):
 		DirAccess.remove_absolute(SaveSystem.save_dir.path_join(f))
@@ -375,35 +372,6 @@ func test_the_list_sorts_by_when_place_or_day() -> void:
 	assert_eq(SavesScreen.sort_id(), "place", "the button steps to the next")
 	assert_true(sort.text.begins_with("By place"))
 	root.call("close_screen")
-
-
-func test_every_save_is_copied_before_an_update() -> void:
-	GameState.story.gold = 33.0
-	assert_eq(SaveSystem.save("one"), OK)
-	assert_eq(SaveSystem.autosave(), OK)
-	var made := SaveSystem.back_up_for_build("abcdef123456")
-	assert_true(made != "" and FileAccess.file_exists(made.path_join("one.json")), "every save is copied")
-	assert_true(FileAccess.file_exists(made.path_join("autosave.json")), "the autosave too")
-	assert_eq(SaveSystem.back_up_for_build("abcdef123456"), "", "once per build")
-	assert_eq(SaveSystem.list_slots().size(), 2, "a backup's copies aren't listed as saves")
-	GameState.story.gold = 1.0
-	assert_eq(SaveSystem.save("one"), OK)
-	var menu := await _menu()
-	var went: Array[String] = []
-	menu.scene_changer = func(path: String) -> void: went.append(path)
-	await _press(menu, "Load a Save")
-	var page := _page(menu)
-	await _press(page, "Backups")
-	assert_true(_shows(page, "before build abcdef12"), "a heading says when it was kept")
-	_row_button(page, "one").pressed.emit()
-	assert_eq(went, [PauseMenu.GAME_SCENE] as Array[String], "a backup loads")
-	assert_eq(GameState.story.gold, 33.0, "as it was kept")
-	assert_eq(SaveSystem.current_slot, "", "a game from a backup has no slot until its first save")
-	assert_eq(float((_on_disk("one")["story"] as Dictionary)["gold"]), 1.0, "the save itself is untouched")
-	root.call("close_screen")
-	for i in SaveSystem.BACKUPS_KEPT + 2:
-		SaveSystem.back_up_for_build("build%02d" % i)
-	assert_eq(SaveSystem.backups().size(), SaveSystem.BACKUPS_KEPT, "the newest %d builds' copies are kept" % SaveSystem.BACKUPS_KEPT)
 
 
 func test_each_chapter_has_a_jump_in_save() -> void:

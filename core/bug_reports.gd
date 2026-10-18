@@ -229,14 +229,9 @@ func _settings() -> String:
 		roundi(GameSettings.text_scale() * 100.0)]
 
 
-## The build: a build file's commit (builds/play_build.json, which nothing writes now), else the checkout's own branch and commit, read from git.
+## The build: the checkout's own branch and commit, read from git.
 func _build(out: Dictionary) -> void:
 	var path := ProjectSettings.globalize_path("res://").trim_suffix("/")
-	var commit := SaveSystem.build_commit()
-	if commit != "":
-		out["commit"] = commit.left(9)
-		out["build"] = ErrorWatch.build()
-		return
 	var head := _git(path, PackedStringArray(["log", "-1", "--format=%h %s"]))
 	out["commit"] = head.get_slice(" ", 0)
 	var branch := _git(path, PackedStringArray(["rev-parse", "--abbrev-ref", "HEAD"]))

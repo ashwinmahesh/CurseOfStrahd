@@ -1,7 +1,7 @@
 extends Node
 ## The saves' own page (ui/screens/saves_screen.gd, lane 16) from a late party, with the golden saves as the list:
-## the recap on loading (Q3), Save Game, the questions before writing over or deleting a save, Load a Save with its Backups and
-## Chapters tabs, the game-over screen and the title's Load. Saves of the capture's own only, so the owner's never show
+## the recap on loading (Q3), Save Game, the questions before writing over or deleting a save, Load a Save with its Chapters
+## tab, the game-over screen and the title's Load. Saves of the capture's own only, so the owner's never show
 ## or change.
 ## make capture SCENE=res://tools/capture/saves_capture.tscn NAME=saves FRAMES=30
 
@@ -78,12 +78,9 @@ func capture_shots(tool: Node, out: String) -> void:
 	page.call("_confirm_delete", page.slots()[1])
 	await _shoot(tool, out + "_2b_delete.png")
 	root.call("close_screen")
-	SaveSystem.back_up_for_build("capture_build")
 	root.call("open_screen", "menu", 0)
 	(root.get("screen") as PauseMenu).call("_open_saves", SavesScreen.Mode.LOAD)
 	await _shoot(tool, out + "_3_load_page.png")
-	(_page().find_child("Backups", true, false) as Button).pressed.emit()
-	await _shoot(tool, out + "_3b_backups.png")
 	(_page().find_child("Chapters", true, false) as Button).pressed.emit()
 	await _shoot(tool, out + "_3c_chapters.png")
 	root.call("close_screen")
@@ -100,8 +97,5 @@ func capture_shots(tool: Node, out: String) -> void:
 	title.queue_free()
 	for slot in _made:
 		SaveSystem.delete_slot(slot)
-	for b in SaveSystem.backups():
-		SaveSystem.call("_remove_dir", SaveSystem.backups_dir().path_join(b))
-	SaveSystem.call("_remove_dir", SaveSystem.backups_dir())
 	DirAccess.remove_absolute(SaveSystem.save_dir)
 	SaveSystem.save_dir = _real_dir

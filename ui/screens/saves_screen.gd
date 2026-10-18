@@ -6,7 +6,7 @@ extends CanvasLayer
 ## list scrolls, so any number of saves fits, and every line ends in an ellipsis rather than spilling. Back or Escape
 ## returns to whatever opened it (Escape first closes the overwrite question, if it's up).
 ## Q9: each save shows its picture and the player's note (typed above the list when saving), the list sorts by when,
-## place or day, and loading has a second tab for the backups kept before each update. Q12: a Chapters tab, to jump in
+## place or day, and Q12: loading has a Chapters tab, to jump in
 ## at the start of any chapter.
 
 ## Closed by Back, Escape or a save (after `saved`).
@@ -22,7 +22,7 @@ const SIZE := Vector2(1100, 760)
 const PICTURE := Vector2(160, 90)
 ## How the list is sorted, kept with the player's settings: [id, the button's words].
 const SORTS := [["newest", "Newest first"], ["place", "By place"], ["day", "By day"]]
-const TABS: Array[String] = ["Your Saves", "Chapters", "Backups"]
+const TABS: Array[String] = ["Your Saves", "Chapters"]
 ## The travel map, for a chapter's picture and a save without one of its own.
 const MAP := "res://art/ui/map/barovia.png"
 ## How much of the map a picture shows, in map pixels (16:9).
@@ -38,7 +38,7 @@ var _new: Button                   ## New Save, when saving
 var _back: Button
 var _hidden: CanvasItem            ## what the page hides under it while it's up (the arch, the title's column)
 var _closing := false
-var _tab := "Your Saves"           ## loading: the player's saves or the backups
+var _tab := "Your Saves"           ## loading: the player's saves or the chapters
 var _tabs: Control
 var _hint: Label
 var _note_edit: LineEdit           ## the player's note for the save about to be made
@@ -200,8 +200,7 @@ func _draw_tabs() -> void:
 	for b in strip.get_children():
 		b.name = str((b as Button).text).replace(" ", "")
 		(b as Button).tooltip_text = {"Your Saves": "Your saves, the autosaves and a fight's round start.",
-			"Chapters": "Jump in at the start of any chapter, the party at that chapter's level and gear.",
-			"Backups": "A copy of every save, kept before each update of the game."}.get((b as Button).text, "") as String
+			"Chapters": "Jump in at the start of any chapter, the party at that chapter's level and gear."}.get((b as Button).text, "") as String
 	_tabs.add_child(strip)
 
 
@@ -222,10 +221,6 @@ func _fill() -> void:
 		_hint.text = "Begin at the start of any chapter, the party at its level and gear. Its first save makes a new slot."
 		_sort.visible = false
 		_fill_chapters()
-		return
-	elif _tab == "Backups":
-		_hint.text = "Copies of your saves from before each update. A game loaded from one saves in a new slot."
-		_fill_backups()
 		return
 	else:
 		_hint.text = "Choose a save to load. The game's own autosaves and a fight's round start are here too."
@@ -271,27 +266,6 @@ func _chapter_row(s: Dictionary) -> Control:
 		"Chapter %d · Level %d" % [int(s["number"]), int(s["level"])], about))
 	row.name = str(s["chapter"])
 	return row
-
-
-## Each backup (newest first) under a heading saying when it was kept, with its saves.
-func _fill_backups() -> void:
-	var folders := SaveSystem.backups()
-	if folders.is_empty():
-		_list.add_child(UiKit.label("No backups yet. The game keeps a copy of every save before each update.", 15, "parchment"))
-	for f in folders:
-		var shown := slots(SaveSystem.backups_dir().path_join(f))
-		if shown.is_empty():
-			continue
-		_list.add_child(UiParts.section(backup_title(f)))
-		for s in shown:
-			_list.add_child(_row(s))
-
-
-## A backup's heading from its folder name (<date>T<time>_<commit>): "Kept 2026-10-07 18:55, before build 463d4670".
-static func backup_title(folder: String) -> String:
-	var at := folder.get_slice("_", 0)
-	var stamp := "%s %s" % [at.get_slice("T", 0), at.get_slice("T", 1).replace("-", ":").left(5)]
-	return "Kept %s, before build %s" % [stamp, folder.get_slice("_", 1)]
 
 
 ## The keyboard starts on New Save when saving, else on the newest save's Load (Back if there's none).
