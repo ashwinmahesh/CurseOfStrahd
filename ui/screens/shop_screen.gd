@@ -8,8 +8,8 @@ extends CanvasLayer
 ## character's Persuasion in the open. The purse counts up or down to its new sum (UiMotion.roll).
 ## The pack side has the inventory's filter tabs (InventoryScreen.FILTERS, Potions and Quest items among them; LB/RB on
 ## a pad) and Only what <merchant> buys, which leaves out what this merchant won't take; both are kept for the rest of
-## the play session. A magic item's row is edged in the colour of its rarity there and on the wares side, as in the
-## inventory.
+## the play session. A magic item's picture has a box in the colour of its rarity there and on the wares side, as in
+## the inventory.
 ## The wares side has tabs of its own (WARE_FILTERS, only the kinds this merchant has; LB/RB step whichever side the
 ## focus is on), so a merchant with a hundred magic items (Ashwin, 2026-10-14: every one the story doesn't need is for
 ## sale somewhere) is a few short lists. A magic item's name is in its rarity's colour with the rarity beside it. One
@@ -137,8 +137,8 @@ func _draw() -> void:
 		_sell_ids.append(id)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 10)
-		UiParts.add_icon(row, "item", id)
 		var rarity := InventoryScreen.rarity_of(MagicItems.shown_data(data, e))
+		UiParts.add_framed_icon(row, "item", id, InventoryScreen.rarity_box(rarity), InventoryScreen.ROW_ICON)
 		var n := UiKit.label("%s%s" % [data.get("name", id), " ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""], 15, "vellum")
 		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(n)
@@ -157,7 +157,7 @@ func _draw() -> void:
 		elif offer >= 0.0 and int(e["qty"]) < lot:
 			b.tooltip_text = "Merchants only buy these %d at a time" % lot
 		row.add_child(b)
-		pack.add_child(UiParts.row(row, LootWindow._item_tip(data), false, 7, ItemTile.rarity_edge(rarity) if rarity != "" else Color.TRANSPARENT))
+		pack.add_child(UiParts.row(row, LootWindow._item_tip(data)))
 	if _sell_ids.is_empty():
 		pack.add_child(UiKit.label(_nothing_to_sell(ch, hidden > 0), 15, "bone"))
 	cols.add_child(_sell_side(ch, pack, hidden))
@@ -220,7 +220,7 @@ func _ware_row(w: Dictionary, ch: Character) -> Control:
 	var id := str(w["id"])
 	var made := w.has("bases")
 	var rarity := str(w.get("rarity", ""))
-	UiParts.add_icon(row, "item", id)
+	UiParts.add_framed_icon(row, "item", id, InventoryScreen.rarity_box(rarity), InventoryScreen.ROW_ICON)
 	var n := UiKit.label(str(w["name"]), 15, ItemTile.rarity_colour(rarity, "vellum") if rarity != "" else "vellum")
 	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -246,8 +246,7 @@ func _ware_row(w: Dictionary, ch: Character) -> Control:
 		if b.disabled:
 			b.tooltip_text = "Not enough gold"
 	row.add_child(b)
-	return UiParts.row(row, LootWindow._item_tip(Compendium.shared().item_data(id)), made and _open_bases == id, 7,
-		ItemTile.rarity_edge(rarity) if rarity != "" else Color.TRANSPARENT)
+	return UiParts.row(row, LootWindow._item_tip(Compendium.shared().item_data(id)), made and _open_bases == id)
 
 
 ## One base of an open made-to-order ware ("Flame Tongue Rapier"), set in under it, with its own price and Buy.
