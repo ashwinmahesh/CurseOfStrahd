@@ -507,6 +507,9 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 			view.unstage_npc(npc))
 	dialogue.respec_requested.connect(respec)
 	dialogue.spoke.connect(_talk_music)
+	dialogue.spoke.connect(func(speaker_id: String) -> void:
+		if view != null:
+			view.set_speaking(speaker_id))   # a vestige's amber flares while its line shows (AmberGlow)
 	dialogue.scene_shown.connect(_scene_music)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
@@ -517,7 +520,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		hud.visible = true
 		ModeController.force(ModeController.Mode.EXPLORATION)
 	else:
-		TalkCamera.open(view, _npc_id)   # the camera eases in on the leader and the speaker (Visual Polish Plan 7)
+		TalkCamera.open(view, _npc_id, view.dialogue_prop if view != null else "")   # the camera eases in on the leader and the speaker, or the prop that speaks (Visual Polish Plan 7)
 		if dialogue != null:
 			_talk_music(_npc_id)   # the one who was clicked, before they have spoken
 
@@ -559,6 +562,8 @@ func _dialogue_ended(combat: String) -> void:
 	_scene_mood = ""
 	if view != null:
 		view.clear_staged()   # whoever stepped into the scene leaves with it
+		view.dialogue_prop = ""
+		view.set_speaking("")
 		TalkCamera.close(view, combat != "" or not moved.is_empty())
 	# `end_game`, or the parley's yield or ireena, ends the campaign (ADR 0014).
 	if Endings.reached(st) != "" or (Endings.parley_ends(st) and Endings.request(st) != ""):

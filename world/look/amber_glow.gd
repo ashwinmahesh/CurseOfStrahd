@@ -79,6 +79,75 @@ static func vestige_of(prop_id: String) -> String:
 	return v if v != prop_id and shapes().has(v) else ""
 
 
+# --- The temple answers (Amber Temple Look Plan §3.1, LocationView refreshes this a few times a second) ----------------
+
+## A block's states. The wardens' seal over everything, then a line of its vestige on screen (a flare that pulses with it),
+## then its gift taken, then its conversation open while another voice speaks, then waiting.
+const WAITING := "waiting"
+const ATTENDING := "attending"
+const SPEAKING := "speaking"
+const SATED := "sated"
+const SEALED := "sealed"
+## What each state asks of a block: how bright its glass glows (a share of its light's own breath), how far toward murk its
+## glass is (0 as built, 1 dead), how bright its light burns, how strongly and how softly the shape inside shows (1 as it
+## was made), whether the light still breathes, the share a second it eases there, and the flare's pulse.
+const LOOKS := {
+	WAITING: {"glow": 1.0, "dead": 0.0, "light": 1.0, "shown": 1.0, "soft": 1.0, "breath": true, "ease": 1.5},
+	ATTENDING: {"glow": 1.3, "dead": 0.0, "light": 1.35, "shown": 1.05, "soft": 1.0, "breath": true, "ease": 3.0},
+	SPEAKING: {"glow": 2.1, "dead": 0.0, "light": 2.6, "shown": 1.15, "soft": 1.0, "breath": true, "ease": 7.0,
+		"pulse": 0.25},
+	SATED: {"glow": 0.5, "dead": 0.0, "light": 0.4, "shown": 1.45, "soft": 0.45, "breath": false, "ease": 0.8},
+	SEALED: {"glow": 0.0, "dead": 1.0, "light": 0.0, "shown": 0.5, "soft": 1.3, "breath": false, "ease": 0.5},
+}
+## How near (squares) the party brightens a waiting block, and by how much at its foot (a share of its glow).
+const NEAR_RANGE := 5.0
+const NEAR_GAIN := 0.35
+## How dead the glass is once the temple is sealed (never fully flat: the shape is still faintly there).
+const SEALED_DEAD := 0.96
+## The speaker ids of the vestiges' lines: "vestige_<name>".
+const SPEAKER_PREFIX := "vestige_"
+
+
+## The state of the block of `vestige` ("zantras") whose prop is `prop_id`, given the story and what is on screen.
+static func state_of(view: LocationView, vestige: String, prop_id: String) -> String:
+	if bool(view.st.get_flag("amber_temple_sealed", false)):
+		return SEALED
+	if vestige == "":
+		return WAITING
+	if view.speaking == SPEAKER_PREFIX + vestige:
+		return SPEAKING
+	if StoryConditions.check("gift:gift_of_" + vestige, view.st):
+		return SATED
+	if view.dialogue_prop == prop_id:
+		return ATTENDING
+	return WAITING
+
+
+## Every block of amber in `view` takes the state the story and the screen give it (a few times a second, from
+## LocationView._process; and when whose line is on screen changes): sealed, speaking, sated, attending or waiting, with how
+## near the party stands. A block that has no state yet takes its first at once (a sealed temple opens dark, not fading).
+static func refresh(view: LocationView) -> void:
+	if view == null or view.st == null or not view.is_inside_tree():
+		return
+	var cases := view.get_tree().get_nodes_in_group(&"amber_cases")
+	if cases.is_empty():
+		return
+	var party: Array[Vector2] = []
+	for m: Combatant in view.members:
+		if view.tokens.has(m.id) and is_instance_valid(view.tokens[m.id]):
+			var at := (view.tokens[m.id] as Node3D).global_position
+			party.append(Vector2(at.x, at.z))
+	for n: Node in cases:
+		var c := n as Case
+		if c == null or c.glass.is_empty() or not view.is_ancestor_of(c):
+			continue
+		var from := Vector2(c.global_position.x, c.global_position.z)
+		var near := 0.0
+		for p: Vector2 in party:
+			near = maxf(near, 1.0 - clampf(p.distance_to(from) / NEAR_RANGE, 0.0, 1.0))
+		c.set_state(state_of(view, c.vestige, c.prop_id), smoothstep(0.0, 1.0, near))
+
+
 ## Builds the case for a location prop at `cell` under `root` (SetDressing.place's node for it): `look` is its catalog
 ## entry ({art: "amber_case", case: ...}). Returns `root`.
 static func place(board: ArenaBoard, root: Node3D, cell: Vector2i, look: Dictionary) -> Node3D:
@@ -96,7 +165,9 @@ static func place(board: ArenaBoard, root: Node3D, cell: Vector2i, look: Diction
 	var case := Case.new()
 	case.name = "AmberCase_" + str(root.name).trim_prefix("Dressing_")
 	case.kind = kind
-	case.vestige = vestige_of(str(root.name).trim_prefix("Dressing_"))
+	case.prop_id = str(root.name).trim_prefix("Dressing_")
+	case.vestige = vestige_of(case.prop_id)
+	case.base_dead = float(spec.get("dead", 0.0))
 	var a := board.cell_center(foot.position)
 	var b := board.cell_center(foot.end - Vector2i.ONE)
 	case.position = Vector3((a.x + b.x) / 2.0, minf(a.y, b.y), (a.z + b.z) / 2.0)
@@ -198,6 +269,7 @@ static func _coloured(spec: Dictionary, held: Dictionary) -> Dictionary:
 static func _hold(case: Case, held: Dictionary, at: Vector3) -> void:
 	var id := case.vestige
 	var touch := str(held.get("touch", ""))
+	case.soft_base = float(held.get("soft", 1.6))
 	for plane: String in ["main", "orbit"]:
 		var file := SHAPE_DIR + ("%s.png" % id if plane == "main" else "%s_orbit.png" % id)
 		var tex: Texture2D = load(file) as Texture2D if ResourceLoader.exists(file) else null
@@ -467,25 +539,46 @@ static func _tri(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, centre: Ve
 
 # --- The node ----------------------------------------------------------------------------------------------------------
 
-## One block of amber: its glass materials, its light and how bright it glows. Its glow follows the light inside as that
-## breathes (a block with none glows at `glow` alone).
+## One block of amber: its glass materials, its light and how bright it glows, and the state it is in (AmberGlow.refresh).
+## Its glow follows the light inside as that breathes (a block with none glows at `glow` alone); the state eases it to
+## brighter (a vestige speaking, the party near), held low and still (its gift taken) or dark (the temple sealed).
 class Case extends Node3D:
 	var kind := ""
-	## The vestige it holds ("zantras"), or "".
+	## The vestige it holds ("zantras"), or "", and the id of the prop it stands as ("sarc_zantras").
 	var vestige := ""
+	var prop_id := ""
 	var body_height := 2.0
 	var body_base := 0.0
+	## How dead its glass is as built (the hollow, the cracked one), before the temple is sealed.
 	var base_dead := 0.0
 	## The shader settings only some blocks have (the egg's break), set on every glass material of the case.
 	var shell_extra: Dictionary = {}
 	var glass: Array[ShaderMaterial] = []
 	var shape_materials: Array[ShaderMaterial] = []
+	## How soft the shape inside is as built (the entry's `soft`; a state sharpens or blurs it from there).
+	var soft_base := 1.6
 	## Its light stops breathing (Savnok's amber is locked, like its mouth).
 	var locked := false
 	var light: CandleFlicker = null
-	## How bright the state asks it to glow, over the light's own breath (1: as it breathes).
+	## How bright the block's own entry asks it to glow, over the light's own breath (1: as it breathes).
 	var glow := 1.0
+	## The state it is in (AmberGlow.WAITING...), and how near the party stands (0 far, 1 at its foot).
+	var state := ""
+	var _near := 0.0
+	var _near_to := 0.0
 	var _fogged := false
+	## Where the state's look has eased to: glow and light as a share of their own, deadness, shape strength and softness.
+	var _lift := 1.0
+	var _dead := 0.0
+	var _burn := 1.0
+	var _shown := 1.0
+	var _soft := 1.0
+	var _jump := false
+	var _clock := 0.0
+	## The energy written to the light last frame, and whether its breath has been set to the state's.
+	var _written := 0.0
+	var _breath := -1
+	var _light_base := 0.0
 
 	## Once the case is built: its materials' own sizes, and its light's breath to follow.
 	func finish() -> void:
@@ -494,6 +587,9 @@ class Case extends Node3D:
 			m.set_shader_parameter("body_height", body_height)
 			for k: String in shell_extra:
 				m.set_shader_parameter(k, shell_extra[k])
+		if light != null:
+			_light_base = light.base_energy
+			_written = _light_base
 		set_process(light != null)
 
 	## The case's own light: shadowless, a slow breath (the `amber` kind, given by Atmosphere), warm.
@@ -509,16 +605,70 @@ class Case extends Node3D:
 		light.set_meta("no_shadow", true)
 		add_child(light)
 
-	func _process(_delta: float) -> void:
-		if light == null or not is_instance_valid(light):
+	## Takes the state it is given and how near the party is: eased to, or at once the first time (a sealed temple opens
+	## dark; a block never fades in from a state it was not in).
+	func set_state(to: String, near: float) -> void:
+		_near_to = near
+		if to == state:
+			set_process(true)
 			return
-		if not _fogged and light.has_meta("light_kind"):
+		_jump = _jump or state == ""
+		state = to
+		_breath = -1   # (set again once its light is dressed)
+		set_process(true)
+
+	func _process(delta: float) -> void:
+		_clock += delta
+		if light != null and is_instance_valid(light) and not _fogged and light.has_meta("light_kind"):
 			# Dressed as an amber light now (Atmosphere gives it the kind's haze): a light inside the glass would light
 			# the haze it stands in into a white blob, so its own haze is thin.
-			light.light_volumetric_fog_energy = FOG_ENERGY
+			light.light_volumetric_fog_energy = AmberGlow.FOG_ENERGY
 			_fogged = true
 			if locked and LightFlicker.of(light) != null:
 				LightFlicker.of(light).queue_free()   # its light holds still at its own energy, as its mouth is sewn
-		var ratio := light.light_energy / maxf(light.base_energy, 0.001)
+		var look := (AmberGlow.LOOKS.get(state, AmberGlow.LOOKS[AmberGlow.WAITING]) as Dictionary)
+		var k := 1.0 if _jump else clampf(delta * float(look["ease"]), 0.0, 1.0)
+		_jump = false
+		_near = _near_to if is_equal_approx(_near, _near_to) else lerpf(_near, _near_to, clampf(delta * 2.0, 0.0, 1.0))
+		# The party's nearness brightens a block that is alive and waiting (not one that has flared, or sated, or gone dark).
+		var near_gain := 1.0 + AmberGlow.NEAR_GAIN * _near if state in [AmberGlow.WAITING, AmberGlow.ATTENDING] else 1.0
+		_lift = lerpf(_lift, float(look["glow"]) * near_gain, k)
+		_burn = lerpf(_burn, float(look["light"]) * near_gain, k)
+		_dead = lerpf(_dead, float(look["dead"]), k)
+		_shown = lerpf(_shown, float(look["shown"]), k)
+		_soft = lerpf(_soft, float(look["soft"]), k)
+		var pulse := 1.0 + float(look.get("pulse", 0.0)) * sin(_clock * 5.0)
+		var ratio := 1.0
+		if light != null and is_instance_valid(light):
+			if not locked and _written > 0.001:
+				ratio = clampf(light.light_energy / _written, 0.0, 3.0)   # the breath: what the flicker made of the energy it was given
+			_written = maxf(_light_base * _burn * pulse, 0.0)
+			light.base_energy = _written
+			light.visible = _burn > 0.01
+			_set_breath(bool(look["breath"]))
+		var lit := ratio * glow * _lift * pulse
+		var murk := lerpf(base_dead, AmberGlow.SEALED_DEAD, _dead)
 		for m in glass:
-			m.set_shader_parameter("glow", ratio * glow)
+			m.set_shader_parameter("glow", lit)
+			m.set_shader_parameter("dead", murk)
+		for m in shape_materials:
+			m.set_shader_parameter("shown", _shown)
+			m.set_shader_parameter("softness", soft_base * _soft)
+		# A block with no light of its own (a sleeper, the egg) is at rest once it has eased there.
+		if light == null and absf(_lift - float(look["glow"]) * near_gain) < 0.002 and absf(_dead - float(look["dead"])) < 0.002 \
+				and is_equal_approx(_near, _near_to):
+			set_process(false)
+
+	## Makes the light breathe (the `amber` kind's swell) or hold still; only once Atmosphere has given it its flicker.
+	func _set_breath(on: bool) -> void:
+		var want := 1 if on else 0
+		if want == _breath or light == null:
+			return
+		var f := LightFlicker.of(light)
+		if f == null:
+			return   # (not dressed yet, or held at its energy for good: Savnok's)
+		var style := (LightFlicker.STYLES["amber"] as Dictionary).duplicate()
+		if not on:
+			style["swell"] = 0.0
+		f.set_style(style)
+		_breath = want

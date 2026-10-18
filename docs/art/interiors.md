@@ -267,6 +267,15 @@ braziers burning in the antechamber and either side of the altar.
     empty sarcophagus, lying across the squares of cover it covers, the largest block of all), `plinth` (the empty
     plinth, frost ring, scrape marks toward the nearest exit) and `block` (the cottage-sized block of amber in the Eye's
     chamber, broken open from the inside). A case stands on its prop's '=' squares and changes no rule.
+  - Every vestige's block holds a dark silhouette (art/amber_shapes.json: the game-icons.net outlines, CC BY 3.0, artists on
+    the Credits screen, composed into art/textures/amber/shapes/ by `make vestige_shapes`), softened by depth, with a touch
+    of its own (gold flecks, rising bubbles, a twitch, cracks, glints, stars, sparks, a ring, an orbiting plane, a lightless core).
+  - The temple answers (AmberGlow.refresh, a few times a second from LocationView._process): a block is `waiting` (it
+    breathes, brighter as the party comes within five squares), `speaking` (its vestige's `vestige_<name>` line is on
+    screen: it flares and pulses, LocationView.set_speaking, and the conversation camera leans to the block,
+    TalkCamera.open's `prop_id`), `attending` (its conversation is open while another voice speaks), `sated` (a party
+    member carries its `gift_of_<name>`: held low and still, the shape sharper) or `sealed` (`flag.amber_temple_sealed`:
+    dark brown glass, no light, the shape faint; a sealed temple opens dark). The looks are AmberGlow.LOOKS.
 
 ### Castle Ravenloft
 

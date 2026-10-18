@@ -228,3 +228,123 @@ func test_a_blocks_mesh_faces_outward() -> void:
 			out += 1
 	assert_true(verts.size() > 100 and out == verts.size(), "every one of %d vertices faces outward (%d do)" % [verts.size(), out])
 	assert_true(absf(mesh.get_aabb().size.y - 1.84) < 0.001, "and it is as tall as asked")
+
+
+# --- The temple answers (Amber Temple Look Plan step 6) --------------------------------------------------------------------
+
+## How bright the block's glass glows now, how dead it is, and how bright its light burns.
+func _glows(case: AmberGlow.Case) -> float:
+	return float(case.glass[0].get_shader_parameter("glow"))
+
+
+func _murk(case: AmberGlow.Case) -> float:
+	return float(case.glass[0].get_shader_parameter("dead"))
+
+
+## Lets the block ease to the state it is in (what a few seconds of frames do), its light's flicker writing the energy it was
+## given as it would each frame.
+func _settle(case: AmberGlow.Case) -> void:
+	for i in 12:
+		case._process(1.0)
+		if case.light != null:
+			case.light.light_energy = case.light.base_energy
+
+
+## A block waits, flares while its vestige's line shows, settles once its gift is taken and goes dark when the temple is
+## sealed; every other block is as it was, and a block no one is speaking for stays put.
+func test_the_amber_answers_the_story() -> void:
+	var v := _view("amber_temple_faceless_god")
+	await _frames(3)
+	var zantras := _case(v, "sarc_zantras")
+	var fekre := _case(v, "sarc_fekre")
+	assert_true(zantras != null and fekre != null, "the ring has both blocks")
+	AmberGlow.refresh(v)
+	assert_eq(zantras.state, AmberGlow.WAITING, "a block waits")
+	_settle(zantras)
+	_settle(fekre)
+	var waiting := _glows(zantras)
+	assert_true(waiting > 0.2, "it glows (%.2f)" % waiting)
+	# Its vestige's line on screen: it flares, the others don't.
+	v.set_speaking("vestige_zantras")
+	assert_eq(zantras.state, AmberGlow.SPEAKING, "its line is on screen")
+	assert_eq(fekre.state, AmberGlow.WAITING, "no other block answers")
+	_settle(zantras)
+	assert_true(_glows(zantras) > waiting * 1.4, "it flares (%.2f over %.2f)" % [_glows(zantras), waiting])
+	assert_true(zantras.light.base_energy > zantras._light_base * 1.4, "and its light burns brighter")
+	# The Narrator speaking in its conversation: it stays lifted a little, not flaring.
+	v.dialogue_prop = "sarc_zantras"
+	v.set_speaking("narrator")
+	assert_eq(zantras.state, AmberGlow.ATTENDING, "its conversation is open while someone else speaks")
+	_settle(zantras)
+	assert_between(_glows(zantras), waiting * 1.05, waiting * 1.5, "a little lifted")
+	v.dialogue_prop = ""
+	v.set_speaking("")
+	assert_eq(zantras.state, AmberGlow.WAITING, "and settles when the conversation ends")
+	_settle(zantras)
+	assert_true(is_equal_approx(_glows(zantras), waiting), "back where it was")
+	# Its gift taken: held low and still, the shape sharper.
+	GameState.story.party[0].accept_dark_gift("gift_of_zantras")
+	AmberGlow.refresh(v)
+	assert_eq(zantras.state, AmberGlow.SATED, "its gift is taken")
+	assert_eq(fekre.state, AmberGlow.WAITING, "and Fekre's isn't")
+	_settle(zantras)
+	assert_true(_glows(zantras) < waiting * 0.7, "it glows low (%.2f)" % _glows(zantras))
+	assert_true(zantras.light.base_energy < zantras._light_base * 0.6, "and its light burns low")
+	var sharp := float(zantras.shape_materials[0].get_shader_parameter("softness"))
+	assert_true(sharp < zantras.soft_base * 0.6, "the shape shows sharper (%.2f from %.2f)" % [sharp, zantras.soft_base])
+	v.set_speaking("vestige_zantras")
+	assert_eq(zantras.state, AmberGlow.SPEAKING, "it still flares as it speaks")
+	v.set_speaking("")
+	# The wardens' seal: every block of amber goes dark, brown, and its light goes out; the shape is faintly there.
+	GameState.story.set_flag("amber_temple_sealed")
+	AmberGlow.refresh(v)
+	for c: AmberGlow.Case in [zantras, fekre]:
+		assert_eq(c.state, AmberGlow.SEALED, "%s is sealed" % c.prop_id)
+		_settle(c)
+		assert_true(_glows(c) < 0.05, "%s gives no glow (%.2f)" % [c.prop_id, _glows(c)])
+		assert_true(_murk(c) > 0.9, "%s is dark brown glass (%.2f)" % [c.prop_id, _murk(c)])
+		assert_false(c.light.visible, "%s's light is out" % c.prop_id)
+		var shown := float(c.shape_materials[0].get_shader_parameter("shown"))
+		assert_between(shown, 0.3, 0.7, "%s's shape is still faintly there (%.2f)" % [c.prop_id, shown])
+	v.queue_free()
+
+
+## A temple that is already sealed opens dark; it does not fade out as the party comes in.
+func test_a_sealed_temple_opens_dark() -> void:
+	GameState.story.set_flag("amber_temple_sealed")
+	var v := _view("amber_temple_vault")
+	await _frames(3)
+	AmberGlow.refresh(v)
+	var count := 0
+	for n in get_tree().get_nodes_in_group(&"amber_cases"):
+		var c := n as AmberGlow.Case
+		if c == null or c.glass.is_empty() or not v.is_ancestor_of(c):
+			continue
+		count += 1
+		assert_eq(c.state, AmberGlow.SEALED, "%s opens sealed" % c.name)
+		c._process(0.016)
+		assert_true(_glows(c) < 0.05, "%s is dark from the first frame (%.2f)" % [c.name, _glows(c)])
+	assert_true(count >= 10, "the vaults' amber is all sealed: %d blocks" % count)
+	v.queue_free()
+
+
+## The party's nearness brightens a block that waits, and only that one.
+func test_the_party_brightens_the_amber_it_comes_near() -> void:
+	var v := _view("amber_temple_faceless_god")
+	await _frames(3)
+	var case := _case(v, "sarc_zantras")
+	var leader := v.leader()
+	var tok := v.tokens[leader.id] as Node3D
+	var at := tok.global_position
+	for m in v.members:
+		(v.tokens[m.id] as Node3D).global_position = case.global_position + Vector3(60, 0, 0)
+	AmberGlow.refresh(v)
+	_settle(case)
+	var far := _glows(case)
+	tok.global_position = case.global_position + Vector3(1.0, 0, 1.0)
+	AmberGlow.refresh(v)
+	_settle(case)
+	var near := _glows(case)
+	assert_true(near > far * 1.15, "the block brightens as the party comes up (%.2f over %.2f)" % [near, far])
+	tok.global_position = at
+	v.queue_free()

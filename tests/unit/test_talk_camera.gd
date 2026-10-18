@@ -67,3 +67,26 @@ func test_a_fight_from_the_talk_and_a_fights_own_shot() -> void:
 	TalkCamera.open(v, "nobody_here")
 	assert_true(is_equal_approx(rig.shot_zoom, 1.0), "never in headless runs")
 	v.queue_free()
+
+
+## A vestige speaks from its block of amber (Amber Temple Look Plan step 6): the camera leans toward the block as it does to
+## a person, between the leader and the block, and a prop that isn't there leaves it on the leader.
+func test_in_toward_a_block_of_amber_that_speaks() -> void:
+	var v := LocationView.create("amber_temple_faceless_god", GameState.story, null, Dice.roller, "default")
+	add_child(v)
+	var rig := v.rig
+	var leader := rig.global_position
+	assert_true(v.prop_cell("sarc_zantras") != null, "the ring of amber has Zantras's block")
+	assert_true(v.prop_cell("sarc_nobody") == null, "and nothing by an id it hasn't")
+	TalkCamera.open(v, "", "sarc_zantras")
+	_settle(rig)
+	var block := v.board.cell_center(v.prop_cell("sarc_zantras") as Vector2i)
+	var raised := (leader + block) / 2.0 + rig.global_basis * Vector3(0, 0, TalkCamera.RAISE / TalkCamera.LEAN)
+	assert_true(rig.shot_focus.is_equal_approx(raised), "between the leader and the block, framed above the box")
+	TalkCamera.close(v)
+	_settle(rig)
+	TalkCamera.open(v, "", "sarc_nobody")
+	_settle(rig)
+	var alone := leader + rig.global_basis * Vector3(0, 0, TalkCamera.RAISE / TalkCamera.LEAN)
+	assert_true(rig.shot_focus.is_equal_approx(alone), "a prop that isn't there leaves it on the leader")
+	v.queue_free()

@@ -8,7 +8,9 @@ extends Node3D
 ## Environment: AMBER_LOC=amber_temple_vault, AMBER_AT=19,24 (the square the camera looks at; several, split by |, each a
 ## shot), AMBER_ZOOM=9 (the camera's distance), AMBER_TURNS=1 (camera quarter turns), AMBER_PARTY=19,26|20,26 (the
 ## party's squares; empty: the place's own spawn), AMBER_FLAGS=amber_temple_sealed,... (story flags set first),
-## AMBER_HOUR=12, AMBER_WINDOW=1 (keep the window round the party that walls and blocks open; off by default), AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them).
+## AMBER_HOUR=12, AMBER_WINDOW=1 (keep the window round the party that walls and blocks open; off by default), AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them),
+## AMBER_SPEAK=vestige_zantras (whose line is on screen for the stills), AMBER_GIFT=gift_of_zantras (the first of the party has taken it),
+## AMBER_STAGE=6:speak=vestige_zantras,14:speak=,18:gift=gift_of_zantras,24:flag=amber_temple_sealed (in a clip, what changes at which frame).
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 ## How much faster than real time the game runs while a clip's frames are taken.
@@ -67,6 +69,11 @@ func _build(loc_id: String) -> void:
 	view = LocationView.create(loc_id, st, Narrator.new(), Dice.roller, "" if not party.is_empty() else "default")
 	add_child(view)
 	view.update_daylight()
+	if OS.get_environment("AMBER_GIFT") != "":
+		st.party[0].accept_dark_gift(OS.get_environment("AMBER_GIFT"))
+	if OS.get_environment("AMBER_SPEAK") != "":
+		view.set_speaking(OS.get_environment("AMBER_SPEAK"))
+	AmberGlow.refresh(view)
 	if OS.get_environment("AMBER_WINDOW") != "1":
 		# No window opened in the walls and blocks nearer the camera than the party (SeeThrough puts it where the camera
 		# looks when nobody is followed): a shot of a block wants it whole.
@@ -86,9 +93,28 @@ func _clip(tool: Node, base: String, frames: int, seconds: float) -> void:
 		for k in between:
 			await get_tree().process_frame
 			at += get_process_delta_time()
+		_stage(i)
 		times.append("%.4f" % at)
 		tool.call("_shot", "%s_clip_%03d.png" % [base, i])
 	Engine.time_scale = 1.0
 	var f := FileAccess.open(base + "_clip.txt", FileAccess.WRITE)
 	f.store_string("\n".join(times) + "\n")
 	f.close()
+
+
+## What the clip changes at frame `i` (AMBER_STAGE): whose line is on screen, a gift taken, a flag set.
+func _stage(i: int) -> void:
+	for entry: String in OS.get_environment("AMBER_STAGE").split(",", false):
+		var at := entry.get_slice(":", 0)
+		if not at.is_valid_int() or int(at) != i:
+			continue
+		var what := entry.get_slice(":", 1)
+		var value := what.get_slice("=", 1)
+		match what.get_slice("=", 0):
+			"speak":
+				view.set_speaking(value)
+			"gift":
+				GameState.story.party[0].accept_dark_gift(value)
+			"flag":
+				GameState.story.set_flag(value)
+	AmberGlow.refresh(view)

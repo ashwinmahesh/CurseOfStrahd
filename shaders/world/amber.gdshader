@@ -19,7 +19,7 @@ uniform vec3 edge : source_color = vec3(0.54, 0.23, 0.07);
 // The murk a dead block is made of.
 uniform vec3 dead_tint : source_color = vec3(0.17, 0.1, 0.06);
 // How brightly it glows (1 is the breath's own middle: the light inside, as a share of its own energy, times the state's).
-uniform float glow : hint_range(0.0, 2.0) = 1.0;
+uniform float glow : hint_range(0.0, 4.0) = 1.0;
 // 0 alive, 1 dead: the glow is gone and the glass is murky brown.
 uniform float dead : hint_range(0.0, 1.0) = 0.0;
 // Clouding through the amber (a sick block's, a dead one's), 0 clear.
