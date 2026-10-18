@@ -108,6 +108,11 @@ join ezmerelda
 if tarokka.ally.npc == ezmerelda
 quest find_the_ally found
 endif
+# The tower was searched before the cards named her, so nobody is left on the shore to be told: the Hunter's Tower ends
+# with her here as it does at the tower and in the yard. With Rictavio gone from Vallaki the reunion ends it instead.
+if quest.the_hunters_tower == inside and not flag.rictavio_gone
+quest the_hunters_tower with_her
+endif
 if name:ratatoille
 interject name:ratatoille: You trained under Van Richten? I have read his monographs. Well, the introductions. I have so many questions.
 Ezmerelda: Save them for the walk. It's a long walk, and he wrote very long books.
