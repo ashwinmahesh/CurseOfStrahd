@@ -24,6 +24,8 @@ endif
 * [if flag.khazan_known] Say the name: Khazan. -> open
 * [if not flag.tower_lintel_read] [History DC 14] Read the worn letters on the lintel. -> read_ok | read_fail
 * [if not flag.tower_ward_known] [Arcana DC 14] Study the wards on the door. -> arcana_ok | arcana_fail
+* [if not flag.tower_figures_studied] Study the eight small figures cut into the stone frame. -> figures
+* [if flag.tower_figures_studied] [Performance DC 14] Copy the eight poses in order from left to right. -> poses_ok | poses_fail
 * Knock. -> knock
 * Leave it. -> END
 
@@ -55,6 +57,19 @@ set tower_ward_known
 Narrator: The door hums faintly under your palm, like a hive. Whatever it is waiting for, it keeps to itself.
 -> door_menu
 
+~ figures
+set tower_figures_studied
+Narrator: Eight carved dancers ring the lintel, each frozen with its arms raised at a different angle. The stone beneath your feet is worn smooth in two footprints facing them.
+-> door_menu
+
+~ poses_ok
+set tower_poses_solved
+-> open
+
+~ poses_fail
+Narrator: The carved figures seem to watch your clumsy finish before a thin blue thread of light runs round the lintel and fades. The door stays shut, its stone still humming with charge.
+-> door_menu
+
 ~ knock
 Narrator: You knock. The tower considers the question and declines to answer.
 if name:wren_featherfoot
@@ -73,7 +88,11 @@ quest the_hunters_tower with_her
 elif tarokka.ally.npc != ezmerelda and (not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked)
 quest the_hunters_tower inside
 endif
+if flag.tower_poses_solved
+Narrator: At the eighth gesture, a low hum settles into the masonry. The heavy door swings inward on silent hinges.
+else
 Narrator: You say the name. Something in the wood listens, thinks it over, and lets go. The door swings inward on hinges that make no sound at all.
+endif
 if guest:ezmerelda
 Narrator: As Ezmerelda follows you in, blue fire crawls over the frame and snaps at her. She swears in three languages, shoulders through it with her hair standing on end, and doesn't look back.
 Ezmerelda: Remind me to kill him. After I've hugged him.

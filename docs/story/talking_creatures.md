@@ -111,3 +111,12 @@ guards a question.
 | The skull of Intree Sik-Valoo | the next crypt along | the same three, truly: the count's coffin under the hall of names at the foot of the black stair; beat him once, then the stake, the Sunsword's sunlight or the Holy Symbol of Ravenkind; and that the niche in Saint Finderway's crypt opens on the count's own tomb |
 
 Lines: narrative/castle_ravenloft/catacombs_skulls.dialogue. Tests: tests/integration/test_catacomb_crypts.gd (`test_the_skulls`).
+
+## The tower's head (Dungeon Expansion Plan V1, branch `v1-van-richten-tower`)
+
+| Who | Where | What they know | What it does |
+|---|---|---|---|
+| A Vistani man's head | Van Richten's Tower, the iron chest in his room on the fourth floor (open it with the armour's word, its clasp or a shoulder) | Van Richten asked which of the Vistani still serve the castle, for his student's sake; the camp by Lake Zarovich under Arrigal sells strong strangers to the castle's wolves and his silver is not honest | `arrigal_suspected`, as the Vistani camp's black horse tells it (Speak with Dead, a 3rd-level slot, once: `vrt_head_spoke`) |
+
+The book says only that Van Richten used Speak with Dead on the head to learn about the Vistani; what it answers is ours. Tests:
+tests/integration/test_van_richtens_tower_v1.gd.

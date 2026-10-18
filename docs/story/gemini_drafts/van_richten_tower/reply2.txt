@@ -1,0 +1,34 @@
+STUDY_ENTER: The floorboards are swept clean and the narrow bed is made tight. Beside the cold brazier, a pair of worn boots waits with the laces already threaded for a quick departure.
+STUDY_BED: A camp bed with the grey blanket pulled taut enough to bounce a copper piece. Folded neatly at the foot is a thick woollen cardigan, darned twice at both elbows.
+STUDY_DESK: A brass lamp, a stoppered inkpot, and a stack of squared paper. The top sheet holds a dozen crossed-out beginnings to the same letter, none getting past MY DEAR.
+ARMOUR_LOOK: A suit of old plate stands beside an iron chest. Its visored helm is turned a few degrees too far toward the door, as if listening for a step on the stair.
+ARMOUR_OPT_NAME: Say the name from the door aloud: Khazan.
+ARMOUR_OBEYS: The steel joints click to attention; the armour brings one gauntlet to its breast and steps a pace aside from the chest. It waits for an order you do not have.
+ARMOUR_OPT_STUDY: Examine the armour's joints and straps for a maker's mark.
+ARMOUR_STUDY_OK: Inside the rim of the gorget, cut in letters finer than an eyelash, is a single word: KHAZAN. It is a command, not a signature.
+ARMOUR_STUDY_FAIL: The cold steel hums under your fingers like a held breath; something inside it is waiting to hear a word, and you cannot tell which.
+ARMOUR_OPT_LEAVE: Leave the armour alone.
+CHEST_LOOK: A plain iron chest rests against the wall, with a dry smell of salt and rosemary about it, and a heavy clasp forged like a closed hand.
+CHEST_OPT_ARMOUR: Order the armour to lift the lid.
+CHEST_OPT_CLASP: Work the iron clasp loose.
+CHEST_OPT_FORCE: Force the lid up with your shoulders.
+CHEST_ARMOUR_OPENS: The armour takes the iron edge and lifts the lid with two steel fingers, as one lifts the blanket from something asleep.
+CHEST_CLASP_OK: The iron fingers of the clasp let go with a small click, and the heavy lid rises on oiled hinges.
+CHEST_FORCE_OK: The lid gives with a shriek of bent iron; the armour turns its helm to the noise and does nothing at all, because nobody told it to.
+CHEST_FAIL: The heavy lid stays where it is. Whatever rests inside has been there a long while and is not in a hurry.
+CHEST_OPT_LEAVE: Let the chest be.
+HEAD_LOOK: Bedded in coarse salt and dried herbs lies the head of a Vistani man, eyes shut, kept so long in the dark that it has stopped smelling of anything at all.
+HEAD_SILENT: Without the spell the dry mouth says nothing; a paper tag tied through the hair in a small neat hand reads ASK, THEN LET HIM REST.
+HEAD_OPT_ASK: Speak with the dead man.
+HEAD_WAKES: The spell takes hold; the dry eyelids part, and a voice like dust stirred in an empty pot comes out around the salt.
+HEAD_OPT_WHAT: Ask what the old hunter asked him.
+HEAD_WHAT: The old doctor asked which of my people still carry water for the castle. There is a girl he is fond of, though he would never say so; he wanted to know whose fire she must avoid.
+HEAD_OPT_WHO: Ask which Vistani serve the castle.
+HEAD_WHO: Keep clear of the camp by Lake Zarovich, where Arrigal counts the coin. They sell strong strangers to the castle's wolves, and the silver in Arrigal's purse is not honest silver.
+HEAD_OPT_REST: Thank him, and let him rest.
+HEAD_BYE: Put the iron back over my eyes and let the salt keep me. I have waited three winters in this box for someone to remember his manners.
+HEAD_OPT_LEAVE: Close the lid.
+LANTERN_ENTER: The lantern room: windows on every side, a stair going up, and a strongbox under the sill. Copper nails stud the floor in a careful spiral, and the air tastes of coming storm.
+LANTERN_ENTER_QUIET: The lantern room: windows on every side, a stair going up, a strongbox under the sill, and a spiral of copper nails in the floor, now dull and quiet.
+LANTERN_WINDOW: From the high windows the whole tarn is laid out below, and the causeway, and Ezmerelda's fire, and far away to the east, small and black on its crag, the castle.
+LANTERN_WINDOW_NIGHT: From the lantern windows, every light in the valley is visible at once. There aren't many, and the brightest is the castle's.

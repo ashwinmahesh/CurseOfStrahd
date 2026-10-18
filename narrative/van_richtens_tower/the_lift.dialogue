@@ -1,0 +1,69 @@
+# The lift in Van Richten's tower (Dungeon Expansion Plan V1; Elven Tower, chapter 11): four clay figures on the ground floor
+# hold the chains of a platform that runs the height of the tower. They obey only lift commands, ignore any other
+# word and start nothing. Each ride is a `move` between the floors' lift spawns (lift_f1 to lift_f4).
+
+~ platform_f1
+Narrator: A square platform of scarred timber rests between them on the flagstones, hung from four heavy chains that vanish through a round hole in the ceiling.
+-> menu_f1
+
+~ statues_f1
+Narrator: Four faceless clay figures stand at the corners of a square, each gripping a chain. As you step near, their blank heads tilt a fraction, like dogs waiting for a word.
+-> menu_f1
+
+~ call_f2
+Narrator: Looking down through the round shaft in the floor, you give one of the hanging chains two sharp tugs. Far below in the dark, heavy clay hands take up the slack.
+-> menu_f2
+
+~ call_f3
+Narrator: Looking down through the round shaft in the floor, you give one of the hanging chains two sharp tugs. Far below in the dark, heavy clay hands take up the slack.
+-> menu_f3
+
+~ call_f4
+Narrator: Looking down through the round shaft in the floor, you give one of the hanging chains two sharp tugs. Far below in the dark, heavy clay hands take up the slack.
+-> menu_f4
+
+~ menu_f1
+* Order the lift up one floor. -> up_f2
+* Order the lift up two floors. -> up_f3
+* Order the lift all the way to the top. -> up_f4
+* Wish the clay figures a good morning. -> chat_f1
+* Step off the platform onto the floor. -> END
+
+~ menu_f2
+* Order the lift up one floor. -> up_f3
+* Order the lift all the way to the top. -> up_f4
+* Order the lift down. -> down_f1
+* Step off the platform onto the floor. -> END
+
+~ menu_f3
+* Order the lift up one floor. -> up_f4
+* Order the lift down. -> down_f1
+* Step off the platform onto the floor. -> END
+
+~ menu_f4
+* Order the lift down. -> down_f1
+* Step off the platform onto the floor. -> END
+
+~ chat_f1
+Narrator: The four blank heads do not so much as twitch. Whatever they were shaped to care about, polite conversation was left out of the clay.
+-> menu_f1
+
+~ up_f2
+Narrator: Iron links rattle overhead as the clay figures haul in unison, drawing the timber floor smoothly up the shaft. Dark masonry slides past until the platform settles with a dull thud.
+time +1
+move van_richtens_tower_interior:lift_f2
+
+~ up_f3
+Narrator: Iron links rattle overhead as the clay figures haul in unison, drawing the timber floor smoothly up the shaft. Dark masonry slides past until the platform settles with a dull thud.
+time +1
+move van_richtens_tower_interior:lift_f3
+
+~ up_f4
+Narrator: Iron links rattle overhead as the clay figures haul in unison, drawing the timber floor smoothly up the shaft. Dark masonry slides past until the platform settles with a dull thud.
+time +1
+move van_richtens_tower_interior:lift_f4
+
+~ down_f1
+Narrator: Below you, the four figures pay out the chains link by link, letting the platform sink under its own weight. It touches down upon the lower stones without a jar.
+time +1
+move van_richtens_tower_interior:lift_f1

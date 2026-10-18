@@ -1,0 +1,62 @@
+You are a dialogue and narration writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown, no code fences, no preamble, no commentary after) and do not send messages to any other agent. Write only what is asked, in the exact format asked.
+
+SETTING OF THIS TASK: Van Richten's Tower, a round tower of black stone on a small island in Lake Baratok, a cold tarn under Mount Baratok. A long-dead archmage named Khazan built it. The monster hunter Rudolph van Richten (who also goes by Rictavio) keeps it now, tidy in the way of a man who expects to leave in a hurry. His student Ezmerelda d'Avenir camps on the shore. The party is level 6 to 8 and has not necessarily met either of them. The tower's door has no handle and no keyhole. Inside, the floors are a hunter's storeroom, a workroom of maps and notes, and a lantern room whose floor is studded with copper nails that carry a lightning ward.
+
+TONE: gothic horror with dry, understated, character-driven humour. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad. No modern slang, no pop culture, no real-world references. Do not invent named people other than the ones given. Do not use em-dashes (use commas, colons or full stops). Do not use more than one semicolon in a line. Plain words a voice actor can read aloud.
+
+NARRATOR STYLE (second person, present tense, one or two sentences). Samples from the existing game, to match voice, length and rhythm:
+- A long black scorch across the stones at the foot of the door, as though something was thrown backwards very hard. A few long dark hairs are fused into the soot.
+- Maps, notes and books cover every surface, weighted down with candle stubs and skulls. Small skulls. Not human. Mostly.
+- Not trophies of hunting: trophies of hunters. A row of small things on nails: a scarf, a brass compass, a girl's hair ribbon, a pair of spectacles. Each has a name written under it and a date.
+- A narrow camp cot with the blanket folded square and tucked tight. Under the pillow, a stake. Under the stake, a little bag of lavender.
+Carved or written words are set in CAPITALS inside the sentence, as in the samples.
+
+OUTPUT FORMAT, one per line, nothing else:
+SLOT_ID: the line
+"Option" lines are what the player's party says or does to choose a branch: a plain statement or question of at most 10 words, no quotation marks. A "Narrator" line follows the narrator style above (second person, present tense, at most 32 words). A "spoken" line is in the speaker's own voice, at most 36 words. Never repeat a joke or a sentence shape between lines.
+
+TASK 2 OF 2: Van Richten's own room at the top of the tower, and two small rewrites. Write the slots below.
+
+VAN RICHTEN'S ROOM (new fourth floor, reached by the lift or by the stair above the lantern room). It is the cleanest, most lived-in room in the tower, and the only one that is not a storeroom or a workroom. A narrow bed made tight. A desk. A suit of old plate armour on a stand beside an iron chest. The room is in use but nobody is in it.
+STUDY_ENTER: Narrator: the party's first sight of the room, one image of its tidiness and one sign that a stubborn man lives here a few hours at a time.
+STUDY_BED: Narrator: his bed; narrow, made; one small, human detail that is not a stake.
+STUDY_DESK: Narrator: his desk is clear but for a lamp, an inkpot and squared blank paper; the top sheet holds a dozen crossed-out attempts at the first line of a letter to a student. Do not name her.
+
+THE ANIMATED ARMOUR. The old plate on its stand is animated and loyal to one word: KHAZAN, the name of the tower's builder. It will never attack anyone; it only guards the chest. It does nothing at all until it hears its word. If the party says the name it comes to attention and stands aside from the chest. It also has the word cut in tiny letters inside its gorget, which a careful study (Arcana) finds.
+ARMOUR_LOOK: Narrator: the armour on its stand beside the chest, its helm turned a few degrees too far toward the door, as if it were listening.
+ARMOUR_OPT_NAME: option: say the name over the door aloud: Khazan.
+ARMOUR_OBEYS: Narrator: at the name the armour comes to attention, brings one gauntlet to its breast, and slides a pace aside from the chest. It is waiting for an order and the party has none for it.
+ARMOUR_OPT_STUDY: option: examine the armour's joints and straps for a maker's mark.
+ARMOUR_STUDY_OK: Narrator: inside the gorget, in letters finer than a hair, one word: KHAZAN. It is a command, not a signature.
+ARMOUR_STUDY_FAIL: Narrator: the steel hums under your fingers like a held breath; something in it is waiting for a word, and you cannot tell which.
+ARMOUR_OPT_LEAVE: option: leave the armour alone.
+
+THE CHEST. A plain iron chest, lid shut, closed with a clasp. The party may get it open three ways: the armour lifts the lid for them (if it has been told the name), or they work the clasp (Sleight of Hand), or they force the lid (Athletics). The armour does not interfere with the last two; it was never told to.
+CHEST_LOOK: Narrator: the chest, with a smell of salt and dried herbs about it, and a clasp shaped like a closed hand.
+CHEST_OPT_ARMOUR: option: order the armour to lift the lid.
+CHEST_OPT_CLASP: option: work the clasp loose.
+CHEST_OPT_FORCE: option: force the lid up with your shoulders.
+CHEST_ARMOUR_OPENS: Narrator: the armour lifts the lid with two fingers, as one lifts the lid of something asleep.
+CHEST_CLASP_OK: Narrator: the clasp lets go of its hand with a small click and the lid rises.
+CHEST_FORCE_OK: Narrator: the lid gives with a shriek; the armour's helm turns to the noise and does nothing, because nobody told it to.
+CHEST_FAIL: Narrator: the lid stays where it is. Whatever is inside is not in a hurry.
+CHEST_OPT_LEAVE: option: let the chest be.
+
+THE VISTANI'S HEAD. Inside the chest, bedded in salt and dried herbs, is the severed head of a Vistani man. Van Richten kept it so he could use the spell Speak with Dead on it to learn about the Vistani. It is not gruesome; it is old, dry and patient. A paper tag is tied through its hair in Van Richten's small neat hand. With no spell the head says nothing. When the spell takes, the eyes open and the dry mouth moves; the head answers in the first person, tired and dry, with a Vistani's pride but no caricature. It knows only what it knew alive. Van Richten asked it which Vistani still serve the castle, for his student's sake. It names the camp by Lake Zarovich under a man called ARRIGAL (the camp sells strong strangers to the castle's wolves, and Arrigal's silver comes from the castle); it does not say anything about any other camp.
+HEAD_LOOK: Narrator: the head in the chest, in salt and herbs, eyes shut, kept so long it has stopped smelling of anything.
+HEAD_SILENT: Narrator: without the spell it says nothing; the paper tag tied through its hair, in a small neat hand, says ASK, THEN LET HIM REST.
+HEAD_OPT_ASK: option: speak with the dead man.
+HEAD_WAKES: Narrator: the spell takes; the eyes open, and a voice like dust in an empty pot comes out around the dryness.
+HEAD_OPT_WHAT: option: ask what the old hunter asked him.
+HEAD_WHAT: spoken: the head says what Van Richten asked: which of his people still serve the castle, so that a girl he is fond of will know whose fire not to sit at. Tired, dry, a little proud.
+HEAD_OPT_WHO: option: ask which Vistani serve the castle.
+HEAD_WHO: spoken: the head's answer: the camp by Lake Zarovich under Arrigal sells strong strangers to the castle's wolves, and the silver in Arrigal's purse is not honest silver.
+HEAD_OPT_REST: option: thank him, and let him rest.
+HEAD_BYE: spoken: his last words; asks only to be let rest, with one dry remark about how long he has waited for anyone to be polite.
+HEAD_OPT_LEAVE: option: close the lid.
+
+TWO REWRITES. The lantern room (third floor, where the lightning ward is) used to be the top of the tower; now Van Richten's room is above it. Rewrite these four existing lines so none claims the lantern room is the top, keeping their voice, imagery and length as close as possible and changing as little as you can. The lantern room has windows on every side, a strongbox under the sill, copper nails in a spiral in the floor, and a stair going up at its far end.
+LANTERN_ENTER: Narrator, original: The top of the tower: windows on every side and a strongbox under the sill. The floor is studded with copper nails in a careful spiral, and the air tastes of a storm that hasn't arrived yet.
+LANTERN_ENTER_QUIET: Narrator, original (the ward is down): The top of the tower: windows on every side, a strongbox under the sill, a spiral of copper nails in the floor, now dull and quiet.
+LANTERN_WINDOW: Narrator, original: From the top of the tower the whole tarn is laid out below, and the causeway, and Ezmerelda's fire, and far away to the east, small and black on its crag, the castle.
+LANTERN_WINDOW_NIGHT: Narrator, original (night): From up here, every light in the valley is visible at once. There aren't many, and the brightest is the castle's.

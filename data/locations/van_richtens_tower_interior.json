@@ -2,7 +2,7 @@
   "id": "van_richtens_tower_interior",
   "name": "Van Richten's Tower",
   "region": "van_richtens_tower",
-  "summary": "Three round rooms stacked inside the black tower: the archmage's old hall, now a hunter's storeroom; a workroom of notes and maps; and a lantern room at the top where Van Richten keeps what matters, behind a ward that smells of thunderstorms.",
+  "summary": "Four round rooms stacked inside the black tower: the archmage's old hall, now a hunter's storeroom, with the clay figures that work the lift; a workroom of notes and maps; a lantern room where Van Richten keeps what matters, behind a ward that smells of thunderstorms; and above it his own room.",
   "text": "Stone stairs wind up inside the wall. Every room is tidy in the way of a man who expects to leave in a hurry.",
   "map": {
     "rows": [
@@ -37,6 +37,18 @@
       "##..........##",
       "##..........##",
       "##........=.##",
+      "##..........##",
+      "###........###",
+      "####......####",
+      "##############",
+      "              ",
+      "##############",
+      "####......####",
+      "###........###",
+      "##..........##",
+      "##..........##",
+      "##..........##",
+      "##..........##",
       "##..........##",
       "###........###",
       "####......####",
@@ -90,6 +102,20 @@
       "floor": "dungeon/stone_floor",
       "walls": "dungeon/stone_wall",
       "furnish": false
+    },
+    {
+      "id": "vrt_study",
+      "name": "Van Richten's room",
+      "cells": [
+        [
+          2,
+          37
+        ],
+        [
+          11,
+          45
+        ]
+      ]
     }
   ],
   "spawns": {
@@ -120,6 +146,34 @@
     "from_undercroft": [
       4,
       7
+    ],
+    "lantern_from_above": [
+      8,
+      32
+    ],
+    "study_from_below": [
+      9,
+      38
+    ],
+    "lantern_from_scaffold": [
+      11,
+      27
+    ],
+    "lift_f1": [
+      5,
+      4
+    ],
+    "lift_f2": [
+      4,
+      19
+    ],
+    "lift_f3": [
+      9,
+      27
+    ],
+    "lift_f4": [
+      4,
+      43
     ]
   },
   "exits": [
@@ -193,6 +247,36 @@
       "spawn": "from_tower",
       "label": "Down under the hearth",
       "when": "flag.khazan_stair_open"
+    },
+    {
+      "id": "vrt_stairs_up_3",
+      "cell": [
+        9,
+        33
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "study_from_below",
+      "label": "Stairs up to Van Richten's room"
+    },
+    {
+      "id": "vrt_stairs_down_4",
+      "cell": [
+        9,
+        37
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "lantern_from_above",
+      "label": "Stairs down to the lantern room"
+    },
+    {
+      "id": "vrt_scaffold_down",
+      "cell": [
+        12,
+        27
+      ],
+      "to": "van_richtens_tower",
+      "spawn": "from_scaffold",
+      "label": "Out through the broken window to the scaffolding"
     }
   ],
   "props": [
@@ -474,6 +558,156 @@
       "model": "floor_crack",
       "when": "level >= 10 or quest.the_name_over_the_door",
       "dialogue": "van_richtens_tower/the_name_over_the_door:hearthstone"
+    },
+    {
+      "id": "vrt_lift_platform_1",
+      "cell": [
+        5,
+        3
+      ],
+      "kind": "examine",
+      "label": "A lift platform on four chains",
+      "model": "lift_cage",
+      "dialogue": "van_richtens_tower/the_lift:platform_f1"
+    },
+    {
+      "id": "vrt_lift_statue_1",
+      "cell": [
+        4,
+        2
+      ],
+      "kind": "examine",
+      "label": "A clay figure holding a chain",
+      "model": "statue_faceless",
+      "dialogue": "van_richtens_tower/the_lift:statues_f1"
+    },
+    {
+      "id": "vrt_lift_statue_2",
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "examine",
+      "label": "A clay figure holding a chain",
+      "model": "statue_faceless",
+      "dialogue": "van_richtens_tower/the_lift:statues_f1"
+    },
+    {
+      "id": "vrt_lift_statue_3",
+      "cell": [
+        4,
+        4
+      ],
+      "kind": "examine",
+      "label": "A clay figure holding a chain",
+      "model": "statue_faceless",
+      "dialogue": "van_richtens_tower/the_lift:statues_f1"
+    },
+    {
+      "id": "vrt_lift_statue_4",
+      "cell": [
+        6,
+        4
+      ],
+      "kind": "examine",
+      "label": "A clay figure holding a chain",
+      "model": "statue_faceless",
+      "dialogue": "van_richtens_tower/the_lift:statues_f1"
+    },
+    {
+      "id": "vrt_lift_platform_2",
+      "cell": [
+        4,
+        20
+      ],
+      "kind": "examine",
+      "label": "The lift platform",
+      "model": "lift_cage",
+      "dialogue": "van_richtens_tower/the_lift:call_f2"
+    },
+    {
+      "id": "vrt_lift_platform_3",
+      "cell": [
+        9,
+        26
+      ],
+      "kind": "examine",
+      "label": "The lift platform",
+      "model": "lift_cage",
+      "dialogue": "van_richtens_tower/the_lift:call_f3"
+    },
+    {
+      "id": "vrt_lift_platform_4",
+      "cell": [
+        4,
+        44
+      ],
+      "kind": "examine",
+      "label": "The lift platform",
+      "model": "lift_cage",
+      "dialogue": "van_richtens_tower/the_lift:call_f4"
+    },
+    {
+      "id": "vrt_scaffold_hole",
+      "cell": [
+        12,
+        26
+      ],
+      "label": "A hole broken through the wall",
+      "model": "window",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_study_bed",
+      "cell": [
+        3,
+        40
+      ],
+      "kind": "examine",
+      "label": "Van Richten's bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "vrt_study_desk",
+      "cell": [
+        6,
+        38
+      ],
+      "kind": "examine",
+      "label": "Van Richten's desk",
+      "model": "desk"
+    },
+    {
+      "id": "vrt_study_window",
+      "cell": [
+        12,
+        41
+      ],
+      "label": "A window",
+      "model": "window_tall",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_armor",
+      "cell": [
+        10,
+        43
+      ],
+      "kind": "examine",
+      "label": "A suit of old plate",
+      "model": "armor_stand",
+      "dialogue": "van_richtens_tower/the_study:armor"
+    },
+    {
+      "id": "vrt_head_chest",
+      "cell": [
+        10,
+        41
+      ],
+      "kind": "examine",
+      "label": "An iron chest",
+      "model": "chest_iron",
+      "dialogue": "van_richtens_tower/the_study:chest"
     }
   ],
   "containers": [
@@ -641,6 +875,15 @@
         30
       ],
       "kind": "magic",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        6,
+        41
+      ],
+      "kind": "lamp",
       "bright_ft": 10,
       "dim_ft": 20
     }

@@ -341,6 +341,46 @@
       "id": "zuleika_ring_given",
       "type": "bool",
       "summary": "Zuleika gave the party her Ring of Free Action once Emil was free (werewolf_den/zuleika: inside, docs/story/found_magic_items.md)."
+    },
+    {
+      "id": "tower_figures_studied",
+      "type": "bool",
+      "summary": "The party studied the eight figures cut round the tower's door frame (Dungeon Expansion Plan V1): the poses can now be tried."
+    },
+    {
+      "id": "tower_poses_solved",
+      "type": "bool",
+      "summary": "The party opened the tower's door by acting out the figures' poses (Performance DC 14, the book's riddle) instead of saying Khazan's name."
+    },
+    {
+      "id": "tower_ward_1",
+      "type": "bool",
+      "summary": "The lightning ward on the tower door has gone off once (its trap vrt_door_ward_1 set it). The werewolves come down from the ridge (fight ward_wolves)."
+    },
+    {
+      "id": "tower_wolves_beaten",
+      "type": "bool",
+      "summary": "The werewolves the door's lightning ward called were beaten (ward_wolves)."
+    },
+    {
+      "id": "vrt_armor_studied",
+      "type": "bool",
+      "summary": "The party looked the animated armour over for its command word (Arcana DC 14, one try)."
+    },
+    {
+      "id": "vrt_armor_obeys",
+      "type": "bool",
+      "summary": "The animated armour in Van Richten's room was given its word, Khazan: it stands aside from the chest."
+    },
+    {
+      "id": "vrt_head_chest_open",
+      "type": "bool",
+      "summary": "The iron chest in Van Richten's room is open: the Vistani man's head lies in it."
+    },
+    {
+      "id": "vrt_head_spoke",
+      "type": "bool",
+      "summary": "The party spoke with the Vistani man's head (Speak with Dead, once): it named Arrigal's camp (arrigal_suspected)."
     }
   ]
 }

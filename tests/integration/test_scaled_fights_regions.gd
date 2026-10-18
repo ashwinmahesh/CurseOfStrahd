@@ -216,6 +216,22 @@ func test_tower_night_visitors_v0_at_level_8() -> void:
 	await _held("van_richtens_tower", 23, 8, "tower_night_visitors", [Vector2i(15, 20), Vector2i(16, 20), Vector2i(15, 21), Vector2i(15, 19)], 4, 8, ["van_richten_notes_read"])
 
 
+## ward_wolves, van_richtens_tower variant 2 at level 6: the lightning ward on Van Richten's door calls the werewolves (Dungeon
+## Expansion Plan V1). The party stands where the ward's step leaves it, the leader on the west leaf's front square.
+func test_ward_wolves_v2_at_level_6() -> void:
+	await _held("van_richtens_tower", 12, 6, "ward_wolves", [Vector2i(15, 11), Vector2i(15, 12), Vector2i(15, 13), Vector2i(15, 14)], 4, 6, [])
+
+
+## ward_wolves, van_richtens_tower variant 1 at level 7.
+func test_ward_wolves_v1_at_level_7() -> void:
+	await _held("van_richtens_tower", 12, 7, "ward_wolves", [Vector2i(15, 11), Vector2i(15, 12), Vector2i(15, 13), Vector2i(15, 14)], 4, 6, [])
+
+
+## ward_wolves, van_richtens_tower variant 0 at level 8.
+func test_ward_wolves_v0_at_level_8() -> void:
+	await _held("van_richtens_tower", 12, 8, "ward_wolves", [Vector2i(15, 11), Vector2i(15, 12), Vector2i(15, 13), Vector2i(15, 14)], 4, 6, [])
+
+
 ## den_guards, werewolf_den_caves variant 2 at level 6.
 func test_den_guards_v2_at_level_6() -> void:
 	await _held("werewolf_den_caves", 12, 6, "den_guards", [Vector2i(19, 27), Vector2i(20, 27), Vector2i(18, 27), Vector2i(19, 28)], 4, 6, [])

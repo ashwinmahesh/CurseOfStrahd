@@ -1,0 +1,17 @@
+SCAFFOLD_OPT_CLIMB: Climb the rotten scaffolding toward the hole above.
+SCAFFOLD_OPT_LEAVE: Step back and leave the scaffolding alone.
+JOURNAL_INSIDE: We have found a way past the walls. We are inside Van Richten's tower.
+WARD_HIT_2: Blue lightning throws you back onto the stones again. Above you, the whole tower shudders, shedding a dry rain of mortar as a crack climbs the black wall.
+WARD_HIT_3: The third bolt splits the masonry with a long, grinding roar that shakes the island underfoot. When the black dust settles on the water, only a steep hill of stone remains.
+ENTER_COLLAPSED: Where the black tower stood on its little island, there is only a high cairn of fallen stone. No lantern burns above the cold water now.
+DOOR_GONE: Where the smooth, handleless door stood, a rough slope of black rubble spills down to the water. Two splintered oak beams jut from the stones like broken ribs.
+RUBBLE_LOOK: The tower fell straight down into its own footprint, floor pancaked upon floor. Whatever the rooms held is still buried underneath, waiting for a shovel and a strong back.
+DIG_OPT_START: Start hauling stone and dig into the rubble.
+DIG_OPT_LEAVE: Leave the heap of stone as it is.
+DIG_OK: Two hours of levering timber and passing heavy black stone from hand to hand. Your shoulders ache and your palms are raw, but the pit is deeper.
+DIG_FAIL: Every heavy block you pry free brings three more sliding down to take its place. Two hours pass in the cold damp, and the hole is no deeper.
+DIG_FOUND: A beam shifts, opening a dark pocket under the old window sill. Inside, an iron strongbox rests unharmed on its side, surrounded by dry pages from the hunter's desk.
+RUBBLE_ENTER: You squeeze down between wedged timbers into a low cave of black stone. The air is close, cold, and still tastes faintly of copper and old lightning.
+RUBBLE_NOTES: Loose sheets from a casebook, a neat ledger, and a map of the valley floor. The fallen slate kept the lake mist off them; every cramped line remains legible.
+ANTI_ENTER: A step from the black stone, a strange stillness presses against your temples. Every spell you carry in your mind goes out at once, like a candle pinched between wet fingers.
+ANTI_FIZZLE: The words leave your tongue, but the tower's ward snuffs the magic out.

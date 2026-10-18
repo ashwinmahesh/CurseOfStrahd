@@ -184,3 +184,18 @@ and silvain_aster at the playthrough's own level).
 | `den_guards` | werewolf_den_caves | L6v2 | 6 | 3 werewolf, dire wolf | 5 werewolf, 3 dire wolf | 5 |
 | `den_guards` | werewolf_den_caves | L7v1 | 7 | 4 werewolf, 2 dire wolf | 5 werewolf, 3 dire wolf | 5 |
 | `den_guards` | werewolf_den_caves | L8v0 | 8 | 5 werewolf, 2 dire wolf | 7 werewolf, 3 dire wolf | 4 |
+
+## The tower's ward (Dungeon Expansion Plan V1)
+
+`ward_wolves` is new: the lightning ward on Van Richten's door goes off and werewolves come down off the ridge
+(trap `vrt_door_ward_1`, flag `tower_ward_1`). The test party stands where the ward's step leaves it (the leader on the west
+leaf's front square, the others in a line behind) and the foes start spread over the island's ring
+(tests/integration/test_scaled_fights_regions.gd; tests/unit/test_fight_spread.gd). First line-ups (3, 4, 5 werewolves) won 8 of 8;
+the numbers below are the first that came down to the band.
+
+| Fight | Where | Version | Level | Was | Now | Wins |
+|---|---|---|---|---|---|---|
+| `ward_wolves` | van_richtens_tower | L6v2 | 6 | new (3 werewolf won 8 of 8; 4 won 8) | 5 werewolf | 4 |
+| `ward_wolves` | van_richtens_tower | L7v1 | 7 | new (4 werewolf won 8 of 8; 5 won 6) | 5 werewolf, 78 HP each | 5 |
+| `ward_wolves` | van_richtens_tower | L8v0 | 8 | new (5 werewolf won 8 of 8) | 6 werewolf | 5 |
+

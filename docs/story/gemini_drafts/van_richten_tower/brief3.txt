@@ -1,0 +1,45 @@
+You are a dialogue and narration writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown, no code fences, no preamble, no commentary after) and do not send messages to any other agent. Write only what is asked, in the exact format asked.
+
+SETTING OF THIS TASK: Van Richten's Tower, a round tower of black stone on a small island in Lake Baratok, a cold tarn under Mount Baratok. A long-dead archmage named Khazan built it. The monster hunter Rudolph van Richten (who also goes by Rictavio) keeps it now, tidy in the way of a man who expects to leave in a hurry. His student Ezmerelda d'Avenir camps on the shore. The party is level 6 to 8 and has not necessarily met either of them. The tower's door has no handle and no keyhole. Inside, the floors are a hunter's storeroom, a workroom of maps and notes, and a lantern room whose floor is studded with copper nails that carry a lightning ward.
+
+TONE: gothic horror with dry, understated, character-driven humour. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad. No modern slang, no pop culture, no real-world references. Do not invent named people other than the ones given. Do not use em-dashes (use commas, colons or full stops). Do not use more than one semicolon in a line. Plain words a voice actor can read aloud.
+
+NARRATOR STYLE (second person, present tense, one or two sentences). Samples from the existing game, to match voice, length and rhythm:
+- A long black scorch across the stones at the foot of the door, as though something was thrown backwards very hard. A few long dark hairs are fused into the soot.
+- Maps, notes and books cover every surface, weighted down with candle stubs and skulls. Small skulls. Not human. Mostly.
+- Not trophies of hunting: trophies of hunters. A row of small things on nails: a scarf, a brass compass, a girl's hair ribbon, a pair of spectacles. Each has a name written under it and a date.
+- A narrow camp cot with the blanket folded square and tucked tight. Under the pillow, a stake. Under the stake, a little bag of lavender.
+Carved or written words are set in CAPITALS inside the sentence, as in the samples.
+
+OUTPUT FORMAT, one per line, nothing else:
+SLOT_ID: the line
+"Option" lines are what the player's party says or does to choose a branch: a plain statement or question of at most 10 words, no quotation marks. A "Narrator" line follows the narrator style above (second person, present tense, at most 32 words). A "spoken" line is in the speaker's own voice, at most 36 words. Never repeat a joke or a sentence shape between lines.
+
+TASK: the lines that finish the tower's set pieces. Write the slots below.
+
+THE SCAFFOLDING. The party can climb the rotten scaffolding on the tower's north-west side to a hole in the wall at the third floor (a back way in). It is a short conversation with two choices.
+SCAFFOLD_OPT_CLIMB: option: climb the scaffolding to the hole in the wall.
+SCAFFOLD_OPT_LEAVE: option: leave the scaffolding alone.
+
+THE QUEST JOURNAL. One quest stage says: "The door opened to the old wizard's name. We are inside Van Richten's tower." The party can now also get in by the scaffolding, so the first sentence may be untrue. Rewrite the stage as one or two plain sentences, written as the party's own journal ("we"), true whichever way they came in.
+JOURNAL_INSIDE: the rewritten journal entry.
+
+THE WARD, FIRED AGAIN. The lightning ward on the door can go off more than once. The first time it flings the toucher back and werewolves howl from the ridge (already written). The second time the whole tower shakes. The third time the old tower cannot take it and collapses into a heap of black stone where it stood, killing nobody (the party is outside, and nobody lives inside the tower while this happens). Nothing inside the tower is lost for good; it is all under the stone.
+WARD_HIT_2: Narrator: the second firing; lightning again, the toucher thrown back again, and now the tower itself shakes: dust, a long crack climbing the black stone.
+WARD_HIT_3: Narrator: the third firing; the tower gives way with a long roar, the island shudders, and when the dust settles the tower is a hill of black stone. Two sentences.
+ENTER_COLLAPSED: Narrator: the party's first sight of the island and shore from the road now that the tower has fallen: no tower, no lit window, only a heap and a cold lake. (Replaces the usual first view of the black tower with one lit window.)
+DOOR_GONE: Narrator: the party looks for the door that had no handle; where it stood there is a slope of fallen black stone and a few splintered beams.
+RUBBLE_LOOK: Narrator: the heap that was the tower; the party can tell that the floors fell more or less in order, so what was inside is down there, if it is dug for.
+
+DIGGING OUT. The party can dig into the fallen tower in shifts of about two hours each (a Strength (Athletics) check each time). After enough good shifts they reach the old lantern room's strongbox and the scattered notes of the hunter's casebook, ledger and valley map.
+DIG_OPT_START: option: dig down into the fallen stone.
+DIG_OPT_LEAVE: option: leave the heap for now.
+DIG_OK: Narrator: one good shift of digging; beams hauled out, stone shifted, a little deeper than before.
+DIG_FAIL: Narrator: one bad shift of digging; stone slides back as fast as it is shifted, and the party has little to show for two hours.
+DIG_FOUND: Narrator: at last the party breaks through into a pocket of the old lantern room; the iron strongbox is on its side under the sill, unharmed, and loose pages from the hunter's papers lie dry among the stones.
+RUBBLE_ENTER: Narrator: the party crawls into the hollow under the fallen tower, a cramped cave of black stone and broken beams that still smells faintly of storm.
+RUBBLE_NOTES: Narrator: an examine line for the loose pages in the hollow: a casebook, a ledger and a map, each page dry and still legible.
+
+THE ANTIMAGIC RING. The tower's old protection includes an antimagic field that reaches five feet out from its walls. Inside that ring no spell can be cast, though magic items the old archmage placed inside the tower still work. It is only a ring a step wide round the walls.
+ANTI_ENTER: Narrator: the party steps into the ring close to the walls; every spell they know goes quiet in their heads, like a candle pinched out.
+ANTI_FIZZLE: a short notice shown when someone tries to cast a spell inside the ring; at most 14 words, plain.

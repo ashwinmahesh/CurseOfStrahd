@@ -1,0 +1,113 @@
+# Van Richten's room, the tower's fourth floor (Dungeon Expansion Plan V1; Elven Tower, chapter 11): the animated armour
+# that obeys the builder's word, the chest, and the Vistani man's head he kept to question with Speak with Dead
+# (docs/story/talking_creatures.md). The armour only guards: it never fights (no new fight; the book's armour is ours as a
+# talk). The head's answer about Arrigal's camp is ours, the book says only that Van Richten asked it about the Vistani.
+
+~ armor
+if flag.vrt_armor_obeys
+Narrator: The steel joints click to attention; the armour brings one gauntlet to its breast and steps a pace aside from the chest. It waits for an order you do not have.
+-> END
+endif
+Narrator: A suit of old plate stands beside an iron chest. Its visored helm is turned a few degrees too far toward the door, as if listening for a step on the stair.
+-> armor_menu
+
+~ armor_menu
+* [if flag.khazan_known] Say the name from the door aloud: Khazan. -> armor_obeys
+* [if not flag.khazan_known and not flag.vrt_armor_studied] [Arcana DC 14] Examine the armour's joints and straps for a maker's mark. -> armor_study_ok | armor_study_fail
+* Leave the armour alone. -> END
+
+~ armor_obeys
+set vrt_armor_obeys
+Narrator: The steel joints click to attention; the armour brings one gauntlet to its breast and steps a pace aside from the chest. It waits for an order you do not have.
+-> END
+
+~ armor_study_ok
+set vrt_armor_studied
+set khazan_known
+Narrator: Inside the rim of the gorget, cut in letters finer than an eyelash, is a single word: KHAZAN. It is a command, not a signature.
+-> armor_menu
+
+~ armor_study_fail
+set vrt_armor_studied
+Narrator: The cold steel hums under your fingers like a held breath; something inside it is waiting to hear a word, and you cannot tell which.
+-> armor_menu
+
+~ chest
+if flag.vrt_head_chest_open
+-> head
+endif
+Narrator: A plain iron chest rests against the wall, with a dry smell of salt and rosemary about it, and a heavy clasp forged like a closed hand.
+-> chest_menu
+
+~ chest_menu
+* [if flag.vrt_armor_obeys] Order the armour to lift the lid. -> chest_armour
+* [Sleight of Hand DC 15] Work the iron clasp loose. -> chest_clasp_ok | chest_fail
+* [Athletics DC 15] Force the lid up with your shoulders. -> chest_force_ok | chest_fail
+* Let the chest be. -> END
+
+~ chest_armour
+set vrt_head_chest_open
+Narrator: The armour takes the iron edge and lifts the lid with two steel fingers, as one lifts the blanket from something asleep.
+-> head
+
+~ chest_clasp_ok
+set vrt_head_chest_open
+Narrator: The iron fingers of the clasp let go with a small click, and the heavy lid rises on oiled hinges.
+-> head
+
+~ chest_force_ok
+set vrt_head_chest_open
+Narrator: The lid gives with a shriek of bent iron; the armour turns its helm to the noise and does nothing at all, because nobody told it to.
+-> head
+
+~ chest_fail
+Narrator: The heavy lid stays where it is. Whatever rests inside has been there a long while and is not in a hurry.
+-> chest_menu
+
+~ head
+Narrator: Bedded in coarse salt and dried herbs lies the head of a Vistani man, eyes shut, kept so long in the dark that it has stopped smelling of anything at all.
+if flag.vrt_head_spoke
+-> head_done
+endif
+if not spell:speak_with_dead
+Narrator: Without the spell the dry mouth says nothing; a paper tag tied through the hair in a small neat hand reads ASK, THEN LET HIM REST.
+endif
+-> head_menu
+
+~ head_done
+* Close the lid. -> END
+
+~ head_menu
+* [if spell:speak_with_dead] Speak with the dead man. -> head_speaks
+* [if not spell:speak_with_dead] [knows:speak_with_dead] (Cast Speak with Dead.) Speak with the dead man. -> head_cast
+* Close the lid. -> END
+
+~ head_cast
+cast speak_with_dead
+if check.last
+-> head_speaks
+endif
+-> END
+
+~ head_speaks
+set vrt_head_spoke
+Narrator: The spell takes hold; the dry eyelids part, and a voice like dust stirred in an empty pot comes out around the salt.
+-> head_ask
+
+~ head_ask
+* Ask what the old hunter asked him. -> head_what
+* Ask which Vistani serve the castle. -> head_who
+* Thank him, and let him rest. -> head_bye
+
+~ head_what
+Narrator: "The old hunter asked which of my people still carry water for the castle. There is a girl he is fond of, though he would never say so; he wanted to know whose fire she must avoid."
+-> head_ask
+
+~ head_who
+set arrigal_suspected
+Narrator: "Keep clear of the camp by Lake Zarovich, where Arrigal counts the coin. They sell strong strangers to the castle's wolves, and the silver in Arrigal's purse is not honest silver."
+-> head_ask
+
+~ head_bye
+Narrator: "Put the lid back over my eyes and let the salt keep me. I have waited a long while in this box for someone to remember their manners."
+-> END

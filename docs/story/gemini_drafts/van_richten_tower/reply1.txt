@@ -1,0 +1,23 @@
+DOOR_OPT_FIGURES: Study the eight small figures cut into the stone frame.
+DOOR_FIGURES: Eight carved dancers ring the lintel, each frozen with its arms raised at a different angle. The stone beneath your feet is worn smooth in two footprints facing them.
+DOOR_OPT_POSES: Copy the eight poses in order from left to right.
+DOOR_POSES_OK: At the eighth gesture, a low hum settles into the masonry. The heavy door swings inward on silent hinges.
+DOOR_POSES_FAIL: The carved figures seem to watch your clumsy finish before a thin blue thread of light runs round the lintel and fades. The door stays shut, its stone still humming with charge.
+WARD_FOUND: Fine lines like frost run along the threshold and up the stone frame. They hum under your breath, and a pale blue spark crawls slowly from one groove to the next.
+WARD_HIT: White lightning cages the tower and hurls you backwards across the wet flagstone. High on the black ridge above the lake, a dozen long throats take up a single howl.
+WOLVES_ARRIVE: Gaunt shapes come loping down the ridge and out across the narrow causeway, half man and half wolf. Already they are fanning out along the stony shore to ring the island.
+SCAFFOLD_LOOK: Grey, split planks lash the north-west wall with sodden rope, climbing in crooked stages toward a jagged hole at the third floor. None of the timber looks happy about its work.
+SCAFFOLD_ARRIVE: Every wet plank groans under your boots until you haul yourself through the broken masonry. The room inside smells of copper and a storm that has not broken yet.
+LIFT_STATUES: Four faceless clay figures stand at the corners of a square, each gripping a chain. As you step near, their blank heads tilt a fraction, like dogs waiting for a word.
+LIFT_PLATFORM: A square platform of scarred timber rests between them on the flagstones, hung from four heavy chains that vanish through a round hole in the ceiling.
+LIFT_OPT_RIDE: Step onto the wooden platform.
+LIFT_OPT_UP_ONE: Order the lift up one floor.
+LIFT_OPT_UP_TWO: Order the lift up two floors.
+LIFT_OPT_UP_TOP: Order the lift all the way to the top.
+LIFT_OPT_DOWN: Order the lift down.
+LIFT_OPT_CHAT: Wish the clay figures a good morning.
+LIFT_OPT_OFF: Step off the platform onto the floor.
+LIFT_UP: Iron links rattle overhead as the clay figures haul in unison, drawing the timber floor smoothly up the shaft. Dark masonry slides past until the platform settles with a dull thud.
+LIFT_DOWN: Below you, the four figures pay out the iron links link by link, letting the platform sink under its own weight. It touches down upon the lower stones without a jar.
+LIFT_IGNORED: The four blank heads do not so much as twitch. Whatever they were shaped to care about, polite conversation was left out of the clay.
+LIFT_CALL: Looking down through the round shaft in the floor, you give one of the hanging chains two sharp tugs. Far below in the dark, heavy clay hands take up the slack.

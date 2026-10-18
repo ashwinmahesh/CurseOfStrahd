@@ -147,6 +147,10 @@
     "from_library": [
       22,
       25
+    ],
+    "from_scaffold": [
+      11,
+      7
     ]
   },
   "exits": [
@@ -408,6 +412,17 @@
       "model": "well_stone",
       "dialogue": "van_richtens_tower/the_drowned_library:wellhead",
       "when": "level >= 9"
+    },
+    {
+      "id": "vrt_scaffolding",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "examine",
+      "label": "A rotten scaffolding",
+      "model": "fallen_beam",
+      "dialogue": "van_richtens_tower/the_scaffold:climb"
     }
   ],
   "containers": [
@@ -470,6 +485,31 @@
       "damage_type": "fire",
       "flag": "ezmerelda_trap_found",
       "text": "A wire parts with a ping, a jar of alchemist's fire drops off the wagon step, and the night goes orange."
+    },
+    {
+      "id": "vrt_door_ward_1",
+      "label": "The lightning ward on the door",
+      "cells": [
+        [
+          14,
+          11
+        ],
+        [
+          15,
+          11
+        ]
+      ],
+      "detect_dc": 15,
+      "disarm_dc": 17,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "lightning",
+      "flag": "tower_ward_1",
+      "when": "not flag.tower_door_opened and not guest:rictavio",
+      "text": "White lightning cages the tower and hurls you backwards across the wet rock. High on the black ridge above the lake, long throats take up a single howl."
     }
   ],
   "lights": [
@@ -759,6 +799,153 @@
           }
         ]
       }
+    },
+    {
+      "id": "ward_wolves",
+      "trigger": "flag:tower_ward_1",
+      "when": "not flag.tower_wolves_beaten and level >= 8",
+      "text": "Gaunt shapes come loping down the ridge and out across the narrow causeway, half man and half wolf. Already they are fanning out along the stony shore to ring the island.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            10,
+            6
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            6
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            10,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            20,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            12,
+            4
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "tower_wolves_beaten"
+    },
+    {
+      "id": "ward_wolves",
+      "trigger": "flag:tower_ward_1",
+      "when": "not flag.tower_wolves_beaten and level >= 7",
+      "text": "Gaunt shapes come loping down the ridge and out across the narrow causeway, half man and half wolf. Already they are fanning out along the stony shore to ring the island.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            10,
+            6
+          ],
+          "hp": 78
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 78
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            15,
+            4
+          ],
+          "hp": 78
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            10,
+            12
+          ],
+          "hp": 78
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            20,
+            12
+          ],
+          "hp": 78
+        }
+      ],
+      "surprise": "",
+      "flag": "tower_wolves_beaten"
+    },
+    {
+      "id": "ward_wolves",
+      "trigger": "flag:tower_ward_1",
+      "when": "not flag.tower_wolves_beaten",
+      "text": "Gaunt shapes come loping down the ridge and out across the narrow causeway, half man and half wolf. Already they are fanning out along the stony shore to ring the island.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            10,
+            6
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            6
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            10,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            20,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "tower_wolves_beaten"
     }
   ],
   "narration": {

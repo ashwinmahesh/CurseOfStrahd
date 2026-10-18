@@ -1,0 +1,18 @@
+# The rotten scaffolding on the tower's north-west side (prop vrt_scaffolding): a back way in, to a hole broken through the
+# wall of the third floor, the lantern room (Dungeon Expansion Plan V1; Elven Tower, chapter 11). It goes in by a
+# conversation so the hunter's-tower quest moves as it does at the door.
+
+~ climb
+Narrator: Grey, split planks lash the north-west wall with sodden rope, climbing in crooked stages toward a jagged hole at the third floor. None of the timber looks happy about its work.
+* Climb the rotten scaffolding toward the hole above. -> up
+* Step back and leave the scaffolding alone. -> END
+
+~ up
+if guest:ezmerelda and not flag.rictavio_gone and (not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked)
+quest the_hunters_tower with_her
+elif tarokka.ally.npc != ezmerelda and (not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked)
+quest the_hunters_tower inside
+endif
+Narrator: Every wet plank groans under your boots until you haul yourself through the broken masonry. The room inside smells of copper and a storm that has not broken yet.
+time +10
+move van_richtens_tower_interior:lantern_from_scaffold
