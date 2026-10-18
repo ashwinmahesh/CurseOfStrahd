@@ -1154,6 +1154,12 @@ func _refresh_hotbar() -> void:
 		ch.queue_free()
 	_slot_buttons.clear()
 	_slot_actions.clear()
+	# Armor the caster has no training with shuts every spell (2024 Armor Training), and each slot says so only on hover:
+	# the Spell tab says it first, once (owner report 2026-10-18: Liriel, "can't cast any spells", in Plate Armor +1).
+	if tab == ActionCatalog.SPELLS and c.creature is Character:
+		var untrained := (c.creature as Character).untrained_armor()
+		if not untrained.is_empty():
+			_slots.add_child(_untrained_notice(c, untrained))
 	# The player's arrangement (U2): their order, their favourites, the actions they hid (ActionCatalog.arranged), with
 	# one slot per idea: a rule's modes as one toggle, an action's variants as one container (ActionCatalog.slots).
 	var all := catalog.actions_for(c)   # read once for every section
@@ -1190,6 +1196,17 @@ func _refresh_hotbar() -> void:
 		_slots.add_child(grid)
 		for av: Variant in g["items"]:
 			i = _add_slot(grid, av as Dictionary, i, c, mine)
+
+
+## The line above the Spell tab's slots when `armor` (the caster's own, worn without training) is why none can be cast.
+func _untrained_notice(c: Combatant, armor: Dictionary) -> Label:
+	var note := _label("%s has no training with %s armor, so no spells in %s. Take it off in the pack." % [
+		c.name().get_slice(" ", 0), str((armor["armor"] as Dictionary).get("kind", "")), str(armor.get("name", "it"))], 13, "flame")
+	note.name = "UntrainedArmorNotice"
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	note.custom_minimum_size = Vector2(200, 0)
+	return note
 
 
 ## One hotbar slot for action `a` in `grid`, numbered `i`; returns the next number.

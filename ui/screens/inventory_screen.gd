@@ -674,7 +674,18 @@ func fits_quick(d: Dictionary) -> bool:
 		and str(Compendium.shared().item_data(str(d.get("id", ""))).get("category", "")) in QUICK_CATEGORIES
 
 
-## Puts `item_id` in hand (`slot`), taking off what was there; a two-handed weapon empties the other hand.
+## What wearing `item_id` costs `ch` when it is armor they have no training with (2024 Armor Training), else "": said the
+## moment it goes on, since every spell goes dark with it (owner report 2026-10-18: Liriel in Plate Armor +1).
+static func untrained_warning(ch: Character, item_id: String) -> String:
+	var data := Compendium.shared().item_data(item_id)
+	if not Gear.is_armor(data) or ch.trained_for(data):
+		return ""
+	return "%s has no training with %s armor: Disadvantage on Strength and Dexterity rolls, and no spells while %s is on." % [
+		ch.name.get_slice(" ", 0), str((data["armor"] as Dictionary).get("kind", "")), Compendium.shared().display_name("items", item_id)]
+
+
+## Puts `item_id` in hand (`slot`), taking off what was there; a two-handed weapon empties the other hand. Armor its
+## wearer has no training with says so in the note (untrained_warning).
 func _equip(ch: Character, item_id: String, slot: String) -> bool:
 	var data := Compendium.shared().item_data(item_id)
 	var held := ch.equipped(slot)
@@ -687,7 +698,17 @@ func _equip(ch: Character, item_id: String, slot: String) -> bool:
 		ch.unequip("main_hand")
 	if slot in Character.EQUIP_SLOTS:
 		ch.unequip(slot)
-	return ch.equip(item_id, slot)
+	var worn := ch.equip(item_id, slot)
+	if worn and slot == "armor":
+		_warn_untrained(ch, item_id)
+	return worn
+
+
+## Says untrained_warning in the note, when there is one.
+func _warn_untrained(ch: Character, item_id: String) -> void:
+	var warning := InventoryScreen.untrained_warning(ch, item_id)
+	if warning != "":
+		_say(warning, "flame")
 
 
 func _drop_on_slot(d: Dictionary, slot: String, occupant: Dictionary) -> void:
@@ -702,10 +723,10 @@ func _drop_on_slot(d: Dictionary, slot: String, occupant: Dictionary) -> void:
 	if not occupant.is_empty() and slot in MagicItems.WORN_SLOTS:
 		ch.unequip_item(str(occupant["id"]))
 	var name_ := Compendium.shared().display_name("items", id)
-	if _equip(ch, id, slot):
-		_say("%s: %s." % [slot_name(slot), name_])
-	else:
+	if not _equip(ch, id, slot):
 		_say("%s can't go there." % name_, "flame")
+	elif slot != "armor" or InventoryScreen.untrained_warning(ch, id) == "":   # untrained armor said so in _equip
+		_say("%s: %s." % [slot_name(slot), name_])
 	_draw()
 
 
@@ -1392,6 +1413,7 @@ func _draw_card() -> void:
 	elif Gear.is_armor(data):
 		acts.add_child(UiKit.button("Wear", func() -> void:
 			ch.equip(selected, "armor")
+			_warn_untrained(ch, selected)
 			_draw(), 14))
 	elif Gear.is_shield(data):
 		acts.add_child(UiKit.button("Equip (off hand)", func() -> void:

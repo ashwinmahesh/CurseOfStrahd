@@ -1756,6 +1756,21 @@ func trained_for(armor_item: Dictionary) -> bool:
 	return has_armor_training(str((armor_item.get("armor", {}) as Dictionary).get("kind", "")))
 
 
+## The armor this character wears but has no training with ({} when none): the 2024 Armor Training rule gives them
+## Disadvantage on Strength and Dexterity D20 Tests and no spellcasting while it stays on.
+func untrained_armor() -> Dictionary:
+	var armor := equipped("armor")
+	return {} if armor.is_empty() or trained_for(armor) else armor
+
+
+## "" when what this character wears lets them cast, else why not, naming the armor ("Wearing Plate Armor +1 without
+## training"): the reason on every spell slot, and what the Spell tab says (owner report 2026-10-18: Liriel, a Thaumaturge
+## Cleric, "can't cast any spells for some reason" in Plate Armor +1).
+func armor_cast_blocker() -> String:
+	var armor := untrained_armor()
+	return "" if armor.is_empty() else "Wearing %s without training" % str(armor.get("name", "armor"))
+
+
 # --- Hit Points ----------------------------------------------------------------------------------
 
 func max_hp_breakdown() -> Breakdown:

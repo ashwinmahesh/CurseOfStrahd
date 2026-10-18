@@ -147,7 +147,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Changing Weapon Mastery after a Long Rest: Barbarian and Fighter one kind (`replace_max`), Paladin, Ranger, Rogue and the Weapon Master feat any; a level up only adds kinds | data, choice_options.gd `open_swap`, prepare_screen.gd, level_up_controller.gd | tested | test_mastery_swaps |
 | Weapon Mastery properties | encounter.gd, features.gd | tested: all eight (Cleave in test_feature_combat); Push and Topple can be held back from the class tab | test_combat_encounter, test_feature_combat |
 | Armor: light/medium/heavy AC, Strength requirement, Stealth Disadvantage | character.gd | tested | test_reference_party, test_attacks |
-| Armor and Shield without training | character.gd gear_d20_sources, armor_class | implemented | — |
+| Armor and Shield without training | character.gd gear_d20_sources, armor_class, armor_cast_blocker (no spellcasting; the Spell tab and the inventory say which armor) | implemented | test_armor_training_casting |
 | Unarmed Strike (1 + Str) | weapon_profile.gd | implemented | — |
 | Carrying capacity by size and Powerful Build | creature.gd carrying_capacity | implemented | — |
 | Spell slots (full, half, third, multiclass) | magic/spellcasting.gd | tested (to level 11 by class) | test_spellcasting, test_levels_8_to_11 |

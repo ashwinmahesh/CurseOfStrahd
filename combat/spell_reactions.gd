@@ -170,8 +170,7 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 		return false
 	if not _voice_ok(c, s):
 		return false
-	var armor := ch.equipped("armor")
-	if not armor.is_empty() and not ch.trained_for(armor):
+	if ch.armor_cast_blocker() != "":
 		return false
 	if free:
 		return true

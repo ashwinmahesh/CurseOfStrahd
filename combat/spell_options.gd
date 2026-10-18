@@ -109,9 +109,9 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 				return "Silence: no Verbal spells here"
 	if c.creature.has_flag("cant_cast"):
 		return "Can't cast spells in this form"
-	var armor := ch.equipped("armor")
-	if not armor.is_empty() and not ch.trained_for(armor):
-		return "Wearing armor without training"
+	var armor_why := ch.armor_cast_blocker()
+	if armor_why != "":
+		return armor_why
 	# A costly material component (2024): carried, since no pouch or focus stands in for it; not when a feature casts the
 	# spell without its Material component (Knowledge Domain's Channel Divinity).
 	var feature_cast := entry.get("resource_cast", {}) as Dictionary

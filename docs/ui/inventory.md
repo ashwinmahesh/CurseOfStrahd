@@ -20,7 +20,8 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 
 - **Paper doll**: head, cloak, neck, armor, hands, belt, two rings, feet; **weapon sets** (main hand + off hand,
   two sets with a quick swap ↻); ammunition and spellcasting focus slots. Equipping armor shows the new AC on the
-  slot; armor without training warns before equipping (Disadvantage on Str/Dex rolls, no spellcasting).
+  slot; armor without training warns on its item card and again in the note the moment it goes on (Disadvantage on
+  Str/Dex rolls, no spellcasting; owner report 2026-10-18), and the combat Spell tab names it when it shuts a caster's spells.
   Built (U11, 2026-10-07; in the shape of a person 2026-10-09, owner: the items "in the place where they would be
   equipped"): every slot sits on a drawn figure where it's worn: the head, the eyes beside it and any Ioun Stones
   orbiting it (two shown, then "+n more"), the neck under it, a cloak and a robe at the shoulders, armor on the
