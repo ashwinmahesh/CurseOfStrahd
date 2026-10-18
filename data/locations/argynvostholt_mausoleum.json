@@ -102,13 +102,13 @@
       "label": "The dragon's bones",
       "model": "bones",
       "dialogue": "argynvostholt/mausoleum:bones",
-      "scale": 2.6
+      "scale": 2.2
     },
     {
       "id": "holt_empty_skull_place",
       "cell": [
-        7,
-        2
+        3,
+        5
       ],
       "kind": "examine",
       "label": "The head of the bier",

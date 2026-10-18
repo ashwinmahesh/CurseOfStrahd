@@ -141,3 +141,11 @@ contact, stairs and the cottage's size as it does the 2D ones. Captures:
 - Long runs of pews or tables are one model per square, so a long table shows its seams.
 - No lights of their own: candles and the hearth glow but don't light the room (lighting belongs to the world look).
 - The secret bookcase door keeps its 2D disguise.
+
+## Sourced models (2026-10-18)
+
+Two pieces are not modelled from our own art: `dragon_skull` (a wall trophy, in profile) and `dragon_bones` (the
+mausoleum's skeleton, `big`) are free CC BY 4.0 models from Sketchfab, read from art/sourced/sketchfab_*/ by their
+builders in blender/models_3d.py and put on the bone colours of the palette, thinned and sized like the rest of the
+set (docs/art/set_dressing.md, Scale-ups; credits in art/credits.json). A builder imports from a temporary copy so the
+originals stay untouched, and `make models ONLY="dragon_skull dragon_bones"` rebuilds them.

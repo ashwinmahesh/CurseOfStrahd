@@ -2350,17 +2350,18 @@
         "dragon_bones"
       ],
       "size": [
-        2.459,
-        1.6,
-        1.237
+        2.1,
+        1.335,
+        2.598
       ],
       "materials": [
+        "pal_bone",
         "pal_bone_dark",
-        "spr_dragon_bones"
+        "pal_parchment",
+        "pal_vellum"
       ],
-      "triangles": 6516,
-      "big": true,
-      "sculpted": true
+      "triangles": 10080,
+      "big": true
     },
     "mobile": {
       "file": "art/models/mobile.glb",
@@ -5883,15 +5884,16 @@
       ],
       "size": [
         0.8,
-        0.732,
-        0.22
+        0.572,
+        0.31
       ],
       "materials": [
+        "pal_bone",
         "pal_bone_dark",
-        "spr_dragon_skull"
+        "pal_parchment",
+        "pal_vellum"
       ],
-      "triangles": 7004,
-      "sculpted": true
+      "triangles": 8309
     },
     "stone_faces": {
       "file": "art/models/stone_faces.glb",

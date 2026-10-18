@@ -2916,7 +2916,7 @@ SCULPTED = {
     "scarecrow_stitched": (1.4, 0.3), "stuffed_wolf": (0.8, 0.5), "horse": (1.4, 0.35), "carcass": (0.5, 0.5),
     "skeleton_leather": (0.7, 0.35), "doll": (0.4, 0.45), "doll_yellow": (0.4, 0.45), "poppet": (0.3, 0.45),
     "crow_barrel": (0.8, 0.8), "charms": (1.2, 0.15), "soul_bags": (1.2, 0.3), "frozen_traveller": (0.8, 0.5),
-    "frozen_birds": (0.6, 0.35), "roc_nest": (0.7, 0.8), "dragon_bones": (1.6, 0.5), "mobile": (1.2, 0.15),
+    "frozen_birds": (0.6, 0.35), "roc_nest": (0.7, 0.8), "mobile": (1.2, 0.15),
     "coats": (1.2, 0.25), "sheeted_furniture": (1.1, 0.6), "refuse_mound": (0.6, 0.8), "bones": (0.4, 0.6),
     "sword_leaning": (0.8, 0.15), "jewel_box": (0.7, 0.7), "music_box": (0.7, 0.7), "cage_hanging": (1.4, 0.6),
     "wicker_cage": (1.4, 0.6), "dollhouse": (0.9, 0.7), "puppet_theatre": (1.2, 0.4), "harp": (1.2, 0.25),
@@ -2926,7 +2926,7 @@ SCULPTED = {
     "gate_pillar": (4.2, 0.35), "gargoyle": (1.0, 0.55), "black_horse": (1.4, 0.35), "saint_defaced": (1.6, 0.42),
     "bone_throne": (1.3, 0.55), "bone_chair": (0.9, 0.55), "statue_young_strahd": (1.6, 0.4),
 }
-BIG_SCULPTED = {"horse", "black_horse", "dragon_bones", "colossus", "statue_faceless", "strahd_effigy", "wicker_sun", "gate_pillar"}
+BIG_SCULPTED = {"horse", "black_horse", "colossus", "statue_faceless", "strahd_effigy", "wicker_sun", "gate_pillar"}
 
 
 def _sculpt_builder(art, height, share):
@@ -2961,7 +2961,7 @@ WALL_ART = {
     "stag_head": "sculpt", "trophy_wolf": "sculpt", "skeleton_shackles": "sculpt", "wall_chains": "sculpt", "jars": "sculpt",
     "gear_brake": "sculpt", "winch": "sculpt", "dumbwaiter": "sculpt", "robe_pegs": "sculpt", "uniforms": "sculpt",
     "crest": "sculpt", "shelves_wall": "sculpt",
-    "portrait_tatyana": "frame", "portrait_strahd": "frame", "portrait_jester": "frame", "dragon_skull": "sculpt",
+    "portrait_tatyana": "frame", "portrait_strahd": "frame", "portrait_jester": "frame",
     "stone_faces": "slab", "names_wall": "slab", "bronze_plaque": "board", "banner_regiment": "cloth", "key_board": "board",
     "wine_rack_bricked": "slab",
 }
@@ -5536,6 +5536,250 @@ def jester_plaster(p):
 
 
 # --- Export and preview ----------------------------------------------------------------------------------------
+
+# --- Sourced models: the dragon's skull and skeleton (owner todos 2026-10-17) -------------------------------------------
+# Two free models from Sketchfab (CC BY 4.0, art/sourced/sketchfab_*/SOURCE.md, credits in art/credits.json), put on the
+# palette: each face takes the nearest of the bone colours, so they draw like the rest of the set. The files in
+# art/sourced stay as downloaded; these builders read them, thin them, pose and size them, and the export is the game's own.
+
+SOURCED = ROOT / "art" / "sourced"
+BONE_RAMP = ["pal_bone_dark", "pal_bone", "pal_parchment", "pal_vellum"]
+
+
+def _import_glb(path):
+    """Imports a sourced GLB (from a temporary copy: Blender writes a file's textures out beside it, and the originals
+    in art/sourced stay as downloaded); returns (everything it added, its meshes)."""
+    import shutil
+    import tempfile
+    before = set(bpy.data.objects)
+    with tempfile.TemporaryDirectory() as tmp:
+        copy = Path(tmp) / Path(path).name
+        shutil.copy(path, copy)
+        bpy.ops.import_scene.gltf(filepath=str(copy))
+        for img in bpy.data.images:
+            img.pack() if img.filepath and not img.packed_file and img.source == "FILE" else None
+    added = [o for o in bpy.data.objects if o not in before]
+    return added, [o for o in added if o.type == "MESH"]
+
+
+def _world_bm(meshes):
+    """One bmesh of these mesh objects in world space (the glTF axis change applied), UVs kept."""
+    bm = bmesh.new()
+    for ob in meshes:
+        part = bmesh.new()
+        part.from_mesh(ob.data)
+        bmesh.ops.transform(part, matrix=ob.matrix_world, verts=part.verts)
+        tmp = bpy.data.meshes.new("_part")
+        part.to_mesh(tmp)
+        part.free()
+        bm.from_mesh(tmp)
+        bpy.data.meshes.remove(tmp)
+    return bm
+
+
+def _decimated(bm, ratio):
+    """`bm` thinned to about `ratio` of its triangles (collapse, UVs followed)."""
+    me = bpy.data.meshes.new("_decimate")
+    bm.to_mesh(me)
+    ob = bpy.data.objects.new("_decimate", me)
+    bpy.context.scene.collection.objects.link(ob)
+    bpy.context.view_layer.objects.active = ob
+    mod = ob.modifiers.new("d", "DECIMATE")
+    mod.ratio = ratio
+    bpy.ops.object.modifier_apply(modifier="d")
+    out = bmesh.new()
+    out.from_mesh(ob.data)
+    bpy.data.objects.remove(ob)
+    bpy.data.meshes.remove(me)
+    return out
+
+
+def _append_faces(p, bm, material_of, smooth=True):
+    """Appends `bm` to piece `p`, each face in the material `material_of(face)` names."""
+    for f in bm.faces:
+        f.material_index = p._slot(material_of(f))
+        f.smooth = smooth
+    me = bpy.data.meshes.new("_sourced")
+    bm.to_mesh(me)
+    bm.free()
+    p.bm.from_mesh(me)
+    bpy.data.meshes.remove(me)
+
+
+def _fit(bm, rot_z_deg, length, rest):
+    """Turns `bm` about z, scales its x-length to `length`, and rests it: `rest(lo, hi)` gives the translation."""
+    bmesh.ops.rotate(bm, cent=(0, 0, 0), matrix=Euler((0, 0, math.radians(rot_z_deg))).to_matrix(), verts=bm.verts)
+    xs = [v.co.x for v in bm.verts]
+    k = length / (max(xs) - min(xs))
+    bmesh.ops.scale(bm, vec=(k, k, k), verts=bm.verts)
+    lo = Vector((min(v.co.x for v in bm.verts), min(v.co.y for v in bm.verts), min(v.co.z for v in bm.verts)))
+    hi = Vector((max(v.co.x for v in bm.verts), max(v.co.y for v in bm.verts), max(v.co.z for v in bm.verts)))
+    bmesh.ops.translate(bm, vec=rest(lo, hi), verts=bm.verts)
+    return k
+
+
+@model("dragon_skull", "wall", ["dragon_skull"])
+def dragon_skull(p):
+    """The dragon's skull (Paulina, @Byakko, CC BY 4.0): hung in profile on a trophy mount, snout along +x, its back on
+    the wall face, about 0.8 long (the data's `scale` makes it the trophy room's 8 ft or so)."""
+    import numpy as np
+    added, meshes = _import_glb(SOURCED / "sketchfab_dragon_skull_byakko" / "dragon_skull.glb")
+    img = None
+    for m in meshes:
+        for slot in m.material_slots:
+            tree = slot.material.node_tree if slot.material else None
+            for node in (tree.nodes if tree else []):
+                if node.type == "BSDF_PRINCIPLED" and node.inputs["Base Color"].links:
+                    src = node.inputs["Base Color"].links[0].from_node
+                    if src.type == "TEX_IMAGE":
+                        img = src.image
+    bm = _decimated(_world_bm(meshes), 0.55)
+    for o in added:
+        bpy.data.objects.remove(o)
+    pix = np.empty(len(img.pixels), dtype=np.float32)
+    img.pixels.foreach_get(pix)
+    pix = pix.reshape(img.size[1], img.size[0], 4)
+    uv = bm.loops.layers.uv.active
+    vlum = {v.index: [] for v in bm.verts}
+    for f in bm.faces:
+        u = sum(l[uv].uv.x for l in f.loops) / len(f.loops)
+        v = sum(l[uv].uv.y for l in f.loops) / len(f.loops)
+        c = pix[min(img.size[1] - 1, max(0, int(v * (img.size[1] - 1)))), min(img.size[0] - 1, max(0, int(u * (img.size[0] - 1))))]
+        for vert in f.verts:
+            vlum[vert.index].append(0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2])
+    shade = {i: sum(x) / len(x) for i, x in vlum.items() if x}
+    for _ in range(6):   # the painted stains, smoothed over the mesh so a face's tone belongs to a region, not a texel
+        nxt = {}
+        for vert in bm.verts:
+            near = [shade[e.other_vert(vert).index] for e in vert.link_edges if e.other_vert(vert).index in shade]
+            nxt[vert.index] = 0.4 * shade.get(vert.index, 0.5) + 0.6 * (sum(near) / len(near) if near else shade.get(vert.index, 0.5))
+        shade = nxt
+    lum = {f.index: sum(shade[v.index] for v in f.verts) / len(f.verts) for f in bm.faces}
+    cuts = np.percentile(list(lum.values()), [14, 58, 92])
+    _fit(bm, -90.0, 0.8, lambda lo, hi: Vector((-(lo.x + hi.x) / 2.0, -hi.y, 0.22 - lo.z)))
+    _append_faces(p, bm, lambda f: BONE_RAMP[int(sum(lum[f.index] > c for c in cuts))])
+
+
+# The skeleton is one static pose in the download (no rig). The game's pose is made from its bones: the head and the
+# lump it holds are dropped (the bier's neck ends in nothing: the skull is a separate find), the neck is lowered, and
+# each wing, found as the bones joined to a shoulder blade, is laid flat, drooped and shrunk about its shoulder.
+WING_SCALE = 0.24
+WING_DROOP = 25.0
+
+
+@model("dragon_bones", "free", ["dragon_bones"], big=True)
+def dragon_bones(p):
+    """The dragon's skeleton (mgsawwinhtike3002, @SawWinHtike, CC BY 4.0), headless, wings laid to the sides: about 2.1
+    long, head end to -x. The data's `scale` makes it the mausoleum's 30 ft and more."""
+    import numpy as np
+    from mathutils import Quaternion, kdtree
+    added, meshes = _import_glb(SOURCED / "sketchfab_dragon_skeleton_sawwinhtike" / "dragon_skeleton_low-poly.glb")
+    body = [m for m in meshes if len(m.data.polygons) > 20000][0]   # the other meshes are the rock and the base it stood on
+    bm = _world_bm([body])
+    for o in added:
+        bpy.data.objects.remove(o)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=0.002)
+    bm.faces.ensure_lookup_table()
+    bm.verts.ensure_lookup_table()
+    seen, comps = set(), []
+    for f in bm.faces:
+        if f.index in seen:
+            continue
+        stack, cl = [f], []
+        seen.add(f.index)
+        while stack:
+            c = stack.pop()
+            cl.append(c)
+            for e in c.edges:
+                for g in e.link_faces:
+                    if g.index not in seen:
+                        seen.add(g.index)
+                        stack.append(g)
+        comps.append(cl)
+    isl = []
+    for k, cl in enumerate(comps):
+        vs = sorted({v.index for f in cl for v in f.verts})
+        pts = [bm.verts[i].co.copy() for i in vs]
+        c = sum(pts, Vector()) / len(pts)
+        isl.append({"k": k, "n": len(cl), "vs": vs, "pts": pts, "c": c, "faces": cl,
+                    "lo": Vector((min(q.x for q in pts), min(q.y for q in pts), min(q.z for q in pts))),
+                    "hi": Vector((max(q.x for q in pts), max(q.y for q in pts), max(q.z for q in pts)))})
+    byk = {i["k"]: i for i in isl}
+    adj = {i["k"]: set() for i in isl}
+    for a in isl:   # bones that touch are joined
+        kd = kdtree.KDTree(len(a["pts"]))
+        for j, q in enumerate(a["pts"]):
+            kd.insert(q, j)
+        kd.balance()
+        for b in isl:
+            if b["k"] <= a["k"] or a["lo"].x - 0.5 > b["hi"].x or b["lo"].x - 0.5 > a["hi"].x:
+                continue
+            for q in b["pts"]:
+                if kd.find(q)[2] < 0.45:
+                    adj[a["k"]].add(b["k"])
+                    adj[b["k"]].add(a["k"])
+                    break
+    central = {i["k"] for i in isl if abs(i["c"].x) < 3.3}
+    done, groups = set(), []
+    for i in isl:   # what hangs off the central bones: the two wings, and the small bits of the feet
+        if i["k"] in central or i["k"] in done:
+            continue
+        g, st = {i["k"]}, [i["k"]]
+        while st:
+            x = st.pop()
+            for y in adj[x]:
+                if y not in g and y not in central:
+                    g.add(y)
+                    st.append(y)
+        done |= g
+        groups.append(g)
+    groups.sort(key=lambda g: -sum(byk[k]["n"] for k in g))
+    wings = [(groups[0], 1 if sum(byk[k]["c"].x for k in groups[0]) > 0 else -1), (groups[1], 1 if sum(byk[k]["c"].x for k in groups[1]) > 0 else -1)]
+    head = max(isl, key=lambda i: i["n"])
+    hlo, hhi = head["lo"] - Vector((0.3,) * 3), head["hi"] + Vector((0.3,) * 3)
+    dropped = {i["k"] for i in isl if i is head or all(hlo[a] <= i["c"][a] <= hhi[a] for a in range(3))}
+    for g, side in wings:
+        ids = sorted({v for k in g for v in byk[k]["vs"]})
+        pts = [bm.verts[v].co.copy() for v in ids]
+        blade = [byk[c]["c"] for k in g for c in adj[k] if c in central and byk[c]["n"] > 300]
+        pivot = min(pts, key=lambda q: (q - (blade[0] if blade else Vector((3 * side, -3.5, 10)))).length).copy()
+        arr = np.array([[q.x, q.y, q.z] for q in pts])
+        centre = arr.mean(axis=0)
+        _, vecs = np.linalg.eigh(np.cov((arr - centre).T))
+        e3, e2, e1 = [Vector(vecs[:, i]) for i in range(3)]   # thin, spread, long
+        if (Vector(centre) - pivot).dot(e1) < 0:
+            e1 = -e1
+        e2 = e3.cross(e1).normalized()
+        if e3.z < 0:
+            e3, e2 = -e3, -e2
+        e3 = e1.cross(e2).normalized()
+        h = Vector((e1.x, e1.y, 0)).normalized()
+        up = Vector((0, 0, 1))
+        across = up.cross(h).normalized()
+        A = Matrix(((e1.x, e2.x, e3.x), (e1.y, e2.y, e3.y), (e1.z, e2.z, e3.z)))
+        B = Matrix(((h.x, across.x, up.x), (h.y, across.y, up.y), (h.z, across.z, up.z)))
+        M = Quaternion(across, math.radians(WING_DROOP)).to_matrix() @ (B @ A.inverted())
+        for v, q in zip(ids, pts):
+            bm.verts[v].co = pivot + WING_SCALE * (M @ (q - pivot))
+    neck = [k for k in central if 170 <= byk[k]["n"] <= 200 and byk[k]["c"].y < -0.5 and byk[k]["c"].z > 8.3]
+    rot, npv = Matrix.Rotation(math.radians(40), 3, "X"), Vector((0, -0.6, 8.3))
+    for k in neck:
+        for v in byk[k]["vs"]:
+            bm.verts[v].co = npv + rot @ (bm.verts[v].co - npv)
+    out, mp = bmesh.new(), {}
+    for i in isl:
+        if i["k"] in dropped:
+            continue
+        for f in i["faces"]:
+            out.faces.new([mp.setdefault(v.index, out.verts.new(v.co)) for v in f.verts])
+    bm.free()
+    out = _decimated(out, 0.5)
+    _fit(out, 90.0, 2.1, lambda lo, hi: Vector((-(lo.x + hi.x) / 2.0, -(lo.y + hi.y) / 2.0, -lo.z)))
+    bmesh.ops.scale(out, vec=(1.0, 1.0, 0.6), verts=out.verts)   # it lies on the bier: the crouch is settled, the ribs lower
+    zs = [f.calc_center_median().z for f in out.faces]
+    cuts = np.percentile(zs, [30, 78, 97])   # lit from above: the low bones darker, the high ones paler, the whole of it old
+    _append_faces(p, out, lambda f: BONE_RAMP[int(sum(f.calc_center_median().z > c for c in cuts))])
+
 
 def bounds(ob):
     vs = [ob.matrix_world @ v.co for v in ob.data.vertices]

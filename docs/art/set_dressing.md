@@ -244,9 +244,20 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
 - **Argynvostholt's study:** the dragon's desk and chair are three times a desk's and a chair's size (a 15 ft desk, its
   top at 7.5 ft; a 19 ft chair back). The chair moved from [17, 3] to [17, 2] so it doesn't sit in the desk, and the
   hidden-drawer notes from [16, 4] to [17, 5], in front of the desk where they show.
-- **The dragon's skull** (Castle Ravenloft's trophy room) is drawn 2.2 times the trophy it was, 8.8 ft across, among the
-  stag and wolf heads (two stag heads moved from the north wall to the east wall to make room for it). **The mausoleum's bones** are 2.6 times: 32 ft long over the bier's 40 by 25 ft. Both are the
-  sculpted-from-the-sprite pieces; a real 3D skull and skeleton replace them when the models are made.
+- **The dragon's skull** (Castle Ravenloft's trophy room) is 2.2 times the model: 8.8 ft long, hung in profile among the
+  stag and wolf heads (two stag heads moved from the north wall to the east wall to make room for it). **The
+  mausoleum's bones** are 2.2 times: a 23 ft body lying on the bier with the wings drooped to the sides (28 ft across),
+  its neck ending in nothing; the "head of the bier" prop moved to the neck's end at [3, 5]. Both are real models now
+  (below), no longer pieces sculpted from the 2D sprites.
+- **Sourced models** (owner picks, 2026-10-18): the skull is Paulina's "Dragon Skull" and the skeleton mgsawwinhtike3002's
+  "Dragon skeleton low-poly", both CC BY 4.0 from Sketchfab, kept as downloaded in art/sourced/sketchfab_*/ (SOURCE.md,
+  licence rows in docs/assets/LICENSES.md, credits in art/credits.json; `.gdignore` keeps Godot from importing them).
+  `blender/models_3d.py` reads them (`make models ONLY="dragon_skull dragon_bones"`): the skull is thinned to 8.3k
+  triangles and each face takes the nearest of four bone colours from the painted texture, smoothed over the mesh; the
+  skeleton, a fixed pose with no rig, loses its head and the rock and base it stood on, lowers its neck, and each wing
+  (the bones joined to a shoulder blade) is laid flat, drooped and shrunk to a quarter about its shoulder, then
+  the whole is thinned to 10k triangles and settled to 0.6 of its height. Their `size` in art/models/manifest.json is
+  what the data's `scale` multiplies.
 - **Silver heaps** (`silver_heap`, `world/look/coin_heap.gd`): the Undercroft's eight heaps of silver are built from
   about a thousand coins each over a lumpy dune. The gold heap model scaled up was a smooth blob with a few big discs
   on it. Pillars and fight squares keep clear of them; the biggest, at [19, 5], is 7.5 ft tall.

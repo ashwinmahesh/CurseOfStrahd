@@ -255,7 +255,7 @@ func test_3d_pieces_dont_overlap() -> void:
 ## `scaled`, and keeps everything else off the squares it covers; a piece with no `scale` is as modelled.
 func test_a_props_scale_draws_its_piece_that_big() -> void:
 	var asked := {"argynvostholt_upper": {"holt_dragon_desk": 3.0, "holt_dragon_chair": 3.0},
-		"argynvostholt_mausoleum": {"holt_dragon_bones": 2.6}, "castle_ravenloft_court": {"court_dragon_skull": 2.2}}
+		"argynvostholt_mausoleum": {"holt_dragon_bones": 2.2}, "castle_ravenloft_court": {"court_dragon_skull": 2.2}}
 	for loc_id: String in asked:
 		var v := _view(loc_id)
 		await _frames(1)
