@@ -134,6 +134,50 @@ func test_the_party_screens() -> void:
 		await _frames(2)
 
 
+## The journal's Other tab filed by region (Ashwin, 2026-10-18) with every quest in the game taken: the D-pad reaches every
+## quest across the region headings, a press down from a row lands on the next row in the list (never on a heading), and B
+## goes back.
+func test_the_journal_by_region_on_a_pad() -> void:
+	if not await _game(LATE):
+		return
+	for q: Dictionary in Compendium.shared().all("quests"):
+		GameState.story.set_quest_stage(str(q["id"]), str(((q["stages"] as Array)[0] as Dictionary)["id"]))
+	root.call("open_screen", "journal", 0)
+	await _frames(3)
+	var journal := root.get("screen") as JournalScreen
+	await _press(JOY_BUTTON_DPAD_DOWN)   # the first press wakes the pad
+	if journal.quest_tab != "Other":
+		await _trigger(JOY_AXIS_TRIGGER_RIGHT)
+	assert_eq(journal.quest_tab, "Other", "RT turns to the other quests")
+	await _frames(2)
+	var rows: Array[String] = []
+	_rows(journal.find_child("QuestList", true, false), rows)
+	assert_true(rows.size() > 40, "a long list of side quests (%d)" % rows.size())
+	await _reach("the journal's Other quests, by region")
+	await _press(JOY_BUTTON_DPAD_DOWN)
+	await _press(JOY_BUTTON_DPAD_UP)
+	var here := nav.focus_in(nav.scope_now())
+	assert_true(here != null and here.get_parent() != null and str(here.get_parent().name).begins_with("Quest_"), "the pad is on a quest")
+	if here != null:
+		var i := rows.find(str(here.get_parent().name))
+		assert_true(i >= 0 and i < rows.size() - 1, "and not on the last one")
+		if i >= 0 and i < rows.size() - 1:
+			await _press(JOY_BUTTON_DPAD_DOWN)
+			var next := nav.focus_in(nav.scope_now())
+			assert_true(next != null and next.get_parent() != null, "down lands on a quest")
+			if next != null and next.get_parent() != null:
+				assert_eq(str(next.get_parent().name), rows[i + 1], "the next quest in the list, over any region heading")
+	await _back("the journal", _screen_gone)
+
+
+## The quest rows of a journal list, top to bottom.
+func _rows(n: Node, out: Array[String]) -> void:
+	for c in n.get_children():
+		if str(c.name).begins_with("Quest_"):
+			out.append(str(c.name))
+		_rows(c, out)
+
+
 func test_the_sheet_tabs() -> void:
 	if not await _game(LATE):
 		return
