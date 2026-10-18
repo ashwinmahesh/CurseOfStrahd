@@ -267,7 +267,7 @@ func _overload(c: Combatant, ch: Character, s: Dictionary, bonus: Breakdown) -> 
 ## Inspiring Strike: once per turn, a Critical Hit on a creature inspires an ally within 30 ft who sees or hears you.
 func after_hit(c: Combatant, target: Combatant, critical: bool, st: Dictionary = {}) -> void:
 	var fr := faerun()
-	if target != null and st.has("smite_ctx") and str(((st["smite_ctx"] as Dictionary)["s"] as Dictionary).get("id", "")) == "divine_smite":
+	if target != null and CombatFeatures.divine_smote(st):
 		fr.subclasses._elemental_smite(c, target)
 	if target != null and str(c.get_meta("flustering_armed", "")) == _turn_key() and _ch(c).resource_left("flustering_strike") > 0:
 		fr.general._flustering_strike(c, target)

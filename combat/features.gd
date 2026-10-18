@@ -706,11 +706,13 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 		out.append({"dice": str(ch.class_level_of("rogue")), "type": str(p.damage_type), "label": "Assassinate"})
 	if has_feat(c, "charger") and melee and c.moved and e.current() == c and _once(c, "charger"):
 		out.append({"dice": "1d8", "type": str(p.damage_type), "label": "Charge"})
-	# An armed smite spell: cast now (a Bonus Action and a slot); its dice join the hit's.
-	var sctx := cast_armed_smite(c, melee, false)
-	if not sctx.is_empty():
+	# The armed smites: a smite spell cast now (a Bonus Action and a slot) and Divine Smite, armed for the turn or chosen
+	# on this hit's question, beside it; their dice join the hit's.
+	for sctx in cast_armed_smites(c, melee, false, st):
 		e.events.append({"type": "smite", "caster": c.id, "spell": str((sctx["s"] as Dictionary)["id"]), "target": target.id})
-		st["smite_ctx"] = sctx
+		var cast := st.get("smite_ctxs", []) as Array
+		cast.append(sctx)
+		st["smite_ctxs"] = cast
 		var sd := sctx["s"] as Dictionary
 		# Lightning Arrow: the bolt replaces the attack's own damage.
 		if bool(sd.get("replaces_weapon_damage", false)):
@@ -722,69 +724,86 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 	return out
 
 
-## Casts the smite spell `c` armed, if this hit (or miss, for spells with `on_miss_too`) qualifies: a melee or
-## ranged weapon as the spell needs, a Bonus Action and a slot left, no other slot spell this turn. Returns its
-## casting context, or {}.
-func cast_armed_smite(c: Combatant, melee: bool, missed: bool) -> Dictionary:
-	var e := enc()
+## Casts the smites `c` has armed that this hit (or miss, for spells with `on_miss_too`) qualifies for: a melee or
+## ranged weapon as the spell needs, a Bonus Action and a slot left, no other slot spell this turn. Divine Smite, the
+## 2014 way, is no spell and takes no Bonus Action, so it goes off beside a smite spell on the same hit: it comes from
+## the turn's arming or from the answer to this hit's question (st["divine_smite_slot"], smite_offers), which is for
+## this hit only. Each smite is settled on its own: one that can't go off never swallows another. Returns their casting
+## contexts, in the order they were armed.
+func cast_armed_smites(c: Combatant, melee: bool, missed: bool, st: Dictionary = {}) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
 	if not c.creature is Character:
-		return {}
+		return out
+	var wanted: Array[String] = []
+	for a: String in c.armed:
+		if a.begins_with("smite:"):
+			wanted.append(a.substr(6))
+	var asked := st.has("divine_smite_slot")
+	if asked and not DIVINE_SMITE in wanted:
+		wanted.append(DIVINE_SMITE)
+	for sid in wanted:
+		var sctx := _cast_smite(c, sid, melee, missed, asked and sid == DIVINE_SMITE, str(st.get("divine_smite_slot", "")))
+		if not sctx.is_empty():
+			out.append(sctx)
+	return out
+
+
+## One armed smite, cast if it can be: its casting context, or {}. `asked`: Divine Smite chosen on this hit's question,
+## with the slot (or "free") `picked` there.
+func _cast_smite(c: Combatant, sid: String, melee: bool, missed: bool, asked: bool, picked: String) -> Dictionary:
+	var e := enc()
 	var ch := c.creature as Character
-	for a: String in c.armed.duplicate():
-		if not a.begins_with("smite:"):
-			continue
-		var sid := a.substr(6)
-		var sd := Compendium.shared().spell_data(sid)
-		if bool(sd.get("on_hit_melee_only", true)) and not melee:
-			continue
-		if bool(sd.get("on_hit_ranged_only", false)) and melee:
-			continue
-		if missed and not bool(sd.get("on_miss_too", false)):
-			continue
-		# Divine Smite, the 2014 way: no Bonus Action, not a spell (the one spell slot a turn doesn't count it), and it
-		# stays armed for every hit this turn while slots last.
-		var five_e := sid == DIVINE_SMITE
-		if not c.bonus_available and not five_e:
-			return {}
-		# Asked after this hit (smite_offers): armed for this one hit only.
-		if five_e and c.has_meta("smite_asked"):
-			c.remove_meta("smite_asked")
-			c.armed.erase(a)
-		var lvl := int(sd.get("level", 1))
-		var free := false
-		for k in e.spells.castable(c):
-			if str(k["id"]) == sid and bool(k["free"]):
-				free = true
-		var slot := lvl if free else e.spells._lowest_slot(ch, lvl)
-		# Divine Smite asked on the hit: the slot picked on the prompt (or its free use), while it's still there.
-		if five_e and c.has_meta("smite_slot"):
-			var picked := str(c.get_meta("smite_slot"))
-			c.remove_meta("smite_slot")
-			if picked != "free" and int(picked) in SpellReactions.slot_levels(ch, lvl):
-				free = false
-				slot = int(picked)
-		if slot == 0 or (c.cast_slot_spell_this_turn and not free and not five_e):
-			return {}
+	var sd := Compendium.shared().spell_data(sid)
+	if bool(sd.get("on_hit_melee_only", true)) and not melee:
+		return {}
+	if bool(sd.get("on_hit_ranged_only", false)) and melee:
+		return {}
+	if missed and not bool(sd.get("on_miss_too", false)):
+		return {}
+	# Divine Smite, the 2014 way: no Bonus Action, not a spell (the one spell slot a turn doesn't count it), and armed it
+	# smites every hit this turn while slots last.
+	var five_e := sid == DIVINE_SMITE
+	if not c.bonus_available and not five_e:
+		return {}
+	var lvl := int(sd.get("level", 1))
+	var free := false
+	for k in e.spells.castable(c):
+		if str(k["id"]) == sid and bool(k["free"]):
+			free = true
+	var slot := lvl if free else e.spells._lowest_slot(ch, lvl)
+	# Divine Smite asked on the hit: the slot picked on the prompt (or its free use), while it's still there.
+	if asked and picked != "free" and int(picked) in SpellReactions.slot_levels(ch, lvl):
+		free = false
+		slot = int(picked)
+	if slot == 0 or (c.cast_slot_spell_this_turn and not free and not five_e):
+		return {}
+	if not five_e:
+		c.armed.erase("smite:" + sid)
+		c.bonus_available = false
+	if free:
+		ch.spend_resource("spell:%s" % sid)
+	else:
+		ch.expend_slot(slot)
 		if not five_e:
-			c.armed.erase(a)
-			c.bonus_available = false
-		if free:
-			ch.spend_resource("spell:%s" % sid)
-		else:
-			ch.expend_slot(slot)
-			if not five_e:
-				c.cast_slot_spell_this_turn = true
-		var conc: Concentration = null
-		if bool((sd.get("duration", {}) as Dictionary).get("concentration", false)):
-			conc = c.creature.begin_concentration(sid, str(sd["name"]))
-		if five_e:
-			e.log.add("spell", "%s smites (%s)" % [c.name(), "the free use" if free else "a level %d spell slot" % slot], c.id)
-		else:
-			e.spells.trigger_ends(c, "cast_spell")
-			e.log.add("spell", "%s casts %s on the %s (level %d)" % [c.name(), sd["name"], "miss" if missed else "hit", slot], c.id)
-		return {"c": c, "s": sd, "slot": slot, "nums": e.spells.numbers(c, e.spells._entry_any(c, sid)), "conc": conc, "opts": {},
-			"choice": SpellCaster.choice_of(sd, {})}
-	return {}
+			c.cast_slot_spell_this_turn = true
+	var conc: Concentration = null
+	if bool((sd.get("duration", {}) as Dictionary).get("concentration", false)):
+		conc = c.creature.begin_concentration(sid, str(sd["name"]))
+	if five_e:
+		e.log.add("spell", "%s smites (%s)" % [c.name(), "the free use" if free else "a level %d spell slot" % slot], c.id)
+	else:
+		e.spells.trigger_ends(c, "cast_spell")
+		e.log.add("spell", "%s casts %s on the %s (level %d)" % [c.name(), sd["name"], "miss" if missed else "hit", slot], c.id)
+	return {"c": c, "s": sd, "slot": slot, "nums": e.spells.numbers(c, e.spells._entry_any(c, sid)), "conc": conc, "opts": {},
+		"choice": SpellCaster.choice_of(sd, {})}
+
+
+## Whether Divine Smite went off on the hit `st` describes.
+static func divine_smote(st: Dictionary) -> bool:
+	for sctx: Dictionary in st.get("smite_ctxs", []) as Array:
+		if str((sctx["s"] as Dictionary).get("id", "")) == DIVINE_SMITE:
+			return true
+	return false
 
 
 ## Divine Smite offered once a melee attack hits, an Opportunity Attack included (the 2014 way: the paladin decides
@@ -832,11 +851,9 @@ func smite_offers(c: Combatant, target: Combatant, option: Dictionary, st: Dicti
 		"select": func(selected: Array[String]) -> void:
 			if not selected.is_empty():
 				choice["slot"] = selected[0],
-		"use": func() -> void:
-			if not ("smite:" + DIVINE_SMITE) in c.armed:
-				c.armed.append("smite:" + DIVINE_SMITE)
-				c.set_meta("smite_asked", true)
-			c.set_meta("smite_slot", str(choice["slot"]))}]
+		# The answer belongs to this hit alone (`st`): it is spent when this hit's damage is rolled, beside any smite spell
+		# armed, and is gone with the hit, so a later hit is asked again.
+		"use": func() -> void: st["divine_smite_slot"] = str(choice["slot"])}]
 
 
 ## The extra dice a smite spell adds to the hit: its damage with the slot's extra dice, plus Divine Smite's die
@@ -922,8 +939,7 @@ func after_miss(c: Combatant, target: Combatant, option: Dictionary, r: CombatRe
 	var e := enc()
 	# Lightning Arrow on a miss: half the bolt's damage to the target, then the burst.
 	if str(option.get("kind", "")) in ["weapon", "thrown"] and not bool(option.get("melee", true)):
-		var sctx := cast_armed_smite(c, false, true)
-		if not sctx.is_empty():
+		for sctx in cast_armed_smites(c, false, true):
 			e.events.append({"type": "smite", "caster": c.id, "spell": str((sctx["s"] as Dictionary)["id"]), "target": target.id})
 			var total := 0
 			var texts: Array[String] = []
@@ -1076,8 +1092,8 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 			fx12.repeat_save = {"ability": "wis", "dc": rdc, "when": "end"}
 			target.creature.add_effect(fx12)
 	# A smite spell's effects (Searing Smite's burning, Thunderous Smite's push, Hail of Thorns' burst...).
-	if st.has("smite_ctx"):
-		smite_follow_up(st["smite_ctx"] as Dictionary, target, alive, r)
+	for sctx: Dictionary in st.get("smite_ctxs", []) as Array:
+		smite_follow_up(sctx, target, alive, r)
 	# Giant Ancestry riders.
 	match str(st.get("giant", "")):
 		"frosts_chill":
