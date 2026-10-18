@@ -25,8 +25,21 @@ An encounter marked `waiting` (started by stepping into an area) has foes standi
 it starts. Each shows once a party member can see its square (the fight's own sight rules: walls and closed doors,
 the light of the hour and the map, lamps and the lantern, Darkvision), and stays shown. Nobody walks through them.
 
-A waiting foe faces a way, and its figure shows it: its entry's `facing`, else toward the middle of its group
-(gathered round a fire, a cauldron, a dig), else toward the middle of its fight's area. Before a fight it notices a
+Seventeen fights wait in plain view. Nine always did: the frozen watch at the Amber Temple's doors, the catacombs' sleepers
+by night, the coven at its cauldron, Ghakis's keepers, the Wachters' cellar cult, the tower's night visitors, the village's
+dead at night, the werewolf den's guards and the wine cellar's dig. Eight were walk-in fights before overworld stealth: the
+Abbey garden's scarecrows (`garden_sentry`), Castle Ravenloft's guardroom (`court_post_watch`), the east turret post
+(`crg_turret_guard`), the jailers' guardroom (`larders_jailers`), the gargoyles of the champion's tomb
+(`cat_gargoyle_watch`), of the north tower peak (`peak_guardians`) and of the front courtyard by night
+(`crg_courtyard_gargoyles`), and Baba Lysaga's scarecrows (`berez_scarecrows`). Only the foes that stand in plain view show:
+a foe marked `unseen` (what bursts out when the fight starts, and the extras a fight brings that are spread about the
+place) has no figure, notices no one and comes when the fight starts. Yester Hill's wardens' camp and the winery's druids
+stay walk-in fights: they waited once, and a party on the summit path or at the winery door was noticed from outside,
+which forced fights nobody had walked into.
+
+A waiting foe faces a way, and its figure shows it: its entry's `facing` (every foe in view of a fight that waits since
+overworld stealth has one: `make validate` asks for it), else toward the middle of its group (gathered round a fire, a
+cauldron, a dig), else toward the middle of its fight's area. Before a fight it notices a
 party member within 30 ft (the maps are compact; at 60 ft foes noticed parties walking past) in one of two ways
 (owner, 2026-10-07, after Baldur's Gate 3's sight cones):
 

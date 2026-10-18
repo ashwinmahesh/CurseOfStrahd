@@ -62,6 +62,15 @@ Tests: test_stealth_visit, test_pad_explore, test_layout.
 conversions): `LocationStealth.step_in` and `_check_slipped`, the XP award through `Xp.talked_away`, guarded containers,
 sleepers, the hover hints and the arrival rule (`LocationView.arrive_sneaking`). Tests: test_slip_past, test_xp.
 
+**Built (branch `stealth`, piece 3):** all eight conversions, each its own commit: garden_sentry, court_post_watch,
+crg_turret_guard, larders_jailers, cat_gargoyle_watch, peak_guardians, crg_courtyard_gargoyles and berez_scarecrows. Every
+foe in view has a `facing`, what joins only when its fight starts is `unseen`, and each series starts where the foes first
+notice a party walking in from the spawn the story uses (read off by walking it), with the doors that walk opened. Hit
+Points were retuned to hold 4 to 6 in 8 from there: the Abbey garden's wisps 27 to 18, the jailers 60 to 108, the champion's
+gargoyles 134 to 101, the peak's 100, 87 and 77 to 55, 70 and 58, the courtyard's 77 and 84 to 46 and 50, and Berez's level 9
+version by a third. `make validate` asks every fight made `waiting` since for its facings (`LEGACY_WAITING` lists the nine
+that predate them). Yester Hill's wardens' camp and the winery's druids stay walk-in fights.
+
 ## Option A: Slip past (skip a guarded room, or rob it)
 
 **Rule.** A `waiting` fight starts when one of its foes notices a party member, when the party attacks, or when the
