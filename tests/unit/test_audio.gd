@@ -271,6 +271,24 @@ func test_the_castle_has_no_tavern_swing() -> void:
 	assert_true(Audio.files("music", "castle").has("res://art/sourced/oga_tausdei/stronghold.mp3"), "and Stronghold")
 
 
+## The castle's lonely piano (owner, 2026-10-18): the Marche funebre and the six more he picked from the listening page.
+## Piano is quiet, so each carries a track level from its whole-file loudness against the Marche funebre's.
+func test_the_castle_plays_the_lonely_piano() -> void:
+	var piano: Array[String] = [
+		"wikimedia_commons/Chopin_Nocturne_Op48_No1_Luke_Faulkner.ogg",
+		"wikimedia_commons/Chopin_Prelude_Op28_No4_Ivan_Ilic.ogg",
+		"wikimedia_commons/Chopin_Nocturne_Op_posth_C-sharp_minor_Musopen.ogg",
+		"wikimedia_commons/Chopin_Nocturne_Op72_No1_Luke_Faulkner.mp3",
+		"wikimedia_commons/Beethoven_Moonlight_Sonata_I_Paul_Pitman.ogg",
+		"kevin_macleod/Wounded.mp3"]
+	var levels := Audio._data["track_levels"] as Dictionary
+	for f: String in piano:
+		var path := "res://art/sourced/" + f
+		assert_true(Audio.files("music", "castle").has(path), "the castle plays %s" % f)
+		assert_true(levels.has(path), "%s has its own level" % f)
+		assert_true(absf(float(levels.get(path, 99.0))) <= 12.0, "%s: a level that big would clip or vanish" % f)
+
+
 ## Region themes (A1, lane 11): a region's places play its theme, but taverns and the like keep their own mood.
 func test_regions_play_their_theme() -> void:
 	var c := Compendium.shared()
