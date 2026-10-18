@@ -208,13 +208,13 @@
       "model": "eleven_v3"
     },
     "vosk": {
-      "voice_id": "0c8J1N1i3sIcgiJsow0W",
-      "name": "James - Clear, Polished and Steady",
-      "description": "A man with a mild, precise, soft-spoken English accent, a scholar with impeccable manners: dry, reasonable and pleasant, like a solicitor explaining a contract. A faint purr of hunger beneath the politeness.",
+      "voice_id": "A3l5D1B0XmKei4MqrzKr",
+      "name": "Barovia Vosk",
+      "description": "Master Vosk, an arcanaloth disguised as a scholar of the Amber Temple: a calm, knowing, powerful, sinister voice with menace under perfect manners; a mild, precise English accent. Designed 2026-10-18 (Ashwin's pick, voice A).",
       "settings": {},
-      "library": true,
       "accent_tag": "[English accent]",
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "released": true
     },
     "ilinca_vrana": {
       "voice_id": "LJylQFwR903OigY5UG7p",
