@@ -81,7 +81,7 @@ func test_larders_furnace_v0_at_level_10() -> void:
 
 ## larders_jailers, castle_ravenloft_larders_dungeon variant 0 at level 10.
 func test_larders_jailers_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_jailers", [Vector2i(22, 3), Vector2i(21, 3), Vector2i(20, 3), Vector2i(19, 3)], 4, 6, [])
+	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_jailers", [Vector2i(21, 3), Vector2i(20, 3), Vector2i(19, 3), Vector2i(18, 3)], 4, 6, [], [], ["larders_jailers_post_door"])
 
 
 ## larders_questioner, castle_ravenloft_larders_dungeon variant 0 at level 10.

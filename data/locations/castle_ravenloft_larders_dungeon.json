@@ -1314,6 +1314,7 @@
     {
       "id": "larders_jailers",
       "trigger": "enter_area:larders_jailers_post",
+      "waiting": true,
       "when": "not flag.larders_jailers_beaten",
       "text": "Suits of armour stand round the jailers' table as if waiting for another hand. They are empty, and they draw.",
       "surprise": "",
@@ -1324,56 +1325,72 @@
           "cell": [
             22,
             2
-          ]
+          ],
+          "hp": 108,
+          "facing": "southwest"
         },
         {
           "monster": "helmed_horror",
           "cell": [
             25,
             2
-          ]
+          ],
+          "hp": 108,
+          "facing": "west"
         },
         {
           "monster": "helmed_horror",
           "cell": [
             24,
             4
-          ]
+          ],
+          "hp": 108,
+          "facing": "west"
         },
         {
           "monster": "helmed_horror",
           "cell": [
             14,
             2
-          ]
+          ],
+          "hp": 108,
+          "unseen": true
         },
         {
           "monster": "helmed_horror",
           "cell": [
             21,
             9
-          ]
+          ],
+          "hp": 108,
+          "unseen": true
         },
         {
           "monster": "helmed_horror",
           "cell": [
             21,
             13
-          ]
+          ],
+          "hp": 108,
+          "unseen": true
         },
         {
           "monster": "helmed_horror",
           "cell": [
             21,
             6
-          ]
+          ],
+          "hp": 108,
+          "unseen": true
         },
         {
           "monster": "helmed_horror",
           "cell": [
             16,
             5
-          ]
+          ],
+          "hp": 108,
+          "unseen": true
         }
       ]
     },

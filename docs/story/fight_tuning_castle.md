@@ -33,7 +33,7 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 | `larders_guardroom` | larders | L10v0 | 10 | 2 wight, 2 helmed horror, 4 strahd zombie | 4 wight, 4 helmed horror, 6 ghast, strahd zombie | 5 |
 | `larders_watch_alarm` | larders | L10v0 | 10 | 2 wight, 2 helmed horror, 4 strahd zombie | 4 wight (102 HP), 3 helmed horror (75 HP), strahd zombie (38 HP), 5 ghast (45 HP) | 5 |
 | `larders_furnace` | larders_dungeon | L10v0 | 10 | 2 flameskull, fire elemental | 3 flameskull, fire elemental | 4 |
-| `larders_jailers` | larders_dungeon | L10v0 | 10 | 3 helmed horror | 8 helmed horror | 4 |
+| `larders_jailers` | larders_dungeon | L10v0 | 10 | 3 helmed horror | 8 helmed horror (108 HP) | 5 |
 | `larders_questioner` | larders_dungeon | L10v0 | 10 | wight, 2 black pudding, 6 crawling claw | 3 wraith (151 HP), 5 black pudding (153 HP), 9 crawling claw (4 HP) | 5 |
 | `crg_kestrel_cellar` | main_floor | L10v0 | 10 | 3 vampire spawn | 7 vampire spawn (126 HP) | 6 |
 | `crg_kestrel_cellar` | main_floor | L10v1 | 10 | 3 vampire spawn | 7 vampire spawn (144 HP) | 5 |
