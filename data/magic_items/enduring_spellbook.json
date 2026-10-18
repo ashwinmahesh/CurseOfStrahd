@@ -15,5 +15,6 @@
   "theme": "implements",
   "icon": "book",
   "summary": "A spellbook that can't be harmed by fire, water or age.",
-  "text": "Neither flame nor water can harm this spellbook or the writing inside it, and time leaves no mark on its pages. (It has no further effect in the game.)"
+  "text": "Neither flame nor water can harm this spellbook or the writing inside it, and time leaves no mark on its pages, which still hold its last owner's spells for a Wizard to copy into their own book. (It has no further effect in the game.)",
+  "spells": ["detect_magic", "find_familiar", "identify", "magic_missile", "levitate"]
 }
