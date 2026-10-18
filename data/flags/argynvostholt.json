@@ -180,6 +180,11 @@
       "id": "beacon_oath_kept",
       "type": "bool",
       "summary": "The party kept Vladimir's oath at the beacon's cradle and let the dragon's flame go out (beacon:oath_kept): The Dragon's Beacon ends as a failure, the cradle, the echo and the bones go quiet for good. A side flag; order_fate stays grudge."
+    },
+    {
+      "id": "ballroom_colony_cleared",
+      "type": "bool",
+      "summary": "The party cleared the giant spiders' colony out of the west wing's ballroom (encounter ballroom_colony)."
     }
   ]
 }

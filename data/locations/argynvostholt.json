@@ -636,6 +636,25 @@
       "model": "rubble",
       "search_dc": 14,
       "item": "holy_symbol_emblem"
+    },
+    {
+      "id": "holt_dragon_statue",
+      "cell": [
+        24,
+        8
+      ],
+      "kind": "examine",
+      "label": "The dragon statue",
+      "model": "gargoyle"
+    },
+    {
+      "id": "holt_dragon_statue_frost",
+      "cell": [
+        25,
+        8
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
     }
   ],
   "containers": [
@@ -657,6 +676,39 @@
     }
   ],
   "lights": [],
+  "traps": [
+    {
+      "id": "holt_front_steps",
+      "cells": [
+        [
+          19,
+          6
+        ],
+        [
+          20,
+          6
+        ],
+        [
+          21,
+          6
+        ],
+        [
+          22,
+          6
+        ]
+      ],
+      "label": "The front steps",
+      "detect_dc": 14,
+      "disarm_dc": 14,
+      "save": {
+        "ability": "dex",
+        "dc": 14
+      },
+      "damage": "3d8",
+      "damage_type": "cold",
+      "text": "An ancient ward laid by the Order of the Silver Dragon sleeps within the front steps, set to wake beneath an unannounced stranger's boot in a burst of killing frost."
+    }
+  ],
   "npcs": [
     {
       "npc": "sir_ottokar",

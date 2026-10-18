@@ -24,7 +24,7 @@
       "#..........#.............#.........#",
       "#..........#.............#.........#",
       "#..........#.............#..=====..#",
-      "#..................................#",
+      "...................................#",
       "#..........#.............#.........#",
       "#..........#.............#.........#",
       "#..........#............~#.........#",
@@ -142,6 +142,10 @@
     "from_undercroft": [
       27,
       21
+    ],
+    "from_west_wing": [
+      1,
+      18
     ]
   },
   "exits": [
@@ -186,6 +190,16 @@
       "label": "A stair down to the undercroft",
       "when": "flag.tithe_told",
       "locked_text": "Flagstones under the servants' table, and a cold draught between them."
+    },
+    {
+      "id": "west_wing_door",
+      "cell": [
+        0,
+        18
+      ],
+      "to": "argynvostholt_west_wing",
+      "spawn": "from_hall",
+      "label": "A passage into the west wing"
     }
   ],
   "doors": [

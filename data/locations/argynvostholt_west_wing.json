@@ -1,0 +1,1204 @@
+{
+  "id": "argynvostholt_west_wing",
+  "name": "Argynvostholt, West Wing",
+  "region": "argynvostholt",
+  "summary": "The household west wing opens off a central passage into a spider-choked ballroom, a laid dining hall, a parlour, a wine store, a cold kitchen with a rattling pot, and the dragon's own vaulted den.",
+  "text": "A long passage runs west from the gallery between rows of closed doors. To the north lie the ballroom, the dining hall, and the parlour; to the south wait the kitchen, the wine store, and the great hollow of the dragon's den.",
+  "map": {
+    "rows": [
+      "########################################",
+      "#....._____.....#..........#...........#",
+      "#.~~.._____..~~.#..........#...........#",
+      "#.~~.......~..~.#..........#...........#",
+      "#...............#..======..#...........#",
+      "#....~.==.......#..======..#...........#",
+      "#......==...~~..#..........#...........#",
+      "#..~~.......~~..#..........#...........#",
+      "#...~.....~.....#..........#...........#",
+      "#...............#..........#...........#",
+      "#######...###########.###########.######",
+      "#......................................#",
+      "#.......................................",
+      "#......................................#",
+      "########.############.###########.######",
+      "#...............#..........#...........#",
+      "#...............#..........#...........#",
+      "#...............#..........#...........#",
+      "#...............#..........#...........#",
+      "#...............#..=====...............#",
+      "#...............#..........#...........#",
+      "#...............#..........#...........#",
+      "#...............#..........#############",
+      "#...............#..........#############",
+      "#...............#..........#############",
+      "#...............########################",
+      "#...............########################",
+      "########################################"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "holt_west_passage",
+      "name": "The west passage",
+      "cells": [
+        [
+          1,
+          11
+        ],
+        [
+          38,
+          13
+        ]
+      ],
+      "floor": "interior/marble_floor",
+      "walls": "castle/ashlar"
+    },
+    {
+      "id": "holt_ballroom",
+      "name": "The ballroom",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          15,
+          7
+        ]
+      ],
+      "light": "dark",
+      "floor": "interior/parquet",
+      "walls": "interior/wood_panel",
+      "furnish": "webbed_ballroom"
+    },
+    {
+      "id": "holt_ballroom_doors",
+      "name": "The ballroom",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          15,
+          9
+        ]
+      ],
+      "light": "dark",
+      "floor": "interior/parquet",
+      "walls": "interior/wood_panel",
+      "furnish": "webbed_ballroom"
+    },
+    {
+      "id": "holt_dining_hall",
+      "name": "The dining hall",
+      "cells": [
+        [
+          17,
+          1
+        ],
+        [
+          26,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "holt_parlour",
+      "name": "The parlour",
+      "cells": [
+        [
+          28,
+          1
+        ],
+        [
+          38,
+          9
+        ]
+      ],
+      "furnish": "faded_parlour"
+    },
+    {
+      "id": "holt_dragons_den",
+      "name": "The dragon's den",
+      "cells": [
+        [
+          1,
+          15
+        ],
+        [
+          15,
+          26
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall",
+      "furnish": "dragons_den"
+    },
+    {
+      "id": "holt_kitchen",
+      "name": "The kitchen",
+      "cells": [
+        [
+          17,
+          15
+        ],
+        [
+          26,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "holt_wine_store",
+      "name": "The wine store",
+      "cells": [
+        [
+          28,
+          15
+        ],
+        [
+          38,
+          21
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "interior/damp_plaster",
+      "furnish": "wine_store"
+    }
+  ],
+  "spawns": {
+    "default": [
+      38,
+      12
+    ],
+    "from_hall": [
+      38,
+      12
+    ]
+  },
+  "exits": [
+    {
+      "id": "west_wing_out",
+      "cell": [
+        39,
+        12
+      ],
+      "to": "argynvostholt_hall",
+      "spawn": "from_west_wing",
+      "label": "Back to the west gallery"
+    }
+  ],
+  "doors": [
+    {
+      "id": "holt_ballroom_door",
+      "cell": [
+        8,
+        10
+      ],
+      "label": "Ballroom doors"
+    },
+    {
+      "id": "holt_ballroom_door_w",
+      "cell": [
+        7,
+        10
+      ],
+      "label": "Ballroom doors"
+    },
+    {
+      "id": "holt_ballroom_door_e",
+      "cell": [
+        9,
+        10
+      ],
+      "label": "Ballroom doors"
+    },
+    {
+      "id": "holt_dining_door",
+      "cell": [
+        21,
+        10
+      ],
+      "label": "Dining hall door"
+    },
+    {
+      "id": "holt_parlour_door",
+      "cell": [
+        33,
+        10
+      ],
+      "label": "Parlour door"
+    },
+    {
+      "id": "holt_den_door",
+      "cell": [
+        8,
+        14
+      ],
+      "label": "The dragon's den"
+    },
+    {
+      "id": "holt_kitchen_door",
+      "cell": [
+        21,
+        14
+      ],
+      "label": "Kitchen door"
+    },
+    {
+      "id": "holt_wine_store_door",
+      "cell": [
+        33,
+        14
+      ],
+      "label": "Wine store door"
+    },
+    {
+      "id": "holt_service_door",
+      "cell": [
+        27,
+        19
+      ],
+      "label": "Service door"
+    }
+  ],
+  "props": [
+    {
+      "id": "holt_ww_portraits",
+      "cell": [
+        3,
+        10
+      ],
+      "kind": "decor",
+      "label": "A row of portraits",
+      "model": "painting_row"
+    },
+    {
+      "id": "holt_ww_portrait_2",
+      "cell": [
+        14,
+        10
+      ],
+      "kind": "decor",
+      "label": "A family portrait",
+      "model": "family_portrait"
+    },
+    {
+      "id": "holt_ww_portrait_3",
+      "cell": [
+        27,
+        10
+      ],
+      "kind": "decor",
+      "label": "A portrait turned to the wall",
+      "model": "portrait_turned"
+    },
+    {
+      "id": "holt_ballroom_chandelier",
+      "cell": [
+        7,
+        5
+      ],
+      "kind": "examine",
+      "label": "The fallen chandelier",
+      "model": "candelabra",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "holt_ballroom_harp",
+      "cell": [
+        6,
+        1
+      ],
+      "kind": "decor",
+      "label": "A harp under a veil of web",
+      "model": "harp"
+    },
+    {
+      "id": "holt_ballroom_harpsichord",
+      "cell": [
+        10,
+        1
+      ],
+      "kind": "decor",
+      "label": "A harpsichord",
+      "model": "harpsichord"
+    },
+    {
+      "id": "holt_ballroom_window_1",
+      "cell": [
+        3,
+        0
+      ],
+      "kind": "decor",
+      "label": "A window grown over with web",
+      "model": "window_shuttered"
+    },
+    {
+      "id": "holt_ballroom_window_2",
+      "cell": [
+        8,
+        0
+      ],
+      "kind": "decor",
+      "label": "A window grown over with web",
+      "model": "window_tall"
+    },
+    {
+      "id": "holt_ballroom_window_3",
+      "cell": [
+        13,
+        0
+      ],
+      "kind": "decor",
+      "label": "A window grown over with web",
+      "model": "window_shuttered"
+    },
+    {
+      "id": "holt_ballroom_web_1",
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "decor",
+      "label": "Sheets of web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "holt_ballroom_web_2",
+      "cell": [
+        16,
+        6
+      ],
+      "kind": "decor",
+      "label": "Sheets of web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "holt_ballroom_web_3",
+      "cell": [
+        5,
+        0
+      ],
+      "kind": "decor",
+      "label": "Sheets of web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "holt_ballroom_web_4",
+      "cell": [
+        11,
+        0
+      ],
+      "kind": "decor",
+      "label": "Sheets of web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "holt_dining_hearth",
+      "cell": [
+        21,
+        0
+      ],
+      "kind": "decor",
+      "label": "A cold hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "holt_dining_painting_1",
+      "cell": [
+        18,
+        0
+      ],
+      "kind": "decor",
+      "label": "A painting",
+      "model": "painting"
+    },
+    {
+      "id": "holt_dining_painting_2",
+      "cell": [
+        24,
+        0
+      ],
+      "kind": "decor",
+      "label": "A painting",
+      "model": "painting"
+    },
+    {
+      "id": "holt_kitchen_stove",
+      "cell": [
+        24,
+        14
+      ],
+      "kind": "decor",
+      "label": "A cold stove",
+      "model": "stove"
+    },
+    {
+      "id": "holt_iron_pot",
+      "cell": [
+        24,
+        15
+      ],
+      "kind": "examine",
+      "label": "A rattling iron pot",
+      "model": "stewpot",
+      "checks": [
+        {
+          "id": "holt_pot_lid",
+          "skill": "investigation",
+          "dc": 13,
+          "label": "Lift the pot's lid",
+          "success": {
+            "gold": 25,
+            "text": "You ease the heavy iron lid aside to find a twist of greasy cloth in the dry bottom, heavy with a cook's small hoard of gold coin. Once uncovered, the pot gives a last small clink and settles into quiet, as if its duty is done."
+          },
+          "failure": {
+            "text": "The iron lid refuses to budge, stinging your fingers with a fierce heat that a dead stove has no business keeping."
+          }
+        }
+      ]
+    },
+    {
+      "id": "holt_kitchen_pot_rack",
+      "cell": [
+        18,
+        14
+      ],
+      "kind": "decor",
+      "label": "A rack of copper pans",
+      "model": "pot_rack"
+    },
+    {
+      "id": "holt_kitchen_herbs",
+      "cell": [
+        26,
+        14
+      ],
+      "kind": "decor",
+      "label": "Dried herbs, long past use",
+      "model": "drying_herbs"
+    },
+    {
+      "id": "holt_wine_rack_1",
+      "cell": [
+        29,
+        14
+      ],
+      "kind": "decor",
+      "label": "A rack of bottles gone to vinegar",
+      "model": "bottle_rack"
+    },
+    {
+      "id": "holt_wine_cask_rack",
+      "cell": [
+        31,
+        14
+      ],
+      "kind": "decor",
+      "label": "A cask rack",
+      "model": "cask_rack"
+    },
+    {
+      "id": "holt_wine_rack_2",
+      "cell": [
+        35,
+        14
+      ],
+      "kind": "decor",
+      "label": "A rack of bottles gone to vinegar",
+      "model": "bottle_rack"
+    },
+    {
+      "id": "holt_wine_rack_3",
+      "cell": [
+        37,
+        14
+      ],
+      "kind": "decor",
+      "label": "A bricked-up wine rack",
+      "model": "wine_rack_bricked"
+    },
+    {
+      "id": "holt_wine_rack_4",
+      "cell": [
+        39,
+        17
+      ],
+      "kind": "decor",
+      "label": "A rack of bottles gone to vinegar",
+      "model": "bottle_rack"
+    },
+    {
+      "id": "holt_wine_barrel",
+      "cell": [
+        30,
+        20
+      ],
+      "kind": "decor",
+      "label": "A barrel",
+      "model": "barrel"
+    },
+    {
+      "id": "holt_parlour_hearth",
+      "cell": [
+        33,
+        0
+      ],
+      "kind": "decor",
+      "label": "A cold hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "holt_parlour_portrait_1",
+      "cell": [
+        30,
+        0
+      ],
+      "kind": "decor",
+      "label": "A family portrait",
+      "model": "family_portrait"
+    },
+    {
+      "id": "holt_parlour_portrait_2",
+      "cell": [
+        36,
+        0
+      ],
+      "kind": "decor",
+      "label": "A portrait",
+      "model": "painting"
+    },
+    {
+      "id": "holt_guest_book",
+      "cell": [
+        35,
+        3
+      ],
+      "kind": "book",
+      "label": "The guest book",
+      "model": "ledger",
+      "codex": "order_guest_book",
+      "text": "A guest book rests on a brass stand, its pages gone the colour of weak tea. Hundreds of names in a hundred different hands fill the leaves, each with a brief word on the weather or the roast. The last entry, written four hundred years ago, reads only: \"Fine night. The lamp was lit. Back soon.\""
+    },
+    {
+      "id": "holt_den_hollow",
+      "cell": [
+        8,
+        21
+      ],
+      "kind": "examine",
+      "label": "The hollow in the floor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_den_frost_1",
+      "cell": [
+        6,
+        19
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_den_frost_2",
+      "cell": [
+        10,
+        20
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_den_frost_3",
+      "cell": [
+        4,
+        22
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_den_frost_4",
+      "cell": [
+        12,
+        22
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_den_frost_5",
+      "cell": [
+        7,
+        24
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_den_rubble_1",
+      "cell": [
+        2,
+        16
+      ],
+      "kind": "decor",
+      "label": "Fallen stone",
+      "model": "rubble"
+    },
+    {
+      "id": "holt_den_rubble_2",
+      "cell": [
+        14,
+        25
+      ],
+      "kind": "decor",
+      "label": "Fallen stone",
+      "model": "rubble"
+    },
+    {
+      "id": "holt_den_silver_dust",
+      "cell": [
+        8,
+        24
+      ],
+      "kind": "search",
+      "label": "silver glitter in the dust",
+      "model": "rubble",
+      "search_dc": 13,
+      "item": "silver_dust"
+    }
+  ],
+  "containers": [
+    {
+      "id": "holt_web_cocoons",
+      "cell": [
+        14,
+        8
+      ],
+      "label": "A cocooned satchel",
+      "model": "satchel",
+      "items": [
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        },
+        {
+          "id": "holy_water",
+          "qty": 1
+        }
+      ],
+      "gold": 40
+    },
+    {
+      "id": "holt_sideboard",
+      "cell": [
+        26,
+        2
+      ],
+      "label": "A sideboard",
+      "model": "sideboard",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 4
+        }
+      ],
+      "gold": 25
+    },
+    {
+      "id": "holt_kitchen_cupboard",
+      "cell": [
+        26,
+        20
+      ],
+      "label": "A pantry cupboard",
+      "model": "cupboard",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 6
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "holt_steward_strongbox",
+      "cell": [
+        38,
+        21
+      ],
+      "label": "The steward's strongbox",
+      "model": "strongbox",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 60,
+      "lock_dc": 14
+    },
+    {
+      "id": "holt_den_scatter",
+      "cell": [
+        11,
+        25
+      ],
+      "label": "Silver coins ground into the floor",
+      "model": "gold_spill",
+      "items": [],
+      "gold": 80
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        8,
+        20
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "ballroom_colony",
+      "trigger": "enter_area:holt_ballroom",
+      "waiting": true,
+      "when": "not flag.ballroom_colony_cleared and level >= 8",
+      "text": "The high webs split with a sound like tearing linen, and dark, many-legged shapes pour down the silk ropes toward the floor. They come in silence, save for the dry click of their jaws.",
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            1
+          ],
+          "hp": 95,
+          "facing": "southeast"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            14,
+            6
+          ],
+          "hp": 95,
+          "facing": "west"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            4,
+            8
+          ],
+          "hp": 95,
+          "facing": "northeast"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            8,
+            2
+          ],
+          "hp": 95,
+          "facing": "southwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            13,
+            1
+          ],
+          "hp": 95,
+          "facing": "southwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            10,
+            8
+          ],
+          "hp": 95,
+          "facing": "northwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            5
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            4,
+            3
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            11,
+            4
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            8
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            3,
+            6
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            5,
+            5
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            12,
+            7
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            14,
+            3
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            3
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            3,
+            1
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            15,
+            9
+          ],
+          "name": "A Swarm of Spiderlings",
+          "hp": 70,
+          "facing": "northwest"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            1,
+            7
+          ],
+          "name": "A Swarm of Spiderlings",
+          "hp": 70,
+          "facing": "east"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            3,
+            3
+          ],
+          "name": "A Swarm of Spiderlings",
+          "hp": 70,
+          "facing": "east"
+        }
+      ],
+      "surprise": "",
+      "flag": "ballroom_colony_cleared"
+    },
+    {
+      "id": "ballroom_colony",
+      "trigger": "enter_area:holt_ballroom",
+      "waiting": true,
+      "when": "not flag.ballroom_colony_cleared and level >= 7",
+      "text": "The high webs split with a sound like tearing linen, and dark, many-legged shapes pour down the silk ropes toward the floor. They come in silence, save for the dry click of their jaws.",
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            1
+          ],
+          "hp": 95,
+          "facing": "southeast"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            14,
+            6
+          ],
+          "hp": 95,
+          "facing": "west"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            4,
+            8
+          ],
+          "hp": 95,
+          "facing": "northeast"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            8,
+            2
+          ],
+          "hp": 95,
+          "facing": "southwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            13,
+            1
+          ],
+          "hp": 95,
+          "facing": "southwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            10,
+            8
+          ],
+          "hp": 95,
+          "facing": "northwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            5
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            4,
+            3
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            11,
+            4
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            8
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            3,
+            6
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            5,
+            5
+          ],
+          "hp": 95,
+          "unseen": true
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            15,
+            9
+          ],
+          "name": "A Swarm of Spiderlings",
+          "hp": 60,
+          "facing": "northwest"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            1,
+            7
+          ],
+          "name": "A Swarm of Spiderlings",
+          "hp": 60,
+          "facing": "east"
+        }
+      ],
+      "surprise": "",
+      "flag": "ballroom_colony_cleared"
+    },
+    {
+      "id": "ballroom_colony",
+      "trigger": "enter_area:holt_ballroom",
+      "waiting": true,
+      "when": "not flag.ballroom_colony_cleared",
+      "text": "The high webs split with a sound like tearing linen, and dark, many-legged shapes pour down the silk ropes toward the floor. They come in silence, save for the dry click of their jaws.",
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            1
+          ],
+          "hp": 100,
+          "facing": "southeast"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            14,
+            6
+          ],
+          "hp": 100,
+          "facing": "west"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            4,
+            8
+          ],
+          "hp": 100,
+          "facing": "northeast"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            8,
+            2
+          ],
+          "hp": 100,
+          "facing": "southwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            13,
+            1
+          ],
+          "hp": 100,
+          "facing": "southwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            10,
+            8
+          ],
+          "hp": 100,
+          "facing": "northwest"
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            1,
+            5
+          ],
+          "hp": 100,
+          "unseen": true
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            4,
+            3
+          ],
+          "hp": 100,
+          "unseen": true
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            15,
+            9
+          ],
+          "name": "A Swarm of Spiderlings",
+          "hp": 60,
+          "facing": "northwest"
+        }
+      ],
+      "surprise": "",
+      "flag": "ballroom_colony_cleared"
+    }
+  ],
+  "traps": [],
+  "narration": {
+    "enter": "enter:argynvostholt_west_wing"
+  },
+  "rest": "risky"
+}

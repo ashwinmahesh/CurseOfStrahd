@@ -5629,6 +5629,72 @@
           "statue_head"
         ],
         "floor_fill": 0.35
+      },
+      "webbed_ballroom": {
+        "wall": [
+          "cobwebs",
+          "tapestry"
+        ],
+        "floor": [
+          "sheeted_furniture",
+          "chair_high",
+          "candelabra"
+        ],
+        "centre": [
+          "sheeted_furniture"
+        ],
+        "wall_fill": 0.5,
+        "floor_fill": 0.35,
+        "centre_fill": 0.2
+      },
+      "dragons_den": {
+        "floor": [
+          "rubble",
+          "ice_patch",
+          "snowdrift"
+        ],
+        "centre": [
+          "ice_patch",
+          "rubble"
+        ],
+        "floor_fill": 0.3,
+        "centre_fill": 0.15
+      },
+      "faded_parlour": {
+        "wall": [
+          "painting",
+          "family_portrait",
+          "mirror",
+          "lantern_bracket"
+        ],
+        "floor": [
+          "candelabra",
+          "book_stack"
+        ],
+        "centre": [
+          "armchair",
+          "settee"
+        ],
+        "wall_fill": 0.4,
+        "floor_fill": 0.3,
+        "centre_fill": 0.25
+      },
+      "wine_store": {
+        "wall": [
+          "jars"
+        ],
+        "floor": [
+          "barrel",
+          "barrel_spigot",
+          "crate_stack"
+        ],
+        "centre": [
+          "barrel",
+          "wine_tray"
+        ],
+        "wall_fill": 0.3,
+        "floor_fill": 0.5,
+        "centre_fill": 0.2
       }
     }
   },
@@ -6061,6 +6127,19 @@
         ],
         "run": [
           "straw_pallet"
+        ]
+      }
+    ],
+    [
+      [
+        "ballroom"
+      ],
+      {
+        "single": [
+          "fallen_beam"
+        ],
+        "run": [
+          "fallen_beam"
         ]
       }
     ]

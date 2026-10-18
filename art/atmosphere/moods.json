@@ -75,7 +75,8 @@
     "castle_ravenloft_court_belfry": "ravenloft_back_way",
     "castle_ravenloft_court_treasury": "ravenloft_vault",
     "amber_temple_library": "amber_library",
-    "amber_temple_vault": "amber_vault"
+    "amber_temple_vault": "amber_vault",
+    "argynvostholt_west_wing": "webbed_wing"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -3932,6 +3933,29 @@
             "core": "frost",
             "rim": "moonlight",
             "amount": 70
+          }
+        ]
+      }
+    },
+    "webbed_wing": {
+      "like": "haunted",
+      "modern": {
+        "tone": {
+          "shade": "grave",
+          "amount": 0.5,
+          "ambient_tint": "bone_dark",
+          "ambient_mix": 0.45,
+          "shade_saturation": 0.6,
+          "ambient": 1.4
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "bone",
+            "rim": "pewter",
+            "amount": 90
           }
         ]
       }
