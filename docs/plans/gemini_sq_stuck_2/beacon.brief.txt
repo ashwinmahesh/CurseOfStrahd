@@ -1,0 +1,24 @@
+You are drafting dialogue for a single-player D&D video game set in Curse of Strahd (Barovia). Reply in plain text only. Do not call tools, do not send messages to anyone, do not route anything. Just write the lines.
+
+FORMAT. One line per row: `Speaker [mood]: Text`. The mood tag is optional (neutral, smile, angry, afraid, sad, sly, weary). Stage directions go in round brackets inside the text. Narrator lines are `Narrator: ...`. One or two sentences a line, two to five lines a node. Plain A-Z speaker names. British spelling.
+
+THE SCENE. Argynvostholt is the ruined house of the silver dragon Argynvost, whose dead knights (the Order of the Silver Dragon) still keep a watch he never wanted them to keep. Argynvost's echo (a voice, frost drawing a long head on a window) is warm, unhurried, a little amused, kind, calls the living "friends", never commands, asks; pet phrase "Keep the watch." He lit a beacon at the top of his tower every night so the valley would know someone was awake; it went out when he died. The party has carried the cold silver flame from his bones up to the beacon's iron cradle to relight it for one night so his knights can go home. But earlier, at the knights' commander Vladimir's table, the party swore Vladimir's oath of hate: when they reach the castle they will break Strahd and not end him, and the Order will watch the oath kept. So the cradle now offers this choice (existing):
+
+Narrator: The silver flame leans toward the cradle on its own. You swore an oath over Vladimir's table that this house would go on watching.
+* Light it. That oath was a mistake.   (the flame is lit, Vladimir fights them for it)
+* (Lower the flame.) An oath is an oath.   (today: nothing happens and the quest just stays open forever)
+
+WHAT WE ARE ADDING. Keeping the oath is now a real choice that CLOSES the beacon quest as a failure, after a warning and a confirmation. The flame in their hands is the last of Argynvost's fire. If they lower it now, it goes out, he goes out with it, and the beacon will never be lit. Nothing else changes: Vladimir and his knights stay at their post and the oath is kept. It is a failure, not a punishment: sad, quiet, a loss with a shape.
+
+WHAT I NEED (all new, all unvoiced).
+A) THE WARNING (3 lines, `Argynvost` speaking out of the flame as they lower it). He is not angry and not begging. He says what lowering the flame will cost him and the house, without telling them what to do, and he asks. Fair, not a spoiler: never "this will end the quest".
+B) THE TWO CHOICES THE PARTY SAYS (2 short options): one to lower the flame and keep the oath (it must contain the words "oath stands"), one to hold it a little longer instead (it must contain the words "a little longer").
+C) THE FLAME GOES OUT (3 lines, Narrator, plus at most one last line of Argynvost's). The quiet failure scene: one concrete image of what is lost (the cold light, the cradle, the silence on the stair, the hall below). End on the knights' watch going on.
+D) THE CRADLE LATER (1 Narrator line): the cradle afterwards, cold ash and a pale scorch where the flame was. 
+E) THE ECHO LATER (1 Narrator line): the great window in the chapel afterwards, where the frost used to draw his head, now just frost.
+F) THE BONES LATER (1 Narrator line): the dragon's ribs in the mausoleum afterwards, where the frost used to glow where the fire was taken.
+G) THE JOURNAL ENTRY (2 to 3 sentences, first person plural, past tense) for the failure stage: we kept Vladimir's oath, lowered the flame, and the beacon stayed dark. Mention that the knights still keep their watch.
+
+THREE LIMITS. (1) Fair but not a spoiler. (2) Quiet and specific, one concrete image, never a lecture. (3) The later lines carry the consequence without blaming the player.
+
+Return the lines grouped under the headings A, B, C, D, E, F and G, nothing else.

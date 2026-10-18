@@ -1,0 +1,15 @@
+A
+Danika [angry]: (She sets a folded shirt of fine grey links and a knotted purse on the counter between you, her fingers coming off them as if the metal burnt.) That was his grandfather's the night the house on the hill fell, from the cellar the castle still doesn't know about, and the coin is counted to the penny.
+Danika [weary]: (She looks at the floorboards rather than your boots, her jaw tight.) Bray is upstairs with stew in his belly instead of hanging in a pine, and a Martikov doesn't keep a debt.
+Danika [neutral]: Thank you for my son. Now take your silver and go upstairs before I have to look at you again.
+
+B
+Danika [weary]: (She wipes her hands on her apron and comes round the bar with a folded shirt of pale links and a heavy purse.) Urwin's still out with the wicker sun and the wet torches, or he'd be putting this in your hands himself—Brom, leave your brother's ear alone!
+Danika [smile]: His grandfather flew in this mail the night the house on the hill fell, and it's lain in the cellar the castle still doesn't know about ever since. You kept that secret for us, and you brought our boy back through the door in one piece.
+Danika [neutral]: Take the coin as well, and don't argue with me any more than Urwin does. Wipe your feet and sit down; there's stew on.
+
+C
+Bray [smile]: (He spots you by the door and bolts for the kitchen stairs.) Mum, Dad, they're here—the ones who got me out of the tree!
+
+D
+Bray is home and himself, and the castle still doesn't know about the Martikovs' cellar. For bringing him back, we were given the mail shirt Urwin's grandfather flew in and two hundred gold from the inn's strongbox.

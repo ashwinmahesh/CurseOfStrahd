@@ -1,0 +1,25 @@
+You are drafting dialogue for a single-player D&D video game set in Curse of Strahd (Barovia). Reply in plain text only. Do not call tools, do not send messages to anyone, do not route anything. Just write the lines.
+
+FORMAT. One line per row: `Speaker [mood]: Text`. The mood tag is optional (neutral, smile, angry, afraid, sad, sly, weary). Stage directions go in round brackets inside the text. One or two sentences a line, two to five lines a node. Plain A-Z speaker names only. British spelling ("travellers", "colour").
+
+THE SCENE. The Ravens' Ransom is a side quest at the Blue Water Inn, Vallaki. Urwin and Danika Martikov (innkeeper and his wife, secret "Keepers of the Feather", ravens carry their word) have two boys, Brom and Bray. Bray, ten, flew out of the window after dark to look at the castle and was caught in a silver cage hung in a dead pine as a trap for whoever came for him. The party fought the count's fowlers, freed Bray and brought him home. It is now time to pay the party. Urwin's usual payment scene (existing, for reference):
+
+Urwin: (He comes round the bar, which he never does, and takes your hand in both of his, which he has never done.) Our boy. Home, and himself.
+Urwin: My grandfather flew in this, the night the house on the hill fell. It's from the cellar the castle still doesn't know about, thanks to you. And money, which Danika says I'm to give you and not argue.
+(then the party receives an elven chain shirt and 200 gold)
+
+THE PROBLEM. If the party sided with Lady Wachter, who now rules Vallaki, Urwin will say nothing but one line and end the talk, and Danika only says her angry line (below) and ends the talk. So nobody can pay them and the quest sticks. Danika must pay instead. Danika's existing angry line under Lady Wachter's rule (it plays first, then your new lines follow it):
+
+Danika [angry]: You did this. I know you did; the whole town watched you do it. You'll get a bed, because I won't turn anyone into the night. Don't expect breakfast.
+
+Danika's voice: brisk, motherly, practical, interrupts herself to shout at the boys, judges people by their boots, frosty to bullies, warm to guests. Her earlier line about Bray: "Bring him home. Then I'll kill him. Then I'll feed him. In that order." Pet phrases: "Wipe your feet." "It's always stew."
+
+WHAT I NEED (all new, all unvoiced).
+A) DANIKA UNDER LADY WACHTER (3 lines). Right after her angry line above. She is still furious at the party for the town, but they brought her boy home and she keeps her debts. She hands over the mail shirt from the cellar (Urwin's grandfather flew in it; the castle still doesn't know about the cellar) and the money. Cold, exact, unforgiving, and it must cost her something to say thanks. Not warm.
+B) DANIKA DURING THE FESTIVAL (3 lines). Urwin is out with the procession, so she pays instead. She is NOT angry here. Brisk and warm and tired. Same gifts (the mail shirt from the cellar, and the money). She mentions Urwin would have done it himself.
+C) BRAY RUNS FOR HIS MOTHER (1 line). At the inn, Bray, ten, sees the party who brought him home and shouts for a parent. One short line of his, in a boy's voice, no more.
+D) THE JOURNAL ENTRY (2 sentences, first person plural, past tense). Replaces "Urwin gave us the mail his grandfather flew in, and money Danika told him not to argue about." so that it is true whichever Martikov paid. Starts with "Bray is home and himself, and the castle still doesn't know about the Martikovs' cellar."
+
+THREE LIMITS. (1) Fair but not a spoiler: say what is at stake, never "this fails the quest". (2) Quiet and specific: one concrete image of the cost, never a lecture. (3) The later lines carry the consequence without blaming the player more than once.
+
+Return the lines grouped under the headings A, B, C and D, nothing else.

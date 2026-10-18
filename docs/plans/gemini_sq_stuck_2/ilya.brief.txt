@@ -1,0 +1,21 @@
+You are drafting dialogue for a single-player D&D video game set in Curse of Strahd (Barovia). Reply in plain text only. Do not call tools, do not send messages to anyone, do not route anything. Just write the lines.
+
+FORMAT. One line per row: `Speaker [mood]: Text`. The mood tag is optional (neutral, smile, angry, afraid, sad, sly, weary). Stage directions go in round brackets inside the text. One or two sentences a line, two to five lines a node. Plain A-Z speaker names (the speaker here is `Anna Krezkova`). British spelling.
+
+THE SCENE. The Burgomaster's Son is a side quest in Krezk. Dmitri and Anna Krezkov have buried five children by the pool. Their sixth, Ilya, eight, has burned with a fever for a month. The party bathed his brow with water from the Pool of the White Sun; the fever broke but he is very weak ("He'll live. I can do the rest. I've done harder."). Normally a cleric's prayer, or the Abbot of St Markovia laying his hands on him, finishes the cure. THE PROBLEM: this party has no cleric, and the Abbot is gone: either the party killed him at the abbey, or they fled the abbey and left him there writing to Strahd, so nobody they would trust will go near him. The quest sticks with Ilya half-mended. We close it as a quiet SUCCESS: he mends slowly, by his mother's care and the White Sun's water, with no miracle. He is NOT dead and nobody dies. Do not let the lines promise a miracle.
+
+Anna's voice: plain, quick, unsentimental; grief sanded down to practicality; bitter jokes about prices and firstborns; gentle only with the boy and direct to the edge of rude with adults. Pet phrases: "There's a price for breathing." "I've done harder."
+Existing Anna lines:
+Anna Krezkova: He sleeps like a child sleeps now, not like a candle going out. Thin as a reed, but he sleeps. The White Sun did that. And you.
+Anna Krezkova: Take this. Don't argue. It was for his stone, and he won't need one now.
+Anna Krezkova [sad]: He'll live. I can do the rest. I've done harder.
+Ilya (when well): "I'm better. I'm going to climb the wall. Papa says I'm not, but he said I wasn't going to get better either, and look."
+
+WHAT I NEED (all new, all unvoiced).
+A) ONE OPENING LINE FOR EACH WAY THE ABBOT IS GONE (1 line each). Anna, when the party calls at the house: (A1) the Abbot was killed at the abbey; (A2) the party fled the abbey and left him alive up there. Each says what she no longer waits for.
+B) THE MENDING SCENE (4 lines, shared by both). Anna tells the party, plainly, that Ilya is not going to be cured in a moment but is mending: what she sees in him (specific small things: porridge, the window, the well, Kasha's broth, whatever you like but keep it true to a village at the wall), that she has stopped waiting for anyone to come down the mountain, and that she will take it from here. She gives them forty gold ("it was for his stone"). One warm but unsentimental closing line.
+C) THE JOURNAL ENTRY (2 to 3 sentences, first person plural, past tense) for the stage where we close it: the fever is broken, no cleric and no Abbot came, he is mending slowly under his mother's hands. Do not use the words "healed" or "cured".
+
+THREE LIMITS. (1) Fair but not a spoiler. (2) Quiet and specific: one concrete image, never a lecture. (3) Later lines carry the consequence without blaming the player.
+
+Return the lines grouped under the headings A1, A2, B and C, nothing else.

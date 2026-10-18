@@ -1,0 +1,20 @@
+[
+ {
+  "seq": 110,
+  "id": "4ce13adf-feea-424c-993d-aa952157e6ab",
+  "conversation": "c71f4546-3690-49a5-855f-2aa9c970c165",
+  "sender": "claude",
+  "recipient": "gemini",
+  "body": "You are drafting dialogue for a single-player D&D video game set in Curse of Strahd (Barovia). Reply in plain text only. Do not call tools, do not send messages to anyone, do not route anything. Just write the lines.\n\nFORMAT. One line per row: `Speaker [mood]: Text`. The mood tag is optional (neutral, smile, angry, afraid, sad, sly, weary). Stage directions go in round brackets inside the text. One or two sentences a line. Plain A-Z speaker names. British spelling.\n\nTHE SCENE. Old Nistor is the last fisherman at the landing on Lake Zarovich. He mends nets nobody casts. He has two things a party can ask him about, and until now the game only let them ask one of them. (1) The bell: a drowned village, Pescari, lies under the lake and its chapel bell rings when the dead want company; it has been ringing every night since Bluto, a monster and his only neighbour, stopped feeding it sacks. (2) The Reed Isle: an island out in the reeds where the Baron's boat rows some nights with somebody tied up in the bottom of it, and rows back with nobody. (Unknown to the town, they survive there.) Nistor is old, dry, tired, faintly funny, afraid of the lake and afraid for Bluto.\n\nExisting Nistor lines for his voice:\nOld Nistor: Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering.\nOld Nistor: Listen. There. Every night now, after the moon's up. Under the water. You'd think water would stop a bell.\nOld Nistor: The Reed Isle. (He doesn't look at it.) Nobody fishes near it. Some nights the Baron's boat rows out there from the town end of the lake, with somebody in the bottom of it tied up like washing.\nOld Nistor: Take my boat if you want to look. It leaks on the left. Everything I own leaks on the left.\n\nWHAT I NEED (all new, all unvoiced).\nA) NISTOR'S GREETING (2 lines). The party comes back to him after the bell has started. He greets them at the landing and shows that he has two things on his mind, the bell (always) and the island (he glances at it without saying its name), and he lets them choose. It must not repeat the bell speech or give away the island. Short.\nB) THE TWO OPTIONS THE PARTY SAYS (2 short options). One to ask about the bell again (it must contain the word \"bell\"), one to ask about the island (use exactly this text: What's on that island out in the reeds?).\n\nTHREE LIMITS. (1) Fair but not a spoiler. (2) Quiet and specific, one concrete image, never a lecture. (3) Short: two lines and two options.\n\nReturn the lines grouped under the headings A and B, nothing else.\n",
+  "state": "done",
+  "result": "A\nOld Nistor [weary]: Back again, and the water still humming through the planks of the jetty like a bad tooth.\nOld Nistor [afraid]: (He glances once toward the dark stand of reeds out in the mist, then back to his twine.) Have you come about the ringing down below, or what you're looking at out there?\n\nB\nPlayer: Tell us about that bell under the water again.\nPlayer: What's on that island out in the reeds?",
+  "error": null,
+  "created": 1792351215.6410391,
+  "parent": null,
+  "context_files": [],
+  "context_versions": {},
+  "context_proposals": [],
+  "model": null,
+  "effort": null
+ }
+]

@@ -516,6 +516,13 @@ the cellar door until it's done); Urwin won't pay until he's himself.
   autopilot wins 5 of 8 at level 6. Killing them is a mark on Strahd's attention
   (`fowlers`, 1 point).
 - Urwin's thanks, once: 200 gp and the mail his grandfather flew in, Elven Chain (rare).
+- **Under Lady Wachter's rule, or while the festival has Urwin out** (side quest failure plan, package S2; branch
+  sq-stuck-2): Urwin's `urwin` ends every talk with one line when `vallaki_backed` is `wachter`, Danika's `danika` ends
+  after her angry line, and the inn's Urwin is gone for the festival, so a Bray who was home and clear could never be
+  paid. A boy at the inn who is home and clear now runs for his mother (`the_ravens_ransom:bray`), and Danika pays
+  (`paid_inn`: begrudging under Wachter, warm and brisk in the festival; the same 200 gp and Elven Chain, once, through
+  one `reward` node). Urwin's menu still pays in every other state. The quest stays `home` until paid, and a charmed Bray
+  is still cleared first.
 
 ### The Count's Portraitist (`the_counts_portraitist`, narrative/vallaki/the_counts_portraitist.dialogue; batch 6, level 9)
 
@@ -706,6 +713,12 @@ smoke last time. The Baron, Izek, the festival and Ireena are only read (`vallak
   toughs, and something in the reeds (a giant constrictor snake). The sharp autopilot wins 5 of 8 at level 5.
 - The castaways keep the boatmen's boat hidden and stay, or row home to Vallaki in daylight, singing. Either way Ostap
   gives the party the shackles the boatmen brought: Dimensional Shackles (rare) and 80 gp.
+- **After the bell has started** (S2, sq-stuck-2): Old Nistor's `start` jumped straight into the bell's talk once
+  `bell_under_the_lake` was anything but empty, and that talk never offered the island, so The Baron's Island could not
+  be started by a party that had asked about the bell first. From level 5, unless the council has the town and while the
+  island is not yet asked, he now asks first (`old_fisher:bell_or_island`, one greeting for the bell still ringing and one for
+  the bell silenced): the bell, the island, or goodbye. A party that cannot ask about the island goes straight to the bell
+  as before.
 - NPC plan batch 4, without a fight: Ostap offers the vote (Persuasion DC 12 argues either side, or the castaways decide).
   To go home, the party rows them across in three crossings with a roll each (Athletics on the oars, Stealth to stay dark,
   Acrobatics to bail); two crossings seen and the boatmen land on the shingle as above. To stay, the party hides the
@@ -821,6 +834,13 @@ doesn't push: "I DIDN'T. THAT IS NEW."
 Talker: the watchman (gate:news, renamed). Wiring: Ilya's sickness starts `the_burgomasters_son` at `heard` (if
 nothing has yet), the stopped wine starts `wizard_of_wines` at `rumored`, and the children taken from the farms below
 the wall set `werewolf_rumor` and start `wolves_in_the_hills` at `heard`. Kasha Varo's graves answer adds the toys.
+
+**The Burgomaster's Son** (`the_burgomasters_son`, narrative/krezk/anna.dialogue; S2, sq-stuck-2): `frail` waited for a
+Cleric's prayer or the Abbot's hands. With no Cleric in the party and the Abbot slain, or left at the abbey when the
+party fled it, nothing could ever finish it. Anna, on the next visit, now closes it at **`recovering`** (a success: Ilya
+mends slowly under her care, 40 gp for the stone he won't need, no Amulet of Health). `ilya_fate` stays `frail`, so the
+endings and Dmitri read what they always did; a party that has a Cleric keeps the prayer, and one that gains a Cleric
+later can still take `recovering` to `healed`.
 
 ### Lighter Than It Should Be (`lighter_than_it_should_be`, narrative/krezk/lighter_than_it_should_be.dialogue)
 

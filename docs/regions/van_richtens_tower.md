@@ -124,6 +124,9 @@ Six maps (data/locations/). Map themes are existing ones; §13 lists the themes 
   night, `ezmerelda_left_tower`, unless he has already gone home to the tower, in which case she realises he's inside);
   keep his secret (`ezmerelda_secret_kept`); or lie (Deception 15, `ezmerelda_lied`). Give her the letter. Bring him
   to her (as a guest: the reunion plays at her fire).
+- **Named by the cards at the abbey after the tower was searched** (S2, sq-stuck-2): the door was opened before the
+  reading, so `the_hunters_tower` is at `inside`, and her join at the abbey (`abbey_of_st_markovia/ezmerelda:join`) now
+  ends it at `with_her` as the tower's and the yard's joins do (not with `rictavio_gone`: the reunion ends it then).
 - **After she leaves for Vallaki** (Story Allies Presence Plan, package M1; narrative/allies/ezmerelda_hunt.dialogue):
   she waits in the Blue Water Inn's stable yard by Rictavio's wagon (`vallaki_blue_water_inn`, an entry that stands
   while `ezmerelda_left_tower` holds, he is still at the inn and she is not with the party) and speaks first when the

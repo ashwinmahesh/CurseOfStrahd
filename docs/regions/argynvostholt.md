@@ -90,6 +90,10 @@ in a courtyard, the bier and the beacon plinth) is placed as props on open squar
    the cradle conversation is the climax: Vladimir comes up the stair. The party moves him (the dragon's last words,
    no roll; or Persuasion 17), fights him (`beacon_stand`), or backs down. The beacon burns; the knights lie down;
    the milestone; Vladimir's keeping is handed over.
+   **Under the grudge pact** the cradle asks twice (`beacon:pact_warning`): light it anyway (Vladimir fights oathbreakers), or
+   lower the flame, and then Argynvost warns that it is the last of him and the party confirms (`beacon:oath_ask`). Keeping
+   the oath puts the flame out for good: `the_dark_beacon` ends at `kept_dark` (a failure), the side flag
+   `beacon_oath_kept` shuts the cradle, the echo and the bones, and `order_fate` stays `grudge` (sq-stuck-2, package S2).
 8. **The muster** (instead of 7). With Godfrey remembering, or the dragon's words known, the party asks Vladimir to
    call the Order to the table and speaks to all of them. The knights choose to ride.
 9. **The pact** (instead of 7 or 8). Vladimir's terms, sworn over the table.

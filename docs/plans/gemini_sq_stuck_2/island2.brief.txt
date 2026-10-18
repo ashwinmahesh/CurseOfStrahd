@@ -1,0 +1,17 @@
+You are drafting dialogue for a single-player D&D video game set in Curse of Strahd (Barovia). Reply in plain text only. Do not call tools, do not send messages to anyone, do not route anything. Just write the lines.
+
+FORMAT. One line per row: `Speaker [mood]: Text`. The mood tag is optional (neutral, smile, angry, afraid, sad, sly, weary). Stage directions go in round brackets inside the text. One or two sentences a line. Plain A-Z speaker names. British spelling.
+
+CONTEXT. Old Nistor, the last fisherman at the landing on Lake Zarovich, is old, dry, tired, faintly funny, afraid of the lake. You drafted his greeting for a party that comes back while the drowned village's bell is still ringing every night under the lake (that greeting is used, not repeated here). One thing on his mind besides the bell is the Reed Isle out in the reeds, where the Baron's boat rows some nights with somebody tied up in it.
+
+NOW THE SAME GREETING FOR A PARTY THAT HAS ALREADY SILENCED THE BELL. The party cut the bell loose (or rang it for the dead) a while ago and the drowned went quiet; the fish are coming back; he caught a pike the length of his arm and nearly wept on it. He is lighter than he has been for forty years, but still glances at the island.
+
+Existing Nistor lines after the bell is silenced, for his voice:
+Old Nistor [smile]: A pike this morning. A pike, the length of my arm. First fish in a year that wasn't too small to bother. I nearly wept on it.
+Old Nistor: Bluto's shack is empty. I don't go in. Some nights I think I hear him singing, out on the water, the way he used to when he'd had a catch.
+
+WHAT I NEED (all new, all unvoiced): TWO lines of Old Nistor, to be played in order when the party walks up to him. The first greets them and shows the silence on the water. The second glances at the reeds and asks whether it is the bell they have come about, or what is out there, without naming the island. Both must stand in front of a menu of two options (ask about the bell again, or ask about the island), so nothing in them may answer either question.
+
+LIMITS. Fair but not a spoiler. Quiet, one concrete image, never a lecture. Short.
+
+Return only the two lines.

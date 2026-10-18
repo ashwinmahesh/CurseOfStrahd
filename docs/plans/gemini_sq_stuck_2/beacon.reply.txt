@@ -1,0 +1,26 @@
+A
+Argynvost [weary]: Easy, my friends. That small cold light in your palms is the last of what I was, and I have no second spark to give.
+Argynvost [sad]: If you set it down unlit, my voice goes out with the ember, and this dark roof will never shine for my knights again.
+Argynvost [neutral]: Will you let the fire die so their bitter watch may go on, or will you raise it once more before I sleep?
+
+B
+* (Extinguish the flame.) Vladimir's oath stands.
+* (Wait.) Hold the light a little longer.
+
+C
+Narrator: You tip your cupped hands towards the stone, and the silver flame thins to a ribbon of frost before vanishing into the dark.
+Argynvost [weary]: Keep the watch, my friends.
+Narrator: The iron cradle stays cold and black above the valley, its rim untouched by light.
+Narrator: Far below on the ruined stair, a rusted gauntlet shifts on a sword hilt as the dead go on keeping their watch.
+
+D
+Narrator: The iron cradle sits cold and empty, marked only by a pinch of grey ash and a pale scorch where the silver fire died.
+
+E
+Narrator: Hoarfrost clings thick and blind to the high chapel glass, no longer tracing the long shape of a dragon's head.
+
+F
+Narrator: Between the great arched ribs, the frost has dulled to grey rime, the hollow where the spark was taken now dark as any other bone.
+
+G
+We honoured the oath sworn at Vladimir's table and lowered the last of Argynvost's silver fire before it could touch the cradle. The flame went out in our hands, leaving the beacon dark and the dragon's voice gone from the hall forever. Below the unlit tower, the revenants of the Order still keep their endless watch.
