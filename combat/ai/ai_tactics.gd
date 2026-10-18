@@ -434,17 +434,22 @@ func open_grid(locked: bool, furniture: bool) -> CombatGrid:
 	return g
 
 
-## A turn with no attack in it (`plan`, AiBrain.plan_turn): a foe cut off from every enemy (cut_off) for CUT_OFF_TURNS
-## of its turns in a row leaves the fight, in every mode, so a fight nobody can finish ends (the last wolf of a pack on
-## the far side of the narrows when a bystander stood in the gap). Strahd and legendary creatures hold their ground:
-## their fights are the story's. Returns the turn's result when it leaves, else null.
+## A turn with no attack in it (`plan`, AiBrain.plan_turn): a foe cut off from every enemy (cut_off), or held off from
+## them by dangerous ground that could drop it (the plan's square `held_off`: a hurt will-o'-wisp at the edge of a
+## cleric's Spirit Guardians, owner 2026-10-18), for CUT_OFF_TURNS of its turns in a row leaves the fight, in every
+## mode, so a fight nobody can finish ends (the last wolf of a pack on the far side of the narrows when a bystander
+## stood in the gap). Strahd and legendary creatures hold their ground: their fights are the story's. Returns the
+## turn's result when it leaves, else null.
 func stranded_turn(c: Combatant, plan: Dictionary) -> Variant:
 	var e := enc()
+	var square := plan.get("square", {}) as Dictionary
+	var approach := str(plan.get("kind", "")) == "approach" and not square.is_empty()
+	var held := approach and bool(square.get("held_off", false))
 	# Closing in (the square it thought of isn't where it stands) is no stall: only a turn going nowhere is looked at.
-	var going := str(plan.get("kind", "")) == "approach" and plan.has("square") \
-		and ((plan["square"] as Dictionary)["cell"] as Vector2i) != c.cell
-	if going or str(plan.get("kind", "")) == "attack" or c.side != &"enemy" or str(c.ai_profile) == "strahd" \
-			or (c.creature is Monster and (c.creature as Monster).data.has("legendary_actions")) or not cut_off(c):
+	var going := approach and (square["cell"] as Vector2i) != c.cell
+	if str(plan.get("kind", "")) == "attack" or c.side != &"enemy" or str(c.ai_profile) == "strahd" \
+			or (c.creature is Monster and (c.creature as Monster).data.has("legendary_actions")) \
+			or not (held or (not going and cut_off(c))):
 		_cut.erase(c.id)
 		return null
 	var was := _cut.get(c.id, {}) as Dictionary
@@ -453,7 +458,11 @@ func stranded_turn(c: Combatant, plan: Dictionary) -> Variant:
 	if n < CUT_OFF_TURNS:
 		return null
 	_cut.erase(c.id)
-	e.ai.last_plan = {"kind": "flee", "why": "cut off from every enemy"}
-	e.log.add("info", "%s can find no way to reach its foes" % c.name(), c.id)
+	if held:
+		e.ai.last_plan = {"kind": "flee", "why": "held off by dangerous ground"}
+		e.log.add("info", "%s won't brave the ground between it and its foes, and slips away" % c.name(), c.id)
+	else:
+		e.ai.last_plan = {"kind": "flee", "why": "cut off from every enemy"}
+		e.log.add("info", "%s can find no way to reach its foes" % c.name(), c.id)
 	e.legendary.leave(c, "cut off")
 	return CombatResult.new()

@@ -186,8 +186,8 @@ func test_the_worst_the_ground_can_do() -> void:
 	assert_false(e.ai.hazards.read(berserker).deadly(through), "exactly a tenth left is enough")
 
 
-## Ground that could drop it at its worst it never walks into, round after round (owner, 2026-10-18: "as long as it
-## won't kill them"): 3rd-level Spirit Guardians can do 24, and a berserker keeps a tenth of its 67 Hit Points (7).
+## Ground that could drop it at its worst it never walks into (owner, 2026-10-18: "as long as it won't kill them"):
+## 3rd-level Spirit Guardians can do 24, and a berserker keeps a tenth of its 67 Hit Points (7).
 func test_it_never_wades_into_ground_that_could_drop_it() -> void:
 	var e := TestCombat.open_field(4)
 	var cleric := TestCombat.caster_with(e, ["spirit_guardians"], Vector2i(5, 4))
@@ -196,14 +196,12 @@ func test_it_never_wades_into_ground_that_could_drop_it() -> void:
 	assert_true(e.spells.cast(cleric, "spirit_guardians", 3).ok)
 	var spirits := e.spells.zones.live()[0]
 	foe.creature.hp = 30
-	for i in 2:
-		while e.current() != foe:
-			e.end_turn()
-		e.run_ai_turn()
-		assert_false(foe.cell in spirits.cells, "round %d: not among the spirits, %s" % [i + 1, foe.cell])
-		assert_eq(foe.creature.hp, 30, "round %d: untouched" % [i + 1])
-		e.end_turn()
-	assert_true(e.distance(foe, cleric) <= 20, "it waits at their edge, as close as it dares")
+	e.end_turn()
+	assert_eq(e.current(), foe)
+	e.run_ai_turn()
+	assert_false(foe.cell in spirits.cells, "not among the spirits, %s" % foe.cell)
+	assert_eq(foe.creature.hp, 30, "untouched")
+	assert_true(e.distance(foe, cleric) <= 20, "at their edge, as close as it dares")
 	foe.creature.hp = 31
 	while e.current() != foe:
 		e.end_turn()
@@ -213,6 +211,25 @@ func test_it_never_wades_into_ground_that_could_drop_it() -> void:
 	assert_eq(e.distance(foe, cleric), 5, "in beside her")
 	while e.pending != null:
 		e.answer_reaction(false)
+
+
+## Held off from every foe by ground that could drop it, turn after turn (a hurt will-o'-wisp at the edge of a cleric's
+## Spirit Guardians, unseen, the party never coming for it), it slips away rather than wait out the fight.
+func test_held_off_by_ground_that_could_drop_it_it_slips_away() -> void:
+	var e := TestCombat.open_field(4)
+	var cleric := TestCombat.caster_with(e, ["spirit_guardians"], Vector2i(5, 4))
+	var foe := TestCombat.foe(e, "berserker", Vector2i(10, 4))
+	TestCombat.start_with(e, cleric)
+	assert_true(e.spells.cast(cleric, "spirit_guardians", 3).ok)
+	foe.creature.hp = 20
+	for i in AiTactics.CUT_OFF_TURNS:
+		while e.current() != foe:
+			e.end_turn()
+		assert_false(foe.has_meta("left_fight"), "turn %d: still here" % [i + 1])
+		e.run_ai_turn()
+		e.end_turn()
+	assert_eq(str(foe.get_meta("left_fight", "")), "cut off", "gone")
+	assert_eq(foe.creature.hp, 20, "never touched the spirits")
 
 
 ## Beside a cleric in her own Spirit Guardians, with no one else to strike, it strikes her round after round: the hole
