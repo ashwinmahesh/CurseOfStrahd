@@ -26,3 +26,36 @@ cutscene roc_looks_down
 interject tag:blunt: Count the wingspan. Then don't.
 interject class:wizard: A roc. They nest on high crags and take cattle the way an owl takes mice. The Tsolenka Pass is said to have one.
 -> END
+
+# ---------------------------------------------------------------- The curtain of green fire (props tsolenka_green_fire_w and _e)
+
+# The book hangs a curtain of green fire behind the gate and says it can be crossed or dispelled (Elven Tower, Curse of
+# Strahd chapter 9); it gives no numbers. The rest is ours: the curtain stands once the portcullis is up, an
+# Arcana try (one for the whole party: a failure closes it) or Dispel Magic puts it out for good, and walking into it is
+# the trap tsolenka_green_fire (tsolenka_pass.json, 4d10 fire, Dexterity 15 for half, spent when it goes off). Every
+# way works for any party; nothing here depends on a social check.
+
+~ green_fire
+Narrator: Behind the iron teeth hangs a sheet of green flame, standing upright across the arch like a drawn curtain. It hums in your teeth and throws a sick, pale light over the stone.
+Narrator: Hold your hand near and your skin prickles with cold, as if the fire is taking heat instead of giving it.
+-> green_fire_menu
+
+~ green_fire_menu
+* [if not flag.tsolenka_fire_unpick_tried] [Arcana DC 15] Study the weave for the knot that holds it. -> green_fire_unpicked | green_fire_tangled
+* [knows:dispel_magic] (Cast Dispel Magic on the curtain.) -> green_fire_dispelled
+* Step back from it. -> END
+
+~ green_fire_unpicked
+set tsolenka_green_fire_out
+Narrator: Every spell has a seam if you know where to look. One thread pulled loose and the green curtain folds in on itself, vanishing with a dry click.
+-> END
+
+~ green_fire_tangled
+set tsolenka_fire_unpick_tried
+Narrator: You trace the green weave for a loose thread, but the flame only flares higher, humming like a wasp in a jar.
+-> green_fire_menu
+
+~ green_fire_dispelled
+set tsolenka_green_fire_out
+Narrator: You speak the word that unmakes work, and the green curtain shrinks to a cold spark the size of a pin, then goes out without smoke.
+-> END

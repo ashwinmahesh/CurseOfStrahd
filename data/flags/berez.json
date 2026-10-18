@@ -255,6 +255,16 @@
       "id": "roc_driven_off",
       "type": "bool",
       "summary": "The roc of Mount Ghakis was fought on the bridge (encounter roc_of_ghakis); the bridge is safe by day."
+    },
+    {
+      "id": "tsolenka_green_fire_out",
+      "type": "bool",
+      "summary": "The curtain of green fire behind the Tsolenka portcullis is out: dispelled (Dispel Magic), unpicked (Arcana) or burned through by whoever walked into it (the trap tsolenka_green_fire)."
+    },
+    {
+      "id": "tsolenka_fire_unpick_tried",
+      "type": "bool",
+      "summary": "The party tried to unpick the green fire's weave with Arcana and failed: that way is closed (tsolenka_pass/events:green_fire); Dispel Magic or walking through still work."
     }
   ]
 }

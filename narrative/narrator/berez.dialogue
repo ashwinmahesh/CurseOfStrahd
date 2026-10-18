@@ -302,6 +302,18 @@ once
 ~ examine:tsolenka_brazier
 | A watch brazier on a tripod, full of grey ash. It burns, though nobody feeds it, with a pale flame that gives light and no heat at all.
 
+~ examine:tsolenka_arch_w
+| A weathered arch frames the western end of the bridge, a carved sun half eaten by frost on its keystone, and the gorge wind whistles softly through its stones.
+
+~ examine:tsolenka_arch_e
+| The eastern arch matches its brother across the drop, though the wind has taken a tooth from its crown and worn the sun nearly flat.
+
+~ examine:tsolenka_vrock_w
+| A winged demon of grey stone crouches against the wall beside the gate, taloned feet locked into the stone. The wind scours the pass white with frost, yet not a flake settles on its shoulders.
+
+~ examine:tsolenka_vrock_e
+| Its twin crouches against the wall on the other side of the gate in the same patient pose, though the stone beneath it is dark and greasy, like tallow.
+
 ~ open:roc_nest
 | The nest is pine trunks woven like straw, lined with fleece and bones and what the roc couldn't eat: a purse, a sword, a coat of rings.
 

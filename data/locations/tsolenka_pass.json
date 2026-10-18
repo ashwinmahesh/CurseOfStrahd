@@ -516,6 +516,72 @@
       "model": "cairn",
       "dialogue": "mount_ghakis/the_mountains_heart:cairn",
       "when": "level >= 10"
+    },
+    {
+      "id": "tsolenka_green_fire_w",
+      "cell": [
+        30,
+        6
+      ],
+      "kind": "examine",
+      "label": "A curtain of green fire",
+      "model": "flame",
+      "flame": "bile",
+      "dialogue": "tsolenka_pass/events:green_fire",
+      "when": "flag.tsolenka_gate_open and not flag.tsolenka_green_fire_out"
+    },
+    {
+      "id": "tsolenka_green_fire_e",
+      "cell": [
+        31,
+        6
+      ],
+      "kind": "examine",
+      "label": "A curtain of green fire",
+      "model": "flame",
+      "flame": "bile",
+      "dialogue": "tsolenka_pass/events:green_fire",
+      "when": "flag.tsolenka_gate_open and not flag.tsolenka_green_fire_out"
+    },
+    {
+      "id": "tsolenka_vrock_w",
+      "cell": [
+        29,
+        7
+      ],
+      "kind": "examine",
+      "label": "A stone demon on the gate wall",
+      "model": "gargoyle"
+    },
+    {
+      "id": "tsolenka_vrock_e",
+      "cell": [
+        32,
+        7
+      ],
+      "kind": "examine",
+      "label": "A stone demon on the gate wall",
+      "model": "gargoyle"
+    },
+    {
+      "id": "tsolenka_arch_w",
+      "cell": [
+        13,
+        17
+      ],
+      "kind": "examine",
+      "label": "The western arch",
+      "model": "arch_carved"
+    },
+    {
+      "id": "tsolenka_arch_e",
+      "cell": [
+        26,
+        17
+      ],
+      "kind": "examine",
+      "label": "The eastern arch",
+      "model": "arch_carved"
     }
   ],
   "containers": [
@@ -979,6 +1045,32 @@
       "when": "level >= 9 and quest.the_last_egg != done and quest.the_last_egg != sold",
       "facing": "east",
       "approach": 4
+    }
+  ],
+  "traps": [
+    {
+      "id": "tsolenka_green_fire",
+      "label": "the curtain of green fire",
+      "cells": [
+        [
+          30,
+          6
+        ],
+        [
+          31,
+          6
+        ]
+      ],
+      "detect_dc": 40,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "fire",
+      "flag": "tsolenka_green_fire_out",
+      "when": "flag.tsolenka_gate_open and not flag.tsolenka_green_fire_out",
+      "text": "The green curtain closes round the first of you like a sheet of ice that burns, and having done its work it gutters out into the stone."
     }
   ]
 }
