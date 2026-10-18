@@ -45,6 +45,7 @@ checked against the free 2024 Basic Rules (`checked_against: BR2024`); see docs/
 | fire-1 (AntumDeluge) | https://opengameart.org/content/fire-1 | CC0 | art/sourced/oga_fire_antumdeluge/ | Resting by the fire; fires and hearths heard from where they burn (fire-1.wav) |
 | Footsteps on different surfaces (congusbongus) | https://opengameart.org/content/footsteps-on-different-surfaces | CC BY 3.0 | art/sourced/oga_footsteps_congusbongus/ | Footsteps on dirt roads (boots) and on loose gravel indoors |
 | Stream Sounds (kurt) | https://opengameart.org/content/stream-sounds | CC BY 3.0 | art/sourced/oga_stream_kurt/ | Rivers and the falls at Tser Pool |
+| Crying female low tone Voice Over (JeanMyna_VA) | https://opengameart.org/content/crying-female-low-tone-voice-over-vocal-sound-for-character | CC BY 3.0 (credit "JeanMyna_VA") | art/sourced/oga_crying_jeanmyna/ | Patrina Velikovna's weeping in the Amber Temple's hall of echoes (4_cry.ogg edited into a looping bed; the edits are in its LICENSE.md) |
 | Mechanical Sounds (BMacZero) | https://opengameart.org/content/mechanical-sounds | CC0 | art/sourced/oga_mechanical_bmaczero/ | Levers and sprung traps |
 | Different steps on wood, stone, leaves, gravel and mud (TinyWorlds) | https://opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud | CC0 | art/sourced/oga_steps_tinyworlds/ | Footsteps on wooden floors, grass and mud |
 | Open Chest (spookymodem) | https://opengameart.org/content/open-chest | CC BY 3.0 | art/sourced/oga_chest_creak_spookymodem/ | Opening chests, trunks and crypts |

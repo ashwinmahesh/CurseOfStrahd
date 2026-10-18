@@ -130,6 +130,7 @@
     "hearth": -14.0,
     "river": -6.0,
     "waterfall": -6.0,
+    "weeping": -10.0,
     "combat_hard": -4.0,
     "strahd": -2.0,
     "dread": -4.0,
@@ -1476,7 +1477,13 @@
     ],
     "waterfall": [
       "res://art/sourced/oga_stream_kurt/waterfall2.ogg"
+    ],
+    "weeping": [
+      "res://art/sourced/oga_crying_jeanmyna/weeping_loop.wav"
     ]
+  },
+  "npc_beds": {
+    "patrina_velikovna": "weeping"
   },
   "water": {
     "tser_falls": "waterfall"
