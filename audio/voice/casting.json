@@ -2263,7 +2263,8 @@
       "settings": {},
       "model": "eleven_v3",
       "generated_voice_id": "c2e2Qacn3oMFw74cBWbC",
-      "released": true
+      "released": true,
+      "pace_note": "Owner, 2026-10-18: The Eye Below talked too slowly (1.15-1.55 words a second on 3 of its 5 clips). Those 3 were sped up 1.3x at the same pitch, level matched (manifest `stretch` 0.769); a --recast re-records them at the voice's own pace."
     },
     "yester_zorica": {
       "voice_id": "sWGyL0SesRcEgBs4mt9L",

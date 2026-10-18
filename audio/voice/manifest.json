@@ -90562,6 +90562,7 @@
   "direction": "[contemptuous, imperious, slow]",
   "model": "eleven_v3",
   "recipe": "4b8aeb6302",
+  "stretch": 0.769,
   "text": "The only thing in this temple that sees. The dead gods in their little boxes lie; I watched them lie for a thousand years, until the wardens put me to sleep for seeing it. I was a debt they paid with sleep."
  },
  "the_eye_below/2ba7323c25cdaacf": {
@@ -90576,6 +90577,7 @@
   "direction": "[dreamy, slow, eerie, curious]",
   "model": "eleven_v3",
   "recipe": "4b8aeb6302",
+  "stretch": 0.769,
   "text": "More dreams. I dreamed you in the stair. I dream you very badly; you're all the wrong shape. Stand still while I dream you better."
  },
  "the_eye_below/a597e5ff79da254f": {
@@ -90583,6 +90585,7 @@
   "direction": "[drowsy, soothing, menacing]",
   "model": "eleven_v3",
   "recipe": "4b8aeb6302",
+  "stretch": 0.769,
   "text": "Still here, little dreams. I haven't woken you yet. Wait."
  },
  "the_grandsire/49a6d5ba29486433": {
