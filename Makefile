@@ -20,6 +20,9 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              -o -name '*.mp3' -o -name '*.glb' \) -newer $(STAMP) -print -quit)" ]; then \
              echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null; s=$$?; \
              case $$s in 75|129|130|137|143) exit $$s ;; esac; touch $(STAMP); fi
+## The import before a game the owner plays (run-main, arena) never waits for a Godot slot or takes one: he is at the
+## terminal, so it must not queue behind lane imports and tests (owner, 2026-10-18; tools/godot_slot.sh).
+PLAYFRESH := export GODOT_SLOTS=off; $(FRESH)
 
 .PHONY: run run-main arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons vestige_shapes cursors voice creator pregens plants vistas
 
@@ -38,7 +41,7 @@ run:
 ## import (a merge can add a class_name or images that the editor cache doesn't know yet, and the game then stops at a
 ## parse error).
 run-main:
-	@$(FRESH)
+	@$(PLAYFRESH)
 	$(NOFOCUS) < /dev/null
 
 .PHONY: edge edge-list edge-add edge-remove edge-prune edge-reset edge-test
@@ -75,7 +78,7 @@ release:
 
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:
-	@$(FRESH)
+	@$(PLAYFRESH)
 	$(NOFOCUS) res://scenes/combat/arena.tscn < /dev/null
 
 ## Boots the game, or SCENE=res://..., headless for FRAMES frames (600); fails on errors. Agents check with this.

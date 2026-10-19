@@ -493,14 +493,15 @@ def needs_import(wt: Path) -> bool:
 
 
 def import_project(cfg: Config, wt: Path) -> int:
-    """tools/import.sh as the Makefile's FRESH runs it: its notes show, its output goes to builds/edge_import.log."""
+    """tools/import.sh as the Makefile's FRESH runs it: its notes show, its output goes to builds/edge_import.log.
+    It never takes or waits for a Godot slot (GODOT_SLOTS=off): the owner is waiting to play."""
     say("files changed since the last import: importing first (a few minutes if art changed; the game starts after).")
     log = wt / "builds" / "edge_import.log"
     log.parent.mkdir(parents=True, exist_ok=True)
     stamp = wt / ".godot" / ".last_import"
     with log.open("w") as out:
         status = subprocess.run([str(wt / "tools" / "import.sh")], cwd=str(wt), stdout=out,
-                                env=dict(os.environ, GODOT=cfg.godot)).returncode
+                                env=dict(os.environ, GODOT=cfg.godot, GODOT_SLOTS="off")).returncode
     if status in IMPORT_STOPPED:
         return status
     stamp.parent.mkdir(parents=True, exist_ok=True)

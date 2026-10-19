@@ -277,6 +277,26 @@ class RunTests(unittest.TestCase):
         self.assertEqual(argv, ["/g/Godot", "--path", "/r/CurseOfStrahdGame-edge"])
         self.assertEqual(env["__CFBundleIdentifier"], "org.godotengine.godot")
 
+    def test_the_pre_play_import_skips_the_godot_slot_cap(self):
+        tmp = Path(tempfile.mkdtemp(prefix="edge_slots_")).resolve()
+        self.addCleanup(lambda: subprocess.run(["rm", "-rf", str(tmp)]))
+        cfg = edge.Config(repo=Path("/x"), home=Path("/h"), root=Path("/r"), base="main", godot="/g/Godot",
+                          data_name="d", support=Path("/s"), keep_data=False, no_run=False)
+        seen = {}
+
+        def fake_run(argv, **kwargs):
+            seen["env"] = kwargs["env"]
+            return subprocess.CompletedProcess(argv, 0)
+
+        original, edge.subprocess.run = edge.subprocess.run, fake_run
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(edge.import_project(cfg, tmp), 0)
+        finally:
+            edge.subprocess.run = original
+        self.assertEqual(seen["env"]["GODOT_SLOTS"], "off")
+        self.assertEqual(seen["env"]["GODOT"], "/g/Godot")
+
     def test_what_needs_an_import_follows_the_makefile_rule(self):
         tmp = Path(tempfile.mkdtemp(prefix="edge_import_")).resolve()
         self.addCleanup(lambda: subprocess.run(["rm", "-rf", str(tmp)]))

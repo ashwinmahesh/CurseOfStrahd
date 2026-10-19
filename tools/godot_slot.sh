@@ -4,7 +4,8 @@
 # has it; <pool> is "import" (the editor, IMPORT_SLOTS, 3) or "test" (a headless test process, TEST_SLOTS, 8), shared
 # by every lane and every checkout. A slot whose PID is gone is cleared, and so is one with no PID for a minute.
 # tools/run_tests.py takes its test slots the same way. GODOT_SLOTS=off turns the cap off. Where the folder can't be
-# made, nothing is capped.
+# made, nothing is capped. A launch the owner plays (make run, run-main, arena) runs its pre-play import with
+# GODOT_SLOTS=off: it never waits for a slot, takes none, and a running game holds none, so lanes keep all of theirs.
 #
 # Sourced by tools/import.sh: take_slot <pool> <limit> waits for a free one; free_slot gives it back.
 slot_root="${STRAHD_SLOT_ROOT:-/tmp/strahd-godot-slots-$(id -u)}"

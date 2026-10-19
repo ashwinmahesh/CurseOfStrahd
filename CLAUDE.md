@@ -31,6 +31,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - At most 3 import editors and 8 headless test processes run at once across all lanes (tools/godot_slot.sh and
   tools/run_tests.py; IMPORT_SLOTS, TEST_SLOTS, GODOT_SLOTS=off): the Mac has 24 GB, and a dozen editors at ~1.8 GB
   each swapped it (load 82, 20 GB swap, 2026-10-18). A run past the cap waits its turn and says so; it isn't stuck.
+  The owner's play launches (`make run`, `make run-main`, `make arena`) and the import they do first skip the cap
+  (GODOT_SLOTS=off): he is waiting to play, and a running game holds no slot.
 - `make run` and `make arena` are for the owner to play: run them only when asked. `make run` is the edge build (tools/edge/edge.py):
   the local main plus the lane branches listed in ~/.curse-of-strahd/edge/branches.txt (handed off, not merged yet), merged in
   a throwaway worktree, on its own copy of the saves and settings (the real ones are never written). The build thread adds a
