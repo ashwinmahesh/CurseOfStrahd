@@ -22,6 +22,7 @@ cutscene cairn_open
 Narrator: Under the last stone, wrapped in oilcloth gone stiff with cold, lies a fat spellbook bound in grey leather, and tucked inside its cover two loose scrolls, written fast. The hand is strong and impatient. The capital letters all have a little hook.
 give spell_scroll__chain_lightning
 give spell_scroll__disintegrate
+Narrator: At the bottom of the bundle, wedged under the heavy spine, two more scrolls are stuck to the frozen cloth. They bear the same hooked letters, and smell faintly of soot and iron.
 give spell_scroll__delayed_blast_fireball
 give spell_scroll__forcecage
 interject name:ratatoille: That is a master's book. Not a clever student's. A master's. Somebody else hold it, my hands are shaking.

@@ -26,6 +26,8 @@ func test_opening_the_cairn_gives_two_level_6_and_two_level_7_scrolls_and_no_lev
 	assert_eq(SideQuestPlay.missing(beats), "")
 	assert_true(bool(st.get_flag("mordenkainen_spellbook_found", false)))
 	assert_eq(st.quest_stage("the_mad_mage"), "book_found")
+	assert_true(SideQuestPlay.text(beats).contains("two loose scrolls"), "the voiced line about the first two is unchanged")
+	assert_true(SideQuestPlay.text(beats).contains("two more scrolls"), "and a new line finds the last two")
 	for sp in LEVEL_6 + LEVEL_7:
 		assert_eq(_count(st, "spell_scroll__" + sp), 1, "one scroll of %s" % sp)
 	assert_eq(_count(st, "spell_scroll_level_1"), 0, "and not the two level 1 scrolls")

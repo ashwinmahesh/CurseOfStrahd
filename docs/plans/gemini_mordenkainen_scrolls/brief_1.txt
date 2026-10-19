@@ -1,0 +1,17 @@
+You are drafting one line of dialogue for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. Reply with plain text only: the lines requested below, nothing else. Finish without sending messages to anyone else.
+
+## The scene
+On the summit of Mount Baratok stands a warded cairn. The party unstacks it and finds the spellbook of the archmage Mordenkainen, who hid it there before the vampire lord's witch took his memory forty years ago. The game already plays this Narrator line (it is voiced and must not change):
+
+"Under the last stone, wrapped in oilcloth gone stiff with cold, lies a fat spellbook bound in grey leather, and tucked inside its cover two loose scrolls, written fast. The hand is strong and impatient. The capital letters all have a little hook."
+
+Those first two scrolls are Chain Lightning and Disintegrate. I need ONE new Narrator line, played straight after it, that finds two MORE scrolls: Delayed Blast Fireball and Forcecage, rolled tight and wedged under the book at the bottom of the bundle, in the same hand. Keep it to the same facts: no new people, places, dates or lore; Mordenkainen is not named in the line; no game terms (no "level", "roll", "scroll of level seven", no numbers except words like "two"). It may name the two spells in plain words if it reads naturally, but need not.
+
+## The Narrator
+An old gothic storyteller, fond of the party the way a gravedigger is fond of the weather. Second person, present tense. One or two sentences; the second is usually the turn (irony, dread, dry joke). Never cruel. Concrete senses over adjectives (a smell, a sound, a temperature). No game terms. No winks at the player.
+Samples:
+- "By a painted wagon, a woman in a long dark coat sits fixing silver heads to crossbow bolts. Below her right knee, a brace of oak and steel; her left hand is bandaged, and she smells faintly of burnt hair."
+- "She doesn't look up. She lifts a small loaded crossbow off her knee instead and points it at you."
+
+## Format
+Give THREE alternative versions, one per row, exactly: `Narrator: Text`, each 1-2 sentences, under 40 words, written to be spoken aloud by an actor. Plain ASCII punctuation (straight quotes, hyphens, no em dashes), no stage directions, no markdown. Label them 1a, 1b, 1c at the start of each row like `1a. Narrator: ...`.
