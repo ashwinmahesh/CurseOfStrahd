@@ -4,7 +4,7 @@ extends RefCounted
 ## instead of it all being square rooms"). A cave's rock was drawn like a house's walls: a block a square, a full storey
 ## high, its top a flat black cap, so a great cave was a rectangle cut out of a slab. Here the place's rock squares share
 ## one surface instead, planned once for the whole board (catalog place_looks `cave: true`, or `cave: "hewn"` for rooms
-## cut into rock, a lighter amount; Modern only, Classic keeps its blocks):
+## cut into rock, a smoother face with less lean, rubble and stone; Modern only, Classic keeps its blocks):
 ##   - the cave's outline is one smooth contour round the floor the rules grid gives it. The grid's boundary is traced
 ##     into loops and its corners rounded as far as the walls beside each allow (a corner between two long walls takes
 ##     a radius of a square or more, a one-square niche hardly any), so a rectangular room becomes a rounded chamber and
@@ -29,10 +29,10 @@ const STEP := 1.0 / RES
 ## How far (world units) the surface tucks under the floor where it gives way to it.
 const TUCK := 0.04
 ## The rubble at a wall's foot: its height at the face, and how far (squares) it runs out over the floor.
-const TALUS := 0.24
+const TALUS := 0.3
 const TALUS_W := 0.55
 ## How far the top of a face leans over the cave, for each unit of its height.
-const LEAN := 0.05
+const LEAN := 0.07
 ## How far in (squares) the contour may come over the floor: a quarter of a square (rule 2).
 const IN := 0.2
 const INTRUSION := 0.25
@@ -43,7 +43,7 @@ const ROUND := 2.0
 const FAR := 1.0e6
 const AMOUNTS := {
 	"full": {"round": 1.0, "wander": 1.0, "bays": 1.0, "lean": 1.0, "talus": 1.0, "decor": 1.0, "face": 0.13},
-	"hewn": {"round": 0.9, "wander": 0.8, "bays": 0.7, "lean": 0.5, "talus": 0.6, "decor": 0.4, "face": 0.2},
+	"hewn": {"round": 1.0, "wander": 1.0, "bays": 1.0, "lean": 0.6, "talus": 0.7, "decor": 0.5, "face": 0.2},
 }
 
 var board: ArenaBoard
@@ -344,7 +344,7 @@ func _thickness() -> void:
 			z = z1
 	_thick.resize(_w * _d)
 	for k in _w * _d:
-		_thick[k] = 0.0 if _open[k] == 1 else clampf((float(mini(runx[k], runz[k])) - 0.4) * 0.5, 0.0, 1.2)
+		_thick[k] = 0.0 if _open[k] == 1 else clampf((float(mini(runx[k], runz[k])) - 0.4) * 0.5, 0.0, 2.2)
 	# A floor square takes the limit of the rock beside it, so the contour between them reads the rock's.
 	var at_floor := _thick.duplicate()
 	for z in _d:
@@ -651,12 +651,14 @@ func _field(sd0: PackedFloat32Array, sd1: PackedFloat32Array) -> void:
 				_s[k] = f1
 				continue
 			var smax := _sq_at(_thick, x, z)
-			var o := SWELL * wander + (_nwind.get_noise_2d(x, z) * 0.22 + _n1.get_noise_2d(x, z) * 0.18 + _n2.get_noise_2d(x, z) * 0.05) * wander
+			var o := SWELL * wander + (_nwind.get_noise_2d(x, z) * 0.3 + _n1.get_noise_2d(x, z) * 0.3 + _n2.get_noise_2d(x, z) * 0.1) * wander
 			if bays > 0.0:
-				var bay := smoothstep(0.12, 0.55, _nbay.get_noise_2d(x, z)) * bays
+				var bay := smoothstep(-0.05, 0.4, _nbay.get_noise_2d(x, z)) * bays
 				if bay > 0.0:
 					o += bay * smax * (0.55 + 0.45 * (0.5 + 0.5 * _ndepth.get_noise_2d(x, z)))
 			o = clampf(o, -IN, smax) * _keepw[k]
+			if o > 0.0:
+				o = minf(o, maxf(minf(minf(x, _w - x), minf(z, _d - z)) - 0.4, 0.0))   # a bay never reaches the map's own edge
 			_s[k] = maxf(f1 + o, f0 - INTRUSION)
 
 
@@ -726,7 +728,7 @@ func _shape() -> void:
 				if s < -2.5:
 					h = hw
 				else:
-					hw += 0.22 * _nrough.get_noise_2d(x, z) * (1.0 - smoothstep(0.1, 1.5, -s))   # a ragged lip
+					hw += (0.3 * _nrough.get_noise_2d(x, z) + 0.2 * _ncrack.get_noise_2d(x, z)) * (1.0 - smoothstep(0.1, 1.5, -s))   # a ragged lip
 					var keep := _keepw[k]
 					var tal := tal0 * (0.7 + 0.3 * _nrough.get_noise_2d(x, z)) * (0.35 + 0.65 * keep)
 					if s >= 0.0:
@@ -855,7 +857,7 @@ func _piece(c: Vector2i) -> MeshInstance3D:
 			var mid := 0.25 * (_pos[k00] + _pos[k10] + _pos[k01] + _pos[k11])
 			if slot == 2 and sa < 0.5 and rng.randf() < 0.2 * decor:
 				_rubble(verts[0], norms[0], mid - origin, rng.randf_range(0.05, 0.16), rng)
-			elif sa > 0.2 and _s0[k00] < 0.0 and rng.randf() < 0.05 * decor and not board.occupied.has(Vector2i(floori(mid.x), floori(mid.z))):
+			elif sa > 0.2 and _s0[k00] < 0.0 and rng.randf() < 0.09 * decor and not board.occupied.has(Vector2i(floori(mid.x), floori(mid.z))):
 				_stalagmite(verts[0], norms[0], mid - origin + Vector3(0, TUCK, 0), rng)
 	if c.x == 0 or c.y == 0 or c.x == _w - 1 or c.y == _d - 1:
 		_skirts(c, verts[1], norms[1], origin)
@@ -961,7 +963,7 @@ static func _rubble(verts: PackedVector3Array, norms: PackedVector3Array, at: Ve
 
 ## A stalagmite: a tapering spike, a little bent, from the floor at `at` up 0.35 to 1.0 units.
 static func _stalagmite(verts: PackedVector3Array, norms: PackedVector3Array, at: Vector3, rng: RandomNumberGenerator) -> void:
-	var h := rng.randf_range(0.35, 1.0)
+	var h := rng.randf_range(0.4, 1.3)
 	var r0 := rng.randf_range(0.07, 0.2) * (0.6 + h * 0.5)
 	var bend := Vector3(rng.randf_range(-0.08, 0.08), 0.0, rng.randf_range(-0.08, 0.08))
 	var turn := rng.randf() * TAU
