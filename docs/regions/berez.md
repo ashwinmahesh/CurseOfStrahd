@@ -300,7 +300,7 @@ with no setup; setup if needed: `mordenkainen_memory_jar_taken: true`.
 | prop `lysaga_cradle` | hut nursery | **the Wizard of Wines gem** (dialogue: `winery_gem_berez_found`, `the_third_stone found`) |
 | `marinas_dowry_chest` (Tarokka spot) | vault | 150 gp |
 | `berez_vault_niche` | vault | 30 gp (Strahd's offerings; taking them is noticed by no one, yet) |
-| prop `baratok_cairn` (warded) | Baratok summit | 2 level 1 spell scrolls (given in the dialogue); `mordenkainen_spellbook_found` |
+| prop `baratok_cairn` (warded) | Baratok summit | 4 spell scrolls, given in the dialogue (Ashwin, 2026-10-19; they were two level 1 scrolls): Chain Lightning and Disintegrate (level 6), Delayed Blast Fireball and Forcecage (level 7); `mordenkainen_spellbook_found` |
 | `baratok_summit_cache` | a cleft below the summit | 15 gp, potion of healing |
 | `baratok_hut_pack` | Mad Mage's hut | rations, component pouch, a Spell Scroll of Mordenkainen's Sword (very rare) |
 | `roc_nest` | the roc's crag | 140 gp, chain shirt, longsword, a Potion of Healing (Greater), +2 Greatsword (rare), an Ioun Stone (Agility) (very rare) |

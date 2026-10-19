@@ -303,6 +303,7 @@ leaves a smaller purse and one find.
 | ✅ | Marina's monument, the dowry chest | Robe of Scintillating Colors (very rare) | Hoard: Strahd's gift to her |
 | ✅ | Mount Baratok, the ring of glass | Wand of Lightning Bolts (rare) | Search (Perception DC 15): fused into the glass |
 | ✅ | Mount Baratok, the opened cairn | Ioun Stone of Intellect (very rare) | Search (Perception DC 16) |
+| ✅ | Mount Baratok, the warded cairn | Spell Scrolls of Chain Lightning, Disintegrate (level 6), Delayed Blast Fireball and Forcecage (level 7) (all very rare) | Unstack the stones (Arcana DC 16 unpicks the ward): Mordenkainen's own scrolls under his spellbook (Ashwin, 2026-10-19: was two level 1 scrolls; a reader needs the spell on their class list, and one above their top slot a spellcasting ability check, DC 10 + the spell's level) |
 | ✅ | Mount Baratok, the hut's yard | Spell Scroll of Cone of Cold (rare) | Search (Perception DC 13): a page blown into the snow (lane 28's spot) |
 | ✅ | The Mad Mage's hut, the dragonchess board | Figurine of Wondrous Power, Serpentine Owl (rare) | Search (Investigation DC 17): one piece isn't a piece |
 | ✅ | The Mad Mage's hut, the shelves of blank books | Tome of Understanding (very rare) | Search (Investigation DC 17) |
