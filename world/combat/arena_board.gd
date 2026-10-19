@@ -516,6 +516,21 @@ func _wall_room(c: Vector2i) -> Dictionary:
 	return {}
 
 
+## Whether wall square `c` is drawn as a tree though its place's walls are rock (catalog place_looks `tree_walls`:
+## rectangles [[x0, y0], [x1, y1]], corners included): a mountain's lower slopes are wooded and its crags above are
+## bare (Mount Baratok's south approach, its drop and its east edge, the vault's Mount Baratok Look Plan). Modern only:
+## the frozen Classic look keeps its rock.
+func _tree_wall(c: Vector2i) -> bool:
+	if not Look.modern():
+		return false
+	for r: Variant in _look.get("tree_walls", []):
+		var lo := (r as Array)[0] as Array
+		var hi := (r as Array)[1] as Array
+		if c.x >= int(lo[0]) and c.x <= int(hi[0]) and c.y >= int(lo[1]) and c.y <= int(hi[1]):
+			return true
+	return false
+
+
 ## Rock instead of trees (catalog place_looks "rock_walls"): a craggy column of cliff on each wall square, taller at
 ## the map's edge, so mountains and caves are walled by rock.
 func _rock(c: Vector2i) -> void:
@@ -706,7 +721,8 @@ func _wall(c: Vector2i) -> void:
 	if theme == "camp" and _wagon_cells.has(c):
 		_wagon(c)
 		return
-	if _rock_tex != null and not house_cells.has(c) and (theme in WILD or theme == "shrine_yard" or theme in TOWNS and _on_border(c)):
+	if _rock_tex != null and not house_cells.has(c) and not _tree_wall(c) \
+			and (theme in WILD or theme == "shrine_yard" or theme in TOWNS and _on_border(c)):
 		_rock(c)
 		return
 	if theme in WILD:
