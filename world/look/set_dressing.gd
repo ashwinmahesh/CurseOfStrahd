@@ -205,6 +205,8 @@ static func _place(board: ArenaBoard, spec: Dictionary, is_container: bool) -> N
 				facing_yaw(spec), span_centre(board, spec), span_foot(spec) if bool(look.get("big", false)) else Rect2(), prop_scale)
 			if piece != null and spec.has("tint"):
 				ModelPiece.tint(piece, ModelPiece.tint_colour(str(spec["tint"])))   # recoloured before it opens round the party
+			if piece != null and look.has("swap"):
+				ModelPiece.swap_surfaces(piece, look["swap"] as Dictionary)   # its walls and roof in other materials (the stone hut)
 			if piece != null and int(spec.get("stand_ft", 0)) > 0:
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
 				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET

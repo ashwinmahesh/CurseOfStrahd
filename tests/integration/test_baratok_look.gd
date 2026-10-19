@@ -292,3 +292,89 @@ func test_baratok_has_its_own_air() -> void:
 	assert_true((Vista.config()["styles"] as Dictionary).has("baratok"), "its horizon has a style of its own, else the woods' green ridges")
 	for other: String in ["mount_baratok_trail", "mountain_pass"]:
 		assert_eq(Atmosphere.mood_for(other, Compendium.shared().get_entry("locations", other)), "high_snow", "%s keeps the shared mood" % other)
+
+
+## Snow marks, not leaves and mud (Step 3): the wilderness rules lay autumn leaves, mud and twigs, which are wrong on a
+## snowfield. A place's clutter rules match by prefix, so the hut's interior keeps the house rules it had.
+func test_snow_marks_not_leaves() -> void:
+	Look.set_style("modern", false)
+	var v := _view()
+	await _frames(2)
+	var rules := str(Clutter.rules_for(v.board))
+	for gone: String in ["floor_leaves", "floor_mud", "kit_scatter_twigs"]:
+		assert_false(rules.contains(gone), "no %s on a snowfield" % gone)
+	assert_true(rules.contains("floor_cracks"), "a cracked crust instead")
+	v.queue_free()
+	await _frames(1)
+	var inside := LocationView.create("mount_baratok_hut", GameState.story, null, Dice.roller, "default")
+	add_child(inside)
+	await _frames(2)
+	var house := (SetDressing.catalog()["clutter"] as Dictionary)["themes"] as Dictionary
+	assert_eq(str(Clutter.rules_for(inside.board)), str(house["house"]), "the hut's inside keeps the house's marks")
+	inside.queue_free()
+	await _frames(1)
+
+
+## Whether the board drew wall square `c` as a tree (a 3D plant: meta `nature`) or as a rock column (a box).
+func _is_tree(board: ArenaBoard, c: Vector2i) -> bool:
+	for n: Variant in board.dressing.get(c, []):
+		if (n as Node).has_meta("nature"):
+			return true
+	return false
+
+
+func _is_rock(board: ArenaBoard, c: Vector2i) -> bool:
+	for n: Variant in board.dressing.get(c, []):
+		if n is MeshInstance3D and (n as MeshInstance3D).mesh is BoxMesh and not (n as Node).has_meta("nature"):
+			return true
+	return false
+
+
+## The treeline (Step 4): in the Modern look the south approach, the drop under the lookout, the field's inner blocks and
+## the east edge are trees where the rules still have walls (catalog place_looks `tree_walls`), and the crags above stay
+## bare rock; the frozen Classic look keeps its rock everywhere.
+func test_pines_below_crags_above() -> void:
+	Look.set_style("modern", false)
+	var v := _view()
+	await _frames(2)
+	var low := Vector2i(0, 25)
+	var high := Vector2i(20, 3)
+	assert_true(v.board.grid.has_flag(low, CombatGrid.WALL) and v.board.grid.has_flag(high, CombatGrid.WALL), "both are still walls to the rules")
+	assert_true(_is_tree(v.board, low) and not _is_rock(v.board, low), "the lower slope at %s is a tree" % low)
+	assert_true(_is_rock(v.board, high) and not _is_tree(v.board, high), "the crag at %s is bare rock" % high)
+	var rocks := 0
+	for n: Node3D in v.board.mesh_occluders:
+		if is_instance_valid(n) and n is MeshInstance3D and n.get_parent() == v.board:
+			rocks += 1
+	assert_true(rocks > 20, "the crags still fade like trees when they stand in the party's way (%d rock columns)" % rocks)
+	v.queue_free()
+	await _frames(1)
+	Look.set_style("classic", false)
+	var classic := _view()
+	await _frames(2)
+	assert_true(_is_rock(classic.board, low) and not _is_tree(classic.board, low), "Classic keeps its rock at %s" % low)
+	classic.queue_free()
+	await _frames(1)
+
+
+## The stone hut (Step 5): the map calls it one, and the cottage model is half-timbered plaster and thatch, so the
+## catalog's `swap` draws its walls in the interior's stone and its roof in slate (ModelPiece.swap_surfaces).
+func test_the_hut_is_stone() -> void:
+	var v := _view()
+	await _frames(2)
+	var hut := v.prop_nodes.get(HUT) as Node3D
+	assert_true(hut != null, "the hut is built")
+	if hut == null:
+		return
+	var surfaces: Array[String] = []
+	for n: Node in hut.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		for i in mi.mesh.get_surface_count():
+			var m := mi.get_surface_override_material(i)
+			if m != null and m.has_meta("surface"):
+				surfaces.append(str(m.get_meta("surface")))
+	assert_true("dungeon/stone_wall" in surfaces, "its walls are the interior's stone (%s)" % [surfaces])
+	assert_true("village/roof_slate" in surfaces, "its roof is slate")
+	assert_false("village/house_wall" in surfaces or "village/roof_thatch" in surfaces, "no plaster and no thatch left")
+	v.queue_free()
+	await _frames(1)

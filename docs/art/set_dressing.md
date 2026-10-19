@@ -279,3 +279,20 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
 - Wall pieces and door leaves are flat: seen along the wall they disappear, as the cut-away walls' faces do.
 - Houses are rectangles; a building the data draws as an L becomes two houses with their own roofs.
 - Interiors stay dark at dusk and night by design; the party's lantern lights the pieces near the party.
+
+## Mount Baratok's treeline (the vault's Mount Baratok Look Plan, 2026-10-19)
+
+`rock_walls` draws every `#` of a place as a rock column, which on Mount Baratok was a field of grey cubes. Beside
+`rock_walls` a place look may carry `tree_walls`, rectangles `[[x0, y0], [x1, y1]]` (corners included) of wall squares
+that are drawn as the place's trees all the same (`ArenaBoard._tree_wall`, asked by `_wall`): in the Modern look only,
+so the frozen Classic look keeps its rock. The rules are untouched: they are still walls. Baratok's lower slopes
+(the south approach and its pillars, the drop under the lookout, the field's two inner blocks, the east edge) are the
+snow-laden spruce of its plant set and the crags above (rows 0 to 8 and the north-east band) stay bare rock. A prop
+standing on a wall square hides its rock or tree as before; a prop of `art: pine` stays the old low-poly cone, since
+props are built after the land's snowy trees, so a place's woods come from `tree_walls`, not from props.
+
+A catalog entry for a prop id (`ids`) may also carry `swap`: a 3D piece's surfaces drawn in other materials, by the names
+Blender gave them (`ModelPiece.swap_surfaces`, called by `SetDressing._place` beside `tint`, before the piece opens
+round the party). Mount Baratok's hut is the half-timbered thatched cottage with `tex_village__house_wall` swapped for
+`tex_dungeon__stone_wall` (the hut interior's own stone), the thatch for `tex_village__roof_slate` and its timbers for
+dark stone: honestly a stone cottage with a slate roof. A rough-stone hut of its own shape needs a Blender model.

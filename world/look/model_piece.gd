@@ -142,6 +142,8 @@ static func material(name: String) -> Material:
 		m = g
 	elif name.begins_with("tex_"):
 		m = Look.cel_textured(name.trim_prefix("tex_").replace("__", "/"))
+		if m != null:
+			m.set_meta("surface", name.trim_prefix("tex_").replace("__", "/"))   # (which texture set it is, for the tests)
 	elif name.begins_with("spr_") and SetDressing.has_art(name.trim_prefix("spr_")):
 		# Painted with its own 2D art (a piece sculpted from its sprite).
 		var sm := ShaderMaterial.new()
@@ -152,6 +154,19 @@ static func material(name: String) -> Material:
 		m = Look.cel("pewter")
 	_materials[key] = m
 	return m
+
+
+## Re-surfaces a piece: each surface of its model whose material Blender named as a key of `swap` is drawn in the game
+## material of the value (the catalog's `swap`; Mount Baratok's hut is the cottage with its plaster and thatch swapped
+## for the interior's stone and a slate roof). Done before the piece opens round the party, as `tint` is.
+static func swap_surfaces(node: Node3D, swap: Dictionary) -> void:
+	for n in node.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		for i in mi.mesh.get_surface_count():
+			var src := mi.mesh.surface_get_material(i)
+			var name := src.resource_name if src != null else ""
+			if swap.has(name):
+				mi.set_surface_override_material(i, material(str(swap[name])))
 
 
 # --- Placing ----------------------------------------------------------------------------------------------------
