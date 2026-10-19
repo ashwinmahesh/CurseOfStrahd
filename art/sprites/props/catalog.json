@@ -681,8 +681,9 @@
       "ice_patch"
     ],
     "mount_baratok": [
-      "snowdrift",
-      "ice_patch"
+      "ice_patch",
+      "ice_patch",
+      "snowdrift"
     ],
     "mount_baratok_trail": [
       "snowdrift",
@@ -4650,6 +4651,150 @@
             1.2
           ],
           "max": 40
+        }
+      ],
+      "mount_baratok": [
+        {
+          "decals": [
+            "floor_cracks"
+          ],
+          "on": "floor",
+          "chance": 0.03,
+          "size": [
+            0.7,
+            1.2
+          ],
+          "max": 22,
+          "tint": [
+            0.8,
+            0.86,
+            0.96
+          ]
+        },
+        {
+          "decals": [
+            "floor_puddles"
+          ],
+          "on": "difficult",
+          "chance": 0.4,
+          "size": [
+            0.9,
+            1.4
+          ],
+          "max": 30,
+          "tint": [
+            0.88,
+            0.94,
+            1.0
+          ]
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "edge",
+          "chance": 0.14,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 40,
+          "tint": [
+            0.62,
+            0.64,
+            0.7
+          ]
+        },
+        {
+          "scatter": [
+            "kit_scatter_stones",
+            "kit_scatter_pebbles"
+          ],
+          "on": "edge",
+          "chance": 0.16,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 45
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles"
+          ],
+          "on": "floor",
+          "chance": 0.025,
+          "size": [
+            0.7,
+            1.0
+          ],
+          "max": 20
+        }
+      ],
+      "mount_baratok_hut": [
+        {
+          "decals": [
+            "floor_straw"
+          ],
+          "on": "floor",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 20
+        },
+        {
+          "decals": [
+            "floor_stains"
+          ],
+          "on": "floor",
+          "chance": 0.05,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 20
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "edge",
+          "chance": 0.1,
+          "size": [
+            0.5,
+            0.9
+          ],
+          "max": 30
+        },
+        {
+          "decals": [
+            "wall_soot"
+          ],
+          "on": "wall",
+          "chance": 0.03,
+          "size": [
+            0.6,
+            1.0
+          ],
+          "max": 8
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "floor",
+          "chance": 0.45,
+          "size": [
+            0.8,
+            1.5
+          ],
+          "max": 70,
+          "rooms": [
+            "bakery",
+            "millstone"
+          ]
         }
       ]
     }
