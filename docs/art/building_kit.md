@@ -233,9 +233,11 @@ ruler-straight: `BuildingBend` is one smooth displacement of a building's points
   plate wave up and down, and the chimney leans with the roof under it. Yard walls and a town wall lean and wander and
   have an uneven coping, a palisade's logs each lean their own way with uneven tops, and building-sized props (the
   cottage, Baba Lysaga's hut, the windmill: catalog `models3d.bend`, `ModelPiece.instance_bent`) bend as houses do.
-- **How far.** Never more than a quarter of a square sideways (rule 2: a wall is taller than a token's knee, so a token
-  in the middle of the square beside it and its ring stay clear; the field itself is held to 0.2, `FIELD_MAX`, so a
-  module bent whole stays inside 0.25). Per style, catalog `building_kit.bend`: `styles` (timber 1, clapboard 0.95, stone
+- **How far.** A wall never moves more than its style's reach sideways: a quarter of a square (rule 2: a wall is taller than
+  a token's knee, so a token in the middle of the square beside it and its ring stay clear), and for timber walls half a
+  square (Ashwin's pick, 2026-10-19, so there a wall may stand at the middle of the square beside it): catalog
+  `building_kit.bend.reach`. The field itself is held a little under it (0.2 for a quarter, 0.36 for a half), so a module
+  bent whole stays inside. Per style, catalog `building_kit.bend`: `styles` (timber 1, clapboard 0.95, stone
   0.7, church 0.5), `places` (Castle Ravenloft's outer yards 0, the Abbey and Argynvostholt 0.8) and `overhang`. The
   field is seeded by the place and the building, so a place comes out the same every time and no two houses lean alike.
   The Classic look and the rules grid are untouched.

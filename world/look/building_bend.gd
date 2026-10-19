@@ -8,7 +8,8 @@ extends RefCounted
 ## Only vertices move (no new art), so a window, a door bay or a beam goes with the wall it is in, and anything hung on a
 ## wall asks `frame` where the wall is now (TownBuilder.face_taken). The same field serves a yard wall, a palisade of
 ## logs and a building-sized prop (ModelPiece), each with its own scale.
-## Rule 2 of the plan: nothing moves more than MAX_OUT sideways, a quarter of a square, so a token in the middle of the
+## Rule 2 of the plan: nothing moves more than the style's reach sideways (MAX_OUT, a quarter of a square, unless the catalog
+## says more: Ashwin chose half a square for timber walls, 2026-10-19), so a token in the middle of the
 ## square beside a bent wall and its ring stay clear and pickable. The rules grid is never touched.
 ## How far a building bends is per style (catalog building_kit "bend"): timber most, stone less, Castle Ravenloft none.
 ## The Classic look is frozen and never bends.
@@ -30,6 +31,11 @@ const PROP := 3
 
 var kind := HOUSE
 var amount := 1.0
+## How far a wall of this building may reach sideways (catalog building_kit.bend.reach, else MAX_OUT), what the field itself is
+## held to (a little under, since a module bent whole overshoots at its far corners) and what the roof may reach at its ridge.
+var reach := MAX_OUT
+var _field_max := FIELD_MAX
+var _roof_max := ROOF_MAX
 var _noise := _plain_noise()
 ## The height the lean is measured over (the walls' top, for a house), and the roof's rise over it.
 var _h := 2.2
@@ -96,6 +102,19 @@ static func amount_for(board: ArenaBoard, style: String) -> float:
 	return float((cfg.get("styles", {}) as Dictionary).get(style, 0.0))
 
 
+## How far a style's walls may reach sideways, in squares: the catalog's building_kit.bend.reach, else MAX_OUT.
+static func reach_for(style: String) -> float:
+	var cfg := BuildingKit.settings().get("bend", {}) as Dictionary
+	return float((cfg.get("reach", {}) as Dictionary).get(style, MAX_OUT))
+
+
+## Sets what the reach means for this bend: the field held a little under it (more under, for a wide reach, since a module bent whole overshoots by its lean over its height), the roof allowed a quarter square beyond that at its ridge.
+func _set_reach(reach_: float) -> void:
+	reach = reach_
+	_field_max = reach_ - (0.05 if reach_ <= MAX_OUT else 0.14)
+	_roof_max = _field_max + (ROOF_MAX - FIELD_MAX)
+
+
 ## A number for a place that stays the same every time it is built.
 static func place_seed(board: ArenaBoard) -> int:
 	return absi(board.place.hash()) % 1000003
@@ -111,6 +130,7 @@ static func for_house(board: ArenaBoard, style: String, parts: Array[Rect2], mai
 	var b := BuildingBend.new()
 	b.kind = HOUSE
 	b.amount = a
+	b._set_reach(reach_for(style))
 	var s := place_seed(board) * 7919 + int(main.position.x) * 73856093 + int(main.position.y) * 19349663 + int(main.size.x) * 83492791
 	b._noise.seed = absi(s) % 2147483647
 	b._noise.frequency = 1.0
@@ -120,7 +140,7 @@ static func for_house(board: ArenaBoard, style: String, parts: Array[Rect2], mai
 	var rng := RandomNumberGenerator.new()
 	rng.seed = absi(s)
 	# Every house its own amount: some barely off true, some properly crooked.
-	var k := a * lerpf(0.85, 1.4, rng.randf())
+	var k := a * lerpf(0.85, 1.4, rng.randf()) * pow(b.reach / MAX_OUT, 0.5)   # (a wider reach, a bigger bend to fill it)
 	# A lean of several degrees toward some side.
 	var ang := rng.randf() * TAU
 	b._lean = Vector2(cos(ang), sin(ang)) * lerpf(0.6, 1.0, rng.randf()) * 0.09 * b._h * k
@@ -145,13 +165,13 @@ static func for_house(board: ArenaBoard, style: String, parts: Array[Rect2], mai
 	b._ridge_a = Vector2(main.position.x, mid.y) if along_x else Vector2(mid.x, main.position.y)
 	b._ridge_b = Vector2(main.end.x, mid.y) if along_x else Vector2(mid.x, main.end.y)
 	b._ridge_n = Vector2(0.0, 1.0) if along_x else Vector2(1.0, 0.0)
-	var long_roof := clampf(length / 4.0, 0.55, 1.25)
-	b._sag = lerpf(0.4, 0.7, rng.randf()) * kr * long_roof
+	var long_roof := clampf(length / 4.0, 0.55, 1.1)
+	b._sag = lerpf(0.35, 0.55, rng.randf()) * minf(kr, 1.1) * long_roof
 	b._eave_sag = b._sag * 0.4
 	b._sag_skew = lerpf(-0.45, 0.45, rng.randf())
 	b._ridge_bow = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.15, 0.32, rng.randf()) * kr * long_roof
 	b._roof_wave = 0.12 * kr
-	b._wave = 0.05 * k
+	b._wave = 0.06 * a
 	return b
 
 
@@ -262,7 +282,7 @@ func signature() -> String:
 # --- The displacement ----------------------------------------------------------------------------------------------
 
 ## Where point `p` (world x and z, y up from the building's foot) is once bent. Continuous, so two meshes that meet
-## before still meet, and horizontal moves never pass FIELD_MAX (a little under MAX_OUT).
+## before still meet, and horizontal moves never pass `_field_max` (a little under the reach).
 func apply(p: Vector3) -> Vector3:
 	var u := p.y / _h
 	var uw := clampf(u, 0.0, 1.0)
@@ -290,7 +310,7 @@ func apply(p: Vector3) -> Vector3:
 		var j := _over * uw
 		dx += o.x * j
 		dz += o.y * j
-	var cap := FIELD_MAX
+	var cap := _field_max
 	var dy := 0.0
 	var wave_k := 0.0
 	if u > 0.55:
@@ -306,7 +326,7 @@ func apply(p: Vector3) -> Vector3:
 		if _ridge_bow != 0.0:
 			dx += _ridge_n.x * _ridge_bow * rw * prof
 			dz += _ridge_n.y * _ridge_bow * rw * prof
-		cap += (ROOF_MAX - FIELD_MAX) * minf((p.y - _h) / (0.35 * _rise), 1.0)
+		cap += (_roof_max - _field_max) * minf((p.y - _h) / (0.35 * _rise), 1.0)
 		wave_k += _roof_wave * NORM * minf((p.y - _h) / 0.3, 1.0)
 		if _sag > 0.0:
 			dy -= _sag * rw * prof * (1.0 + _sag_skew * (2.0 * _ridge_t(p.x, p.z) - 1.0))
@@ -383,7 +403,9 @@ func bent(verts: PackedVector3Array, at: Vector2 = Vector2.ZERO) -> PackedVector
 	var h := _h
 	var rise := _rise
 	var inv_rise := 1.0 / maxf(_rise, 0.01)
-	var max2 := FIELD_MAX * FIELD_MAX
+	var field_max := _field_max
+	var roof_extra := _roof_max - _field_max
+	var max2 := field_max * field_max
 	var turn0 := _turn0
 	var turn1 := _turn1
 	var centre := _centre
@@ -458,7 +480,7 @@ func bent(verts: PackedVector3Array, at: Vector2 = Vector2.ZERO) -> PackedVector
 			var rc := (y - h) / (0.35 * rise)
 			if rc > 1.0:
 				rc = 1.0
-			var cap := FIELD_MAX + (ROOF_MAX - FIELD_MAX) * rc
+			var cap := field_max + roof_extra * rc
 			cap2 = cap * cap
 			var rl := (y - h) * 3.3333333
 			if rl > 1.0:

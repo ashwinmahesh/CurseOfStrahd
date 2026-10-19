@@ -38,10 +38,11 @@ func _house_bend(seed_: int = 1) -> BuildingBend:
 	return bend
 
 
-## Rule 2 of the plan: nothing a token stands beside moves more than a quarter of a square sideways, whatever the kind of
-## bend or where on the building the point is. The roof is overhead and may reach further over the walls' top (ROOF_MAX, at
-## the ridge, over the middle of the building); the ridge sags and the eaves wave, nothing leaps.
-func test_a_bend_never_moves_a_point_more_than_a_quarter_square() -> void:
+## Rule 2 of the plan: nothing a token stands beside moves more than its style's reach sideways (a quarter of a square,
+## half for timber walls), whatever the kind of bend or where on the building the point is. The roof is overhead and may
+## reach a quarter square further over the walls' top, at the ridge, over the middle of the building; the ridge sags and
+## the eaves wave, nothing leaps.
+func test_a_bend_never_moves_a_point_more_than_its_reach() -> void:
 	var bends: Array[BuildingBend] = [_house_bend(1), _house_bend(2), _house_bend(3)]
 	var board := ArenaBoard.new()
 	board.place = "bend_test_walls"
@@ -66,8 +67,8 @@ func test_a_bend_never_moves_a_point_more_than_a_quarter_square() -> void:
 					if p.y <= 2.0:
 						worst_low = maxf(worst_low, side)
 					worst_up = maxf(worst_up, absf(q.y - p.y))
-		assert_true(worst_low <= BuildingBend.FIELD_MAX + 0.0001, "the walls: sideways a little under a quarter of a square (%.3f)" % worst_low)
-		assert_true(worst <= BuildingBend.ROOF_MAX + 0.0001, "the roof: at most %.2f (%.3f)" % [BuildingBend.ROOF_MAX, worst])
+		assert_true(worst_low <= bend._field_max + 0.0001, "the walls: sideways a little under their reach (%.3f of %.2f)" % [worst_low, bend._field_max])
+		assert_true(worst <= bend._roof_max + 0.0001, "the roof: at most %.2f (%.3f)" % [bend._roof_max, worst])
 		assert_true(worst > 0.04, "and it does move (%.3f)" % worst)
 		assert_true(worst_up < 1.2, "up and down: a sag and a wave, no leaps (%.3f)" % worst_up)
 
@@ -113,6 +114,9 @@ func test_each_style_bends_by_its_own_amount() -> void:
 	var church := BuildingBend.amount_for(board, "church")
 	assert_true(timber > clap and clap > stone and stone > church and church > 0.0, "timber most, the church least of the town styles (%s)" % [[timber, clap, stone, church]])
 	assert_eq(timber, 1.0, "a Barovian cottage bends the full amount")
+	assert_eq(BuildingBend.reach_for("timber"), 0.5, "timber walls may reach half a square into the street (Ashwin's pick)")
+	for style: String in ["clapboard", "stone", "church"]:
+		assert_eq(BuildingBend.reach_for(style), BuildingBend.MAX_OUT, "%s walls stay inside a quarter square" % style)
 	board.place = "castle_ravenloft_gates"
 	assert_eq(BuildingBend.amount_for(board, "stone"), 0.0, "Castle Ravenloft stays as raised by power")
 	board.place = "village_of_barovia"
@@ -211,7 +215,7 @@ func test_a_bent_wall_leaves_the_middle_of_the_square_beside_it_clear() -> void:
 	for key: String in flat:
 		assert_true(crooked.has(key), "the same house stands: %s" % key)
 		var more := float(crooked.get(key, 0.0)) - float(flat[key])
-		assert_true(more <= BuildingBend.MAX_OUT + 0.005, "%s reaches at most a quarter square further (%.3f)" % [key, more])
+		assert_true(more <= BuildingBend.reach_for("timber") + 0.005, "%s reaches at most its reach further (%.3f)" % [key, more])
 		if more > 0.03:
 			moved += 1
 	assert_true(moved >= 6, "most houses lean or bow out (%d)" % moved)

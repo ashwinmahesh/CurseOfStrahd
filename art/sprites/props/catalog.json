@@ -2118,7 +2118,7 @@
       "night"
     ],
     "bend": {
-      "about": "Natural shapes for buildings (natural maps B1, owner 2026-10-19: \"We can give buildings natural shapes instead of their straight lines\"; BuildingBend, docs/art/building_kit.md): a building's points are moved once when it is built, so its walls lean and bow, its corners drift, a timber house's upper storey juts, the ridge sags and the eaves wave: a wall never more than a quarter of a square sideways, a roof (overhead) up to 0.45 at its ridge. styles: how far each style bends, 1 the most (a Barovian timber cottage); places: a place's own amount over its style's (Castle Ravenloft's outer yards stay as raised by power, the Abbey and Argynvostholt are old and tired); overhang: how far a style's upper storey juts out at full amount. A town's yard walls and palisade take the style's amount too. The Classic look never bends.",
+      "about": "Natural shapes for buildings (natural maps B1, owner 2026-10-19: \"We can give buildings natural shapes instead of their straight lines\"; BuildingBend, docs/art/building_kit.md): a building's points are moved once when it is built, so its walls lean and bow, its corners drift, a timber house's upper storey juts, the ridge sags and the eaves wave: a wall never more than its style's reach sideways (a quarter of a square, half for timber walls: Ashwin's pick, 2026-10-19), a roof (overhead) a quarter square further at its ridge. reach: how far a style's walls may go, in squares (default 0.25). styles: how far each style bends, 1 the most (a Barovian timber cottage); places: a place's own amount over its style's (Castle Ravenloft's outer yards stay as raised by power, the Abbey and Argynvostholt are old and tired); overhang: how far a style's upper storey juts out at full amount. A town's yard walls and palisade take the style's amount too. The Classic look never bends.",
       "styles": {
         "timber": 1.0,
         "clapboard": 0.95,
@@ -2130,6 +2130,9 @@
         "castle_ravenloft_overlook": 0.0,
         "abbey_of_st_markovia": 0.8,
         "argynvostholt": 0.8
+      },
+      "reach": {
+        "timber": 0.5
       },
       "overhang": {
         "timber": 0.07
