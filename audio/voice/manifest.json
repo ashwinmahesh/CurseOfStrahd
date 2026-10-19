@@ -31957,17 +31957,66 @@
   "recipe": "e91d2c917c",
   "text": "Then I will be brave once, and late. Take it."
  },
+ "kasimir_velikov/02b25084cb250bdd": {
+  "chars": 96,
+  "direction": "[sardonic, cold, dry]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The town traded a loud jailer for a quiet clerk of the castle. The doors will lock the same way."
+ },
+ "kasimir_velikov/0619c094726187c9": {
+  "chars": 54,
+  "direction": "[dry, wry, contemptuous]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Men who keep neat ledgers in ruins never lack for ink."
+ },
+ "kasimir_velikov/076d24ddf9bd4263": {
+  "chars": 76,
+  "direction": "[anguished, self-reproachful, heavy]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Three hundred years in the cold, and I kept her there with my own cowardice."
+ },
  "kasimir_velikov/0893692f1946d036": {
   "chars": 216,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "Long ago a Vistana I had never met fell sick with a fever on the road, and I sat with her three nights until it broke. Her grandchildren still bring me soup. The Vistani forget nothing: not a kindness, not an insult."
  },
+ "kasimir_velikov/14321b5bd147d62e": {
+  "chars": 43,
+  "direction": "[hushed, fatalistic, distant]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The dead keep their own counsel at the end."
+ },
+ "kasimir_velikov/1a2582b91aacbd2d": {
+  "chars": 52,
+  "direction": "[trembling, quiet, imploring]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Tell me only one thing, if you will: was she afraid?"
+ },
  "kasimir_velikov/1b85e45a5940de11": {
   "chars": 71,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "You are patient. The young rarely are. Very well; you have paid for it."
+ },
+ "kasimir_velikov/1cd690d4ca73f51b": {
+  "chars": 92,
+  "direction": "[diffident, courteous, wistful]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I would return to the camp by the lake, unless you still have some use for a slow companion."
+ },
+ "kasimir_velikov/1d3d50a65ac87506": {
+  "chars": 88,
+  "direction": "[quiet, bracing, solemn]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You have been up into the ice, and you do not look at me. Say what you have come to say."
  },
  "kasimir_velikov/1fb546cb5e2b42ca": {
   "chars": 187,
@@ -31982,6 +32031,20 @@
   "recipe": "e91d2c917c",
   "text": "My sister asked for far less than this, once. Look what it made of her."
  },
+ "kasimir_velikov/279b8d63c4d9c3c5": {
+  "chars": 128,
+  "direction": "[grave, ominous, lecturing]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The wardens carved their warnings plainly, because the vestiges always keep their word. A permanent grace, for a permanent debt."
+ },
+ "kasimir_velikov/283fa1c049f73431": {
+  "chars": 91,
+  "direction": "[bitter, hollow, searching]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "We thought silence was survival, when it was only another grave. Did she say anything else?"
+ },
  "kasimir_velikov/287f25ff1d9dbdb3": {
   "chars": 82,
   "direction": "[rueful, sad]",
@@ -31995,11 +32058,32 @@
   "recipe": "e91d2c917c",
   "text": "Beyond the pass to the north, in the ice. I have read of it, and dreamed of it, and been too much of a coward to climb to it. If ever you go that way, I would like very much to go with you."
  },
+ "kasimir_velikov/295119ab5307f2d5": {
+  "chars": 117,
+  "direction": "[warm, serene, farewell]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Walk in the light while it lasts, my friends. If you pass the lake, I will be at the fire, and I will not be mending."
+ },
+ "kasimir_velikov/2ab68dd88ffe745a": {
+  "chars": 85,
+  "direction": "[earnest, hushed, pleading]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I ask only one courtesy: when we find my sister, let me be the first to speak to her."
+ },
  "kasimir_velikov/2be802d47a756945": {
   "chars": 24,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "\"Let her rest, brother.\""
+ },
+ "kasimir_velikov/30b741bffefdd1a7": {
+  "chars": 83,
+  "direction": "[easy, warm, inviting]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The fire is warm, and the Vistani have been talking. Tell me what you wish to know."
  },
  "kasimir_velikov/30f526670ef15662": {
   "chars": 180,
@@ -32013,11 +32097,46 @@
   "recipe": "e91d2c917c",
   "text": "\"The boy who brings you this is the best thing I did with the time I stole. Feed him. He will say he isn't hungry. He is lying. S.\""
  },
+ "kasimir_velikov/32c2b2b859faf385": {
+  "chars": 80,
+  "direction": "[frail, urgent, solemn]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The light is thin today, and my count is smaller. Speak, while we are both here."
+ },
+ "kasimir_velikov/333356edead5da4a": {
+  "chars": 87,
+  "direction": "[haunted, rueful, knowing]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Living with one's own hands is a long punishment. Believe me, I know the measure of it."
+ },
+ "kasimir_velikov/361e7a72b7bc5c74": {
+  "chars": 103,
+  "direction": "[observant, uneasy, soft]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You took a gift from the amber. I can see it in the way your breath catches, and how you do not flinch."
+ },
  "kasimir_velikov/374d831acb6c9ed1": {
   "chars": 149,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "I will come. Somewhere along your road is the castle, and beneath it, my sister. And past it, perhaps, the temple. It is time I stopped mending nets."
+ },
+ "kasimir_velikov/3825ce9fa5919b55": {
+  "chars": 35,
+  "direction": "[soft, touched, humble]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You are kind to remember my errand."
+ },
+ "kasimir_velikov/38565c2d8778ed9d": {
+  "chars": 125,
+  "direction": "[warm, glad, softly smiling]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You brought Luvash his daughter back from the water. Listen to the wagons tonight - the camp has not sung like that in years."
  },
  "kasimir_velikov/3871f925fb7ab935": {
   "chars": 26,
@@ -32031,12 +32150,26 @@
   "recipe": "e91d2c917c",
   "text": "My sister, Patrina. Cleverer than me, prouder than me. She went up to the castle of her own will, to learn what its lord knew. Our own people stoned her for it, and I stood at the back and did not stop them."
  },
+ "kasimir_velikov/412b8b2a84bda779": {
+  "chars": 101,
+  "direction": "[kind, solemn, warning]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I will not judge you for buying what you needed. Only remember that the bill is collected at the end."
+ },
  "kasimir_velikov/443814ef14f36f04": {
   "chars": 78,
   "direction": "[dry, melancholy]",
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "I am poor at this. I am improving. It is not a skill I ever wished to improve."
+ },
+ "kasimir_velikov/49e07e87721f981b": {
+  "chars": 42,
+  "direction": "[sincere, drained, dignified]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Thank you for bringing me the truth of it."
  },
  "kasimir_velikov/4ac1daf646b797eb": {
   "chars": 106,
@@ -32050,11 +32183,39 @@
   "recipe": "e91d2c917c",
   "text": "Back again, to the saddest wagon in the camp. People will start to talk."
  },
+ "kasimir_velikov/4e9d26b6cdfde285": {
+  "chars": 101,
+  "direction": "[wry, suspicious, slow]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "They say he is courteous, glad of visitors, and very helpful to those who lose their way in the cold."
+ },
+ "kasimir_velikov/52b4b7c937e0d2b0": {
+  "chars": 89,
+  "direction": "[relieved, grateful, humble]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I am glad you were the ones to hear that voice, and that I did not stand before it alone."
+ },
  "kasimir_velikov/52f9526ec3250b26": {
   "chars": 221,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "\"I hear you mean to go to the temple in the mountains, where death can be argued with. Do not. Whatever answers there will want more than either of us has, and it will not give her back as she was. Let her rest, brother.\""
+ },
+ "kasimir_velikov/55fecf2cc035bde8": {
+  "chars": 65,
+  "direction": "[composed, brittle, grave]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You need not tell me how it ended, or whose hand struck the blow."
+ },
+ "kasimir_velikov/56a48241fb4ddaf9": {
+  "chars": 86,
+  "direction": "[calm, accommodating, mild]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Very well, we will leave the question for another mile. Lead on, and I will keep pace."
  },
  "kasimir_velikov/57690e955472eb33": {
   "chars": 8,
@@ -32081,6 +32242,20 @@
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "Every morning I wake and count. The number is smaller. I would not take the bargain back. I would like to stop counting."
+ },
+ "kasimir_velikov/597eaa72af3a8d61": {
+  "chars": 66,
+  "direction": "[steady, tired, accepting]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "That is an honest answer, and I will not ask you for a kinder one."
+ },
+ "kasimir_velikov/5a9062fa3e6bf11d": {
+  "chars": 82,
+  "direction": "[scornful, cool, measured]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "A man who orders his people to smile has never understood how long a winter lasts."
  },
  "kasimir_velikov/5b1a822636f0c532": {
   "chars": 53,
@@ -32133,6 +32308,34 @@
   "recipe": "e91d2c917c",
   "text": "Kasimir Velikov. My people came to this valley long ago, the elves of the dusk, as guests of its lord. We stayed as his tenants. Now there are only a handful of us, none of us young, and there will never be another. That was his doing. And, I am afraid, a little of ours."
  },
+ "kasimir_velikov/7190281853396251": {
+  "chars": 82,
+  "direction": "[peaceful, spent, tender]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I will sit here a little longer and listen to the water, with nothing in my hands."
+ },
+ "kasimir_velikov/75e0c406d199e529": {
+  "chars": 109,
+  "direction": "[wary, flat, knowing]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Word from the wagons is that Lady Fiona rules Vallaki now. She has always kept the count's portrait polished."
+ },
+ "kasimir_velikov/7ecf25b6f4973c86": {
+  "chars": 70,
+  "direction": "[shaken, raw, confessing]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "My hand was on the red amber, and you pulled me back from my own word."
+ },
+ "kasimir_velikov/7fde83697bc1855a": {
+  "chars": 97,
+  "direction": "[wry, tender, resigned]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "My sister always preferred to give the orders, and I find myself inclined, for once, to obey her."
+ },
  "kasimir_velikov/833f3ad6604fab91": {
   "chars": 108,
   "direction": "[grave, warm, resolute]",
@@ -32146,11 +32349,53 @@
   "recipe": "e91d2c917c",
   "text": "We do not say it. We are what is left of a people who said yes to the lord of this valley once. Our sister said yes to him too. Patrina. Our own people stoned her for it, and I stood at the back."
  },
+ "kasimir_velikov/89dbfd012e58bcf6": {
+  "chars": 87,
+  "direction": "[thoughtful, measured, quiet]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I heard that Bluto still breathes after what he did at the lake. You left him his life."
+ },
+ "kasimir_velikov/8a6e72fa329d627c": {
+  "chars": 98,
+  "direction": "[grateful, humbled, warm]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Thank you for climbing where I was too afraid to go, and for bringing her words down the mountain."
+ },
+ "kasimir_velikov/8c5c50ff66a3786a": {
+  "chars": 71,
+  "direction": "[wry, resolved, gentle]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "She did say to be brave somewhere she could not see me. A road will do."
+ },
+ "kasimir_velikov/8dc66a6cbc9c112e": {
+  "chars": 115,
+  "direction": "[patient, sorrowful, gentle]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I have waited three hundred years for that word, so I can wait a little longer. Come to my fire when you are ready."
+ },
  "kasimir_velikov/8ef61e95a9b59743": {
   "chars": 104,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "She told me to be brave somewhere she can't see me. I think she meant the castle. I think she meant you."
+ },
+ "kasimir_velikov/90c0a964182c0877": {
+  "chars": 59,
+  "direction": "[brisk, clipped, wary]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You have a question for me. Ask it, and let us keep moving."
+ },
+ "kasimir_velikov/9152e67b50b04aef": {
+  "chars": 75,
+  "direction": "[hurt, understated, sad]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I looked for Patrina's name in the margins. He did not even write her down."
  },
  "kasimir_velikov/97cc58da84d67314": {
   "chars": 132,
@@ -32159,6 +32404,41 @@
   "recipe": "e91d2c917c",
   "text": "My people came over this pass as the count's guests. They are still his guests. It is the longest visit in the history of the world."
  },
+ "kasimir_velikov/98bca9ff23c4698c": {
+  "chars": 62,
+  "direction": "[ominous, low, measured]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The pass is cold, and what waits in the amber is colder still."
+ },
+ "kasimir_velikov/9a41e49b232eb80c": {
+  "chars": 48,
+  "direction": "[fond, wry, proud]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Even as a spirit in the ice, she keeps her edge."
+ },
+ "kasimir_velikov/9ae88261b9d2aca0": {
+  "chars": 93,
+  "direction": "[rueful, resentful, quiet]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "One of ours stayed in that house to serve him, yet even we are only a footnote in the ledger."
+ },
+ "kasimir_velikov/9af5c6e744757c65": {
+  "chars": 69,
+  "direction": "[proud, mournful, softened]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Proud to the last, then, as she was when she walked up to the castle."
+ },
+ "kasimir_velikov/9bc8323977122d39": {
+  "chars": 76,
+  "direction": "[devastated, ashamed, low]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "It took three centuries alone to teach her fear, and I left her to learn it."
+ },
  "kasimir_velikov/9c90ef1d3c26c8f7": {
   "chars": 75,
   "direction": "[weary, relieved]",
@@ -32166,17 +32446,59 @@
   "recipe": "e91d2c917c",
   "text": "Is everyone whole? Good. I have buried enough people for an elf's lifetime."
  },
+ "kasimir_velikov/9cfcfe4dfd9f10c3": {
+  "chars": 98,
+  "direction": "[dry, warm, quietly amused]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Very well. I will walk with you a while longer, if only to prove an old elf can learn a new habit."
+ },
+ "kasimir_velikov/9dbefe9ae0764e6f": {
+  "chars": 83,
+  "direction": "[longing, slow, tender]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I have waited a very long time to hear her name spoken by someone who has seen her."
+ },
  "kasimir_velikov/9f7928bac2268bba": {
   "chars": 116,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "My sister. Patrina. Her bones lie under the castle and her voice is in this temple. Can you put them together again?"
  },
+ "kasimir_velikov/9f9b11504eef8718": {
+  "chars": 83,
+  "direction": "[hushed, apprehensive, grave]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "So Tarakamedes has spoken to you out of the red amber. Do not tell me what it said."
+ },
  "kasimir_velikov/a1ac801d1a296e95": {
   "chars": 38,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "One year. I have wasted three hundred."
+ },
+ "kasimir_velikov/a31815966d16cd76": {
+  "chars": 63,
+  "direction": "[soft, aching, steadying]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "She told me to go home and be brave where she could not see me."
+ },
+ "kasimir_velikov/a4d22d42e45040ab": {
+  "chars": 77,
+  "direction": "[haunted, wistful, tired]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I have read the name for three hundred years, though never the price it asks."
+ },
+ "kasimir_velikov/a60e91a54e545c82": {
+  "chars": 67,
+  "direction": "[fond, rueful, wistful]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "It is like her to lose patience with me at the end. Was there more?"
  },
  "kasimir_velikov/a785bc5fbd689336": {
   "chars": 121,
@@ -32190,6 +32512,13 @@
   "recipe": "e91d2c917c",
   "text": "I was afraid of them, and I was afraid of you, and I let them do it so that I would never have to be as brave as you were. I'm sorry. I have been sorry every day."
  },
+ "kasimir_velikov/ac6fb50d5850707f": {
+  "chars": 72,
+  "direction": "[wry, perceptive, quiet]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You have met Master Vosk, then, and heard a clerk's courtesy in the ice."
+ },
  "kasimir_velikov/ac8259dba30e614d": {
   "chars": 102,
   "direction": "[quietly relieved, wary]",
@@ -32197,12 +32526,40 @@
   "recipe": "e91d2c917c",
   "text": "I think of her less as a wound now, and more as a name. It is a strange relief. I do not trust it yet."
  },
+ "kasimir_velikov/ac909955900657b2": {
+  "chars": 86,
+  "direction": "[dry, hollow, unsparing]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "It does not dry the water, of course. It only leaves one fewer fisherman on the shore."
+ },
+ "kasimir_velikov/b17ad4f0578f1d47": {
+  "chars": 106,
+  "direction": "[flat, sober, detached]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "They say the fisherman Bluto is dead by Lake Zarovich. A sack, a boat, and a short end to a small madness."
+ },
  "kasimir_velikov/b18ab6350af81668": {
   "chars": 131,
   "direction": "[grieving, resolute]",
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "Patrina walked up these stairs of her own will. I stood at the back the day they stoned her for it. I am done standing at the back."
+ },
+ "kasimir_velikov/b2f764de44b5211f": {
+  "chars": 110,
+  "direction": "[somber, hushed, grieved]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The lake kept Luvash's small girl. The fires are low tonight, and her father has not spoken a word since noon."
+ },
+ "kasimir_velikov/b3025660b969d38d": {
+  "chars": 92,
+  "direction": "[courteous, withdrawn, final]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The wind off the lake is rising, and I have work to finish before dark. Good evening to you."
  },
  "kasimir_velikov/b5ba36fb05918de7": {
   "chars": 119,
@@ -32216,12 +32573,61 @@
   "recipe": "e91d2c917c",
   "text": "The strangers. The camp talks of nothing else. Sit, if you like. I am poor company. I have been poor company for a very long time."
  },
+ "kasimir_velikov/b88d7e858eb96a3c": {
+  "chars": 93,
+  "direction": "[curious, guarded, measured]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Rumour speaks of a Master Vosk in the halls - a scholar of the temple who keeps its accounts."
+ },
+ "kasimir_velikov/b9933ebecf7fa84d": {
+  "chars": 122,
+  "direction": "[sardonic, knowing, dry]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Read old books long enough and you learn one rule. In a market like that, the politest voice is the one with a price list."
+ },
+ "kasimir_velikov/bb1101e1a6287fa1": {
+  "chars": 65,
+  "direction": "[strained, grateful, heavy]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Thank you for the mercy, though it sits like a stone in my chest."
+ },
  "kasimir_velikov/bc7b5b7106ee10a1": {
   "chars": 91,
   "direction": "[grave, wistful]",
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "My people were warriors once, before we were tenants. My arms remember it better than I do."
+ },
+ "kasimir_velikov/bee8531e38680cec": {
+  "chars": 105,
+  "direction": "[curious, lightly surprised, reserved]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The traders say a council sits in Vallaki now, and the Baron's chair is empty. That is a rare thing here."
+ },
+ "kasimir_velikov/c2b795debb87c980": {
+  "chars": 64,
+  "direction": "[wistful, heavy, sorrowful]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "She was never afraid when she was alive, not even of the stones."
+ },
+ "kasimir_velikov/c5ab8de8f7add560": {
+  "chars": 55,
+  "direction": "[subdued, bittersweet, self-condemning]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "It is a small mercy, though it is more than I gave her."
+ },
+ "kasimir_velikov/c5abaf7c3d6e7a4c": {
+  "chars": 89,
+  "direction": "[heavy, empathetic, slow]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I know the sound of a camp when a child does not come home. It takes a long time to fade."
  },
  "kasimir_velikov/c67237f9f28f8077": {
   "chars": 55,
@@ -32234,6 +32640,13 @@
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "It knows. Of course it knows. It was built for nothing else."
+ },
+ "kasimir_velikov/cd934272880f3478": {
+  "chars": 99,
+  "direction": "[patient, subdued, faintly hopeful]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I have no new words for you today. Walk a little further, and perhaps the valley will give us some."
  },
  "kasimir_velikov/d1a39dddf5af5b34": {
   "chars": 127,
@@ -32252,6 +32665,13 @@
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "One year. It is strange, how much longer a year feels when you can count it."
+ },
+ "kasimir_velikov/da20e28dd9605067": {
+  "chars": 116,
+  "direction": "[reserved, grave, distant]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You brought the fisherman Bluto to Luvash's people for judgment. I walked down to the water before the camp decided."
  },
  "kasimir_velikov/dc2be83d7ca61789": {
   "chars": 48,
@@ -32272,6 +32692,27 @@
   "recipe": "e91d2c917c",
   "text": "The songs are always written before the ending. I would like, once, to hear the ending first."
  },
+ "kasimir_velikov/e18ad97d37cfa5e2": {
+  "chars": 79,
+  "direction": "[formal, distant, flat]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You have returned. Tell me what you require, and we will conclude our business."
+ },
+ "kasimir_velikov/e36516d5b06e82b4": {
+  "chars": 56,
+  "direction": "[hopeful, hesitant, fragile]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Tell me what she said to you, if she could speak at all."
+ },
+ "kasimir_velikov/e3774c4b86661f00": {
+  "chars": 71,
+  "direction": "[resolute, quiet, rueful]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Yes, I was very good at quiet. I think I am finished practicing it now."
+ },
  "kasimir_velikov/e6f63105398dc362": {
   "chars": 41,
   "direction": "[grave, firm]",
@@ -32279,11 +32720,74 @@
   "recipe": "e91d2c917c",
   "text": "Find me that road. I will hold you to it."
  },
+ "kasimir_velikov/eb57ff47db1cadba": {
+  "chars": 99,
+  "direction": "[ominous, reflective, low]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "In the red amber lies Tarakamedes, the dragon in the grave. The old books say it deals in the dead."
+ },
  "kasimir_velikov/eb7526d015abd872": {
   "chars": 155,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "My sister came this way. If they stopped her, they'll remember. If they didn't, they let her through to that place, and I don't know which I'd rather hear."
+ },
+ "kasimir_velikov/eb8ba7e0e327ad19": {
+  "chars": 95,
+  "direction": "[grave, gentle, tired]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "You still carry the mountain air on your cloaks. Sit by the wagon, please, and tell me plainly."
+ },
+ "kasimir_velikov/edab9e2a972c4368": {
+  "chars": 98,
+  "direction": "[urgent, ashamed, firm]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Do not trust me when we stand before that stone. If I speak to it, do not take my word on the day."
+ },
+ "kasimir_velikov/ef7ae9854b95ebd4": {
+  "chars": 88,
+  "direction": "[dry, self-deprecating, weary]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I warn you that three centuries beside a wagon have made me very dull company on a road."
+ },
+ "kasimir_velikov/f04ecb8814127911": {
+  "chars": 107,
+  "direction": "[bitter, pointed, wry]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Look here - one dry page for the dusk elves, written the way a landlord notes his tenants. Not a word more."
+ },
+ "kasimir_velikov/f2d96d3f965d0eb7": {
+  "chars": 103,
+  "direction": "[dry, weary, unimpressed]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The Vistani say Baron Vargas still sits in his chair in Vallaki. Another festival, and nothing changed."
+ },
+ "kasimir_velikov/f364a52a07ca0ec7": {
+  "chars": 101,
+  "direction": "[wry, soft, melancholy]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Welcome back. The wagon is only the second saddest place in the camp now, which is a strange comfort."
+ },
+ "kasimir_velikov/f424611143ce5fa3": {
+  "chars": 75,
+  "direction": "[gentle, respectful, grateful]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "The Vistani remember every hand that pulls a child of theirs from the cold."
+ },
+ "kasimir_velikov/f46885636d8ac365": {
+  "chars": 96,
+  "direction": "[musing, dry, mellow]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Committees move slowly, which is usually a fault. In this valley, slowness is sometimes a mercy."
  },
  "kasimir_velikov/f56907da6e122ef6": {
   "chars": 176,
@@ -32291,17 +32795,52 @@
   "recipe": "e91d2c917c",
   "text": "Her bones lie under his castle now. They say there is a temple high in the mountains, sealed in amber, where death itself can be argued with. One day I will go there and argue."
  },
+ "kasimir_velikov/f671ab975a1dd39e": {
+  "chars": 70,
+  "direction": "[thoughtful, unhurried, mild]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "We have a moment before the road takes us again. What is on your mind?"
+ },
  "kasimir_velikov/f6b98f4ff4351ce3": {
   "chars": 108,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "I did. I do. I don't know. He says let her rest. He was always the wise one. He was always the one who left."
  },
+ "kasimir_velikov/f969c3d1e17c5668": {
+  "chars": 126,
+  "direction": "[intrigued, grim, restrained]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "So this is Strahd's own hand. A conqueror bored by peace, a brother named Sergei, and a girl named Tatyana who chose the fall."
+ },
+ "kasimir_velikov/fb1cbafdecfa5284": {
+  "chars": 60,
+  "direction": "[moved, sincere, gentle]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Thank you for walking me to the door I could not open alone."
+ },
+ "kasimir_velikov/fb55b80b2e46714d": {
+  "chars": 98,
+  "direction": "[haunted, ashamed, flat]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I stood in the back and made no sound while the stones fell. Afterward, none of us spoke her name."
+ },
  "kasimir_velikov/fccf787709dde00a": {
   "chars": 94,
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "I stood at the back. I have stood at the back for three hundred years. I came up here to stop."
+ },
+ "kasimir_velikov/fe99ba3442753950": {
+  "chars": 76,
+  "direction": "[weary, bitter, resigned]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "I have seen enough justice in my life. I had no need to watch another man's."
  },
  "kestrel_merrow/0c71ada79e090ea7": {
   "chars": 39,
@@ -94433,6 +94972,13 @@
   "recipe": "555f6fed09",
   "text": "Thank you for going. The coin goes out on the first of the month, and now it goes out with a name on it, in a manner of speaking."
  },
+ "tudorel/3c88dc97b94eb8e4": {
+  "chars": 167,
+  "direction": "[polite, uneasy, forlorn]",
+  "model": "eleven_v3",
+  "recipe": "555f6fed09",
+  "text": "If you have come for Lady Wachter's household, her ladyship is gone from the house, and the rest of us were told to wait here until someone decides what to do with us."
+ },
  "tudorel/3ea51cccfd1cc5ed": {
   "chars": 79,
   "direction": "[polite, nervous, hospitable]",
@@ -94447,12 +94993,26 @@
   "recipe": "555f6fed09",
   "text": "I know what you are thinking, and you may think it, only keep your voices down in the hall."
  },
+ "tudorel/543399c0af6b9f89": {
+  "chars": 109,
+  "direction": "[sheepish, rueful, quiet]",
+  "model": "eleven_v3",
+  "recipe": "555f6fed09",
+  "text": "I would take the livery off, only it is the warmest coat I own and the wind is coming down from the mountain."
+ },
  "tudorel/6a295534888c1f3a": {
   "chars": 137,
   "direction": "[earnest, hushed, confessing]",
   "model": "eleven_v3",
   "recipe": "555f6fed09",
   "text": "I give Old Kolya a silver piece every month when he goes down the valley with his cart, wrapped in a bit of tea-paper with no name on it."
+ },
+ "tudorel/73526f6d9cf94b5f": {
+  "chars": 112,
+  "direction": "[ashamed, hushed, aching]",
+  "model": "eleven_v3",
+  "recipe": "555f6fed09",
+  "text": "It is a shameful thing to say, I know, but I would rather he pray for a dead boy than curse a living one's coat."
  },
  "tudorel/7d234affe8ede2ae": {
   "chars": 92,
@@ -94467,6 +95027,27 @@
   "model": "eleven_v3",
   "recipe": "555f6fed09",
   "text": "Please do not tell him where you saw me, or whose bread I am eating."
+ },
+ "tudorel/b5c64811faf35b6b": {
+  "chars": 86,
+  "direction": "[guarded, stiff, nervous]",
+  "model": "eleven_v3",
+  "recipe": "555f6fed09",
+  "text": "You are looking at me as if you know my face. I am sure I have never had the pleasure."
+ },
+ "tudorel/b9776c1bb2ed3e4a": {
+  "chars": 76,
+  "direction": "[grateful, soft, relieved]",
+  "model": "eleven_v3",
+  "recipe": "555f6fed09",
+  "text": "Thank you for going all that way, and for giving me a clean end in his ears."
+ },
+ "tudorel/bff4bf0ab90e5db2": {
+  "chars": 127,
+  "direction": "[earnest, steady, tender]",
+  "model": "eleven_v3",
+  "recipe": "555f6fed09",
+  "text": "Old Kolya will still carry the silver piece in its bit of tea-paper every month, unsigned, for as long as I have wages to send."
  },
  "tudorel/fe3e6ca7c2246f0d": {
   "chars": 87,
