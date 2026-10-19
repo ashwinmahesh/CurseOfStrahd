@@ -249,3 +249,23 @@ func test_a_short_order_does_not_scroll_and_leaves_the_wheel_alone() -> void:
 		assert_true(view.in_view(e.current().id), "everyone is in view")
 	var panel := hud.get("_strip_panel") as Control
 	assert_true(panel.size.x < CombatHud.ORDER_MAX_WIDTH * 0.7, "a short order's box is only as wide as its cards (%.0f)" % panel.size.x)
+
+
+# --- Long names -----------------------------------------------------------------------------------
+
+func test_a_long_name_is_cut_on_its_card_and_kept_in_the_tooltip() -> void:
+	assert_eq(CombatHud.order_name("Ilse Varga", false), "Ilse", "a hero is their first name")
+	assert_eq(CombatHud.order_name("Dire Wolf", true), "Dire", "a Dire Wolf is Dire")
+	assert_eq(CombatHud.order_name("Zombie", true), "Zombie", "a short foe's name is whole")
+	var cut := CombatHud.order_name("Strahd von Zarovich", true)
+	assert_true(cut.length() <= CombatHud.ORDER_NAME_CHARS and cut.ends_with("…"), "a long foe's name is cut with an ellipsis (%s)" % cut)
+	assert_eq(CombatHud.order_name("Ireena Kolyana", false), "Ireena", "a long guest name is only the first name")
+	assert_true(CombatHud.order_name("Bartholomewsworth Pendlebrook", false).ends_with("…"), "even a long first name is cut")
+	var view := _fight(1)
+	var foe := e.order.filter(func(c: Combatant) -> bool: return c.side == &"enemy").front() as Combatant
+	foe.creature.name = "The Very Long-Named Zombie Lord of the Barrow"
+	hud.refresh()
+	await _settle(view)
+	var card := view.strip.get_children().filter(func(n: Node) -> bool:
+		return n is PanelContainer and (n as Control).tooltip_text.ends_with(foe.creature.name)).front() as Control
+	assert_true(card.size.x < 80.0, "its card stays about as wide as the others (%.0f)" % card.size.x)

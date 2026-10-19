@@ -4,7 +4,7 @@ extends Node3D
 ## 2026-10-19: smaller portraits and turn order, the saves list of an area spell under the combat log): the fight at its
 ## first turn (<out>_1_idle.png), the wizard's Fireball aimed with the log compact (<out>_2_fireball.png) and with it
 ## grown tall (<out>_3_fireball_tall_log.png), then the log minimized (<out>_4_fireball_log_minimized.png) and the order
-## on a foe's turn (<out>_5_foe_turn.png), so the sizes can be shown before and after.
+## on a foe's turn (<out>_5_foe_turn.png) and with long foe names (<out>_6_long_name.png), so the sizes can be shown before and after.
 
 const POINTER := Vector2(10.5, 5.5)
 
@@ -119,3 +119,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	view.hud.refresh()
 	await tool.call("wait_frames", 40)
 	tool.call("_shot", "%s_5_foe_turn.png" % out)
+	# A foe with a long name: its card is cut with an ellipsis (<out>_6_long_name.png).
+	var foes: Array = e.order.filter(func(c: Combatant) -> bool: return c.side == &"enemy")
+	(foes[0] as Combatant).creature.name = "Strahd von Zarovich"
+	(foes[2] as Combatant).creature.name = "The Very Long-Named Zombie Lord"
+	view.hud.refresh()
+	await tool.call("wait_frames", 20)
+	tool.call("_shot", "%s_6_long_name.png" % out)

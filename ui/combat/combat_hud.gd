@@ -172,6 +172,8 @@ const PARTY_GAP := 6
 const ORDER_PORTRAIT := 34.0
 const ORDER_PORTRAIT_ACTIVE := 44.0
 const ORDER_NAME_SIZE := 11
+## The most characters of a name on a turn order card (order_name).
+const ORDER_NAME_CHARS := 10
 const ORDER_NAME_SIZE_ACTIVE := 13
 const ORDER_BAR := 38
 const ORDER_BAR_ACTIVE := 48
@@ -940,7 +942,7 @@ func _refresh_strip() -> void:
 		v.add_theme_constant_override("separation", 1)
 		card.add_child(v)
 		v.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), ORDER_PORTRAIT_ACTIVE if active else ORDER_PORTRAIT, c.is_down(), c.creature.dead))
-		var short := c.name().get_slice(" ", 0) if c.side != &"enemy" else c.name().replace("Dire Wolf", "Dire")
+		var short := order_name(c.name(), c.side == &"enemy")
 		var sl := _label(short, ORDER_NAME_SIZE if not active else ORDER_NAME_SIZE_ACTIVE, "gilt_light" if active else "vellum")
 		sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(sl)
@@ -980,6 +982,16 @@ func _refresh_strip() -> void:
 func look_at(id: String) -> void:
 	_strip_view.look(id)
 	_refresh_strip()
+
+
+## A creature's name on its turn order card (owner, 2026-10-19: a long name must not stretch its card): a hero or guest's
+## first name, a foe's name with "Dire Wolf" as "Dire"; a name past ORDER_NAME_CHARS is cut with an ellipsis. The card's
+## tooltip has the whole name.
+static func order_name(full: String, foe: bool) -> String:
+	var short := full.get_slice(" ", 0) if not foe else full.replace("Dire Wolf", "Dire")
+	if short.length() > ORDER_NAME_CHARS:
+		return short.substr(0, ORDER_NAME_CHARS - 1).strip_edges() + "…"
+	return short
 
 
 ## The lair's turn in the order (initiative count 20): ticked once the lair has acted this round.
