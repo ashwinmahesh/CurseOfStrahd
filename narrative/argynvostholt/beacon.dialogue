@@ -111,7 +111,7 @@ Narrator: The silver flame leans toward the cradle on its own. You swore an oath
 Argynvost [weary]: Easy, friends. That small cold light is the last of what I was, and I have no second spark to give.
 Argynvost [sad]: Lower it now and it goes out, and I go out with it. The beacon will never be lit.
 Argynvost: I would rather you raised it, and let them go home. But I only ask.
-* (Let the flame die.) The oath stands. -> oath_kept
+* [ends:the_dark_beacon] (Let the flame die.) The oath stands. -> oath_kept
 * (Hold the flame a little longer.) Not yet. -> END
 
 ~ oath_kept
