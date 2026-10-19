@@ -3686,6 +3686,9 @@ class Wiki:
                 old = json.loads(manifest.read_text())
             except json.JSONDecodeError:
                 old = {}
+        # A page or heading that still exists keeps its links: only a target that's gone was renamed. (A spell's
+        # scroll moved from Magic Items#Spell Scroll to its level on Spell Scrolls, but the heading stayed.)
+        live = {v[2:-2].partition("|")[0] for v in new.values()}
         swaps = []
         for k, was in old.items():
             now = new.get(k)
@@ -3693,7 +3696,7 @@ class Wiki:
                 continue
             ot, _, ol = was[2:-2].partition("|")
             nt, _, nl = now[2:-2].partition("|")
-            if ot == nt:
+            if ot == nt or ot in live:
                 continue
             swaps += [(was, now), (was.replace("|", "\\|"), now.replace("|", "\\|")),
                       (f"[[{ot}|", f"[[{nt}|"), (f"[[{ot}\\|", f"[[{nt}\\|"), (f"[[{ot}]]", f"[[{nt}]]")]
