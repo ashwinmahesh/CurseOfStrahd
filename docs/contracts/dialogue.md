@@ -155,7 +155,11 @@ switch), and `interject guest:ireena: Text` for a story ally travelling with the
 or a number), `attention >= marked` (Strahd's attention: a number or a tier from data/strahd/attention.json, F9),
 `gold >= 25` (the party's purse), `level >= 3`
 (the lowest character level in the party), `leader:name:thistle` (the one speaking for the party matches the selector
-after `leader:`; `name:thistle and not leader:name:thistle` is Thistle when she isn't the one speaking), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
+after `leader:`; `name:thistle and not leader:name:thistle` is Thistle when she isn't the one speaking),
+`hero_named:vesper` (any party member is called that, whoever is speaking: it reads the name a player typed for a custom
+hero; case doesn't matter, the whole name or its first word will do, so `vesper` is "Vesper Brightwater", and `_` stands
+for a space: `hero_named:vesper_brightwater`; use it only for a variant or a wink, never to gate the story),
+`check.last` (the last check succeeded), joined with `and`, `or`, `not`
 and parentheses.
 
 `gold -N` never takes the purse below zero: guard a purchase with `[if gold >= N]` and offer a "can't afford" line.
@@ -184,6 +188,19 @@ cooldown 3
   (conditioned before plain), and the game avoids repeating a variant until the others have played.
 - `cooldown n` (minutes outside combat, rounds in combat): the trigger won't play again sooner. `once` plays it only
   the first time.
+- `[once]` / `[once and <condition>]` on a variant: that one line plays a single time a playthrough (remembered in the
+  save, by its text), then drops out and the trigger's other lines carry on. Until it has played, and while its
+  condition holds, it comes before every other line (conditioned ones too), so a one-off plays as soon as its moment
+  comes; with several unplayed at once, one of them is picked and the rest wait their turn. It is the way to give a
+  trigger a one-off line without silencing the trigger afterwards, which is what the node-level `once` does. `once` only leads the brackets; `[flag.x and once]` and
+  `[once or flag.x]` are errors (`make validate`).
+
+```
+~ rest:long:some_inn
+| [once and flag.some_flag] A line that plays one time, once the flag is set.
+| [once] A line that plays one time, the first time the trigger fires.
+| A plain line, which carries on after both.
+```
 
 Trigger keys the game sends: `enter:<location_or_area_id>`, `examine:<prop_id>`, `search:<prop_id>`,
 `check:<skill>:success|failure` (and `check:<skill>:<prop_id>:success|failure`), `trap:<trap_id>:found|triggered`,

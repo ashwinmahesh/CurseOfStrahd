@@ -7,7 +7,7 @@ extends RefCounted
 ##   line {speaker, mood, away, text} (away: "" | "speaker" | "party", the `[away]` cue) · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty, to}
 ##   gold {amount} · attitude {npc, value} · xp (milestone) · xp fight {encounter} · check {skill, dc, ok, fail} · interject {selector, text}
-##   combat {encounter} · move {location, spawn} · narrate {key} · variant {cond, text} · cooldown {minutes} · once · end_game (ADR 0014)
+##   combat {encounter} · move {location, spawn} · narrate {key} · variant {cond, once, text} · cooldown {minutes} · once · end_game (ADR 0014)
 ##   cast {spell} · reveal {prop} (an exploring spell cast in the scene; a hidden find shown to the party)
 ##   lead {npc, to} (the party follows npc to a spot on the map, a square or another place; docs/story/leads_and_guests.md)
 ##   approve {changes: [[companion id, delta]], why} · inspire {selector, why} (story/approval.gd, story/in_character.gd)
@@ -112,7 +112,12 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 	if line.begins_with("|"):
 		var mv := re_variant.search(line)
 		if mv != null:
-			return {"t": "variant", "cond": mv.get_string(1), "text": mv.get_string(2)}
+			# `[once]` / `[once and <condition>]`: the Narrator plays this variant one time (story/narrator.gd).
+			var cond := mv.get_string(1)
+			var once := cond == "once" or cond.begins_with("once and ")
+			if once:
+				cond = "" if cond == "once" else cond.substr(9).strip_edges()
+			return {"t": "variant", "cond": cond, "once": once, "text": mv.get_string(2)}
 	var mo := re_option.search(line)
 	if mo != null:
 		var label := mo.get_string(1)

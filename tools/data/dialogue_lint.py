@@ -62,6 +62,8 @@ RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
 RE_APPROVE = re.compile(r"^approve\s+((?:[a-z][a-z0-9_]*\s+[+-]\d+\s*)+)(?::\s*(.*))?$")
 RE_INSPIRE = re.compile(r"^inspire\s+(party|[a-z]+:[a-z0-9_]+)(?::\s*(.+))?$")
 RE_APPROVAL_REF = re.compile(r"\bapproval\.([a-z][a-z0-9_]*)(?:\s*(==|!=|>=|<=|>|<)\s*([a-z0-9_+-]+))?")
+RE_HERO_NAMED = re.compile(r"\bhero_named:([^\s()=!<>]*)")
+RE_ONCE_WORD = re.compile(r"\bonce\b")
 CLASS_TAGS = {"fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
               "sorcerer", "warlock"}
 
@@ -93,6 +95,9 @@ def parse_file(path):
         if expr:
             for cid, rhs in conditions_approval(expr):
                 out.setdefault("approval_terms", []).append((cid, rhs, where))
+            for arg in RE_HERO_NAMED.findall(expr):
+                if not re.fullmatch(r"[A-Za-z0-9_]+", arg):
+                    out["errors"].append(f"{where}: hero_named:{arg} needs a name: letters and digits, `_` for a space")
 
     for n, raw in enumerate(text.splitlines(), 1):
         line = raw.strip()
@@ -117,7 +122,13 @@ def parse_file(path):
         m = RE_VARIANT.match(line)
         if m and narrator_file:
             if m.group(1):
-                read(conditions_flags(m.group(1)), where, m.group(1))
+                cond = m.group(1)
+                if RE_ONCE_WORD.search(cond):
+                    # `[once]` / `[once and <condition>]`: the Narrator plays the variant one time (story/narrator.gd).
+                    if cond != "once" and not (cond.startswith("once and ") and cond[9:].strip()):
+                        out["errors"].append(f"{where}: `once` only leads a variant's brackets: `[once]` or "
+                                             f"`[once and <condition>]`, not [{cond}]")
+                read(conditions_flags(cond), where, cond)
             continue
         m = RE_OPTION.match(line)
         if m:

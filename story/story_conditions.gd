@@ -12,6 +12,7 @@ extends RefCounted
 ## the party is; story/weather.gd), `indoors` (the party's map is under a roof or a dungeon: CampSite.setting; a night's
 ## line written for sleeping behind walls carries it, so an outdoor camp doesn't say it),
 ## `leader:name:thistle` (the party member speaking for the party matches the selector after `leader:`),
+## `hero_named:vesper` (any party member is called that, whoever speaks; the name a player typed for a custom hero),
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
@@ -265,6 +266,8 @@ func _term() -> bool:
 		# The party member speaking for the party: `leader:name:thistle` (so a scene can pick someone else).
 		var lead := st.leader_character()
 		return lead != null and StoryState.member_matches(lead, t.substr(7))
+	if t.begins_with("hero_named:"):
+		return hero_named(st, t.substr(11))
 	if t.contains(":"):
 		if t.begins_with("item:"):
 			return st.party_has_item(t.substr(5))
@@ -272,6 +275,20 @@ func _term() -> bool:
 			return StoryState.member_matches(actor, t)
 		return st.find_member(t) != null
 	push_warning("Unknown condition term: %s" % t)
+	return false
+
+
+## `hero_named:<name>`: some party member goes by that name, whoever is speaking. It reads the name a player typed for a
+## custom hero. Case doesn't matter; the whole name or its first word will do (`vesper` is "Vesper Brightwater"), and a
+## `_` stands for a space (`vesper_brightwater`).
+static func hero_named(state: StoryState, wanted: String) -> bool:
+	var want := wanted.replace("_", " ").strip_edges().to_lower()
+	if want == "":
+		return false
+	for ch in state.party:
+		var full := ch.name.strip_edges().to_lower()
+		if full == want or full.get_slice(" ", 0) == want:
+			return true
 	return false
 
 
