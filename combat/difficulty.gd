@@ -16,6 +16,10 @@ const IDS: Array[String] = ["story", "balanced", "tactician", "honour"]
 
 ## A boss, for Honour's "bosses at full strength": legendary actions, or Challenge Rating 5 and up.
 const BOSS_CR := 5.0
+## The game's named bosses (G3): monster id -> {title} or {names: {name: title}}. The boss bar shows them, and what a boss
+## deals is multiplied by boss_damage (the other bosses are the foes with legendary actions: boss_entry).
+const BOSSES := "res://narrative/combat/bosses.json"
+static var _bosses: Dictionary = {}
 
 ## Each mode's rules.
 ##   hp:            enemy Hit Points as a share of what the fight gives them, kept inside the Hit Dice range.
@@ -32,25 +36,27 @@ const BOSS_CR := 5.0
 ##                  strongest spell; what isn't used is looted.
 ##   morale:        when its side breaks, a foe that isn't mindless or a boss flees the field.
 ##   full_bosses:   a fight's lighter version of a boss (for a lower-level party) is put back to its stat block.
+##   boss_damage:   what a boss's damage to the other side is multiplied by (owner, 2026-10-19: bosses hit about 25%
+##                  harder; Story, the mode for the tale, keeps the book's numbers). Who counts is boss_entry.
 ##   spared:        a party member who would die is left Unconscious and Stable instead.
 ##   safe_rests:    Long Rests in risky places are never interrupted.
 ##   one_save:      the playthrough keeps a single save (built by the saves lane).
 ##   switchable:    can be picked in Settings mid-game (Honour only at a new game).
 const MODES := {
 	"story": {"name": "Story", "hp": 0.75, "party_bonus": 2, "enemy_bonus": 0, "tactics": "kind", "spells": false, "kit": false, "morale": false, "full_bosses": false,
-		"spared": true, "safe_rests": true, "one_save": false, "switchable": true,
+		"boss_damage": 1.0, "spared": true, "safe_rests": true, "one_save": false, "switchable": true,
 		"tagline": "For the tale",
 		"summary": "Foes are frailer and spread their blows around, your party gets +2 to attacks and saves, and nobody dies for good."},
 	"balanced": {"name": "Balanced", "hp": 1.0, "party_bonus": 0, "enemy_bonus": 0, "tactics": "standard", "spells": true, "kit": false, "morale": false,
-		"full_bosses": false, "spared": false, "safe_rests": false, "one_save": false, "switchable": true,
+		"full_bosses": false, "boss_damage": 1.25, "spared": false, "safe_rests": false, "one_save": false, "switchable": true,
 		"tagline": "The book as written",
 		"summary": "Foes at their stat block, fighting the way the book has them."},
 	"tactician": {"name": "Tactician", "hp": 1.2, "party_bonus": 0, "enemy_bonus": 2, "tactics": "sharp", "spells": true, "kit": true, "morale": true,
-		"full_bosses": false, "spared": false, "safe_rests": false, "one_save": false, "switchable": true,
+		"full_bosses": false, "boss_damage": 1.25, "spared": false, "safe_rests": false, "one_save": false, "switchable": true,
 		"tagline": "For a hard fight",
 		"summary": "Tougher, sharper foes (+2 to hit and to their DCs) who gang up on the hurt, go for your healers, drink their potions and run when beaten."},
 	"honour": {"name": "Honour", "hp": 1.2, "party_bonus": 0, "enemy_bonus": 2, "tactics": "ruthless", "spells": true, "kit": true, "morale": true, "full_bosses": true,
-		"spared": false, "safe_rests": false, "one_save": true, "switchable": false,
+		"boss_damage": 1.25, "spared": false, "safe_rests": false, "one_save": true, "switchable": false,
 		"tagline": "One life, one save",
 		"summary": "Tactician with no mercy: bosses at full strength, cruel foes finish the fallen, and one save."},
 }
@@ -67,6 +73,7 @@ var spells: bool = false
 var kit: bool = false
 var morale: bool = false
 var full_bosses: bool = false
+var boss_damage: float = 1.0
 var spared: bool = false
 var safe_rests: bool = false
 var one_save: bool = false
@@ -90,6 +97,7 @@ static func named(mode_id: String) -> Difficulty:
 	d.kit = bool(m["kit"])
 	d.morale = bool(m["morale"])
 	d.full_bosses = bool(m["full_bosses"])
+	d.boss_damage = float(m["boss_damage"])
 	d.spared = bool(m["spared"])
 	d.safe_rests = bool(m["safe_rests"])
 	d.one_save = bool(m["one_save"])
@@ -144,6 +152,8 @@ func describe() -> Array[String]:
 		out.append("When their side breaks, foes flee the fight, except mindless things and bosses.")
 	if full_bosses:
 		out.append("Bosses always come at full strength.")
+	if not is_equal_approx(boss_damage, 1.0):
+		out.append("Bosses hit %d%% harder." % roundi((boss_damage - 1.0) * 100.0))
 	if spared:
 		out.append("Nobody in your party dies for good: a hero who would die is left Unconscious and Stable.")
 	if safe_rests:
@@ -157,6 +167,41 @@ func describe() -> Array[String]:
 ## Whether `m` counts as a boss: legendary actions, or Challenge Rating 5 and up.
 static func is_boss(m: Monster) -> bool:
 	return m.data.has("legendary_actions") or float(m.data.get("cr", 0)) >= BOSS_CR
+
+
+## narrative/combat/bosses.json, read once.
+static func boss_data() -> Dictionary:
+	if _bosses.is_empty():
+		_bosses = JSON.parse_string(FileAccess.get_file_as_string(BOSSES)) as Dictionary
+	return _bosses
+
+
+## What makes `c` one of the game's bosses: {"title": ...} (the title may be ""), or {} for any other creature. Listed in
+## bosses.json by monster id or by the name a fight gives it, or any foe with legendary actions; only foes count, so a
+## boss's helpers (a flesh golem, a wraith, spawn) aren't, unlike is_boss's wider net of Challenge Rating 5 and up.
+static func boss_entry(c: Combatant) -> Dictionary:
+	if c.side != &"enemy" or not c.creature is Monster:
+		return {}
+	var m := c.creature as Monster
+	var spec := ((boss_data().get("bosses", {}) as Dictionary).get(str(m.data.get("id", "")), {}) as Dictionary)
+	if spec.has("names"):
+		var names := spec["names"] as Dictionary
+		if names.has(c.name()):
+			return {"title": str(names[c.name()])}
+	elif not spec.is_empty():
+		return {"title": str(spec.get("title", ""))}
+	if not (m.data.get("legendary_actions", {}) as Dictionary).is_empty():
+		return {"title": ""}
+	return {}
+
+
+## What `source`'s damage to `target` is multiplied by: boss_damage when `source` is one of the game's bosses (boss_entry)
+## and `target` is on the other side; 1 for anyone else, a boss's own minions and the party. Where it's used:
+## EncounterDamage.deal_damage.
+func damage_factor(source: Combatant, target: Combatant) -> float:
+	if is_equal_approx(boss_damage, 1.0) or source == null or target == null or source.side == target.side:
+		return 1.0
+	return boss_damage if not boss_entry(source).is_empty() else 1.0
 
 
 ## The lowest and highest Hit Points `m`'s Hit Dice could roll (x and y); its average twice when it has no dice.

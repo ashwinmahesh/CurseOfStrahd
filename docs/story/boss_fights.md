@@ -159,6 +159,9 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1
   boss would need more than that, helpers stand beside it instead. Encounter `text` (the voiced narrator line) still names the old counts of spawn.
 - **Fight starts (2026-10-15)**: every boss fight starts spread out: no 20 ft burst catches every foe, nor more than three quarters of eight or more
   (tests/unit/test_fight_spread.gd, its PENDING list now empty). The foes were moved the fewest squares that did it; the fights were then re-measured and retuned back to their targets.
+- **Boss damage (2026-10-19)**: bosses (`Difficulty.boss_entry`: narrative/combat/bosses.json and legendary-action foes) deal 25% more damage on Balanced and harder
+  (`Difficulty.boss_damage`, docs/plans/difficulty.md). The line-ups and wins above were measured before it and were not re-measured (owner: the 3 in 8 tuning was a
+  one-time job); a series that now leaves its band is reported by the full ci, and its expectation follows the measured value.
 - **Versions that never ran (2026-10-15)**: Strahd's heart-of-sorrow, horseman, darklord, Sergei and royal-tomb finals had both versions on the same condition, so the
   big one always ran; `item:sunsword` is now on the big one, like the other six finals. Two encounters have versions with different triggers (the oven Offalia, `open:hag_oven`;
   Rahadin at the failed footlocker, `check:rahadin_footlocker:failure`) and a trigger started the first version of that id whose condition held, so they never ran:

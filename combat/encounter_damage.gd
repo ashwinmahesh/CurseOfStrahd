@@ -231,6 +231,19 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		for part: Dictionary in parts:
 			part["amount"] = int(part["amount"]) * 2
 		details.append("Siege Monster: double damage to objects")
+	# Bosses hit harder (owner, 2026-10-19): the mode's boss_damage on all they deal the other side, before the target's
+	# defenses; the log shows the extra.
+	var boss := e.difficulty.damage_factor(source, target)
+	if boss != 1.0:
+		var extra := 0
+		parts = parts.duplicate(true)
+		for part: Dictionary in parts:
+			var base := int(part["amount"])
+			part["amount"] = roundi(base * boss)
+			extra += int(part["amount"]) - base
+		if extra > 0:
+			details = details.duplicate()
+			details.append("Boss: +%d damage (x%s)" % [extra, str(snappedf(boss, 0.01))])
 	parts = e.damage_responses.synchronous(target, parts, details, responses_resolved)
 	parts = e.faerun.synchronous_damage(source, target, parts, details, responses_resolved)
 	e.spells.reaction_spells.absorb_synchronous(target, parts, responses_resolved)

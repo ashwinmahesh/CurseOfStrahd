@@ -3,13 +3,16 @@
 Four modes, picked on the New game page after the party (ui/menu/difficulty_page.gd) and kept in the save as
 `StoryState.options["difficulty"]`. Saves from before the modes have no entry and play as Balanced, which is the game
 exactly as it played before. The rules live in one table, `combat/difficulty.gd` (`Difficulty.MODES`); the AI's side
-is `combat/ai/ai_tactics.gd`.
+is `combat/ai/ai_tactics.gd`. A boss is whatever `Difficulty.boss_entry` calls one (the boss bar's list too: `narrative/combat/bosses.json` by monster or
+name, and any foe with legendary actions), not every Challenge Rating 5 foe; `Difficulty.damage_factor` gives the multiplier and
+`EncounterDamage.deal_damage` applies it, the one place all combat damage passes.
 
 | | Story | Balanced | Tactician | Honour |
 |---|---|---|---|---|
 | Enemy Hit Points | 25% fewer | stat block (or the fight's tuned number) | 20% more | 20% more |
 | Inside the Hit Dice range | yes | — | yes | yes |
 | Lighter boss versions for a low-level party | yes, also 25% fewer | yes | yes, also 20% more | no: back to the stat block (boss = legendary actions or CR 5+) |
+| Boss damage (`boss_damage`) | the book's numbers | 25% more (owner, 2026-10-19), on everything a boss deals the other side, before the target's defenses; the log says "Boss: +N damage" | as Balanced | as Balanced |
 | +2s, like Baldur's Gate 3 | party: attack rolls and saving throws | — | enemies: attack rolls, spell attacks, DCs of spells and actions | as Tactician |
 | Who enemies hit (`tactics`) | `kind`: spread blows, no killing-blow bonus | `standard`: as before | `sharp`: the hurt, the target its side is on, concentrating casters, healers | `ruthless`: sharp, and cruel foes strike heroes at 0 HP |
 | Potion of Healing on armed humanoids | — | — | yes: drunk when Bloodied; badly hurt and pressed, Disengage and step back first; looted if unused | as Tactician |

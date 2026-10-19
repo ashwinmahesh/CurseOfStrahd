@@ -7,7 +7,6 @@ extends CanvasLayer
 ## exact Hit Points: it drops a quarter at a time, deep red once Bloodied. Legendary Resistance left shows beside the
 ## title. CombatView builds it, plays the entrance, refreshes it with the HUD and fades it with the HUD.
 
-const DATA := "res://narrative/combat/bosses.json"
 ## At most this many plates (the coven, the brides).
 const MOST := 3
 ## The plates' row: its width, the room it leaves for the hotbar under it, and a plate's height.
@@ -28,7 +27,6 @@ const STING_GAP := 0.3
 
 ## The screens and captures that turn the entrance off; headless runs (the tests) never play it.
 static var entrances := true
-static var _data: Dictionary = {}
 
 var e: Encounter
 var bosses: Array[Combatant] = []
@@ -46,9 +44,7 @@ func _init() -> void:
 
 
 static func data() -> Dictionary:
-	if _data.is_empty():
-		_data = JSON.parse_string(FileAccess.get_file_as_string(DATA)) as Dictionary
-	return _data
+	return Difficulty.boss_data()
 
 
 ## Whether the entrance plays (never headless).
@@ -56,21 +52,10 @@ static func entrance_on() -> bool:
 	return entrances and DisplayServer.get_name() != "headless"
 
 
-## What makes `c` a boss: {"title": ...} (the title may be ""), or {} for any other creature. Only foes count.
+## What makes `c` a boss: {"title": ...} (the title may be ""), or {} for any other creature. Only foes count. The list and
+## the rule are Difficulty's (boss_entry), which the bosses' extra damage reads too.
 static func entry(c: Combatant) -> Dictionary:
-	if c.side != &"enemy" or not c.creature is Monster:
-		return {}
-	var m := c.creature as Monster
-	var spec := ((data().get("bosses", {}) as Dictionary).get(str(m.data.get("id", "")), {}) as Dictionary)
-	if spec.has("names"):
-		var names := spec["names"] as Dictionary
-		if names.has(c.name()):
-			return {"title": str(names[c.name()])}
-	elif not spec.is_empty():
-		return {"title": str(spec.get("title", ""))}
-	if not (m.data.get("legendary_actions", {}) as Dictionary).is_empty():
-		return {"title": ""}
-	return {}
+	return Difficulty.boss_entry(c)
 
 
 ## The bosses standing in `enc` at its start, the greatest first (legendary actions, then Challenge Rating), up to MOST.
