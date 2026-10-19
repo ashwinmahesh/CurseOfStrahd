@@ -7,21 +7,30 @@ extends CanvasLayer
 ## Hint button for what to do next and Track, which makes it the quest the HUD follows (Ashwin, 2026-10-09). Then the
 ## books, letters and notes the party has read, and what it has learned of the creatures it fought (BestiaryPage, U8).
 ## The reading text follows the player's text size (UiScale.text). On a pad LB/RB change the page, LT/RT Main and
-## Other, and A on the search box opens the pad's keyboard.
+## Other, Y goes to the search box and A there opens the pad's keyboard.
+##
+## The search (Ashwin, 2026-10-19) finds quests by what the journal shows of them: the name, who gave the quest, the place
+## (its region), the entries of the stages reached and the current objectives, never the summary or the hint. Chips beside
+## it keep All, Open, Done or Failed quests, Ctrl+F or / (Y on a pad) goes to the box, Esc or B clears it and leaves it, and
+## a list with nothing to show says why and offers to clear the search.
 
 const TABS: Array[String] = ["Quests", "Codex", "Bestiary"]
 const QUEST_TABS: Array[String] = ["Main", "Other"]
 const LIST_W := 340.0
 ## How wide the picked quest's text wraps, beside the list.
 const DETAIL_W := 680.0
+## The status chips: {status: label}, in order.
+const STATUS_CHIPS := {"all": "All", "active": "Open", "success": "Done", "failure": "Failed"}
 
 var root: Node
 var st: StoryState
 var tab := "Quests"
 ## Main or Other ("" until the journal opens: the tracked quest's tab, else Main while it has an open quest).
 var quest_tab := ""
-## What the search box holds: every word must appear in a quest's name, summary, journal text or objectives.
+## What the search box holds: every word must appear in a quest's name, giver, place, journal text or objectives.
 var search := ""
+## Which quests the chips keep: "all", or the status "active" (Open), "success" (Done) or "failure" (Failed).
+var status_filter := "all"
 ## The quest shown beside the list ("" for the tracked one, else the first in the list).
 var picked := ""
 ## The creature the Bestiary shows ("" for the first).
@@ -33,6 +42,8 @@ var _frame: VBoxContainer
 ## The quest page's parts that redraw as the search changes, so the search box keeps its focus and caret.
 var _quest_tabs: HBoxContainer
 var _quest_body: HBoxContainer
+var _search_box: LineEdit
+var _chip_row: HFlowContainer
 
 
 func _init() -> void:
@@ -90,7 +101,25 @@ func pad_trigger(step: int) -> void:
 
 
 func pad_prompts() -> Array:
-	return [["lb+rb", "Pages"], ["lt+rt", "Main / Other"]] if tab == "Quests" else [["lb+rb", "Pages"]]
+	return [["lb+rb", "Pages"], ["lt+rt", "Main / Other"], ["y", "Search"]] if tab == "Quests" else [["lb+rb", "Pages"]]
+
+
+## Y: to the search box (A there opens the keyboard).
+func pad_button(button: int) -> bool:
+	if button == JOY_BUTTON_Y and tab == "Quests" and _search_box != null and is_instance_valid(_search_box):
+		_search_box.grab_focus()
+		return true
+	return false
+
+
+## Ctrl+F or / goes to the search box on the Quests page.
+func _unhandled_input(event: InputEvent) -> void:
+	var key := event as InputEventKey
+	if key == null or not key.pressed or key.echo or tab != "Quests" or _search_box == null or not is_instance_valid(_search_box):
+		return
+	if key.keycode == KEY_SLASH or (key.keycode == KEY_F and (key.ctrl_pressed or key.meta_pressed)):
+		get_viewport().set_input_as_handled()
+		_search_box.grab_focus()
 
 
 # --- Quests ---------------------------------------------------------------------------------------------------------
@@ -109,6 +138,11 @@ func _quest_page() -> Control:
 	top.add_child(_quest_tabs)
 	top.add_child(_search_row())
 	page.add_child(top)
+	_chip_row = HFlowContainer.new()
+	_chip_row.name = "StatusChips"
+	_chip_row.add_theme_constant_override("h_separation", 8)
+	_chip_row.add_theme_constant_override("v_separation", 4)
+	page.add_child(_chip_row)
 	_quest_body = HBoxContainer.new()
 	_quest_body.add_theme_constant_override("separation", 14)
 	_quest_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -152,6 +186,7 @@ func _search_row() -> Control:
 	var box := LineEdit.new()
 	box.name = "QuestSearch"
 	box.placeholder_text = "Search quests"
+	box.tooltip_text = "Finds quests by name, who gave them, where they are and what you have learned of them."
 	box.text = search
 	box.clear_button_enabled = true
 	box.custom_minimum_size = Vector2(300, 0)
@@ -161,15 +196,35 @@ func _search_row() -> Control:
 	box.text_changed.connect(func(t: String) -> void:
 		search = t
 		_fill_quests())
+	box.gui_input.connect(_search_keys)
+	_search_box = box
 	row.add_child(box)
 	return row
 
 
-## Whether every word of `text` is in the quest's name, region, summary, journal text or objectives (never its hint).
+## Esc or B in the search box: what was typed is cleared and the box is left, so the next Esc or B closes the journal (the
+## box would otherwise keep that first press to itself, leaving editing with nothing to see). A pad with no focus spends its
+## next press getting some back, so it is given the picked quest's row to stand on.
+func _search_keys(event: InputEvent) -> void:
+	if event.is_action_pressed(&"ui_cancel") and _search_box != null:
+		_search_box.accept_event()
+		if search != "":
+			_search_box.text = ""
+			search = ""
+			_fill_quests()
+		_search_box.release_focus()
+		var row := find_child("Quest_" + picked, true, false)
+		if PadNav.active() and row != null and row.get_child_count() > 0:
+			UiFeel.pad.focus_on(row.get_child(row.get_child_count() - 1) as Control)
+
+
+## Whether every word of `text` is in what the journal shows of the quest: its name, who gave it, its place, the journal
+## text of the stages reached and its objectives. Never its summary or its hint: the card doesn't show them, and a summary
+## can tell more than the party has found out.
 static func matches(text: String, q: Dictionary) -> bool:
 	if text.strip_edges() == "":
 		return true
-	var hay := " ".join([str(q["name"]), QuestRegions.title(str(q.get("region", ""))), str(q["summary"]),
+	var hay := " ".join([str(q["name"]), str(q.get("giver_name", "")), QuestRegions.title(str(q.get("region", ""))),
 		" ".join(q["entries"] as Array), " ".join(q["objectives"] as Array)]).to_lower()
 	for word in text.to_lower().split(" ", false):
 		if not hay.contains(word):
@@ -183,7 +238,8 @@ func _shown(all: Array[Dictionary], t: String) -> Array[Dictionary]:
 	var open: Array[Dictionary] = []
 	var done: Array[Dictionary] = []
 	for q in all:
-		if (str(q["kind"]) == "main") != (t == "Main") or not matches(search, q):
+		if (str(q["kind"]) == "main") != (t == "Main") or not matches(search, q) \
+				or (status_filter != "all" and str(q["status"]) != status_filter):
 			continue
 		if str(q["status"]) == "active":
 			open.push_front(q)
@@ -210,7 +266,7 @@ static func by_region(quests: Array[Dictionary]) -> Array[Dictionary]:
 
 
 func _fill_quests() -> void:
-	for holder: Control in [_quest_tabs, _quest_body]:
+	for holder: Control in [_quest_tabs, _chip_row, _quest_body]:
 		for c in holder.get_children():
 			holder.remove_child(c)
 			c.queue_free()
@@ -221,6 +277,7 @@ func _fill_quests() -> void:
 	if shown.is_empty() and search.strip_edges() != "" and not _shown(all, other).is_empty():
 		quest_tab = other
 		shown = _shown(all, quest_tab)
+	_fill_chips(all)
 	var labels: Array[String] = []
 	for t in QUEST_TABS:
 		labels.append("%s  %d" % [t, _shown(all, t).size()])
@@ -249,9 +306,21 @@ func _fill_quests() -> void:
 	left.custom_minimum_size = Vector2(LIST_W, 0)
 	_quest_body.add_child(left)
 	if shown.is_empty():
-		var why := "No quest matches \"%s\"." % search.strip_edges() if search.strip_edges() != "" \
-			else ("No main quests yet." if quest_tab == "Main" else "No other quests yet. Ask around: people's rumours start them.")
+		var kept := str(STATUS_CHIPS[status_filter]).to_lower() + " " if status_filter != "all" else ""
+		var why := ""
+		if search.strip_edges() != "":
+			why = "No %squest matches \"%s\"." % [kept, search.strip_edges()]
+		elif status_filter != "all":
+			why = "No %squests under %s." % [kept, quest_tab]
+		else:
+			why = "No main quests yet." if quest_tab == "Main" else "No other quests yet. Ask around: people's rumours start them."
 		list.add_child(UiKit.label(why, UiScale.text(15), "bone", LIST_W - 20.0))
+		if search.strip_edges() != "" or status_filter != "all":
+			var clear := UiParts.small_button("Clear search" if search.strip_edges() != "" else "Show all", _clear_search)
+			clear.name = "ClearSearch"
+			var holder := HBoxContainer.new()
+			holder.add_child(clear)
+			list.add_child(holder)
 		return
 	var finished_shown := false
 	var region := ""
@@ -272,6 +341,37 @@ func _fill_quests() -> void:
 			var right := UiParts.fill_scroll(_quest_card(q))
 			right.name = "QuestEntry"
 			_quest_body.add_child(right)
+
+
+## The chips under the search: All, Open, Done and Failed with how many quests each keeps under the tab and the words
+## searched for, the one in force lit, and a reminder of how to get to the box (Ctrl+F or / on a keyboard, Y on a pad).
+func _fill_chips(all: Array[Dictionary]) -> void:
+	var counts := {"all": 0, "active": 0, "success": 0, "failure": 0}
+	for q in all:
+		if (str(q["kind"]) == "main") == (quest_tab == "Main") and matches(search, q):
+			counts["all"] = int(counts["all"]) + 1
+			counts[str(q["status"])] = int(counts[str(q["status"])]) + 1
+	_chip_row.add_child(UiKit.label("Show", UiScale.text(13), "parchment"))
+	for status: String in STATUS_CHIPS:
+		var chip := UiParts.small_button("%s  %d" % [STATUS_CHIPS[status], int(counts[status])], func() -> void:
+			status_filter = status
+			_fill_quests())
+		chip.name = "Chip_" + status
+		if status == status_filter:
+			UiParts.light_up(chip)
+		_chip_row.add_child(chip)
+	var hint := UiKit.label("", 13, "parchment")
+	PadGlyphs.hint(hint, "Ctrl+F or /  to search", "{y}  to search")
+	_chip_row.add_child(hint)
+
+
+## Empties the search box and puts the chips back to All.
+func _clear_search() -> void:
+	search = ""
+	status_filter = "all"
+	if _search_box != null and is_instance_valid(_search_box):
+		_search_box.text = ""
+	_fill_quests()
 
 
 ## A region's heading over its side quests: its name (wrapping rather than spilling) and how many, a gilt rule under it.
@@ -352,6 +452,8 @@ func _quest_card(q: Dictionary) -> Control:
 		_:
 			head.add_child(UiParts.pill("Failed", "rose", 13))
 	col.add_child(head)
+	if str(q.get("giver_name", "")) != "":
+		col.add_child(UiKit.label("Given by %s" % q["giver_name"], UiScale.text(14), "parchment", DETAIL_W))
 	if status == "active":
 		var tracked := bool(q["tracked"])
 		var b := UiParts.small_button("Stop tracking" if tracked else "Track", func() -> void:

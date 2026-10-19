@@ -4,12 +4,13 @@ extends RefCounted
 ## in order, its current objectives, and whether it ended.
 
 
-## [{id, name, summary, entries: [text], objectives: [text], hint, warn, status: active|success|failure, kind: main|other,
+## [{id, name, summary, giver, giver_name, entries: [text], objectives: [text], hint, warn, status: active|success|failure, kind: main|other,
 ## region, tracked, at}]: active first, each part in the order the quests last moved (oldest first, so the HUD's newest
 ## objective is the last open one), never the dictionary's order: a save writes its keys sorted, so after a load that
 ## was alphabetical (Storyline QA, 2026-10-08). `hint` is the current stage's what-to-do-next, for an open quest only.
 ## `warn` is the line a quest's `closes` rule gives while the quest could still run out (QuestClosures.warning), for an
 ## open quest only.
+## `giver` is the NPC who gave the quest (its id, "" for none) and `giver_name` their name.
 ## `kind` is the journal tab it's under; `region` is the heading the Other tab files it under (QuestRegions); `tracked` is
 ## true for the open quest the party follows (track); `at` is when it last moved.
 static func journal(st: StoryState) -> Array[Dictionary]:
@@ -34,7 +35,10 @@ static func journal(st: StoryState) -> Array[Dictionary]:
 				hint = Tarokka.fill(str(stage.get("hint", "")), st)
 				if str(stage.get("ends", "")) != "":
 					status = str(stage["ends"])
-		out.append({"id": qid, "name": str(q["name"]), "summary": str(q.get("summary", "")), "entries": entries,
+		var giver := str(q.get("giver", ""))
+		var giver_name := str(Compendium.shared().get_entry("npcs", giver).get("name", "")) if giver != "" else ""
+		out.append({"id": qid, "name": str(q["name"]), "summary": str(q.get("summary", "")), "giver": giver, "giver_name": giver_name,
+			"entries": entries,
 			"objectives": objectives, "hint": hint if status == "active" else "", "status": status,
 			"warn": QuestClosures.warning(st, qid) if status == "active" else "",
 			"kind": kind(qid), "region": QuestRegions.of(qid), "tracked": status == "active" and bool(entry.get("tracked", false)),
