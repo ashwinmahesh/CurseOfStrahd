@@ -1,0 +1,68 @@
+You are drafting dialogue for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. I need about 25 lines for ONE side quest about ONE character. Reply with plain text only: the lines under the node names given below, nothing else. Finish without sending messages to anyone else. (This is the first of four requests in this conversation: this one is the grave errand, the later ones give a sword-lesson scene, a reading-the-book scene and three letters for the same character. Keep the voice and limits below in mind throughout.)
+
+## The scene
+
+Ireena Kolyana is a young woman in her early twenties, red-haired, the adopted daughter of the late burgomaster Kolyan Indirovich of the Village of Barovia. The vampire lord of the valley has come to her window twice; twice she woke with two punctures on her neck and no memory of letting him in. The player's party buried her father with her in the village churchyard, and then took her somewhere safe and left her there (or she travels with them). In the game she can no longer fight: something in the valley goes round her like water round a stone, and she hates being kept back from it. Wherever she is, the player can walk up to her and have a "check-in" conversation. This errand is one of the things she can ask for in it.
+
+THE ERRAND, "Flowers for Father". Ireena is staying somewhere safe far from the village (the Blue Water Inn or St. Andral's church in Vallaki, or the burgomaster's house in Krezk; the lines must work at any of them, so NEVER name the place she is in). The road back to the village is too dangerous for her to walk alone, and she will not drag the party off a road for her. She asks the party, the next time they are in the village, to lay a pressed sprig on Kolyan's grave in the churchyard and to tell her how it looks. The sprig is something small and dry that she pressed in a book the night of the burial and has kept since (choose a hardy herb, rosemary or similar; do not make it a flower garden). At the grave, the party lays it down: there is a short scene. Later the party reports back to her, truthfully or with a kind lie, and she tells them ONE story about her father that she has never told anyone. That is the whole errand. It is quiet. There are no fights, no checks and no rewards in the lines themselves.
+
+What the grave looks like in the game (already written, do not repeat the exact words): fresh earth, a board with his name burned into it, and someone's wildflowers already gone brown. The churchyard has a raven on a stone and a gravedigger working at the far end. Her father was burgomaster of the village for twenty years, a stubborn old man, dead of a failed heart at his own front door after a month of wolves at the shutters. He found her as a small girl wandering on the lake road, red hair full of frost, bare feet, and no name she would give him; he wrapped her in his coat and raised her. (That is already told in the game, so do not retell it, and do NOT tell the story of how she got her name.) Her brother Ismark, the old man's son, is a swordsman who drinks too much and uses gallows humour; he may or may not still be in the village.
+
+## The nodes I need (line counts are targets; one line = 1-2 short sentences, ideally under 25 words in total)
+
+flowers_ask: Ireena x4. She gives the party the sprig and asks them to lay it on the grave and tell her how it looks ("Say it plainly" is her phrase). She explains why she can't go herself in one dry sentence; she does not ask for anything else; she does not make a big speech. She may mention she keeps looking at the book it was in.
+flowers_given: Narrator x1. She puts the sprig in the hand of whoever is speaking for the party. Light, dry, nearly weightless.
+
+grave_scene: Narrator x2. The party stands at the grave with the sprig and lays it down. Concrete senses (the cold, the board, the smell of turned earth). Do not repeat "fresh earth, a board with his name burned into it, wildflowers gone brown". Do not describe Ireena's face (she is not there).
+grave_ismark: Ismark x2. Ismark is at the grave too (he stayed in the village). He sees what it is and knows who sent it. Gallows humour that gives way for one line to something plain. He does not cry.
+grave_kolyan: Narrator x1 then Kolyan Indirovich x1. Only played if the party once cast Speak with Dead on Kolyan at this grave. The Narrator says the earth is quiet now and recalls how the voice that answered them was gruff and impatient. Then ONE remembered line in Kolyan's voice (a gruff old man's order or complaint) that is about Ireena and is not the same as anything he said when they spoke to him before (he told them where he found her, and about a brooch).
+grave_done: Narrator x1. The party leaves the grave. A small closing image.
+
+flowers_report_ask: Ireena x1. They are back; she asks how it looks.
+report_truth: Ireena x2. The party told her the plain truth: a board, new earth, the wildflowers gone brown. She takes it without flinching.
+report_kind: Ireena x2. The party told her a kind lie: that it was covered in flowers. She sees through it at once, says so, and thanks them for it all the same.
+report_ismark: Ireena x2. Ismark was there at the grave when the party laid the sprig, and the party tells her so. She is dry about her brother and softer about the fact that he was there.
+report_story: Ireena x4. THE story about her father she has never told anyone. A small private moment, specific and domestic, funny at the edges and tender under that (he is a stubborn, loud old man who is bad at being gentle). Not the finding, not the naming, not his death and not a speech. Think of the small ways a gruff man looked after a frightened child.
+report_end: Ireena x1. A closing line that thanks the party in her way and makes it clear she trusts them a little more now.
+
+flowers_moot: Ireena x2. A different version: the party has called Kolyan back from the dead (he is alive and walking about). The sprig is no longer for a grave. She keeps it and says so, gently, with some wonder and some alarm.
+
+## Option texts
+
+Also write what the PARTY says (not Ireena), as `* text` rows, each under 12 words, in the party's voice ("we" or addressing her):
+ask_opt: `* ` the line the player picks to say she looks like she wants something from them (used in a small menu of things she might ask).
+take_opt: `* ` agreeing to take the sprig.
+refuse_opt: `* ` not now.
+report_opt: `* ` the line the player picks to tell her they have laid the sprig.
+truth_opt: `* ` telling her the plain truth about the grave.
+kind_opt: `* ` telling her it was covered in flowers.
+ismark_opt: `* ` telling her her brother was there.
+
+## Ireena Kolyana - voice bible
+
+Direct and proud. Short sentences, no ornament. She asks questions like a magistrate. Dry humor with an edge; she makes the grim joke before anyone can pity her. Never says "please" to the devil. Calls Strahd "him" or "the devil" or "our visitor" and NEVER says his name. Gets more formal, not softer, when she is grieving; grief comes out as precision (about the funeral, the paperwork, the exact order of things). Her pet phrases are "I'm not made of glass." "Say it plainly." "Father would want it done properly." (She is NOT glass: do not make her fragile; use the glass phrase at most once in the whole reply, or not at all.) She judges people by how they treat her father's memory. She hates being kept out of things. Wants: to bury her father properly, then to stop being prey; she would rather be hunted on a road than waited for in a parlour. Fears: the dreams, a lake, a white dress, a fall; that one night she will open the window herself. Secret (never stated flatly here): some nights she does not want to keep the window shut.
+
+Her existing lines (match this register; do not repeat them):
+- "I'm not made of glass. I'm made of whatever's left when the glass breaks. Now, are you here to help carry him?"
+- "Father would want it done properly: the priest, the words, the earth. After that, take me anywhere he isn't."
+- "None of you were priests when we buried Father, and the plain words you said over the dirt suited him better."
+- "Father always took an honest sentence over a pretty one, and I judge you kindly for giving him that."
+- "Every name-day I can remember, Father bought one small cask from the Wizard of Wines and tapped it by the fire. It tasted of sour plums and damp cellar oak, and I thought it was the finest thing in the world."
+- "I sit in Father's chair after the lamps go out and talk to the panelling. The house is quieter when someone speaks to it."
+- "Back with all your limbs. Good. Tell me what you stirred up out there."
+- "Is anyone hurt? Say it plainly. I'd rather know now than at the next door."
+- "I keep a scarf over the marks. I'm not ashamed of them. I'm ashamed I don't remember."
+
+Ismark Kolyanovich (her brother, a swordsman in his late twenties, broad in the shoulder and hollow under the eyes): weary gallows wit, short plain sentences then one dry sting at the end; calls Strahd "the devil" or "his lordship". His lines: "They call me Ismark the Lesser. Fair enough. My father was the greater, and look where it got him." / "I'd die for her. I'd prefer to do something more useful first." He is proud of her and cannot say so.
+
+Kolyan Indirovich, the dead burgomaster: blunt, loud, impatient, a man interrupted halfway through an argument he meant to win. His lines: "Twenty years I kept this village. Two weeks dead and you lot are digging me up." / "I know who you are, girl. I'm dead, not blind."
+
+The Narrator: an old gothic storyteller. Second person, present tense, one or two sentences, the second is usually the turn. Ominous, dryly funny, never cruel. Concrete senses over adjectives (a smell, a sound, a temperature). Respect the dead. No game terms (no "check", "roll", "level").
+
+## Canon limits
+
+Do not invent named characters or places. Names you may use: Kolyan or "Father" (her late father; she says "Father"), Ismark (her brother), Father Donavich (the village priest), Father Lucian, the Martikovs, Dmitri and Anna Krezkov. The party is several people and has no names: Ireena says "you". No new monsters, no new history for her beyond what is said here. No stage directions in brackets or asterisks, no "{name}" or other placeholders, no emoji, no markdown. She is not holding a sword in any line. Her mother is not mentioned. Do not state a date or a number of years for anything except "twenty years" as the length of his term.
+
+## Format
+
+One line per row, exactly: `Speaker [mood]: Text` where Speaker is Ireena, Ismark, Kolyan Indirovich or Narrator (the mood in brackets is optional and the Narrator takes none; allowed moods: smile, angry, afraid, sad, weary; leave it out for neutral). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each node on its own line as `~ node_name`, in the order given. The option texts are `* text` rows under a node line `~ options`. Do not add nodes, code or commentary.

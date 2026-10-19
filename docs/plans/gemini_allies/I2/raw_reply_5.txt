@@ -1,0 +1,84 @@
+~ flowers_ask
+Ireena: I pressed this sprig of rosemary into my father's ledger the night we buried him.
+Ireena: I cannot walk that road alone without handing myself to the devil, and I will not pull you off your path for an errand.
+Ireena: Next time your road takes you through the village, lay it on his grave for me.
+Ireena: Tell me how the place is keeping when you return, and say it plainly.
+
+~ grave_ismark
+Ismark: Leave it to my sister to send me dry weeds when what I need is a shovel and three more men.
+Ismark: Put it down by the headstone; I am glad to have a piece of her hand here.
+
+~ grave_kolyan
+Narrator: The dark earth lies still again, though the air still seems to carry the gruff, impatient voice that answered your questions from beneath the sod.
+Kolyan Indirovich: Stop fussing over my dirt and see that my girl eats a hot meal; she gets cold in the fingers when she frets.
+
+~ flowers_moot
+Ireena: Since my father is breathing and walking around again, he has very little use for grave herbs.
+Ireena [smile]: I will keep the rosemary in my pocket, though it still turns my stomach over to say that aloud.
+
+~ wants_ask_plain
+Ireena: Too many people in this valley look at me and see a woman who was dead before I was born.
+Ireena: I have had the same dream of a high stone room since I was a child, and I am tired of guessing in the dark.
+Ireena: If the devil wrote down his own account of what he wants with my face, or if there is some stone or painting out there that wears it, bring me word.
+Ireena: Do not spare me a line of it.
+
+~ statue_bier
+Ireena: You say the scratch above her heart was red and fresh, even after all those years under the stone?
+Ireena [weary]: Then he did not even let the first one finish dying before he came looking for me.
+
+~ letter_1_text
+Strahd: Ireena. You did not come to the door when I called in the dark, though the night was damp and your father's grave lies cold in the village churchyard.
+Strahd: A dutiful daughter keeps inside when strangers knock, and I do not fault your manners.
+Strahd: Keep those who would die for you close by the hearth tonight; we will speak again before the week is out.
+
+~ letter_2_text
+Strahd: How charming to watch the lanterns strung along the road and hear so many loud voices promising one another the dark is past.
+Strahd: They hang their banners and bar their shutters as though a strip of painted cloth has ever kept me from a window I meant to open.
+Strahd: Rest well while the smoke clears, Ireena, and do not let those who would die for you stand too near the door.
+
+~ letter_3_kept
+Ireena [weary]: All right. Do not look at me like a clerk catching a thief.
+Ireena: It is inside my cuff. Listen to how he writes it.
+Strahd: My carriage waits upon the road at dusk, Ireena, and your place is laid at my castle table where the candles are already lit.
+Strahd: You need only lift the window latch when the house grows quiet, as we both know your hand has wished to do.
+Ireena [afraid]: That is why I hid it from you. Because some nights, when the house is still and the glass is cold, my hand wants to lift the latch and be done with the waiting.
+Ireena [angry]: I despise it in myself, and I would rather lose the hand at the wrist than give him the satisfaction.
+Ireena: If you ever see me walk toward that window after dark, do not waste time looking for him. Lay hold of me and pull me back.
+
+~ quest_flowers
+name: Rosemary for Kolyan
+summary: Ireena asked us to lay a sprig of pressed rosemary on her father's grave in the Village of Barovia.
+stage given:
+journal: Ireena gave us a sprig of rosemary from her father's ledger and asked us to lay it on his grave in the village churchyard. She wants us to tell her plainly how the place is keeping.
+objective: Lay Ireena's rosemary on Kolyan Indirovich's grave.
+hint: Kolyan Indirovich's grave is in the churchyard in the Village of Barovia.
+stage laid:
+journal: We laid Ireena's sprig of rosemary on Kolyan Indirovich's grave in the village churchyard. We should go back to Ireena and tell her how the grave looks.
+objective: Tell Ireena how her father's grave is keeping.
+hint: Speak with Ireena at the Blue Water Inn, St. Andral's, or in Krezk.
+stage done:
+journal: We told Ireena how her father's grave is keeping, and she told us a story about him she had never told anyone else.
+stage alive:
+journal: Kolyan Indirovich was raised from his grave before we could lay the rosemary on the earth, so Ireena kept the sprig for herself.
+
+~ quest_wants
+name: What He Wants With Me
+summary: Ireena wants to know the truth about the woman whose face she wears, both from the vampire's own book and from any monument made in her likeness.
+stage asked:
+journal: Ireena asked us to bring her the truth about the face she wears. She wants to hear what the vampire wrote about himself, and about anything else in the valley made in her likeness.
+objective: Read the vampire's book aloud to Ireena.
+objective: Tell Ireena of any monument that wears her face.
+hint: Search the valley for the vampire's own written account and look in Berez for a monument that bears Ireena's face, then speak with her at the Blue Water Inn, St. Andral's, or in Krezk.
+stage tome_read:
+journal: We read the Tome of Strahd aloud to Ireena so she could hear the vampire's own words. She still wants to know if anything else in the valley wears her face.
+objective: Tell Ireena of any monument that wears her face.
+hint: Look in Berez for a monument that bears Ireena's face, then return to her at the Blue Water Inn, St. Andral's, or in Krezk.
+stage statue_told:
+journal: We told Ireena about the stone statue in Berez that was carved with her face. She still wants to hear the vampire's own account from his book.
+objective: Read the vampire's book aloud to Ireena.
+hint: Find the vampire's own written account and bring it to Ireena at the Blue Water Inn, St. Andral's, or in Krezk.
+stage knows:
+journal: Ireena has heard the vampire's own account from his book and learned of the statue in Berez. She knows whose face she wears now, and whose life is her own.
+
+~ hub_opt
+* Is there anything you need from us?

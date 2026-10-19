@@ -1,0 +1,43 @@
+{
+  "id": "what_he_wants",
+  "name": "What He Wants With Me",
+  "summary": "Ireena wants to know the truth about the woman whose face she wears, from the vampire's own book and from any monument made in her likeness.",
+  "giver": "ireena",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Ireena asked us to bring her the truth about the face she wears. She wants to hear what the vampire wrote about himself, and about anything else in the valley made in her likeness.",
+      "objectives": [
+        "Read the vampire's book aloud to Ireena",
+        "Tell Ireena of any monument that wears her face"
+      ],
+      "hint": "Find the vampire's own book, and look in Berez for a monument with Ireena's face. Then speak with her at the Blue Water Inn or St. Andral's in Vallaki, or in Krezk.",
+      "ends": ""
+    },
+    {
+      "id": "tome_read",
+      "journal": "We read the Tome of Strahd aloud to Ireena so she could hear the vampire's own words. She still wants to know if anything else in the valley wears her face.",
+      "objectives": [
+        "Tell Ireena of any monument that wears her face"
+      ],
+      "hint": "Look in Berez for a monument with Ireena's face, then speak with her at the Blue Water Inn or St. Andral's in Vallaki, or in Krezk.",
+      "ends": ""
+    },
+    {
+      "id": "statue_told",
+      "journal": "We told Ireena about the stone statue in Berez that was carved with her face. She still wants to hear the vampire's own account from his book.",
+      "objectives": [
+        "Read the vampire's book aloud to Ireena"
+      ],
+      "hint": "Find the vampire's own book and bring it to Ireena at the Blue Water Inn or St. Andral's in Vallaki, or in Krezk.",
+      "ends": ""
+    },
+    {
+      "id": "knows",
+      "journal": "Ireena has heard the vampire's own account from his book and learned of the statue in Berez. She knows whose face she wears now, and whose life is her own.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

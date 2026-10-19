@@ -1,0 +1,41 @@
+Fifth request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as before. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else. About 40 short lines. This one is redrafts of lines whose facts did not hold in the game, and the text for two journal entries.
+
+## Part 1: redrafts (the problem with each draft, then what to write)
+
+flowers_ask: Ireena x4. Your draft had "Every time I open the pages, I only see the dirt", which does not parse. Keep the sprig (rosemary pressed in her father's ledger the night of the burial), the reason she cannot go (the road alone would hand her to the devil, and she will not drag the party off a road for her sake), the request (lay it on the grave next time they pass through the village, and tell her how the place is keeping, "say it plainly"). Make the four lines plainer and a little shorter. Never name where she is.
+
+grave_ismark: Ismark x2. Your draft had Ismark mention a fence and "the ledger desk"; neither exists. Ismark is at his father's grave when the party lays the sprig. He recognises the rosemary and knows his sister sent it. Gallows humour first, then one plain line that shows he is glad she sent it. He does not mention fences, fields or ledgers.
+
+grave_kolyan: Narrator x1, then Kolyan Indirovich x1. Your draft said the party "called him back"; they did not, they cast a spell to ask him a few questions at the grave. The Narrator line should say the earth is quiet now and recall the gruff, impatient voice that answered them. Keep your Kolyan line (stop fussing over my dirt, see that my girl eats a hot meal, she gets cold in the fingers when she frets): it is good. Rewrite only the Narrator line.
+
+flowers_moot: Ireena x2. Your draft put Kolyan "upstairs", which is a place. Kolyan has been raised from the dead by the party and is alive again. He is not with her (do not say where he is). She keeps the sprig and says so, with wonder and some alarm. Dry. No place names, no rooms.
+
+wants_ask_plain: Ireena x4. Your first line said "even the candles lean the wrong way when I pass"; she does not know that. The reasons she suspects she is someone else are not hers to list: she has only the dream, and that many people have looked at her as though she were someone else. Keep lines 2 to 4 as drafted, except cut "Even the candles lean the wrong way when I pass" and write one new first line that is only about people looking at her and seeing someone else.
+
+statue_bier: Ireena x2. Your draft asked a question nobody can answer and the second line did not parse. Facts: the party found the vault under the statue and saw a girl of about nineteen asleep on a white stone bier under a lace veil, red hair braided over one shoulder, no smell of death at all, a single red scratch above her heart that never healed. They tell Ireena this. Ireena listens, is not squeamish, asks ONE precise question about the scratch (a statement-and-question in one line is fine), and then says in one plain line what it means to her. Two lines in all.
+
+letter_1_text: Strahd x3. Your draft said he stood "beneath your window" and "the bolt drawn"; the game does not say it was the window (it may have been the churchyard gate of a church where she sheltered). Write it so it is true either way: he called, she did not come to the door, he is not discouraged. Keep his velvet knife: every courtesy names a threat (her father's grave in the village churchyard, the road, the one the others would die for, a night). No "Strahd." signature at the end of a line: the game shows a seal instead.
+letter_2_text: Strahd x3. Keep your draft and only remove the "Strahd." at the end of the last line.
+letter_3_kept: the two Strahd lines. Keep your draft and only remove the "Strahd." at the end of the last line. Keep Ireena's lines as they are.
+
+## Part 2: journal and one menu line
+
+Quest journal entries are written in the party's voice, plainly ("we", "Ireena", "us"), past tense for what has happened, one or two sentences each, with no game words. Each non-ending stage also has one short OBJECTIVE or two (what to do next, imperative, under 10 words) and a HINT (one sentence: where to go and what to do, never the twist; it MUST name a place from this list: the Village of Barovia, the churchyard in the Village of Barovia, Vallaki, the Blue Water Inn, St. Andral's, Krezk, Berez).
+
+quest_flowers (Flowers for Father): give a name (3 or 4 words), a one-sentence summary, and the stages:
+ given: Ireena gave us a sprig of rosemary to lay on her father's grave in the village churchyard and asked us to tell her how it looks. (journal; objective; hint)
+ laid: we laid the sprig on Kolyan Indirovich's grave. We should tell Ireena how it looks. (journal; objective; hint: she is at the Blue Water Inn, St. Andral's or in Krezk)
+ done: we told Ireena about the grave, and she told us a story about her father she had never told anyone. (journal only; this ends the quest well)
+ alive: Kolyan Indirovich was raised from his grave before we could lay the sprig, so Ireena kept it. (journal only; this ends the quest well)
+
+quest_wants (What He Wants With Me): give a name (4 or 5 words), a one-sentence summary, and the stages:
+ asked: Ireena asked us to bring her whatever tells the story of the face she wears: the book the vampire wrote about himself, and anything else that has her face. (journal; objectives; hint)
+ tome_read: we read the Tome of Strahd aloud to Ireena. She still wants to hear about anything that wears her face. (journal; objective; hint)
+ statue_told: we told Ireena about the statue in Berez that wears her face. She still wants to hear the vampire's own account in his book. (journal; objective; hint)
+ knows: Ireena has heard the vampire's own account and has been told of the statue in Berez. She knows whose face she wears, and whose she doesn't. (journal only; this ends the quest well)
+
+hub_opt: `* ` (under a node line `~ hub_opt`) the line the party says to Ireena in a check-in to ask whether there is anything she needs from them, a plain question under 12 words.
+
+## Format reminder
+
+One line per row, exactly: `Speaker [mood]: Text` for the lines in Part 1 (Ireena, Ismark, Kolyan Indirovich, Narrator or Strahd; mood optional and never for the Narrator or Strahd; allowed moods: smile, angry, afraid, sad, weary). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each node on its own line as `~ node_name`. For Part 2 use `~ quest_flowers` and `~ quest_wants` nodes with rows of the form `name: ...`, `summary: ...`, then for each stage `stage given:` followed by rows `journal: ...`, `objective: ...`, `hint: ...`. No stage directions, no placeholders, no emoji, no markdown, no new named characters or places.

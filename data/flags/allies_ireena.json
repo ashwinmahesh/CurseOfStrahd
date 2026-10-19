@@ -9,7 +9,7 @@
     {
       "id": "ireena_trust",
       "type": "int",
-      "summary": "How far Ireena trusts the party, a side counter that starts at 0. I1 adds 1 the first time the party checks in on her at each place (the inn, St. Andral's, Krezk, the mansion, the road). Only her own new lines, the finale and the epilogues may read it; it never moves a story flag."
+      "summary": "How far Ireena trusts the party, a side counter that starts at 0. I1 adds 1 the first time the party checks in on her at each place (the inn, St. Andral's, Krezk, the mansion, the road). I2 adds 1 for the sprig laid and told, each sword lesson that lands, the pool-and-statue story told (What He Wants With Me) and the third letter's secret. Only her own new lines, the finale and the epilogues may read it; it never moves a story flag."
     },
     {
       "id": "ireena_news_now",
@@ -195,6 +195,121 @@
       "id": "ireena_offer_father",
       "type": "bool",
       "summary": "Her father topic is on offer in the check-in's menu now (the three newest unheard topics are offered). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_asks_open",
+      "type": "bool",
+      "summary": "There is something to talk about with Ireena in this check-in's menu: an errand, a report, a lesson, a letter (allies/ireena_errands:prepare, which sets it before every menu; Story Allies Presence Plan, package I2). No story reads it."
+    },
+    {
+      "id": "ireena_ask_flowers",
+      "type": "bool",
+      "summary": "Her sprig for her father's grave is on offer in the check-in's menu now (allies/ireena_errands:prepare). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_report",
+      "type": "bool",
+      "summary": "The party can report back on her father's grave in the check-in's menu now (the sprig is laid). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_moot",
+      "type": "bool",
+      "summary": "Kolyan was raised before the sprig was laid, so she has something to say about it in this check-in. Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_wants",
+      "type": "bool",
+      "summary": "Her ask for what tells the story of the face she wears (What He Wants With Me) is on offer in the check-in's menu now. Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_lesson_first",
+      "type": "bool",
+      "summary": "She is ready to ask for her first sword lesson in the check-in's menu now. Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_lesson",
+      "type": "bool",
+      "summary": "The party can offer her another sword lesson in the check-in's menu now (one a check-in). Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_tome",
+      "type": "bool",
+      "summary": "The party can read the Tome of Strahd with her in the check-in's menu now. Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_statue",
+      "type": "bool",
+      "summary": "The party can tell her about Marina's statue in Berez in the check-in's menu now. Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_done",
+      "type": "bool",
+      "summary": "She has heard the Tome and (on her own road) seen the statue, so she can say what she knows in this check-in. Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_ask_letter",
+      "type": "int",
+      "summary": "Which of Strahd's letters to her is due to be shown in the check-in's menu now: 0 none, 1 after his call at her window or the churchyard gate, 2 after the festival, 3 with the dinner. Recomputed before every menu; no story reads it."
+    },
+    {
+      "id": "ireena_lesson_asked",
+      "type": "bool",
+      "summary": "Ireena has asked for her first sword lesson (allies/ireena_errands:lesson_ask_first), whether or not the party took it. After that the party offers the lessons from the menu."
+    },
+    {
+      "id": "ireena_lesson_tried",
+      "type": "bool",
+      "summary": "A sword lesson was tried in this check-in (it landed or not); reset by every check-in. One lesson a check-in, so a lesson that did not land is offered again next time."
+    },
+    {
+      "id": "ireena_lessons",
+      "type": "int",
+      "summary": "How many of Ireena's three sword lessons landed (grip and footing, reading an opponent, then drill or the fall). A lesson that did not land is not counted. The finale and the epilogues may read it; it changes no numbers."
+    },
+    {
+      "id": "ireena_wants_later",
+      "type": "bool",
+      "summary": "The party put off Ireena's ask for what tells the story of her face (What He Wants With Me), so her first sword lesson, if pending, is raised next time instead. Reset when the lesson is raised."
+    },
+    {
+      "id": "ireena_ismark_at_grave",
+      "type": "bool",
+      "summary": "Ismark was at his father's grave when the party laid Ireena's sprig (allies/ireena_errands:grave_scene). It lets the party tell her so."
+    },
+    {
+      "id": "ireena_tome_read",
+      "type": "bool",
+      "summary": "The party read the Tome of Strahd aloud to Ireena (allies/ireena_errands:tome_start)."
+    },
+    {
+      "id": "ireena_statue_told",
+      "type": "bool",
+      "summary": "The party told Ireena about Marina's statue in Berez, or she saw it herself (allies/ireena_errands:statue_tell)."
+    },
+    {
+      "id": "ireena_knows_tatyana",
+      "type": "bool",
+      "summary": "Ireena has heard the Tome and learned of the statue: she knows whose face she wears (What He Wants With Me, stage knows). It never sets ireena_pool_choice. The finale (F1) reads it."
+    },
+    {
+      "id": "ireena_heard_letter1",
+      "type": "bool",
+      "summary": "Ireena showed the party Strahd's first letter to her, after his call at her window or the churchyard gate (allies/ireena_errands:letter_1_open). Told once."
+    },
+    {
+      "id": "ireena_heard_letter2",
+      "type": "bool",
+      "summary": "Ireena showed the party Strahd's second letter to her, after the festival (allies/ireena_errands:letter_2_open). Told once."
+    },
+    {
+      "id": "ireena_kept_letter",
+      "type": "bool",
+      "summary": "Ireena told the party about Strahd's third letter to her, with the dinner invitation, and said she burned it; the game knows she kept it (allies/ireena_errands:letter_3_open). Set when the third letter is told, whether or not the party saw through her, and it is the 'told once' mark for that letter. The finale and her epilogues read it."
+    },
+    {
+      "id": "ireena_secret_shared",
+      "type": "bool",
+      "summary": "The party saw through Ireena over the third letter (Insight) and she told them her secret: some nights she wants to lift the latch. She asked them to stop her. Adds 1 to ireena_trust; the finale and her epilogues read it."
     }
   ]
 }

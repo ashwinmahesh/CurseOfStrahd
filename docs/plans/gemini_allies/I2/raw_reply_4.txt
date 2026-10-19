@@ -1,0 +1,73 @@
+~ asks_open
+Ireena: Go on. If there is something on your mind, say it.
+
+~ letter_1_open
+Narrator: She holds out a sheet of heavy cream paper, folded neat and broken at the crease where black wax bears a single stamped Z. It was not on the table when the shutters were barred last night.
+Ireena: I found it by my cup this morning. I have read it already, and I will not pretend it is nothing.
+
+~ letter_1_text
+Strahd: Ireena. You kept the bolt drawn when I stood beneath your window, though the night was damp and your father's grave lies cold at the turn of the road.
+Strahd: A dutiful daughter keeps her doors shut to strangers, and I do not fault your manners.
+Strahd: Keep your friends close by the hearth tonight; we will speak again before the week is out. Strahd.
+
+~ letter_1_ask
+Ireena: There is his hand. What would you do with it?
+
+~ letter_1_burn
+Ireena: Good. The stove can have his courtesies, and I will save the ash for the scrub bucket.
+
+~ letter_1_keep
+Ireena [weary]: You are right that a magistrate would keep the evidence, though I hate carrying his ink in my pocket.
+
+~ letter_2_open
+Narrator: A second square of cream paper rests across her knee, the black Z cracked in two and carrying a thin, dry smell of woodsmoke. Her thumb sits flat over the folded corner.
+Ireena: Another came before dawn. Our visitor has thoughts on the festival.
+
+~ letter_2_text
+Strahd: How charming to watch the lanterns strung along the road and hear so many loud voices promising one another the dark is past.
+Strahd: They hang their banners and bar their shutters as though a strip of painted cloth has ever kept me from a window I meant to open.
+Strahd: Rest well while the smoke clears, Ireena, and do not let those who would die for you stand too near the door. Strahd.
+
+~ letter_2_ask
+Ireena: Well? Does this one go to the grate or the pack?
+
+~ letter_2_burn
+Ireena: Into the coals with it, then. It smells of smoke already.
+
+~ letter_2_keep
+Ireena: Put it with the first, then, and tie the string tight. I do not want to hear the paper rustle when we walk.
+
+~ letter_3_open
+Ireena: A third letter came when his black carriage stopped on the road with your invitation.
+Ireena: He asked me to the same dinner. I put it straight into the fire before the wax was cold.
+
+~ letter_3_good
+Ireena: Yes. One less piece of him in the room.
+
+~ letter_3_what
+Ireena: Only that a chair was set for me at his castle table beside yours.
+Ireena: The rest was the usual ink and courtesy, and it made very small ashes.
+
+~ letter_3_kept
+Ireena [weary]: All right. Do not look at me like a clerk catching a thief.
+Ireena: It is inside my cuff. Listen to how he writes it.
+Strahd: My carriage waits upon the road at dusk, Ireena, and your place is laid at my castle table where the candles are already lit.
+Strahd: You need only lift the window latch when the house grows quiet, as we both know your hand has wished to do. Strahd.
+Ireena [afraid]: That is why I hid it from you. Because some nights, when the house is still and the glass is cold, my hand wants to lift the latch and be done with the waiting.
+Ireena [angry]: I despise it in myself, and I would rather lose the hand at the wrist than give him the satisfaction.
+Ireena: If you ever see me walk toward that window after dark, do not waste time looking for him. Lay hold of me and pull me back.
+
+~ letter_3_kept_end
+Ireena: Put that look away now. The window is shut, and we have work to do.
+
+~ letter_3_lost
+Ireena: Ash, I told you. You are welcome to poke through the stove with a stick if you doubt me.
+
+~ options
+* What is that letter in your hand?
+* Never mind. It can wait.
+* Burn it.
+* Keep it. We may need proof of what he is.
+* Good. Better in the fire than in your hand.
+* What did the third letter say before you burned it?
+* You did not burn that one.

@@ -1,0 +1,11 @@
+~ statue_tell
+Narrator: You tell her of the white stone woman standing on the only dry ground in the marsh, her hands folded and her own face turned toward the castle with the moss scrubbed clean and fresh black roses at her feet. You repeat the word MARINA cut into the plinth, and the fine, patient carving beneath it: "Berez took her. I took Berez."
+Ireena [weary]: It's a strange thing to be told your own nose and chin are standing in a marsh with fresh black roses at their ankles.
+Ireena: Most men leave a prayer on a grave, not a receipt for a town.
+Ireena [angry]: A man who scrubs the moss off a statue and signs his name to the ruin does not want a wife. He wants a monument that breathes.
+Ireena: Marina had my face, and he drowned a whole town over it, which tells me plainly enough what his tenderness is worth.
+
+~ statue_bier
+Narrator: You tell her of the stair beneath the plinth and the girl of about nineteen lying asleep on a white stone bier under a lace veil, her red hair braided over one shoulder and no smell of death in the room. You describe the single red scratch above her heart, fine as a thorn's, that has never healed.
+Ireena: A scratch that fine above the heart is not a wound from a fight; someone drew that mark with a steady hand before her blood went cold.
+Ireena [angry]: He keeps what he loses under stone and lace, and I will not be the next body on a slab.

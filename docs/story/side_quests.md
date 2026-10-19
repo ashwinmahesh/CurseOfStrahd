@@ -1424,6 +1424,90 @@ The quest never sets or changes a druid, Wintersplinter or gem flag; it reads `y
 - Freydis lays her grandmother in the oldest mound facing the mountains and sings her in (tell her what got up, or
   spare her). Silverjaw's Blood Amulet (rare) and 150 gp.
 
+## Ireena's errands (any refuge; Story Allies Presence Plan, package I2)
+
+Ireena Kolyana is kept out of the fights and left at a refuge (the Blue Water Inn, St. Andral's, the Krezkovs' house), in
+her father's mansion if the party would not take her, or on the road beside them. These are the reasons to go back to
+her, each a small errand that moves her toward knowing who she is. Her check-in (narrative/allies/ireena.dialogue,
+docs/story/ireena_checkin.md) gains one option, "There is something we wanted to speak with you about.", whenever one of
+them is on offer; it opens `asks` in narrative/allies/ireena_errands.dialogue, a menu of what there is to talk about. The
+hub's last offer node hands over to `prepare` there, which works out what is on offer and sets the `ireena_ask_*` flags
+(recomputed before every menu; nothing else reads them). Every path comes back to the check-in's menu or ends the
+conversation, and nothing here sets a story flag: only the side flags in data/flags/allies_ireena.json and the two quests
+below move. Ignoring her costs only the chance: nothing is lost by not asking. The door for every errand is the check-in
+at the place she stands (a quest that began only from a guest click would not count for the reach test; the grave prop
+carries the same file).
+
+### Rosemary for Kolyan (`flowers_for_kolyan`, narrative/allies/ireena_errands.dialogue; Story Allies Presence Plan, package I2)
+
+Once her father is buried, and while she shelters at the inn, the church or in Krezk (not in the mansion, where she can go
+herself, and not on the road, where there is no village to send them to) and the party has not raised him, she asks the
+party to lay a pressed sprig of rosemary on Kolyan's grave in the churchyard of the Village of Barovia and to tell her how
+it looks. The grave prop (`kolyan_grave`, data/locations/village_of_barovia.json) now opens `allies/ireena_errands:grave`:
+with the quest at `given` it plays the laying (Ismark is there if he stayed behind, so not when he guards her, is in Krezk or
+travels with the party; if Speak with Dead was cast there, the Narrator recalls the voice and Kolyan has one remembered
+line), and moves the quest to `laid`; in every other state it plays the old node (`village_of_barovia/kolyan:grave`)
+unchanged, so raising him and Speak with Dead work as before. Back with her the party answers how the grave looks (the
+plain truth, a kind lie she sees through, or that Ismark was there) and she tells the one story about her father she has
+never told (`done`). Reward: Heroic Inspiration for the party (`inspire party`; dialogue selectors cannot pick the current
+speaker) and one point of `ireena_trust`. If Kolyan is raised before the sprig is laid she keeps it and the quest ends at
+`alive`, also a success.
+
+- Stages: `given`, `laid`, `done` (success), `alive` (success). No roll, no fight, no gold.
+- Flags: `ireena_ismark_at_grave` (so the party can tell her he was there).
+
+### What He Wants With Me (`what_he_wants`, narrative/allies/ireena_errands.dialogue; Story Allies Presence Plan, package I2)
+
+When she has told the party her dream of the lake (the check-in's topic) and something has made her wonder (Tamsin showed her
+the locket, the Abbot's candles, the falls, Marina's statue, the pool, the Tome carried, or a trip to Berez), the check-in's
+talk option offers "You look as though you have something to ask us." She asks the party for what tells the story of the face
+she wears: the book he wrote about himself, and anything else with her face (two voices, by whether she has been to the pool).
+The party then reads the **Tome of Strahd** aloud to her (the item's codex text is our whole canon for it: the conqueror,
+Sergei, Tatyana, the wedding day, the fall, "he chose all of it"; three hours pass; the Narrator ends on a door closing
+somewhere far off, and no story flag is set, the item's own "Read it through" does that) and tell her about **Marina's
+statue** in Berez (the word, the line under it, the face; if the party also went down to the vault, the girl on the bier).
+Either order. When both are done (a statue she saw herself on the road counts) she says it plainly: she is not Tatyana and
+not Marina, and he keeps what he loses (`knows`, `ireena_knows_tatyana`, one point of trust). If the rumour of the pool is
+known (`the_pool_of_the_white_sun` at `rumored`) and she is not with the party, she then asks to be taken to Krezk, through the
+existing rejoin nodes (`vallaki/ireena:rejoin` from the inn and the church, `krezk/ireena:rejoin` in Krezk,
+`village_of_barovia/ireena:krezk` from the mansion). It never sets `ireena_pool_choice` or moves the pool's quest: the pool
+stays the pool's.
+
+- Stages: `asked`, `tome_read`, `statue_told`, `knows` (success). No roll, no fight.
+- Flags: `ireena_tome_read`, `ireena_statue_told`, `ireena_knows_tatyana` (the finale, F1, reads the last), `ireena_wants_later`
+  (the party put the ask off, so a pending first sword lesson is raised next time).
+
+#### Sword lessons (no quest)
+
+From the second check-in, with a Fighter, a Paladin or a Ranger in the party, or Ezmerelda along, Ireena asks to be taught
+(she cannot be in the fights, so the one thing left is to know how to hold a blade when the fight comes to her). If the
+party puts the first ask off, it can offer the lesson itself from the same menu ("Have you got a moment for another sword
+lesson?"). Three lessons, one try per check-in, each half an hour: grip and footing (Athletics DC 11), reading an
+opponent (Insight DC 12, a roll in the scene and not an option, so a miss spends nothing and the lesson is offered again
+next check-in), then the party's choice for the last (one cut over and over, Athletics DC 13, or how to fall, Acrobatics
+DC 13, with a quiet line she never explains). The best of the party rolls. A lesson that lands adds one to `ireena_lessons`
+and one to `ireena_trust`; one that does not changes nothing and costs the afternoon. Ezmerelda has an aside in each when she
+is along. The lessons change no numbers; the finale (F1) reads `ireena_lessons`.
+
+- Flags: `ireena_lesson_asked`, `ireena_lesson_tried` (reset by every check-in), `ireena_lessons`.
+
+#### His letters to her (no quest)
+
+While she shelters (not on the road, not when he holds her), the vampire writes to her, three letters spaced by the story:
+after his call at her window or the churchyard gate (`strahd_window` set), after the festival (`vallaki_backed`), and with the
+dinner (`strahd_invitation`). She shows each one in the check-in's talk menu ("What is that letter in your hand?"), one at a
+time and in order, and asks what the party would do (burn it, or keep it as proof). The third she says she burned
+(`ireena_kept_letter`, set whether or not anyone notices: she kept it). The party can take her word, ask what it said, or
+see through her (Insight DC 14): then she reads one line of it and tells them her secret, that some nights she wants to
+lift the window latch, and asks them to stop her. A miss costs only the confession: the other answers are still there and the
+secret stays hers (`ireena_secret_shared` adds one to her trust). The finale and her epilogues read the two flags.
+
+- Flags: `ireena_heard_letter1`, `ireena_heard_letter2`, `ireena_kept_letter` (the third letter told), `ireena_secret_shared`.
+
+- Lines: 106 spoken (Ireena, the Narrator, Strahd's six letter lines, Ismark's two and Kolyan's one at the grave, Ezmerelda's three
+  lesson asides), drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_allies/I2/), all unvoiced.
+  Test: tests/integration/test_ireena_errands.gd.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -1541,3 +1625,5 @@ the Tser Pool camp and the crossroads: stanimirs_fire.dialogue, radus_horse.dial
 costica.dialogue in full (new speakers Costica and Ambrose Fennimore); in called_by_name.dialogue the by-day nodes; in
 grey_mare.dialogue the decoy nodes; in tser_camp.dialogue Dorina's pot, Zora's cord and Petru's blades; and one new
 option in stanimir.dialogue.
+
+Story Allies Presence Plan, package I2 (2026-10-18), Ireena's errands: narrative/allies/ireena_errands.dialogue in full (Ireena, Strahd's letters, Ismark and Kolyan at the grave, Ezmerelda's lesson asides, the Narrator).

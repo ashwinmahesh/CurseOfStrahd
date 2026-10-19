@@ -1,0 +1,67 @@
+~ lesson_ask_first
+Ireena: You keep me out of the fighting, and I know why. That does not mean I intend to stand idle when the door gives way.
+Ireena: Find a dull iron or a heavy stick and show me how to hold it. I will not be taken like a sheep in a pen.
+
+~ lesson_ask_again
+Ireena: You have ten minutes and both your hands. Show me the next part.
+
+~ lesson_1_setup
+Narrator: You put a blunted iron blade into her hand. She grips the leather hilt like a poker she means to throw into the grate, knuckles white and shoulders high.
+
+~ lesson_1_pass
+Narrator: You set a boot against her heel to widen her stance and press her elbow down until the weight drops into her hips. The iron stops wavering.
+Ireena: Better. It pulls less at the wrist when I stop fighting the weight of it.
+
+~ lesson_1_fail
+Narrator: Every time you square her shoulders, the heavy point dips back toward the floor and twists in her sweat-damp palm. After half an hour her forearm is trembling.
+Ireena [angry]: This piece of iron was balanced by a blind smith. We will try it again tomorrow when my fingers unlock.
+
+~ lesson_2_setup
+Narrator: You raise a guard and tell her to strike where she sees an opening. Her eyes fix hard on your left shoulder three heartbeats before her arm moves.
+
+~ lesson_2_pass
+Narrator: You tap the flat of your blade against her wrist each time her gaze gives her away, until she learns to watch your chest and strike from the dark. The last cut lands clean.
+Ireena [smile]: Look at the coat, not the target. Father used to do the same thing across a council table.
+
+~ lesson_2_fail
+Narrator: You step aside from five cuts in a row without lifting your guard, following the plain warning in her stare. She lowers the point, breathing hard through her nose.
+Ireena [weary]: I might as well send a herald ahead of the blow. Enough for today.
+
+~ lesson_3_setup
+Narrator: She takes her stance without being corrected, the dull iron steady in her fist. There is time for one more lesson: a single honest strike, or how to survive losing her feet.
+
+~ lesson_3_drill_pass
+Narrator: You make her cut from the shoulder a hundred times until her hair clings to her temples and the iron whistles on the same line every time. On the last stroke, the blow rings hard against your parry.
+Ireena [weary]: My arm feels like lead, and I could do that cut in the pitch dark. Good.
+
+~ lesson_3_drill_fail
+Narrator: By the fiftieth stroke her heel slips out of line and the flat of the blade slaps harmlessly against your guard. You call a halt before she blisters her palm raw.
+
+~ lesson_3_fall_pass
+Narrator: You sweep her boot out from under her again and again, teaching her to tuck her chin, take the shock on her shoulder, and come up with the point already raised. Dust coats her sleeves, but she rises faster each time.
+Ireena: Tuck the shoulder, keep the hilt clear, get the feet back under me.
+Ireena [afraid]: It is a good thing to know that the ground is actually there when you go down.
+
+~ lesson_3_fall_fail
+Narrator: She braces her arm on the way down instead of rolling, jarring her wrist hard against the floor and losing her grip on the hilt. You haul her up and call an end to it while she shakes the numbness from her fingers.
+
+~ lesson_done
+Ireena: That makes three lessons. I am still five years behind any bandit on the road, and I know it.
+Ireena [smile]: Still, I know which end of the iron is which. When we are out of this valley, you owe me a proper bout.
+
+~ lesson_ezmerelda_1
+Ezmerelda: Loosen your thumb, or the first parry will send that steel into the bushes.
+
+~ lesson_ezmerelda_2
+Ezmerelda [smile]: Stop glaring at the ribs you want to crack. Rudolph beat that out of me in a week.
+
+~ lesson_ezmerelda_3
+Ezmerelda: Hit the dirt like a sack of turnips, come up like a cat. Never stay down to admire the ceiling.
+
+~ options
+* Take a practice blade. We have time to show you now.
+* Not right now. Keep your strength for later.
+* Have you got a moment for another sword lesson?
+* One cut, over and over, until your arm knows it.
+* How to take a fall and come back up with your blade.
+* Save the last lesson for another day.

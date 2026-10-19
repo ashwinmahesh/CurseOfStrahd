@@ -1,0 +1,47 @@
+Fourth request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as before. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else. About 34 lines.
+
+## The scene: his letters to her
+
+While Ireena is sheltering somewhere safe (the Blue Water Inn or St. Andral's church in Vallaki, or the burgomaster's house in Krezk; the lines must work at any of them, so NEVER name the place), the vampire lord writes to her. Three letters, spaced by the story. She shows the party each one in a check-in conversation and asks what they would do with it. She never says his name ("him", "the devil", "our visitor"). In each letter HE speaks, as Strahd, and the game shows his lines under his own name; the Narrator describes the paper.
+
+Strahd's voice (a "velvet knife"): elegant, courteous, unhurried, complete sentences, old-fashioned grammar, never raises his voice. Every courtesy names its threat: not a vague menace but WHO, WHERE or WHEN (Kolyan in his grave, the window she sleeps behind, the one the others would die for, the road each night). He speaks of Ireena as already his: tender in tone, never in meaning; he never asks after her comfort; he calls her "Ireena", softly. No jokes at his own expense, never lonely, wistful or put out. He signs "Strahd". He knows exactly whose face she wears and does not say it. Pet phrases: "Welcome." "How charming." "We will speak again." "Do not let me keep you." Existing lines of his (match this register; do not repeat them): "Keep the scarf on. I know what is under it. I put it there." / "Every road in this valley ends at my door. I had them laid that way." / "My dear guests. Forgive a host for writing when he might call. My nights are spoken for, and my days are not my own." / "You have put Ireena behind a wall and a door. I have always admired walls. They tell me exactly where to look."
+
+THE THREE LETTERS (each arrives by an unseen hand; the courier is never named or described):
+LETTER 1 comes after he has been to her window (or to the churchyard gate where she sheltered) once already. He writes as a man who called and was not let in, and who is not discouraged. Strahd x3 lines.
+LETTER 2 comes after the festival in Vallaki has ended, however it went (do not say who won, and do not name the Baron, Lady Wachter or the priest). He comments on the town's lights and banners and on the people who think they keep him out. Strahd x3 lines.
+LETTER 3 comes with the dinner: a black carriage has been sent for the party (the party has had its own invitation), and her letter invites her to the same table. Ireena tells the party she BURNED this one. She did not (she kept it, and the game knows it): the party can see through her with an Insight check (the game rolls it; you write both the success and the plain version). It is her secret from the voice bible: some nights she does not want to keep the window shut. She hates that about herself and has told no one. If the party sees through her, she admits it, reads out one line of the letter she kept, and asks them to stop HER, not him, if she ever reaches for the latch. It is a secret, not a betrayal: she is frightened of herself, not leaning toward him.
+
+## The nodes I need (line counts are targets)
+
+asks_open: Ireena x1. She turns to the party when they ask whether she needs anything, short: "go on".
+letter_1_open: Narrator x1 (the paper: cream-coloured, heavy, black wax pressed with a single letter, a Z; it was not here last night), then Ireena x1 (she shows it; she has read it; she will not say it was nothing).
+letter_1_text: Strahd x3.
+letter_1_ask: Ireena x1. She asks what they would do with it.
+letter_1_burn: Ireena x1. The party says burn it. Her reaction: the practical, dry one.
+letter_1_keep: Ireena x1. The party says keep it as proof. Her reaction: she thinks it is a good idea and hates that it is.
+letter_2_open: Narrator x1 (the same paper and seal; this one smells faintly of smoke), then Ireena x1.
+letter_2_text: Strahd x3.
+letter_2_ask: Ireena x1.
+letter_2_burn: Ireena x1.
+letter_2_keep: Ireena x1.
+letter_3_open: Ireena x2. She says a third came, with the black carriage, inviting her to dinner; she burned it. She says it flatly and a little too fast.
+letter_3_good: Ireena x1. The party says good. A short answer.
+letter_3_what: Ireena x2. The party asks what it said. She gives a partial truth, dry and brief (that he laid a place for her at his table), and does not say the rest.
+letter_3_kept: Ireena x2, then Strahd x2, then Ireena x3. The party saw through her. She says all right, she kept it. She reads one line of it aloud (Strahd x2: tender in tone, a threat in meaning, naming a place and a time; it must NOT be the same as letters 1 and 2). Then she confesses her secret in three plain lines and asks them to stop HER if she ever reaches for the latch.
+letter_3_kept_end: Ireena x1. A closing line that asks them not to look at her like that and moves on.
+letter_3_lost: Ireena x1. The party did not see through her. She says "ash" and sends them to look in the stove if they like. A closed door, said lightly.
+
+## Option texts
+
+Also write what the PARTY says (not Ireena), as `* text` rows, each under 12 words:
+letter_menu_opt: `* ` the line the player picks, in a small menu of things she might want, to ask about the letter she is holding.
+never_opt: `* ` leaving that menu: "never mind".
+burn_opt: `* ` telling her to burn it.
+keep_opt: `* ` telling her to keep it as proof of what he is.
+good_opt: `* ` telling her good, she burned it.
+what_opt: `* ` asking what the third letter said.
+insight_opt: `* ` not believing her: "you didn't burn that one."
+
+## Format reminder
+
+One line per row, exactly: `Speaker [mood]: Text` (Ireena, Strahd or Narrator; mood optional and not for the Narrator; allowed moods for Ireena: smile, angry, afraid, sad, weary; Strahd takes none). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each node on its own line as `~ node_name`. The option texts are `* text` rows under a node line `~ options`. The Narrator speaks in the second person, present tense, one or two sentences, concrete senses, no game words. Do not repeat ideas from your earlier replies in this conversation (the sprig, the book, the sword lessons, the hall table and thunder, the statue). No stage directions, no placeholders, no emoji, no markdown, no new named characters or places. The letters may mention only: Ireena, her father in his grave, the window, the road, the castle, the festival, the dinner, the party's carriage.

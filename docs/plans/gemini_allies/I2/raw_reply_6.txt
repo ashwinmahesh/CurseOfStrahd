@@ -1,0 +1,9 @@
+~ hub_opt
+* There is something we wanted to speak with you about.
+
+~ wants_ask_plain_2
+Ireena [weary]: That dream of the dark water has not stopped coming, and I am tired of guessing in the dark.
+
+~ statue_bier
+Ireena: That red scratch above her heart, did the edges look torn, or was it cut clean with a blade?
+Ireena [angry]: He keeps the ones he loses under stone and lace, and I will not be the next body on a slab.

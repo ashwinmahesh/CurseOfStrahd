@@ -1,0 +1,44 @@
+Third request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as before. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else. About 34 lines.
+
+## The scene: "What He Wants With Me"
+
+Ireena has begun to suspect she is not only who she thinks she is. She has dreamed a white dress, a lake and a fall for years; people keep looking at her as if she were somebody else (a portrait, candles that lean toward her, a stone face, a man who stared as if at a ghost). She has told the party about the dream before. She will not ask the devil what he wants with her, and she will not wait for him to tell her at her window. She asks the party for what tells the story: the book he wrote about himself, if they carry it, and anything else that wears her face. This is a quiet conversation, not a fight, and she does not cry.
+
+THE SECRET THE GAME KNOWS (she does not, until the party tells her through these scenes; she learns it in pieces and the game never says the word reincarnation): she wears the face of Tatyana, the woman the vampire has loved and lost across centuries, and Marina, a girl of Berez whom the vampire loved, wore it too. The vampire's brother Sergei was Tatyana's love.
+
+The lines must work wherever she is (the Blue Water Inn or St. Andral's church in Vallaki, the burgomaster's house in Krezk, her father's mansion, or on the road with the party), so NEVER name the place she is in.
+
+There are three scenes, and a short ending.
+
+SCENE 1, THE ASK. She gives the party the errand. Two versions, by whether she has already been to the Pool of the White Sun in Krezk:
+wants_ask_plain: Ireena x4. She has not been to the pool. She states plainly why she is asking (too many people have looked at her and seen someone else; she'd rather read it in his own hand than learn it at her window). She asks for the book he wrote, and for anything with her face on it: "if you find one, tell me". No self-pity.
+wants_ask_pool: Ireena x4. She has been to the pool: she remembers a chapel full of white flowers, a high stone wall, and a young man in the water calling her by another name. She knows the shape and not the story. She asks for the book in his own words and for anything else that wears her face. She is calmer, because she knows something.
+
+SCENE 2, THE BOOK. The party reads the Tome of Strahd aloud to her. What the book says (this is our whole canon for it; add nothing): "In his own unwavering hand, Strahd von Zarovich tells it: a conqueror who took the valley by the sword and found that peace bored him; a younger brother, Sergei, who had everything Strahd lacked; a girl named Tatyana who loved the brother and not the lord. Strahd sought youth from the powers below the mountains and paid with his brother's blood on the wedding day. Tatyana fled him to the castle walls and fell to the mists rather than be his. The guards shot him, and he did not die. The book ends on the man telling himself he chose all of it." The Narrator tells what the party reads, in its own words and briefly; Ireena answers in HER words: dry first, quieter as it goes. She never says his name. She does not break down. Reading takes hours.
+tome_start: Narrator x2, then Ireena x1. The party sits down with the book and she asks them to read it plainly and not skip. The first pages: the conqueror, the peace that bored him, the younger brother.
+tome_girl: Narrator x1, then Ireena x2. The girl who loved the brother, the pact for youth, the wedding day, the brother's blood. Ireena recognises a piece (a chapel full of white flowers) without remembering it.
+tome_fall: Narrator x1, then Ireena x2. The wall, the mists, the guards, and he did not die. She goes quiet; then angry at the last line of the book, where he tells himself he chose all of it.
+tome_close: Narrator x1, then Ireena x1. The book is shut. The Narrator ends on a small ominous image of a door somewhere closing very quietly (something is aware the book has been opened). Ireena's closing line is practical.
+
+SCENE 3, THE STATUE. The party tells her about Marina's statue in the marsh village of Berez. What they saw (our whole canon; add nothing): on the only dry ground in the marsh stands a young woman in white stone, hands folded, face turned toward the castle; someone has scrubbed the moss from her; fresh black roses lie at her feet; one word is cut into the plinth, MARINA, and below it in the same fine patient hand: "Berez took her. I took Berez."; and the statue has Ireena's face. Ireena asks questions like a magistrate.
+statue_tell: Ireena x4. She asks what it said and whose hand wrote it; she is dry about being told her face is on a grave; she says what she makes of a man who signs his graves.
+statue_bier: Ireena x2. A variant played only if the party also found the vault under the statue: a girl of about nineteen asleep on a white stone bier under a lace veil, red hair braided over one shoulder, no smell of death, a single red scratch above her heart that never healed. Ireena's reaction: she is not squeamish; she asks one precise question and then says what it means to her.
+
+THE END. Once she has heard both the book and the statue, she knows who she is up against and whose face she wears.
+wants_done: Ireena x4. She says it plainly: she is not Tatyana, and she is not Marina; she is the girl Father raised who has been given a dead woman's face; he keeps what he loses (a book, a statue, a window) and she will not be kept. She does not decide anything about the pool or the future yet. No speech; end on something exact and a little grim-funny.
+wants_krezk: Ireena x2. Played only if the party also knows the dead brother's rumour of where Tatyana would go (the Pool of the White Sun in Krezk, where the water is white with the sun). She asks the party to take her there. She is not pleading.
+
+## Option texts
+
+Also write what the PARTY says (not Ireena), as `* text` rows, each under 12 words:
+wants_opt: `* ` the line the player picks, in a small menu of things she might want, to say she looks like she has something to ask them.
+wants_agree_opt: `* ` agreeing to bring her what tells the story.
+wants_later_opt: `* ` not yet.
+tome_opt: `* ` offering to read the Tome of Strahd with her.
+statue_opt: `* ` telling her about the statue in Berez.
+krezk_yes_opt: `* ` agreeing to take her to the pool in Krezk.
+krezk_later_opt: `* ` not yet.
+
+## Format reminder
+
+One line per row, exactly: `Speaker [mood]: Text` (Ireena or Narrator; mood optional and not for the Narrator; allowed moods: smile, angry, afraid, sad, weary). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each node on its own line as `~ node_name`. The option texts are `* text` rows under a node line `~ options`. The Narrator speaks in the second person, present tense, one or two sentences, concrete senses, no game words. Do not repeat ideas from your earlier replies in this conversation (the sprig, the book it was pressed in, the sword lessons). No stage directions, no placeholders, no emoji, no markdown, no new named characters or places beyond Tatyana, Sergei, Marina, Berez and Krezk.

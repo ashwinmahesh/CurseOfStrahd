@@ -15,6 +15,7 @@
 ~ checkin
 set ireena_checkins += 1
 set ireena_news_now = 0
+set ireena_lesson_tried = false
 if not guest:ireena
 -> greet
 endif
@@ -402,10 +403,12 @@ if flag.ireena_topics_now < 3 and not flag.ireena_heard_father
 set ireena_offer_father
 set ireena_topics_now += 1
 endif
--> menu_show
+# Package I2 (narrative/allies/ireena_errands.dialogue) works out what else there is to talk about, then comes back to menu_show.
+-> allies/ireena_errands:prepare
 
 ~ menu_show
 * [if flag.ireena_topics_now > 0] Is something on your mind? -> topics
+* [if flag.ireena_asks_open] There is something we wanted to speak with you about. -> allies/ireena_errands:asks
 # The later Ireena packages put their asks and errands here.
 * [if (flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals") and not guest:ireena] Come with us again. -> vallaki/ireena:rejoin
 * [if flag.ireena_in_krezk and not guest:ireena] Come with us again, Ireena. -> krezk/ireena:rejoin

@@ -1,0 +1,60 @@
+~ flowers_ask
+Ireena: I pressed this rosemary in Father's ledger the night we buried him. Every time I open the pages, I only see the dirt.
+Ireena [weary]: If I walk that road alone, our visitor will have me before the first milestone, and I will not drag you back for my sake.
+Ireena: Next time your business takes you through the village, lay it on his grave for me.
+Ireena: When you come back, tell me how the place is keeping. Say it plainly.
+
+~ flowers_given
+Narrator: She lays a dry sprig of rosemary across your palm. It weighs almost nothing, and leaves a faint scent of kitchen smoke on your skin.
+
+~ grave_scene
+Narrator: Cold mist clings to the raw mound and the smell of turned clay hangs heavy in the air. You set the dry rosemary against the dark wood at the head of the plot.
+Narrator: The grey needles catch in a splinter and stay put against the wind. Down the path, an iron spade scrapes once against stone.
+
+~ grave_ismark
+Ismark [weary]: Kitchen rosemary from the ledger desk. She never could leave a piece of household business unfinished.
+Ismark: Tell her the fence is holding and the ground has settled clean. Tell her I come by when the light goes.
+
+~ grave_kolyan
+Narrator: The clay under your boots is silent now, though you still recall the rough, impatient bark that rose from it when you called him back.
+Kolyan Indirovich [angry]: Stop fussing over my dirt and see that my girl eats a hot meal! She gets cold in the fingers when she frets.
+
+~ grave_done
+Narrator: You leave the herb wedged against the timber and turn back toward the gate. Behind you, black wings shift once on wet stone.
+
+~ flowers_report_ask
+Ireena: You have been back through the village. How does his grave look?
+
+~ report_truth
+Ireena: Turned earth, a plain marker, and dead stalks. Good.
+Ireena [weary]: Nothing pretty keeps in that valley anyway. Father would rather have the truth than a tidy lawn.
+
+~ report_kind
+Ireena [smile]: Covered in fresh blossoms, in that churchyard, under that sky? You are terrible liars.
+Ireena: Still, it was kindly meant, and there is little enough kindness on the road. Thank you for the thought.
+
+~ report_ismark
+Ireena [weary]: Standing in the damp without a proper coat, no doubt, arguing with the crows.
+Ireena [sad]: I am glad he was there. Father hated an empty room almost as much as he hated a fuss.
+
+~ report_story
+Ireena: When I was small, thunder from the mountain used to drive me under the hall table. I would never admit I was frightened.
+Ireena: Father would stomp in with his boots on, curse the draughts, and drop a ledger on the floorboards right beside my knees.
+Ireena [smile]: Then he would sit on the cold planks for an hour, reading timber tariffs aloud at the top of his lungs to drown out the sky.
+Ireena [sad]: If I fell asleep against his sleeve, he would swear his knees had locked up so he did not have to move me.
+
+~ report_end
+Ireena: You did a small thing properly when no one was watching. I will remember that.
+
+~ flowers_moot
+Ireena [afraid]: Wait. Keep your hands off that rosemary. Father is walking around upstairs complaining about the draughts, and the grave has no use for it.
+Ireena [smile]: I think I will leave it in the ledger anyway. If I hand a living man his own funeral herb, we will never hear the end of it.
+
+~ options
+* You have something in your hand. What do you need from us?
+* Give us the rosemary. We will lay it on his grave.
+* Keep it for now. We are not heading that way yet.
+* We went by the churchyard and laid the rosemary for your father.
+* Raw earth, a wooden marker, and old wildflowers gone brown.
+* It looked peaceful. Someone had left fresh flowers all across it.
+* Ismark was there at the graveside when we laid it down.

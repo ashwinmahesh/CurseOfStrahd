@@ -1,0 +1,466 @@
+# Ireena's errands (Story Allies Presence Plan, package I2; docs/story/side_quests.md, docs/voice/ireena.md).
+# What she asks of the party, or shows them, once the check-in (narrative/allies/ireena.dialogue) has been had:
+#   - Flowers for Father (quest flowers_for_kolyan): a pressed sprig for her father's grave. The grave itself is the prop
+#     `kolyan_grave` in the Village of Barovia (data/locations/village_of_barovia.json), whose dialogue is `grave` here;
+#     it plays the old grave node (village_of_barovia/kolyan:grave) when there is no sprig to lay.
+#   - Sword lessons: three, one per check-in, for a party with a Fighter, Paladin or Ranger, or Ezmerelda along. No quest and
+#     no numbers: ireena_lessons counts the ones that landed (the finale reads it).
+#   - What He Wants With Me (quest what_he_wants): she asks for whatever tells the story of the face she wears. The Tome of
+#     Strahd read with her, and Marina's statue in Berez told to her; both done, she knows (ireena_knows_tatyana). If the
+#     rumour of the pool is known she asks to be taken to Krezk, through the existing rejoin nodes. It never sets
+#     ireena_pool_choice.
+#   - His letters to her: three, spaced by the story (a visit at her window or the church gate, the festival, the dinner),
+#     shown to the party in a check-in. The third she says she burned; an Insight roll finds the one she kept.
+# Only side flags (data/flags/allies_ireena.json) and the two side quests move; story flags are read. The check-in's menu
+# gets one option, `There is something we wanted to speak with you about.`, when `prepare` finds something to talk about.
+# Every conversation here ends in the check-in's menu (allies/ireena:menu) or at END, so each one has its exit.
+# The drafts are Gemini's (docs/plans/gemini_allies/I2/), edited; every line is unvoiced.
+
+# --- What is on offer: recomputed before every check-in menu (the hub's offer chain ends here) -----------------------------
+
+~ prepare
+set ireena_asks_open = false
+set ireena_ask_flowers = false
+set ireena_ask_report = false
+set ireena_ask_moot = false
+set ireena_ask_wants = false
+set ireena_ask_lesson_first = false
+set ireena_ask_lesson = false
+set ireena_ask_tome = false
+set ireena_ask_statue = false
+set ireena_ask_done = false
+set ireena_ask_letter = 0
+if flag.burgomaster_buried and not flag.kolyan_raised and not guest:ireena and not quest.flowers_for_kolyan and (flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals" or flag.ireena_in_krezk)
+set ireena_ask_flowers
+endif
+if quest.flowers_for_kolyan == laid
+set ireena_ask_report
+endif
+if quest.flowers_for_kolyan == given and flag.kolyan_raised
+set ireena_ask_moot
+endif
+if flag.ireena_heard_dreams and not quest.what_he_wants and (item:tome_of_strahd or flag.tamsin_locket_recognized or flag.abbot_saw_ireena or flag.ireena_saw_marina or flag.ireena_falls_memory or flag.ireena_pool_vision or visited:berez)
+set ireena_ask_wants
+endif
+if flag.ireena_checkins >= 2 and flag.ireena_lessons < 3 and (class:fighter or class:paladin or class:ranger or guest:ezmerelda)
+if flag.ireena_lesson_asked
+if not flag.ireena_lesson_tried
+set ireena_ask_lesson
+endif
+else
+set ireena_ask_lesson_first
+endif
+endif
+if quest.what_he_wants and not flag.ireena_knows_tatyana and not flag.ireena_tome_read and item:tome_of_strahd
+set ireena_ask_tome
+endif
+if quest.what_he_wants and not flag.ireena_knows_tatyana and not flag.ireena_statue_told and not flag.ireena_saw_marina and visited:berez
+set ireena_ask_statue
+endif
+if quest.what_he_wants == tome_read and flag.ireena_saw_marina
+set ireena_ask_done
+endif
+if not guest:ireena and not flag.ireena_held_by_strahd
+if flag.strahd_window and not flag.ireena_heard_letter1
+set ireena_ask_letter = 1
+elif flag.ireena_heard_letter1 and flag.vallaki_backed and not flag.ireena_heard_letter2
+set ireena_ask_letter = 2
+elif flag.ireena_heard_letter2 and flag.strahd_invitation and not flag.ireena_kept_letter and not flag.ireena_secret_shared
+set ireena_ask_letter = 3
+endif
+endif
+if flag.ireena_ask_flowers or flag.ireena_ask_report or flag.ireena_ask_moot or flag.ireena_ask_wants or flag.ireena_ask_lesson_first or flag.ireena_ask_lesson or flag.ireena_ask_tome or flag.ireena_ask_statue or flag.ireena_ask_done or flag.ireena_ask_letter > 0
+set ireena_asks_open
+endif
+-> allies/ireena:menu_show
+
+# --- The menu of what there is to talk about ---------------------------------------------------------------------------
+
+~ asks
+if flag.ireena_ask_moot
+-> flowers_moot
+endif
+if flag.ireena_ask_done
+-> wants_done
+endif
+Ireena: Go on. If there's something on your mind, say it.
+* [if flag.ireena_ask_flowers] You have something in your hand. What do you need from us? -> flowers_ask
+* [if flag.ireena_ask_report] We went by the churchyard and laid the rosemary for your father. -> flowers_report_ask
+* [if flag.ireena_ask_wants or flag.ireena_ask_lesson_first] You look as though you have something to ask us. -> hers
+* [if flag.ireena_ask_lesson] Have you got a moment for another sword lesson? -> lesson_start
+* [if flag.ireena_ask_tome] We have the book he wrote. Sit down and hear it. -> tome_start
+* [if flag.ireena_ask_statue] We found a white stone statue in the marsh at Berez. -> statue_tell
+* [if flag.ireena_ask_letter > 0] What is that letter in your hand? -> letter
+* Never mind. It can wait. -> allies/ireena:menu
+
+# What she brings up herself: the book and the faces first, the lessons after (unless the party put the first off).
+~ hers
+if flag.ireena_ask_wants and flag.ireena_ask_lesson_first and flag.ireena_wants_later
+set ireena_wants_later = false
+-> lesson_ask_first
+endif
+if flag.ireena_ask_wants and flag.ireena_pool_vision
+-> wants_ask_pool
+elif flag.ireena_ask_wants
+-> wants_ask_plain
+endif
+-> lesson_ask_first
+
+# --- Flowers for Father --------------------------------------------------------------------------------------------------
+
+~ flowers_ask
+Ireena: I pressed this sprig of rosemary into my father's ledger the night we buried him.
+Ireena: I can't walk that road alone without handing myself to the devil, and I won't pull you off your path for an errand.
+Ireena: Next time your road takes you through the village, lay it on his grave for me, and tell me how the place is keeping. Say it plainly.
+* Give us the rosemary. We'll lay it on his grave. -> flowers_take
+* Keep it for now. We're not heading that way yet. -> allies/ireena:menu
+
+~ flowers_take
+quest flowers_for_kolyan given
+Narrator: She lays a dry sprig of rosemary across your palm. It weighs almost nothing and smells faintly of kitchen smoke.
+-> allies/ireena:menu
+
+# The prop `kolyan_grave` in the Village of Barovia: the sprig laid, or his grave as it always was.
+~ grave
+if quest.flowers_for_kolyan == given and not flag.kolyan_raised
+-> grave_scene
+endif
+-> village_of_barovia/kolyan:grave
+
+~ grave_scene
+Narrator: Cold mist clings to the raw mound, and the smell of turned clay hangs heavy. You set the dry rosemary against the dark wood at the head of the plot.
+Narrator: The grey needles catch in a splinter and stay put against the wind. Down the path, an iron spade scrapes once against stone.
+if not flag.ismark_guards_ireena and not flag.ismark_in_krezk and not flag.ismark_joins_escort and not guest:ismark
+set ireena_ismark_at_grave
+appear ismark at kolyan_grave
+Ismark [weary]: Leave it to my sister to send me dry weeds when what I need is a shovel and three more men.
+Ismark: Put it down by the board. I'm glad to have a piece of her hand here.
+endif
+if flag.kolyan_spoke
+Narrator: The dark earth lies still again, though the air seems to carry the gruff, impatient voice that answered your questions from beneath the sod.
+Kolyan Indirovich: Stop fussing over my dirt and see that my girl eats a hot meal. She gets cold in the fingers when she frets.
+endif
+Narrator: You leave the herb wedged against the timber and turn back toward the gate. Behind you, black wings shift once on wet stone.
+quest flowers_for_kolyan laid
+-> END
+
+~ flowers_report_ask
+Ireena: You've been through the village, then. How does his grave look?
+* Raw earth, a wooden marker, and old wildflowers gone brown. -> report_truth
+* It looked peaceful. Someone had left fresh flowers all across it. -> report_kind
+* [if flag.ireena_ismark_at_grave] Ismark was there at the graveside when we laid it down. -> report_ismark
+
+~ report_truth
+Ireena [weary]: Nothing pretty keeps in this valley anyway. Father would rather have the truth than a tidy lawn.
+-> report_story
+
+~ report_kind
+Ireena [smile]: Covered in fresh blossoms, in that churchyard, under that sky? You're terrible liars.
+Ireena: Still, it was kindly meant, and there's little enough of that around. Thank you.
+-> report_story
+
+~ report_ismark
+Ireena [weary]: Standing in the damp without a proper coat, no doubt, arguing with the crows.
+Ireena [sad]: I'm glad he was there. Father hated an empty room almost as much as he hated a fuss.
+-> report_story
+
+~ report_story
+Ireena: When I was small, thunder off the mountain used to drive me under the hall table. I'd never admit I was frightened.
+Ireena: Father would stomp in with his boots on, curse the draughts, and drop a ledger on the floor beside my knees.
+Ireena [smile]: Then he'd sit on the cold boards for an hour reading the village accounts at the top of his lungs, to drown out the sky.
+Ireena [sad]: If I fell asleep against his sleeve, he'd swear his knees had locked, so he wouldn't have to move me.
+Ireena: You did a small thing properly when nobody was watching. I'll remember that.
+quest flowers_for_kolyan done
+set ireena_trust += 1
+inspire party: carried a sprig to a burgomaster's grave for his daughter
+-> allies/ireena:menu
+
+# Kolyan was raised before the sprig was laid.
+~ flowers_moot
+Ireena: Since Father is breathing and walking about again, he has very little use for grave herbs.
+Ireena [smile]: I'll keep the rosemary in my pocket, though it turns my stomach to say that aloud.
+quest flowers_for_kolyan alive
+-> allies/ireena:menu
+
+# --- Sword lessons ---------------------------------------------------------------------------------------------------------
+
+~ lesson_ask_first
+set ireena_lesson_asked
+Ireena: You keep me out of the fighting, and I know why. That doesn't mean I'll stand idle when the door gives way.
+Ireena: Find a dull blade or a heavy stick and show me how to hold it. I won't be taken like a sheep in a pen.
+* Take a practice blade. We have time to show you now. -> lesson_start
+* Not right now. Keep your strength for later. -> allies/ireena:menu
+
+# The next lesson, by how many have landed.
+~ lesson_start
+set ireena_lesson_asked
+if flag.ireena_lessons >= 1
+Ireena: You have half an hour and both your hands. Show me the next part.
+endif
+if flag.ireena_lessons == 0
+-> lesson_1_setup
+elif flag.ireena_lessons == 1
+-> lesson_2_setup
+endif
+-> lesson_3_setup
+
+~ lesson_1_setup
+set ireena_lesson_tried
+time +30
+Narrator: You put a blunted blade into her hand. She grips the leather hilt like a poker she means to throw into the grate, knuckles white and shoulders high.
+interject guest:ezmerelda: Loosen your thumb, or the first parry will send that steel into the bushes.
+check Athletics DC 11 -> lesson_1_pass | lesson_1_fail
+
+~ lesson_1_pass
+Narrator: You set a boot against her heel to widen her stance and press her elbow down until the weight drops into her hips. The blade stops wavering.
+Ireena: Better. It pulls less at the wrist when I stop fighting the weight of it.
+-> lesson_landed
+
+~ lesson_1_fail
+Narrator: Every time you square her shoulders, the heavy point dips back toward the ground and twists in her sweat-damp palm. After half an hour her forearm is trembling.
+Ireena [angry]: This blade was balanced by a blind smith. We'll try again another day, when my fingers unlock.
+-> allies/ireena:menu
+
+~ lesson_2_setup
+set ireena_lesson_tried
+time +30
+Narrator: You raise a guard and tell her to strike where she sees an opening. Her eyes fix hard on your left shoulder three heartbeats before her arm moves.
+interject guest:ezmerelda: Stop glaring at the ribs you want to crack. Rudolph beat that out of me in a week.
+check Insight DC 12 -> lesson_2_pass | lesson_2_fail
+
+~ lesson_2_pass
+Narrator: You tap the flat of your blade against her wrist each time her gaze gives her away, until she learns to watch your chest instead of the spot she means to hit. The last cut lands clean.
+Ireena [smile]: Look at the coat, not the target.
+-> lesson_landed
+
+~ lesson_2_fail
+Narrator: You step aside from five cuts in a row without lifting your guard, following the plain warning in her stare. She lowers the point, breathing hard through her nose.
+Ireena [weary]: I might as well send a herald ahead of the blow. Enough for today.
+-> allies/ireena:menu
+
+~ lesson_3_setup
+Narrator: She takes her stance without being corrected, the blunted blade steady in her fist. There is time for one more lesson: a single honest strike, or how to survive losing her feet.
+* One cut, over and over, until your arm knows it. -> lesson_3_drill
+* How to take a fall and come back up with your blade. -> lesson_3_fall
+* Save the last lesson for another day. -> allies/ireena:menu
+
+~ lesson_3_drill
+set ireena_lesson_tried
+time +30
+check Athletics DC 13 -> lesson_3_drill_pass | lesson_3_drill_fail
+
+~ lesson_3_drill_pass
+Narrator: You make her cut from the shoulder a hundred times until her hair clings to her temples and the blade whistles along the same line every time. On the last stroke, the blow rings hard against your parry.
+Ireena [weary]: My arm feels like lead, and I could do that cut in the pitch dark. Good.
+-> lesson_landed
+
+~ lesson_3_drill_fail
+Narrator: By the fiftieth stroke her heel slips out of line and the flat of the blade slaps harmlessly against your guard. You call a halt before she blisters her palm raw.
+-> allies/ireena:menu
+
+~ lesson_3_fall
+set ireena_lesson_tried
+time +30
+interject guest:ezmerelda: Hit the dirt like a sack of turnips, come up like a cat. Never stay down to admire the ceiling.
+check Acrobatics DC 13 -> lesson_3_fall_pass | lesson_3_fall_fail
+
+~ lesson_3_fall_pass
+Narrator: You sweep her boot out from under her again and again, teaching her to tuck her chin, take the shock on her shoulder, and come up with the point already raised. Dust coats her sleeves, but she rises faster each time.
+Ireena [afraid]: It's a good thing to know that the ground is actually there when you go down.
+-> lesson_landed
+
+~ lesson_3_fall_fail
+Narrator: She braces her arm on the way down instead of rolling, jarring her wrist hard against the ground and losing her grip on the hilt. You haul her up and call an end to it while she shakes the numbness from her fingers.
+-> allies/ireena:menu
+
+# A lesson that landed: one more, a little more trust, and after the third her word on it.
+~ lesson_landed
+set ireena_lessons += 1
+set ireena_trust += 1
+if flag.ireena_lessons >= 3
+-> lesson_done
+endif
+-> allies/ireena:menu
+
+~ lesson_done
+Ireena: That makes three lessons. I'm still years behind any bandit on the road, and I know it.
+Ireena [smile]: Still, I know which end of the blade is which. When we're out of this valley, you owe me a proper bout.
+-> allies/ireena:menu
+
+# --- What He Wants With Me ---------------------------------------------------------------------------------------------------
+
+~ wants_ask_plain
+Ireena: Too many people in this valley look at me and see a woman who was dead before I was born.
+Ireena [weary]: That dream of the dark water hasn't stopped coming, and I'm tired of guessing in the dark.
+Ireena: If the devil wrote down his own account of what he wants with my face, or if there's some stone or painting out there that wears it, bring me word.
+-> wants_ask_options
+
+~ wants_ask_pool
+Ireena: Since I looked into the water at Krezk, I've had the pieces of a house I never lived in: a chapel full of white flowers, a high stone wall, and a young man calling me by another name.
+Ireena: I know the shape of it now, but not the record. I'd rather read the account in his own hand than wait for him to recite it at my window.
+Ireena: Bring me the book he wrote about himself, if you have it, and tell me where you find anything else in this valley that carries my face.
+-> wants_ask_options
+
+~ wants_ask_options
+* If we find his book or your likeness, we'll tell you. -> wants_agree
+* Leave that for now. We have other ground to cover first. -> wants_later
+
+~ wants_later
+set ireena_wants_later
+-> allies/ireena:menu
+
+~ wants_agree
+if flag.ireena_saw_marina
+set ireena_statue_told
+quest what_he_wants statue_told
+else
+quest what_he_wants asked
+endif
+-> allies/ireena:menu
+
+# The Tome of Strahd, read to her. Our whole canon for it is the item's codex text (data/magic_items/tome_of_strahd.json).
+~ tome_start
+set ireena_tome_read
+time +180
+Narrator: You lay the heavy leather volume between you and turn to the first page, where the ink is black and level as a ruled ledger. She folds her hands in her lap and tells you not to spare her a word.
+Narrator: You read for an hour of the warlord who took the valley by the blade, of the quiet years that soured in his mouth, and of the younger brother, Sergei, who had everything the elder lacked.
+Ireena: He writes like a bailiff totting up someone else's debt. Go on.
+Narrator: The steady hand does not waver as it names Tatyana, who gave her heart to the younger brother, or the bargain struck in the dark under the mountains, paid in Sergei's blood on the wedding day.
+Ireena [sad]: White flowers by the altar, and the stone cold through the soles of her shoes. I have stood in that room in my sleep.
+Narrator: The last pages tell how she ran from him to the castle wall and fell into the mist rather than be his, how the guards shot him and he did not die, and how he writes at the end that the choice was his alone.
+Ireena: So that is the water at the bottom of the dream.
+Ireena [angry]: He murdered his brother, drove a girl over a wall, and sits in the dark telling the paper he chose it. What a small, greedy liar.
+Narrator: You shut the cover on the dry rasp of old vellum, the lamp burning low between you after hours of his voice. Somewhere far off, a latch clicks home as softly as a breath let out.
+Ireena: Bury that thing at the bottom of your pack. Let's see how well he sleeps, knowing someone else has read his ledger.
+if flag.ireena_statue_told or flag.ireena_saw_marina
+-> wants_done
+endif
+quest what_he_wants tome_read
+-> allies/ireena:menu
+
+# Marina's statue in Berez (data/locations/berez.json, narrative/berez/marina.dialogue).
+~ statue_tell
+set ireena_statue_told
+Narrator: You tell her of the white stone woman on the only dry ground in the marsh: hands folded, face turned toward the castle, moss scrubbed clean, fresh black roses at her feet.
+Narrator: You repeat the word MARINA cut into the plinth and the patient hand beneath it, "Berez took her. I took Berez." Then you tell her whose face the statue wears.
+Ireena [weary]: It's a strange thing to be told your own nose and chin are standing in a marsh with fresh black roses at their ankles.
+Ireena: Most men leave a prayer on a grave, not a receipt for a town.
+Ireena [angry]: A man who scrubs the moss off a statue and signs his name to the ruin does not want a wife. He wants a monument that breathes.
+if visited:berez_marinas_monument
+-> statue_bier
+endif
+-> statue_end
+
+~ statue_bier
+Narrator: You tell her of the stair beneath the plinth and the girl of about nineteen lying asleep on a white stone bier under a lace veil, her red hair braided over one shoulder and no smell of death in the room. You describe the single red scratch above her heart, fine as a thorn's, that has never healed.
+Ireena: A scratch that fine above the heart is no wound from a fight; someone drew that mark with a steady hand.
+Ireena [angry]: He keeps what he loses under stone and lace, and I won't be the next body on a slab.
+-> statue_end
+
+~ statue_end
+if flag.ireena_tome_read
+-> wants_done
+endif
+quest what_he_wants statue_told
+-> allies/ireena:menu
+
+# Both told: she knows. Then, if the rumour of the pool is known, she asks to be taken there.
+~ wants_done
+set ireena_knows_tatyana
+set ireena_trust += 1
+quest what_he_wants knows
+Ireena: Tatyana went over the wall, and Marina is under the marsh. I am neither of them.
+Ireena: I'm the daughter Father raised, and I had the bad luck to be born with a dead woman's face.
+Ireena: He keeps what he loses - a book in a chest, a stone in the reeds, a girl behind a window. He will not keep me.
+Ireena [smile]: If nothing else, I'm glad the face has given him several centuries of poor sleep.
+if quest.the_pool_of_the_white_sun == rumored and not guest:ireena
+-> wants_krezk
+endif
+-> allies/ireena:menu
+
+~ wants_krezk
+Ireena: You said the brother spoke of a pool in Krezk where the water turns white under the sun.
+Ireena: Take me there when the road allows. If Sergei left anything behind that the devil can't touch, I want to see it with my own eyes.
+* [if (flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals")] We'll take you to the pool in Krezk. -> vallaki/ireena:rejoin
+* [if flag.ireena_in_krezk] We'll take you to the pool in Krezk. -> krezk/ireena:rejoin
+* [if flag.ireena_escort == "declined"] We'll take you to the pool in Krezk. -> village_of_barovia/ireena:krezk
+* Not yet. The road to Krezk will have to wait. -> allies/ireena:menu
+
+# --- His letters to her ------------------------------------------------------------------------------------------------------
+
+~ letter
+if flag.ireena_ask_letter == 1
+-> letter_1_open
+elif flag.ireena_ask_letter == 2
+-> letter_2_open
+endif
+-> letter_3_open
+
+~ letter_1_open
+set ireena_heard_letter1
+Narrator: She holds out a sheet of heavy cream paper, folded neat and broken at the crease where black wax bears a single stamped Z. It was not on the table when the shutters were barred last night.
+Ireena: I found it by my cup this morning. I've read it already, and I won't pretend it's nothing.
+Strahd: Ireena. You did not come to the door when I called in the dark, though the night was damp and your father's grave lies cold in the village churchyard.
+Strahd: Keep those who would die for you close by the hearth tonight; we will speak again before the week is out.
+Ireena: There's his hand. What would you do with it?
+* Burn it. -> letter_1_burn
+* Keep it. We may need proof of what he is. -> letter_1_keep
+
+~ letter_1_burn
+Ireena: Good. The stove can have his courtesies, and I'll save the ash for the scrub bucket.
+-> allies/ireena:menu
+
+~ letter_1_keep
+Ireena [weary]: You're right that a magistrate would keep the evidence, though I hate carrying his ink in my pocket.
+-> allies/ireena:menu
+
+~ letter_2_open
+set ireena_heard_letter2
+Narrator: A second square of cream paper rests across her knee, the black Z cracked in two and carrying a thin, dry smell of woodsmoke. Her thumb sits flat over the folded corner.
+Ireena: Another came before dawn. Our visitor has thoughts on the festival.
+Strahd: How charming to watch the lanterns strung along the road and hear so many loud voices promising one another the dark is past.
+Strahd: They hang their banners and bar their shutters as though a strip of painted cloth has ever kept me from a window I meant to open.
+Strahd: Rest well while the smoke clears, Ireena, and do not let those who would die for you stand too near the door.
+* Burn it. -> letter_2_burn
+* Keep it. We may need proof of what he is. -> letter_2_keep
+
+~ letter_2_burn
+Ireena: Into the coals with it, then. It smells of smoke already.
+-> allies/ireena:menu
+
+~ letter_2_keep
+Ireena: Then keep it somewhere dry, and tie the string tight. I don't want to hear the paper rustle.
+-> allies/ireena:menu
+
+# The third: she says she burned it. The Insight roll is not the only way on: the other two answers leave her secret with her.
+~ letter_3_open
+set ireena_kept_letter
+Ireena: A third letter came the same night as your invitation.
+Ireena: He asked me to the same dinner. I put it straight into the fire before the wax was cold.
+* Good. Better in the fire than in your hand. -> letter_3_good
+* What did the third letter say before you burned it? -> letter_3_what
+* [Insight DC 14] You didn't burn that one. -> letter_3_kept | letter_3_lost
+
+~ letter_3_good
+Ireena: Yes. One less piece of him in the room.
+-> allies/ireena:menu
+
+~ letter_3_what
+Ireena: Only that a chair was set for me at his castle table beside yours. The rest was the usual ink and courtesy, and it made very small ashes.
+-> allies/ireena:menu
+
+~ letter_3_kept
+set ireena_secret_shared
+set ireena_trust += 1
+Ireena [weary]: All right. Don't look at me like a clerk catching a thief.
+Ireena: It's inside my cuff. Listen to how he writes it.
+Strahd: My carriage waits upon the road at dusk, Ireena, and your place is laid at my castle table where the candles are already lit.
+Strahd: You need only lift the window latch when the house grows quiet, as we both know your hand has wished to do.
+Ireena [afraid]: That's why I hid it from you. Because some nights, when the house is still and the glass is cold, my hand wants to lift the latch and be done with the waiting.
+Ireena [angry]: I despise it in myself, and I'd rather lose the hand at the wrist than give him the satisfaction.
+Ireena: If you ever see me walk toward that window after dark, don't waste time looking for him. Lay hold of me and pull me back.
+-> allies/ireena:menu
+
+~ letter_3_lost
+Ireena: Ash, I told you. You're welcome to poke through the stove with a stick if you doubt me.
+-> allies/ireena:menu

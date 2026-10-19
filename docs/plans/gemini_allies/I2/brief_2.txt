@@ -1,0 +1,45 @@
+Second request, same conversation, same character (Ireena Kolyana), same voice bible, canon limits and format as before. Reply with plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else. About 28 lines.
+
+## The scene: three sword lessons
+
+In the game Ireena can no longer fight (something in the valley goes round her like water round a stone), and she hates being kept back from it. She asks to be taught anyway. If a Fighter, a Paladin or a Ranger is in the party, or the monster hunter Ezmerelda d'Avenir is travelling with them, the party can give her a short sword lesson in the check-in conversation: three lessons in all, one per check-in, in order. Each lesson is a short scene, a Narrator line or two and Ireena's reaction. Each lesson can go well or not (the game rolls a skill; you write both outcomes). A lesson that does not land costs the afternoon and a little of her patience, never anything else: nobody is hurt, she is not "bad at it", and next check-in the same lesson is offered again. A lesson that lands is just a small step; the lessons change no numbers and are never mentioned again until much later, so do not write a finale. Write each lesson so it reads right wherever she is, so NEVER name a place (no inn, church, Krezk, road, mansion, yard). The practice blade is a blunted blade or a stick; do not mention a broom (it was used already).
+
+The three lessons and what each is about:
+1. Grip and footing. The blade is heavier than she thinks and she holds it like a tool she hates. The skill is Athletics (the teacher shows her, bodily, how to stand and carry weight).
+2. Reading an opponent. The teacher notices she stares at the spot she means to hit, so anyone could see the blow coming. The skill is Insight (the teacher reads her tells and tells her).
+3. The last lesson, and the party picks how to teach it. Two ways: DRILL (one cut, repeated until she hates it; skill Athletics), or THE FALL (teaching her how to go down and get up, again and again, never staying down; skill Acrobatics). The fall lesson should make her unusually quiet for one line: she has been dreaming of falling from a height into water. DO NOT say that or mention the dream, the lake, the water or a white dress; let a single plain line carry it.
+
+Ezmerelda d'Avenir (only when she is travelling with the party; she is the teacher or a second pair of eyes): a Vistana monster hunter, quick and sardonic, practical, hunter's rules delivered as jokes, running complaint about her teacher Rudolph. She wears a brace of oak and steel on her right leg and is dry about it. Her lines: "Stop there. Say something a vampire wouldn't say." / "I go first through doors, I take the silver, and nobody calls me girl." / "Stopping's the one thing I'm bad at."
+
+## The nodes I need
+
+lesson_ask_first: Ireena x2. The first time. She asks to be taught and refuses to be put off. Her argument: she cannot be in the fights, so the one thing left is to know how to hold a blade when the fight comes to her. Dry, direct. She does not say "please".
+lesson_ask_again: Ireena x1. Later asks, short.
+
+lesson_1_setup: Narrator x1.
+lesson_1_pass: Narrator x1, then Ireena x1.
+lesson_1_fail: Narrator x1, then Ireena x1 (dry; she blames the blade, not the teacher).
+lesson_2_setup: Narrator x1.
+lesson_2_pass: Narrator x1, then Ireena x1.
+lesson_2_fail: Narrator x1, then Ireena x1.
+lesson_3_setup: Narrator x1 (this is the last lesson; there are two ways to go about it).
+lesson_3_drill_pass: Narrator x1, then Ireena x1.
+lesson_3_drill_fail: Narrator x1.
+lesson_3_fall_pass: Narrator x1, then Ireena x2 (the second a quiet one).
+lesson_3_fall_fail: Narrator x1.
+lesson_done: Ireena x2. After the third lesson has landed. She says where this leaves her (she knows exactly how far behind she is; she does not pretend to be a swordswoman) and asks to spar when this is over.
+lesson_ezmerelda_1, lesson_ezmerelda_2, lesson_ezmerelda_3: Ezmerelda x1 each. A sardonic aside during the lesson (grip, tells, falling). One line, under 20 words.
+
+## Option texts
+
+Also write what the PARTY says (not Ireena), as `* text` rows, each under 12 words:
+lesson_opt: `* ` accepting the lesson.
+lesson_later_opt: `* ` putting it off.
+lesson_menu_opt: `* ` the line the player picks, in a menu of things she might want, to say it is time for a lesson (a short one).
+lesson_drill_opt: `* ` choosing to drill her on one cut.
+lesson_fall_opt: `* ` choosing to teach her how to fall.
+lesson_wait_opt: `* ` leaving the last lesson for another day.
+
+## Format reminder
+
+One line per row, exactly: `Speaker [mood]: Text` (Ireena, Narrator or Ezmerelda; mood optional and not for the Narrator; allowed moods: smile, angry, afraid, sad, weary). Plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each node on its own line as `~ node_name`. The option texts are `* text` rows under a node line `~ options`. The Narrator speaks in the second person, present tense, one or two sentences, with concrete senses; no game words (no "check", "roll", "level", "skill"); it never names the teacher (the teacher is "you" or "someone"). No stage directions, no placeholders, no emoji, no markdown, no new named characters or places. Do not repeat ideas from your earlier reply in this conversation (the sprig, the book, the grave).

@@ -1,0 +1,39 @@
+{
+  "id": "flowers_for_kolyan",
+  "name": "Rosemary for Kolyan",
+  "summary": "Ireena asked us to lay a sprig of pressed rosemary on her father's grave in the Village of Barovia.",
+  "giver": "ireena",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "given",
+      "journal": "Ireena gave us a sprig of rosemary from her father's ledger and asked us to lay it on his grave in the village churchyard. She wants us to tell her plainly how the place is keeping.",
+      "objectives": [
+        "Lay Ireena's rosemary on Kolyan Indirovich's grave"
+      ],
+      "hint": "Kolyan Indirovich's grave is in the churchyard of the Village of Barovia.",
+      "ends": ""
+    },
+    {
+      "id": "laid",
+      "journal": "We laid Ireena's sprig of rosemary on Kolyan Indirovich's grave in the village churchyard. We should go back to Ireena and tell her how the grave looks.",
+      "objectives": [
+        "Tell Ireena how her father's grave is keeping"
+      ],
+      "hint": "Speak with Ireena at the Blue Water Inn or St. Andral's in Vallaki, or in Krezk.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "We told Ireena how her father's grave is keeping, and she told us a story about him she had never told anyone else.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "alive",
+      "journal": "Kolyan Indirovich was raised from his grave before we could lay the rosemary on the earth, so Ireena kept the sprig for herself.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

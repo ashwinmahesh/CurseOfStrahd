@@ -1,0 +1,59 @@
+~ wants_ask_plain
+Ireena: Too many people in this valley have looked at me and seen a dead woman looking back. Even the candles lean the wrong way when I pass.
+Ireena: I will not ask the devil what he wants of me, and I will not sit waiting to hear it at the glass in the dark.
+Ireena: He is vain enough to have written his own account. If you come across a book in his hand, bring it to me.
+Ireena: And if you find anything else out there that wears my face - stone, paint, or bone - tell me.
+
+~ wants_ask_pool
+Ireena: Since I looked into the water at Krezk, I have the pieces of a house I never lived in. A chapel full of white flowers, a high stone wall, and a young man calling me by another name.
+Ireena: I know the shape of it now, but not the record. I would rather read the account in his own hand than wait for him to recite it at my window.
+Ireena: Bring me the book he wrote about himself, if you have it.
+Ireena: And if you find anything else in this valley that carries my face, tell me where it stands.
+
+~ tome_start
+Narrator: You lay the heavy leather volume between you and turn to the first page, where the ink is black and level as a ruled ledger. She folds her hands in her lap and tells you not to spare her a word.
+Narrator: You read for an hour of the warlord who took the valley by the blade, of the quiet years that soured in his mouth, and of the younger brother, Sergei, who came after him with light in his step.
+Ireena: He writes like a bailiff totaling someone else's debt. Go on.
+
+~ tome_girl
+Narrator: The steady hand does not waver as it names Tatyana, who gave her heart to the younger brother, or the bargain struck in the dark under the mountains, paid in Sergei's blood on the wedding morning.
+Ireena [sad]: White flowers by the altar, and the stone cold through the soles of her shoes. I have stood in that room in my sleep.
+Ireena: He killed his own brother for a borrowed coat of youth, and still thought she would turn and take his hand. Keep reading.
+
+~ tome_fall
+Narrator: The last pages tell how she ran from him to the high stones and threw herself into the mist, how the castle guard filled him with shafts that did not kill him, and how he writes at the end that the choice was his alone.
+Ireena: So that is the water at the bottom of the dream.
+Ireena [angry]: He murdered his brother, drove a girl over a wall, and sits in the dark telling the paper he chose it. What a small, greedy liar.
+
+~ tome_close
+Narrator: You shut the cover on the dry rasp of old vellum, the lamp burning low between you after hours of his voice. Somewhere far off, a latch clicks home as softly as a breath let out.
+Ireena: Hide that thing at the bottom of your pack. Let us see how well he sleeps when someone else knows his ledger.
+
+~ statue_tell
+Ireena: Tell me carefully. What was cut into the stone beneath her feet, and what sort of hand cut it?
+Ireena: Marina. And the same patient clerk's hand below it, claiming the whole drowned village for his receipt.
+Ireena [weary]: It is a strange thing to be told your own nose and chin are standing in a marsh with fresh black roses at their ankles.
+Ireena: A man who scrubs the moss off a headstone and signs his name to the ruin does not want a wife. He wants a monument that breathes.
+
+~ statue_bier
+Ireena: Was the hair hers, or did he braid it after he laid her under the veil?
+Ireena: Then even the grave is not deep enough to shut him out, if he can keep the body under lock and key.
+
+~ wants_done
+Ireena: Tatyana went over the wall, and Marina is under the marsh. I am neither of them.
+Ireena: I am the daughter Kolyan Indirovich raised, and I had the bad luck to be born with a dead woman's face.
+Ireena: He keeps what he loses - a book in a chest, a stone in the reeds, a girl behind a window. He will not keep me.
+Ireena [smile]: If nothing else, I am glad to know the face has given him several centuries of poor sleep.
+
+~ wants_krezk
+Ireena: You said the brother spoke of a pool in Krezk where the water turns white under the sun.
+Ireena: Take me there when the road allows. If Sergei left anything behind that the devil cannot touch, I want to see it with my own eyes.
+
+~ options
+* You look as though you have something to ask us.
+* If we find his book or your likeness, we will tell you.
+* Leave that for now. We have other ground to cover first.
+* We have the book he wrote. Sit down and hear it.
+* We found a white stone statue in the marsh at Berez.
+* We will take you to the pool in Krezk.
+* Not yet. The road to Krezk will have to wait.

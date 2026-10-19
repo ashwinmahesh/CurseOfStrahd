@@ -588,7 +588,7 @@
       "label": "The burgomaster's grave",
       "model": "grave",
       "when": "flag.burgomaster_buried",
-      "dialogue": "village_of_barovia/kolyan:grave"
+      "dialogue": "allies/ireena_errands:grave"
     },
     {
       "id": "tavern_sign",
