@@ -214,6 +214,33 @@ func test_walls_never_drop_below_half() -> void:
 			assert_true(float(broken) / total > 0.1, "a ruin has more broken than a whole wall (%d of %d)" % [broken, total])
 
 
+## A ruin falls in stretches: along a wall the broken stones come in runs (a stretch of wall down, a stretch standing),
+## not scattered one by one as chips are.
+func test_a_ruin_falls_in_stretches() -> void:
+	var noise := FastNoiseLite.new()
+	noise.seed = 3
+	noise.frequency = 1.0
+	var frame := Drystone.frame_of(1.0, 1.0)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 21
+	var down: Array[bool] = []
+	for u in 300:
+		for s: Dictionary in Drystone._stones(rng, noise, float(u), frame.x, frame.y, 1.0, 2):
+			down.append(float(s["h0"]) < frame.x * 0.82)
+	var same := 0
+	var fallen := 0
+	for i in range(1, down.size()):
+		if down[i] == down[i - 1]:
+			same += 1
+	for d in down:
+		if d:
+			fallen += 1
+	var f := float(fallen) / down.size()
+	assert_true(f > 0.15 and f < 0.85, "some of the wall is down and some stands (%d of %d)" % [fallen, down.size()])
+	var scattered := f * f + (1.0 - f) * (1.0 - f)   # how often neighbours would agree if stones fell one by one
+	assert_true(float(same) / (down.size() - 1) > scattered + 0.08, "neighbours agree more than chips would (%.2f against %.2f)" % [float(same) / (down.size() - 1), scattered])
+
+
 ## A place whose look says `rough` lays its walls more evenly: a castle's parapet (rough 0.25) rises and falls far less
 ## than a churchyard's wall, with fewer broken stones.
 func test_a_castles_parapet_is_laid_nearly_straight() -> void:

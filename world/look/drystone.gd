@@ -285,7 +285,9 @@ static func _ground_off(board: ArenaBoard, c: Vector2i, base: float, u: float, v
 
 ## The stones of one arm: n of them between u = 0 and 1, each {u0, u1, h0, h1}: the height of its top at each end. They
 ## follow a swell that carries on across the squares (`u_world` is the arm's start along the wall, in squares), a stone
-## standing a hair above or below its neighbour; now and then one has broken (lower, and slanting), or is missing.
+## standing a hair above or below its neighbour; now and then one has broken (lower, and slanting), or is missing. In a
+## ruin the wall has also fallen in stretches: where a slow noise along it is high the wall is down to its lowest
+## (`min_frac`), and stands where it is low, so a ruin is long standing runs and long fallen ones, not a scatter of chips.
 static func _stones(rng: RandomNumberGenerator, noise: FastNoiseLite, u_world: float, height: float, min_frac: float,
 		ruin: float, n: int, rough: float = 1.0) -> Array[Dictionary]:
 	var cuts: Array[float] = [0.0]
@@ -300,16 +302,24 @@ static func _stones(rng: RandomNumberGenerator, noise: FastNoiseLite, u_world: f
 		var jitter := rng.randf_range(-0.02, 0.02) * rough
 		var h0 := height * (1.0 + 0.1 * rough * noise.get_noise_2d((u_world + cuts[i]) * 0.5, 3.1)) + jitter
 		var h1 := height * (1.0 + 0.1 * rough * noise.get_noise_2d((u_world + cuts[i + 1]) * 0.5, 3.1)) + jitter
+		if ruin > 0.0:
+			h0 = lerpf(h0, height * min_frac * 1.08, _fallen(noise, u_world + cuts[i]) * ruin)
+			h1 = lerpf(h1, height * min_frac * 1.08, _fallen(noise, u_world + cuts[i + 1]) * ruin)
 		var roll := rng.randf()
-		if roll < 0.07 * rough + 0.2 * ruin:
+		if roll < 0.07 * rough + 0.06 * ruin:
 			# Broken: its top slants down from one end.
 			h0 = height * rng.randf_range(min_frac, min_frac + 0.3)
 			h1 = height * rng.randf_range(min_frac, min_frac + 0.3)
-		elif roll < 0.1 * rough + 0.26 * ruin:
+		elif roll < 0.1 * rough + 0.1 * ruin:
 			h0 = height * min_frac   # missing
 			h1 = height * min_frac
 		out.append({"u0": cuts[i], "u1": cuts[i + 1], "h0": maxf(h0, height * min_frac), "h1": maxf(h1, height * min_frac)})
 	return out
+
+
+## How far a ruin's wall has fallen at `u` squares along it: 0 standing, 1 down to its lowest, in stretches.
+static func _fallen(noise: FastNoiseLite, u: float) -> float:
+	return smoothstep(0.3, 0.7, 0.5 + 0.5 * noise.get_noise_2d(u * 0.3, 9.3))
 
 
 ## The four corners' heights (x0 z0, x1 z0, x1 z1, x0 z1) of a stone whose top is `h0` at its near end along the wall

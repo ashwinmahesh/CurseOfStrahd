@@ -20,6 +20,8 @@ const REACH_WET := 0.04
 const MIN_SCALE := 0.75
 const MAX_SCALE := 2.0
 const MAX_HALF := 0.95
+## The tallest a clump grows (squares): a token's height, so a thicket never hides the party behind it.
+const TALLEST := 0.9
 ## How close two clumps may stand, as a share of their two radii (so they grow into each other a little).
 const CROWD := 1.1
 ## A difficult square whose middle has no clump within this reach gets one.
@@ -51,6 +53,7 @@ var forced := 0
 var _arts: Array[String] = []
 var _r0: Dictionary = {}    ## art -> half the width of its model (squares)
 var _low: Dictionary = {}   ## art -> whether it is a low thing (a drift, a patch of ice) rather than a bush
+var _tall: Dictionary = {}  ## art -> how tall its model stands (squares)
 ## What each square is, for the scatter (worked out once): OPEN walkable ground, WET water or the void, DIFF difficult
 ## ground; anything else (walls) 0. And the clumps standing in each square, for the crowding check.
 const OPEN := 1
@@ -89,6 +92,7 @@ static func plan(board_: ArenaBoard, choices: Array) -> GroundCover:
 			g._arts.append(art)
 			g._r0[art] = _base_radius(art)
 			g._low[art] = _is_low(art)
+			g._tall[art] = _height_of(art)
 	if g._arts.is_empty():
 		return null
 	g._plant()
@@ -191,6 +195,11 @@ func _shape(p: Vector2, art: String, want: float, min_scale: float, rng: RandomN
 	# The way the nearest square a clump may not spread over (open ground, water, the void) lies; none where it is far.
 	var near := open if open.x <= wet.x else wet
 	var edge := Vector2(near.y, near.z).normalized() if near.x < 1.4 and near.x > 0.0001 else Vector2.ZERO
+	# Deep in a run the thicket grows big and tall, a mass with a ragged rim; at the rim it thins to small low tufts.
+	var depth := minf(near.x, 3.0)
+	var deep := smoothstep(0.9, 2.4, depth)
+	want *= lerpf(1.0, 1.6, deep)
+	var max_half := MAX_HALF * lerpf(1.0, 1.7, deep)
 	var yaw := rng.randf_range(0.0, TAU)
 	var along := 0.0
 	if edge != Vector2.ZERO:
@@ -200,7 +209,7 @@ func _shape(p: Vector2, art: String, want: float, min_scale: float, rng: RandomN
 		along = edge.dot(Vector2(cos(yaw), -sin(yaw)))
 	# How far the clump reaches along the edge's direction, per unit of scale (r0 times the stretch's share of it).
 	var across := sqrt(along * along * sx * sx + (1.0 - along * along) * sz * sz) if edge != Vector2.ZERO else maxf(sx, sz)
-	var s := minf(want, minf(room / (r0 * across), MAX_HALF / (r0 * maxf(sx, sz))))
+	var s := minf(want, minf(room / (r0 * across), max_half / (r0 * maxf(sx, sz))))
 	if s < min_scale:
 		return null
 	var k := Clump.new()
@@ -211,7 +220,8 @@ func _shape(p: Vector2, art: String, want: float, min_scale: float, rng: RandomN
 	k.art = art
 	k.pick = rng.randi() % 7
 	k.yaw = yaw
-	k.stretch = Vector3(sx, rng.randf_range(0.8, 1.25), sz)
+	var sy := lerpf(0.8, 1.5, smoothstep(0.3, 1.8, depth)) * rng.randf_range(0.9, 1.1)
+	k.stretch = Vector3(sx, maxf(minf(sy, TALLEST / (float(_tall[art]) * s)), 0.7), sz)   # (never taller than a token)
 	k.toward_edge = edge
 	return k
 
@@ -303,6 +313,12 @@ static func _base_radius(art: String) -> float:
 	if size.size() == 3:
 		return maxf(float(size[0]), float(size[2])) / 2.0
 	return 0.38
+
+
+## How tall the art's model stands (squares), else a bush's.
+static func _height_of(art: String) -> float:
+	var size := ((ModelPiece.manifest().get(_model_id(art), {}) as Dictionary).get("size", []) as Array)
+	return maxf(float(size[1]), 0.05) if size.size() == 3 else 0.4
 
 
 ## Whether the art's model is a low thing (a drift, a patch of ice) rather than a bush.
