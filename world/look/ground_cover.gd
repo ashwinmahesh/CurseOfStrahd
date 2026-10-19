@@ -28,6 +28,9 @@ const HEAPS := {"rubble": 1.45}
 const TALLEST := 0.9
 ## How close two clumps may stand, as a share of their two radii (so they grow into each other a little).
 const CROWD := 1.1
+## How likely each open square beside a run is to get a loose clump, and how far from the run's edge it may stand.
+const SCATTER := 0.4
+const RIM := 0.2
 ## A difficult square whose middle has no clump within this reach gets one.
 const COVER := 0.4
 
@@ -159,6 +162,20 @@ func _plant() -> void:
 			var k := _shape(p, art, grown * rng.randf_range(0.85, 1.15), MIN_SCALE, rng)
 			if k != null:
 				_add(cell, k)
+	# Loose debris and tufts at the run's rim: small clumps just outside it, in the open squares beside it, so the run
+	# doesn't stop at its squares' edge. Within a fifth of a square of the edge and small, so a token in the middle of
+	# that square and its ring stay clear.
+	for c: Vector2i in diff:
+		for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n := c + d
+			if _class_at(n) != OPEN or rng.randf() > SCATTER:
+				continue
+			var along := rng.randf_range(0.1, 0.9)
+			var out := rng.randf_range(0.04, RIM)
+			var p := Vector2(float(c.x) + (1.0 + out if d.x > 0 else -out if d.x < 0 else along), float(c.y) + (1.0 + out if d.y > 0 else -out if d.y < 0 else along))
+			var k := _shape(p, _art_at(kind, p), rng.randf_range(0.5, 0.85), 0.45, rng)
+			if k != null and k.radius <= RIM + 0.12:
+				_add(c, k)
 	# Every difficult square carries a clump near its middle.
 	for c: Vector2i in diff:
 		var mid := Vector2(c.x + 0.5, c.y + 0.5)
