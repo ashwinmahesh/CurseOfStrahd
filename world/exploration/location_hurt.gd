@@ -40,6 +40,14 @@ static func show(view_: LocationView, victim_: Combatant, amount_: int, cue_: Di
 	view_.add_child(h)
 
 
+## Whether a beat is still waiting to play in `view_` (the party standing up waits for it).
+static func pending(view_: LocationView) -> bool:
+	for c in view_.get_children():
+		if c is LocationHurt:
+			return true
+	return false
+
+
 ## The party member whose creature is `who` here, or null.
 static func member(view_: LocationView, who: Creature) -> Combatant:
 	for m in view_.members + view_.guest_members:

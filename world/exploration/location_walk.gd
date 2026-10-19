@@ -127,6 +127,7 @@ static func tick(view: LocationView, delta: float) -> void:
 
 ## The leader steps to `next`; each follower steps into the square the one ahead of it just left.
 static func _advance_party(view: LocationView, next: Vector2i) -> void:
+	LocationCare.stand_up(view)   # the party moves on: whoever a trap threw down gets up (no turn to spend standing)
 	var old: Array[Vector2i] = []
 	for m in view.members:
 		old.append(m.cell)

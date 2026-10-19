@@ -112,6 +112,7 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 		view._pending_final = ""
 	view._queue.clear()
 	view._on_arrive = Callable()
+	LocationCare.stand_up(view, true)   # nobody starts a fight lying where a trap threw them: outside one, standing is free
 	view.in_combat = true
 	view.fight_id = encounter_id   # (the sanctum's braziers flare for Vosk's: AmberGlow)
 	ModeController.force(ModeController.Mode.COMBAT)

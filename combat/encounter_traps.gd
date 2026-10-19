@@ -6,6 +6,11 @@ extends RefCounted
 ## trap is spent. LocationFights hands the location's traps over as the fight starts (`add`) and marks the ones that
 ## went off afterwards (`sprung_ids`); a saved fight keeps them (`to_dict`).
 
+## Minutes a condition a trap gives lasts when its entry names none (`condition_minutes`): a minute for a fright, ten
+## for anything else, so nothing a trap does stays on a hero for good (owner todo, 2026-10-17).
+const CONDITION_MINUTES := {"frightened": 1}
+const DEFAULT_CONDITION_MINUTES := 10
+
 var _enc: WeakRef
 ## The fight's traps: [{id, cells: Array[Vector2i], spec: the location's trap entry, found: bool, sprung: bool}].
 var list: Array[Dictionary] = []
@@ -87,10 +92,26 @@ func spring(t: Dictionary, victim: Combatant) -> void:
 			e.events.append({"type": "condition", "id": victim.id})
 		return
 	_damage(victim, spec, success, lines)
-	var condition := str(spec.get("condition", ""))
-	if condition != "" and not success and victim.is_alive():
-		victim.creature.add_condition(StringName(condition), label)
+	if str(spec.get("condition", "")) != "" and not success and victim.is_alive():
+		give_condition(victim.creature, spec, victim.id)
 		e.events.append({"type": "condition", "id": victim.id})
+
+
+## Gives `creature` the condition trap entry `spec` names (its `condition`, for `condition_minutes`): a lasting effect
+## that runs out with the clock, in a fight too (`owner_id`: whose turns count its rounds there), not a condition nothing
+## ever takes off. Prone is the exception, a state and not a duration: in a fight the creature spends movement to stand,
+## outside one the party stands up (LocationCare.stand_up). True if it took hold (an immunity can stop it).
+static func give_condition(creature: Creature, spec: Dictionary, owner_id: String = "") -> bool:
+	var cond := StringName(str(spec.get("condition", "")))
+	var label := str(spec.get("label", "a trap"))
+	if cond == &"" or cond == &"prone":
+		return cond != &"" and creature.add_condition(cond, label)
+	var fx := Effect.new(label.left(1).to_upper() + label.substr(1), &"trap", str(spec.get("id", "")))
+	fx.conditions.append(cond)
+	fx.ends = Effect.Ends.MINUTES
+	fx.minutes_left = maxi(1, int(spec.get("condition_minutes", int(CONDITION_MINUTES.get(str(cond), DEFAULT_CONDITION_MINUTES)))))
+	fx.turn_owner_id = owner_id
+	return creature.add_effect(fx)
 
 
 func _damage(victim: Combatant, spec: Dictionary, halved: bool, lines: Array[String]) -> void:

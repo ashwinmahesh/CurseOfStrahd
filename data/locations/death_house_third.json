@@ -631,6 +631,7 @@
       "damage": "1d6",
       "damage_type": "poison",
       "condition": "poisoned",
+      "condition_minutes": 10,
       "when": "flag.death_house_refused",
       "text": "Every hearth on the floor exhales at once."
     }

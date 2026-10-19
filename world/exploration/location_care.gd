@@ -93,6 +93,67 @@ static func _lay_on_hands_out(view: LocationView, cell: Vector2i, choice: String
 	view.party_tended.emit()
 
 
+## Seconds a hero lies where a trap threw them before getting up on their own.
+const STAND_AFTER := 2.0
+const LYING := "lying_since"
+
+
+## Who lies Prone outside a fight and could get up: conscious (at 0 Hit Points, healing gets them up: refresh_party) and
+## not at the bottom of a pit (they climb out: PitFall).
+static func lying(view: LocationView) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for m in view.members + view.guest_members:
+		var cr := m.creature
+		if cr.hp > 0 and not cr.dead and cr.conditions.has(&"prone") and not PitFall.holds(view, m):
+			out.append(m)
+	return out
+
+
+## Outside a fight a hero knocked Prone gets up (owner todo, 2026-10-17: "how to stand up if we fall prone from a trap"):
+## there is no turn to spend standing (2024 PHB, Prone: standing costs half your Speed, which nothing outside a fight
+## counts), so they stand as the party moves on or acts (LocationWalk, LocationView.act, interact and search), a moment
+## after the fall (tick_lying), or when a fight starts (`quiet`: its start does the refreshing). The party panel drops the
+## tag. True if anyone stood.
+static func stand_up(view: LocationView, quiet: bool = false) -> bool:
+	if view.in_combat:
+		return false
+	var up := lying(view)
+	for m in up:
+		m.creature.remove_condition(&"prone")
+		if view.tokens.has(m.id):
+			(view.tokens[m.id] as CombatToken).refresh()
+	if up.is_empty():
+		return false
+	if view.has_meta(LYING):
+		(view.get_meta(LYING) as Dictionary).clear()
+	if not quiet:
+		view.party_tended.emit()
+	return true
+
+
+## Each frame outside a fight (LocationView._process): a hero who has lain STAND_AFTER seconds where a trap threw them
+## gets up, so Prone shows for a moment (the tag in the party panel, the figure down) and never stays. The count waits
+## while the d20 for the fall is up and its beat (LocationHurt) hasn't played, so nobody rises before the damage shows.
+static func tick_lying(view: LocationView, delta: float) -> void:
+	if view.in_combat:
+		return
+	if not view.has_meta(LYING):
+		view.set_meta(LYING, {})
+	var since := view.get_meta(LYING) as Dictionary
+	var down := lying(view)
+	if down.is_empty():
+		since.clear()
+		return
+	if DiceRoll.showing() != null or LocationHurt.pending(view):
+		return
+	var ready := false
+	for m in down:
+		since[m.id] = float(since.get(m.id, 0.0)) + delta
+		ready = ready or float(since[m.id]) >= STAND_AFTER
+	if ready:
+		stand_up(view)
+
+
 ## Outside a fight, a party member with Hit Points again gets up (Prone ends: there's no turn to spend standing) and
 ## every party token shows its current state (owner report 2026-10-07: healed outside combat but still "Prone · Dying").
 static func refresh_party(view: LocationView) -> void:

@@ -213,6 +213,7 @@ func _process(delta: float) -> void:
 	if LocationParty.ensure_living_leader(self):
 		party_tended.emit()   # the dead don't lead: the next hero took over, and the party panel shows it
 	LocationStealth.show_crouch(self)
+	LocationCare.tick_lying(self, delta)   # a hero a trap threw down gets up a moment later
 	_exit_check -= delta
 	if _exit_check <= 0.0:
 		_exit_check = 0.25
@@ -382,6 +383,7 @@ func actions_at(cell: Vector2i) -> Dictionary:
 
 
 func act(cell: Vector2i, action_id: String) -> void:
+	LocationCare.stand_up(self)   # acting: whoever a trap threw down gets up first
 	LocationInteraction.act(self, cell, action_id)
 
 
@@ -402,6 +404,7 @@ func click(cell: Vector2i) -> void:
 
 
 func interact(thing: Dictionary) -> void:
+	LocationCare.stand_up(self)
 	LocationInteraction.interact(self, thing)
 
 
@@ -424,6 +427,7 @@ static func _pick_bonus(picker: Character, adv: Array[String]) -> Breakdown:
 # --- Traps and searching (LocationTraps), the party's care (LocationCare), field magic (LocationMagic) ----------
 
 func search() -> void:
+	LocationCare.stand_up(self)
 	LocationTraps.search(self)
 
 

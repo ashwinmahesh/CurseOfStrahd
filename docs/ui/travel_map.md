@@ -133,6 +133,13 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   "Traps and falls"), the damage floats over their head as in a fight, and their card on the left shows the new Hit
   Points (it kept the old value until something else refreshed the panel). A pit's fall and its stakes are one number; a
   climb, swim or ritual that fails and hurts does the same.
+- A hero a trap throws Prone shows the tag in the party panel and lies there for a couple of seconds, then gets up on
+  their own (free: there is no turn to spend standing, docs/rules/deviations.md); the party moving on or acting
+  (a step, a menu choice, a Search) stands them at once, and so does a fight starting. A pit's victim climbs out
+  instead; a hero at 0 Hit Points waits for healing. Any other condition a trap gives (Poisoned, Frightened...) is a
+  lasting effect that runs out with the clock (the trap's `condition_minutes`: a minute for Frightened, ten for
+  anything else), in a fight too; it used to stay on the hero for good, long rests and all
+  (`EncounterTraps.give_condition`, `LocationCare.stand_up`).
 - A noticed trap's border also shows through a wall in front of it as red hatching (shaders/world/xray_mark.gdshader),
   so a trap in a one-square passage still reads from the diagonal camera.
 

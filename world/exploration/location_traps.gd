@@ -113,7 +113,7 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 		lines.append(dr.describe(victim.name()))
 		hurt = dr.final
 	if str(trap.get("condition", "")) != "" and not success:
-		victim.creature.add_condition(StringName(str(trap["condition"])), str(trap.get("label", "a trap")))
+		EncounterTraps.give_condition(victim.creature, trap)   # a lasting effect that runs out; Prone, the party stands up from
 	if trap.has("flag"):
 		view.st.set_flag(str(trap["flag"]))
 	view.check_rolled.emit(" · ".join(lines))

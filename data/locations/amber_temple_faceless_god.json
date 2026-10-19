@@ -814,6 +814,7 @@
       "damage": "3d8",
       "damage_type": "psychic",
       "condition": "frightened",
+      "condition_minutes": 1,
       "text": "You look up into the blank face, and for one long moment it looks back with every face you have ever feared."
     }
   ],

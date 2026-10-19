@@ -569,6 +569,11 @@
           "condition": {
             "$ref": "common.schema.json#/$defs/condition"
           },
+          "condition_minutes": {
+            "description": "How long the condition lasts (minutes), as a lasting effect that runs out; with none, a minute for Frightened and ten for any other. Prone isn't timed: outside a fight the party stands up (world/exploration/location_care.gd).",
+            "type": "integer",
+            "minimum": 1
+          },
           "flag": {
             "type": "string"
           },
