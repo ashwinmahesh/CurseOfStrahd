@@ -81,7 +81,10 @@ func test_walls_stand_on_raised_ground() -> void:
 				if first or box.size.y < 0.4:
 					continue
 				var d := box.position.y - v.board.floor_y(c)
-				if d > 0.3 or d < -0.6:
+				# A crag's patch (Crags.piece, place_looks `rock_shape`) follows the ground it stands on: at the corner it shares
+				# with a lower square it stands half a 10 ft step (1.0, and the tuck under the ground) below the square's
+				# own level, never a cliff's or a drop's depth.
+				if d > 0.3 or d < (-1.2 if n.has_meta("crag") else -0.6):
 					off += 1
 					sample = "%s %+.1f" % [c, d]
 		if off > 0:

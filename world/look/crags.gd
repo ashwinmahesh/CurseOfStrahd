@@ -37,6 +37,8 @@ const SCREE_REACH := 0.5
 ## How much of its `crag_floor` a thin band's crest stands at in the saddles and at the peaks.
 const CREST_LOW := 0.55
 const CREST_HIGH := 1.2
+## How far (world units) the ground beside a rock square may stand from the rock's own level for its foot to spread onto it.
+const MARGIN_STEP := 0.5
 ## Where the surface is this low or lower it tucks under the ground beside it.
 const TUCK := 0.04
 ## How far (squares) the face's line is bent off the grid.
@@ -304,7 +306,22 @@ func _normals(pts: PackedInt32Array, pis: PackedInt32Array, pjs: PackedInt32Arra
 ## The height (world units) of the ground under point (x, z): the board's own (natural ground's slope, else floor).
 func _ground(x: float, z: float) -> float:
 	var p := Vector2(clampf(x, 0.001, _w - 0.001), clampf(z, 0.001, _d - 0.001))
-	return board.ground_y(p)
+	var here := Vector2i(floori(p.x), floori(p.y))
+	var g := board.grid
+	if not (g.has_flag(here, CombatGrid.VOID) or g.has_flag(here, CombatGrid.WATER)):
+		return board.ground_y(p)
+	# A point on the edge of a drop or a lake belongs to the empty square too, whose ground isn't the rock's: take the
+	# ground of the squares that touch it that people can stand on.
+	var total := 0.0
+	var count := 0
+	for dz: int in [-1, 0]:
+		for dx: int in [-1, 0]:
+			var o := Vector2i(floori(x) + dx, floori(z) + dz)
+			if not g.in_bounds(o) or g.has_flag(o, CombatGrid.VOID) or g.has_flag(o, CombatGrid.WATER):
+				continue
+			total += board.ground_y(Vector2(clampf(x, o.x + 0.001, o.x + 0.999), clampf(z, o.y + 0.001, o.y + 0.999)))
+			count += 1
+	return total / count if count > 0 else board.ground_y(p)
 
 
 func _at(i: int, j: int) -> Vector3:
@@ -322,6 +339,8 @@ func _reach_into_open_squares(act: PackedByteArray) -> void:
 			var sq := Vector2i(sx, sz)
 			if act[sz * _w + sx] == 0 or cells.has(sq):
 				continue
+			if board.grid.has_flag(sq, CombatGrid.VOID) or board.grid.has_flag(sq, CombatGrid.WATER):
+				continue   # nobody stands there, and its ground isn't the rock's (a drop's floor, a lake's)
 			for b in RES:
 				for a in RES:
 					var i := sx * RES + a
@@ -343,6 +362,11 @@ func _reach_into_open_squares(act: PackedByteArray) -> void:
 								best_d = dist
 								best = o
 					if best.x >= 0:
+						# Not down a cliff: where the walkable ground beside the rock is far from the rock's own level
+						# the rock doesn't spread onto it (a cliff's foot is CliffFace's).
+						var low := (_base[k] + _base[k + 1] + _base[k + _nx] + _base[k + _nx + 1]) / 4.0
+						if absf(low - board.floor_y(best)) > MARGIN_STEP:
+							continue
 						if not _margin.has(best):
 							_margin[best] = [] as Array[int]
 						(_margin[best] as Array[int]).append(j * qw + i)
