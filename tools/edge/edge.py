@@ -18,15 +18,16 @@ When the base and every branch are where the last build left them, the worktree 
 Saves and settings (owner: the real ones are never touched). The build runs on its own user data folder, `Curse of Strahd Edge`
 next to the downloaded game's `Curse of Strahd Fan Game` in ~/Library/Application Support: an override.cfg in the
 worktree switches on the project's custom user dir (Godot reads it beside project.godot; the project's own
-`.template` setting only reaches exported builds) and puts "(edge)" in the window title. Each launch replaces that
-folder's saves/ with a copy of the owner's (dev builds keep them in Godot/app_userdata/Curse of Strahd) and copies settings.cfg,
-so a branch that migrates or swaps data on load (item-audit's SaveSystem.WITHDRAWN) only ever
-changes the copy; caches the build makes itself (shaders, looks) are kept. EDGE_KEEP_DATA=1 keeps the edge's own
-saves from the last run instead. The owner's folder is only read, and this script refuses a destination that is it, the
-downloaded game's or inside either. The console says which folder is in use, and warns when a merged branch raises
+`.template` setting only reaches exported builds) and puts "(edge)" in the window title. The edge's saves/ are its own
+and are kept between runs: they are seeded with a copy of the owner's (dev builds keep them in Godot/app_userdata/Curse of
+Strahd) only when that folder is missing or empty, or on request (EDGE_FRESH=1 make run replaces them with a fresh copy).
+Newer real saves are never merged into them. settings.cfg is copied from the owner's on every launch (EDGE_KEEP_DATA=1
+keeps the edge's own settings too). So a branch that migrates or swaps data on load (item-audit's SaveSystem.WITHDRAWN)
+only ever changes the copy; caches the build makes itself (shaders, looks) are kept as well. The owner's folder is only
+read, and this script refuses a destination that is it, the downloaded game's or inside either. The console says which folder is in use, and warns when a merged branch raises
 GameState.SAVE_VERSION.
 
-Environment: EDGE_HOME, EDGE_ROOT, EDGE_BASE, EDGE_DATA (the user folder's name), EDGE_KEEP_DATA=1, EDGE_NO_RUN=1 (assemble
+Environment: EDGE_HOME, EDGE_ROOT, EDGE_BASE, EDGE_DATA (the user folder's name), EDGE_FRESH=1, EDGE_KEEP_DATA=1, EDGE_NO_RUN=1 (assemble
 and import, don't start: same as `build`), GODOT (as the Makefile). The first run makes the worktree and imports it,
 which takes minutes on a busy Mac; later runs import only what changed (the Makefile's FRESH rule).
 
@@ -138,6 +139,7 @@ class Config:
     support: Path       # ~/Library/Application Support
     keep_data: bool
     no_run: bool
+    fresh: bool = False  # EDGE_FRESH=1: replace the edge's saves with a fresh copy of the owner's
 
     @property
     def manifest(self) -> Path:
@@ -180,6 +182,7 @@ class Config:
             support=home / "Library" / "Application Support",
             keep_data=bool(env.get("EDGE_KEEP_DATA")),
             no_run=bool(env.get("EDGE_NO_RUN")),
+            fresh=bool(env.get("EDGE_FRESH")),
         )
 
 
@@ -386,6 +389,37 @@ def refresh_data(real: Path, edge: Path, protected: Sequence[Path]) -> str:
     return "a fresh copy of your saves/ (%d entr%s) and settings" % (count, "y" if count == 1 else "ies")
 
 
+def _entries(saves: Path) -> int:
+    return sum(1 for _ in saves.iterdir()) if saves.is_dir() else 0
+
+
+def _plural(n: int) -> str:
+    return "%d entr%s" % (n, "y" if n == 1 else "ies")
+
+
+def prepare_data(real: Path, edge: Path, protected: Sequence[Path], fresh: bool = False, keep_settings: bool = False) -> str:
+    """What the edge folder holds at launch. Its saves/ are kept; they are seeded from the owner's (refresh_data) only
+    when missing or empty (a symlink is replaced too: it could lead into the real ones) or when `fresh` asks.
+    settings.cfg is copied on every launch unless keep_settings. Returns a line for the console."""
+    check_data_dirs(edge, [real, *protected])
+    saves = edge / "saves"
+    kept = not saves.is_symlink() and _entries(saves) > 0
+    if kept and not fresh:
+        for name in ([] if keep_settings else USER_FILES):
+            mine, theirs = real / name, edge / name
+            if mine.is_file():
+                shutil.copy2(mine, theirs)
+            elif theirs.exists():
+                theirs.unlink()
+        return "kept your edge saves (%s)%s" % (_plural(_entries(saves)),
+                                               ", and the edge's own settings" if keep_settings else "; settings copied from yours")
+    refresh_data(real, edge, protected)
+    n = _plural(_entries(saves))
+    if kept:
+        return "EDGE_FRESH=1: replaced the edge saves with a fresh copy of your real saves (%s) and settings" % n
+    return "seeded from your real saves (%s) and settings" % n
+
+
 def override_text(title: str, data_name: str) -> str:
     return (
         "; Written by tools/edge/edge.py on every launch; not part of the game. Godot reads this beside project.godot.\n"
@@ -533,12 +567,10 @@ def cmd_run(cfg: Config, args: argparse.Namespace) -> int:
         build = assemble(wt, cfg.base, base_sha, resolve(cfg.repo, read_manifest(cfg.manifest)))
         report(build, cfg)
         (wt / "override.cfg").write_text(override_text(cfg.project_name, cfg.data_name), encoding="utf-8")
-        if cfg.keep_data and cfg.edge_data.is_dir():
-            say("saves and settings: the edge's own from last time, in %s (EDGE_KEEP_DATA=1)." % tilde(cfg.edge_data))
-        else:
-            what = refresh_data(cfg.real_data, cfg.edge_data, [cfg.fan_game_data])
-            say("saves and settings: %s in %s." % (what, tilde(cfg.edge_data)))
-        say("your own (%s) are only read, never written; EDGE_KEEP_DATA=1 keeps the edge's between runs." % tilde(cfg.real_data))
+        what = prepare_data(cfg.real_data, cfg.edge_data, [cfg.fan_game_data], cfg.fresh, cfg.keep_data)
+        say("saves and settings: %s, in %s." % (what, tilde(cfg.edge_data)))
+        say("your own (%s) are only read, never written; EDGE_FRESH=1 make run starts the edge's saves over from them."
+            % tilde(cfg.real_data))
         say("folder: %s" % tilde(wt))
         if first or needs_import(wt):
             status = import_project(cfg, wt)

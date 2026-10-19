@@ -35,7 +35,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   (GODOT_SLOTS=off): he is waiting to play, and a running game holds no slot.
 - `make run` and `make arena` are for the owner to play: run them only when asked. `make run` is the edge build (tools/edge/edge.py):
   the local main plus the lane branches listed in ~/.curse-of-strahd/edge/branches.txt (handed off, not merged yet), merged in
-  a throwaway worktree, on its own copy of the saves and settings (the real ones are never written). The build thread adds a
+  a throwaway worktree, on its own saves (seeded from the real ones once, then kept between runs; `EDGE_FRESH=1 make run`
+  reseeds them) and a settings copy (the real ones are never written). The build thread adds a
   branch with `make edge-add BRANCH=<branch>` when it takes a hand-off and drops it with `make edge-remove` once merged.
   `make run-main` plays a checkout's own code, as `make run` used to.
 

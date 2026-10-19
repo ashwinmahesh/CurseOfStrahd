@@ -261,6 +261,59 @@ class DataTests(unittest.TestCase):
             edge.refresh_data(self.real, self.support / "Godot" / "app_userdata" / ".." / "app_userdata" / "Curse of Strahd", [self.fan])
         self.assertEqual(self.snapshot(self.real), before)
 
+    def test_the_first_launch_seeds_the_edge_saves_and_later_ones_keep_them(self):
+        before = self.snapshot(self.real)
+        line = edge.prepare_data(self.real, self.edge, [self.fan])
+        self.assertIn("seeded from your real saves", line)
+        self.assertEqual((self.edge / "saves" / "slot_1.json").read_text(), '{"v": 2}')
+        (self.edge / "saves" / "made_in_edge.json").write_text("{}")
+        (self.edge / "saves" / "slot_1.json").write_text("changed in the edge")
+        (self.real / "saves" / "newer_real.json").write_text("{}")
+        line = edge.prepare_data(self.real, self.edge, [self.fan])
+        self.assertIn("kept your edge saves (4 entries)", line)
+        self.assertEqual((self.edge / "saves" / "slot_1.json").read_text(), "changed in the edge")
+        self.assertTrue((self.edge / "saves" / "made_in_edge.json").is_file())
+        self.assertFalse((self.edge / "saves" / "newer_real.json").exists())   # no merging of newer real saves
+        (self.real / "saves" / "newer_real.json").unlink()
+        self.assertEqual(self.snapshot(self.real), before)
+
+    def test_an_empty_or_missing_saves_folder_is_seeded_again(self):
+        (self.edge / "saves").mkdir(parents=True)
+        self.assertIn("seeded", edge.prepare_data(self.real, self.edge, [self.fan]))
+        self.assertTrue((self.edge / "saves" / "slot_1.json").is_file())
+
+    def test_a_saves_symlink_is_replaced_by_a_copy_never_followed(self):
+        self.edge.mkdir(parents=True)
+        (self.edge / "saves").symlink_to(self.real / "saves")
+        before = self.snapshot(self.real)
+        self.assertIn("seeded", edge.prepare_data(self.real, self.edge, [self.fan]))
+        self.assertFalse((self.edge / "saves").is_symlink())
+        self.assertEqual(self.snapshot(self.real), before)
+
+    def test_asking_for_fresh_replaces_the_edge_saves(self):
+        edge.prepare_data(self.real, self.edge, [self.fan])
+        (self.edge / "saves" / "made_in_edge.json").write_text("{}")
+        line = edge.prepare_data(self.real, self.edge, [self.fan], fresh=True)
+        self.assertIn("EDGE_FRESH=1", line)
+        self.assertFalse((self.edge / "saves" / "made_in_edge.json").exists())
+
+    def test_settings_follow_the_real_ones_each_launch_unless_kept(self):
+        edge.prepare_data(self.real, self.edge, [self.fan])
+        (self.real / "settings.cfg").write_text("[game]\nturn_based=true\n")
+        edge.prepare_data(self.real, self.edge, [self.fan])
+        self.assertEqual((self.edge / "settings.cfg").read_text(), "[game]\nturn_based=true\n")
+        (self.edge / "settings.cfg").write_text("edge's own")
+        line = edge.prepare_data(self.real, self.edge, [self.fan], keep_settings=True)
+        self.assertIn("edge's own settings", line)
+        self.assertEqual((self.edge / "settings.cfg").read_text(), "edge's own")
+
+    def test_a_real_data_destination_is_still_refused_before_a_launch_keeps_anything(self):
+        before = self.snapshot(self.real)
+        for bad in (self.real, self.real / "saves", self.fan):
+            with self.assertRaises(edge.EdgeError, msg=str(bad)):
+                edge.prepare_data(self.real, bad, [self.fan])
+        self.assertEqual(self.snapshot(self.real), before)
+
     def test_override_cfg_points_the_game_at_the_edge_folder(self):
         text = edge.override_text("Curse of Strahd", "Curse of Strahd Edge")
         self.assertIn("[application]", text)
@@ -410,13 +463,27 @@ class RunFlowTests(unittest.TestCase):
         self.assertEqual(git(self.wt, "rev-parse", "HEAD"), head)
         self.assertEqual((self.wt / "builds" / "imports.txt").read_text(), "imported\n")
 
-    def test_keeping_the_edge_saves_leaves_them_alone(self):
+    def test_the_edge_saves_are_kept_by_default_and_fresh_reseeds_them(self):
+        status, out = self.run_edge()
+        self.assertIn("seeded from your real saves", out)
+        mine = self.support / "Curse of Strahd Edge" / "saves" / "made_in_edge.json"
+        mine.write_text("{}")
+        status, out = self.run_edge()
+        self.assertTrue(mine.is_file())
+        self.assertIn("kept your edge saves", out)
+        self.cfg.fresh = True
+        status, out = self.run_edge()
+        self.assertFalse(mine.exists())
+        self.assertIn("EDGE_FRESH=1", out)
+
+    def test_keeping_the_edge_data_also_keeps_its_settings(self):
         self.run_edge()
-        (self.support / "Curse of Strahd Edge" / "saves" / "made_in_edge.json").write_text("{}")
+        folder = self.support / "Curse of Strahd Edge"
+        (folder / "settings.cfg").write_text("edge's own")
         self.cfg.keep_data = True
         status, out = self.run_edge()
-        self.assertTrue((self.support / "Curse of Strahd Edge" / "saves" / "made_in_edge.json").is_file())
-        self.assertIn("EDGE_KEEP_DATA=1", out)
+        self.assertEqual((folder / "settings.cfg").read_text(), "edge's own")
+        self.assertIn("edge's own settings", out)
 
     def test_a_data_folder_that_is_the_real_one_stops_before_anything_is_touched(self):
         self.cfg.data_name = "Godot/app_userdata/Curse of Strahd"
