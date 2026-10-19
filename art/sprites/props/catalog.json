@@ -1290,7 +1290,14 @@
     },
     "berez": {
       "difficult": "marsh/marsh_mud",
-      "floor": "marsh/marsh_mud"
+      "floor": "marsh/marsh_mud",
+      "ruin": true
+    },
+    "argynvostholt": {
+      "ruin": true
+    },
+    "yester_hill_gulthias_tree": {
+      "ruin": true
     },
     "berez_marsh_track": {
       "difficult": "marsh/marsh_mud",
@@ -1336,11 +1343,13 @@
       "floor": "castle/courtyard",
       "rock_walls": "mountain/cliff",
       "rock_shape": "crags",
-      "crag_scale": 0.6
+      "crag_scale": 0.6,
+      "rough": 0.25
     },
     "castle_ravenloft_overlook": {
       "floor": "castle/flagstones",
-      "rock_walls": "mountain/cliff"
+      "rock_walls": "mountain/cliff",
+      "rough": 0.25
     },
     "castle_ravenloft_spires": {
       "floor": "castle/flagstones",

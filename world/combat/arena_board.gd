@@ -352,6 +352,10 @@ var _cliff_mat: Material = null
 var crags: Crags = null
 ## The place's cliffs and drops as shaped ground (CliffFace, Modern only); null where it has none.
 var cliffs: CliffFace = null
+## The map's difficult squares planted as thickets (GroundCover), planned once on the first '~'; null where they're
+## one bush a square.
+var _cover: GroundCover = null
+var _cover_planned := false
 const _CORNERS: Array[Vector2i] = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1)]
 ## The side under each top edge (north, east, south, west), as the step to the square beyond it.
 const _SIDES: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
@@ -832,6 +836,10 @@ func _wall(c: Vector2i) -> void:
 			if TownBuilder.walled(self):
 				_town_wall(c)
 				return
+			if Drystone.wanted() and Ruin.amount(_look) > 0.0:
+				# A ruin's yard walls stand broken, each to its own height (Drystone), not whole as the kit makes them.
+				add_child(Drystone.yard(self, c, Ruin.stone(), TownBuilder.YARD_WALL_H, Ruin.amount(_look), TownBuilder._gates(self)))
+				return
 			TownBuilder.yard_wall(self, c, wall_material())
 			return
 		# Houses: plaster-and-timber walls under slate or thatch.
@@ -848,6 +856,11 @@ func _wall(c: Vector2i) -> void:
 		return   # a yard's shed or shrine, built whole by TownBuilder
 	var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
 	if border:
+		if Drystone.wanted():
+			# The churchyard's outer wall as old dry stone: coping stones laid along the border on a rough footing, a few
+			# broken or missing, never below half its height (Drystone; a ruin, place_looks `ruin`, breaks more).
+			add_child(Drystone.outer(self, c, _wall_tex if _wall_tex != null else Look.cel("slate"), OUTER_H, Ruin.amount(_look)))
+			return
 		# The churchyard's outer wall: low, mossy, uneven.
 		var h := OUTER_H + _rng.randf_range(-0.25, 0.15)
 		_box("OuterWall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), _wall_tex if _wall_tex != null else Look.cel("slate"))
@@ -857,6 +870,16 @@ func _wall(c: Vector2i) -> void:
 			_box("Moss", Vector3(1.02, 0.12, 1.02), Vector3(c.x + 0.5, h - 0.05, c.y + 0.5), Look.cel("moss"))
 	else:
 		# Shrine pillars and standing stones.
+		if StandingStone.wanted():
+			# Each is a weathered standing stone of its own, narrower than its square, so the ground shows round it; a
+			# free-standing 2 x 2 is one tor, built on its first square (StandingStone).
+			if floor_y(c) <= 0.0:
+				_ground_box("Ground", c, _floor_mat)
+			var rock := Look.cel_textured(str(_look.get("stone", "cave/rock_wall")))
+			var stone := StandingStone.make(self, c, rock if rock != null else Look.cel("pewter"), WALL_H)
+			if stone != null:
+				add_child(stone)
+			return
 		_box("Pillar", Vector3(0.9, WALL_H, 0.9), Vector3(c.x + 0.5, WALL_H / 2.0, c.y + 0.5), _wall_tex if _wall_tex != null else Look.cel("pewter"))
 		_box("PillarCap", Vector3(1.0, 0.18, 1.0), Vector3(c.x + 0.5, WALL_H + 0.09, c.y + 0.5), Look.cel("slate"))
 
@@ -977,6 +1000,12 @@ func _low_run(c: Vector2i) -> Dictionary:
 func _low_cover(c: Vector2i) -> void:
 	if _one_piece_cells.has(c):
 		return   # a square of a run already built as one long piece (_one_piece)
+	if Drystone.wanted() and Ruin.amount(_look) > 0.0 and theme not in INTERIORS and theme != "dungeon":
+		# A ruin's low walls are broken dry stone (Drystone), not the place's whole wall pieces.
+		var broken := Drystone.low(self, c, Ruin.stone(), LOW_H, Ruin.amount(_look))
+		if broken != null:
+			add_child(broken)
+			return
 	var sets := SetDressing.catalog().get("low_cover", {}) as Dictionary
 	var key := place if place != "" and sets.has(place) else _dressing_key()
 	var choices := sets.get(key, []) as Array
@@ -1037,6 +1066,10 @@ func _low_cover(c: Vector2i) -> void:
 	var down := grid.has_flag(c + Vector2i(0, 1), CombatGrid.LOW)
 	var base := floor_y(c)
 	var low_mat: Material = _wall_tex if _wall_tex != null else Look.cel("bone_dark")
+	if Drystone.wanted() and (left or right or up or down):
+		# Old dry stone with an uneven top, running on into its neighbours (Drystone).
+		add_child(Drystone.low(self, c, low_mat, LOW_H, Ruin.amount(_look)))
+		return
 	if left or right:
 		# A run of low wall along x.
 		_box("LowWall", Vector3(1.0, LOW_H, 0.45), Vector3(c.x + 0.5, base + LOW_H / 2.0, c.y + 0.5), low_mat)
@@ -1122,6 +1155,15 @@ func _brambles(c: Vector2i) -> void:
 	var key := place if sets.has(place) else (_dressing_key() if theme in WILD or theme == "dungeon" else ("interior" if theme in INTERIORS else theme))
 	var choices := sets.get(key, []) as Array
 	if not choices.is_empty():
+		if GroundCover.wanted(self, key):
+			# Outdoors in the Modern look the map's difficult squares are planted together as thickets (clumps over the
+			# runs of '~', GroundCover), not one bush a square.
+			if not _cover_planned:
+				_cover_planned = true
+				_cover = GroundCover.plan(self, choices)
+			if _cover != null:
+				_cover.stand(c)
+				return
 		var pick := str(choices[(c.x * 5 + c.y * 11) % choices.size()])
 		if SetDressing.has_art(pick):
 			var at := Vector3(c.x + 0.5 + _rng.randf_range(-0.15, 0.15), floor_y(c), c.y + 0.5 + _rng.randf_range(-0.15, 0.15))

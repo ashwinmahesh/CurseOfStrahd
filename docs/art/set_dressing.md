@@ -370,3 +370,36 @@ blurred a square either way so it ramps down beside a way out, settling into the
 noise), draws the risen land in the place's rock (`ArenaBoard.rock_material`, a fourth surface of the land mesh) and
 plants no tree or ground plant on it, so a turned or tilted camera sees the mountain go on instead of a wall and a forest.
 tools/capture/crags_views.tscn shoots them from the four headings and prints which squares a crag hides.
+## Ground cover and small built things as natural land (owner 2026-10-19; the vault's Natural Maps Plan, N7)
+
+"Basically we want the world to look more natural": draw each place as natural land first, lay the battle grid over it
+afterwards. Four small things that were one box or bush a square are now drawn across their squares, in the Modern look
+only (Classic keeps what it had); the rules grid never sees any of it.
+
+- **Thickets** (`GroundCover`, asked by `ArenaBoard._brambles`). A map's difficult squares are planted together, once: clumps of
+  the place's own dressing (catalog `difficult`: brambles, reeds, drifts, ice) scattered by noise over each run of `~`,
+  big where the run is deep and small at its rim, thick in some patches and thin in others, turned along the run's edge
+  and stretched their own way (drifts long and low), standing wherever the noise puts them, across the squares' edges.
+  A clump may reach a third of a square into the open ground beside the run and never into water or the void, and every
+  difficult square keeps a clump near its middle so it reads as difficult. Clumps are `ground_cover`, so they may grow
+  into each other; each belongs to the difficult square its middle is in, so a prop that takes the square takes them.
+  Outdoors only: a place's own indoor set (rubble, webs) stays one piece a square until the interiors package.
+- **Standing stones** (`StandingStone`, asked by `ArenaBoard._wall`'s shrine-yard branch). An inner `#` of a yard that is
+  no part of a building is a weathered stone of its own (`Pillar`, meta `standing_stone`): a ring grid tapering as it
+  climbs, leaning, its sides wobbling, its top rounded, cut slantwise, split into two horns or ragged; a free-standing 2 x 2
+  is one bigger tor. Cave rock by default (place look `stone` names another surface). Narrower than the square, so the
+  ground is drawn under it; never reaching out of its square.
+- **Dry stone** (`Drystone`, asked by `_wall` and `_low_cover`). The yard's outer wall and its low walls are laid as coping
+  stones, two to a square, each a hair off a swell that carries on across the squares, with a bevel and a top a little
+  askew; here and there one is broken (lower, slanting) or missing, but none is ever lower than half the whole wall. The
+  outer wall stands on a rough footing the width of its square, its body set back a changing few inches; corners are a post
+  a little taller than either arm. Low walls run from the middle of their square toward each low neighbour and join where
+  they meet. Meta `drystone` is "outer", "low" or "yard".
+- **Ruin** (`Ruin`, place look `ruin`: true, or 0 to 1 for how far). Argynvostholt, Berez and the Gulthias Tree's yard
+  are ruins: their walls are drawn broken, to a height no lower than three fifths of the whole wall at the most
+  fallen, with more stones broken and missing and the whole a little lower. Yard walls and low walls are `Drystone`
+  there (the kit's whole yard wall, and the `wall_low` pieces Berez set on its `=` squares, are replaced); houses stand
+  as they were. Geometry, not a shader that clips the top: a clipped top is hollow and shows the ground through it.
+
+`Drystone.enabled`, `StandingStone.enabled` and `GroundCover.enabled` switch them off for tests and timing runs that
+compare with the old pieces. tests/integration/test_natural_small_things.gd.
