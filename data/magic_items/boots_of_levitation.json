@@ -19,6 +19,7 @@
       "id": "levitate",
       "name": "Levitate",
       "spell": "levitate",
+      "self_only": true,
       "cost": "magic",
       "text": "Cast Levitate on yourself at will."
     }

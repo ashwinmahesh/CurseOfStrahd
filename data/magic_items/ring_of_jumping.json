@@ -20,6 +20,7 @@
       "id": "jump",
       "name": "Jump",
       "spell": "jump",
+      "self_only": true,
       "charges": 0,
       "cost": "bonus",
       "text": "Bonus Action: cast Jump on yourself (no charges)."

@@ -263,9 +263,18 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 		st.advance_minutes(1)
 		return {"ok": true, "text": "%s uses the %s: %s." % [ch.name.get_slice(" ", 0), data.get("name", ""), spell.get("name", "")],
 			"lines": [], "effect": spell_id}
-	var tc := e.get_c(target.id) if target != null else c
+	# `field_targets`: several creatures at once (the sheet's "4 of us" for a Staff of Healing's Mass Cure Wounds, ItemSpells).
+	var tcs: Array = []
+	for t: Variant in opts.get("field_targets", [target if target != null else ch]):
+		var tc := e.get_c((t as Creature).id)
+		if tc != null:
+			tcs.append(tc)
+	var cast_opts := opts.duplicate()
+	cast_opts.erase("field_targets")
+	# A spell that fills an area (a Staff of Healing's Mass Cure Wounds) is centred on its caster, in the middle of the party.
+	var point := e.center_of(c) if spell.has("area") else Vector2.INF
 	var before := e.log.entries.size()
-	var r := e.items.use(c, item_id, power_id, [tc] if tc != null else [], Vector2.INF, Vector2.ZERO, int(opts.get("level", 0)), opts)
+	var r := e.items.use(c, item_id, power_id, tcs, point, Vector2.ZERO, int(opts.get("level", 0)), cast_opts)
 	var lines: Array[String] = []
 	for i in range(before, e.log.entries.size()):
 		if str(e.log.entries[i]["kind"]) != "turn":

@@ -692,7 +692,8 @@ func _spells(ch: Character) -> VBoxContainer:
 	for e in ch.spellcasting:
 		box.add_child(_caster_row(ch, str(e["class_id"])))
 	var known := ch.known_spells()
-	if known.is_empty():
+	var item_spells := ItemSpells.entries(st, ch, Dice.roller)
+	if known.is_empty() and item_spells.is_empty():
 		box.add_child(_empty("%s doesn't cast spells." % ch.name.get_slice(" ", 0)))
 		return box
 	var casts := {}
@@ -722,6 +723,7 @@ func _spells(ch: Character) -> VBoxContainer:
 			var k := kv as Dictionary
 			var s := Compendium.shared().spell_data(str(k["id"]))
 			box.add_child(_spell_row(ch, k, s, casts.get(str(k["id"]), {}) as Dictionary, utility.get(str(k["id"]), {}) as Dictionary))
+	_item_spell_groups(ch, item_spells, box)
 	return box
 
 
@@ -940,6 +942,13 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 	if bool(o["self_only"]):
 		row.add_child(UiParts.small_button("Cast", func() -> void: _do_cast(ch, id, pick, [ch]), "spells"))
 		return
+	row.add_child(_cast_menu(ch, o, func(tgt: Array) -> void: _do_cast(ch, id, pick, tgt)))
+
+
+## The "Cast on…" menu for a spell (or an item's) that goes on others: the party, then the story allies travelling with
+## it, "N of us" for a spell with several targets; for a revival, the dead it can reach (`o.targets`). `on_pick` is called
+## with the chosen creatures.
+func _cast_menu(ch: Character, o: Dictionary, on_pick: Callable) -> MenuButton:
 	var menu := MenuButton.new()
 	menu.text = "Cast on…"
 	menu.flat = false
@@ -978,8 +987,8 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 			tgt.append(st.guests[pid - 200])
 		else:
 			tgt.append(st.party[pid])
-		_do_cast(ch, id, pick, tgt))
-	row.add_child(menu)
+		on_pick.call(tgt))
+	return menu
 
 
 ## Exploring spells (Light, Detect Magic, Find Traps ...): Cast, or as a Ritual.
@@ -1045,6 +1054,143 @@ func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Arra
 	var res := FieldCasting.revive(st, ch, spell_id, slot, targets[0] as Character) if FieldCasting.REVIVAL.has(spell_id) and not targets.is_empty() \
 		else FieldCasting.cast(st.party, ch, spell_id, slot, targets, Dice.roller, st)
 	_cast_note = str(res["text"]) if str(res["text"]) != "" else "Done."
+	_draw()
+
+
+# --- Spells from items ----------------------------------------------------------------------------
+
+## The spells the items `ch` is wearing or holding give (ItemSpells): a heading for each item with the charges it has left,
+## then a row for each spell. They are cast from here outside a fight where a spell can be cast there.
+func _item_spell_groups(ch: Character, list: Array[Dictionary], box: VBoxContainer) -> void:
+	var last := ""
+	for o in list:
+		if str(o["item_id"]) != last:
+			last = str(o["item_id"])
+			var charges: Control = UiKit.label(str(o["item_charges"]), 14, "gilt_light") if str(o["item_charges"]) != "" else null
+			box.add_child(UiParts.section("From the %s" % str(o["item_name"]).trim_prefix("The "), charges))
+		box.add_child(_item_spell_row(ch, o))
+
+
+func _item_spell_row(ch: Character, o: Dictionary) -> Control:
+	var id := str(o["spell_id"])
+	var s := Compendium.shared().spell_data(id)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	if UiParts.has_icons():
+		UiParts.add_icon(row, "spell", id, 36.0)
+	else:
+		row.add_child(UiParts.drawn(Vector2(10, 22), func(c: Control) -> void:
+			UiParts.diamond(c, Vector2(5, 12), 5.0, Look.color(str(SCHOOL_COLOURS.get(str(s.get("school", "")), "parchment"))), true)))
+	var left := VBoxContainer.new()
+	left.add_theme_constant_override("separation", 1)
+	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# The tags wrap under the name when the row is full, as a class spell's do (UI QA UI-02).
+	var head := HFlowContainer.new()
+	head.add_theme_constant_override("h_separation", 7)
+	head.add_theme_constant_override("v_separation", 2)
+	head.add_child(UiKit.label(str(o["name"]), 16, "vellum"))
+	var kind := str(o["kind"])
+	var out := (kind == "charges" and int(o["left"]) < int(o["need"])) or (kind == "uses" and int(o["left"]) <= 0)
+	head.add_child(UiParts.pill(str(o["usage"]) if kind != "charges" else str(o["cost"]),
+		"bile" if kind == "at_will" else ("rose" if out else ("moonlight" if kind == "uses" else "gilt"))))
+	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
+		head.add_child(UiParts.pill("Conc.", "moonlight"))
+	if st.spell_active(id):
+		head.add_child(UiParts.pill("Active", "bile"))
+	left.add_child(head)
+	left.add_child(UiKit.label(_item_spell_facts(o, s), 13, "parchment", 440.0))
+	var fight_only := str(o["reason"]) == ItemSpells.FIGHT_ONLY
+	if not in_fight and not bool(o["legal"]) and not fight_only:
+		left.add_child(UiKit.label(str(o["reason"]), 13, "rose", 440.0))
+	if not in_fight and (bool(o["legal"]) or not fight_only):
+		left.add_child(_item_spell_controls(ch, o))
+	row.add_child(left)
+	return _row(row, func() -> Control: return _item_spell_tip(o, s))
+
+
+## The line under an item spell's name: its range, how long it lasts, what it costs and when that comes back, the save
+## or attack it makes, and "Only in a fight" for a spell with nothing to do outside one.
+func _item_spell_facts(o: Dictionary, s: Dictionary) -> String:
+	var parts: Array[String] = []
+	var r := s.get("range", {}) as Dictionary
+	parts.append("%d ft" % int(r["feet"]) if str(r.get("kind", "")) == "feet" else _range(s))
+	var d := _duration(s).replace("Concentration, up to ", "")
+	if d != "Instantaneous":
+		parts.append(d)
+	if int(o["level"]) != int(s.get("level", 0)):
+		parts.append("at level %d" % int(o["level"]))
+	var cost := "Costs " + str(o["cost"]) if str(o["kind"]) == "charges" else str(o["cost"]).left(1).to_upper() + str(o["cost"]).substr(1)
+	parts.append(cost + (" (%s)" % o["cost_note"] if str(o["cost_note"]) != "" else ""))
+	if str(o["recharge"]) != "":
+		parts.append("back " + str(o["recharge"]))
+	if bool(o["save"]):
+		parts.append("save DC %d" % int(o["dc"]))
+	elif bool(o["attacks"]):
+		parts.append("spell attack %+d" % int(o["attack"]))
+	if str(o["reason"]) == ItemSpells.FIGHT_ONLY and not in_fight:
+		parts.append(ItemSpells.FIGHT_ONLY)
+	return "  ·  ".join(parts)
+
+
+func _item_spell_tip(o: Dictionary, s: Dictionary) -> Control:
+	var lvl := int(o["level"])
+	var school := str(s.get("school", "")).capitalize()
+	var facts: Array = [["Casting time", _casting_time(s)], ["Range", _range(s)], ["Duration", _duration(s)]]
+	if bool(o["save"]):
+		facts.append(["Save DC", str(int(o["dc"]))])
+	if bool(o["attacks"]):
+		facts.append(["Spell attack", "%+d" % int(o["attack"])])
+	facts.append(["Costs", str(o["cost"]) + (", %s" % o["cost_note"] if str(o["cost_note"]) != "" else "")])
+	if str(o["recharge"]) != "":
+		facts.append(["Comes back", str(o["recharge"])])
+	var text := str(s.get("text", "")) if str(s.get("text", "")) != "" else str(s.get("summary", ""))
+	return UiParts.rules_tip(str(s.get("name", o["spell_id"])), ("%s cantrip" % school) if lvl == 0 else "Level %d %s" % [lvl, school], text, facts,
+		"From the %s: worn or held, and attuned where it asks. %s" % [str(o["item_name"]).trim_prefix("The "), str(o["item_charges"])])
+
+
+## What goes under a castable item spell: the level it can be cast at (charges buy a higher one), what it asks for, and
+## Cast, or Cast on… for a spell that goes on others. A spell blocked right now gets a Cast that is off (its reason is
+## written under it).
+func _item_spell_controls(ch: Character, o: Dictionary) -> Control:
+	var controls := HFlowContainer.new()
+	controls.add_theme_constant_override("h_separation", 8)
+	controls.add_theme_constant_override("v_separation", 4)
+	if not bool(o["legal"]):
+		var no := UiParts.small_button("Cast", func() -> void: pass, "spells")
+		no.disabled = true
+		no.tooltip_text = str(o["reason"])
+		controls.add_child(no)
+		return controls
+	var level := OptionButton.new()
+	for l: int in o["levels"] as Array:
+		level.add_item("Level %d · %d charges" % [l, int((o["level_costs"] as Dictionary)[l])], l)
+	UiParts.compact(level)
+	level.visible = level.item_count > 1
+	controls.add_child(level)
+	var kind := OptionButton.new()
+	var words := o.get("choice_labels", {}) as Dictionary
+	for k: Variant in o["choices"] as Array:
+		kind.add_item(str(words.get(str(k), str(k).capitalize())))
+		kind.set_item_metadata(kind.item_count - 1, str(k))
+	UiParts.compact(kind)
+	kind.visible = kind.item_count > 1
+	controls.add_child(kind)
+	if bool(o["needs_target"]) and not bool(o["self_only"]):
+		controls.add_child(_cast_menu(ch, o, func(tgt: Array) -> void: _do_item_cast(ch, o, level, kind, tgt)))
+	else:
+		controls.add_child(UiParts.small_button("Cast", func() -> void: _do_item_cast(ch, o, level, kind, [ch]), "spells"))
+	return controls
+
+
+## Casts an item's spell on `targets` (party members, story allies or the dead a revival reaches) at the level and with the
+## pick chosen above (ItemSpells.cast), tells what it did, and lets the world show it (a Light, a Detect Magic).
+func _do_item_cast(ch: Character, o: Dictionary, level: OptionButton, kind: OptionButton, targets: Array) -> void:
+	var lvl := level.get_item_id(level.selected) if level.item_count > 0 and level.selected >= 0 else 0
+	var choice := str(kind.get_item_metadata(kind.selected)) if kind.item_count > 0 and kind.selected >= 0 else ""
+	var res := ItemSpells.cast(st, ch, str(o["item_id"]), str(o["power_id"]), targets, lvl, choice, Dice.roller)
+	_cast_note = str(res["text"]) if str(res["text"]) != "" else ("Done." if bool(res.get("ok", false)) else "It didn't work.")
+	if bool(res.get("ok", false)) and str(res.get("effect", "")) != "" and root != null and root.get("view") != null:
+		(root.get("view") as LocationView).apply_spell_effect(str(res["effect"]))
 	_draw()
 
 

@@ -33,6 +33,7 @@
       "id": "jump",
       "name": "Jump",
       "spell": "jump",
+      "self_only": true,
       "cost": "bonus",
       "text": "Cast Jump on yourself at will."
     }

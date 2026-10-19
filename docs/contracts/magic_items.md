@@ -56,6 +56,13 @@ for its `duration`); a Spell Scroll an implicit "Read"; an Ioun Stone (`worn: "i
   hotbar's Items tab lists `items.list(c)` (kind `item`, or `item_spell` for powers that target like spells).
 - `FieldItems.options(party, ch, item_id, dice)` / `FieldItems.use(st, ch, item_id, power_id, target, dice, opts)` use
   one outside a fight (the inventory's item card).
+- `ItemSpells.entries(st, ch, dice)` / `ItemSpells.cast(st, ch, item_id, power_id, targets, level, choice, dice)` (story/item_spells.gd)
+  are the character sheet's Spells tab: every `spell` power of an item that is working for `ch` (`Character.item_active`:
+  worn or held where it must be, attuned where it asks; a weapon in the second set counts), marked with the item and its
+  charges, daily uses or "At will". A spell can be cast there if its power is `field`, or it is healing or help for the
+  party (`FieldCasting.helpful`), a revival, Light and its kind, or has nothing to do in a fight; any other says "Only in a
+  fight". Casting is `FieldItems.use` (`opts.field_targets` aims it at several creatures at once), so charges, uses and DCs
+  are the item card's. A power that is only for its wielder (the rings and boots that cast on "yourself") says `self_only`.
 - `Character`: `wear`, `equip`, `attune`, `end_attunement`, `item_active(entry)`, `charges_left`, `spend_charges`,
   `on_dawn`, `on_dusk`, `items_passage`, `put_in` / `take_out` / `contents_of`, `remove_one` (returns the state to pass
   to `add_item(id, qty, state)`).
