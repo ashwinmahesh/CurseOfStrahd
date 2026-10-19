@@ -127,13 +127,31 @@ Narrator: She held it very well. She holds my doors still. S.
 interject tag:blunt: He didn't lose. He ran. And she stayed.
 -> letters_check
 
-# The last letter found with the mage travelling alongside: he reads them there (Wiki finding 56).
+# The last letter found with the mage travelling alongside: he reads them there (Wiki finding 56). Also what a click on
+# him (data/npcs/mordenkainen.json gifts), his "we found your letters" option and his joining with the letters already in
+# the party's hands come to, wherever they stand: a mage who travels can always be handed the three he is waiting for.
 ~ letters_check
 if guest:mordenkainen and flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and quest.the_mages_lost_pages != named
+if at:mount_baratok
 Narrator: You hand Mordenkainen the three letters. He reads them in order, once each, standing in the snow, and doesn't give them back.
+else
+Narrator: You hand Mordenkainen the three letters. He reads them in order, once each, without looking up, and doesn't give them back.
+endif
 -> letters_read
 endif
 -> END
+
+# He agrees to come with the party already carrying the three letters (mordenkainen:ally): he asks for them before the road.
+~ carrying
+Mordenkainen: Wait. You are carrying three letters written in a hand I know better than my own. Hand them over before we take another step.
+-> letters_check
+
+# "We found three letters that belong to you": his menu, at his hut or on the road.
+~ hand_over
+if guest:mordenkainen
+-> letters_check
+endif
+-> letters_back
 
 # --- The letters brought back ---
 

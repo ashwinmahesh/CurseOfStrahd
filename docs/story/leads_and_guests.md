@@ -57,6 +57,17 @@ In the world: hover reads "Talk to Pidlwick II", a click walks up and talks, a r
 Send home, Look), the pad marks guests like anyone else. On the HUD: click the guest's card. On the Party screen: Talk and
 Give... beside Send home.
 
+### Allies the cards can name, who cannot be sent home (Ashwin, 2026-10-19)
+
+Madam Eva's ally stays for good (`StoryState.guest_stays`), so whatever the story asks of them in conversation has to be
+reachable on the road. The Mage's Lost Pages was the gap that showed it: Mordenkainen joined as the cards' ally with the
+three letters in the pack, his hut was empty, and nothing handed them over. Now Mordenkainen (`mordenkainen:companion`, the
+gift "The three lost letters", and a hand-over the moment he joins already holding them), Sir Godfrey Gwilym
+(`godfrey:companion`: Godrick's knighting) and Rictavio (`rictavio:companion`: Silvain's Aurel Mirescu question and his wares)
+have a `guest_talk`, with an exit each; Davian's news goes through Stefania (`stefania:news`). The rest of the cards'
+allies (Emil, Victor, Ismark, Kolyan, Parriwimple, Arabelle) hold only banter or business done before they travel.
+tests/integration/test_mage_pages_orders.gd lists every ally on a card and fails when a new one has no note.
+
 ### Pidlwick and his key
 
 The brass key is now a quest item (`pidlwicks_key`, given by the roost's nest, taken when handed over). With Pidlwick II

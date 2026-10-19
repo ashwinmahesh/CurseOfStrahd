@@ -9,6 +9,16 @@
   "voice": "docs/regions/berez.md",
   "monster": "mordenkainen",
   "guest": true,
+  "guest_talk": "mount_baratok/mordenkainen:companion",
+  "gifts": [
+    {
+      "id": "letters",
+      "label": "The three lost letters",
+      "when": "flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and quest.the_mages_lost_pages != named",
+      "ref": "mount_baratok/the_mages_lost_pages:letters_check",
+      "note": "His apprentice's letters from the mountain (The Mage's Lost Pages): he reads them wherever the party stands."
+    }
+  ],
   "guest_build": {
     "monster": "mordenkainen",
     "note": "His own stat block; joins only once his memory is restored, and only if the Tarokka names him (the broken one)."

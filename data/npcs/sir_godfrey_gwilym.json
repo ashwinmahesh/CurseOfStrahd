@@ -9,6 +9,7 @@
   "voice": "docs/voice/sir_godfrey_gwilym.md",
   "monster": "sir_godfrey_gwilym",
   "guest": true,
+  "guest_talk": "argynvostholt/godfrey:companion",
   "guest_build": {
     "monster": "sir_godfrey_gwilym",
     "note": "His own stat block (a revenant knight in plate); joins if the Tarokka names him, or stays for one last ride when the beacon is lit."

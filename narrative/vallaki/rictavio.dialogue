@@ -18,6 +18,15 @@ Rictavio [smile]: My audience returns! Twice in one week. In Barovia that's prac
 endif
 -> menu
 
+# What a click on him opens while he travels with the party (data/npcs/rictavio.json guest_talk): his usual menu, so the
+# Aurel Mirescu question (Silvain's Aurel's Last Chapter) and his wares stay within reach once Madam Eva's cards have
+# taken him from the inn. He doesn't walk out on a town that backed the Wachters when he is already on the road.
+~ companion
+if flag.rictavio_unmasked
+-> hunter_menu
+endif
+-> menu
+
 ~ menu
 * What's in the wagon? -> wagon
 * Where have you come from? -> where
@@ -26,7 +35,7 @@ endif
 * [background:sage] (Recognise a phrase he used, from a famous treatise on the walking dead.) -> sage
 * [if flag.rictavio_suspected] You're no showman. Who are you hunting? -> hunted
 * [if flag.rictavio_journal_read] We read your journal, Doctor van Richten. -> unmask
-* [if tarokka.ally.npc == rictavio or tarokka.ally.npc == van_richten] Madam Eva's cards named a man like you. -> cards
+* [if (tarokka.ally.npc == rictavio or tarokka.ally.npc == van_richten) and not guest:rictavio] Madam Eva's cards named a man like you. -> cards
 * [name:silvain_aster] [if quest.aurels_last_chapter and not flag.aurel_rictavio_told] Ask about a scholar named Aurel Mirescu. -> companions/aurel:rictavio
 * Goodbye. -> bye
 
@@ -105,7 +114,7 @@ Rictavio: The same as you, I expect, only for longer. I came to see whether the 
 -> hunter
 
 ~ hunter
-if flag.vallaki_backed == "wachter" and not flag.rictavio_gone
+if flag.vallaki_backed == "wachter" and not flag.rictavio_gone and not guest:rictavio
 Rictavio: This town has chosen its master, and I watched who helped it choose. I won't sleep another night under a roof that bows to him. I'll be gone by morning, wagon and all.
 if tarokka.ally.npc == rictavio
 -> ally_refused

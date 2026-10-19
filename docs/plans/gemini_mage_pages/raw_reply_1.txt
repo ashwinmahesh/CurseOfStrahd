@@ -1,0 +1,14 @@
+1a. Make it brief. I have forty years of spellcraft to reconstruct in my head, and your pace is already distracting enough.
+1b. Speak, if you must. Half my repertoire is still buried under forty years of fog, and it will not dig itself out.
+1c. Yes? Keep your voice down. I am trying to recall a fourth-circle binding I misplaced forty years ago.
+2a. We found these letters on the mountain.
+2b. We found three letters that belong to you.
+2c. We picked up your lost letters on the mountain.
+3a. You hand Mordenkainen the three letters. He reads them in order, once each, in complete silence, and doesn't give them back.
+3b. You hand Mordenkainen the three letters. He reads them in order, once each, without looking up, and doesn't give them back.
+4a. Hold. That slanted hand on the paper in your pack is mine to read, not yours. Give me the letters.
+4b. Wait. You are carrying three letters written in a hand I know better than my own. Hand them over before we take another step.
+4c. Before we go anywhere, give me the three letters in your pack. I know that handwriting, even from here.
+5a. The three lost letters
+5b. The apprentice's letters
+5c. Three weathered letters

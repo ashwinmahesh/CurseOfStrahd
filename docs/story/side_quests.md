@@ -1060,6 +1060,12 @@ tonight; his promise to come with the party (or Persuasion DC 16) holds him, or 
 inside.
 
 - No fight. It leads to The Unnamed Crypt (batch 4, the castle).
+- **Whatever order (Ashwin, 2026-10-19).** His name can come back by the jar, Greater Restoration, the spellbook with its
+  last page, or talking him back; the letters can be found before or after; he can be taken as Madam Eva's ally before
+  or after. All end with the letters read and the quest `named` (tests/integration/test_mage_pages_orders.gd). "We found
+  three letters that belong to you" is on his menu at the hut and on the road without asking for news first; as an ally he
+  has a `guest_talk` (`mordenkainen:companion`, with "Nothing. Let's go." as the exit), the gift "The three lost letters"
+  under Give..., and if the party already holds all three when he joins, he asks for them there and then.
 - Corvina's first ring, which he took off her desk the night they went up: a Ring of Telekinesis (very rare).
 
 ### The Forgotten Storm (`the_forgotten_storm`, narrative/mount_baratok/the_forgotten_storm.dialogue; batch 7, level 8)

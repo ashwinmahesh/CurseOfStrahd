@@ -1,0 +1,29 @@
+You are drafting a few short dialogue lines for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. Reply with plain text only: the numbered items below, nothing else. Finish without sending messages to anyone else.
+
+## The situation
+
+Mordenkainen is an archmage from beyond the mists who came to Barovia forty years ago to kill the vampire lord Strahd, lost, and had his memory taken. The player's party gave it back to him. He speaks like this once restored: crisp, imperious, dry, impatient with fools and with himself; short sentences, no flourishes; never cute, never pitied. Sample lines, already in the game:
+
+- "My name is Mordenkainen."
+- "Everyone has questions. Very few have the right ones. Ask later."
+- "Go on. And stay out of jars."
+- "Then try to keep up."
+- "No. You're right. I'd go up there as exactly the man who ran. I need to be someone else first, and that takes longer than a night."
+
+A side quest, "The Mage's Lost Pages": letters from his apprentice Corvina, written in a small slanted hand he knows better than his own, were blown out of his hut forty years ago. The party finds three of them on the mountain. When he reads them he learns that he did not lose to Strahd: he ran, and she stayed behind to hold the door. The party hands him the letters, he reads them in order, once each, and does not give them back.
+
+The bug being fixed: a player who brought Mordenkainen along as a travelling companion (the fortune-teller's cards name him as the party's ally) could not hand him the letters, because the only way to talk to him was a hut conversation that is not there once he travels. We are adding a way to talk to him while he walks with the party, and a way to hand him the letters wherever the party happens to be (not only on his mountain).
+
+## What I need (everything is unvoiced text, short)
+
+1. GREETING. What Mordenkainen says when the player clicks on him while he is walking with the party, to open a conversation. 3 alternatives. One or two short sentences each, 160 characters at most. He is already travelling with them, so it is NOT "you again" or a first meeting. The place is unknown (it could be a swamp, a town, a castle corridor or his own hut), so name no place and no time of day. Do not mention the letters. Tone: dry, proud, a little ashamed of the years he lost, rebuilding his spells.
+
+2. OPTION_LETTERS. The text of the player's menu choice that hands him the letters. 3 alternatives, 55 characters at most, first person plural, plain. Example of the register of the other options in the same menu: "Heard anything interesting?" and "What waits at the Amber Temple?".
+
+3. HANDOVER. A Narrator line for the moment the party hands him the three letters when they are NOT on the mountain (so no snow, no weather, no place). Second person, present tense, one or two sentences, 200 characters at most, the Narrator is wry and observant, never cruel. Keep the facts: you hand him the three letters, he reads them in order, once each, and does not give them back. The version used on the mountain, for rhythm: "You hand Mordenkainen the three letters. He reads them in order, once each, standing in the snow, and doesn't give them back." 2 alternatives.
+
+4. NOTICES. A line for Mordenkainen at the moment he agrees to travel with the party when they are ALREADY carrying the three letters he has been trying to remember. He notices them and asks for them. One or two short sentences, 170 characters at most, dry. 3 alternatives.
+
+5. LABEL. The name of the item in a "Give..." list for the three letters, 28 characters at most. 3 alternatives. Do not use the name Corvina in it.
+
+Format: for each numbered item, list the alternatives on separate lines, prefixed with the item number and a letter (for example "1a", "1b", "1c"). Lines of speech are written without a speaker label. Do not use em dashes.

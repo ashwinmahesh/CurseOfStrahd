@@ -12,6 +12,7 @@
   "voice": "docs/voice/rictavio.md",
   "monster": "rictavio",
   "guest": true,
+  "guest_talk": "vallaki/rictavio:companion",
   "tags": [
     "traveler",
     "bard",

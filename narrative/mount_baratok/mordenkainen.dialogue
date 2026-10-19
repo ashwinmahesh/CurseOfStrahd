@@ -158,11 +158,19 @@ give ring_of_spell_storing
 approve ratatoille +5 kip_smudgewick +1 liriel_dawnsong +1 godrick_pendlebrook +1: You gave Mordenkainen back his name
 -> restored_menu
 
+# What a click on him opens while he travels with the party (data/npcs/mordenkainen.json guest_talk): the same menu as
+# at his hut, with an exit that fits a man on the road.
+~ companion
+Mordenkainen: Make it brief. I have forty years of spellcraft to reconstruct in my head, and your pace is already distracting enough.
+-> restored_menu
+
 ~ restored_greeting
 Mordenkainen: You again. Good. I've been rebuilding my spells from the bottom up; it's like learning to walk after a fall, if walking could set things on fire. What do you need?
 -> restored_menu
 
 ~ restored_menu
+# The letters first: the one thing he is waiting for (The Mage's Lost Pages), at his hut or on the road.
+* [if flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and quest.the_mages_lost_pages != named] We found three letters that belong to you. -> mount_baratok/the_mages_lost_pages:hand_over
 * [if tarokka.ally.npc == mordenkainen and not guest:mordenkainen] Madam Eva's cards named you. Will you come? -> ally
 * [if tarokka.ally.npc != mordenkainen and not flag.mordenkainen_promised_aid] Will you help us against him? -> promise
 * What do you know about Strahd? -> about_strahd
@@ -171,7 +179,8 @@ Mordenkainen: You again. Good. I've been rebuilding my spells from the bottom up
 * What waits at the Amber Temple? -> temple
 * Heard anything interesting? -> mount_baratok/the_mages_lost_pages:news
 * [name:ratatoille] [if quest.a_seat_at_the_table >= a_winery and not flag.ratatoille_master_asked] Ask to become his apprentice. -> companions/table:apprentice
-* Goodbye. -> bye
+* [if guest:mordenkainen] Nothing. Let's go. -> END
+* [if not guest:mordenkainen] Goodbye. -> bye
 
 ~ ally
 Mordenkainen: Eva. That woman read my cards forty years ago and told me I'd be broken, and here I am, with the pieces in a heap. If her cards say I mend in your company, I'm not going to argue with them. Not twice.
@@ -181,6 +190,14 @@ quest find_the_ally found
 quest the_mad_mage joined
 interject class:wizard: You'll want notes. I take very good notes.
 Mordenkainen: Then try to keep up.
+# The party already holds the three letters: he can't be handed them at his hut once he has left it, so he asks for them
+# now (whether or not he had asked for them yet).
+if flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and quest.the_mages_lost_pages != named
+if not quest.the_mages_lost_pages
+quest the_mages_lost_pages asked
+endif
+-> mount_baratok/the_mages_lost_pages:carrying
+endif
 # His lost pages travel with him (Wiki finding 56).
 if not quest.the_mages_lost_pages
 -> mount_baratok/the_mages_lost_pages:joined
