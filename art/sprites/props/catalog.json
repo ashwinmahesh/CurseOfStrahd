@@ -2110,7 +2110,7 @@
       "night"
     ],
     "interiors": {
-      "about": "Interiors: the style a place's rooms are built in, by the start of its id, else by board theme. A lone wall square inside a room is a pillar in that style (kit_pillar_<style>); every open face of a cut-away wall gets the style's coping along its top and, where no panelling does, its face module (kit_<style>_coping, kit_<style>_face). full_walls (W8, Modern look only): rooms get full-height walls, height by style, which open a window round the party where they hide it (SeeThrough); cut_away: they drop to the cut-away height toward the camera instead (off: owner 2026-10-17, \"walls collapse down when looking from certain angles\"); ground: what lies outside the building by style, and outside: a place's own (its ground, how many storeys below it lies, its walls' height); a dungeon's outside is rock.",
+      "about": "Interiors: the style a place's rooms are built in, by the start of its id, else by board theme. A lone wall square inside a room is a pillar in that style (kit_pillar_<style>); every open face of a cut-away wall gets the style's coping along its top and, where no panelling does, its face module (kit_<style>_coping, kit_<style>_face). full_walls (W8, Modern look only): rooms get full-height walls, height by style, which open a window round the party where they hide it (SeeThrough); cut_away: they drop to the cut-away height toward the camera instead (off: owner 2026-10-17, \"walls collapse down when looking from certain angles\"); thin_walls (Natural Maps Plan I1, owner 2026-10-19): the side of a wall that faces a room is set back into the wall square by inset (0.35 of a square), so a wall between two rooms stands a foot and a half thick, not a whole square, and the places named in not (starts of ids: the caves, which have their own walls) keep whole squares; ground: what lies outside the building by style, and outside: a place's own (its ground, how many storeys below it lies, its walls' height); a dungeon's outside is rock.",
       "places": {
         "castle_ravenloft": "castle",
         "amber_temple": "amber"
@@ -2129,6 +2129,10 @@
       },
       "full_walls": true,
       "cut_away": false,
+      "thin_walls": {
+        "inset": 0.35,
+        "not": ["werewolf_den", "ghakis_lair", "amber_deep"]
+      },
       "ground": {
         "manor": "village/grass",
         "timber": "village/cobbles",

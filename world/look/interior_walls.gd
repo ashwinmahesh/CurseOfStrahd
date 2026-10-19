@@ -6,6 +6,13 @@ extends RefCounted
 ## building's outer walls there is ground (a village street, a castle yard) instead of black, a storey or more below on
 ## an upper floor, with the outer walls running down to it.
 ##
+## Walls as thick as walls (Natural Maps Plan I1, owner 2026-10-19: "we don't need to draw our real world maps as a
+## battle grid ... a real natural map that we just overlay a grid on top afterwards"): each side of a wall square that
+## faces a room is drawn set back into the wall square (catalog interiors "thin_walls", 0.35 of a square), so a wall
+## between two rooms stands a foot and a half thick, not a whole square, and the room's floor runs on to the new face.
+## Doors, pieces hung on a wall and furniture backed onto it follow through ArenaBoard.wall_inset_at. Walls with no room
+## beside them stay whole blocks (thick masonry, the outer mass). The rules grid is never changed.
+##
 ## With the catalog's interiors "cut_away" on (off since 2026-10-17), the walls between the camera and the rooms behind
 ## them drop to the old cut-away height instead, turning with the camera: each wall is built in a full and a cut
 ## version, and the board's cut-away each frame reaches them through a building entry {"interior": true}
@@ -23,6 +30,9 @@ const BEYOND := 0.8
 ## Only floor this near the party (squares) brings a wall down: rooms further off keep their walls, so the view is the
 ## party's room and its neighbours, framed by standing walls.
 const NEAR := 7.0
+## How far a room-facing side of a wall is set back into its square (a fraction of a square) unless the catalog's
+## interiors "thin_walls" says otherwise: a wall between two rooms stands 1 - 2 * THIN = 0.3 of a square thick.
+const THIN := 0.35
 
 
 ## Builds wall square `c` (wall material `wall_mat`, as ArenaBoard picked it): a pillar, a room wall (with a cut version
@@ -44,8 +54,9 @@ static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
 	return true
 
 
-## This board's W8 settings, worked out once: {style, height, ground, below, outside (cells), walls, headers, cutting};
-## empty when off.
+## This board's W8 settings, worked out once: {style, height, ground, below, outside (cells), walls, headers, cutting,
+## inset (how far thin walls are set back, 0 for whole squares), cuts (wall square -> bits of the sides set back, by
+## SetDressing.FACES), feet (the floor still to lay under the bands thin walls leave of their squares)}; empty when off.
 static func _state(board: ArenaBoard) -> Dictionary:
 	if board.has_meta("interior_walls"):
 		return board.get_meta("interior_walls") as Dictionary
@@ -57,7 +68,7 @@ static func _state(board: ArenaBoard) -> Dictionary:
 		st = {"style": style, "height": float(place.get("height", HEIGHTS.get(style, 2.4))),
 			"ground": str(place.get("ground", (cfg.get("ground", {}) as Dictionary).get(style, ""))),
 			"below": float(place.get("below", 0.0)) * STOREY, "outside": _outside_cells(board), "walls": [],
-			"headers": {}, "done_ground": false, "cutting": cutting()}
+			"headers": {}, "done_ground": false, "cutting": cutting(), "inset": _inset(board, cfg), "cuts": {}, "feet": []}
 		var root := Node3D.new()
 		root.name = "InteriorWalls"
 		board.add_child(root)
@@ -69,7 +80,22 @@ static func _state(board: ArenaBoard) -> Dictionary:
 			"aabb": AABB(), "rect": Rect2i(), "group": -1, "height": float(st["height"]), "state": st, "dir": Vector2.ZERO}
 		board.buildings.append(entry)   # (the entry holds the state, never the other way: a cycle would leak both)
 	board.set_meta("interior_walls", st)
+	if not st.is_empty() and float(st["inset"]) > 0.0:
+		board.wall_inset = -float(st["inset"])   # pieces hung on a wall or backed onto it stand on its set-back face
 	return st
+
+
+## How far in this board's walls are set back (catalog interiors "thin_walls": {"inset", "not": [place id starts]}); 0
+## for the places the catalog leaves out (the caves), tents (their canvas), natural ground (a hill's floors aren't flat)
+## and Castle Ravenloft's roofs (the castle's own walls).
+static func _inset(board: ArenaBoard, cfg: Dictionary) -> float:
+	var thin := cfg.get("thin_walls", {}) as Dictionary
+	if thin.is_empty() or TentWalls.is_tent(board) or board.has_terrain() or board.has_meta("castle"):
+		return 0.0
+	for prefix: Variant in thin.get("not", []):
+		if board.place.begins_with(str(prefix)):
+			return 0.0
+	return clampf(float(thin.get("inset", THIN)), 0.0, 0.45)
 
 
 ## Whether rooms' walls cut away toward the camera (catalog building_kit interiors "cut_away"; off, owner 2026-10-17).
@@ -145,8 +171,8 @@ static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: D
 	var full := Node3D.new()
 	full.name = "Full"
 	node.add_child(full)
-	_box(full, Vector3(1, h, 1), Vector3(0, h / 2.0, 0), _tall(wall_mat, h))
-	_box(full, Vector3(1.02, 0.1, 1.02), Vector3(0, h + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
+	var rects := _solid(board, c, st)
+	_slabs(full, rects, h, _tall(wall_mat, h))
 	ModelPiece.dress_wall(board, c, wall_mat, h, full)
 	var low: Node3D = null
 	if bool(st["cutting"]):
@@ -154,12 +180,11 @@ static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: D
 		low.name = "Cut"
 		low.visible = false
 		node.add_child(low)
-		_box(low, Vector3(1, CUT, 1), Vector3(0, CUT / 2.0, 0), wall_mat)
-		_box(low, Vector3(1.02, 0.1, 1.02), Vector3(0, CUT + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
+		_slabs(low, rects, CUT, wall_mat)
 		ModelPiece.dress_wall(board, c, wall_mat, CUT, low)
 	var below := float(st["below"])
 	if below > 0.0 and _beside_outside(c, st):
-		_box(node, Vector3(1, below, 1), Vector3(0, -below / 2.0, 0), wall_mat)   # down to the street
+		_footing(node, below, wall_mat, st)   # down to the street
 	SeeThrough.mark(node)
 	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "cell": c, "cut": false, "h": h})
 	# A doorway beside this wall (one open square between it and another wall): the wall goes on over it.
@@ -177,7 +202,8 @@ static func _open(board: ArenaBoard, c: Vector2i) -> bool:
 
 ## The wall over a doorway, from the cut-away height (an interior door's top) to the storey's; where cutting is on, it
 ## stands while either wall beside it stands. A doorway into a room is framed in the place's style (W7): the jambs stay, and the head over
-## them (a lintel, an arch, a cornice) goes with the wall over the doorway.
+## them (a lintel, an arch, a cornice) goes with the wall over the doorway. Thin walls: as thick as they, running on to
+## the opening's edge at a doorway, and across to the set-back faces over a corridor.
 static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: Material, st: Dictionary) -> void:
 	var h := float(st["height"])
 	var node := Node3D.new()
@@ -188,7 +214,10 @@ static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: M
 	var full := Node3D.new()
 	full.name = "Full"
 	node.add_child(full)
-	var size := Vector3(1.0, h - CUT, 0.5) if along.x != 0 else Vector3(0.5, h - CUT, 1.0)
+	var inset := float(st["inset"])
+	var thick := 0.5 if inset <= 0.0 else 1.0 - 2.0 * inset
+	var span := 1.0 if inset <= 0.0 or doorway(board, n) != Vector2i.ZERO else 1.0 + 2.0 * inset
+	var size := Vector3(span, h - CUT, thick) if along.x != 0 else Vector3(thick, h - CUT, span)
 	_box(full, size, Vector3(0, CUT + (h - CUT) / 2.0, 0), _tall(wall_mat, h))
 	_box(full, size + Vector3(0.02, 0.1 - size.y, 0.02), Vector3(0, h + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
 	var low: Node3D = null
@@ -261,13 +290,14 @@ static func _door_at(board: ArenaBoard, c: Vector2i) -> bool:
 
 
 ## The doorway's frame on each of its room sides: the jambs on the doorway's own node (they stay as the walls cut
-## away), the head in the wall over it (`full`).
+## away), the head in the wall over it (`full`). Each stands on the face of the walls beside the doorway (set back, with
+## thin walls).
 static func _frame(node: Node3D, full: Node3D, sides: Array[Vector2i], style: String, st: Dictionary, n: Vector2i) -> void:
 	var jambs: Array = []
 	var heads: Array = []
 	for p in sides:
 		var dir := Vector3(p.x, 0, p.y)
-		var xf := Transform3D(Basis(Vector3.UP, atan2(dir.x, dir.z)), dir * (0.5 + ModelPiece.GAP))
+		var xf := Transform3D(Basis(Vector3.UP, atan2(dir.x, dir.z)), dir * (0.5 - float(st["inset"]) + ModelPiece.GAP))
 		jambs.append(["kit_%s_doorway" % style, xf])
 		heads.append(["kit_%s_doorway_head" % style, xf])
 	var parts: Array[Node3D] = []
@@ -342,7 +372,8 @@ static func _wall(board: ArenaBoard, c: Vector2i) -> bool:
 
 
 ## Solid wall inside the building (a thick wall's middle): a block as tall as the walls round it, its top the dark of
-## a wall's top (at the cut-away height where walls cut away, so it never stands over a wall that's down).
+## a wall's top (at the cut-away height where walls cut away, so it never stands over a wall that's down). Whole, unless
+## a room's corner touches it diagonally (thin walls cut that corner back).
 static func _block(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dictionary) -> void:
 	var node := Node3D.new()
 	node.name = "WallBlock"
@@ -350,12 +381,219 @@ static func _block(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dicti
 	node.set_meta("on_floor", true)
 	board.add_child(node)
 	var h := CUT if bool(st["cutting"]) else float(st["height"])
-	_box(node, Vector3(1, h, 1), Vector3(0, h / 2.0, 0), wall_mat if bool(st["cutting"]) else _tall(wall_mat, h))
-	_box(node, Vector3(1.02, 0.1, 1.02), Vector3(0, h + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
+	_slabs(node, _solid(board, c, st), h, wall_mat if bool(st["cutting"]) else _tall(wall_mat, h))
 	var below := float(st["below"])
 	if below > 0.0 and _beside_outside(c, st):
-		_box(node, Vector3(1, below, 1), Vector3(0, -below / 2.0, 0), wall_mat)
+		_footing(node, below, wall_mat, st)
 	SeeThrough.mark(node)
+
+
+## The part of wall square `c` that is solid, as rectangles in the square's own frame (x and z from -0.5 to 0.5). With
+## thin walls it is the square less a band of `inset` along each side that faces a room, and less a corner where only
+## the diagonal square is open: the 3 x 3 pieces of the square, merged. Also records which sides were set back
+## (`cuts`, for the pieces that stand on them) and queues the floor to lay under the bands (`finish`).
+static func _solid(board: ArenaBoard, c: Vector2i, st: Dictionary) -> Array[Rect2]:
+	var inset := float(st["inset"])
+	var rects: Array[Rect2] = []
+	if inset <= 0.0:
+		rects.append(Rect2(-0.5, -0.5, 1.0, 1.0))
+		return rects
+	var xs: Array[float] = [-0.5, -0.5 + inset, 0.5 - inset, 0.5]
+	var gone := [[false, false, false], [false, false, false], [false, false, false]]   # [column][row]
+	var mask := 0
+	var bands: Array[Array] = []   # [rect, the open square it lies beside]
+	for k in SetDressing.FACES.size():
+		var d: Vector2i = SetDressing.FACES[k]
+		if _cuts_now(board, c, d):
+			mask |= 1 << k
+			for j in 3:
+				if d.x != 0:
+					gone[0 if d.x < 0 else 2][j] = true
+				else:
+					gone[j][0 if d.y < 0 else 2] = true
+	var cut_n := (mask & (1 << SetDressing.FACES.find(Vector2i(0, -1)))) != 0
+	var cut_s := (mask & (1 << SetDressing.FACES.find(Vector2i(0, 1)))) != 0
+	for k in SetDressing.FACES.size():
+		if (mask & (1 << k)) == 0:
+			continue
+		var d: Vector2i = SetDressing.FACES[k]
+		var r: Rect2
+		if d.y > 0:
+			r = Rect2(-0.5, 0.5 - inset, 1.0, inset)
+		elif d.y < 0:
+			r = Rect2(-0.5, -0.5, 1.0, inset)
+		else:
+			# (the north and south bands take the corners)
+			var z0 := -0.5 + (inset if cut_n else 0.0)
+			var z1 := 0.5 - (inset if cut_s else 0.0)
+			r = Rect2(0.5 - inset if d.x > 0 else -0.5, z0, inset, z1 - z0)
+		bands.append([r, c + d])
+	for dz: int in [-1, 1]:
+		for dx: int in [-1, 1]:
+			var i := 0 if dx < 0 else 2
+			var j := 0 if dz < 0 else 2
+			if not gone[i][j] and _open(board, c + Vector2i(dx, dz)):
+				gone[i][j] = true
+				bands.append([Rect2(-0.5 if dx < 0 else 0.5 - inset, -0.5 if dz < 0 else 0.5 - inset, inset, inset), c + Vector2i(dx, dz)])
+	(st["cuts"] as Dictionary)[c] = mask
+	for b: Array in bands:
+		(st["feet"] as Array).append([c, b[0], b[1]])
+	# Merge the pieces that are left: runs along each row, then runs of the same width down the rows.
+	var prev := {}
+	for j in 3:
+		var now := {}
+		var i := 0
+		while i < 3:
+			if gone[i][j]:
+				i += 1
+				continue
+			var k := i
+			while k + 1 < 3 and not gone[k + 1][j]:
+				k += 1
+			var key := Vector2i(i, k)
+			var z0 := xs[j]
+			var z1 := xs[j + 1]
+			if prev.has(key):
+				var at: int = prev[key]
+				rects[at] = Rect2(rects[at].position, Vector2(rects[at].size.x, z1 - rects[at].position.y))
+				now[key] = at
+			else:
+				rects.append(Rect2(xs[i], z0, xs[k + 1] - xs[i], z1 - z0))
+				now[key] = rects.size() - 1
+			i = k + 1
+		prev = now
+	return rects
+
+
+## Whether the open square beside wall square `c` in direction `d` takes the wall's side back from the grid line: every
+## open square does but a doorway lying in the line of the wall, where the wall runs on to the opening's edge.
+static func cuts(board: ArenaBoard, c: Vector2i, d: Vector2i) -> bool:
+	# As it was when the wall was built: a closed door has made its square wall in the grid since.
+	var st := board.get_meta("interior_walls", {}) as Dictionary
+	if st.has("cuts") and (st["cuts"] as Dictionary).has(c):
+		var k := SetDressing.FACES.find(d)
+		return k >= 0 and (int((st["cuts"] as Dictionary)[c]) & (1 << k)) != 0
+	return _cuts_now(board, c, d)
+
+
+static func _cuts_now(board: ArenaBoard, c: Vector2i, d: Vector2i) -> bool:
+	var n := c + d
+	if not _open(board, n):
+		return false
+	var along := doorway(board, n)
+	return along == Vector2i.ZERO or (along != d and along != -d)
+
+
+## Which way the wall runs through open square `n` when it is a doorway: one open square between two walls, opening into
+## a room on at least one side (so not a corridor or its dead end); ZERO when it isn't.
+static func doorway(board: ArenaBoard, n: Vector2i) -> Vector2i:
+	if not _open(board, n):
+		return Vector2i.ZERO
+	for along: Vector2i in [Vector2i(1, 0), Vector2i(0, 1)]:
+		if not (_wall(board, n - along) and _wall(board, n + along)):
+			continue
+		var perp := Vector2i(along.y, along.x)
+		for p: Vector2i in [perp, -perp]:
+			var m := n + p
+			if _open(board, m) and (_open(board, m - along) or _open(board, m + along)):
+				return along
+	return Vector2i.ZERO
+
+
+## How far in from wall square `wall`'s side toward `normal` the wall's surface stands, for the pieces hung on it or
+## backed onto it (ArenaBoard.wall_inset_at): negative for a side thin walls set back into the square, 0 where the
+## wall runs to the grid line (the side of a doorway, a pillar), a tent canvas's inset otherwise.
+static func inset_at(board: ArenaBoard, wall: Vector2i, normal: Vector2i, hung := true) -> float:
+	var st := board.get_meta("interior_walls", {}) as Dictionary
+	var inset := 0.0 if st.is_empty() else float(st.get("inset", 0.0))
+	if inset <= 0.0:
+		return board.wall_inset
+	if (st["cuts"] as Dictionary).has(wall):
+		if not cuts(board, wall, normal):
+			return 0.0
+		# Furniture stays on the grid line against a face too short for it: pressed back into the wall square, two pieces
+		# against the two faces of a wall's end would meet in it. A hung piece has to touch the wall.
+		return 0.0 if not hung and short_face(board, wall, normal) else -inset
+	return -inset if board.door_cells.has(wall) else 0.0
+
+
+## Whether side `d` of wall square `c` is much shorter than a square (a thin wall's end, or its last square before an
+## end): what stands against it or hangs on it would reach past the wall.
+static func short_face(board: ArenaBoard, c: Vector2i, d: Vector2i) -> bool:
+	if board.wall_inset >= 0.0:
+		return false
+	var length := 1.0
+	for e: Vector2i in [Vector2i(d.y, -d.x), Vector2i(-d.y, d.x)]:
+		if cuts(board, c, e):
+			length += board.wall_inset
+	return length < 0.9
+
+
+## How far side `d` of thin wall square `c` runs along a face module's own x (a module is made standing on its face, one
+## square wide, from -0.5 to 0.5; its +x is (d.y, -d.x) on the grid): shorter at an end where the next square along is a
+## room too (the wall's end cuts that end of the face back by the inset), longer where it goes on round a room's inside
+## corner into the corner square's notch.
+static func face_span(board: ArenaBoard, c: Vector2i, d: Vector2i) -> Vector2:
+	var span := Vector2(-0.5, 0.5)
+	var inset := -board.wall_inset
+	var along := Vector2i(d.y, -d.x)
+	for k: int in [1, -1]:
+		var e := along * k
+		var edge := 0.5 * k
+		if cuts(board, c, e):
+			edge -= inset * k
+		elif _wall(board, c + e) and _wall(board, c + e + d):
+			edge += inset * k   # a room's inside corner: the face goes on into the corner square's notch
+		if k > 0:
+			span.y = edge
+		else:
+			span.x = edge
+	return span
+
+
+## The floor still to lay under the bands thin walls leave of their squares, once every square is built (ArenaBoard.
+## _build): each band takes the floor of the open square it lies beside, so that room's floor runs on to the wall's
+## face. Recorded with the wall square's scenery (a prop that takes the square hides them, as the wall).
+static func finish(board: ArenaBoard) -> void:
+	var st := board.get_meta("interior_walls", {}) as Dictionary
+	if st.is_empty() or float(st["inset"]) <= 0.0:
+		return
+	for f: Array in st["feet"]:
+		var c: Vector2i = f[0]
+		var r: Rect2 = f[1]
+		var n: Vector2i = f[2]
+		var fb := board.floor_box(n)
+		var mat: Material = fb.material_override if fb != null and fb.material_override != null else board.floor_material()
+		var top := board.floor_y(n)
+		var bottom := minf(top, 0.0) - 0.2
+		var at := board.cell_center(c)
+		var mi := MeshInstance3D.new()
+		mi.name = "WallFoot"
+		mi.mesh = _box_mesh(Vector3(r.size.x, top - bottom, r.size.y))
+		mi.position = Vector3(at.x + r.get_center().x, (top + bottom) / 2.0, at.z + r.get_center().y)
+		mi.material_override = mat
+		board.add_child(mi)
+		mi.set_meta("on_floor", true)
+		mi.set_meta("wall_foot", true)
+		var nodes: Array = board.dressing.get(c, [])
+		nodes.append(mi)
+		board.dressing[c] = nodes
+	(st["feet"] as Array).clear()
+
+
+## Solid wall boxes for `rects` (`_solid`), `h` tall on the square's floor, each with its dark top.
+static func _slabs(parent: Node3D, rects: Array[Rect2], h: float, mat: Material) -> void:
+	for r in rects:
+		var mid := r.get_center()
+		_box(parent, Vector3(r.size.x, h, r.size.y), Vector3(mid.x, h / 2.0, mid.y), mat)
+		_box(parent, Vector3(r.size.x + 0.02, 0.1, r.size.y + 0.02), Vector3(mid.x, h + 0.05, mid.y), Look.cel(ArenaBoard.CUT_FACE))
+
+
+## An outer wall of an upper floor running down to the ground outside. With thin walls it starts under the floor laid at
+## the foot of the room-facing sides, so the two never share a top.
+static func _footing(node: Node3D, below: float, wall_mat: Material, st: Dictionary) -> void:
+	var skip := 0.2 if float(st["inset"]) > 0.0 else 0.0
+	_box(node, Vector3(1, below - skip, 1), Vector3(0, -(below + skip) / 2.0, 0), wall_mat)
 
 
 ## Outside the building: the ground the house stands on, a storey or more below on an upper floor, made once as one slab
@@ -413,13 +651,25 @@ static var _talls: Dictionary = {}
 static func _box(parent: Node3D, size: Vector3, pos: Vector3, mat: Material) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	mi.name = "Wall"
-	var bm := BoxMesh.new()
-	bm.size = size
-	mi.mesh = bm
+	mi.mesh = _box_mesh(size)
 	mi.position = pos
 	mi.material_override = mat
 	parent.add_child(mi)
 	return mi
+
+
+static var _box_meshes: Dictionary = {}   ## size (thousandths) -> the BoxMesh every wall of that size shares
+
+
+## The box mesh of `size`, made once: a place's walls come in a few sizes and a mesh of its own for each of hundreds of
+## boxes was most of what drawing them cost to build.
+static func _box_mesh(size: Vector3) -> BoxMesh:
+	var key := Vector3i(roundi(size.x * 1000.0), roundi(size.y * 1000.0), roundi(size.z * 1000.0))
+	if not _box_meshes.has(key):
+		var bm := BoxMesh.new()
+		bm.size = size
+		_box_meshes[key] = bm
+	return _box_meshes[key] as BoxMesh
 
 
 ## Each frame where cutting is on (TownBuilder.cut_away): a wall with floor just beyond it, looking from the camera, near the party,

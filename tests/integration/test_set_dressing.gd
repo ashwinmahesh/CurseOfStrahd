@@ -103,7 +103,7 @@ func test_death_house_doors_props_and_containers() -> void:
 	if not models.is_empty():
 		# A 3D cabinet (docs/art/models.md): its back on the den's west wall face, facing east into the room.
 		var box := _world_box(models[0] as Node3D)
-		assert_true(absf(box.position.x - 1.0) < 0.02, "its back on the west wall's face (x %.3f)" % box.position.x)
+		assert_true(absf(box.position.x - (1.0 + v.board.wall_inset)) < 0.02, "its back on the west wall's face (x %.3f)" % box.position.x)
 		assert_true((models[0] as Node3D).global_basis.z.normalized().is_equal_approx(Vector3(1, 0, 0)), "facing into the room")
 		var mi := (models[0] as Node3D).find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D
 		var was: Variant = (mi.get_surface_override_material(0) as ShaderMaterial).get_shader_parameter("albedo")
@@ -433,8 +433,9 @@ func test_wall_pieces_sit_flush_with_their_wall() -> void:
 					problems.append("%s: %s turned %.0f degrees off its wall" % [loc_id, node.name, rad_to_deg(yaw)])
 					continue
 				var facing := node.global_basis.z
-				# (A tent's pieces stand off its canvas, which stands in from the wall square's face: ArenaBoard.wall_inset.)
-				var behind := node.global_position - Vector3(facing.x, 0, facing.z).normalized() * ((0.55 if against else 0.05) + board.wall_inset)
+				# (A tent's pieces stand off its canvas, which stands in from the wall square's face: ArenaBoard.wall_inset.
+				# A thin wall's face lies back inside its square, so there the piece only has further to reach: not looked for.)
+				var behind := node.global_position - Vector3(facing.x, 0, facing.z).normalized() * ((0.55 if against else 0.05) + maxf(board.wall_inset, 0.0))
 				var c := board.grid.cell_at(behind)
 				var backed := board.grid.has_flag(c, CombatGrid.WALL) or board.door_cells.has(c)
 				if against and SetDressing.backing_side(board, board.grid.cell_at(node.global_position)) == Vector2i.ZERO:

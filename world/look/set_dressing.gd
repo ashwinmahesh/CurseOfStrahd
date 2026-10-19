@@ -356,9 +356,10 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 		var disguise := Node3D.new()
 		disguise.name = "Disguise"
 		leaf.add_child(disguise)
+		var face_at := 0.5 + minf(0.0, board.wall_inset)   # the wall's faces: the square's edges, or thin walls' set-back ones
 		var block := MeshInstance3D.new()
 		var bm := BoxMesh.new()
-		bm.size = Vector3(1, h, 1)
+		bm.size = Vector3(1, h, 2.0 * face_at)
 		block.mesh = bm
 		block.position = Vector3(0, h / 2.0, 0)
 		block.material_override = board.wall_material()
@@ -369,7 +370,7 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 			for s: float in [-1.0, 1.0]:
 				var face := ModelPiece.door_leaf(model, w, h)
 				face.name = "Face"
-				face.position = Vector3(0, 0, s * (0.5 + depth / 2.0 + WALL_GAP))
+				face.position = Vector3(0, 0, s * (face_at + depth / 2.0 + WALL_GAP))
 				face.rotation.y = 0.0 if s > 0 else PI
 				disguise.add_child(face)
 		elif art == "door_bookcase":
@@ -377,7 +378,7 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 				var face := _sprite(art)
 				face.billboard = BaseMaterial3D.BILLBOARD_DISABLED
 				face.scale = sp.scale
-				face.position = Vector3(0, 0, s * (0.5 + WALL_GAP))
+				face.position = Vector3(0, 0, s * (face_at + WALL_GAP))
 				face.rotation.y = 0.0 if s > 0 else PI
 				disguise.add_child(face)
 	return leaf
@@ -896,17 +897,18 @@ static func _against_wall(board: ArenaBoard, parent: Node3D, art: String, front:
 	root.position = board.cell_center(cell)
 	root.rotation.y = atan2(n.x, n.z)
 	parent.add_child(root)
+	var inset := minf(0.0, board.wall_inset_at(cell + wall, -wall, false))   # a thin wall's face is further back, in its square
 	var sp := wall_sprite(front)
 	sp.pixel_size *= scale_
 	sp.scale.x = fit   # squeezed to fit along the wall, never shortened: it keeps its real height
-	sp.position = Vector3(0, 0, depth - 0.5)
+	sp.position = Vector3(0, 0, depth - 0.5 + inset)
 	root.add_child(sp)
 	if body:
 		var mi := MeshInstance3D.new()
 		var bm := BoxMesh.new()
 		bm.size = Vector3(w * fit * 0.9, h * 0.86, depth - 0.02)
 		mi.mesh = bm
-		mi.position = Vector3(0, bm.size.y / 2.0, depth / 2.0 - 0.5)
+		mi.position = Vector3(0, bm.size.y / 2.0, depth / 2.0 - 0.5 + inset)
 		mi.material_override = Look.cel("walnut")
 		root.add_child(mi)
 	return root
@@ -934,17 +936,20 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	var wall := cell
 	var normal := Vector2i.ZERO
 	if _wall_at(board, cell):
-		# The side facing the piece's own room first (an area containing its square), then the usual order.
-		for own: bool in [true, false]:
-			for d in FACES:
-				if normal == Vector2i.ZERO and _open_at(board, cell + d) and (not own or _same_area(board, cell, cell + d)):
-					normal = d
+		# The side facing the piece's own room first (an area containing its square), then the usual order; a side long
+		# enough for it before a thin wall's short end.
+		for roomy: bool in [true, false]:
+			for own: bool in [true, false]:
+				for d in FACES:
+					if normal == Vector2i.ZERO and _open_at(board, cell + d) and (not own or _same_area(board, cell, cell + d)) \
+							and (not roomy or not InteriorWalls.short_face(board, cell, d)):
+						normal = d
 	else:
-		for d in FACES:
-			if _wall_at(board, cell - d):
-				wall = cell - d
-				normal = d
-				break
+		for roomy: bool in [true, false]:
+			for d in FACES:
+				if normal == Vector2i.ZERO and _wall_at(board, cell - d) and (not roomy or not InteriorWalls.short_face(board, cell - d, d)):
+					wall = cell - d
+					normal = d
 	if normal == Vector2i.ZERO:
 		return false
 	# One piece per wall face: a second one moves to another open face of the same wall square if it has one.
@@ -976,7 +981,7 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	var bottom := 0.0 if h >= 0.85 else maxf(0.0, 0.7 - h / 2.0)
 	var n := Vector3(normal.x, 0, normal.y)
 	var c := board.cell_center(wall)
-	sp.position = Vector3(c.x, board.floor_y(cell if not _wall_at(board, cell) else cell + normal) + bottom, c.z) + n * (0.5 + WALL_GAP + board.wall_inset)
+	sp.position = Vector3(c.x, board.floor_y(cell if not _wall_at(board, cell) else cell + normal) + bottom, c.z) + n * (0.5 + WALL_GAP + board.wall_inset_at(wall, normal))
 	sp.rotation.y = atan2(n.x, n.z)
 	root.add_child(sp)
 	board.attach_to_building(wall, root)

@@ -60,7 +60,7 @@ static func dress(board: ArenaBoard, loc: Dictionary) -> int:
 				if board.grid.in_bounds(w) and board.grid.has_flag(w, CombatGrid.WALL):
 					wall_dir = -d
 					break
-			if walls_beside == 1 and wall_dir != Vector2i.ZERO:
+			if walls_beside == 1 and wall_dir != Vector2i.ZERO and not InteriorWalls.short_face(board, c + wall_dir, -wall_dir):
 				var w := c + wall_dir
 				var face := "%d,%d,%d,%d" % [w.x, w.y, -wall_dir.x, -wall_dir.y]
 				var arts := _arts(rule.get("wall", []) as Array)

@@ -210,9 +210,10 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2]) * scale_
 		holder.set_meta("against_wall", true)
 		if back != Vector2i.ZERO:
-			model.position = Vector3(0, 0, -0.5 + GAP + board.wall_inset)
-			if board.wall_inset > 0.0 and depth + board.wall_inset > 1.0 - GAP:
-				model.scale.z *= (1.0 - GAP - board.wall_inset) / depth   # stood off a tent's canvas, still in its square
+			var inset := board.wall_inset_at(cell + back, -back, false)   # a tent's canvas (+), a thin wall's set-back face (-)
+			model.position = Vector3(0, 0, -0.5 + GAP + inset)
+			if inset > 0.0 and depth + inset > 1.0 - GAP:
+				model.scale.z *= (1.0 - GAP - inset) / depth   # stood off a tent's canvas, still in its square
 			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it
 		else:
 			model.position = Vector3(0, 0, -depth / 2.0)
@@ -401,7 +402,7 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	if str(info.get("mount", "wall")) != "wall":
 		# A piece modelled round its middle (a door leaf hung as a picture) stands just in front of the face.
 		model.position = Vector3(0, 0, depth / 2.0)
-	model.position.z += board.wall_inset   # off a tent's canvas (ArenaBoard.wall_inset)
+	model.position.z += board.wall_inset_at(wall, normal)   # off a tent's canvas, or back to a thin wall's face (ArenaBoard.wall_inset_at)
 	_extras(model, info)
 	return holder
 
@@ -469,12 +470,26 @@ static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, top: 
 		if not board.grid.in_bounds(n) or board.grid.has_flag(n, CombatGrid.WALL) or board.grid.has_flag(n, CombatGrid.VOID):
 			continue
 		var dir := Vector3(d.x, 0, d.y)
-		var foot := dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n) - base, 0)
+		# A thin wall (InteriorWalls) has set this side back into its square, and the side's length runs from where the
+		# neighbouring sides cut it short to where it carries on into a room's corner: along the module's own x.
+		var inset := 0.0
+		var span := Vector2(-0.5, 0.5)
+		if board.wall_inset < 0.0:
+			if not InteriorWalls.cuts(board, c, d):
+				continue   # the end of the wall at a doorway: the wall over the opening covers its top
+			inset = board.wall_inset
+			span = InteriorWalls.face_span(board, c, d)
+		var foot := dir * (0.5 + inset + GAP * 0.5) + Vector3(0, board.floor_y(n) - base, 0)
 		var yaw := atan2(dir.x, dir.z)
 		if BuildingKit.has(coping):
-			kit_parts.append([coping, Transform3D(Basis(Vector3.UP, yaw), foot + Vector3(0, top - CUT_TOP, 0))])
+			# (a coping is the same all along, so a shorter side takes it stretched shorter)
+			var along := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(span.y - span.x, 1.0, 1.0))
+			kit_parts.append([coping, Transform3D(along, foot + Vector3(dir.z, 0, -dir.x) * ((span.x + span.y) / 2.0)
+				+ Vector3(0, top - CUT_TOP, 0))])
 		if board.grid.in_bounds(n + d) and board.grid.has_flag(n + d, CombatGrid.WALL):
 			continue   # a one-square gap in the wall: a doorway
+		if span.y - span.x < 0.999:
+			continue   # a module is a whole square wide: a shorter side stays plain
 		if id == "":
 			if BuildingKit.has(face_id):
 				kit_parts.append([face_id, Transform3D(Basis(Vector3.UP, yaw), foot)])

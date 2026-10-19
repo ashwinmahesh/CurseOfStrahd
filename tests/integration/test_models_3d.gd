@@ -85,14 +85,15 @@ func test_the_library_is_built_of_models() -> void:
 	assert_eq(str(shelf.get_meta("model")), "bookcase")
 	assert_true(shelf.global_basis.z.normalized().is_equal_approx(Vector3(0, 0, -1)), "it faces north, into the room")
 	var box := _bounds(shelf)
-	assert_true(absf(box.end.z - 9.0) < 0.02, "its back is on the secret door's face (z %.3f)" % box.end.z)
+	# (Thin walls set their faces back into their squares: ArenaBoard.wall_inset, negative.)
+	assert_true(absf(box.end.z - (9.0 - v.board.wall_inset)) < 0.02, "its back is on the secret door's face (z %.3f)" % box.end.z)
 	assert_true(box.size.x < 1.0 and box.size.x > 0.85, "about a square wide")
 	assert_true(absf(box.size.y - 1.4) < 0.05, "7 ft tall")
 	for id: String in ["library_histories", "library_hearth", "library_chair"]:
 		assert_eq(_models(v.prop_nodes[id] as Node).size(), 1, id + " is a model")
 	assert_eq(_models(v.container_nodes["library_desk"] as Node).size(), 1, "the desk is a model")
 	var hearth := _models(v.prop_nodes["library_hearth"] as Node)[0]
-	assert_true(absf(_bounds(hearth).position.z - 1.0) < 0.02, "the hearth stands on the north wall's face")
+	assert_true(absf(_bounds(hearth).position.z - (1.0 + v.board.wall_inset)) < 0.02, "the hearth stands on the north wall's face")
 	assert_true(hearth.find_children("*", "Sprite3D", true, false).size() > 0, "with a fire in it")
 	var leaf := (v.door_nodes["library_door"] as Node3D).get_node_or_null("Leaf")
 	assert_true(leaf != null and leaf.has_meta("model"), "the library door's leaf is a model")
@@ -142,6 +143,8 @@ func test_models_stay_in_their_square() -> void:
 				var n := m.global_basis.z.normalized()
 				var front := v.grid.cell_at(m.global_position + n * 0.5)
 				room = Rect2(front.x - 0.06, front.y - 0.06, 1.12, 1.12)
+			if (m.has_meta("hung") or m.has_meta("against_wall")) and v.board.wall_inset < 0.0:
+				room = _reach_back(room, m, -v.board.wall_inset)   # thin walls: the wall's face lies back inside its square
 			if m.has_meta("scaled"):
 				# A prop asked to be bigger (its `scale`) reaches as far past its square as its extra size asks, no further.
 				var size := info.get("size", [1, 1, 1]) as Array
@@ -230,8 +233,10 @@ func test_3d_pieces_dont_overlap() -> void:
 			for dx: int in [-1, 0, 1]:
 				for dz: int in [-1, 0, 1]:
 					var c := (rects[i][1] as Vector2i) + Vector2i(dx, dz)
+					# (A thin wall is only its middle: its faces lie back inside its square, ArenaBoard.wall_inset.)
 					if (dx != 0 or dz != 0) and board.grid.in_bounds(c) and board.grid.has_flag(c, CombatGrid.WALL) \
-							and not board.door_cells.has(c) and _drawn(board, c) and a.intersects(Rect2(c.x, c.y, 1, 1)):
+							and not board.door_cells.has(c) and _drawn(board, c) \
+							and a.intersects(Rect2(c.x, c.y, 1, 1).grow(minf(board.wall_inset, 0.0))):
 						problems.append("%s: %s at %s reaches into the wall at %s" % [loc_id, rects[i][0], rects[i][1], c])
 		for n in board.find_children("*", "Sprite3D", true, false):
 			var sp := n as Sprite3D
@@ -315,6 +320,23 @@ func test_the_undercrofts_silver_is_big_heaps() -> void:
 
 
 ## A footprint less 0.03 all round (touching isn't overlapping), never below a sliver.
+## `room` reaching back from a piece facing into it, `depth` further into the wall behind it (thin walls).
+func _reach_back(room: Rect2, piece: Node3D, depth: float) -> Rect2:
+	var back := -piece.global_basis.z.normalized()
+	var r := room
+	if back.x > 0.5:
+		r.size.x += depth
+	elif back.x < -0.5:
+		r.position.x -= depth
+		r.size.x += depth
+	elif back.z > 0.5:
+		r.size.y += depth
+	elif back.z < -0.5:
+		r.position.y -= depth
+		r.size.y += depth
+	return r
+
+
 func _shrink(r: Rect2) -> Rect2:
 	var dx := minf(0.03, r.size.x / 2.0 - 0.001)
 	var dz := minf(0.03, r.size.y / 2.0 - 0.001)

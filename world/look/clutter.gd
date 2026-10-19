@@ -287,7 +287,7 @@ static func _spots(board: ArenaBoard, c: Vector2i, on: String) -> Array:
 				if not g.in_bounds(n) or g.has_flag(n, CombatGrid.WALL) or g.has_flag(n, CombatGrid.VOID):
 					continue
 				var nv := Vector3(d.x, 0, d.y)
-				out.append({"at": Vector3(c.x + 0.5, board.floor_y(n), c.y + 0.5) + nv * 0.5, "normal": nv, "wall": true,
+				out.append({"at": Vector3(c.x + 0.5, board.floor_y(n), c.y + 0.5) + nv * (0.5 + board.wall_inset_at(c, d)), "normal": nv, "wall": true,
 					"foot": on == "wall_foot"})
 	return out
 

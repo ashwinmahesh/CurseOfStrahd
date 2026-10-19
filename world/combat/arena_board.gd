@@ -232,6 +232,7 @@ func _build() -> void:
 			if (f & CombatGrid.LOW) != 0:
 				_low_cover(c)
 			_dress(c, dressed)
+	InteriorWalls.finish(self)   # the floor under the bands thin walls leave of their squares (every floor is built now)
 	_flights(dais)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
@@ -301,7 +302,8 @@ var _faded_for: Array = []           ## fade_occluders' camera, focus and counts
 ## location's own prop can take the square's place (SetDressing): cell -> Array of nodes. Ground boxes aren't in it.
 var dressing: Dictionary = {}
 ## How far in from a wall square's face the wall's surface stands, so pieces hung on it or backed onto it stand off
-## it rather than inside it: 0 for walls, a tent's canvas inset and lean (TentWalls).
+## it rather than inside it: 0 for walls, a tent's canvas inset and lean (TentWalls); negative where thin walls set their
+## room-facing sides back into the wall square (InteriorWalls, Natural Maps Plan I1). Pieces ask wall_inset_at.
 var wall_inset := 0.0
 ## Squares holding a door (SetDressing.door): not wall for hanging pictures or picking a wall's direction.
 var door_cells: Dictionary = {}
@@ -710,6 +712,13 @@ func restore_cell(c: Vector2i) -> void:
 	if _cleared.has(c):
 		(_cleared[c] as Node).queue_free()
 		_cleared.erase(c)
+
+
+## `wall_inset` for the side of wall square `wall` that faces `normal` (the way into the room): thin walls run on to the
+## grid line at a doorway's side and keep a pillar as modelled, so only the sides they set back answer with the inset.
+## `hung` is for what hangs on the wall; furniture standing against a wall's short end stays on the grid line.
+func wall_inset_at(wall: Vector2i, normal: Vector2i, hung := true) -> float:
+	return InteriorWalls.inset_at(self, wall, normal, hung) if has_meta("interior_walls") else wall_inset
 
 
 ## What the walls of this board are made of (door frames and secret doors match it); a town's yard walls are stone.

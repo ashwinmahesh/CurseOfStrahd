@@ -60,6 +60,37 @@ every wall square of an interior or dungeon to `BuildingKit.interior_wall`, whic
   that runs on between walls the same way (a corridor under the wall over it), and a gap between free-standing walls
   (the Amber Temple's book stacks) unless a door hangs in it.
 
+### Thin walls (Natural Maps Plan I1, `InteriorWalls`; owner 2026-10-19)
+
+"We don't need to draw our real world maps as a battle grid": a wall is not a whole square thick. The catalog's
+`interiors.thin_walls` (`inset` 0.35; `not`: the starts of the place ids it leaves out, the caves, which are I2's) sets
+each side of a wall square that faces a room back into the square by that much, so a wall between two rooms stands
+1 - 2 x 0.35 = 0.3 of a square (about a foot and a half) thick and the rooms read bigger. The rules grid is untouched.
+
+- **The solid** (`InteriorWalls._solid`): the square less a band along each side with a room beside it, and less a corner
+  where only the diagonal square is open (a room's inside corner), as boxes: a run is one 0.3 wide box, a wall's end
+  0.3 x 0.65, an outside corner 0.65 x 0.65, a T its three arms. A wall with no room beside it, diagonals included,
+  stays a whole block (thick masonry, the outer mass); an upper floor's outer walls still run down to the street.
+- **Doorways** keep the wall running on to the opening's edge (`InteriorWalls.doorway`: one open square between two
+  walls that opens into a room), so the opening is still a square wide; the wall over it (`_header`) is as thin as the
+  walls beside it, and the jambs and head stand on the set-back faces (`_frame`). Over a corridor the header runs across
+  to the set-back faces.
+- **The floor runs on** to the new face: each band left of a square gets a floor piece in the floor of the open square it
+  lies beside (`InteriorWalls.finish`, called by `ArenaBoard._build` once every floor is built; recorded with the wall
+  square's scenery, so a prop that takes the square or an undiscovered room hides them too).
+- **What stands on a wall follows the face**: `ArenaBoard.wall_inset` is negative on such a board (a tent's canvas stays
+  positive) and pieces ask `ArenaBoard.wall_inset_at(wall, normal)` for the wall square's own side: models hung on a
+  wall (`ModelPiece.hang`), furniture backed onto it (`ModelPiece.stand`, `SetDressing._against_wall`), 2D wall pieces
+  (`SetDressing._hang`), a secret door's disguise and bookcase faces, and wall decals (`Clutter._spots`). A doorway's
+  side (the wall runs to the grid line) and a lone pillar answer 0. A face much shorter than a square (a wall's end, or
+  the last square before it) takes no decor (`Furnish`, `_hang` picks another face when it can) and furniture there
+  stays on the grid line: two pieces pressed against the two faces of one wall's end would meet inside it.
+- **Modules on a shorter face**: the style's coping is stretched to the face's length (`ModelPiece.dress_wall`,
+  `InteriorWalls.face_span`; it carries on round a room's inside corner into the notch), and the face module (a
+  whole square wide) is left off.
+- **Not**: tents (their canvas), Castle Ravenloft's roofs (`CastleBuilder` claims them), natural ground (a hill's floors
+  aren't flat), the caves, and the Classic look, which keeps its low whole-square walls.
+
 Every wall stands its full storey from every heading, and one between the camera and the party opens a window round
 the party (below, "Walls in the party's way"; owner 2026-10-17: "walls collapse down when looking from certain angles
 ... I don't like this behavior"). With the catalog's `interiors.cut_away` on, each frame the board's cut-away
