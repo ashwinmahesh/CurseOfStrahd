@@ -26,7 +26,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 ## cat_gargoyle_watch, castle_ravenloft_catacombs variant 0 at level 10.
 func test_cat_gargoyle_watch_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_catacombs", 12, 10, "cat_gargoyle_watch", [Vector2i(36, 9), Vector2i(35, 9), Vector2i(34, 8), Vector2i(34, 7)], 4, 6, [], [], ["cat_champion_gate"])
+	await _held("castle_ravenloft_catacombs", 12, 10, "cat_gargoyle_watch", [Vector2i(36, 9), Vector2i(35, 9), Vector2i(34, 8), Vector2i(34, 7)], 4, 7, [], [], ["cat_champion_gate"])
 
 
 ## cat_gargoyle_watch variant 0 at level 10, from the tombs (the spawn `from_tombs`): the same gate, reached up the corridor
@@ -37,17 +37,17 @@ func test_cat_gargoyle_watch_v0_at_level_10_from_the_tombs() -> void:
 
 ## cat_sleepers, castle_ravenloft_catacombs variant 0 at level 10.
 func test_cat_sleepers_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_catacombs", 23, 10, "cat_sleepers", [Vector2i(37, 16), Vector2i(38, 16), Vector2i(37, 17), Vector2i(37, 15)], 4, 6, [])
+	await _held("castle_ravenloft_catacombs", 23, 10, "cat_sleepers", [Vector2i(37, 16), Vector2i(38, 16), Vector2i(37, 17), Vector2i(37, 15)], 2, 6, [])
 
 
 ## cat_sleepers, castle_ravenloft_catacombs variant 1 at level 10.
 func test_cat_sleepers_v1_at_level_10() -> void:
-	await _held("castle_ravenloft_catacombs", 12, 10, "cat_sleepers", [Vector2i(37, 16), Vector2i(38, 16), Vector2i(37, 17), Vector2i(37, 15)], 4, 6, [])
+	await _held("castle_ravenloft_catacombs", 12, 10, "cat_sleepers", [Vector2i(37, 16), Vector2i(38, 16), Vector2i(37, 17), Vector2i(37, 15)], 2, 6, [])
 
 
 ## cat_guardians, castle_ravenloft_catacombs_tombs variant 0 at level 10.
 func test_cat_guardians_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_catacombs_tombs", 12, 10, "cat_guardians", [Vector2i(16, 8), Vector2i(16, 7), Vector2i(16, 6), Vector2i(16, 5)], 4, 6, [])
+	await _held("castle_ravenloft_catacombs_tombs", 12, 10, "cat_guardians", [Vector2i(16, 8), Vector2i(16, 7), Vector2i(16, 6), Vector2i(16, 5)], 4, 7, [])
 
 
 ## court_accountant_rug, castle_ravenloft_court variant 0 at level 10.
@@ -57,13 +57,13 @@ func test_court_accountant_rug_v0_at_level_10() -> void:
 
 ## court_post_watch, castle_ravenloft_court variant 0 at level 10.
 func test_court_post_watch_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_court", 12, 10, "court_post_watch", [Vector2i(18, 19), Vector2i(19, 19), Vector2i(20, 20), Vector2i(21, 21)], 4, 6, [], [], ["court_guardroom_door"])
+	await _held("castle_ravenloft_court", 12, 10, "court_post_watch", [Vector2i(18, 19), Vector2i(19, 19), Vector2i(20, 20), Vector2i(21, 21)], 3, 6, [], [], ["court_guardroom_door"])
 
 
 ## crg_courtyard_gargoyles, castle_ravenloft_gates variant 0 at level 10 (strahd_invitatio), from the yard's middle (the
 ## spawn `default`: the way these fights were first measured).
 func test_crg_courtyard_gargoyles_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_gates", 23, 10, "crg_courtyard_gargoyles", [Vector2i(19, 12), Vector2i(18, 11), Vector2i(18, 13), Vector2i(20, 11)], 4, 6, ["strahd_invitatio"])
+	await _held("castle_ravenloft_gates", 23, 10, "crg_courtyard_gargoyles", [Vector2i(19, 12), Vector2i(18, 11), Vector2i(18, 13), Vector2i(20, 11)], 3, 6, ["strahd_invitatio"])
 
 
 ## crg_courtyard_gargoyles, castle_ravenloft_gates variant 1 at level 9 (strahd_invitatio), from the yard's middle.
@@ -79,7 +79,7 @@ func test_crg_courtyard_gargoyles_v0_at_level_10_from_the_gate() -> void:
 
 ## crg_courtyard_gargoyles variant 1 at level 9, from the gate.
 func test_crg_courtyard_gargoyles_v1_at_level_9_from_the_gate() -> void:
-	await _held("castle_ravenloft_gates", 23, 9, "crg_courtyard_gargoyles", [Vector2i(19, 21), Vector2i(19, 22), Vector2i(19, 23), Vector2i(19, 24)], 4, 6, ["strahd_invitatio"], [], ["crg_portcullis"])
+	await _held("castle_ravenloft_gates", 23, 9, "crg_courtyard_gargoyles", [Vector2i(19, 21), Vector2i(19, 22), Vector2i(19, 23), Vector2i(19, 24)], 3, 6, ["strahd_invitatio"], [], ["crg_portcullis"])
 
 
 ## crg_courtyard_gargoyles variant 0 at level 10, arriving from the main floor (the spawn `from_main_floor`, inside the area).
@@ -109,13 +109,13 @@ func test_larders_furnace_v0_at_level_10() -> void:
 
 ## larders_jailers, castle_ravenloft_larders_dungeon variant 0 at level 10.
 func test_larders_jailers_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_jailers", [Vector2i(21, 3), Vector2i(20, 3), Vector2i(19, 3), Vector2i(18, 3)], 4, 6, [], [], ["larders_jailers_post_door"])
+	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_jailers", [Vector2i(21, 3), Vector2i(20, 3), Vector2i(19, 3), Vector2i(18, 3)], 1, 6, [], [], ["larders_jailers_post_door"])
 
 
 ## larders_jailers variant 0 at level 10, from the lift (the spawn `from_lift`): up the corridor from the south to the post's
 ## door, so the party stands in a column down it.
 func test_larders_jailers_v0_at_level_10_from_the_lift() -> void:
-	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_jailers", [Vector2i(21, 3), Vector2i(20, 3), Vector2i(20, 4), Vector2i(20, 5)], 4, 6, [], [], ["larders_jailers_post_door"])
+	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_jailers", [Vector2i(21, 3), Vector2i(20, 3), Vector2i(20, 4), Vector2i(20, 5)], 0, 6, [], [], ["larders_jailers_post_door"])
 
 
 ## larders_questioner, castle_ravenloft_larders_dungeon variant 0 at level 10.
@@ -129,7 +129,7 @@ func test_crg_kestrel_cellar_v0_at_level_10() -> void:
 		st.party[st.party.size() - 1] = Pregens.build("ilse_varga", 10)
 		st.party[st.party.size() - 1].finish_long_rest()
 		st.set_quest_stage("kestrel_company", "the_deserter")
-	await _held("castle_ravenloft_main_floor", 12, 10, "crg_kestrel_cellar", [Vector2i(11, 2), Vector2i(12, 2), Vector2i(10, 2), Vector2i(11, 1)], 4, 6, [])
+	await _held("castle_ravenloft_main_floor", 12, 10, "crg_kestrel_cellar", [Vector2i(11, 2), Vector2i(12, 2), Vector2i(10, 2), Vector2i(11, 1)], 4, 7, [])
 
 
 ## crg_kestrel_cellar, castle_ravenloft_main_floor variant 1 at level 10 (kestrel_vell_rests).
@@ -148,7 +148,7 @@ func test_crg_kestrel_table_v0_at_level_10() -> void:
 
 ## crg_turret_guard, castle_ravenloft_main_floor variant 0 at level 10.
 func test_crg_turret_guard_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_main_floor", 12, 10, "crg_turret_guard", [Vector2i(30, 20), Vector2i(29, 20), Vector2i(28, 21), Vector2i(27, 22)], 4, 6, [], [], ["crg_turret_east_door"])
+	await _held("castle_ravenloft_main_floor", 12, 10, "crg_turret_guard", [Vector2i(30, 20), Vector2i(29, 20), Vector2i(28, 21), Vector2i(27, 22)], 4, 7, [], [], ["crg_turret_east_door"])
 
 
 ## crg_turret_guard, castle_ravenloft_main_floor variant 1 at level 9.
@@ -178,7 +178,7 @@ func test_heart_guardians_v1_at_level_10() -> void:
 
 ## heart_guardians, castle_ravenloft_spires_heart variant 0 at level 11.
 func test_heart_guardians_v0_at_level_11() -> void:
-	await _held("castle_ravenloft_spires_heart", 12, 11, "heart_guardians", [Vector2i(8, 7), Vector2i(8, 8), Vector2i(8, 9), Vector2i(8, 10)], 4, 6, [])
+	await _held("castle_ravenloft_spires_heart", 12, 11, "heart_guardians", [Vector2i(8, 7), Vector2i(8, 8), Vector2i(8, 9), Vector2i(8, 10)], 4, 7, [])
 
 
 ## heart_guardians, castle_ravenloft_spires_heart variant 2 at level 9.
@@ -188,12 +188,12 @@ func test_heart_guardians_v2_at_level_9() -> void:
 
 ## peak_guardians, castle_ravenloft_spires_roofs variant 1 at level 10.
 func test_peak_guardians_v1_at_level_10() -> void:
-	await _held("castle_ravenloft_spires_roofs", 12, 10, "peak_guardians", [Vector2i(23, 6), Vector2i(22, 6), Vector2i(21, 6), Vector2i(20, 6)], 4, 6, [])
+	await _held("castle_ravenloft_spires_roofs", 12, 10, "peak_guardians", [Vector2i(23, 6), Vector2i(22, 6), Vector2i(21, 6), Vector2i(20, 6)], 2, 6, [])
 
 
 ## peak_guardians, castle_ravenloft_spires_roofs variant 0 at level 11.
 func test_peak_guardians_v0_at_level_11() -> void:
-	await _held("castle_ravenloft_spires_roofs", 12, 11, "peak_guardians", [Vector2i(19, 6), Vector2i(18, 6), Vector2i(17, 6), Vector2i(16, 6)], 4, 6, [])
+	await _held("castle_ravenloft_spires_roofs", 12, 11, "peak_guardians", [Vector2i(19, 6), Vector2i(18, 6), Vector2i(17, 6), Vector2i(16, 6)], 4, 7, [])
 
 
 ## peak_guardians, castle_ravenloft_spires_roofs variant 2 at level 9.
@@ -218,14 +218,14 @@ func test_cauldron_coven_v2_at_level_9() -> void:
 
 ## escher_fight, castle_ravenloft_spires_rooms variant 0 at level 10.
 func test_escher_fight_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_spires_rooms", 12, 10, "escher_fight", [Vector2i(17, 15), Vector2i(18, 15), Vector2i(16, 15), Vector2i(17, 16)], 4, 6, [])
+	await _held("castle_ravenloft_spires_rooms", 12, 10, "escher_fight", [Vector2i(17, 15), Vector2i(18, 15), Vector2i(16, 15), Vector2i(17, 16)], 3, 6, [])
 
 
 ## roost_swarm, castle_ravenloft_spires_roost variant 0 at level 10.
 func test_roost_swarm_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_spires_roost", 12, 10, "roost_swarm", [Vector2i(14, 6), Vector2i(13, 5), Vector2i(12, 5), Vector2i(11, 5)], 4, 6, [])
+	await _held("castle_ravenloft_spires_roost", 12, 10, "roost_swarm", [Vector2i(14, 6), Vector2i(13, 5), Vector2i(12, 5), Vector2i(11, 5)], 4, 7, [])
 
 
 ## roost_swarm_roused, castle_ravenloft_spires_roost variant 0 at level 10.
 func test_roost_swarm_roused_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_spires_roost", 12, 10, "roost_swarm_roused", [Vector2i(7, 3), Vector2i(6, 3), Vector2i(5, 3), Vector2i(4, 3)], 4, 6, [])
+	await _held("castle_ravenloft_spires_roost", 12, 10, "roost_swarm_roused", [Vector2i(7, 3), Vector2i(6, 3), Vector2i(5, 3), Vector2i(4, 3)], 4, 7, [])

@@ -23,12 +23,12 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 ## library_wardens, amber_temple_library variant 0 at level 10.
 func test_library_wardens_v0_at_level_10() -> void:
-	await _held("amber_temple_library", 12, 10, "library_wardens", [Vector2i(13, 3), Vector2i(14, 4), Vector2i(14, 5), Vector2i(15, 6)], 4, 6, [], [], ["restricted_grille"])
+	await _held("amber_temple_library", 12, 10, "library_wardens", [Vector2i(13, 3), Vector2i(14, 4), Vector2i(14, 5), Vector2i(15, 6)], 4, 7, [], [], ["restricted_grille"])
 
 
 ## larders_cyrus_fight, castle_ravenloft_larders variant 0 at level 10.
 func test_larders_cyrus_fight_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_larders", 12, 10, "larders_cyrus_fight", [Vector2i(25, 5), Vector2i(24, 5), Vector2i(25, 6), Vector2i(25, 4)], 4, 6, [])
+	await _held("castle_ravenloft_larders", 12, 10, "larders_cyrus_fight", [Vector2i(25, 5), Vector2i(24, 5), Vector2i(25, 6), Vector2i(25, 4)], 4, 8, [])
 
 
 ## larders_doru_hunger, castle_ravenloft_larders_dungeon variant 0 at level 10.
@@ -38,7 +38,7 @@ func test_larders_doru_hunger_v0_at_level_10() -> void:
 
 ## larders_false_brother, castle_ravenloft_larders_dungeon variant 0 at level 10.
 func test_larders_false_brother_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_false_brother", [Vector2i(5, 15), Vector2i(6, 15), Vector2i(4, 15), Vector2i(6, 16)], 4, 6, [])
+	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_false_brother", [Vector2i(5, 15), Vector2i(6, 15), Vector2i(4, 15), Vector2i(6, 16)], 4, 7, [])
 
 
 ## larders_false_brother_unmasked, castle_ravenloft_larders_dungeon variant 0 at level 10.

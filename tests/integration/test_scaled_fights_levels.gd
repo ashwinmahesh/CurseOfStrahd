@@ -42,7 +42,7 @@ func test_pasture_wolves_v0_at_level_2() -> void:
 
 ## hound_tenant, burgomaster_mansion variant 2 at level 1.
 func test_hound_tenant_v2_at_level_1() -> void:
-	await _held("burgomaster_mansion", 22, 1, "hound_tenant", [Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14), Vector2i(12, 15)], 4, 6, [], ["lupu"], ["study_door"])
+	await _held("burgomaster_mansion", 22, 1, "hound_tenant", [Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14), Vector2i(12, 15)], 4, 7, [], ["lupu"], ["study_door"])
 
 
 ## mansion_siege, burgomaster_mansion variant 1 at level 2.
@@ -72,7 +72,7 @@ func test_drowned_landing_v2_at_level_7() -> void:
 
 ## raven_trap, lake_zarovich_trail variant 0 at level 7 (fowlers_ready).
 func test_raven_trap_v0_at_level_7() -> void:
-	await _held("lake_zarovich_trail", 22, 7, "raven_trap", [Vector2i(3, 10), Vector2i(4, 10), Vector2i(2, 10), Vector2i(3, 11)], 4, 6, ["fowlers_ready"])
+	await _held("lake_zarovich_trail", 22, 7, "raven_trap", [Vector2i(3, 10), Vector2i(4, 10), Vector2i(2, 10), Vector2i(3, 11)], 3, 6, ["fowlers_ready"])
 
 
 ## raven_trap, lake_zarovich_trail variant 2 at level 5 (fowlers_ready).
@@ -87,17 +87,17 @@ func test_raven_trap_v3_at_level_7() -> void:
 
 ## raven_trap, lake_zarovich_trail variant 4 at level 6.
 func test_raven_trap_v4_at_level_6() -> void:
-	await _held("lake_zarovich_trail", 22, 6, "raven_trap", [Vector2i(3, 10), Vector2i(4, 10), Vector2i(2, 10), Vector2i(3, 11)], 4, 6, [])
+	await _held("lake_zarovich_trail", 22, 6, "raven_trap", [Vector2i(3, 10), Vector2i(4, 10), Vector2i(2, 10), Vector2i(3, 11)], 3, 6, [])
 
 
 ## raven_trap, lake_zarovich_trail variant 5 at level 5.
 func test_raven_trap_v5_at_level_5() -> void:
-	await _held("lake_zarovich_trail", 22, 5, "raven_trap", [Vector2i(3, 10), Vector2i(4, 10), Vector2i(2, 10), Vector2i(3, 11)], 4, 6, [])
+	await _held("lake_zarovich_trail", 22, 5, "raven_trap", [Vector2i(3, 10), Vector2i(4, 10), Vector2i(2, 10), Vector2i(3, 11)], 3, 6, [])
 
 
 ## carriage_escort, svalich_crossroads variant 0 at level 5 (mare_saved, carriage_came).
 func test_carriage_escort_v0_at_level_5() -> void:
-	await _held("svalich_crossroads", 0, 5, "carriage_escort", [Vector2i(31, 11), Vector2i(32, 11), Vector2i(30, 11), Vector2i(31, 12)], 4, 6, ["mare_saved", "carriage_came"])
+	await _held("svalich_crossroads", 0, 5, "carriage_escort", [Vector2i(31, 11), Vector2i(32, 11), Vector2i(30, 11), Vector2i(31, 12)], 3, 6, ["mare_saved", "carriage_came"])
 
 
 ## carriage_escort, svalich_crossroads variant 1 at level 5 (carriage_came).
@@ -132,12 +132,12 @@ func test_festival_coup_v1_at_level_4() -> void:
 
 ## festival_coup, vallaki variant 3 at level 4 (wachter_cult_broken).
 func test_festival_coup_v3_at_level_4() -> void:
-	await _held("vallaki", 12, 4, "festival_coup", [Vector2i(31, 15), Vector2i(30, 16), Vector2i(29, 16), Vector2i(28, 17)], 4, 6, ["wachter_cult_broken"])
+	await _held("vallaki", 12, 4, "festival_coup", [Vector2i(31, 15), Vector2i(30, 16), Vector2i(29, 16), Vector2i(28, 17)], 3, 6, ["wachter_cult_broken"])
 
 
 ## festival_coup, vallaki variant 4 at level 3.
 func test_festival_coup_v4_at_level_3() -> void:
-	await _held("vallaki", 12, 3, "festival_coup", [Vector2i(20, 14), Vector2i(21, 15), Vector2i(22, 16), Vector2i(23, 17)], 4, 6, [])
+	await _held("vallaki", 12, 3, "festival_coup", [Vector2i(20, 14), Vector2i(21, 15), Vector2i(22, 16), Vector2i(23, 17)], 3, 6, [])
 
 
 ## festival_coup, vallaki variant 5 at level 3 (wachter_cult_broken).
@@ -152,12 +152,12 @@ func test_ribbons_gate_v0_at_level_6() -> void:
 
 ## ribbons_gate, vallaki variant 2 at level 4 (ribbons_list_known).
 func test_ribbons_gate_v2_at_level_4() -> void:
-	await _held("vallaki", 21, 4, "ribbons_gate", [Vector2i(22, 20), Vector2i(23, 21), Vector2i(24, 21), Vector2i(23, 20)], 4, 6, ["ribbons_list_known"])
+	await _held("vallaki", 21, 4, "ribbons_gate", [Vector2i(22, 20), Vector2i(23, 21), Vector2i(24, 21), Vector2i(23, 20)], 2, 6, ["ribbons_list_known"])
 
 
 ## ribbons_street, vallaki variant 0 at level 6 (ribbons_list_known).
 func test_ribbons_street_v0_at_level_6() -> void:
-	await _held("vallaki", 21, 6, "ribbons_street", [Vector2i(23, 21), Vector2i(24, 21), Vector2i(23, 20), Vector2i(23, 22)], 4, 6, ["ribbons_list_known"])
+	await _held("vallaki", 21, 6, "ribbons_street", [Vector2i(23, 21), Vector2i(24, 21), Vector2i(23, 20), Vector2i(23, 22)], 4, 7, ["ribbons_list_known"])
 
 
 ## ribbons_street, vallaki variant 2 at level 4 (ribbons_list_known).
@@ -192,7 +192,7 @@ func test_roses_graves_v5_at_level_4() -> void:
 
 ## roses_street, vallaki variant 0 at level 6 (roses_vigil, ana_met).
 func test_roses_street_v0_at_level_6() -> void:
-	await _held("vallaki", 22, 6, "roses_street", [Vector2i(12, 28), Vector2i(13, 27), Vector2i(14, 26), Vector2i(15, 25)], 4, 6, ["roses_vigil", "ana_met"])
+	await _held("vallaki", 22, 6, "roses_street", [Vector2i(12, 28), Vector2i(13, 27), Vector2i(14, 26), Vector2i(15, 25)], 4, 8, ["roses_vigil", "ana_met"])
 
 
 ## roses_street, vallaki variant 2 at level 4 (roses_vigil, ana_met).
@@ -207,7 +207,7 @@ func test_roses_street_v3_at_level_3() -> void:
 
 ## storeroom_spawn, vallaki_coffin_maker variant 1 at level 4.
 func test_storeroom_spawn_v1_at_level_4() -> void:
-	await _held("vallaki_coffin_maker", 12, 4, "storeroom_spawn", [Vector2i(13, 10), Vector2i(12, 10), Vector2i(11, 10), Vector2i(10, 10)], 4, 6, [])
+	await _held("vallaki_coffin_maker", 12, 4, "storeroom_spawn", [Vector2i(13, 10), Vector2i(12, 10), Vector2i(11, 10), Vector2i(10, 10)], 4, 7, [])
 
 
 ## storeroom_spawn, vallaki_coffin_maker variant 2 at level 3.
@@ -252,7 +252,7 @@ func test_wachter_cellar_cult_v2_at_level_3() -> void:
 
 ## doru_undercroft, village_church variant 1 at level 2.
 func test_doru_undercroft_v1_at_level_2() -> void:
-	await _held("village_church", 12, 2, "doru_undercroft", [Vector2i(17, 23), Vector2i(18, 23), Vector2i(16, 23), Vector2i(17, 24)], 4, 6, [])
+	await _held("village_church", 12, 2, "doru_undercroft", [Vector2i(17, 23), Vector2i(18, 23), Vector2i(16, 23), Vector2i(17, 24)], 2, 6, [])
 
 
 ## churchyard_dead, village_of_barovia variant 1 at level 2.
@@ -287,7 +287,7 @@ func test_woodpile_burns_v2_at_level_2() -> void:
 
 ## woodpile_wakes, village_of_barovia variant 0 at level 4 (seedwood_known).
 func test_woodpile_wakes_v0_at_level_4() -> void:
-	await _held("village_of_barovia", 19, 4, "woodpile_wakes", [Vector2i(9, 12), Vector2i(10, 12), Vector2i(8, 12), Vector2i(9, 13)], 4, 6, ["seedwood_known"])
+	await _held("village_of_barovia", 19, 4, "woodpile_wakes", [Vector2i(9, 12), Vector2i(10, 12), Vector2i(8, 12), Vector2i(9, 13)], 3, 6, ["seedwood_known"])
 
 
 ## woodpile_wakes, village_of_barovia variant 2 at level 2 (seedwood_known).

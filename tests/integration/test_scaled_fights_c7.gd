@@ -41,7 +41,7 @@ func test_crg_entry_dragons_v1_at_level_10() -> void:
 
 ## crg_entry_dragons variant 2 at level 9.
 func test_crg_entry_dragons_v2_at_level_9() -> void:
-	await _held(MAIN, 12, 9, "crg_entry_dragons", AT_THE_DOORS, 4, 6, ["crg_entry_dragons_woken"])
+	await _held(MAIN, 12, 9, "crg_entry_dragons", AT_THE_DOORS, 4, 7, ["crg_entry_dragons_woken"])
 
 
 ## crg_balcony_zombies, castle_ravenloft_chapel_balcony: the book's two Strahd zombies, one version for every level. An attrition

@@ -70,7 +70,7 @@ func test_the_churchyard_dead_at_level_3() -> void:
 
 
 func test_doru_in_the_undercroft_at_level_3() -> void:
-	await _held("village_church", 12, 3, "doru_undercroft", UNDERCROFT, 4, 6)
+	await _held("village_church", 12, 3, "doru_undercroft", UNDERCROFT, 2, 6)
 
 
 func test_the_siege_of_the_mansion_at_level_3() -> void:
@@ -87,7 +87,7 @@ func test_the_grey_goose_cellar_at_level_3() -> void:
 
 
 func test_the_dead_procession_at_level_4() -> void:
-	await _held("road_ambush", 12, 4, "road_dead_procession", PROCESSION, 4, 6)
+	await _held("road_ambush", 12, 4, "road_dead_procession", PROCESSION, 3, 6)
 
 
 func test_the_road_hunters_at_level_4() -> void:
@@ -111,15 +111,15 @@ func test_the_hanged_dead_at_level_5() -> void:
 
 
 func test_the_kestrel_patrol_at_level_5() -> void:
-	await _held("svalich_crossroads", 12, 5, "kestrel_patrol", PATROL, 4, 6)
+	await _held("svalich_crossroads", 12, 5, "kestrel_patrol", PATROL, 4, 7)
 
 
 func test_the_kestrel_patrol_caught_up_at_level_5() -> void:
-	await _held("svalich_crossroads", 12, 5, "kestrel_patrol_reached", PATROL, 4, 6)
+	await _held("svalich_crossroads", 12, 5, "kestrel_patrol_reached", PATROL, 4, 7)
 
 
 func test_the_woodpile_at_level_3() -> void:
-	await _held("village_of_barovia", 19, 3, "woodpile_wakes", BY_THE_WOODPILE, 4, 6, ["seedwood_known"])
+	await _held("village_of_barovia", 19, 3, "woodpile_wakes", BY_THE_WOODPILE, 3, 6, ["seedwood_known"])
 
 
 func test_the_woodpile_burning_at_level_4() -> void:

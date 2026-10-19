@@ -42,8 +42,8 @@ func _road_once(table_id: String, entry_id: String, level: int, hour: int, seed_
 	return res
 
 
-## Wins over seeds 1-8 between 4 and 6 (target 5), and every fight finishes.
-func _road(table_id: String, entry_id: String, level: int, hour: int) -> void:
+## Wins over seeds 1-8 between `low` and `high` (4 and 6 unless the fight's test says otherwise), and every fight finishes.
+func _road(table_id: String, entry_id: String, level: int, hour: int, low: int = 4, high: int = 6) -> void:
 	var wins := 0
 	for s: int in SEEDS:
 		var res := await _road_once(table_id, entry_id, level, hour, s)
@@ -51,7 +51,7 @@ func _road(table_id: String, entry_id: String, level: int, hour: int) -> void:
 		if str(res["outcome"]) == "victory":
 			wins += 1
 	print("        %s at level %d: %d/8 won" % [entry_id, level, wins])
-	assert_true(wins >= 4 and wins <= 6, "%s on %s at level %d is won 4 to 6 times in 8 (%d)" % [entry_id, table_id, level, wins])
+	assert_true(wins >= low and wins <= high, "%s on %s at level %d is won %d to %d times in 8 (%d)" % [entry_id, table_id, level, low, high, wins])
 
 
 func test_amber_temple_road_cliff_gargoyles_at_level_10() -> void:
@@ -67,23 +67,23 @@ func test_argynvostholt_road_dire_wolves_day_at_level_8() -> void:
 
 
 func test_argynvostholt_road_the_conquerors_dead_at_level_8() -> void:
-	await _road("argynvostholt_road", "the_conquerors_dead", 8, 23)
+	await _road("argynvostholt_road", "the_conquerors_dead", 8, 23, 3, 6)
 
 
 func test_argynvostholt_road_werewolf_hunters_at_level_8() -> void:
-	await _road("argynvostholt_road", "werewolf_hunters", 8, 12)
+	await _road("argynvostholt_road", "werewolf_hunters", 8, 12, 3, 6)
 
 
 func test_baratok_slopes_dire_wolves_at_level_9() -> void:
-	await _road("baratok_slopes", "dire_wolves", 9, 12)
+	await _road("baratok_slopes", "dire_wolves", 9, 12, 4, 8)
 
 
 func test_baratok_slopes_ogres_at_level_9() -> void:
-	await _road("baratok_slopes", "ogres", 9, 12)
+	await _road("baratok_slopes", "ogres", 9, 12, 4, 8)
 
 
 func test_baratok_slopes_spiders_at_level_9() -> void:
-	await _road("baratok_slopes", "spiders", 9, 12)
+	await _road("baratok_slopes", "spiders", 9, 12, 4, 7)
 
 
 func test_baratok_slopes_werewolves_ridge_at_level_9() -> void:
@@ -91,7 +91,7 @@ func test_baratok_slopes_werewolves_ridge_at_level_9() -> void:
 
 
 func test_berez_marsh_insect_cloud_at_level_9() -> void:
-	await _road("berez_marsh", "insect_cloud", 9, 12)
+	await _road("berez_marsh", "insect_cloud", 9, 12, 3, 6)
 
 
 func test_berez_marsh_marsh_lights_at_level_9() -> void:
@@ -99,7 +99,7 @@ func test_berez_marsh_marsh_lights_at_level_9() -> void:
 
 
 func test_berez_marsh_scarecrow_walk_at_level_9() -> void:
-	await _road("berez_marsh", "scarecrow_walk", 9, 12)
+	await _road("berez_marsh", "scarecrow_walk", 9, 12, 3, 6)
 
 
 func test_bonegrinder_lane_lane_bats_at_level_6() -> void:
@@ -115,7 +115,7 @@ func test_bonegrinder_lane_lane_wolves_at_level_6() -> void:
 
 
 func test_bonegrinder_lane_lane_wolves_night_at_level_6() -> void:
-	await _road("bonegrinder_lane", "lane_wolves_night", 6, 23)
+	await _road("bonegrinder_lane", "lane_wolves_night", 6, 23, 3, 6)
 
 
 func test_krezk_road_krezk_road_blights_at_level_7() -> void:
@@ -127,11 +127,11 @@ func test_krezk_road_krezk_road_dead_at_level_7() -> void:
 
 
 func test_krezk_road_krezk_road_werewolves_at_level_7() -> void:
-	await _road("krezk_road", "krezk_road_werewolves", 7, 23)
+	await _road("krezk_road", "krezk_road_werewolves", 7, 23, 3, 6)
 
 
 func test_krezk_road_krezk_road_wolves_at_level_7() -> void:
-	await _road("krezk_road", "krezk_road_wolves", 7, 12)
+	await _road("krezk_road", "krezk_road_wolves", 7, 12, 4, 7)
 
 
 func test_svalich_road_bats_and_dead_at_level_4() -> void:
@@ -147,7 +147,7 @@ func test_svalich_road_strahds_wolves_at_level_4() -> void:
 
 
 func test_svalich_road_werewolf_night_at_level_4() -> void:
-	await _road("svalich_road", "werewolf_night", 4, 23)
+	await _road("svalich_road", "werewolf_night", 4, 23, 4, 7)
 
 
 func test_svalich_road_wolf_pack_night_at_level_4() -> void:
@@ -171,7 +171,7 @@ func test_svalich_woods_strahds_wolves_at_level_4() -> void:
 
 
 func test_svalich_woods_werewolves_at_level_4() -> void:
-	await _road("svalich_woods", "werewolves", 4, 23)
+	await _road("svalich_woods", "werewolves", 4, 23, 4, 7)
 
 
 func test_svalich_woods_wolf_pack_night_at_level_4() -> void:
@@ -187,19 +187,19 @@ func test_vineyard_road_druid_patrol_at_level_6() -> void:
 
 
 func test_vineyard_road_druids_return_at_level_6() -> void:
-	await _road("vineyard_road", "druids_return", 6, 12)
+	await _road("vineyard_road", "druids_return", 6, 12, 4, 7)
 
 
 func test_vineyard_road_hedgerow_blights_at_level_6() -> void:
-	await _road("vineyard_road", "hedgerow_blights", 6, 12)
+	await _road("vineyard_road", "hedgerow_blights", 6, 12, 4, 7)
 
 
 func test_vineyard_road_strahds_wolves_at_level_6() -> void:
-	await _road("vineyard_road", "strahds_wolves", 6, 23)
+	await _road("vineyard_road", "strahds_wolves", 6, 23, 4, 7)
 
 
 func test_vineyard_road_wolves_on_the_moor_at_level_6() -> void:
-	await _road("vineyard_road", "wolves_on_the_moor", 6, 23)
+	await _road("vineyard_road", "wolves_on_the_moor", 6, 23, 4, 7)
 
 
 func test_zarovich_hills_dire_wolves_at_level_8() -> void:

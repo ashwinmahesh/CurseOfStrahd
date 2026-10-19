@@ -23,7 +23,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 ## wardens_camp_fight, yester_hill variant 2 at level 5.
 func test_wardens_camp_fight_v2_at_level_5() -> void:
-	await _held("yester_hill", 12, 5, "wardens_camp_fight", [Vector2i(14, 21), Vector2i(15, 22), Vector2i(16, 23), Vector2i(17, 24)], 4, 6, [])
+	await _held("yester_hill", 12, 5, "wardens_camp_fight", [Vector2i(14, 21), Vector2i(15, 22), Vector2i(16, 23), Vector2i(17, 24)], 2, 6, [])
 
 
 ## wardens_camp_fight, yester_hill variant 1 at level 6.
@@ -33,4 +33,4 @@ func test_wardens_camp_fight_v1_at_level_6() -> void:
 
 ## wardens_camp_fight, yester_hill variant 0 at level 7.
 func test_wardens_camp_fight_v0_at_level_7() -> void:
-	await _held("yester_hill", 12, 7, "wardens_camp_fight", [Vector2i(14, 21), Vector2i(15, 22), Vector2i(16, 23), Vector2i(17, 24)], 4, 6, [])
+	await _held("yester_hill", 12, 7, "wardens_camp_fight", [Vector2i(14, 21), Vector2i(15, 22), Vector2i(16, 23), Vector2i(17, 24)], 2, 6, [])

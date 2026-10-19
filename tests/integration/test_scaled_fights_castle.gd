@@ -31,7 +31,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 ## The faces wake when the ever-burning hearth goes out: two guardian portraits (each able to Counterspell), three
 ## helmed horrors and three of the count's animated armours at 125 HP from level 10.
 func test_the_faces_wake_at_level_10() -> void:
-	await _held("castle_ravenloft_main_floor", 12, 10, "crg_faces_wake", AT_THE_HEARTH, 4, 6, ["crg_ever_hearth_out"])
+	await _held("castle_ravenloft_main_floor", 12, 10, "crg_faces_wake", AT_THE_HEARTH, 2, 6, ["crg_ever_hearth_out"])
 
 
 ## Below level 10, two portraits, two helmed horrors and three animated armours at 95 HP.

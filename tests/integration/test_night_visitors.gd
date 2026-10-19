@@ -28,6 +28,10 @@ static func target_wins(_level: int) -> int:
 const DRIFT := 1
 
 
+## Groups whose measured wins are their target instead (accepted 2026-10-19: harder fights are fine, Ashwin).
+const TARGET_OVERRIDES := {"mountain_berserkers": 3, "indoors_wraith": 3}
+
+
 func after_each() -> void:
 	if root != null:
 		root.queue_free()
@@ -146,8 +150,9 @@ func _land(land: String) -> void:
 			rounds += int(res["rounds"])
 		print("        %s at level %d: %d/8 won, %.1f rounds, %.1f heroes dropped per win" % [group["id"], level, wins,
 			rounds / 8.0, won_downs / float(maxi(1, wins))])
-		assert_true(absi(wins - target_wins(level)) <= DRIFT, "%s is won %d times in 8 at level %d (tuned to %d, %d either way): %d" % [
-			group["id"], target_wins(level), level, target_wins(level), DRIFT, wins])
+		var target := int(TARGET_OVERRIDES.get(str(group["id"]), target_wins(level)))
+		assert_true(absi(wins - target) <= DRIFT, "%s is won %d times in 8 at level %d (tuned to %d, %d either way): %d" % [
+			group["id"], target, level, target, DRIFT, wins])
 
 
 func test_an_interrupted_night_at_camp_brings_its_visitors() -> void:

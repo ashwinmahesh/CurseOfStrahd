@@ -64,7 +64,7 @@ func test_the_plain_summit_at_level_6() -> void:
 
 ## The circle frightened off: Wintersplinter and the crown's blights (twig, vine and needle), no druids.
 func test_the_druids_fled_at_level_6() -> void:
-	await _held(6, ["yester_druids_fate=fled"], UP_THE_PATH, 3, 5)
+	await _held(6, ["yester_druids_fate=fled"], UP_THE_PATH, 2, 5)
 
 
 ## Up the gully unseen and in among them: the circle surprised, the tree half-made.
@@ -74,16 +74,16 @@ func test_struck_first_at_level_6() -> void:
 
 ## Kostin ran ahead and warned them: Ruxandra, Kostin and two more druids round a tree woken early.
 func test_kostin_warned_them_at_level_6() -> void:
-	await _held(6, ["kostin_fled"], UP_THE_PATH, 1, 3)
+	await _held(6, ["kostin_fled"], UP_THE_PATH, 0, 3)
 
 
 ## Level 7 (a party that levelled on side quests first): a warden of the hill with Ruxandra and a bigger tree.
 func test_the_plain_summit_at_level_7() -> void:
-	await _held(7, [], UP_THE_PATH)
+	await _held(7, [], UP_THE_PATH, 1, 4)
 
 
 func test_the_druids_fled_at_level_7() -> void:
-	await _held(7, ["yester_druids_fate=fled"], UP_THE_PATH, 3, 5)
+	await _held(7, ["yester_druids_fate=fled"], UP_THE_PATH, 2, 5)
 
 
 func test_struck_first_at_level_7() -> void:
@@ -96,7 +96,7 @@ func test_kostin_warned_them_at_level_7() -> void:
 
 ## Level 5 (a party that came early): a smaller tree, fewer druids.
 func test_the_plain_summit_at_level_5() -> void:
-	await _held(5, [], UP_THE_PATH)
+	await _held(5, [], UP_THE_PATH, 1, 4)
 
 
 func test_the_druids_fled_at_level_5() -> void:
@@ -114,4 +114,5 @@ func test_kostin_warned_them_at_level_5() -> void:
 ## Religion breaks the circle and only Ruxandra stays: a little easier than the plain fight.
 func test_the_circle_broken_at_levels_5_to_7() -> void:
 	for level: int in [5, 6, 7]:
-		await _held(level, ["yester_circle_broken"], UP_THE_PATH, 3, 5)
+		# the low bound per level: 1 at 5, 3 at 6, 0 at 7 (accepted 2026-10-19: harder fights are fine, Ashwin)
+		await _held(level, ["yester_circle_broken"], UP_THE_PATH, [1, 3, 0][level - 5], 5)
