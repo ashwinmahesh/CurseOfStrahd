@@ -112,7 +112,7 @@ Gertruda [afraid]: I want to go home. I'm allowed to want that. Aren't I?
 * Then we go through you. -> fight
 * [if not flag.court_gertruda_warned_him] [Persuasion DC 16] A guest who can't leave is a prisoner. Does your master keep prisoners in his guest rooms? -> stand_aside | refused
 * [Intimidation DC 17] Look at us, Rahadin. You're one man. -> stand_aside | refused
-* Gertruda, go back to your room. -> give_back
+* [ends:find_gertruda] Gertruda, go back to your room. -> give_back
 
 ~ stand_aside
 set rahadin_stood_aside

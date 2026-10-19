@@ -4,7 +4,7 @@ extends RefCounted
 ## tools/data/dialogue_lint.py, which validates the same files in `make validate`.
 ##
 ## Statement dictionaries ({"t": type, ...}):
-##   line {speaker, mood, away, text} (away: "" | "speaker" | "party", the `[away]` cue) · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
+##   line {speaker, mood, away, text} (away: "" | "speaker" | "party", the `[away]` cue) · option {text, ok, fail, cond, check: {skill, dc}, selector, ends: [{quest, cond}]} · jump {to}
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty, to}
 ##   gold {amount} · attitude {npc, value} · xp (milestone) · xp fight {encounter} · check {skill, dc, ok, fail} · interject {selector, text}
 ##   combat {encounter} · move {location, spawn} · narrate {key} · variant {cond, once, text} · cooldown {minutes} · once · end_game (ADR 0014)
@@ -121,7 +121,7 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 	var mo := re_option.search(line)
 	if mo != null:
 		var label := mo.get_string(1)
-		var opt := {"t": "option", "ok": mo.get_string(2), "fail": mo.get_string(3), "cond": "", "check": {}, "selector": "", "tags": [] as Array[String]}
+		var opt := {"t": "option", "ok": mo.get_string(2), "fail": mo.get_string(3), "cond": "", "check": {}, "selector": "", "tags": [] as Array[String], "ends": []}
 		while true:
 			var mt := re_tag.search(label)
 			if mt == null:
@@ -133,6 +133,12 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 				opt["check"] = {"skill": mc.get_string(1).strip_edges().to_lower().replace(" ", "_"), "dc": int(mc.get_string(2)), "label": tag}
 			elif tag.begins_with("if "):
 				opt["cond"] = tag.substr(3)
+			elif tag.begins_with("ends:"):
+				# `[ends:<quest>]` or `[ends:<quest> if <condition>]`: choosing this closes the quest (the menu marks it).
+				var body := tag.substr(5).strip_edges()
+				var gate := body.find(" if ")
+				(opt["ends"] as Array).append({"quest": body if gate < 0 else body.substr(0, gate).strip_edges(),
+					"cond": "" if gate < 0 else body.substr(gate + 4).strip_edges()})
 			elif tag.contains(":"):
 				opt["selector"] = tag
 			elif tag.to_lower() in CLASS_TAGS:

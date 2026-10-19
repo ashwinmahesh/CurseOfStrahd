@@ -76,7 +76,7 @@ Ezmerelda [angry]: You let that happen. I'll remember who let that happen.
 endif
 Kiril: Now. Get out of my hills, guests, and give the master my regards.
 * The children come with us. -> kids
-* We're leaving. -> kids_left
+* [ends:the_stolen_children] We're leaving. -> kids_left
 
 ~ kids
 Kiril: The pups stay.
@@ -123,7 +123,7 @@ Narrator: Somebody unbars the pen. Five children come out holding hands in a lin
 ~ kids_refused
 Kiril: No. You've had my generosity. Don't push your luck up my hill.
 * Then we'll take them. -> kids_fight
-* We're leaving. -> kids_left
+* [ends:the_stolen_children] We're leaving. -> kids_left
 
 ~ kids_fight
 set pack_challenge_begun

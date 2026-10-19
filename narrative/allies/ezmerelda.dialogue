@@ -383,7 +383,7 @@ if flag.ledger_spared_lysaga
 Ezmerelda: Baba Lysaga stays on the page: broken or bargained with in Berez, she isn't dead enough for my ink.
 endif
 Ezmerelda: I won't ink a bargain as a kill, so we close the ledger as it stands or leave it open.
-* Close the book at what we've struck. -> ledger_close
+* [ends:hunters_ledger] Close the book at what we've struck. -> ledger_close
 * Leave the ledger open for now. -> menu
 
 ~ ledger_close

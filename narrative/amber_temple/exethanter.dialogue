@@ -116,7 +116,7 @@ Exethanter: NOT THE... oh, that's good. That's very clever. Nobody would ever lo
 Exethanter: Have you got it? Might I... could I have it back?
 * Give it back to him. -> lid_return
 * We'll keep it safe for you. For now. -> lid_keep
-* (Smash it on the floor.) -> lid_smash
+* [ends:something_with_a_lid] [ends:exethanters_notes if quest.exethanters_notes == asked] (Smash it on the floor.) -> lid_smash
 
 ~ lid_return
 set exethanter_phylactery = "returned"

@@ -56,7 +56,7 @@ inspire class:cleric: prayed for a vampire spawn who used to be a boy
 ~ free_warn
 Doru [smile]: You would? Oh, you would. I'll go far away. To the castle; the master will take me in. I'll never trouble Father again. I swear it on the Morninglord. On my mother. On anything.
 interject tag:blunt: He's a hungry wolf asking us to open the pen.
-* Go, then. The way is open. -> free
+* [ends:the_priests_son] Go, then. The way is open. -> free
 * On second thought, no. -> menu
 
 ~ free

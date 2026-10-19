@@ -43,7 +43,7 @@ Strahd [smile]: For whoever came. You came. I am grateful, and I am not often gr
 -> kept_menu
 
 ~ kept_menu
-* [name:tamsin_tealeaf] (Put the locket in his hand.) -> give
+* [ends:the_locket] [name:tamsin_tealeaf] (Put the locket in his hand.) -> give
 * [name:tamsin_tealeaf] (Drop the locket into the fire.) -> burn
 * [name:tamsin_tealeaf] Not yet. -> not_yet
 

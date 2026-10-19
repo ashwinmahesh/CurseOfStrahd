@@ -96,7 +96,7 @@ endif
 
 ~ offer
 The Grandsire: Give me the runt and the pack takes no more Krezk children. Not one. Not for as long as I hold the pack. You have my word. Wolves keep their word. It's men who don't.
-* (Give Petru to the Grandsire.) -> given
+* [ends:the_packs_runt] (Give Petru to the Grandsire.) -> given
 * No. -> fight
 
 ~ given

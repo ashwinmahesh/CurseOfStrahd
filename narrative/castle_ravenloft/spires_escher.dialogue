@@ -42,7 +42,7 @@ cutscene end
 * [if not flag.escher_told_jester and (flag.pidlwick_met or tarokka.ally.npc == pidlwick_ii)] What do you know about the clockwork jester on the stair? -> jester
 * [if level >= 10 and not quest.escher_petition] What's that paper you keep turning over? -> castle_ravenloft/escher_petition:ask
 * Come with us. Help us end him. -> come
-* You're one of his. This ends now. -> attack
+* [ends:escher_petition if quest.escher_petition == asked or quest.escher_petition == held] You're one of his. This ends now. -> attack
 * Goodbye, Escher. -> bye
 
 ~ who
@@ -60,7 +60,7 @@ Escher [sly]: There is something. I've seen it. He took me up to see it once, th
 * [if gold >= 100 and not flag.escher_slighted] We can pay. (100 gp) -> pay
 * [if gold >= 200 and flag.escher_slighted] We can pay. (200 gp) -> pay_more
 * [Persuasion DC 15] You hate him more than we do. Tell us for the pleasure of it. -> persuaded | persuade_fail
-* [Intimidation DC 14] Tell us, or we open your curtains at dawn. -> scared | scare_fail
+* [ends:escher_petition if quest.escher_petition == asked or quest.escher_petition == held] [Intimidation DC 14] Tell us, or we open your curtains at dawn. -> scared | scare_fail
 * Never mind. -> menu
 
 ~ promise
@@ -161,7 +161,7 @@ combat escher_fight
 
 ~ cold
 Escher [angry]: Get out. Go and threaten somebody with a pulse.
-* You're one of his. This ends now. -> attack
+* [ends:escher_petition if quest.escher_petition == asked or quest.escher_petition == held] You're one of his. This ends now. -> attack
 * Leave him to sulk. -> END
 
 ~ bye

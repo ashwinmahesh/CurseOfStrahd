@@ -79,7 +79,7 @@ if not flag.kip_strahd_offer_heard
 set kip_strahd_offer_heard
 Strahd: Or I could buy your contract from him instead. Then you would owe me, and not a stranger. I am a much better landlord than a devil. Ask anyone in the valley.
 * [name:kip_smudgewick] Just the signature, please, sir. -> dinner_signed
-* [name:kip_smudgewick] (Let him buy the contract.) -> dinner_sold
+* [ends:the_fine_print] [name:kip_smudgewick] (Let him buy the contract.) -> dinner_sold
 endif
 -> dinner_signed
 

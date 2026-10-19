@@ -6,6 +6,7 @@ parse_file(path) -> {"nodes": {id: line_no}, "jumps": [(target, line)], "flags_r
                      "flags_set": {id: [where]}, "speakers": [(id, line)], "items": [...], "quests": [...],
                      "skills": [...], "encounters": [...], "selectors": [...], "errors": [str]}
                      (+ "end_games": [where] for each `end_game`, when a file has one)
+                     "ends": [(quest id, where)] for each `[ends:<quest>]` option tag
                      (+ "casts": [(spell id, where)] for `cast`, "reveals": [(prop id, where)] for `reveal`)
                      (+ "leads": [(npc id, target, where)] for `lead <npc> to <target>`, target a place id, an id on a map or "x,y")
                      (+ "moves": [(location id, spawn name, where)] for `move`, the spawn "default" when none is named)
@@ -28,6 +29,7 @@ RE_LINE = re.compile(r"^([A-Za-z][A-Za-z_ ]*?)(?:\s*\[([a-z:]+(?:\s*,\s*[a-z:]+)
 AWAY = {"away", "away:party"}
 RE_OPTION = re.compile(r"^\*\s+(.*?)\s*->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?\s*$")
 RE_TAG = re.compile(r"^\[([^\]]+)\]\s*")
+RE_ENDS_TAG = re.compile(rf"^ends:({ID})(?:\s+if\s+(.+))?$")
 RE_CHECK_TAG = re.compile(r"^([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)$")
 RE_JUMP = re.compile(r"^->\s*([A-Za-z0-9_:/]+|END)$")
 RE_SET = re.compile(rf"^set\s+({ID})(?:\s*(=|\+=|-=)\s*(.+))?$")
@@ -162,7 +164,7 @@ def conditions_approval(expr):
 def parse_file(path):
     text = Path(path).read_text()
     out = {"nodes": {}, "jumps": [], "flags_read": {}, "flags_set": {}, "speakers": [], "items": [], "quests": [],
-           "skills": [], "encounters": [], "selectors": [], "narrates": [], "cutscenes": [], "errors": []}
+           "skills": [], "encounters": [], "selectors": [], "narrates": [], "cutscenes": [], "ends": [], "errors": []}
     node = None
     depth = 0
     narrator_file = "/narrator/" in str(path).replace("\\", "/")
@@ -227,6 +229,15 @@ def parse_file(path):
                         out["errors"].append(f"{where}: unknown skill '{cm.group(1)}'")
                 elif tag.startswith("if "):
                     read(conditions_flags(tag[3:]), where, tag[3:])
+                elif tag.startswith("ends:"):
+                    # `[ends:<quest>]` or `[ends:<quest> if <condition>]`: choosing it closes the quest (tools/data/option_ends.py)
+                    em = RE_ENDS_TAG.match(tag)
+                    if not em:
+                        out["errors"].append(f"{where}: malformed tag [{tag}] (want [ends:<quest id>] or [ends:<quest id> if <condition>])")
+                    else:
+                        out["ends"].append((em.group(1), where))
+                        if em.group(2):
+                            read(conditions_flags(em.group(2)), where, em.group(2))
                 elif ":" in tag:
                     out["selectors"].append((tag, where))
                 elif tag.lower() in CLASS_TAGS:

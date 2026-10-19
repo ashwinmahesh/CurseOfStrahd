@@ -240,7 +240,7 @@ Abbot: Give her to me. I will take her down to him myself. He will be gentled by
 Ireena [angry]: I can count. I'm not going.
 * [if flag.ireena_pool_vision] At the pool she chose a dead man over him. She'll choose that every time. -> pool_truth_demand
 * Never. If you want her, you'll have to go through us. -> kill_now
-* We're leaving. All of us. Now. -> fled
+* [ends:the_abbots_bride] We're leaving. All of us. Now. -> fled
 
 ~ pool_truth_demand
 Narrator: You tell him about the pool. Ireena tells him the rest herself, in a flat, steady voice, about a wall, and a stair, and a morning full of white flowers.

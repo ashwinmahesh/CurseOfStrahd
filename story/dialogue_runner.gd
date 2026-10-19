@@ -6,7 +6,7 @@ extends RefCounted
 ## StoryState; a `combat` line ends the conversation with the encounter to start.
 ##
 ## Beats: {kind: "line", speaker_id, name, portrait, mood, text, narrator, party}
-##        {kind: "options", options: [{text, label, check: {skill, dc, bonus, chance, who}, enabled}]}
+##        {kind: "options", options: [{text, label, check: {skill, dc, bonus, chance, who}, enabled, ends: [quest names]}]}
 ##        {kind: "check", who, portrait, skill, dc, total, success, detail, said}
 ##        {kind: "guidance", offer}: before a check, someone could cast Guidance (GuidanceOffer); the screen asks and
 ##            calls answer_guidance(), which rolls the check and returns its beat
@@ -24,6 +24,11 @@ const ABILITIES := {"strength": &"str", "dexterity": &"dex", "constitution": &"c
 
 ## The way back out of each party picker (its last option).
 const BACK_OUT := {"sacrifice": "No one. Not this.", "respec": "Never mind. No one sits."}
+
+## F4 (Side Quest Failure Plan): a menu whose every option closes the same quests is a story beat, not a choice, so it
+## wears no seals and no "Ends" line (owner's call via the coordinator, 2026-10-19: Godrick's and Wren's camp talks, the
+## Vallaki aftermath). The tags stay in the data and the lint still demands them. Set this true to mark those menus too.
+const MARK_UNIFORM_MENUS := false
 
 var st: StoryState
 var dice: DiceRoller
@@ -501,7 +506,8 @@ func _collect_options() -> void:
 				label = (label + " [%d gp]" % roundi(price)).strip_edges()
 			_options.append({"text": str(s["text"]), "label": label.strip_edges(), "ok": str(s["ok"]), "fail": str(s["fail"]),
 				"check": check, "check_info": info, "who": who, "enabled": enabled,
-				"reason": "" if enabled else "Not enough gold", "xp_key": "%s:%s:%d" % [file.key, node, int(s["n"])]})
+				"reason": "" if enabled else "Not enough gold", "ends": _ends_names(s),
+				"xp_key": "%s:%s:%d" % [file.key, node, int(s["n"])]})
 		elif t in ["if", "elif", "else", "endif"]:
 			if t == "if":
 				if StoryConditions.check(str(s["cond"]), st):
@@ -514,6 +520,23 @@ func _collect_options() -> void:
 				_skip_to_endif()
 		else:
 			break
+
+
+## The names of the quests choosing this option closes, for the menu's mark (`[ends:<quest>]`, F4 of the Side Quest
+## Failure Plan): each tag's condition has to hold now, and a quest that has already ended has nothing left to close.
+func _ends_names(opt: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	for e: Variant in opt.get("ends", []) as Array:
+		var tag := e as Dictionary
+		var id := str(tag["quest"])
+		if str(tag["cond"]) != "" and not StoryConditions.check(str(tag["cond"]), st):
+			continue
+		if st.quest_ended(id):
+			continue
+		var entry := Compendium.shared().get_entry("quests", id)
+		if not entry.is_empty():
+			out.append(str(entry.get("name", id)))
+	return out
 
 
 ## An option's check as the menu shows it: who rolls, their bonus and the chance.
@@ -553,11 +576,22 @@ func _price_of(ref: String) -> float:
 	return 0.0
 
 
+## Whether every option on the menu closes the same quests (two or more options): the menu is a beat, not a choice.
+func _uniform_menu() -> bool:
+	if _options.size() < 2 or (_options[0]["ends"] as Array).is_empty():
+		return false
+	for o in _options:
+		if (o["ends"] as Array) != (_options[0]["ends"] as Array):
+			return false
+	return true
+
+
 func _options_beat() -> Dictionary:
 	var out: Array[Dictionary] = []
+	var beat_only := not MARK_UNIFORM_MENUS and _uniform_menu()
 	for o in _options:
 		out.append({"text": o["text"], "label": o["label"], "check": o["check_info"], "enabled": o["enabled"],
-			"reason": o["reason"],
+			"reason": o["reason"], "ends": [] as Array[String] if beat_only else o["ends"],
 			"who": (o["who"] as Character).name if o["who"] != null else ""})
 	return {"kind": "options", "options": out}
 

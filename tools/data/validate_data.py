@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dialogue_lint  # noqa: E402
 import fail_routes  # noqa: E402
 import magic_prices  # noqa: E402
+import option_ends  # noqa: E402
 import story_reach  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1176,6 +1177,9 @@ def story_checks(data, errors, need):
                 errors.append(f"narrative/{where}: unknown quest '{qid}'")
             elif stage not in {s["id"] for s in quests[qid]["stages"]}:
                 errors.append(f"narrative/{where}: quest {qid} has no stage '{stage}'")
+        for qid, where in p.get("ends", []):
+            if qid not in quests:
+                errors.append(f"narrative/{where}: [ends:{qid}] names an unknown quest")
         for enc, where in p["encounters"]:
             if enc not in encounter_ids:
                 errors.append(f"narrative/{where}: combat '{enc}' isn't an encounter in any location")
@@ -1348,6 +1352,8 @@ def main():
         errors.extend(story_reach.findings(ROOT))
         # A failed roll never locks a quest: a spent social option can't be the only way to a stage (tools/data/fail_routes.py).
         errors.extend(fail_routes.findings(ROOT))
+        # An option that closes a quest wears [ends:<quest>], and only such an option does (tools/data/option_ends.py).
+        errors.extend(option_ends.findings(ROOT))
     # Magic item prices follow Sane Magical Prices (data/treasure/magic_prices.json, tools/data/magic_prices.py).
     errors.extend(magic_prices.findings())
     for e in errors:

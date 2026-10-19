@@ -201,9 +201,9 @@ else
 interject name:wren_featherfoot: I never even got to stand in front of him. One minute he's in his hall and the next there's steel everywhere. Fourteen years of lessons, and I never once said Master Sorrel's name to his face.
 interject name:wren_featherfoot: I had the words lined up in my head like three tin cups on a barrel. Watch this, I was going to say. Bit daft, keeping a speech in your pocket for a dead man.
 endif
-* Maybe the lesson isn't one you needed him for. -> unsaid_lesson
-* I'm sorry, Wren. -> unsaid_sorry
-* (Sit down beside him.) -> unsaid_sit
+* [ends:the_last_lesson] Maybe the lesson isn't one you needed him for. -> unsaid_lesson
+* [ends:the_last_lesson] I'm sorry, Wren. -> unsaid_sorry
+* [ends:the_last_lesson] (Sit down beside him.) -> unsaid_sit
 
 ~ unsaid_lesson
 interject name:wren_featherfoot: Oh, brilliant, a riddle I can solve by myself. Master Sorrel says a wise man learns from an empty room. He never said that. It's rubbish.

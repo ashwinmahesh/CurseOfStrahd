@@ -24,6 +24,7 @@ SOCIAL = {"persuasion", "intimidation", "deception", "performance", "insight"}
 RE_NODE = re.compile(r"^~\s+(\S+)$")
 RE_OPTION = re.compile(r"^\*\s+(.*?)\s*->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?\s*$")
 RE_TAG = re.compile(r"^\[([^\]]+)\]\s*")
+RE_ENDS_TAG = re.compile(rf"^ends:({ID})(?:\s+if\s+.+)?$")
 RE_JUMP = re.compile(r"^->\s*([A-Za-z0-9_:/]+|END)$")
 RE_SET = re.compile(rf"^set\s+({ID})(?:\s*(=|\+=|-=)\s*(.+))?$")
 RE_QUEST = re.compile(rf"^quest\s+({ID})\s+({ID})$")
@@ -93,7 +94,7 @@ def parse_dialogue(path):
             continue
         st = {"line": n, "guards": list(stack)}
         if (m := RE_OPTION.match(line)):
-            label, conds, gates, check = m.group(1), [], [], None
+            label, conds, gates, check, ends = m.group(1), [], [], None, []
             while (t := RE_TAG.match(label)):
                 tag = t.group(1).strip()
                 label = label[t.end():]
@@ -101,9 +102,12 @@ def parse_dialogue(path):
                     check = tag.rsplit(" DC", 1)[0].strip().lower().replace(" ", "_")
                 elif tag.startswith("if "):
                     conds.append(tag[3:])
+                elif (e := RE_ENDS_TAG.match(tag)):
+                    ends.append(e.group(1))   # `[ends:<quest>]`: choosing it closes that quest (tools/data/option_ends.py)
                 else:
                     gates.append(tag)
-            st.update(t="option", to=[x for x in (m.group(2), m.group(3)) if x], conds=conds, gates=gates, check=check)
+            st.update(t="option", to=[x for x in (m.group(2), m.group(3)) if x], conds=conds, gates=gates, check=check,
+                      ends=ends)
         elif (m := RE_JUMP.match(line)):
             st.update(t="jump", to=[m.group(1)])
         elif (m := RE_CHECK.match(line)):

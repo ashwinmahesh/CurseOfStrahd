@@ -999,7 +999,7 @@ interject class:cleric: Then we keep looking. Or we keep our word another way.
 Kasimir: My sister. Patrina. Her bones lie under the castle and her voice is in this temple. Can you put them together again?
 vestige_tarakamedes: Bones, voice, breath. The work of a moment. The price is yours, elf: every year you have left, but one. One year with her. Then you come down to me.
 Kasimir: One year. I have wasted three hundred.
-* Let him choose. -> tarakamedes_kasimir_yes
+* [ends:patrinas_wail] Let him choose. -> tarakamedes_kasimir_yes
 * [Persuasion DC 15] She went to the castle the first time, Kasimir. She'll go again. -> tarakamedes_kasimir_no | tarakamedes_kasimir_yes
 * [if flag.patrina_met] You heard her. She doesn't want to be bought back. -> tarakamedes_kasimir_no
 

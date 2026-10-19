@@ -71,7 +71,7 @@ Narrator: Wren steps out in front of the chamberlain again.
 
 ~ rahadin_choice
 * [name:wren_featherfoot] [if not (approval.wren_featherfoot <= strained)] (Tell him what Sorrel thought of him.) -> rahadin_pity
-* [name:wren_featherfoot] (Go for his throat.) -> rahadin_rage
+* [ends:the_last_lesson] [name:wren_featherfoot] (Go for his throat.) -> rahadin_rage
 * (Pull Wren back.) -> rahadin_pulled
 
 ~ rahadin_pity

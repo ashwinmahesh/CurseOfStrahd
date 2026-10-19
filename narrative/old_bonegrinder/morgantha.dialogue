@@ -90,7 +90,7 @@ endif
 * [if (not (gold >= 150) and not flag.morgantha_threatened) or (not (gold >= 200) and flag.morgantha_threatened)] We haven't that much. -> too_poor
 * What else would you take? -> dream_offer
 * [if not flag.coven_knows_liars] [Persuasion DC 16] Free them, and we'll leave you and your mill in peace. -> truce_ok | truce_fail
-* Keep them. We want no part of this. -> abandon
+* [ends:children_of_the_mill] Keep them. We want no part of this. -> abandon
 * No deals. -> menu
 
 ~ too_poor

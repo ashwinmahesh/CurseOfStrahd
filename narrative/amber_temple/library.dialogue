@@ -36,7 +36,7 @@ Narrator: Somebody has already decided what to do with it.
 -> END
 endif
 * Take it down to show Exethanter. -> jar_take
-* (Smash it.) -> jar_smash
+* [ends:something_with_a_lid] (Smash it.) -> jar_smash
 * Leave it where it is. -> END
 
 ~ jar_take

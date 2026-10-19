@@ -79,7 +79,7 @@ endif
 if flag.tibor_met
 Narrator: Below on the landing, Tibor has stood up from his fire and is not looking at you.
 endif
-* (Step back and let him take it.) -> sold
+* [ends:the_last_egg] (Step back and let him take it.) -> sold
 * No. -> fight
 
 ~ sold

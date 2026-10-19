@@ -104,7 +104,7 @@ Vladimir: You may have it on the Order's terms, or by the Order's law. Not other
 ~ terms
 Vladimir: Swear the Order's second oath with us. When you reach him, you will break him and not end him. Take his castle, his servants, his sleep, his bride. Leave him alive in the ruin of it, forever.
 Vladimir: Swear it, and what I keep is yours, and the Order's war chest besides, and no dead thing on the knights' road will trouble you. And we will be there at the end, to see the oath kept.
-* We swear it. -> pact
+* [ends:the_order_of_the_silver_dragon] We swear it. -> pact
 * No. When we reach him, he dies. -> terms_no
 * We'll think on it. -> menu
 

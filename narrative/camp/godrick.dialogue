@@ -238,9 +238,9 @@ endif
 if flag.ladle_wall_read
 interject name:godrick_pendlebrook: Still, we read his wall. Sir Aldric didn't run, and I know that now, even if there's nobody left to tell it to.
 endif
-* You were a knight before any Order said so. -> unknighted_knight
-* We should have waited for you to be knighted first. -> unknighted_wait
-* (Sit down beside him.) -> unknighted_sit
+* [ends:the_ladle] You were a knight before any Order said so. -> unknighted_knight
+* [ends:the_ladle] We should have waited for you to be knighted first. -> unknighted_wait
+* [ends:the_ladle] (Sit down beside him.) -> unknighted_sit
 
 ~ unknighted_knight
 interject name:godrick_pendlebrook: You sound like Sir Pellam. He said the ladle would hold until we found proper steel.

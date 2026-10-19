@@ -31,6 +31,8 @@ var _portrait: TextureRect
 var _name: Label
 var _text: RichTextLabel
 var _options: VBoxContainer
+## "Ends <quest>" under the menu while the option under the mouse or the pad's focus closes a quest (`[ends:<quest>]`).
+var _ends_note: Label
 var _hint: Label
 var _continue_row: HBoxContainer
 var _waiting_continue := false
@@ -167,6 +169,10 @@ func _ready() -> void:
 	_options_scroll.add_child(_options)
 	_options.minimum_size_changed.connect(_fit_options)
 	right.add_child(_options_scroll)
+	_ends_note = UiKit.label("", 14, "rose")
+	_ends_note.name = "EndsNote"
+	_ends_note.visible = false
+	right.add_child(_ends_note)
 	_continue_row = HBoxContainer.new()
 	_continue_row.add_theme_constant_override("separation", 12)
 	var go := UiParts.small_button("Continue", _advance)
@@ -490,6 +496,17 @@ func _show_options(options: Array) -> void:
 			b.disabled = true
 			b.tooltip_text = str(opt.get("reason", ""))
 			b.add_theme_color_override("font_disabled_color", Look.color("bone"))
+		# A choice that closes a quest wears a broken seal and says which (F4, Side Quest Failure Plan).
+		var ends := _ends_text(opt)
+		if ends != "":
+			b.tooltip_text = ends if b.tooltip_text == "" else "%s\n%s" % [b.tooltip_text, ends]
+			b.add_child(QuestEndMark.new())
+			_option_look(b, QuestEndMark.SIZE + 18.0)
+			b.set_meta(&"ends", ends)
+		# The line under the menu follows the pad's focus and the mouse (an ordinary option clears it).
+		b.focus_entered.connect(_show_ends.bind(b))
+		b.mouse_entered.connect(_show_ends.bind(b))
+		b.mouse_exited.connect(_show_ends.bind(null))
 		b.pressed.connect(func() -> void: _choose(idx))
 		_options.add_child(b)
 		_option_buttons.append(b)
@@ -512,21 +529,43 @@ func _fit_options() -> void:
 
 ## Options read as lines of text; the one under the mouse or keyboard gets a crimson band with pointed ends and a
 ## fine gilt edge, like the menu's buttons.
-func _option_look(b: Button) -> void:
+func _option_look(b: Button, right_margin := 0.0) -> void:
 	var plain := StyleBoxEmpty.new()
 	plain.content_margin_left = 20
+	plain.content_margin_right = right_margin
 	plain.content_margin_top = 4
 	plain.content_margin_bottom = 4
 	var lit := UiKit.style("ui_oxblood", "gilt_dark", 1, 0.95)
 	lit.set_corner_radius_all(14)
 	lit.corner_detail = 1
 	lit.content_margin_left = 20
+	lit.content_margin_right = right_margin
 	lit.content_margin_top = 4
 	lit.content_margin_bottom = 4
 	for state: String in ["normal", "disabled"]:
 		b.add_theme_stylebox_override(state, plain)
 	for state: String in ["hover", "focus", "pressed"]:
 		b.add_theme_stylebox_override(state, lit)
+
+
+## "Ends The Sun-Cake" for an option that closes a quest (its names come from the runner), else "".
+func _ends_text(opt: Dictionary) -> String:
+	var names: Array[String] = []
+	for n: Variant in opt.get("ends", []) as Array:
+		names.append(str(n))
+	return "" if names.is_empty() else "Ends %s" % " and ".join(names)
+
+
+## The line under the menu names what the option under the mouse (else the focused one) closes; null clears the mouse.
+func _show_ends(b: Button) -> void:
+	var shown := b
+	if shown == null:
+		for c in _option_buttons:
+			if is_instance_valid(c) and c.has_focus():
+				shown = c
+				break
+	_ends_note.text = str(shown.get_meta(&"ends", "")) if shown != null and is_instance_valid(shown) else ""
+	_ends_note.visible = _ends_note.text != ""
 
 
 func _choose(i: int) -> void:
@@ -589,6 +628,9 @@ func _clear_options() -> void:
 	if _speaker_button != null:
 		_speaker_button.visible = false
 	options_shown = []
+	if _ends_note != null:
+		_ends_note.visible = false
+		_ends_note.text = ""
 	for c in _options.get_children():
 		c.queue_free()
 	_option_buttons.clear()

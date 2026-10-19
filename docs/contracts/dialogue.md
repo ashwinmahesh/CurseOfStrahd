@@ -46,6 +46,20 @@ Speaker [away]: Text               The speaker turns their back on the other sid
                                    roll failed, and a side quest's stage must still be reachable; a choice between
                                    two endings is fine, and an exception goes in that file's ALLOWED with its reason.
 * [if <condition>] Text -> node    Shown only when the condition holds.
+* [ends:<quest>] Text -> node      Choosing it closes that quest (the next lines move it to an ending). The menu draws a
+                                   broken seal in the Failed pill's rose on the option, its tooltip and the line under the
+                                   menu say "Ends <quest name>" (ui/dialogue/dialogue_ui.gd, QuestEndMark). Several may
+                                   stand together: `[ends:a] [ends:b]`. `[ends:<quest> if <condition>]` marks it only while
+                                   the condition holds (use it where the same option closes the quest in some states and not
+                                   others: `[ends:the_dancing_bear if flag.tser_pool_brawl_won]`); a quest that has ended
+                                   already is never marked. A menu whose every option closes the same quests (two or more
+                                   options) is a story beat, not a choice, and wears no seals (DialogueRunner.MARK_UNIFORM_MENUS). A walk-away that starts one of the quest's `closes` rules may carry
+                                   it too. Side Quest Failure Plan rule 4: no failure the player couldn't have seen coming.
+                                   `make validate` enforces it (tools/data/option_ends.py): follow each option to the next menu
+                                   (jumps and `check` lines, optimistic about `if`s; a roll takes its success branch only, since
+                                   a failed roll never closes a quest), and an option that reaches a side or companion quest's
+                                   failure ending without the tag, or that carries a tag and reaches none of that quest's
+                                   endings, fails. Main-story quests are left alone; an exception goes in that file's ALLOWED.
 * [Cleric] Text -> node            Shown only if a party member is a Cleric; that character speaks it. Also
                                    [Elf], [Criminal] (background), [tag:blunt] and [knows:remove_curse] (a spell that character can cast
                                    now; the option text should name it).

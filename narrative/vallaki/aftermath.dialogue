@@ -126,9 +126,9 @@ Lady Wachter [smile]: People of Vallaki. You may stop smiling now.
 Narrator: Nobody cheers. But nobody stops her, either, and a few faces in the crowd look as if they've put down something heavy.
 Lydia Petrovna [afraid]: Please. Please, Fiona. He's a silly man. He only wanted everyone to be happy. Don't hurt him.
 Lady Wachter: You've earned a say in it, my friends. What shall we do with our Baron?
-* Exile him. Let him and his family leave town tonight. -> baron_exiled
-* The stocks. Let the town have its turn. -> baron_stocks
-* Do as you like with him, my lady. -> baron_executed
+* [ends:victors_circle if flag.victor_circle != "broken" and flag.victor_circle != "persuaded" and flag.victor_circle != "reported" and not guest:victor_vallakovich] Exile him. Let him and his family leave town tonight. -> baron_exiled
+* [ends:victors_circle if flag.victor_circle != "broken" and flag.victor_circle != "persuaded" and flag.victor_circle != "reported" and not guest:victor_vallakovich] The stocks. Let the town have its turn. -> baron_stocks
+* [ends:victors_circle if flag.victor_circle != "broken" and flag.victor_circle != "persuaded" and flag.victor_circle != "reported" and not guest:victor_vallakovich] Do as you like with him, my lady. -> baron_executed
 
 ~ baron_exiled
 set baron_fate = "exiled"

@@ -163,7 +163,7 @@ Narrator: She goes. Granny puts one huge grey hand on her head, gently, the way 
 
 ~ offer
 Granny Ash: Clever ones. Granny likes clever ones. Here's Granny's offer. The girl comes with Granny, and you have this. (She shakes the basket, and it clinks.) And Granny goes back to the deep wood and never comes to this valley again. Never ever. Granny's word.
-* (Take the basket and let her go.) -> given
+* [ends:the_fourth_sister] (Take the basket and let her go.) -> given
 * No. -> fight
 * Hags bargain. Play her at riddles instead. -> riddle_offer
 

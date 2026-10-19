@@ -6,7 +6,7 @@ extends Node
 ## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
 ## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts), the Wait
 ## screen (UI_ONLY=wait), the journal's quests: Other, Main and a search (UI_ONLY=journal_quests), the Other tab by region
-## (UI_ONLY=journal_regions), and XP levelling's strip,
+## (UI_ONLY=journal_regions), a menu whose options close a quest (UI_ONLY=dialogue_ends), and XP levelling's strip,
 ## and level-up line (UI_ONLY=xp).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
@@ -312,6 +312,21 @@ func capture_shots(tool: Node, out: String) -> void:
 			await _shoot(tool, "%s_dialogue_%d_options.png" % [out, n_opts])
 			d.queue_free()
 			await tool.call("wait_frames", 2)
+	if _wants("dialogue_ends"):
+		# Options that close a quest wear a broken seal and say which (Side Quest Failure Plan F4): UI_ONLY=dialogue_ends.
+		var d := DialogueUI.new()
+		add_child(d)
+		await tool.call("wait_frames", 2)
+		(d.get("_name") as Label).text = "Ranka"
+		(d.get("_text") as RichTextLabel).text = "The basket is yours, if you want it. She will not be here when you come back."
+		d.call("_show_options", [
+			{"text": "Ask what she wants for the basket.", "label": "", "check": {}, "enabled": true, "ends": []},
+			{"text": "(Take the basket and let her go.)", "label": "", "check": {}, "enabled": true, "ends": ["The Fourth Sister"]},
+			{"text": "She went to the castle the first time. She will go again.", "label": "[Persuasion]", "check": {"who": "Hedda Ironvow", "bonus": 5, "chance": 0.65}, "enabled": true, "ends": ["The Fourth Sister", "The Priest's Son"]},
+			{"text": "Walk away.", "label": "", "check": {}, "enabled": true, "ends": []}])
+		await _shoot(tool, "%s_dialogue_ends.png" % out)
+		d.queue_free()
+		await tool.call("wait_frames", 2)
 	if _wants("create"):
 		await _create_shots(tool, out)
 	if _wants("wait"):

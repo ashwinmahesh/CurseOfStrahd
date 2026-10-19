@@ -167,7 +167,7 @@ else
 Narrator: The cub is out of the trap, limping, pressed hard against Bujor's side. Bujor looks at you, and down the deer path toward the camp, and up at the dark of the den in the rocks.
 endif
 * [if not (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)] (Lead him home to Lavinia, and the cub with him.) -> home
-* (Let them go into the den together.) -> let_go
+* [ends:the_dancing_bear if flag.tser_pool_brawl_won or flag.vistani_turned_hostile] (Let them go into the den together.) -> let_go
 
 ~ home
 set bujor_home
