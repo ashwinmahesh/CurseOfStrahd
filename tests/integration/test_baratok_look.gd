@@ -214,14 +214,17 @@ func test_nothing_new_stands_by_a_fight() -> void:
 
 
 ## The squares the party can walk from `from`: open floor ('.' and '~'), eight ways without cutting a wall's corner, a
-## step of at most 5 ft of height, and not through any prop or container.
+## step of at most 5 ft of height, and not through any prop or container (a flat ice patch aside).
 func _walk(from: Vector2i) -> Dictionary:
 	var map := _loc()["map"] as Dictionary
 	var rows := map["rows"] as Array
 	var heights := map["elevation"] as Array
 	var shut := {}
-	for id: String in _things():
-		shut[_things()[id]] = true
+	for key: String in ["props", "containers"]:
+		for t: Variant in _loc()[key] as Array:
+			# A flat patch of ice is stood on, not walked round.
+			if str((t as Dictionary).get("model", "")) != "ice_patch":
+				shut[_cell((t as Dictionary)["cell"])] = true
 	var seen := {from: true}
 	var queue: Array[Vector2i] = [from]
 	while not queue.is_empty():

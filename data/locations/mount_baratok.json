@@ -251,7 +251,8 @@
           },
           "once": true
         }
-      ]
+      ],
+      "scale": 1.8
     },
     {
       "id": "baratok_cairn_opened",
@@ -262,7 +263,8 @@
       "kind": "examine",
       "label": "The opened cairn",
       "model": "rocks",
-      "when": "flag.mordenkainen_spellbook_found"
+      "when": "flag.mordenkainen_spellbook_found",
+      "scale": 1.6
     },
     {
       "id": "glass_ring_wand",
@@ -474,6 +476,82 @@
       "kind": "decor",
       "model": "frozen_birds",
       "scale": 1.4
+    },
+    {
+      "id": "summit_stones_west",
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "decor",
+      "model": "baratok_menhirs"
+    },
+    {
+      "id": "summit_stones_east",
+      "cell": [
+        10,
+        2
+      ],
+      "kind": "decor",
+      "model": "baratok_menhirs"
+    },
+    {
+      "id": "summit_frost_4",
+      "cell": [
+        8,
+        2
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "summit_frost_5",
+      "cell": [
+        9,
+        2
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "lookout_bench",
+      "cell": [
+        1,
+        14
+      ],
+      "kind": "decor",
+      "model": "stone_bench",
+      "facing": "west"
+    },
+    {
+      "id": "lookout_cairn",
+      "cell": [
+        1,
+        12
+      ],
+      "kind": "decor",
+      "model": "cairn",
+      "scale": 1.3
+    },
+    {
+      "id": "track_cairn_west",
+      "cell": [
+        14,
+        23
+      ],
+      "kind": "decor",
+      "model": "cairn",
+      "scale": 1.35
+    },
+    {
+      "id": "track_cairn_east",
+      "cell": [
+        21,
+        23
+      ],
+      "kind": "decor",
+      "model": "cairn",
+      "scale": 1.35
     }
   ],
   "containers": [

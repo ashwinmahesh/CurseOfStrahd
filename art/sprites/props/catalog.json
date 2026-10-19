@@ -71,6 +71,10 @@
     "cell_bars": {
       "art": "crypt_gate",
       "mount": "stand"
+    },
+    "baratok_menhirs": {
+      "art": "standing_stones",
+      "fade": true
     }
   },
   "ids": {
