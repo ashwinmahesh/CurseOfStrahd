@@ -36,6 +36,9 @@ var _note: Label                   ## "Saved." under the buttons
 var _on_settings := false
 var _settings_page := "Game"
 var _confirm: Button                ## "Leave Honour for ...", while that switch waits for its second click
+var _scroll: ScrollContainer        ## the Game page's rows, scrolling
+var _row_host: Control              ## where _choice_row puts its parts while a page scrolls: the scroll's content
+var _row_origin := Vector2.ZERO     ## that content's top left on the frame, to turn a concept position into its own
 static var _serif: Font
 
 
@@ -174,6 +177,9 @@ func _clear() -> void:
 	_buttons.clear()
 	_note = null
 	_confirm = null
+	_scroll = null
+	_row_host = null
+	_row_origin = Vector2.ZERO
 
 
 func _place(c: Control) -> Control:
@@ -294,8 +300,10 @@ const SETTINGS_PAGES: Array[String] = ["Game", "Display", "Keys"]
 ## Concept y of the first row and the pitch between rows.
 const ROW_Y := 158.0
 const ROW_PITCH := 34.0
-## The Game page's rows (nine choices and the respec box) sit closer, so the last stays clear of the Back button.
-const GAME_PITCH := 27.0
+## The Game page has more rows than fit between the tabs and the Back button, so they scroll in a window of their own
+## (concept units: x 14 to 268, y 140 to 374), Back and Resume staying put below. The window leaves the scroll bar
+## room beside the choices, which end at x 257.
+const GAME_SCROLL := Rect2(14.0, 140.0, 254.0, 234.0)
 
 
 func _show_settings(page: String = "Game") -> void:
@@ -354,38 +362,40 @@ func _page_tabs(page: String) -> void:
 
 
 ## Game: the playthrough's difficulty, how fights (Flanking among them) and the Narrator play, attunement, turn-based
-## exploring, and the respec option. Ten rows in all, so the pitch is tighter than Display's: the last clears Back.
+## exploring, and the respec option. More rows than fit above Back, so they scroll (the wheel, Page Up and Down, Home and
+## End, the pad's focus moving down them), with the scroll bar showing and Back and Resume where they were.
 func _game_rows() -> void:
+	_open_scroll()
 	var y := ROW_Y
 	if st != null:
 		_difficulty_row(y)
-		y += GAME_PITCH
+		y += ROW_PITCH
 	_choice_row(y, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
-	y += GAME_PITCH
+	y += ROW_PITCH
 	# Shared party turns (owner 2026-10-09, after Baldur's Gate 3).
 	_choice_row(y, "Party turns", ["Shared", "One at a time"], 0 if GameSettings.shared_turns() else 1, func(i: int) -> void:
 		GameSettings.set_shared_turns(i == 0),
 		InputActions.fill("Shared: heroes next to each other in the turn order act together; click a hero's portrait or press {cycle_leader} to switch between them."))
-	y += GAME_PITCH
+	y += ROW_PITCH
 	# Flanking (2024 DMG optional rule, owner 2026-10-12).
 	_choice_row(y, "Flanking", ["On", "Off"], 0 if GameSettings.flanking() else 1, func(i: int) -> void:
 		GameSettings.set_flanking(i == 0),
 		"On: a creature with an ally on the far side of its foe, both next to it, has Advantage on melee attacks against that foe. For heroes and foes alike.")
-	y += GAME_PITCH
+	y += ROW_PITCH
 	# Attunement (a house option, Ashwin 2026-10-17): the book's limit of three, or none at all.
 	_choice_row(y, "Attunement", ["Three at most", "Unlimited"], 1 if GameSettings.unlimited_attunement() else 0, func(i: int) -> void:
 		_set_attunement(i == 1),
 		"Three at most: the book's rule. Unlimited: no attunement at all; a magic item works whenever it is worn, held or equipped, with no limit and no requirements.")
-	y += GAME_PITCH
+	y += ROW_PITCH
 	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
-	y += GAME_PITCH
+	y += ROW_PITCH
 	# Turn-based exploring (F7): the same switch as its key and the hotbar's Turn-based button.
 	_choice_row(y, "Exploring", ["Real time", "Turn-based"], 1 if GameSettings.turn_based() else 0, func(i: int) -> void:
 		_set_turn_based(i == 1),
 		InputActions.fill("Turn-based: outside fights the party moves in rounds, one of you at a time, to set up an ambush. {plan_mode} switches it too."))
-	y += GAME_PITCH
+	y += ROW_PITCH
 	# The controller's button pictures (U6, PadGlyphs): the pad in use, or a family picked here.
 	var icons: Array[String] = ["auto"]
 	icons.append_array(PadGlyphs.FAMILIES)
@@ -395,12 +405,12 @@ func _game_rows() -> void:
 			GameSettings.set_value("pad_icons", icons[i])
 			PadGlyphs.refresh_hints(),
 		"The controller's buttons as they're shown: Automatic follows the pad you play with.")
-	y += GAME_PITCH
+	y += ROW_PITCH
 	# Controller fights (owner pick 2026-10-09): the bar, or Baldur's Gate 3's wheels of actions.
 	_choice_row(y, "Controller fights", ["Bar", "Wheels"], 1 if GameSettings.pad_wheels() else 0, func(i: int) -> void:
 		GameSettings.set_pad_wheels(i == 1),
 		"Bar: hold LB for a wheel of tabs, then step through the hotbar. Wheels: hold LB for a wheel of your actions themselves, the D-pad changing the filter and the page.")
-	y += GAME_PITCH
+	y += ROW_PITCH
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
@@ -413,9 +423,46 @@ func _game_rows() -> void:
 		if st != null:
 			st.options["respec"] = on)
 	respec.focus_mode = Control.FOCUS_NONE
-	_place(respec)
+	_row_item(respec)
 	respec.reset_size()
-	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, y).y - respec.size.y / 2.0)
+	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, y).y - respec.size.y / 2.0) - _row_origin
+	_close_scroll(y + 14.0)
+
+
+## Starts the Game page's scrolling window: the rows that follow go inside it, positioned as on the frame.
+func _open_scroll() -> void:
+	_scroll = ScrollContainer.new()
+	_scroll.name = "GameRows"
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
+	_scroll.follow_focus = true   # a row that takes focus (the pad's, a Tab) scrolls into view
+	_scroll.clip_contents = true
+	_scroll.position = _u(GAME_SCROLL.position.x, GAME_SCROLL.position.y)
+	_scroll.size = _u(GAME_SCROLL.size.x, GAME_SCROLL.size.y)
+	_place(_scroll)
+	_row_host = Control.new()
+	_row_host.name = "Rows"
+	_row_host.mouse_filter = Control.MOUSE_FILTER_PASS   # a plain Control stops the wheel before the window sees it
+	_scroll.add_child(_row_host)
+	_row_origin = _scroll.position
+
+
+## The window's content ends at concept y `end`: tall enough to hold the last row, and the window shows its top.
+func _close_scroll(end: float) -> void:
+	_row_host.custom_minimum_size = Vector2(0.0, (end - GAME_SCROLL.position.y) * K)   # as wide as the window leaves it
+	_row_host = null
+	_row_origin = Vector2.ZERO
+
+
+## A part of a settings row: on the scrolling window's content while there is one, else on the frame. Inside the window
+## a part lets the mouse wheel through to it (a Button's click is still its own).
+func _row_item(c: Control) -> void:
+	if _row_host != null:
+		if c.mouse_filter == Control.MOUSE_FILTER_STOP:
+			c.mouse_filter = Control.MOUSE_FILTER_PASS
+		_row_host.add_child(c)
+	else:
+		_place(c)
 
 
 ## The playthrough's difficulty (F1, combat/difficulty.gd, kept in its options): Story, Balanced and Tactician switch
@@ -439,7 +486,7 @@ func _difficulty_row(y: float) -> void:
 
 
 ## How this game's heroes grow (story/xp.gd), as the Difficulty row's tip says it: shown, not offered, because it is chosen
-## when a game begins and never changed. The page has no room for a row of its own.
+## when a game begins and never changed.
 func _levelling_words() -> String:
 	if Xp.active(st):
 		return "Levelling: Experience. Chosen when this game began; it can't be changed."
@@ -597,9 +644,9 @@ func _set_look(style: String) -> void:
 func _choice_row(y: float, text: String, options: Array[String], current: int, on_change: Callable, tip: String) -> void:
 	var l := _text(text, 14.0, _c("arch_text"))
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	l.position = _u(30, y - 10.0)
+	l.position = _u(30, y - 10.0) - _row_origin
 	l.size = _u(100, 20)
-	_place(l)
+	_row_item(l)
 	var b := Button.new()
 	b.name = text
 	b.tooltip_text = tip
@@ -626,15 +673,15 @@ func _choice_row(y: float, text: String, options: Array[String], current: int, o
 		turn.call(-1 if bool(at[1]) else 1)
 		at[1] = false)
 	b.set_meta(&"pad_adjust", turn)   # the pad's left and right turn it (PadNav)
-	b.position = _u(130, y - 11.0)
+	b.position = _u(130, y - 11.0) - _row_origin
 	b.size = _u(127, 22)
 	# A fine gold rule under the choice, like the sliders' tracks.
 	var rule := UiParts.drawn(_u(127, 4), func(c: Control) -> void:
 		c.draw_line(Vector2(0, c.size.y / 2.0), Vector2(c.size.x, c.size.y / 2.0), Color(_c("arch_gold"), 0.45), 1.0, true)
 		_lozenge(c, Vector2(c.size.x / 2.0, c.size.y / 2.0), 3.0, _c("arch_gold")))
-	rule.position = _u(130, y + 10.0)
-	_place(rule)
-	_place(b)
+	rule.position = _u(130, y + 10.0) - _row_origin
+	_row_item(rule)
+	_row_item(b)
 
 
 ## A small centred text button in the arch's gold (the menu's way to Settings).
@@ -926,6 +973,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		if SaveSystem.can_save():
 			_quick_save()
+		return
+	# The Game page's rows: Page Up and Down move a screenful, Home and End to the ends (the wheel and the pad scroll too).
+	var key := event as InputEventKey
+	if key != null and key.pressed and key.keycode in [KEY_PAGEDOWN, KEY_PAGEUP, KEY_HOME, KEY_END] \
+			and _scroll != null and is_instance_valid(_scroll):
+		get_viewport().set_input_as_handled()
+		var page := roundi(_scroll.size.y * 0.8)
+		match key.keycode:
+			KEY_PAGEDOWN:
+				_scroll.scroll_vertical += page
+			KEY_PAGEUP:
+				_scroll.scroll_vertical -= page
+			KEY_HOME:
+				_scroll.scroll_vertical = 0
+			KEY_END:
+				_scroll.scroll_vertical = 1000000   # the bar holds it to the end
 		return
 	if event.is_action_pressed(&"combat_cancel") and root != null:
 		get_viewport().set_input_as_handled()

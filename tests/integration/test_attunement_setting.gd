@@ -1,6 +1,6 @@
 extends TestCase
-## Settings, Game, Attunement: the row is on the Game page, switches the option, clears the Back button below it, and
-## the screens that count attunements say so no more once it is on.
+## Settings, Game, Attunement: the row is on the Game page and switches the option, and the screens that count
+## attunements say so no more once it is on. (The page's scrolling is test_settings_scroll.)
 
 var root: Node
 
@@ -57,32 +57,6 @@ func test_the_game_page_has_the_row_and_it_switches_the_option() -> void:
 	row.pressed.emit()
 	assert_false(GameSettings.unlimited_attunement(), "the next turns it off")
 	assert_true(row.has_meta(&"pad_adjust"), "and the pad's left and right turn it, as on every row")
-
-
-func test_no_row_of_the_game_page_runs_into_another_or_into_back() -> void:
-	var menu := await _open_game_page()
-	var rows: Array[Control] = []
-	for n in menu.find_children("*", "Button", true, false):
-		var b := n as Button
-		if b.is_visible_in_tree() and b.text.begins_with("‹"):
-			rows.append(b)
-	var respec: Control = null
-	for n in menu.find_children("*", "CheckBox", true, false):
-		if (n as Control).is_visible_in_tree():
-			respec = n as Control
-	assert_true(rows.size() >= 8, "the choice rows are there: %d" % rows.size())
-	assert_true(respec != null, "and the respec box")
-	var all: Array[Control] = rows.duplicate()
-	if respec != null:
-		all.append(respec)
-	all.sort_custom(func(a: Control, b: Control) -> bool: return a.get_global_rect().position.y < b.get_global_rect().position.y)
-	for i in range(1, all.size()):
-		assert_true(all[i - 1].get_global_rect().end.y <= all[i].get_global_rect().position.y + 1.0,
-			"row %d clears row %d" % [i, i - 1])
-	var back := _by_text(menu, "Back")
-	assert_true(back != null, "a Back button")
-	if back != null and respec != null:
-		assert_true(respec.get_global_rect().end.y <= back.get_global_rect().position.y, "the last item clears Back")
 
 
 func _sheet_says_attunement_is_off() -> bool:
