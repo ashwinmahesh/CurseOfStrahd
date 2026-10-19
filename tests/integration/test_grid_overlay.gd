@@ -19,6 +19,7 @@ func before_each() -> void:
 
 func after_each() -> void:
 	Input.action_release(&"show_grid")
+	Input.action_release(&"explore_grid")
 	Look.set_style(Look.DEFAULT_STYLE, false)
 	GameSettings.set_battle_grid("held")
 
@@ -282,6 +283,14 @@ func test_exploring_shows_the_grid_only_when_asked() -> void:
 	Input.action_release(&"show_grid")
 	await _frames(3)
 	assert_false(explore.lines.is_wanted(), "let go")
+	# The controller: the names trigger, held, shows it too (it moves with the names).
+	assert_true(InputMap.has_action(&"explore_grid"), "the controller has an action for it")
+	Input.action_press(&"explore_grid")
+	await _frames(3)
+	assert_true(explore.lines.is_wanted(), "the names trigger held: round the party")
+	Input.action_release(&"explore_grid")
+	await _frames(3)
+	assert_false(explore.lines.is_wanted())
 	GameSettings.set_battle_grid("always")
 	await _frames(3)
 	assert_true(explore.lines.is_wanted(), "Always: on its own")

@@ -263,13 +263,14 @@ func test_the_wheels_hold_the_actions_and_the_tactical_view() -> void:
 	await _frames(2)
 	var radial := cv.hud.radial
 	assert_true(radial.visible and not radial.items.is_empty(), "LB opens a wheel of actions")
-	assert_eq(str(radial.items.back()["label"]), "Tactical view", "the last wedge looks from above")
-	assert_eq(radial.items.size(), mini(cv.hud.slot_count(), RadialMenu.PAGE - 1) + 1)
+	assert_eq(str(radial.items.back()["label"]), "Battle grid", "the last wedge lays the grid")
+	assert_eq(str(radial.items[radial.items.size() - 2]["label"]), "Tactical view", "the one before looks from above")
+	assert_eq(radial.items.size(), mini(cv.hud.slot_count(), RadialMenu.PAGE - RadialMenu.TAIL) + RadialMenu.TAIL)
 	var filter := cv.hud.tab
 	await _press(JOY_BUTTON_DPAD_DOWN)
 	assert_ne(cv.hud.tab, filter, "the D-pad changes the wheel's filter")
 	assert_true(radial.visible, "and the wheel stays open")
-	radial.selected = radial.items.size() - 1
+	radial.selected = radial.items.size() - 2
 	var release := InputEventJoypadButton.new()
 	release.button_index = JOY_BUTTON_LEFT_SHOULDER
 	release.pressed = false
@@ -278,6 +279,36 @@ func test_the_wheels_hold_the_actions_and_the_tactical_view() -> void:
 	assert_true(cv.rig.tactical, "releasing on Tactical view switches the camera")
 	cv.rig.tactical = false
 	GameSettings.set_value("pad_wheels", false, false)
+
+
+## The controller's way to the battle grid (the keyboard holds B): the wheel's last wedge, Battle grid, latches it on round
+## whoever's turn it is until it is picked again, in either wheel.
+func test_the_wheels_battle_grid_wedge_latches_the_grid() -> void:
+	if not _ready_for_input():
+		return
+	Look.set_style("modern", false)
+	GameSettings.set_value("pad_wheels", true, false)
+	for round in 2:
+		var hold := InputEventJoypadButton.new()
+		hold.button_index = JOY_BUTTON_LEFT_SHOULDER
+		hold.pressed = true
+		get_viewport().push_input(hold)
+		await _frames(2)
+		cv.hud.radial.selected = cv.hud.radial.items.size() - 1
+		var release := InputEventJoypadButton.new()
+		release.button_index = JOY_BUTTON_LEFT_SHOULDER
+		release.pressed = false
+		get_viewport().push_input(release)
+		await _frames(2)
+		assert_eq(cv.overlay.lines.latched, round == 0, "round %d: the grid is %s" % [round, "on" if round == 0 else "off again"])
+	GameSettings.set_value("pad_wheels", false, false)
+	# The bar's wheel has the wedge too.
+	cv.hud.radial.visible = false
+	cv.call("_radial", "Grid")
+	assert_true(cv.overlay.lines.latched, "the bar's wheel latches it")
+	cv.call("_radial", "Grid")
+	assert_false(cv.overlay.lines.latched)
+	Look.set_style(Look.DEFAULT_STYLE, false)
 
 
 ## The turn order's portraits (owner, 2026-10-12): a click on one sends the camera gliding over to that creature; on a

@@ -318,6 +318,7 @@ func close_softly() -> void:
 	mode = Mode.OVER
 	overlay.clear_all()
 	overlay.lines.set_active(false)
+	overlay.lines.latched = false
 	hud.hide_tooltip()
 	if boss_bar != null:
 		LayerFade.fade(self, boss_bar, false, 0.35)
@@ -337,6 +338,7 @@ func _advance() -> void:
 		mode = Mode.OVER
 		overlay.clear_all()
 		overlay.lines.set_active(false)
+		overlay.lines.latched = false
 		hud.hide_tooltip()
 		var tail := "R: fight again" if restart_allowed else "Space or A: continue"
 		var head := e.legendary.end_title()
@@ -1240,6 +1242,8 @@ func _radial(choice: String) -> void:
 			hud.set_tab(ActionCatalog.ITEMS)
 		"Tactical":
 			rig.tactical = not rig.tactical
+		"Grid":
+			_latch_grid()
 		"End Turn":
 			_end_turn()
 		"Inspect":
@@ -1252,10 +1256,10 @@ func _radial(choice: String) -> void:
 var _wheel_page := 0
 
 
-## Fills the wheel (LB held, Controller fights: Wheels) with the hotbar filter's slots, a page at a time, the last wedge
-## always the tactical view.
+## Fills the wheel (LB held, Controller fights: Wheels) with the hotbar filter's slots, a page at a time, the last wedges
+## always the tactical view and the battle grid.
 func _open_wheel() -> void:
-	var per := RadialMenu.PAGE - 1
+	var per := RadialMenu.PAGE - RadialMenu.TAIL
 	var first := _wheel_page * per
 	var items: Array[Dictionary] = []
 	for i in range(first, mini(first + per, hud.slot_count())):
@@ -1263,17 +1267,31 @@ func _open_wheel() -> void:
 		var usable := bool(a.get("legal", false)) and (e.current() == hud.shown or bool(a.get("toggle", false)))
 		items.append({"label": str(a["label"]), "icon": UiParts.action_icon(a), "enabled": usable})
 	items.append({"label": "Tactical view", "icon": Icons.feature("the_third_eye"), "enabled": true, "tactical": true})
+	items.append({"label": "Battle grid", "icon": null, "enabled": GameSettings.battle_grid() != "never", "grid": true})
 	var pages := maxi(1, ceili(hud.slot_count() / float(per)))
 	hud.radial.open_items(items, "%s %d/%d" % [hud.tab, _wheel_page + 1, pages] if pages > 1 else hud.tab)
 
 
-## A wedge of the wheel chosen: the tactical view, or the slot it holds used as its hotkey would.
+## A wedge of the wheel chosen: the tactical view, the battle grid, or the slot it holds used as its hotkey would.
 func _wheel_picked(index: int) -> void:
 	var item := hud.radial.items[index] if index < hud.radial.items.size() else {}
 	if bool(item.get("tactical", false)):
 		rig.tactical = not rig.tactical
 		return
-	hud.use_slot(_wheel_page * (RadialMenu.PAGE - 1) + index)
+	if bool(item.get("grid", false)):
+		_latch_grid()
+		return
+	hud.use_slot(_wheel_page * (RadialMenu.PAGE - RadialMenu.TAIL) + index)
+
+
+## The controller's way to the battle grid, which the keyboard holds a key for: it stays on, round whoever's turn it is,
+## until it is picked again or the fight ends (BattleGrid.latched).
+func _latch_grid() -> void:
+	if GameSettings.battle_grid() == "never" or not Look.modern():
+		hud.banner("No battle grid in this look" if not Look.modern() else "The battle grid is off in Settings", 1.4)
+		return
+	overlay.lines.latched = not overlay.lines.latched
+	hud.banner("Battle grid on" if overlay.lines.latched else "Battle grid off", 1.0)
 
 
 func _cycle_inspect() -> void:
@@ -1381,7 +1399,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 		if jb.button_index in [JOY_BUTTON_DPAD_LEFT, JOY_BUTTON_DPAD_RIGHT]:
-			var pages := maxi(1, ceili(hud.slot_count() / float(RadialMenu.PAGE - 1)))
+			var pages := maxi(1, ceili(hud.slot_count() / float(RadialMenu.PAGE - RadialMenu.TAIL)))
 			_wheel_page = posmod(_wheel_page + (-1 if jb.button_index == JOY_BUTTON_DPAD_LEFT else 1), pages)
 			_open_wheel()
 			get_viewport().set_input_as_handled()

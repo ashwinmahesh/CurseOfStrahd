@@ -464,8 +464,8 @@ const PAD_LISTS := {"explore": "Exploring", "fight": "Fights", "screens": "Menus
 const PAD_FIXED: Array[int] = [JOY_BUTTON_B, JOY_BUTTON_START]
 ## A trigger's code: PAD_TRIGGER + its axis (a button's code is its index).
 const PAD_TRIGGER := 100
-## Commands that move with another (what foes see is shown with the names).
-const PAD_FOLLOWS := {&"show_sight": &"show_names"}
+## Commands that move with another (what foes see, and the battle grid when exploring, are shown with the names).
+const PAD_FOLLOWS := {&"show_sight": &"show_names", &"explore_grid": &"show_names"}
 
 
 ## `action`'s default button code, or -1.

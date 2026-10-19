@@ -253,7 +253,9 @@ is frozen, and `lit_world.gdshader` has no grid at all. The grid is a layer laid
   so a crossing is one line deep. It lies under the fight's marks (path, goal, rings, area edge).
 - **When.** Ashwin, 2026-10-19: "we don't need to show the grid in combat it is unnecessary ... maybe it could be a
   button the player holds". So by default (*Held*, Settings, Game; `GameSettings.battle_grid`) the lines show while the
-  Show the battle grid key is held (`show_grid`, B; Settings, Keys; no controller button yet), in a fight and exploring:
+  Show the battle grid key is held (`show_grid`, B; Settings, Keys), in a fight and exploring (on a controller, exploring: the names
+  trigger held, `explore_grid`, which moves with it in Settings, Keys, Controller; in a fight every button is taken, so the
+  radial wheel's last wedge, Battle grid, latches it on until it is picked again, `CombatView._latch_grid`):
   they fade in round the creature whose turn it is (its movement plus two squares, at least 8 and at most 14, fading out
   over the last 2.5; an Invisible foe's turn leaves them where they were, as it leaves the camera; round the party's leader
   when exploring, `ExploreGrid`) and over the whole map while the camera is in the tactical view (O), easing with the

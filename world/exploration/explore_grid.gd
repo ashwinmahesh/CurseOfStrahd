@@ -18,6 +18,7 @@ static func create(v: LocationView) -> ExploreGrid:
 func _ready() -> void:
 	lines = BattleGrid.create(view.board)
 	lines.rig = view.rig
+	lines.pad_action = &"explore_grid"   # (the controller's names trigger, held)
 	add_child(lines)
 
 

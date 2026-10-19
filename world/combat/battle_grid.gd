@@ -44,6 +44,10 @@ var reach := REACH_LEAST
 ## host is live at all (a fight that is over, or exploring while a fight is on, shows nothing, even held).
 var auto := false
 var active := true
+## The controller's way: the radial wheel's Grid wedge latches it on until it is picked again (CombatView).
+var latched := false
+## The controller action held to show it where the host has one (exploring: the names trigger, `explore_grid`).
+var pad_action := &""
 var _want := false
 var _shown := 0.0
 var _mat: ShaderMaterial
@@ -191,7 +195,8 @@ func _hidden() -> Dictionary:
 
 
 func _process(delta: float) -> void:
-	var want := active and Look.modern() and (auto or held())
+	var asked := auto or held() or latched or (pad_action != &"" and InputMap.has_action(pad_action) and Input.is_action_pressed(pad_action))
+	var want := active and Look.modern() and GameSettings.battle_grid() != "never" and asked
 	if want and not _want:
 		_ensure()   # (made over the board's squares the first time it is wanted, and kept with the board)
 		visible = true

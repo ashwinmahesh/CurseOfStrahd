@@ -1,8 +1,9 @@
 class_name RadialMenu
 extends Control
 ## The controller's radial menu (cb_03): hold LB, point the right stick at a wedge, release (or press A) to pick.
-## The bar scheme's eight wedges: Attacks, Spells, Class, Items, Common, Tactical (the camera from above; it was Move,
-## which B already does), End Turn, Inspect. Under either wheel, a line names the buttons that work while it's held:
+## The bar scheme's nine wedges: Attacks, Spells, Class, Items, Common, Tactical (the camera from above; it was Move,
+## which B already does), Grid (the battle grid laid over the ground until it is picked again: the controller's way to the
+## key you hold), End Turn, Inspect. Under either wheel, a line names the buttons that work while it's held:
 ## looking on and back along the turn order, and hiding or showing the action bar. The wheels scheme
 ## (Settings, Game, Controller fights: Wheels; owner pick 2026-10-09, after Baldur's Gate 3 on console) holds the actual
 ## actions instead: the hotbar filter's slots, an icon and a name a wedge, up to PAGE at a time (open_items).
@@ -11,10 +12,11 @@ signal picked(choice: String)
 ## A slot picked on a wheel: its index among the items it was opened with.
 signal picked_item(index: int)
 
-const CHOICES: Array[String] = ["Attacks", "Spells", "Class", "Items", "Common", "Tactical", "End Turn", "Inspect"]
+const CHOICES: Array[String] = ["Attacks", "Spells", "Class", "Items", "Common", "Tactical", "Grid", "End Turn", "Inspect"]
 const RADIUS := 150.0
-## Wedges on one wheel page.
+## Wedges on one wheel page, the last TAIL of them always the tactical view and the battle grid.
 const PAGE := 10
+const TAIL := 2
 
 var selected := -1
 ## The wheel's actions ([{label, icon: Texture2D or null, enabled}]); empty for the bar scheme's eight wedges.
