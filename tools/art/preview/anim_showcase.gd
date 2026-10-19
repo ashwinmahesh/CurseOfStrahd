@@ -7,6 +7,8 @@ extends Node3D
 ## movie writer:
 ##   tools/godot --path . --write-movie out.avi --fixed-fps 30 --resolution 1280x720 \
 ##     res://tools/art/preview/anim_showcase.tscn -- --id=godrick_pendlebrook --mount=otherworldly_steed
+## --veo (owner 2026-10-19) shows the sheets cut from Veo clips (tools/art/veo_anims.py) beside the drawn ones: standing,
+## walking, attacking and casting in several directions.
 
 const HEIGHT := 1.5
 
@@ -23,6 +25,7 @@ var _mount_id := "otherworldly_steed"
 var _labels: Array[String] = ["Before", "After"]
 var _short := false
 var _villain := false
+var _veo := false
 var _aura: AuraFx
 
 
@@ -38,12 +41,14 @@ func _ready() -> void:
 			_short = true
 		elif a == "--villain":
 			_villain = true
+		elif a == "--veo":
+			_veo = true
 	var env := WorldEnvironment.new()
 	env.environment = Environment.new()
 	env.environment.background_mode = Environment.BG_COLOR
 	env.environment.background_color = Look.color("void")
 	add_child(env)
-	if _villain:
+	if _villain or _veo:
 		# The modern finish lights figures by the scene: give them the lit lab's daylight so both read clearly.
 		env.environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 		env.environment.ambient_light_color = Look.color("vellum")
@@ -57,7 +62,7 @@ func _ready() -> void:
 	var pm := PlaneMesh.new()
 	pm.size = Vector2(40, 40)
 	ground.mesh = pm
-	ground.material_override = Look.cel("stone" if _villain else "grave")
+	ground.material_override = Look.cel("stone" if _villain or _veo else "grave")
 	add_child(ground)
 	var line := Node3D.new()
 	line.rotation.y = deg_to_rad(45.0)
@@ -141,6 +146,10 @@ func _run() -> void:
 		await _villain_run()
 		get_tree().quit()
 		return
+	if _veo:
+		await _veo_run()
+		get_tree().quit()
+		return
 	title.text = "Standing: the new set breathes"
 	_face(1)
 	await _wait(3.0)
@@ -199,6 +208,38 @@ func _run() -> void:
 	after.visible = true
 	await _poses()
 	get_tree().quit()
+
+
+## The Veo sheets beside the drawn ones, a little closer: standing, walking, attacking and casting.
+func _veo_run() -> void:
+	rig.distance = 5.0
+	title.text = "Standing"
+	for steps: int in [1, 4]:
+		_face(steps)
+		await _wait(2.5)
+	title.text = "Walking"
+	for steps: int in [1, 2, 3, 5]:
+		_face(steps)
+		before.moving = true
+		after.moving = true
+		await _wait(1.8)
+	before.moving = false
+	after.moving = false
+	await _wait(0.4)
+	title.text = "Attacking"
+	for steps: int in [1, 2, 7, 4]:
+		_face(steps)
+		await _wait(0.4)
+		before.attack()
+		after.attack()
+		await _wait(1.5)
+	title.text = "Casting"
+	for steps: int in [1, 2, 7]:
+		_face(steps)
+		await _wait(0.4)
+		before.cast()
+		after.cast()
+		await _wait(1.5)
 
 
 ## Strahd's set beside his old sheets: the drawn idle, the walk, the clawed strike, the shadow spell (his old sheet had

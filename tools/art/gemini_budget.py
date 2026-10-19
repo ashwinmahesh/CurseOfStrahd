@@ -48,6 +48,11 @@ KEYS = {"primary": ("GEMINI_API_KEY", 10000), "backup": ("GEMINI_BACKUP_API_KEY"
 PRICES = {
     "gemini-3.1-flash-image": {"512": 0.045, "1K": 0.067, "2K": 0.101, "4K": 0.151},
     "gemini-3-pro-image": {"1K": 0.134, "2K": 0.134, "4K": 0.24},
+    # Veo 3.1 video clips (tools/art/veo_anims.py), per clip at 720p by length (ai.google.dev pricing, checked
+    # 2026-10-19: Lite $0.05, Fast $0.10, standard $0.40 a second).
+    "veo-3.1-lite-generate-preview": {"720P-4S": 0.20, "720P-6S": 0.30, "720P-8S": 0.40},
+    "veo-3.1-fast-generate-preview": {"720P-4S": 0.40, "720P-6S": 0.60, "720P-8S": 0.80},
+    "veo-3.1-generate-preview": {"720P-4S": 1.60, "720P-6S": 2.40, "720P-8S": 3.20},
 }
 UNKNOWN = "unknown"   # the key of calls read from a generation log (scripts older than the ledger)
 RESERVE_HOURS = 12    # a batch's reservation lapses after this even if its process is somehow still there
@@ -155,7 +160,7 @@ def size_key(size=""):
 def price(model, size=""):
     """Dollars per image at list price; a model not in PRICES is priced as the pinned Flash model."""
     table = PRICES.get(model, PRICES["gemini-3.1-flash-image"])
-    return table.get(size_key(size), table["1K"])
+    return table.get(size_key(size), table.get("1K", max(table.values())))
 
 
 def _git(*args, cwd=ROOT):

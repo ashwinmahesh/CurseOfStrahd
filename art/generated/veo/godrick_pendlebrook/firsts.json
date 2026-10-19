@@ -1,0 +1,82 @@
+{
+ "walk_s": {
+  "scale": 1.0,
+  "height": 636
+ },
+ "idle_s": {
+  "scale": 1.0,
+  "height": 682
+ },
+ "walk_e": {
+  "scale": 1.0,
+  "height": 662
+ },
+ "attack_s": {
+  "scale": 0.8,
+  "height": 673
+ },
+ "idle_se": {
+  "scale": 1.0,
+  "height": 686
+ },
+ "walk_se": {
+  "scale": 1.0,
+  "height": 674
+ },
+ "walk_ne": {
+  "scale": 1.0,
+  "height": 661
+ },
+ "walk_n": {
+  "scale": 1.0,
+  "height": 675
+ },
+ "idle_ne": {
+  "scale": 1.0,
+  "height": 676
+ },
+ "idle_n": {
+  "scale": 1.0,
+  "height": 674
+ },
+ "idle_e": {
+  "scale": 1.0,
+  "height": 677
+ },
+ "attack_ne": {
+  "scale": 0.8,
+  "height": 663
+ },
+ "cast_se": {
+  "scale": 0.8,
+  "height": 674
+ },
+ "attack_n": {
+  "scale": 0.8,
+  "height": 673
+ },
+ "cast_s": {
+  "scale": 0.8,
+  "height": 689
+ },
+ "cast_e": {
+  "scale": 0.8,
+  "height": 689
+ },
+ "cast_ne": {
+  "scale": 0.8,
+  "height": 681
+ },
+ "cast_n": {
+  "scale": 0.8,
+  "height": 691
+ },
+ "attack_se": {
+  "scale": 1.0,
+  "height": 638
+ },
+ "attack_e": {
+  "scale": 1.0,
+  "height": 666
+ }
+}

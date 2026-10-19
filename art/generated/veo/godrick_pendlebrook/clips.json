@@ -1,0 +1,224 @@
+{
+ "walk_s": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of the armoured knight in the image, seen from the front. He walks in place toward the viewer as if on a treadmill: a steady, natural walk cycle with his arms swinging, his blue tabard and cape swaying and his long hair moving. He stays exactly the same size and in the same spot in the frame and never moves forward, sideways or turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, armour, colours, sword and shield exactly as in the image. Silent.",
+  "made": "2026-10-19T13:58:00-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "idle_s": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of the armoured knight in the image, seen from the front. He stands still in a relaxed, ready stance, breathing gently, his weight shifting slightly; his long hair and blue tabard stir in a light breeze. He does not walk, turn, speak or move his feet. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, armour, colours, sword and shield exactly as in the image. Silent.",
+  "made": "2026-10-19T13:58:00-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "walk_e": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of the armoured knight in the image, seen in profile facing right. He walks in place as if on a treadmill: a steady, natural walk cycle with his arms swinging, his blue tabard and cape swaying and his long hair moving. He stays exactly the same size and in the same spot in the frame, keeps facing right and never moves across the frame or turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, armour, colours, sword and shield exactly as in the image. Silent.",
+  "made": "2026-10-19T13:58:00-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "attack_s": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, always facing exactly the way he faces in the image: first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:46:46-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "idle_se": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He stands still in a relaxed, ready stance, always facing exactly the way he faces in the image, breathing gently, his weight shifting slightly; his hair and clothes stir in a light breeze. He does not walk, speak or move his feet. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:35:53-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "walk_se": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He walks in place as if on a treadmill, always facing exactly the way he faces in the image: a steady, natural walk cycle with the arms swinging and his clothes and hair moving. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:35:57-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "walk_ne": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He walks in place as if on a treadmill, always facing exactly the way he faces in the image: a steady, natural walk cycle with the arms swinging and his clothes and hair moving. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:35:58-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "walk_n": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He walks in place as if on a treadmill, always facing exactly the way he faces in the image: a steady, natural walk cycle with the arms swinging and his clothes and hair moving. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:35:59-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "idle_ne": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He stands still in a relaxed, ready stance, always facing exactly the way he faces in the image, breathing gently, his weight shifting slightly; his hair and clothes stir in a light breeze. He does not walk, speak or move his feet. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:36:23-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "idle_n": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He stands still in a relaxed, ready stance, always facing exactly the way he faces in the image, breathing gently, his weight shifting slightly; his hair and clothes stir in a light breeze. He does not walk, speak or move his feet. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:36:24-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "idle_e": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He stands still in a relaxed, ready stance, always facing exactly the way he faces in the image, breathing gently, his weight shifting slightly; his hair and clothes stir in a light breeze. He does not walk, speak or move his feet. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:36:27-04:00",
+  "centre": [
+   360,
+   776
+  ]
+ },
+ "attack_ne": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:42:18-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "cast_se": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He casts a spell, always facing exactly the way he faces in the image: first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then he returns to the pose in the image and holds still. The whole spell takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:43:33-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "attack_n": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:42:58-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "cast_s": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He casts a spell, always facing exactly the way he faces in the image: first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then he returns to the pose in the image and holds still. The whole spell takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:43:03-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "cast_e": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He casts a spell, always facing exactly the way he faces in the image: first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then he returns to the pose in the image and holds still. The whole spell takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:43:37-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "cast_ne": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He casts a spell, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then he returns to the pose in the image and holds still. The whole spell takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:44:08-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "cast_n": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. He casts a spell, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then he returns to the pose in the image and holds still. The whole spell takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:50:00-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true
+ },
+ "attack_se": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, always facing exactly the way he faces in the image: first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:41:43-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": true,
+  "note": "first frame made at full size before one-shots were drawn at 0.8"
+ },
+ "attack_e": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, always facing exactly the way he faces in the image: first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-19T14:42:15-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": true,
+  "note": "first frame made at full size before one-shots were drawn at 0.8"
+ }
+}

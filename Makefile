@@ -24,7 +24,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
 ## terminal, so it must not queue behind lane imports and tests (owner, 2026-10-18; tools/godot_slot.sh).
 PLAYFRESH := export GODOT_SLOTS=off; $(FRESH)
 
-.PHONY: run run-main arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons vestige_shapes cursors voice creator pregens plants vistas
+.PHONY: run run-main arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys veo-anims portrait wireframes textures prop props models ui_art icons vestige_shapes cursors voice creator pregens plants vistas
 
 ## make run plays the edge build (owner, 2026-10-17; tools/edge/edge.py): main plus every lane branch that has been
 ## handed off but not merged yet, assembled in a throwaway worktree (CurseOfStrahdGame-edge, in the SSD lanes' image), so
@@ -239,6 +239,13 @@ keys:
 	python3 tools/art/build_keys.py $(if $(ONLY),--only $(ONLY),) $(if $(KINDS),--kinds $(KINDS),)
 	$(IMPORT) | $(LOGCHK) > /dev/null
 	python3 tools/art/set_import.py --sheets $(foreach id,$(or $(ONLY),godrick_pendlebrook kip_smudgewick liriel_dawnsong ratatoille thistle wren_featherfoot),$(wildcard art/sprites/$(id)/*.png))
+	$(IMPORT) | $(LOGCHK) > /dev/null
+
+## The six heroes' walk, idle, attack and cast cut from Veo clips (tools/art/veo_anims.py, docs/art/animation.md "Veo"):
+## make veo-anims [ONLY="id ..."] [KINDS="walk idle attack cast"] [GENERATE=1] [REDO="attack_ne ..."]. GENERATE=1 asks
+## Veo for missing clips (Gemini ledger, make art-spend); REDO draws those again. Run it again after make keys.
+veo-anims:
+	/usr/bin/python3 tools/art/veo_anims.py $(if $(ONLY),--only $(ONLY),) $(if $(KINDS),--kinds $(KINDS),) $(if $(GENERATE),--generate,) $(if $(REDO),--redo $(REDO),) --sheets
 	$(IMPORT) | $(LOGCHK) > /dev/null
 
 ## Re-render every character walk sheet from its turnaround with the current cutter and its recorded flags

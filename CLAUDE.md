@@ -9,7 +9,7 @@ Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverag
 
 ## Commands (add new ones to the Makefile)
 make run (the edge build) | run-main | edge | edge-add/edge-remove BRANCH=<branch> | edge-list | edge-prune | edge-reset | arena | release [OUT=…] | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | disk [FAST=1] | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
-make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
+make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | veo-anims [ONLY="id …"] [KINDS=…] [GENERATE=1] [REDO="kind_dir …"] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 make cheat-codes (rewrites Cheat Codes.md in the vault from the item data; story/cheat_codes.gd makes the codes)
@@ -107,7 +107,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   built by TownBuilder (houses, roofs, yard walls). Never fall back to plain boxes for new content.
 - Every character sprite walks and attacks in 8 directions (docs/art/animation.md; a test checks): after
   `make sprite`, add the character to art/anim/animations.json and run `make anims ONLY=<id> GENERATE=1`. The six
-  heroes have the fuller HD set instead: `make keys [ONLY=<id>]` (docs/art/animation.md).
+  heroes have the fuller HD set instead: `make keys [ONLY=<id>]` (docs/art/animation.md); their walk, idle, attack and
+  cast are cut from Veo clips by `make veo-anims [ONLY=<id>] [GENERATE=1]` (run it again after `make keys`).
 - UI draws on CanvasLayers so the palette pass never touches it.
 - Git LFS (owner decision 2026-10-07; .gitattributes): new or changed images under art/generated, art/sprites,
   art/portraits, art/creator and art/textures, voice mp3s, and sound clips under art/sourced, are stored in LFS. Older

@@ -143,6 +143,56 @@ keep the earlier behaviour (the lunge, the flattened fall, the attack used as a 
 `tools/art/preview/anim_showcase.tscn` plays a before/after of one hero (old sheets copied to
 `art/sprites/<id>_before`, not committed) for review; recorded with Godot's movie writer through `tools/godot`.
 
+## Veo clips: the heroes' walk, idle, attack and cast (owner 2026-10-19)
+
+The owner asked for smoother motion from video for the most common animations. The six heroes' walk, idle, attack and
+cast are now cut from Veo 3.1 Lite clips (image to video), not from the drawn strips. Their hurt, fall, riding and
+sneaking stay drawn. The tool is `tools/art/veo_anims.py` (`make veo-anims [ONLY=<id>] [KINDS=…] [GENERATE=1]
+[REDO="cast_se …"]`). The sheets are still sprite sheets: the game plays frames as before, and nothing decodes
+video at run time.
+
+**Clips.**
+- Each clip starts on that direction's first frame from the hero's sheet, set on a flat screen colour. It is
+  720x1280 (9:16) at 24 fps, with the cell centre at (360, 776), so a clip's pixels are the sheet's pixels and the
+  figure keeps its size and ground line.
+- The screen is green, except for Kip and Thistle, who wear green and stand on cyan. No hero has a cyan hue.
+- Walks and idles are 4-second clips ($0.20 each).
+- Attacks and casts are 8-second clips that end on their first frame (Veo's `lastFrame`, $0.40 each). Without that
+  frame Veo turned heroes seen from behind round to face the camera, or left them in another pose.
+- The first frame of an attack or cast is drawn at 0.8 scale, so a swing stays inside the 720-wide clip, and the
+  frames are scaled back up.
+- Calls go through the Gemini ledger (`make art-spend`).
+- Clips, their first frames and prompts (`clips.json`) are kept in `art/generated/veo/<id>/` (LFS, `.gdignore`).
+
+**Frames.**
+- Each frame is keyed off the screen colour (the colour left at an edge is unmixed, and one pixel is eaten off the
+  edge).
+- It is then snapped to the palette like the drawn sheets: binary alpha, and greys only on the grey ramp.
+- Frames are trimmed and packed as `render_keys.py` packs them.
+- `sheets.json` records what was chosen from each clip. `--review` writes a contact sheet per kind
+  (`review_<kind>.png`).
+
+**What the game gets from each kind.**
+
+| Kind | Frames | Timing |
+|---|---|---|
+| Walk | 24 (the cleanest two-step loop, starting on the lowest head, a foot coming down) | 24 fps |
+| Idle | 9 to 18 (a 1.5 to 3 second loop whose last third of a second is faded into its start, since an idle drifts and seldom comes back on its own) | 6 fps |
+| Attack | 16, the fastest motion (the blow) landing on frame 7 (`hit_frames`) | 16 fps |
+| Cast | 12, the release landing on frame 4 | 16 fps |
+
+For the attack and cast, the frames run from just before the hero moves to the first frame back at the starting
+pose.
+
+**Size and checks.**
+- Godrick's sheets came to about 1.7 times the drawn set's pixels: 157 against 90 megapixels for all six sheets.
+- Look at every clip by eye. Veo sometimes changes a shield's colour mid-swing, adds a floor shadow, or lets a spell
+  burst run past the clip's edge (`sheets.json` lists such frames as `clipped` and `shadow`).
+- `make veo-anims ONLY=<id> GENERATE=1 REDO="<kind>_<dir>"` draws a clip again.
+- `make keys` rewrites these four kinds from the strips, so run `make veo-anims` (without GENERATE) after it.
+- `tools/art/preview/anim_showcase.tscn -- --id=<id> --veo` shows a hero beside a copy of their drawn sheets in
+  `art/sprites/<id>_before` (not committed).
+
 **TODO (owner 2026-10-07): custom heroes.** Heroes made in the creator are paper dolls (`HeroLook`, docs/art/creator.md)
 and keep the earlier walk and attack until the v2 set is worked out for parts; each needs about 35 images, so it waits
 for a decision on cost. Also still to do: a pose for riding an ally (the riding pose is used as it is), and monsters'
