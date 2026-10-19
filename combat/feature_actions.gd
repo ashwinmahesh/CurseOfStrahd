@@ -817,8 +817,7 @@ func _teleport(c: Combatant, cell: Vector2i, feet: int) -> CombatResult:
 func room_at(c: Combatant, cell: Vector2i, cells: int = 0) -> bool:
 	var e := enc()
 	for f in CombatGrid.footprint(cell, cells if cells > 0 else c.size_cells):
-		var o := e.occupant_at(f)
-		if not e.grid.in_bounds(f) or e.grid.is_solid(f) or (o != null and o != c):
+		if not e.grid.in_bounds(f) or e.grid.is_solid(f) or e.movement.others_in(f, c):
 			return false
 	return true
 

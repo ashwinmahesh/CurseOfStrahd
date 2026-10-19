@@ -5,6 +5,9 @@ extends RefCounted
 ## areas entered), moves made on a creature (Confusion, Dissonant Whispers, pushes), standing up, dropping Prone,
 ## feature movement and Jump.
 
+## The most creatures the game moves can pack into one square (share_weight): two Small or Medium creatures, or four Tiny.
+const SQUARE_LOAD := 4
+
 var _enc: WeakRef
 ## A move a feature hands an ally right after a hit (Maneuvering Attack): {by, spare, source, round, turn}, open until
 ## an ally takes it (reaction_move), the player passes, or the turn moves on.
@@ -24,10 +27,19 @@ func space_available(cell: Vector2i, size: int, except: Array = []) -> bool:
 	for square in CombatGrid.footprint(cell, size):
 		if not e.grid.in_bounds(square) or e.grid.is_solid(square):
 			return false
-		var occupant := e.occupant_at(square)
-		if occupant != null and not occupant in except:
-			return false
+		# Everyone in the square counts, not only the first: creatures may share one.
+		for occupant in occupants_at(square):
+			if not occupant in except:
+				return false
 	return true
+
+
+## Whether anyone but `c` stands in `cell` (creatures may share a square, so the first occupant alone says little).
+func others_in(cell: Vector2i, c: Combatant) -> bool:
+	for o in occupants_at(cell):
+		if o != c:
+			return true
+	return false
 
 
 ## Whether a creature stands in running water (a deep-water square it isn't flying over, or the `in_running_water`
@@ -144,12 +156,17 @@ func fear_sources(c: Combatant) -> Array[Combatant]:
 ## ally; you can't end your move in an occupied space. `allies_block` (a place's flag) makes allies block too. A dead
 ## creature is an object (its body takes up no space): it's left out.
 ## Cramped rooms (owner, 2026-10-12; deviations.md): a creature the player moves may end its move in an ally's space,
-## so heroes can share a square; foes the game moves keep to squares of their own.
+## so heroes can share a square. Foes too (owner, 2026-10-19): a creature the game moves may end its move in an allied
+## Tiny, Small or Medium creature's square while the square's load stays within SQUARE_LOAD (share_weight); Large and
+## bigger creatures never share, and a place's `allies_block` still stops it.
 func _occupancy_for(c: Combatant) -> Dictionary:
 	var e := enc()
 	var blocked := {}
 	var slowed := {}
 	var occupied := {}
+	# The load of the allies a foe could share each square with (the heroes' squares have no limit).
+	var crowd := {}
+	var my_weight := share_weight(c)
 	var my_size := Creature.SIZES.find(c.creature.size)
 	var partner := e.mount_of(c) if e.mount_of(c) != null else e.rider_of(c)
 	for o in e.combatants:
@@ -166,14 +183,20 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		# 2024: another creature's space is Difficult Terrain unless it's Tiny or an ally's (BR2024, Moving Around Other
 		# Creatures).
 		var slows := o.creature.size != &"tiny" and not c.allied_with(o)
-		var shares := ally and c.is_player_controlled()
+		var shares := ally and (c.is_player_controlled() or (my_weight > 0 and share_weight(o) > 0))
+		var counts := shares and not c.is_player_controlled()
 		for cell in o.footprint():
 			if not shares:
 				occupied[cell] = true
+			elif counts:
+				crowd[cell] = int(crowd.get(cell, 0)) + share_weight(o)
 			if not passable:
 				blocked[cell] = true
 			if slows:
 				slowed[cell] = true
+	for full: Vector2i in crowd:
+		if int(crowd[full]) + my_weight > SQUARE_LOAD:
+			occupied[full] = true
 	var terrain := e.spells.zones.difficult_cells(c)
 	for cell: Vector2i in terrain:
 		slowed[cell] = terrain[cell] if terrain[cell] is int else true
@@ -187,6 +210,62 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 	for wcell: Vector2i in e.spells.specials.mid.blocked_cells():
 		blocked[wcell] = true
 	return {"blocked": blocked, "slowed": slowed, "occupied": occupied}
+
+
+## What `c` counts for in a square it shares with allies the game moves (owner, 2026-10-19): a Tiny creature 1, a Small or
+## Medium one 2, up to SQUARE_LOAD in all (four Tiny, two Medium, one Medium and two Tiny); 0 for a Large or bigger
+## creature, which never shares (its space is several squares, and a stack under a part of it can't be drawn or aimed at).
+static func share_weight(c: Combatant) -> int:
+	if c.size_cells > 1:
+		return 0
+	return 1 if c.creature.size == &"tiny" else 2
+
+
+## Everyone standing in `cell`, in the fight's order: more than one where creatures share a square (heroes, and since
+## 2026-10-19 foes the game moves: share_weight). Encounter.occupant_at is the first of them.
+func occupants_at(cell: Vector2i) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for c in enc().combatants:
+		if c.is_alive() and cell in c.footprint():
+			out.append(c)
+	return out
+
+
+## Why `c` can't walk into `cell` because of who is in it: occupied_why for a square those in it keep `c` out of, else "" (a
+## far-off ally's square the party could share isn't blamed on the ally).
+func held_why(c: Combatant, cell: Vector2i) -> String:
+	var occ := _occupancy_for(c)
+	if not (occ["occupied"] as Dictionary).has(cell) and not (occ["blocked"] as Dictionary).has(cell):
+		return ""
+	return occupied_why(c, cell)
+
+
+## Why `c` can't end its move in `cell` (a square _occupancy_for marks occupied), naming who is there: "" when nobody
+## else is. A hero is turned away by a foe's space or a place that doesn't let allies share, a foe by a full square.
+func occupied_why(c: Combatant, cell: Vector2i) -> String:
+	var e := enc()
+	var partner := e.mount_of(c) if e.mount_of(c) != null else e.rider_of(c)
+	var here: Array[Combatant] = []
+	for o in occupants_at(cell):
+		if o != c and o != partner:
+			here.append(o)
+	if here.is_empty():
+		return ""
+	var names: Array[String] = []
+	for o in here:
+		names.append(o.name())
+		if c.hostile_to(o):
+			return "%s is in that square: you can't stop in an enemy's space" % o.name()
+	if e.allies_block:
+		return "%s is in that square, and allies can't share one here" % " and ".join(names)
+	if c.is_player_controlled():
+		return "%s is in that square" % " and ".join(names)
+	if share_weight(c) == 0:
+		return "%s is too big to share a square" % c.name()
+	for o in here:
+		if share_weight(o) == 0:
+			return "%s is too big to share a square with" % o.name()
+	return "That square is full: %s (at most %d Small or Medium creatures to a square, or four Tiny ones)" % [" and ".join(names), SQUARE_LOAD / 2]
 
 
 ## Whether `a` and `b` share any height off the floor (each as tall as it is wide): a flyer 5 ft up passes over a
@@ -232,7 +311,8 @@ func move(c: Combatant, dest: Vector2i, avoid: Dictionary = {}) -> CombatResult:
 				return CombatResult.fail("Your mount can't reach that square with %d ft of movement" % steed.movement_left)
 			dest = sstop
 		if bool((sreach[dest] as Dictionary)["occupied"]):
-			return CombatResult.fail("Your mount can't end its move in an occupied space")
+			var swhy := occupied_why(steed, dest)
+			return CombatResult.fail("Your mount can't end its move there: %s" % (swhy if swhy != "" else "the space is taken"))
 		c.moved = true
 		return e.undo.after_move(undo, _walk(steed, safe_path(steed, sreach, dest), 1, CombatResult.new(), undo.handled))
 	# Freedom of Movement: 5 ft of movement slips any grapple.
@@ -256,10 +336,12 @@ func move(c: Combatant, dest: Vector2i, avoid: Dictionary = {}) -> CombatResult:
 		# Too far: as far along the way as the movement left goes (owner, 2026-10-12: "just move as close as we can").
 		var stop := stop_toward(c, dest, reach)
 		if stop == c.cell:
-			return CombatResult.fail("Can't reach that square with %d ft of movement" % c.movement_left)
+			var held := held_why(c, dest)
+			return CombatResult.fail(held if held != "" else "Can't reach that square with %d ft of movement" % c.movement_left)
 		dest = stop
 	if bool((reach[dest] as Dictionary)["occupied"]):
-		return CombatResult.fail("You can't end your move in an occupied space")
+		var why2 := occupied_why(c, dest)
+		return CombatResult.fail(why2 if why2 != "" else "You can't end your move in an occupied space")
 	var path := safe_path(c, reach, dest)
 	var r := CombatResult.new()
 	return e.undo.after_move(undo, _walk(c, path, 1, r, undo.handled))

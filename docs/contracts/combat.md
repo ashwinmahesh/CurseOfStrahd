@@ -95,6 +95,10 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 
 Queries: `current()`, `order`, `living()`, `hostiles_of(c)`, `distance(a, b)`, `cover(a, b)`, `can_see(a, b)`,
 `reachable_for(c)`, `attack_situation(c, t, option)`, `hit_chance(c, t, option)`, `needs_death_save(c)`.
+Creatures may share a square (heroes without a limit; foes the game moves up to a load of four, `EncounterMovement.SQUARE_LOAD`
+and `share_weight`, never a Large or bigger one): `occupant_at(cell)` is the first one standing there, `movement.occupants_at(cell)`
+all of them, `movement.others_in(cell, c)` whether anyone but `c` is, and `movement.occupied_why(c, cell)` the reason `c` can't stop there.
+The AI counts the creatures already in a square against it (`AiBrain.crowd_map`, `CROWD_SCORE`, `CROWD_FT`).
 
 ## Reaction prompts (`ReactionRequest`)
 

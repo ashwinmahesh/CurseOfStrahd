@@ -967,6 +967,8 @@ func _strike_after(c: Combatant) -> bool:
 
 ## Right-click on a square on your turn: one menu with Move here and everything you could do to whoever is there.
 var _menu_cell := Vector2i(-1, -1)
+## The creature the square menu was opened on, when several share the square.
+var _menu_who: Combatant = null
 var _menu_items: Array[Dictionary] = []
 
 
@@ -982,10 +984,11 @@ func _open_square_menu(at: Vector2) -> bool:
 	if cell.x < 0:
 		return false
 	_menu_cell = cell
-	_menu_items = catalog.square_actions(c, cell, _reach)
+	_menu_who = t.combatant if t != null else null
+	_menu_items = catalog.square_actions(c, cell, _reach, _menu_who)
 	if _menu_items.is_empty():
 		return false
-	var o := e.occupant_at(cell)
+	var o := _menu_who if _menu_who != null else e.occupant_at(cell)
 	var shown: Array[Dictionary] = []
 	for it in _menu_items:
 		shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
@@ -1010,7 +1013,7 @@ func _square_picked(id: String) -> void:
 	var c := _player()
 	if c == null or mode != Mode.IDLE:
 		return
-	var o := e.occupant_at(_menu_cell)
+	var o := _menu_who if _menu_who != null and _menu_who.is_alive() and _menu_cell in _menu_who.footprint() else e.occupant_at(_menu_cell)
 	if id == "move":
 		hover_token = null
 		hover_cell = _menu_cell
@@ -1197,10 +1200,7 @@ func _pad_aim(c: Combatant, stick: Vector2, length_ft: int) -> void:
 	cursor_cell = Vector2i(clampi(floori(p.x), 0, e.grid.width - 1), clampi(floori(p.y), 0, e.grid.depth - 1))
 	hover_cell = cursor_cell
 	hover_world = Vector3(p.x, board.cell_center(cursor_cell).y, p.y)
-	hover_token = null
-	var o := e.occupant_at(cursor_cell)
-	if o != null:
-		hover_token = tokens.get(o.id) as CombatToken
+	_hover_on_stack(cursor_cell)
 	_update_hover()
 
 
@@ -1475,12 +1475,16 @@ func _next_target() -> void:
 		list.append(o)
 	if list.is_empty():
 		return
-	list.sort_custom(func(a: Combatant, b: Combatant) -> bool: return e.distance(c, a) < e.distance(c, b))
+	# Those sharing a square are the same distance: the fight's order breaks the tie, so the next press is always the next one.
+	list.sort_custom(func(a: Combatant, b: Combatant) -> bool:
+		var da := e.distance(c, a)
+		var db := e.distance(c, b)
+		return da < db or (da == db and e.combatants.find(a) < e.combatants.find(b)))
 	_target_cycle = (_target_cycle + 1) % list.size()
 	cursor_cell = list[_target_cycle].cell
 	using_pad = true
 	pad.follow_cursor = true
-	_pad_hover()
+	_pad_hover(list[_target_cycle])
 
 
 func _process(delta: float) -> void:
@@ -1520,19 +1524,56 @@ func _process(delta: float) -> void:
 		rig.global_position += (b[0] * -pan.y + b[1] * pan.x) * delta * 9.0
 
 
-func _pad_hover() -> void:
+func _pad_hover(prefer: Combatant = null) -> void:
 	hover_cell = cursor_cell
 	hover_world = board.cell_center(cursor_cell) if e.grid.in_bounds(cursor_cell) else Vector3.ZERO
-	hover_token = null
-	var o := e.occupant_at(cursor_cell)
-	if o != null:
-		hover_token = tokens.get(o.id) as CombatToken
+	_hover_on_stack(cursor_cell, prefer)
 	rig.follow = null
 	rig.global_position = rig.global_position.lerp(hover_world, 0.35)
 	_update_hover()
 
 
 # --- Picking and previews -------------------------------------------------------------------------
+
+## The creatures the party can see standing in `cell`, in the fight's order: several where creatures share a square
+## (heroes, and foes since 2026-10-19). One the party can't see (Invisible) isn't one of them, so it neither shows in the
+## square nor shifts the figures that do.
+func _stack_at(cell: Vector2i) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for o in e.movement.occupants_at(cell):
+		if not e.sight.hidden_from_party(o, viewer):
+			out.append(o)
+	return out
+
+
+## The pad cursor's token on `cell`: `prefer` if it stands there, else the one it was on if it still does (so the cursor
+## doesn't hop about a stack), else the first. None for an empty square.
+func _hover_on_stack(cell: Vector2i, prefer: Combatant = null) -> void:
+	var here := _stack_at(cell)
+	var was: Combatant = hover_token.combatant if hover_token != null and hover_token.combatant != null else null
+	hover_token = null
+	var pick: Combatant = null
+	if prefer != null and prefer in here:
+		pick = prefer
+	elif was != null and was in here:
+		pick = was
+	elif not here.is_empty():
+		pick = here[0]
+	if pick != null:
+		hover_token = tokens.get(pick.id) as CombatToken
+
+
+## What a tooltip says of the creature under the pointer when others share its square, to add to its lines: who, and the
+## button that moves the cursor on to the next of them.
+func _stack_note(o: Combatant) -> Array:
+	var others: Array[String] = []
+	for x in _stack_at(o.cell):
+		if x != o:
+			others.append(x.name())
+	if others.is_empty():
+		return []
+	var button := PadGlyphs.words(InputActions.fill("{combat_next_target}"), "{@combat_next_target}")
+	return ["Shares the square with %s · %s for the next" % [" and ".join(others), button]]
 
 func _pick_from_mouse(screen: Vector2) -> void:
 	var cam := rig.camera
@@ -1591,9 +1632,9 @@ func _target_under() -> CombatToken:
 	if hover_token != null:
 		return hover_token
 	if hover_cell.x >= 0:
-		var o := e.occupant_at(hover_cell)
-		if o != null and not e.sight.hidden_from_party(o, viewer):
-			return tokens.get(o.id) as CombatToken
+		var here := _stack_at(hover_cell)
+		if not here.is_empty():
+			return tokens.get(here[0].id) as CombatToken
 	return null
 
 
@@ -1637,6 +1678,7 @@ func _update_hover() -> void:
 				var wpv := ma["preview"] as Dictionary
 				var wlines: Array = ["Walk %d ft up, then attack · %d ft left after" % [int(ma["cost"]), int(ma["left"])]]
 				wlines.append_array(wpv["lines"] as Array)
+				wlines.append_array(_stack_note(o))
 				hud.show_tooltip(str(wpv["title"]), wlines, warns, at, str(wpv.get("edge", "")))
 				_show_odds(wpv, o)
 				return
@@ -1649,14 +1691,15 @@ func _update_hover() -> void:
 						break
 				var pv0 := catalog.attack_preview(c, first, o) if not first.is_empty() else {"title": o.name(), "lines": []}
 				var why0 := catalog.attack_blocker(c, o)
-				hud.show_tooltip(str(pv0["title"]), pv0["lines"] as Array, [why0 if why0 != "" else "Out of reach: move closer, or pick a ranged attack"], at)
+				hud.show_tooltip(str(pv0["title"]), (pv0["lines"] as Array) + _stack_note(o), [why0 if why0 != "" else "Out of reach: move closer, or pick a ranged attack"], at)
 			else:
 				var pv := catalog.attack_preview(c, a, o)
-				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at, str(pv.get("edge", "")))
+				hud.show_tooltip(str(pv["title"]), (pv["lines"] as Array) + _stack_note(o), [], at, str(pv.get("edge", "")))
 				_show_odds(pv, o)
 		else:
 			var about: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)]
 			about.append_array(e.ground.describe_at(o.cell))
+			about.append_array(_stack_note(o))
 			hud.show_tooltip(o.name(), about, [], at)
 		return
 	# What lies on the square (GroundItems), and what hangs or burns there (EncounterObjects), is named under whatever
@@ -1816,7 +1859,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	var o := t.combatant
 	if str(selected["kind"]) in ["attack", "offhand"]:
 		var pv2 := catalog.attack_preview(c, selected, o)
-		hud.show_tooltip(str(pv2["title"]), pv2["lines"] as Array, [], at, str(pv2.get("edge", "")))
+		hud.show_tooltip(str(pv2["title"]), (pv2["lines"] as Array) + _stack_note(o), [], at, str(pv2.get("edge", "")))
 		_show_odds(pv2, o)
 		# A throw: its arc to the target, red when it can't be made.
 		if selected.has("group") and str(selected["group"]) == "Throw":
@@ -1850,6 +1893,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines2.append("Heals %s %+d" % [prev["heal_dice"], (prev["heal_bonus"] as Breakdown).total()])
 	if kind == "multi":
 		lines2.append("Chosen: %d" % picked.count(o))
+	lines2.append_array(_stack_note(o))
 	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at, edge)
 
 
@@ -1910,7 +1954,8 @@ func _share_offset(c: Combatant, cell: Vector2i) -> Vector3:
 		return Vector3.ZERO
 	var here: Array[Combatant] = []
 	for o in e.combatants:
-		if o == c or (o.is_alive() and o.cell == cell and o.size_cells == c.size_cells and e.mount_of(o) == null and e.rider_of(c) != o):
+		if o == c or (o.is_alive() and o.cell == cell and o.size_cells == c.size_cells and e.mount_of(o) == null and e.rider_of(c) != o \
+				and not e.sight.hidden_from_party(o, viewer)):
 			here.append(o)
 	if here.size() < 2:
 		return Vector3.ZERO

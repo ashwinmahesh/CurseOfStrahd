@@ -40,6 +40,14 @@ const PROFILES := {
 	"strahd": {"oa_fear": 0.8, "finish": 1.5, "nearest": false, "flee_bloodied": false},
 }
 
+## What a creature already standing in a square costs a foe that would share it (owner, 2026-10-19: foes may share an
+## allied foe's square, EncounterMovement.share_weight). plan_turn looks at squares of its own first and at shared ones
+## only when none of them gives the foe an attack, and closing in never takes one; these only choose between shared
+## squares and among squares when it flees or a boss steps: in score points for an attack, in feet of flight, and the
+## small tie-breaks of a boss's squares.
+const CROWD_SCORE := 2.0
+const CROWD_FT := 2
+const CROWD_TIE := 0.25
 ## With no way round dangerous ground, what a point of its expected harm weighs against a foot gained on the target
 ## (_harm_ft): little, so it presses on in rather than wait at the edge.
 const PRESS_FT := 0.25
@@ -664,30 +672,39 @@ func plan_turn(c: Combatant) -> Dictionary:
 	for t in heard:
 		if not t.creature.has_flag("ethereal"):
 			strikable.append(t)
-	for t in strikable:
-		var pet := companion(t)
-		for o in options:
-			var p := o["profile"] as WeaponProfile
-			var cells := _attack_cells(c, t, o, reach)
-			for cell: Vector2i in cells:
-				# The walk there goes round the dangerous ground when that reaches the square.
-				var walk := calm if calm.has(cell) else reach
-				var path: Array[Vector2i] = []
-				if hz != null:
-					path = CombatGrid.path_to(walk, cell)
-					if hz.deadly(path):
+	var crowd := crowd_map(c)
+	# Squares of its own first; a square it would share with an ally only when none of its own gives it an attack
+	# (owner, 2026-10-19: foes may share, and the pack doesn't pile in when there's room round the hero).
+	for sharing: bool in [false, true]:
+		if sharing and (str(best["kind"]) == "attack" or str(pet_best["kind"]) == "attack" \
+				or str(risky["kind"]) == "attack" or str(risky_pet["kind"]) == "attack"):
+			break
+		for t in strikable:
+			var pet := companion(t)
+			for o in options:
+				var p := o["profile"] as WeaponProfile
+				var cells := _attack_cells(c, t, o, reach)
+				for cell: Vector2i in cells:
+					if (cell != c.cell and int(crowd.get(cell, 0)) > 0) != sharing:
 						continue
-				var cost := 0 if cell == c.cell else int((walk[cell] as Dictionary)["cost"])
-				var score := _score(c, t, o, cell, cost, walk, prof, threats)
-				var into := pet_best if pet else best
-				if hz != null:
-					var harm := hz.cost(path)
-					if harm > unavoidable + 0.01:
-						score -= harm
-						into = risky_pet if pet else risky
-				if score > float(into["score"]):
-					into.merge({"kind": "attack", "target": t, "cell": cell, "option": str(o["id"]), "score": score,
-						"why": "%s at %s with %s" % [t.name(), cell, p.name]}, true)
+					# The walk there goes round the dangerous ground when that reaches the square.
+					var walk := calm if calm.has(cell) else reach
+					var path: Array[Vector2i] = []
+					if hz != null:
+						path = CombatGrid.path_to(walk, cell)
+						if hz.deadly(path):
+							continue
+					var cost := 0 if cell == c.cell else int((walk[cell] as Dictionary)["cost"])
+					var score := _score(c, t, o, cell, cost, walk, prof, threats) - CROWD_SCORE * float(crowd.get(cell, 0))
+					var into := pet_best if pet else best
+					if hz != null:
+						var harm := hz.cost(path)
+						if harm > unavoidable + 0.01:
+							score -= harm
+							into = risky_pet if pet else risky
+					if score > float(into["score"]):
+						into.merge({"kind": "attack", "target": t, "cell": cell, "option": str(o["id"]), "score": score,
+							"why": "%s at %s with %s" % [t.name(), cell, p.name]}, true)
 	# No attack clear of the dangerous ground: the foes it could reach round it, if any (else it goes in).
 	var round_to: Array[Combatant] = []
 	var foes: Array[Combatant] = []
@@ -1056,6 +1073,7 @@ func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 		return int((walk[cell] as Dictionary)["cost"])
 	var best_cell := c.cell
 	var here: Array[Vector2i] = [c.cell]
+	var crowd := crowd_map(c)
 	var nearest_deadly := 1 << 30
 	var best_d := int(dist.call(c.cell)) + _harm_ft(hz, round_it, here)
 	if hz != null and hz.deadly(here):
@@ -1072,7 +1090,8 @@ func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 			threats = _threats(c)
 	for cell: Vector2i in (calm if round_it else reach):
 		var info := reach[cell] as Dictionary
-		if bool(info["occupied"]):
+		# Closing in takes a square of its own: sharing one is for striking from it (plan_turn), not for walking up.
+		if bool(info["occupied"]) or (cell != c.cell and int(crowd.get(cell, 0)) > 0):
 			continue
 		var d := int(dist.call(cell))
 		# A square already farther than the best one can't win, whatever its Opportunity Attacks or dangerous ground
@@ -1313,6 +1332,20 @@ func _save_aim(c: Combatant, act: Dictionary, targets: Array[Combatant]) -> Comb
 	return aim
 
 
+## The squares other creatures stand in (cell -> how many), apart from `c` and its mount or rider: the ones `c` would have
+## to share if it ended its move there (CROWD_SCORE, CROWD_FT).
+func crowd_map(c: Combatant) -> Dictionary:
+	var e := enc()
+	var partner := e.mount_of(c) if e.mount_of(c) != null else e.rider_of(c)
+	var out := {}
+	for o in e.combatants:
+		if o == c or o == partner or not o.is_alive():
+			continue
+		for cell in o.footprint():
+			out[cell] = int(out.get(cell, 0)) + 1
+	return out
+
+
 ## The best attack from where the creature stands: {target, option} or {}.
 func _best_in_reach(c: Combatant) -> Dictionary:
 	var e := enc()
@@ -1348,10 +1381,11 @@ func _flee(c: Combatant, from: Combatant, may_dash: bool, heed: bool = true) -> 
 	var best_d := e.grid.distance_ft(c.cell, c.size_cells, from.cell, from.size_cells)
 	var here: Array[Vector2i] = [c.cell]
 	var best_harm := 0.0 if hz == null else hz.cost(here)
+	var crowd := crowd_map(c)
 	for cell: Vector2i in reach:
 		if bool((reach[cell] as Dictionary)["occupied"]):
 			continue
-		var d := e.grid.distance_ft(cell, c.size_cells, from.cell, from.size_cells)
+		var d := e.grid.distance_ft(cell, c.size_cells, from.cell, from.size_cells) - CROWD_FT * int(crowd.get(cell, 0))
 		var harm := 0.0 if hz == null else hz.cost(CombatGrid.path_to(calm if calm.has(cell) else reach, cell))
 		if harm < best_harm or (harm == best_harm and d > best_d):
 			best_d = d

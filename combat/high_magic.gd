@@ -821,8 +821,7 @@ func _solid_ground(t: Combatant, crack: Dictionary) -> Vector2i:
 			var cl := t.cell + Vector2i(dx, dy)
 			if crack.has(cl) or not e.grid.in_bounds(cl) or e.grid.is_solid(cl):
 				continue
-			var o := e.occupant_at(cl)
-			if o != null and o != t:
+			if e.movement.others_in(cl, t):
 				continue
 			var d := absi(dx) + absi(dy)
 			if d < best_d:

@@ -227,6 +227,7 @@ func fallen_plan(c: Combatant, options: Array[Dictionary], reach: Dictionary, th
 		return {}
 	var best := {}
 	var best_s := 0.0
+	var crowd := e.ai.crowd_map(c)
 	for t in e.hostiles_of(c):
 		if not t.is_alive() or t.creature.hp > 0 or not t.creature.uses_death_saves or not e.can_see(c, t):
 			continue
@@ -242,7 +243,7 @@ func fallen_plan(c: Combatant, options: Array[Dictionary], reach: Dictionary, th
 				c.cell = keep
 				var fails := 2 if close else 1
 				var value := 9.0 if t.creature.death_failures + fails >= 3 else 4.0 * fails
-				var s := chance * value + e.ai.boss.target_bonus(c, t)
+				var s := chance * value + e.ai.boss.target_bonus(c, t) - AiBrain.CROWD_SCORE * float(crowd.get(cell, 0))
 				if cell != c.cell and oa_fear > 0.0:
 					s -= oa_fear * e.ai._oa_risk(c, CombatGrid.path_to(reach, cell), threats)
 				if s > best_s:

@@ -441,8 +441,7 @@ func _room_for(c: Combatant, to: String) -> bool:
 	if cells <= c.size_cells:
 		return true
 	for cell in CombatGrid.footprint(c.cell, cells):
-		var o := e.occupant_at(cell)
-		if e.grid.is_solid(cell) or (o != null and o != c):
+		if e.grid.is_solid(cell) or e.movement.others_in(cell, c):
 			return false
 	return true
 

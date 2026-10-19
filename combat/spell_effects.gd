@@ -339,8 +339,7 @@ func _resize(t: Combatant, step: int, fxo: Effect) -> void:
 	var cells := CombatGrid.size_cells_for(new_size)
 	if cells > t.size_cells:
 		for cell in CombatGrid.footprint(t.cell, cells):
-			var o := e.occupant_at(cell)
-			if e.grid.is_solid(cell) or (o != null and o != t):
+			if e.grid.is_solid(cell) or e.movement.others_in(cell, t):
 				e.log.add("info", "%s has no room to grow" % t.name(), t.id)
 				return
 	var old := t.creature.size

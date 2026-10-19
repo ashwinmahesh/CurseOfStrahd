@@ -1907,14 +1907,13 @@ func move_reach(c: Combatant) -> Dictionary:
 ## The right-click menu for a square in a fight (owner ask, 2026-10-07): Move here (or why not: you can pass through
 ## an ally but not stop on them), then everything `c` could do to whoever stands there right now (attacks, spells,
 ## Help, Stabilize, items...) and Info. [{id, label, enabled, why, action?}], id "move", "info" or "act:<action id>".
-func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Array[Dictionary]:
+## `who` is the creature the click was on when several share the square (else the first there).
+func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}, who: Combatant = null) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	var o := e.occupant_at(cell)
+	var o := who if who != null and who.is_alive() and cell in who.footprint() else e.occupant_at(cell)
 	if cell != c.cell:
 		var mp := move_preview(c, cell, reach)
 		var why := str(mp["reason"])
-		if why == "Occupied":
-			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
 		var move_label := ("Move toward here (%d ft)" if bool(mp["partial"]) else "Move here (%d ft)") % int(mp["cost"]) if bool(mp["ok"]) else "Move here"
 		out.append({"id": "move", "label": move_label, "enabled": bool(mp["ok"]), "why": why})
 	# Jumping down a cliff or ledge beside it, taking the fall (EncounterMovement.jump_down).
@@ -1955,14 +1954,17 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 		# Too far: the walk stops as far along the way as the movement left goes (owner, 2026-10-12), and `dest` says where.
 		var stop := e.movement.stop_toward(c, cell, r)
 		if stop == c.cell:
-			out["reason"] = "No way there (%d ft left)" % c.movement_left if c.movement_left > 0 else "No movement left"
+			# Someone standing there is the reason, when someone is (an enemy's space can't be walked into at all).
+			var held := e.movement.held_why(c, cell)
+			out["reason"] = held if held != "" else ("No way there (%d ft left)" % c.movement_left if c.movement_left > 0 else "No movement left")
 			return out
 		out["dest"] = stop
 		out["partial"] = true
 		cell = stop
 	var info := r[cell] as Dictionary
 	if bool(info["occupied"]):
-		out["reason"] = "Occupied"
+		var blocker := e.movement.occupied_why(c, cell)
+		out["reason"] = blocker if blocker != "" else "Someone is there"
 		return out
 	path = e.movement.safe_path(c, r, cell)
 	var cost := int(info["cost"])

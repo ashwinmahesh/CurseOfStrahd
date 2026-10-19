@@ -123,8 +123,7 @@ func room_to_grow(c: Combatant, cells: int) -> Vector2i:
 	var e := enc()
 	var fits := func(at: Vector2i) -> bool:
 		for f in CombatGrid.footprint(at, cells):
-			var o := e.occupant_at(f)
-			if not e.grid.in_bounds(f) or e.grid.is_solid(f) or (o != null and o != c):
+			if not e.grid.in_bounds(f) or e.grid.is_solid(f) or e.movement.others_in(f, c):
 				return false
 		return true
 	if cells <= c.size_cells or fits.call(c.cell):

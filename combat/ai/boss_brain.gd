@@ -349,6 +349,7 @@ func _cell_in_reach(c: Combatant, t: Combatant, budget: int, strike: int) -> Vec
 	var calm := reach if hz == null else e.reachable_for(c, budget, false, hz.avoid)
 	var best := c.cell
 	var best_cost := 1 << 30
+	var crowd := e.ai.crowd_map(c)
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]) or e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > strike:
@@ -356,7 +357,7 @@ func _cell_in_reach(c: Combatant, t: Combatant, budget: int, strike: int) -> Vec
 		var way := calm if calm.has(cell) else reach
 		if _harm(hz, CombatGrid.path_to(way, cell)) > 0.0:
 			continue
-		var cost := int((way[cell] as Dictionary)["cost"])
+		var cost := int((way[cell] as Dictionary)["cost"]) + AiBrain.CROWD_FT * int(crowd.get(cell, 0))
 		if cost < best_cost:
 			best_cost = cost
 			best = cell
@@ -464,12 +465,14 @@ func _vantage_cell(c: Combatant, toward: Combatant, own_turn: bool = false, move
 	var strike := _strike_ft(c)
 	var best := c.cell
 	var best_s := _vantage(c, c.cell, strike, toward) - _harm(hz, here)
+	var crowd := e.ai.crowd_map(c)
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]):
 			continue
 		var way := calm if calm.has(cell) else reach
-		var s := _vantage(c, cell, strike, toward) - int((way[cell] as Dictionary)["cost"]) * 0.001
+		var s := _vantage(c, cell, strike, toward) - int((way[cell] as Dictionary)["cost"]) * 0.001 \
+			- AiBrain.CROWD_TIE * float(crowd.get(cell, 0))
 		s -= _harm(hz, CombatGrid.path_to(way, cell))
 		if s > best_s + 0.01:
 			best_s = s
@@ -529,11 +532,12 @@ func _safe_cell(c: Combatant, budget: int = -1) -> Vector2i:
 	var here: Array[Vector2i] = [c.cell]
 	var best := c.cell
 	var best_s := _safety(c, c.cell) - _harm(hz, here)
+	var crowd := e.ai.crowd_map(c)
 	for cell: Vector2i in reach:
 		if bool((reach[cell] as Dictionary)["occupied"]):
 			continue
 		var way := calm if calm.has(cell) else reach
-		var s := _safety(c, cell) - int((way[cell] as Dictionary)["cost"]) * 0.01
+		var s := _safety(c, cell) - int((way[cell] as Dictionary)["cost"]) * 0.01 - AiBrain.CROWD_TIE * float(crowd.get(cell, 0))
 		s -= _harm(hz, CombatGrid.path_to(way, cell))
 		if s > best_s + 0.01:
 			best_s = s
@@ -567,6 +571,7 @@ func _cell_beside(c: Combatant, t: Combatant, budget: int = -1) -> Vector2i:
 	var calm := reach if hz == null else e.reachable_for(c, ft, false, hz.avoid)
 	var best := c.cell
 	var best_cost := 1 << 30
+	var crowd := e.ai.crowd_map(c)
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]) or e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > 5:
@@ -574,7 +579,7 @@ func _cell_beside(c: Combatant, t: Combatant, budget: int = -1) -> Vector2i:
 		var way := calm if calm.has(cell) else reach
 		if _harm(hz, CombatGrid.path_to(way, cell)) > 0.0:
 			continue
-		var cost := int((way[cell] as Dictionary)["cost"])
+		var cost := int((way[cell] as Dictionary)["cost"]) + AiBrain.CROWD_FT * int(crowd.get(cell, 0))
 		if cost < best_cost:
 			best_cost = cost
 			best = cell
