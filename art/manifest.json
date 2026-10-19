@@ -6268,6 +6268,20 @@
       "sprite_flags": [
         "BODY=lumber"
       ]
+    },
+    {
+      "id": "red_dragon_wyrmling",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/red_dragon_wyrmling_turnaround.png",
+      "sprites": "art/sprites/red_dragon_wyrmling/walk.tres",
+      "portrait": "art/portraits/red_dragon_wyrmling.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a red dragon wyrmling carved of stone, a child-sized four-legged dragon that was a statue and has come to life: rough grey granite scales with rust-red veins and chipped edges, a small horned head with ember-red eyes and a snarling fanged mouth, bat-like stone wings folded at its back, strong clawed legs and a long spiked stone tail. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on four legs with its wings folded and its jaws open in a snarl, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
     }
   ],
   "image_provider": "gemini"

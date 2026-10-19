@@ -993,5 +993,9 @@
   "plant_spirit": {"who": "a plant spirit",
     "attack": "branch slam",
     "windup": "both heavy branch arms raised high above it, leaning back",
-    "strike": "both branch arms slammed down and forward at the enemy, the whole figure lurching forward"}
+    "strike": "both branch arms slammed down and forward at the enemy, the whole figure lurching forward"},
+  "red_dragon_wyrmling": {"who": "a stone red dragon wyrmling",
+    "attack": "rending bite and claws",
+    "windup": "rearing up on its hind legs with its wings half spread, front claws raised and jaws wide open",
+    "strike": "lunging forward with its jaws snapping and both front claws raking down at the enemy, wings flared"}
 }
