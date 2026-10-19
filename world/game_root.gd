@@ -121,6 +121,10 @@ func _new_pregen_party() -> void:
 ## its areas (a fight waiting there may be slipped into, or be set off by a foe that notices them); any other way in (the
 ## travel map, a cutscene, a load) starts it walking normally.
 func enter_location(location_id: String, spawn: String, sneaking: bool = false) -> void:
+	# A journey that is waiting to go on is only ever on its road: entering any other place ends it (a conversation's
+	# `move`, or a record a save carried over), so a fight won there can't carry the party off to the journey's end.
+	if not st.travel_resume.is_empty() and not Travel.is_road_scene(location_id):
+		st.travel_resume = {}
 	_fade_from_black()
 	glow.clear()
 	if view != null:
@@ -737,7 +741,7 @@ func _dialogue_ended(combat: String) -> void:
 		view.start_encounter(combat)
 	elif not moved.is_empty():
 		_move_party(str(moved["location"]), str(moved["spawn"]))
-	elif not view.check_flag_encounters() and not st.travel_resume.is_empty():
+	elif not view.check_flag_encounters() and _journey_pending():
 		_continue_journey.call_deferred()
 
 
@@ -817,7 +821,7 @@ func _after_combat(outcome: String) -> void:
 		return
 	if LongRest.broken(st):
 		_sleep_again()   # the night's fight is won: the party sleeps on, and the Long Rest's benefits come at last
-	if not st.travel_resume.is_empty():
+	if _journey_pending():
 		hud.toast("The road is clear. You go on.")
 		_continue_journey.call_deferred()
 	else:
@@ -859,9 +863,29 @@ func open_travel(setting_out: bool) -> void:
 	t.closed.connect(func() -> void: screen = null)
 
 
+## Whether a journey is waiting to go on from here: one is only ever waiting on a road's map, so a record anywhere
+## else is left over (from a save, or a path that left the road) and is dropped.
+func _journey_pending() -> bool:
+	if st.travel_resume.is_empty():
+		return false
+	if Travel.is_road_scene(st.location):
+		return true
+	st.travel_resume = {}
+	return false
+
+
 ## Sets out from place `from` for place `to`, road by road. Something on the road stops the journey on that road's
 ## map; when it's dealt with, the journey goes on (StoryState.travel_resume).
 func travel(from: String, to: String) -> void:
+	# The hours of the legs pass before the party stands on the road (the change of place waits behind its cover), and
+	# time passing makes an autosave: not of this half-way state, which would load back at the start with the journey
+	# armed (_on_time_passed).
+	_journeying = true
+	_travel_legs(from, to)
+	_journeying = false
+
+
+func _travel_legs(from: String, to: String) -> void:
 	st.travel_resume = {}
 	for leg in Travel.route(from, to, st):
 		st.advance_minutes(roundi(float(leg["hours"]) * 60.0))
@@ -904,7 +928,7 @@ func _continue_journey() -> void:
 		await get_tree().process_frame
 	var r := st.travel_resume
 	st.travel_resume = {}
-	if r.is_empty() or view.in_combat:
+	if r.is_empty() or view.in_combat or not Travel.is_road_scene(st.location):
 		return
 	travel(str(r["at"]), str(r["to"]))
 
@@ -1122,6 +1146,8 @@ const CARD_MIN_HOLD := 1.0
 static var took_ms: Dictionary = {}
 ## A change of place is under way behind its cover: the game takes no input and the old place stands still.
 var moving := false
+## A journey's legs are being worked out (travel): time passing in them makes no autosave.
+var _journeying := false
 ## The sprite sheets being read for the change under way (collected if the game goes before it's done).
 var _preload: PlacePreload = null
 
@@ -1192,7 +1218,8 @@ func _covered(to: String, change: Callable) -> void:
 func _on_time_passed(minutes: int) -> void:
 	if not is_inside_tree():
 		return
-	_autosave.call_deferred()   # after a rest or a wait, once it's done
+	if not _journeying:
+		_autosave.call_deferred()   # after a rest or a wait, once it's done
 	if _fade == null:
 		var layer := CanvasLayer.new()
 		layer.layer = 40
@@ -1384,6 +1411,9 @@ var autosaves := false
 func _autosave() -> void:
 	if not (autosaves or get_tree().current_scene == self) or view == null or view.in_combat or dialogue != null \
 			or ending != null or ModeController.mode != ModeController.Mode.EXPLORATION or Endings.reached(st) != "":
+		return
+	# Never a journey that hasn't reached its road: it would load back at the start with the journey armed.
+	if not st.travel_resume.is_empty() and not Travel.is_road_scene(st.location):
 		return
 	if SaveSystem.autosave() == OK:
 		hud.saved_note()

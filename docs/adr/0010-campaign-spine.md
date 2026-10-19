@@ -22,6 +22,10 @@ needs a data format the validator can check, and the engine reads.
   roads (hours, a random-encounter table). Travelling advances the clock; each leg rolls its table's day or night
   chance (40% of it on a road already walked or a journey to a place already visited, 2026-10-18). A random fight
   plays on a road map with the table's monsters; an event plays a conversation.
+  The journey then waits (`StoryState.travel_resume`) only while the party stands on a road map (`Travel.is_road_scene`):
+  no autosave is written between setting out and reaching it, and entering any other place drops a record left over,
+  so a fight won elsewhere never carries the party on to the journey's end (2026-10-18: Take All in Ghakis's lair
+  sent the party to Vallaki).
 - **Day and night** come from `StoryState.minute_of_day`: outdoor light follows the hour, and data uses `night`,
   `day` and `hour >= n` conditions (shops close, the dead walk).
 - **Guests are story allies the player commands.** A guest is an NPC with a stat block (or a fixed character build)

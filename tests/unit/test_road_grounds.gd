@@ -140,3 +140,25 @@ func test_foes_keep_their_side_of_the_party_on_another_ground() -> void:
 	assert_true(west.x < to.x and east.x > to.x, "one west of the party, one east (%s, %s; party %s)" % [west, east, to])
 	var spots: Array = (ground["foe_spots"] as Array).map(func(s: Variant) -> String: return str(_cell(s)))
 	assert_true(spots.has(str(west)) and spots.has(str(east)), "both on the ground's foe spots")
+
+
+## The maps a journey stops on (Travel.is_road_scene), from the game's own data: the road maps and every battle ground
+## a table or a road names, never a town or a lair.
+func test_the_road_scenes_in_the_game_s_data() -> void:
+	for id: String in ["road_ambush", "mountain_pass", "frozen_tarn", "wayside_shrine", "lake_inlet", "barrow_moor"]:
+		assert_true(Travel.is_road_scene(id), "%s is a road scene" % id)
+	for id: String in ["vallaki", "ghakis_lair", "ghakis_shoulder", "tsolenka_pass", "village_of_barovia"]:
+		assert_false(Travel.is_road_scene(id), "%s is not" % id)
+	for t: Variant in Compendium.shared().table("random_encounters").values():
+		var table := t as Dictionary
+		assert_true(Travel.is_road_scene(str(table["map"])), "%s (table %s's own map)" % [table["map"], table.get("id", "")])
+		for id: Variant in RoadGrounds.pool(table, {}):
+			assert_true(Travel.is_road_scene(str(id)), "%s (table %s)" % [id, table.get("id", "")])
+	# A road's own grounds as well: every fight and meeting a journey can stop for plays on one of them.
+	for r: Variant in Travel.map_data().get("roads", []):
+		var road := r as Dictionary
+		var table := Compendium.shared().get_entry("random_encounters", str(road.get("table", "")))
+		if table.is_empty():
+			continue
+		for id: Variant in RoadGrounds.pool(table, road):
+			assert_true(Travel.is_road_scene(str(id)), "%s (road %s)" % [id, road["id"]])

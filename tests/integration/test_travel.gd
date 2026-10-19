@@ -215,6 +215,90 @@ func test_a_meeting_on_the_road_leaves_a_reward_then_the_journey_goes_on() -> vo
 	assert_eq(_view().loc_id, "test_town", "and on to town")
 
 
+## A journey is armed (StoryState.travel_resume) the moment a road's fight or meeting is rolled, but the party only
+## stands on that road once the change of place behind its cover has run. The hours of the leg trigger an autosave in
+## between, which wrote the party still at the start with the journey armed: "Last Autosave" after a lost road fight
+## loaded it, and the next fight the party won anywhere (the fire elemental in Ghakis's lair, Ashwin 2026-10-18) sent it
+## on to the journey's end, straight after Take All. No autosave holds a journey away from its road.
+func test_no_autosave_holds_a_journey_away_from_its_road() -> void:
+	UiMotion._checked = true
+	UiMotion.reduced = false   # the change of place waits behind its cover, as in the game: that is when the save fell
+	for n in range(1, SaveSystem.AUTOSAVES + 1):
+		SaveSystem.delete_slot(SaveSystem.autosave_slot(n))
+	root.set("autosaves", true)
+	root.call("travel", "hall", "mid")
+	for i in 600:
+		await get_tree().process_frame
+		if not bool(root.get("moving")) and _view().loc_id == "test_ambush":
+			break
+	await _frames(3)
+	assert_eq(_view().loc_id, "test_ambush", "stopped on the road")
+	assert_false(GameState.story.travel_resume.is_empty(), "with the journey waiting")
+	for n in range(1, SaveSystem.AUTOSAVES + 1):
+		var slot := SaveSystem.autosave_slot(n)
+		if not SaveSystem.has_slot(slot):
+			continue
+		var d := JSON.parse_string(FileAccess.get_file_as_string(SaveSystem.slot_path(slot))) as Dictionary
+		var story := d["story"] as Dictionary
+		var resume := story.get("travel_resume", {}) as Dictionary
+		assert_true(resume.is_empty() or Travel.is_road_scene(str(story["location"])),
+			"%s: at %s with the journey %s" % [slot, story["location"], resume])
+	root.set("autosaves", false)
+	for n in range(1, SaveSystem.AUTOSAVES + 1):
+		SaveSystem.delete_slot(SaveSystem.autosave_slot(n))
+	UiMotion.reduced = true
+
+
+## A journey left over in a save made before that was fixed (or by any path that leaves the road) must not follow the
+## party into a fight that has nothing to do with it: the record is dropped, the spoils are taken and the party stays.
+func test_a_stale_journey_does_not_follow_a_fight_away_from_the_road() -> void:
+	var st := GameState.story
+	st.travel_resume = {"to": "town", "at": "town"}
+	var foes: Array = [{"monster": "wolf", "cell": [4, 2]}]
+	_view().start_custom_encounter({"id": "stale_wolves", "monsters": foes, "loot": RoadSpoils.for_fight(st, foes, "stale")})
+	await _frames(5)
+	var cv := _view().combat_view
+	assert_true(_view().in_combat, "wolves in the hall")
+	for c in cv.e.combatants:
+		if c.side == &"enemy":
+			cv.e.deal_damage(null, c, [{"amount": 100, "type": "slashing"}], false, "test")
+	cv.finished.emit("victory")
+	await _frames(6)
+	var lw := root.get("loot") as LootWindow
+	assert_true(lw != null, "the wolves' spoils")
+	if lw != null:
+		lw.call("_take_all")
+		if root.get("loot") != null:
+			lw.call("_close")
+	await _frames(10)
+	assert_eq(_view().loc_id, "test_hall", "Take All leaves the party where it fought")
+	assert_true(st.travel_resume.is_empty(), "and the stale journey is gone")
+
+
+## A journey ends where the party leaves its road for a place of its own (a conversation's `move`, a stale record
+## loaded with a save); on the road's own map it waits.
+func test_a_journey_waits_on_its_road_and_ends_anywhere_else() -> void:
+	var st := GameState.story
+	st.travel_resume = {"to": "town", "at": "town"}
+	root.call("enter_location", "test_ambush", "default")
+	await _frames(2)
+	assert_false(st.travel_resume.is_empty(), "on the road's own map the journey waits")
+	root.call("enter_location", "test_town", "default")
+	await _frames(2)
+	assert_true(st.travel_resume.is_empty(), "anywhere else it is over")
+
+
+func test_which_maps_are_road_scenes() -> void:
+	var c := Compendium.shared()
+	assert_true(Travel.is_road_scene("test_ambush"), "a table's own map")
+	assert_false(Travel.is_road_scene("test_hall"), "a town")
+	assert_false(Travel.is_road_scene(""), "nowhere")
+	(c.tables["random_encounters"]["test_road"] as Dictionary)["grounds"] = ["test_ambush", "test_glade"]
+	assert_true(Travel.is_road_scene("test_glade"), "one of its battle grounds")
+	(c.tables["travel"]["barovia"]["roads"][0] as Dictionary)["grounds"] = ["test_hall"]
+	assert_true(Travel.is_road_scene("test_hall"), "a road's own battle ground")
+
+
 ## The loot window that's open now: checks it holds coins and a find, that the party is still on the road while it's
 ## open, then takes everything. False if there was none.
 func _take_spoils() -> bool:

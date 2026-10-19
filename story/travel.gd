@@ -35,6 +35,24 @@ static func place(place_id: String) -> Dictionary:
 	return {}
 
 
+## Whether `location_id` is a map a journey stops on: a random encounter table's own map (where its meetings play and
+## Strahd's visit on the road does), a battle ground the table or a road names (RoadGrounds), or the Old Svalich Road
+## Strahd's visit falls back to. A journey that is waiting (StoryState.travel_resume) is only ever on such a map.
+static func is_road_scene(location_id: String) -> bool:
+	if location_id == "":
+		return false
+	if location_id == "road_ambush":
+		return true
+	for t: Variant in Compendium.shared().table("random_encounters").values():
+		var table := t as Dictionary
+		if str(table.get("map", "")) == location_id or (table.get("grounds", []) as Array).has(location_id):
+			return true
+	for r: Variant in map_data().get("roads", []):
+		if ((r as Dictionary).get("grounds", []) as Array).has(location_id):
+			return true
+	return false
+
+
 ## The travel place whose location the party is in (or "").
 static func place_for_location(location_id: String) -> String:
 	for p: Variant in map_data().get("places", []):
