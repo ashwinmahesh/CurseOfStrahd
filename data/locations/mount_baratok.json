@@ -176,11 +176,12 @@
       "id": "baratok_hut",
       "cell": [
         25,
-        9
+        8
       ],
       "kind": "examine",
       "label": "A stone hut",
-      "model": "cottage"
+      "model": "cottage",
+      "scale": 1.2
     },
     {
       "id": "baratok_frozen_birds",
