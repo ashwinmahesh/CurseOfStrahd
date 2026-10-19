@@ -18,7 +18,8 @@ class FailRoutes(unittest.TestCase):
     def test_allowed_entries_are_still_needed(self):
         # A stale entry hides nothing but says something false: each must still be a finding without the list.
         files, quests = fail_routes.load(ROOT)
-        live = {f"{k}:{n}:{s}:{m[0]}.{m[1]}" for k, n, s, _, m in fail_routes.analyse(files, quests)}
+        found = fail_routes.analyse(files, quests) + fail_routes.analyse_endings(files, quests)
+        live = {f"{k}:{n}:{s}:{m[0]}.{m[1]}" for k, n, s, _, m in found}
         self.assertEqual(sorted(set(fail_routes.ALLOWED) - live), [])
 
 

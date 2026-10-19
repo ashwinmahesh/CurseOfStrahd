@@ -1026,6 +1026,9 @@ static func _upgrade_quests(st: StoryState) -> void:
 		for slot: String in Tarokka.treasures_at("tser_pool_eva_tent", st):
 			st.set_flag("treasure_found_" + slot, true)
 	st._settle_ally()
+	# A quest an earlier version left stuck closes on load when its data says so (`closes` with `old_saves`): the journal
+	# only, no notice. Clocks and departures never run on load: an old save has no honest start time.
+	QuestClosures.sweep(st, {"load": true})
 
 
 ## Saves from before found spellbooks listed their spells: a container that held a plain "spellbook" now holds a

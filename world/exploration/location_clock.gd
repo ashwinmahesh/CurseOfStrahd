@@ -42,7 +42,11 @@ func _process(_delta: float) -> void:
 	_minute = now
 	var before := str(Schedule.memory(view.st)["fired"])
 	var plays := Schedule.catch_up(view.st, view.loc_id)
-	if turned or str(Schedule.memory(view.st)["fired"]) != before:
+	# A quest whose days have run out ends (data/quests `closes`): the event just caught up may have been the last straw.
+	var closed := QuestClosures.sweep(view.st)
+	for said in closed:
+		view.toast.emit(said)
+	if turned or not closed.is_empty() or str(Schedule.memory(view.st)["fired"]) != before:
 		_recheck = true
 		if int(view.get_meta(&"npcs_built", -1)) != Engine.get_process_frames():
 			_recheck = false

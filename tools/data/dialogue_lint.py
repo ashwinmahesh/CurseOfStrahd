@@ -78,6 +78,77 @@ def conditions_flags(expr):
     return RE_FLAG_REF.findall(expr)
 
 
+# What a condition's terms may be (story/story_conditions.gd): a bare word, a `kind.name` or a `kind:name`. Anything else is
+# a warning and false at run time, so a condition in new data (a quest's `closes`) is checked against them.
+CONDITION_WORDS = {"true", "false", "night", "day", "indoors", "hour", "attention", "weather", "gold", "level", "check.last"}
+CONDITION_DOTTED = {"flag", "quest", "quest_days", "days_since", "attitude", "approval", "tarokka"}
+CONDITION_COLONED = {"final_room", "guest", "treasure_at", "gift", "spell", "at", "region", "option", "visited", "leader", "item",
+                     "class", "species", "background", "tag", "name", "knows"}
+RE_CONDITION_TOKEN = re.compile(r'\(|\)|==|!=|>=|<=|=|>|<|"[^"]*"|[^\s()=!<>]+')
+CONDITION_OPS = {"==", "!=", ">=", "<=", "=", ">", "<"}
+
+
+def condition_problems(expr):
+    """[what is wrong] with a condition: unbalanced parentheses, an `and`, `or` or `not` with nothing to join, an operator with
+    no value, a term the game doesn't know. Empty is fine (always true)."""
+    toks = RE_CONDITION_TOKEN.findall(expr or "")
+    problems = []
+    i = 0
+
+    def peek():
+        return toks[i] if i < len(toks) else ""
+
+    def take():
+        nonlocal i
+        i += 1
+        return toks[i - 1] if i - 1 < len(toks) else ""
+
+    def either(joiner, inner):
+        inner()
+        while peek() == joiner:
+            take()
+            inner()
+
+    def term():
+        word = take()
+        if word in ("", ")", "and", "or") or word in CONDITION_OPS:
+            problems.append(f"'{word or 'end of the condition'}' where a term belongs")
+            return
+        if peek() in CONDITION_OPS:
+            take()
+            if peek() in ("", ")", "and", "or") or peek() in CONDITION_OPS:
+                problems.append(f"'{word}' compared with nothing")
+            else:
+                take()
+        head = re.match(r"^([a-z_]+)([.:])", word)
+        known = word in CONDITION_WORDS or (head is not None and head.group(1) in (CONDITION_DOTTED if head.group(2) == "." else CONDITION_COLONED))
+        if not known:
+            problems.append(f"unknown term '{word}'")
+
+    def unary():
+        if peek() == "not":
+            take()
+            unary()
+        elif peek() == "(":
+            take()
+            either("or", conj)
+            if peek() == ")":
+                take()
+            else:
+                problems.append("a '(' is never closed")
+        else:
+            term()
+
+    def conj():
+        either("and", unary)
+
+    if toks:
+        either("or", conj)
+        if i < len(toks):
+            problems.append(f"'{toks[i]}' is left over (an unmatched ')' or a missing and/or)")
+    return problems
+
+
 def conditions_quest_days(expr):
     """The quests a condition's `quest_days.<id>` terms name."""
     return RE_QUEST_DAYS_REF.findall(expr)

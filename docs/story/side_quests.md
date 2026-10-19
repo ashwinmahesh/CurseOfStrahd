@@ -53,6 +53,21 @@ Failed pill. The engine's part:
   uses them in a `when`, never as a hidden timer: the NPC names the time and the journal warns (closures, F1's second
   hand-off). Clock lengths are the plan's table: "tonight" is the next dawn, "a few days" is 3, "a week" is 7, a fever
   or a slow siege is 10, and a named event is that event.
+- **Closures.** A quest that can run out on its own lists `closes` rules in its data: `{"stage": "taken", "when":
+  "quest_days.x >= 3", "from": ["asked"], "leave": "<region>", "warn": "<journal line>", "old_saves": false}`. `stage`
+  is one of the quest's endings (usually a failure; a quiet success is allowed). `when` is a condition, usually a clock
+  or a flag the story has set; with `from` the rule waits for those open stages (default every open stage). `leave` makes
+  it fire only as the party walks out of that region. `warn` is the amber line the journal shows under the objectives
+  while the rule could still fire (the quest stands at a `from` stage), so no clock closes a quest unannounced.
+  `old_saves: true` lets the rule also run when a save loads, to close a quest an earlier version left stuck (journal
+  only, no notice); clocks and departures never run on load. `QuestClosures.sweep` (story/quest_closures.gd) looks at
+  every open quest after a conversation or a fight, when the clock moves (LocationClock), on arrival, as the party
+  leaves a region (LocationView) and on load; each quest it closes toasts "Quest failed: X" (or "Quest complete: X").
+- **What the tools check.** `make validate` checks `then` and `closes` (the stage exists and is an ending, `from` names
+  open stages, `leave` a region, the condition's flags are registered and set somewhere); `story_reach.py` and
+  test_side_quest_reach.gd count a closure as the thing that sets its stage; and `fail_routes.py` now also refuses a failed
+  roll of any skill that sets a side quest's failure ending before the next menu (a failed roll costs something but never
+  ends a quest). The few that exist sit in its ALLOWED list until the package that reshapes them lands.
 
 ## Into the Mists (level 1)
 

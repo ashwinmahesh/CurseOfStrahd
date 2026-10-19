@@ -373,6 +373,10 @@ func _quest_card(q: Dictionary) -> Control:
 		orow.add_child(UiParts.mark(1))
 		orow.add_child(UiKit.label(o, UiScale.text(15), "gilt_light", DETAIL_W - 30.0))
 		col.add_child(orow)
+	if status == "active" and str(q.get("warn", "")) != "":
+		var warn := UiKit.label(str(q["warn"]), UiScale.text(15), "flame", DETAIL_W)   # time is running (the quest's `closes`)
+		warn.name = "Warning"
+		col.add_child(warn)
 	if status == "active":
 		var who := _talk_to(qid)
 		if who != null:

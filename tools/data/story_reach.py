@@ -28,7 +28,7 @@ RE_JUMP = re.compile(r"^->\s*([A-Za-z0-9_:/]+|END)$")
 RE_SET = re.compile(rf"^set\s+({ID})(?:\s*(=|\+=|-=)\s*(.+))?$")
 RE_QUEST = re.compile(rf"^quest\s+({ID})\s+({ID})$")
 RE_GIVE = re.compile(rf"^give\s+({ID})")
-RE_CHECK = re.compile(r"^check\s+.*?->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?$")
+RE_CHECK = re.compile(r"^check\s+(.*?)\s*->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?$")
 RE_COMBAT = re.compile(rf"^combat\s+({ID})$")
 RE_MOVE = re.compile(rf"^move\s+({ID})(?::({ID}))?$")
 RE_IF = re.compile(r"^(if|elif)\s+(.+)$")
@@ -107,8 +107,9 @@ def parse_dialogue(path):
         elif (m := RE_JUMP.match(line)):
             st.update(t="jump", to=[m.group(1)])
         elif (m := RE_CHECK.match(line)):
-            # is_check: a roll (to[0] on success, the last target on failure), for tools/data/fail_routes.py
-            st.update(t="jump", to=[x for x in (m.group(1), m.group(2)) if x], is_check=True)
+            # is_check: a roll (to[0] on success, the last target on failure), for tools/data/fail_routes.py; skill: its name
+            st.update(t="jump", to=[x for x in (m.group(2), m.group(3)) if x], is_check=True,
+                      skill=re.sub(r"\s+DC\s+\d+$", "", m.group(1)).strip().lower().replace(" ", "_"))
         elif (m := RE_SET.match(line)):
             val = "+" if m.group(2) in ("+=", "-=") else (True if m.group(3) is None else _value(m.group(3)))
             st.update(t="set", flag=m.group(1), value=val)
@@ -289,6 +290,7 @@ class Story:
             self._locations()
             self._travel()
             self._events()
+            self._closures()
             if not self.changed:
                 return self
         return self
@@ -308,6 +310,16 @@ class Story:
             if not self.changed:
                 break
         return self
+
+    def _closures(self):
+        """A quest's `closes` rules end it on their own (story/quest_closures.gd): its ending is reached once a stage the
+        rule applies to is, and the rule's condition could hold."""
+        for qid, q in self.quests.items():
+            reached = set(self.stages.get(qid, []))
+            open_ids = {st["id"] for st in q["stages"] if not st.get("ends")}
+            for rule in q.get("closes", []):
+                if reached & set(rule.get("from") or open_ids) and self.possible(rule.get("when", "")):
+                    self.changed |= self.add(("quest", qid, rule["stage"]), f"data/quests/{qid}.json (closes)")
 
     def _locations(self):
         # Daern's Instant Fortress (docs/story/fortress.md): the statuette raises a tower on any open-air map, and its three

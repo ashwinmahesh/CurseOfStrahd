@@ -187,6 +187,7 @@ func _ready() -> void:
 	rig.snap_to_target()
 	add_child(SeeThrough.create(rig))   # walls in the way open a window round the party (owner 2026-10-17)
 	StoryConditions.note_departure(st, st.location, str(loc.get("region", "")))   # leaving Castle Ravenloft ends its truce
+	var left := QuestClosures.region_left(st.location, str(loc.get("region", "")))   # a quest that ends as the party leaves
 	st.location = loc_id
 	var first := not st.visited.has(loc_id)
 	st.visited[loc_id] = true
@@ -195,6 +196,9 @@ func _ready() -> void:
 	_say(str((loc.get("narration", {}) as Dictionary).get("enter", "enter:" + loc_id)))
 	if first and str(loc.get("text", "")) != "":
 		narration.emit(str(loc["text"]))
+	if left != "":
+		for said in QuestClosures.sweep(st, {"leaving": left}):
+			toast.emit(said)   # (data/quests `closes` with `leave`: the party walked away with it open)
 	add_child(HiddenAreas.create(self))   # rooms behind undiscovered secret doors stay out of sight
 	add_child(FoundGlow.create(self))   # what a Search or a check turns up glows orange until it's used
 	add_child(SightOverlay.create(self))   # who can see the party while it sneaks or plans (U10)

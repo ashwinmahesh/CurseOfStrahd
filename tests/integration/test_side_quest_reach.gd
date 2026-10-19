@@ -99,9 +99,11 @@ func test_every_side_quest_can_be_finished() -> void:
 					set_stages[str(mv["stage"])] = true
 					places[lid] = true
 		assert_false(places.is_empty(), "%s happens somewhere" % qid)
+		for rule: Variant in q.get("closes", []):
+			set_stages[str((rule as Dictionary)["stage"])] = true   # a `closes` rule ends the quest on its own (story/quest_closures.gd)
 		for s: Variant in q["stages"]:
 			var stage := s as Dictionary
-			assert_true(set_stages.has(str(stage["id"])), "%s: stage %s is set by a line or a fight" % [qid, stage["id"]])
+			assert_true(set_stages.has(str(stage["id"])), "%s: stage %s is set by a line, a fight or a closure" % [qid, stage["id"]])
 		var known: Array[String] = []
 		for other: String in names:
 			known.append_array(_words(str(names[other])))

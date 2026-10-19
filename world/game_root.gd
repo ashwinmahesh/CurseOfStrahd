@@ -734,6 +734,7 @@ func _dialogue_ended(combat: String) -> void:
 	if view.guest_members.filter(func(g: Combatant) -> bool: return not LocationParty.is_follower(g)).size() != st.guests.size():
 		view.place_guests()
 	ModeController.force(ModeController.Mode.EXPLORATION)
+	_close_quests()   # what the talk set may have run a quest out (data/quests `closes`)
 	view.refresh_npcs()
 	_refresh()
 	var strahd_next := StrahdPresence.after_dialogue(st, _dialogue_ref)
@@ -819,6 +820,7 @@ func _after_combat(outcome: String) -> void:
 		return
 	if outcome == "victory":
 		LongRest.fought(st)   # a fight that broke the night's rest: an hour more to finish it (2024 PHB)
+	_close_quests()
 	view.refresh_npcs()
 	_refresh()
 	if not _road_event.is_empty() and bool(_road_event["after_fight"]):
@@ -948,6 +950,7 @@ func _arrive(place_id: String) -> void:
 	var pl := Travel.place(place_id)
 	var loc_ref := str(pl.get("location", ""))
 	enter_location(loc_ref.get_slice(":", 0), str(pl.get("spawn", "default")))
+	_close_quests()   # the days on the road may have run a quest out
 	var hour := "%02d:%02d" % [st.minute_of_day / 60, st.minute_of_day % 60]
 	if is_instance_valid(_title):
 		_title.set_subtitle(hour)   # the place's title names it; the hour goes beneath
@@ -1271,6 +1274,13 @@ func _exit_tree() -> void:
 		st.item_gained.disconnect(notices.show_item)
 	if st != null and is_instance_valid(hud) and st.xp_gained.is_connected(hud.toast):
 		st.xp_gained.disconnect(hud.toast)
+
+
+## Quests that run out by themselves (data/quests `closes`, story/quest_closures.gd): each one that has, ends with its notice.
+## Called wherever the story may have moved; the clock (LocationClock) and a region's departure (LocationView) look too.
+func _close_quests() -> void:
+	for said in QuestClosures.sweep(st):
+		hud.toast(said)
 
 
 ## A quest ended: a failure gets a short low bell under its notice (the existing "toll", quieter than a fight's).

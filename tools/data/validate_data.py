@@ -1266,6 +1266,33 @@ def story_checks(data, errors, need):
             for nxt in st["then"]:
                 if nxt == st["id"] or nxt not in ids:
                     errors.append(f"data/quests/{qid}.json: stage '{st['id']}' lists `then` stage '{nxt}', which isn't another stage of the quest")
+    # `closes` rules end a quest on their own (story/quest_closures.gd): each moves it to one of its endings, from stages that
+    # are open, on a condition that parses, as the party leaves a region that exists.
+    regions = {l.get("region") for l in locations.values()}
+    for qid, q in sorted(quests.items()):
+        ids = {st["id"] for st in q["stages"]}
+        open_ids = {st["id"] for st in q["stages"] if not st.get("ends")}
+        ends = {st["id"]: st.get("ends", "") for st in q["stages"]}
+        for i, rule in enumerate(q.get("closes", [])):
+            w = f"data/quests/{qid}.json: closes[{i}]"
+            if rule["stage"] not in ids:
+                errors.append(f"{w}: stage '{rule['stage']}' isn't a stage of the quest")
+            elif not ends[rule["stage"]]:
+                errors.append(f"{w}: stage '{rule['stage']}' doesn't end the quest (a rule moves it to an ending)")
+            for s in rule.get("from", []):
+                if s not in open_ids:
+                    errors.append(f"{w}: from '{s}', which isn't an open stage of the quest")
+            if rule.get("leave") and rule["leave"] not in regions:
+                errors.append(f"{w}: leave '{rule['leave']}', which no location is in")
+            if not str(rule.get("when", "")).strip() and not rule.get("leave"):
+                errors.append(f"{w}: no `when` and no `leave`: it would end the quest at once")
+            if rule.get("old_saves") and rule.get("leave"):
+                errors.append(f"{w}: old_saves with leave: a departure never happens on load")
+            if "warn" in rule and not str(rule["warn"]).strip():
+                errors.append(f"{w}: warn is empty")
+            for problem in dialogue_lint.condition_problems(rule.get("when", "")):
+                errors.append(f"{w}: when: {problem}")
+            cond(rule.get("when", ""), f"data/quests/{qid}.json")
     for fid, wh in sorted(flags_read.items()):
         if fid not in flags:
             errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")
