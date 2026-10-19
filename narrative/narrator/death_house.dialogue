@@ -712,6 +712,16 @@ once
 ~ check:unlock:failure
 | [visited:death_house_ground and not flag.death_house_completed] The lock holds. Somewhere in the walls, something that might be laughter.
 
+# The stubborn lock (world/exploration/location_locks.gd): the fifth failed try at one lock, and the lock giving after five.
+# Each plays once a playthrough, at any lock in the valley but the house's own, where the house keeps the humour.
+~ check:unlock:stubborn
+| [not (visited:death_house_ground and not flag.death_house_completed)] Deep in the rust, a heavy tumbler settles back with the smug click of a host who has decided you are staying for supper.
+once
+
+~ check:unlock:at_last
+| [not (visited:death_house_ground and not flag.death_house_completed)] The bolt slides back with a long rusted scrape, like an old guard stepping aside once the formality of refusal has been observed.
+once
+
 ~ rest:short
 | [visited:death_house_ground and not flag.death_house_completed] You sit with your backs to the wall. The wall, to its credit, stays a wall.
 | [visited:death_house_ground and not flag.death_house_completed] Nobody sleeps. Somebody keeps humming, very quietly, and nobody admits to it.

@@ -1,0 +1,15 @@
+{
+  "region": "eggs_lock",
+  "flags": [
+    {
+      "id": "eggs_lock_stubborn",
+      "type": "bool",
+      "summary": "Some lock has taken a fifth failed try, picking or forcing (world/exploration/location_locks.gd, counted per lock in the location's state). Set by the engine, even where the Narrator is silent; side content only, read by the Stubborn as the Lock achievement."
+    },
+    {
+      "id": "eggs_lock_gave",
+      "type": "bool",
+      "summary": "A lock that had taken five or more failed tries finally gave to a pick or to force (world/exploration/location_locks.gd). Set by the engine; side content only."
+    }
+  ]
+}

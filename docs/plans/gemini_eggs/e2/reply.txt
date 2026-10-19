@@ -1,0 +1,6 @@
+STUBBORN 1: The iron pins drop back into place with a dry, familiar rattle. By now the keyhole knows your rhythm better than you do.
+STUBBORN 2: Frost gathers around the keyhole from {name}'s breath alone. The latch stays shut, having found something to pass the evening.
+STUBBORN 3: Deep in the grease and rust, a heavy tumbler settles back with the smug click of a host who has decided you are staying for dinner.
+AT_LAST 1: The bolt slides back with a long, rusted scrape, like an old guard stepping aside now that the formality of refusal has been properly observed.
+AT_LAST 2: The last pin yields with a quiet, almost polite click. Having made its point to the cold dark, the iron sees no need to repeat itself.
+AT_LAST 3: A final shudder runs through the wood before the latch surrenders. Even cold iron eventually grows tired of keeping the same company.

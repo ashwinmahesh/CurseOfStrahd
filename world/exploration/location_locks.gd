@@ -3,6 +3,9 @@ extends RefCounted
 ## Doors and locks in a location (LocationView): opening a door, and the ways into a lock: its key, thieves' tools,
 ## force, the Knock spell, a Chime of Opening and the Mystery Key.
 
+## The failed tries at one lock before the Narrator remarks that it has begun to enjoy itself (`_note_failure`).
+const STUBBORN_AFTER := 5
+
 
 static func _door_state(view: LocationView, id: String) -> String:
 	return str((view.st.loc_state(view.loc_id)["doors"] as Dictionary).get(id, ""))
@@ -113,14 +116,44 @@ static func _unlock(view: LocationView, spec: Dictionary, method: String = "auto
 	if t.success:
 		(view.st.loc_state(view.loc_id)["doors"] as Dictionary)[id] = "unlocked"
 		Audio.sfx("unlock")
-		view._say("check:unlock:success", who)
+		if not _note_success(view, id, who):
+			view._say("check:unlock:success", who)
 		var earned := Xp.award(view.st, "check", "lock:%s:%s" % [view.loc_id, id])   # XP levelling: a lock picked or forced
 		if earned > 0:
 			view.toast.emit("Unlocked" + Xp.tag(earned))
 		return true
-	view._say("check:unlock:failure", who, "It holds.")
+	if not _note_failure(view, id, who):
+		view._say("check:unlock:failure", who, "It holds.")
 	view.st.advance_minutes(1)
 	return false
+
+
+## Counts a failed try (picking or forcing) at a lock in the location's state (`lock_fails`: lock id -> tries; saved
+## with the location, and let go once the lock gives). The fifth sets `eggs_lock_stubborn` and gets the Narrator's
+## `check:unlock:stubborn` line (once a playthrough, never inside the Death House) instead of the plain one. True when
+## that line spoke.
+static func _note_failure(view: LocationView, id: String, who: Character) -> bool:
+	var ls := view.st.loc_state(view.loc_id)
+	if not ls.has("lock_fails"):
+		ls["lock_fails"] = {}
+	var fails := ls["lock_fails"] as Dictionary
+	fails[id] = int(fails.get(id, 0)) + 1
+	if int(fails[id]) != STUBBORN_AFTER:
+		return false
+	view.st.set_flag("eggs_lock_stubborn")
+	return view._say("check:unlock:stubborn", who)
+
+
+## A lock that gives after STUBBORN_AFTER failed tries or more sets `eggs_lock_gave` and gets the Narrator's
+## `check:unlock:at_last` line (once a playthrough) instead of the plain success line. True when that line spoke.
+static func _note_success(view: LocationView, id: String, who: Character) -> bool:
+	var fails := view.st.loc_state(view.loc_id).get("lock_fails", {}) as Dictionary
+	var tries := int(fails.get(id, 0))
+	fails.erase(id)
+	if tries < STUBBORN_AFTER:
+		return false
+	view.st.set_flag("eggs_lock_gave")
+	return view._say("check:unlock:at_last", who)
 
 
 ## Forcing a lock is a Strength (Athletics) check by the party's best at it: Guidance can go on it first

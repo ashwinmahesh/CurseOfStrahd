@@ -203,7 +203,9 @@ cooldown 3
 ```
 
 Trigger keys the game sends: `enter:<location_or_area_id>`, `examine:<prop_id>`, `search:<prop_id>`,
-`check:<skill>:success|failure` (and `check:<skill>:<prop_id>:success|failure`), `trap:<trap_id>:found|triggered`,
+`check:<skill>:success|failure` (and `check:<skill>:<prop_id>:success|failure`), `check:unlock:success|failure` (a lock
+picked or forced; `check:unlock:stubborn` instead of the failure at the fifth failed try at one lock, `check:unlock:at_last`
+instead of the success when a lock gives after five; both `once`, in narrator/death_house.dialogue), `trap:<trap_id>:found|triggered`,
 `rest:short`, `rest:long` (and `rest:long:<location or region>` first), `dream:<id>`, `combat:start`, `combat:crit`, `combat:nat1`, `combat:fall`,
 `combat:kill`, `combat:victory`, `death:<character>`.
 
