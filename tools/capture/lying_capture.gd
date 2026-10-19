@@ -107,6 +107,8 @@ func _take(tool: Node, out: String, id: String, shot: Dictionary) -> void:
 	tool.call("_shot", "%s_%s.png" % [out, id])
 	if not shot.has("fight"):
 		return
+	# A fight a conversation starts has its speaker step aside first, as the game does (Sarkhaza's map figure).
+	FightSeriesCase.step_aside(view, str(shot["fight"]))
 	if not view.start_encounter(str(shot["fight"])):
 		push_warning("lying_capture: no fight %s at %s" % [shot["fight"], loc])
 		return

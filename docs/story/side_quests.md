@@ -1239,7 +1239,8 @@ keepers had three ways of going down to her safely, and each one puts her in a s
   on her turn and one legendary action a round.
 - **Haul her chain in** (the anchor's capstan, Athletics DC 17; one try): the collar crushes her throat (she starts 30
   HP down and surprised), and she chokes for a minute, her first ten turns: no Fire Breath, no spells. The keepers'
-  log says it: "a minute is long enough".
+  log says it: "a minute is long enough". Knocking the pawl out at the drum lets the chain run out again (owner,
+  2026-10-19: to fight her with her breath), and the capstan can haul her in again.
 - **Open the sluice** (the vent gallery): snowmelt drowns the cracks, and the fight isn't in her lair: no lair
   actions, three legendary actions and four Legendary Resistances instead of four and five.
 - On her chain in every fight but one: Speed 20, no climbing. Pulling the pin from her collar instead lets her off it
@@ -1247,7 +1248,7 @@ keepers had three ways of going down to her safely, and each one puts her in a s
 
 - **Boss: Sarkhaza** (data/monsters/sarkhaza.json; owner, 2026-10-18: "she is supposed to be an ancient red dragon").
   The 2025 Monster Manual's Ancient Red Dragon, drawn with the draconic spirit's sprite at her own height
-  (`art_height` 5): Gargantuan, AC 22, 507 HP, three Rends (+17, reach 15, 2d8 + 10 slashing and 3d6 fire), Fire
+  (`art_height` 5), and lying across her gold until she rises in a drawing of her own (art/sprites/lying/sarkhaza.png): Gargantuan, AC 22, 507 HP, three Rends (+17, reach 15, 2d8 + 10 slashing and 3d6 fire), Fire
   Breath (recharge 5-6, a 90-ft cone, DC 24 Dex, 26d6), Spellcasting (Charisma, DC 23: Command and Scorching Ray at
   will, Fireball once), Legendary Resistance (4/day, 5 in her lair), three legendary actions (four in her lair:
   Commanding Presence, Fiery Rays, Pounce), and her cavern on initiative 20 (fire out of the cracks under two foes, or
