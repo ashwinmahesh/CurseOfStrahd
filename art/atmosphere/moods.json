@@ -79,7 +79,8 @@
     "argynvostholt_west_wing": "webbed_wing",
     "castle_ravenloft_brazier_room": "ravenloft_brazier",
     "tsolenka_pass_guard_tower_upper": "frozen_lookout",
-    "tsolenka_pass_guard_tower_roof": "tsolenka_roof"
+    "tsolenka_pass_guard_tower_roof": "tsolenka_roof",
+    "mount_baratok": "baratok_heights"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -4036,6 +4037,84 @@
           0.5
         ],
         "thickness": 3.2
+      }
+    },
+    "baratok_heights": {
+      "like": "high_snow",
+      "modern": {
+        "lying_snow": 0.7,
+        "contrast": 1.12,
+        "shadow_opacity": 0.85,
+        "clouds": {
+          "strength": 0.12
+        },
+        "mist": {
+          "cover": 0.2,
+          "wind": [
+            1.6,
+            0.45
+          ]
+        },
+        "surround": {
+          "rise": -8.0,
+          "hills": 3.0,
+          "trees": 0.2,
+          "dead": 0.15
+        },
+        "tone": {
+          "shade": "moon_blue",
+          "shade_saturation": 0.95
+        },
+        "weather": [
+          {
+            "kind": "snow",
+            "amount": 320,
+            "wind": 1.6
+          },
+          {
+            "kind": "smoke",
+            "at": [
+              [
+                26.5,
+                10.9,
+                8.15
+              ]
+            ]
+          }
+        ],
+        "times": {
+          "day": {
+            "sky": "frost",
+            "fog": "frost",
+            "ambient": "mist_blue",
+            "ambient_energy": 0.75,
+            "key": "ivory",
+            "key_energy": 1.3,
+            "mist": "frost",
+            "mist_strength": 0.3,
+            "clouds": 0.6
+          },
+          "dusk": {
+            "sky": "lilac",
+            "fog": "mist_blue",
+            "ambient": "moon_blue",
+            "ambient_energy": 0.45,
+            "key": "rose",
+            "key_energy": 0.85,
+            "mist": "lilac",
+            "mist_strength": 0.22
+          },
+          "night": {
+            "sky": "night_deep",
+            "fog": "night",
+            "ambient": "mist_blue",
+            "ambient_energy": 0.45,
+            "key": "moonlight",
+            "key_energy": 0.85,
+            "mist": "moonlight",
+            "mist_strength": 0.3
+          }
+        }
       }
     }
   }

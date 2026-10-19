@@ -20,7 +20,8 @@
     "berez": "marsh",
     "yester_hill": "sick",
     "ravenloft": "castle",
-    "argynvostholt": "spectral"
+    "argynvostholt": "spectral",
+    "baratok_heights": "baratok"
   },
   "sets": {
     "forest": {
@@ -1101,6 +1102,41 @@
         ]
       ],
       "tint": "#e3e1e6"
+    },
+    "baratok": {
+      "like": "snow",
+      "trees": {
+        "pine": [
+          "spruce_b",
+          "spruce_c",
+          "spruce_young",
+          "spruce_a",
+          "spruce_c",
+          "spruce_b"
+        ],
+        "dead_tree": [
+          "dead_c",
+          "dead_a"
+        ],
+        "pine_clawed": [
+          "spruce_b"
+        ]
+      },
+      "scale": {
+        "map": [
+          0.55,
+          0.72
+        ],
+        "land": [
+          0.85,
+          1.1
+        ]
+      },
+      "tallest": {
+        "map": 3.4,
+        "land": 6.0
+      },
+      "snow": 0.85
     }
   }
 }

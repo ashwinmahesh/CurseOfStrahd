@@ -29,7 +29,7 @@ own wild ground, and all of it sways in the place's wind. The Classic look keeps
 
 The vault's Region Variety Plan: each region has its own set in art/plants/flora.json, from the plants we have, with
 its own mix, forest density and tint: `woods`, `village`, `autumn` (Tser Pool and the Vistani camps), `graves` (half
-the pines dead), `vineyard`, `heath`, `sick`, `spectral` (silver lichen on the dead trees), `rock` and `rock_snow`. A
+the pines dead), `vineyard`, `heath`, `sick`, `spectral` (silver lichen on the dead trees), `rock` and `rock_snow`, and `baratok` (Mount Baratok's: spruce only, a little shorter, more snow on them; it needs its own `styles` block in vistas.json too, else the horizon falls back to the woods'). A
 set's `tints` gives one kind of plant its own tint (the moor's grass straw, the heath's bushes heather), and `autumn`
 turns that share of a kind's plants, each picked by where it stands (foliage.gdshader `autumn`), from green to a ramp
 between the set's two `autumn_colours` by the leaf's own brightness, so they read rust and gold rather than a tinted

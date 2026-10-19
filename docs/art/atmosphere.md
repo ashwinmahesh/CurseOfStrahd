@@ -42,7 +42,8 @@ anyone touching this file.
 | `barovia_village` | the Village of Barovia | thicker mist in the streets, chimney smoke, lit windows, a few crows |
 | `vallaki` | Vallaki | steady rain with splashes, smoke, lit windows, a greyer day |
 | `krezk`, `abbey`, `white_sun` | Krezk, the Abbey, the Pool of the White Sun | mountain scree and hillsides, light snow (heavier at the Abbey), a cold grade |
-| `high_snow`, `blizzard` | Mount Baratok, the Amber Temple's approach; Tsolenka Pass and the Amber Temple road | snowfields, a blue-white grade; a blizzard driving almost sideways |
+| `high_snow`, `blizzard` | Mount Baratok's ledge road and the Tsolenka pass, the Amber Temple's approach and road | snowfields, a blue-white grade; a blizzard driving almost sideways |
+| `baratok_heights` | Mount Baratok (its own place mood; the trail and the pass keep `high_snow`) | the brightest day in the valley: ivory sun against moon-blue shade, thin mist and cloud, snow that lies on a grey or foggy day too (`lying_snow` 0.7: the floor is dark scree and only snow on it makes it white), a rose dusk and moonlit blue night, the land falling away past the edge (`surround.rise` -8: ridges, Van Richten's tower and the Abbey show when the camera tilts to the horizon), smoke at the hut's chimney; its own plant set `baratok` and horizon style (a flora set with no `styles` entry in vistas.json gets the woods' green ridges) |
 | `lake_zarovich`, `lakeside` | Lake Zarovich, Van Richten's tower | moving water running on past the map's edge, mist on the lake |
 | `berez` | Berez and the marsh track | marsh-mud land, still bog water, green-yellow will-o'-wisps after dark, a bone-coloured grade |
 | `tser_pool`, `vistani_camp`, `tser_falls` | the Vistani camps, Tser Falls | sparks over the fires, fireflies; steep hills and thick mist at the falls |
