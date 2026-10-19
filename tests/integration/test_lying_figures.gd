@@ -121,7 +121,8 @@ func test_sarkhaza_lies_low_across_her_hoard_until_the_chain_hauls_her_up() -> v
 	var v := await _boot("ghakis_lair")
 	var tok := v.npc_tokens.get("sarkhaza", null) as CombatToken
 	assert_true(tok != null and tok.resting, "she lies across the gold")
-	assert_true(tok.sprite.visible and tok.sprite.position.y < -0.3, "a dragon lies on her belly, low, legs under her")
+	var pic := tok.get_node_or_null("LyingPicture") as Sprite3D
+	assert_true(pic != null and pic.visible and not tok.sprite.visible, "drawn lying on her belly across it (art/sprites/lying/sarkhaza.png)")
 	GameState.story.set_flag("wyrm_chain_drawn", true)
 	v.refresh_npcs()
 	await _frames(1)
