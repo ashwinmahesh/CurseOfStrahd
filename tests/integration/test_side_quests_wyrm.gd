@@ -81,13 +81,13 @@ func test_the_log_and_the_keepers_tricks() -> void:
 	st.set_flag("wyrm_chain_drawn")
 	beats = SideQuestPlay.play(st, "mount_ghakis/the_warm_snow:sluice", ["Heave the sluice gate up"])
 	assert_true(st.get_flag("ghakis_sluice_open", false))
-	var choked := SideQuestPlay.encounter(st, "ghakis_lair", "sarkhaza")
-	assert_eq(str(choked.get("surprise", "")), "enemies", "hauled in, she's caught unready...")
-	assert_true("choking" in _states(choked), "...and starts the fight choking")
-	assert_false(bool(choked.get("lair", true)), "the drowned vents can't answer her")
+	var hauled := SideQuestPlay.encounter(st, "ghakis_lair", "sarkhaza")
+	assert_eq(str(hauled.get("surprise", "")), "enemies", "hauled in, she's caught unready")
+	assert_eq(_states(hauled), ["chained"], "and no more: she keeps her breath (owner, 2026-10-19)")
+	assert_false(bool(hauled.get("lair", true)), "the drowned vents can't answer her")
 	st.set_flag("wyrm_salted")
 	var all := SideQuestPlay.encounter(st, "ghakis_lair", "sarkhaza")
-	assert_eq(_states(all), ["chained", "grave_salted", "choking"], "salted too")
+	assert_eq(_states(all), ["chained", "grave_salted"], "salted too")
 	assert_false(_her(all).has("hp"), "every trick leaves her an ancient red's Hit Point maximum")
 
 

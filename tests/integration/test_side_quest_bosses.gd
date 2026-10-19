@@ -244,12 +244,13 @@ func test_sarkhaza_as_she_is_at_level_11() -> void:
 	assert_true(wins <= 1, "head on, an ancient red takes the party (%d of 8)" % wins)
 
 
-## Sarkhaza with the keepers' three tricks at level 11: grave-salted (Slowed, one Rend, one legendary action), choking
-## for a minute on the hauled-in collar (30 HP down, no Fire Breath, no spells) and the vents drowned (no lair); 3 in 8.
+## Sarkhaza with the keepers' three tricks at level 11: grave-salted (Slowed, one Rend, one legendary action), hauled in
+## on the drum (caught unready) and the vents drowned (no lair). Owner, 2026-10-19: no choke on the hauled-in collar, so
+## she breathes from the start, and no retune when a rule changes: her first Fire Breath takes the party, 0 in 8.
 func test_sarkhaza_with_the_keepers_tricks_at_level_11() -> void:
 	speakers_step_aside = true
-	var wins := await _series("ghakis_lair", 12, 11, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_salted", "wyrm_chain_drawn", "ghakis_sluice_open"], [], [], HOARD_MOUTH)
-	assert_true(wins >= 2 and wins <= 4, "Sarkhaza falls to the keepers' tricks in 2 to 4 of 8 (%d)" % wins)
+	var wins := await _sarkhaza_wins(["wyrm_salted", "wyrm_chain_drawn", "ghakis_sluice_open"])
+	assert_true(wins <= 1, "her breath takes the party even with the keepers' tricks (%d of 8)" % wins)
 
 
 ## Sarkhaza unchained at level 11, salted and with the vents drowned: off her chain her Fire Breath is hers again; 0 in 8.

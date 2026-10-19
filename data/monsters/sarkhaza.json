@@ -4,7 +4,7 @@
   "source": {
     "book": "MM2025",
     "edition": "2024",
-    "note": "The 2025 Monster Manual's Ancient Red Dragon (CR 24), read twice from aidedd.org on 2026-10-18, as Sarkhaza (The Warm Snow, docs/story/side_quests.md). Every number is the book's; XP 75,000 in her lair. What the story adds is on her sheet: the count's rivets through her wings (Wings Bound: no Fly Speed, the book's is 80 ft.), and the states her fight can put her in (`states`, turned on by an encounter: the chain, the keepers' grave-salt, choking on a collar hauled in on the drum). The book gives a dragon no lair actions; hers are the cavern's own (the vents, the roof). Not in the engine: the Multiattack's two Rends and a Scorching Ray (she makes three Rends), Detect Magic and Scrying; Pounce's move provokes no Opportunity Attacks, like every legendary move here. Drawn with the draconic spirit's sprite at her own height."
+    "note": "The 2025 Monster Manual's Ancient Red Dragon (CR 24), read twice from aidedd.org on 2026-10-18, as Sarkhaza (The Warm Snow, docs/story/side_quests.md). Every number is the book's; XP 75,000 in her lair. What the story adds is on her sheet: the count's rivets through her wings (Wings Bound: no Fly Speed, the book's is 80 ft.), and the states her fight can put her in (`states`, turned on by an encounter: the chain and the keepers' grave-salt; owner 2026-10-19: no choking on a hauled-in collar, she has her breath from the start). The book gives a dragon no lair actions; hers are the cavern's own (the vents, the roof). Not in the engine: the Multiattack's two Rends and a Scorching Ray (she makes three Rends), Detect Magic and Scrying; Pounce's move provokes no Opportunity Attacks, like every legendary move here. Drawn with the draconic spirit's sprite at her own height."
   },
   "size": "gargantuan",
   "type": "dragon",
@@ -130,25 +130,6 @@
         {
           "stat": "flag",
           "value": "slowed"
-        }
-      ],
-      "implemented": "engine"
-    },
-    "choking": {
-      "id": "choking",
-      "name": "Choking",
-      "action": "passive",
-      "hp_lost": 30,
-      "summary": "Hauled in on the drum, she starts 30 Hit Points down and chokes for a minute (her first ten turns): no Fire Breath, no spells.",
-      "text": "The chain hauled short on the drum snaps her head back by the collar and crushes her throat: she starts the fight 30 Hit Points down, and for a minute (her first ten turns) she chokes: she can't use Fire Breath or cast spells.",
-      "rounds": 10,
-      "blocks": [
-        "fire_breath"
-      ],
-      "modifiers": [
-        {
-          "stat": "flag",
-          "value": "cant_cast"
         }
       ],
       "implemented": "engine"

@@ -1007,7 +1007,7 @@
     },
     "states": {
       "type": "object",
-      "description": "Traits a fight can put this creature in, by id: an encounter's monster entry lists the ones it turns on in `states` (LocationFights.with_states; Sarkhaza chained, grave-salted, choking). A state trait's `spent` lists Recharge actions that start the fight spent.",
+      "description": "Traits a fight can put this creature in, by id: an encounter's monster entry lists the ones it turns on in `states` (LocationFights.with_states; Sarkhaza chained or grave-salted). A state may cut the Multiattack (`multiattack`) and the legendary uses (`legendary_uses`).",
       "additionalProperties": {
         "$ref": "common.schema.json#/$defs/feature"
       }

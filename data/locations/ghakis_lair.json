@@ -1097,8 +1097,7 @@
           ],
           "states": [
             "chained",
-            "grave_salted",
-            "choking"
+            "grave_salted"
           ]
         }
       ],
@@ -1124,8 +1123,7 @@
           ],
           "states": [
             "chained",
-            "grave_salted",
-            "choking"
+            "grave_salted"
           ]
         }
       ],
@@ -1210,8 +1208,7 @@
             6
           ],
           "states": [
-            "chained",
-            "choking"
+            "chained"
           ]
         }
       ],
@@ -1236,8 +1233,7 @@
             6
           ],
           "states": [
-            "chained",
-            "choking"
+            "chained"
           ]
         }
       ],

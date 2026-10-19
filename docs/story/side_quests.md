@@ -1237,10 +1237,9 @@ keepers had three ways of going down to her safely, and each one puts her in a s
 - **Salt her meat** (the larder, Sleight of Hand DC 14; a bad job and she smells it): fed to her, she fights
   grave-salted: slowed (Speed halved, -2 AC and Dexterity saves, no Reactions, an action or a Bonus Action), one Rend
   on her turn and one legendary action a round.
-- **Haul her chain in** (the anchor's capstan, Athletics DC 17; one try): the collar crushes her throat (she starts 30
-  HP down and surprised), and she chokes for a minute, her first ten turns: no Fire Breath, no spells. The keepers'
-  log says it: "a minute is long enough". Knocking the pawl out at the drum lets the chain run out again (owner,
-  2026-10-19: to fight her with her breath), and the capstan can haul her in again.
+- **Haul her chain in** (the anchor's capstan, Athletics DC 17; one try): the chain snaps her head back by the collar as
+  the fight opens, and she is caught unready (surprised). She doesn't choke on it in the fight (owner, 2026-10-19:
+  "just get rid of the chain choking her altogether"): she has her Fire Breath and her spells from the start.
 - **Open the sluice** (the vent gallery): snowmelt drowns the cracks, and the fight isn't in her lair: no lair
   actions, three legendary actions and four Legendary Resistances instead of four and five.
 - On her chain in every fight but one: Speed 20, no climbing. Pulling the pin from her collar instead lets her off it
@@ -1254,10 +1253,10 @@ keepers had three ways of going down to her safely, and each one puts her in a s
   Commanding Presence, Fiery Rays, Pounce), and her cavern on initiative 20 (fire out of the cracks under two foes, or
   the roof coming down). CR 24. What the story adds is on her sheet: her wings riveted shut (no Fly Speed, the
   book's is 80 ft.) and the chain. The fight is for level 11, the game's cap (the Amber Temple is the last milestone,
-  and Ghakis is on its road). Head on, her first Fire Breath takes a level 11 party: the full-ability test party wins
-  0 of 8. With the keepers' three tricks it wins 3 of 8 (the boss band, in about ten rounds: often a race with the end
-  of her minute); with any one of them left out, or unchained, 0 of 8; with all three at level 10, 1 of 8 (2026-10-18,
-  docs/story/boss_fights.md).
+  and Ghakis is on its road). Her first Fire Breath takes a level 11 party: the full-ability test party wins 0 of 8 in
+  every version, with or without the keepers' tricks (2026-10-19, once the choke went; it won 3 of 8 with all three
+  tricks while the hauled-in collar choked her breath for a minute). By the owner's rule nothing was retuned for it
+  (docs/story/boss_fights.md).
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: eight wights, three revenants and a helmed
   horror, waiting by the cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP, two flameskulls, the
   keepers who forgot the sluice, and three wights). The sharp autopilot wins each 5 of 8 at level 10.

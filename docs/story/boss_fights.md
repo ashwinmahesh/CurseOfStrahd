@@ -10,7 +10,7 @@ potions, Web and Hold Person, Guardian of Faith, buffs before the fight. `FightS
 fight is still tuned against sharp play alone (5 in 8). Rewards a quest earns are one step easier (4), Kostin's warning one step harder (2), and
 where no Hit Point step lands on 3 the harder side (2) is kept. Timeouts count as losses and none is left.
 
-Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza without all three of the keepers' tricks, 0-1). Measured over seeds 1-8 on 2026-10-14
+Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1). Measured over seeds 1-8 on 2026-10-14
 (branch boss-3-of-8); Sarkhaza's rows on 2026-10-18 (branch sarkhaza-ancient).
 
 | Fight | Level | 5 in 8 line-up (before) | Line-up now | Wins now | Target |
@@ -103,7 +103,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza without all three of 
 | Exethanter | 10 | Exethanter, 6 Flameskulls | Exethanter (130 HP), 6 Flameskulls, 8 Wraiths (85 HP) | 3/8 | 3 |
 | Vosk unmasked | 10 | Arcanaloth (135 HP), 2 Flameskulls | Arcanaloth (320 HP), 2 Flameskulls | 3/8 | 3 |
 | Vosk named and weakened (reward) | 10 | Arcanaloth (80 HP) | Arcanaloth (330 HP), 2 Flameskulls | 4/8 | 4 |
-| Sarkhaza, the keepers' three tricks | 11 | Sarkhaza (165 HP), 6 Wights | Sarkhaza (507 HP), chained, grave-salted, choking (30 HP down), no lair | 3/8 | 3 |
+| Sarkhaza, the keepers' three tricks | 11 | Sarkhaza (165 HP), 6 Wights | Sarkhaza (507 HP), chained, grave-salted, surprised, no lair | 0/8 | 0 (not retuned) |
 | Strahd woken by day (Sunsword) | 10 | Strahd von Zarovich (350 HP), 2 Swarm of Bats, Vampire Spawn | Strahd von Zarovich (270 HP), 2 Swarm of Bats, 7 Vampire Spawns | 3/8 | 3 |
 | Strahd's dinner (Sunsword) | 10 | Strahd von Zarovich (375 HP), 3 Swarm of Bats, 2 Strahd's Animated Armors | Strahd von Zarovich (605 HP), 3 Swarm of Bats, 2 Strahd's Animated Armors, 3 Vampire Spawns | 3/8 | 3 |
 | Strahd at the broken heart (Sunsword) | 10 | Strahd von Zarovich (350 HP), 2 Strahd's Animated Armors | Strahd von Zarovich (455 HP), 2 Strahd's Animated Armors, 5 Vampire Spawns | 3/8 | 3 |
@@ -142,13 +142,11 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza without all three of 
   Strahd's visits keep their flee-at-0-HP behaviour.
 - **The harder side (2 in 8)**: Morgantha and Offalia, the two brides, all three brides, the Tinker's Wagon at level 6, Old Greytooth with Szoldar turned,
   Bella on the road. No Hit Point step or helper added landed on 3 for these; the 2 is the step below 3.
-- **Sarkhaza is the 2025 Monster Manual's ancient red dragon** (owner, 2026-10-18; CR 24, 507 HP, AC 22), fought at level 11, the game's cap. An
-  ancient red can't be fought fairly by a level 11 party: head on, her first Fire Breath (DC 24, 26d6 in a 90-ft cone) takes the party, 0 in 8. Her
-  fight is beaten through the keepers' three tricks, each a state on her sheet (docs/story/side_quests.md, The Warm Snow): grave-salted (slowed, one
-  Rend, one legendary action a round), choking for a minute on the hauled-in collar (30 HP down, no Fire Breath, no spells) and the vents drowned (no
-  lair). With all three she is at the boss band, 3 in 8 (test band 2-4); with any one left out, or off her chain, she is at 0 (tests: at most 1 in
-  8). They are not one step each: the salt and the chain each stand between the party and her Fire Breath or her Rends, and without the sluice her
-  lair's fire and falling roof finish it (0 in 8, one seed lost with her on 5 HP). At level 10 with all three, 1 in 8. No helpers stand beside her.
+- **Sarkhaza is the 2025 Monster Manual's ancient red dragon** (owner, 2026-10-18; CR 24, 507 HP, AC 22), fought at level 11, the game's cap. Her
+  first Fire Breath (DC 24, 26d6 in a 90-ft cone) takes a level 11 party: 0 in 8 in every version (tests: at most 1 in 8). On 2026-10-18 the
+  keepers' three tricks reached 3 in 8 while the hauled-in collar choked her breath and spells for a minute; on 2026-10-19 the owner had the choke
+  taken out ("just get rid of the chain choking her altogether") and, by his rule, nothing retuned for a rule change, so the tricks no longer win
+  it: grave-salted (slowed, one Rend, one legendary action a round), caught unready on the hauled-in chain, and the vents drowned (no lair).
 - **The Eye Below** keeps the fiction of its tricks. The Eye with both wardens' ways taken needs the same 335 HP as the plain Eye (without
   its dreamed eye and its lair, and surprised), so test_side_quests_beholder now asks that it is no tougher than the plain Eye, not under 180 HP.
 - **Summit L6 (Wintersplinter, default)** is held at 4 in 8 for the pregens (200 HP), the top of the 2-4 band: the weaker Phase 5 playthrough party needs a clean win within eight tries and wins 6 in 8 against 200 HP (5 against 240, 3 with 2 clean against 270; the Wizard of Wines playthrough passes on probe seeds 2, 4, 5, 6 and 7 at 200).

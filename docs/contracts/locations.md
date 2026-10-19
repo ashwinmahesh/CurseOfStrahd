@@ -85,10 +85,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   {npc}` says the foe is that person of the place (the Amber Sentinel on its dais): however the fight starts, their figure
   leaves the board and the foe's takes their place and strides to its start square (StepDown, world/combat/step_down.gd;
   motion off cuts to it), its stat block's size untouched.
-  Its `states` (ids from the stat block's own `states`) join its traits for this fight: Sarkhaza chained, grave-salted
-  or choking on her collar, each a trait on her sheet (LocationFights.with_states). A state may cut its Multiattack
-  (`multiattack`) and its legendary uses (`legendary_uses`), start it `hp_lost` Hit Points down, keep it from actions
-  (`blocks`), and last only its first `rounds` turns (an effect then, LocationFights.start_states).
+  Its `states` (ids from the stat block's own `states`) join its traits for this fight: Sarkhaza chained or
+  grave-salted, each a trait on her sheet (LocationFights.with_states). A state may cut its Multiattack (`multiattack`)
+  and its legendary uses (`legendary_uses`).
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md). A region may keep a truce (StoryConditions.TRUCES): while
   it holds, its `enter_area` fights wait as if their `when` were false, and are back as they were once it ends (Castle
