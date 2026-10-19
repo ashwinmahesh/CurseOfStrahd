@@ -29,8 +29,10 @@ func _create_party() -> Array[Character]:
 	add_child(cs)
 	var empty: Array[Dictionary] = []
 	cs.open_with(empty)
+	# A paladin stands where the wizard did (2026-10-19): foes may share a square now, so the seven wolves on the Mists road
+	# crowd the party where they used to queue behind one another, and four level 1 characters with a wizard fell to them.
 	var picks := [["fighter", "soldier", "human", "Brannoc Vell"], ["rogue", "criminal", "halfling", "Pip Marrow"],
-		["cleric", "acolyte", "dwarf", "Odessa Flint"], ["wizard", "sage", "elf", "Ithren Vael"]]
+		["cleric", "acolyte", "dwarf", "Odessa Flint"], ["paladin", "soldier", "human", "Hale Ravik"]]
 	for i in 4:
 		cs.slot = i
 		var b := cs.b()
