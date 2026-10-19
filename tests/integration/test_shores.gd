@@ -223,14 +223,29 @@ func test_classic_keeps_its_squares() -> void:
 	v.queue_free()
 
 
-## A bank raised above the water keeps its edge (a step or a cliff is for the cliffs): Van Richten's lake has none of it
-## drawn as a shore where its banks stand 15 to 20 ft over the water.
-func test_a_raised_bank_keeps_its_face() -> void:
+## A pit's rim (a bank raised above the water) slopes down over the water squares: Krezk's pool lies in a 5 ft pit, its
+## shore moves out into the water squares and the ground between the rim and the water runs down in a slope.
+func test_a_pits_rim_slopes_into_the_water() -> void:
 	Look.set_style("modern", false)
-	var v := _view("van_richtens_tower")
+	var v := _view("krezk_pool_of_the_white_sun")
 	var shore := _shore(v)
-	if shore != null:
-		for c in _banks(v):
-			if absf(v.board.floor_y(c)) > Shores.LOW_BANK:
-				assert_false(shore.water_squares().has(c), "no water square is drawn beside the raised bank %s" % c)
+	var relief := v.atmosphere.land.relief
+	assert_true(shore != null and shore.water_squares().size() > 8, "the pool has a shore")
+	# Across the pool's north side: bank (7, 3), water (7, 4)...(7, 6).
+	var rim := relief.height(Vector2(7.5, 3.5))
+	assert_true(rim > 0.6, "the rim stands well above the water (%.2f)" % rim)
+	assert_true(shore.distance_at(Vector2(7.5, 4.0)) < -0.25, "the water's edge has moved out into the water squares (%.2f at the grid line)" % shore.distance_at(Vector2(7.5, 4.0)))
+	var previous := relief.height(Vector2(7.5, 4.0))
+	var down := 0
+	for k in range(1, 8):
+		var y := 4.0 + k * 0.1
+		var h := relief.height(Vector2(7.5, y))
+		assert_true(h <= previous + 0.03, "the ground only runs down over the water square (%.2f at %.1f, %.2f before)" % [h, y, previous])
+		if h < previous - 0.01:
+			down += 1
+		previous = h
+	assert_true(down >= 4, "and it is a slope (%d steps down)" % down)
+	assert_true(relief.height(Vector2(7.5, 5.5)) < Shores.WATER_Y, "under the water by the pool's middle (%.2f)" % relief.height(Vector2(7.5, 5.5)))
+	var middle := Vector2(3.5, 3.5)
+	assert_true(absf(relief.height(middle) - v.board.ground_y(middle)) < 0.1, "and the yard's own ground is left as it was")
 	v.queue_free()

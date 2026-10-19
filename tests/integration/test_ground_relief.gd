@@ -58,6 +58,8 @@ func test_the_walked_ground_is_shaped_but_stays_on_the_grid() -> void:
 			for k in 9:
 				var p := Vector2(x + (k % 3) * 0.5, z + (k / 3) * 0.5)
 				# The skin's own shape, over the ground's (natural elevation, lane 3: the crossroads has hills).
+				if relief.shore != null and relief.shore.touches(p):
+					continue   # (a shore meets the water there: Shores lowers it on purpose, test_shores checks it)
 				var h := relief.shape(p)
 				assert_true(h <= 0.0 and h >= -GroundRelief.DEEPEST - 0.001, "the ground at %s stays at or just under floor level (%.3f)" % [p, h])
 				assert_true(absf(relief.height(p) - h - v.board.ground_y(p)) < 0.2, "on the ground's own height at %s" % p)

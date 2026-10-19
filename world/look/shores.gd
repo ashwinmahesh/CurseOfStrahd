@@ -30,9 +30,17 @@ const MAX_IN := 0.28
 const BANK := 0.22
 const BANK_SLOPE := 0.9
 const SHELF := 0.45
-## A bank raised more than this above the floor level is not met by the shore: it is a step or a cliff, for Natural Maps
-## plan N6 (the Krezk pool is a 5 ft pit, Van Richten's lake has cliffs).
+## Banks (ground beside the water, in world units above the floor): up to LOW_BANK a bank is met at the waterline (a short
+## slope); a higher one is a pit's rim (Krezk's pool is a 5 ft pit): the water's edge moves out into the water squares by
+## PIT_REACH a unit of height above PIT_RISE (at most PIT_MAX) and the bank slopes down over them, from half the rim's height
+## at the grid line (what natural ground makes of it there) to the water, so a rim is a rounded slope and not a wall. Rims
+## higher than REACHABLE are cliffs (Natural Maps plan N6) and keep the board's own face.
 const LOW_BANK := 0.35
+const PIT_RISE := 0.3
+const PIT_REACH := 0.65
+const PIT_MAX := 0.8
+const PIT_BLEND := 0.25
+const REACHABLE := 2.05
 ## How dry the middle of a walkable square stays (the contour is at least this far from it), and how fast the water may
 ## come on past 0.2 from the middle.
 const MIDDLE_DRY := -0.2
@@ -56,6 +64,10 @@ var _cw := 0
 var _cd := 0
 ## The signed distance (squares) from the contour at each fine cell's middle, positive over the water.
 var _dist := PackedFloat32Array()
+## The height of the bank beside each fine cell (a water square takes the highest of its neighbours') and how far its
+## shore is moved out into the water by it.
+var _bank := PackedFloat32Array()
+var _shift := PackedFloat32Array()
 ## The water squares the ground draws (land may reach out over them), and the walkable squares beside water (the water
 ## goes under them).
 var _zone_water: Dictionary = {}
@@ -95,6 +107,8 @@ static func build(board_: ArenaBoard, skin: Dictionary, flat: Dictionary) -> Sho
 		again._cw = k._cw
 		again._cd = k._cd
 		again._dist = k._dist
+		again._bank = k._bank
+		again._shift = k._shift
 		again._zone_water = k._zone_water
 		again._zone_land = k._zone_land
 		again._mask = k._mask
@@ -116,27 +130,26 @@ static func build(board_: ArenaBoard, skin: Dictionary, flat: Dictionary) -> Sho
 	return s
 
 
-## Whether the ground of square `c` is at the water's level, so a shore can meet it (a bank raised above the water keeps
-## its own face: Natural Maps plan N6).
-func _low(c: Vector2i) -> bool:
-	return absf(board.floor_y(c)) <= LOW_BANK
+## Whether a shore can meet square `c`: its ground is not a cliff above the water (Natural Maps plan N6).
+func _near(c: Vector2i) -> bool:
+	return absf(board.floor_y(c)) <= REACHABLE
 
 
-## The water squares land may reach over (any beside a low square the ground draws) and the drawn low walkable squares
-## water may reach under.
+## The water squares land may reach over (any beside a square the ground draws) and the drawn walkable squares water may
+## reach under.
 func _zones(skin: Dictionary) -> void:
 	var g := board.grid
 	for z in range(_z0, _z0 + _sd):
 		for x in range(_x0, _x0 + _sw):
 			var c := Vector2i(x, z)
 			var wet := g.has_flag(c, CombatGrid.WATER)
-			if not wet and not (skin.has(c) and _low(c)):
+			if not wet and not (skin.has(c) and _near(c)):
 				continue
 			for d: Vector2i in CombatGrid.DIRS:
 				var n := c + d
 				if not g.in_bounds(n):
 					continue
-				if wet and skin.has(n) and _low(n):
+				if wet and skin.has(n) and _near(n):
 					_zone_water[c] = true
 					break
 				if not wet and g.has_flag(n, CombatGrid.WATER):
@@ -156,8 +169,28 @@ func _field(skin: Dictionary, flat: Dictionary) -> void:
 			var c := Vector2i(_x0 + sx, _z0 + sz)
 			if g.has_flag(c, CombatGrid.WATER):
 				square[sz * _sw + sx] = 1
-			elif not skin.has(c) or flat.has(c) or not _low(c):
+			elif not skin.has(c) or flat.has(c) or not _near(c):
 				square[sz * _sw + sx] = 2
+	# The bank's height at each square: ground beside water is its own floor; a water square takes its highest neighbour's.
+	var rise := PackedFloat32Array()
+	rise.resize(_sw * _sd)
+	for sz in _sd:
+		for sx in _sw:
+			if square[sz * _sw + sx] != 1:
+				rise[sz * _sw + sx] = maxf(board.floor_y(Vector2i(_x0 + sx, _z0 + sz)), 0.0)
+	var rim := rise.duplicate()
+	for sz in _sd:
+		for sx in _sw:
+			if square[sz * _sw + sx] != 1:
+				continue
+			var best := 0.0
+			for dz in range(-1, 2):
+				for dx in range(-1, 2):
+					var nx := sx + dx
+					var nz := sz + dz
+					if nx >= 0 and nz >= 0 and nx < _sw and nz < _sd and square[nz * _sw + nx] != 1:
+						best = maxf(best, rise[nz * _sw + nx])
+			rim[sz * _sw + sx] = best
 	var water := PackedByteArray()
 	water.resize(n)
 	var dry := PackedByteArray()
@@ -189,12 +222,27 @@ func _field(skin: Dictionary, flat: Dictionary) -> void:
 	var peak := _widest(wet)
 	var seed_at := _seed_of(board.place)
 	_dist.resize(n)
+	_bank.resize(n)
+	_shift.resize(n)
 	for j in _cd:
 		for i in _cw:
 			var k := j * _cw + i
+			# The bank's height here, between the squares' middles, and how far it moves the shore out.
+			var fx := (i + 0.5) / RES - 0.5
+			var fz := (j + 0.5) / RES - 0.5
+			var x0 := clampi(floori(fx), 0, _sw - 1)
+			var z0 := clampi(floori(fz), 0, _sd - 1)
+			var x1 := mini(x0 + 1, _sw - 1)
+			var z1 := mini(z0 + 1, _sd - 1)
+			var ax := clampf(fx - x0, 0.0, 1.0)
+			var az := clampf(fz - z0, 0.0, 1.0)
+			var bank := lerpf(lerpf(rim[z0 * _sw + x0], rim[z0 * _sw + x1], ax), lerpf(rim[z1 * _sw + x0], rim[z1 * _sw + x1], ax), az)
+			var shift := clampf((bank - PIT_RISE) * PIT_REACH, 0.0, PIT_MAX)
+			_bank[k] = bank
+			_shift[k] = shift
 			var near := sd[k]
 			if near > 1.0 or near < -1.0:
-				_dist[k] = soft[k]   # (well away from the edge: no wander to work out)
+				_dist[k] = soft[k] - shift   # (well away from the edge: no wander to work out)
 				continue
 			var p := Vector2(_x0 + (i + 0.5) / RES, _z0 + (j + 0.5) / RES)
 			var nz := noise(p * 0.5 + seed_at) * 0.65 + noise(p * 1.5 + seed_at + Vector2(5.3, 1.7)) * 0.35
@@ -208,7 +256,7 @@ func _field(skin: Dictionary, flat: Dictionary) -> void:
 				# the further a point is from its square's middle, the nearer the water may come.
 				var from_mid := p.distance_to(Vector2(floorf(p.x) + 0.5, floorf(p.y) + 0.5))
 				d = minf(d, MIDDLE_DRY + MIDDLE_SLOPE * maxf(from_mid - 0.2, 0.0))
-			_dist[k] = d
+			_dist[k] = d - shift
 
 
 ## Distance in cells from each cell to the nearest cell holding `target` (8 ways, 1 and 1.414 a step; 99 where none).
@@ -316,27 +364,32 @@ static func _seed_of(place: String) -> Vector2:
 ## The signed distance (squares) from the shore's contour at a point of the map, positive over the water, or -8 off the
 ## field (land well away from any water).
 func distance_at(p: Vector2) -> float:
+	return _sample(_dist, p, -8.0)
+
+
+## An array of the field's fine cells read at a point of the map (bilinear between the cells' middles), `outside` off it.
+func _sample(a: PackedFloat32Array, p: Vector2, outside: float) -> float:
 	var fi := (p.x - _x0) * RES - 0.5
 	var fj := (p.y - _z0) * RES - 0.5
 	if fi < -1.0 or fj < -1.0 or fi > _cw or fj > _cd:
-		return -8.0
+		return outside
 	var i := clampi(floori(fi), 0, _cw - 2)
 	var j := clampi(floori(fj), 0, _cd - 2)
 	var fx := clampf(fi - i, 0.0, 1.0)
 	var fz := clampf(fj - j, 0.0, 1.0)
 	var k := j * _cw + i
-	return lerpf(lerpf(_dist[k], _dist[k + 1], fx), lerpf(_dist[k + _cw], _dist[k + _cw + 1], fx), fz)
+	return lerpf(lerpf(a[k], a[k + 1], fx), lerpf(a[k + _cw], a[k + _cw + 1], fx), fz)
 
 
 ## The ground's height over a point where the shore's distance is `d`, for ground at `ground` there (absolute): down a
-## short bank to the water's level at the contour with the bank's slope (a cubic from the ground's own height, so a raised
-## bank rounds off into the water instead of standing as a wall), then a shelf under the water.
-static func shelf(d: float, ground: float = 0.0) -> float:
-	if d <= -BANK:
+## short bank (`width` squares) to the water's level at the contour with the bank's slope (a cubic from the ground's own
+## height, so a raised bank rounds off into the water instead of standing as a wall), then a shelf under the water.
+static func shelf(d: float, ground: float = 0.0, width: float = BANK) -> float:
+	if d <= -width:
 		return ground
 	if d <= 0.0:
-		var t := (d + BANK) / BANK
-		return ground + (WATER_Y - ground) * (3.0 * t * t - 2.0 * t * t * t) - BANK_SLOPE * BANK * (t * t * t - t * t)
+		var t := (d + width) / width
+		return ground + (WATER_Y - ground) * (3.0 * t * t - 2.0 * t * t * t) - BANK_SLOPE * width * (t * t * t - t * t)
 	return WATER_Y - SHELF * (1.0 - exp(-d * BANK_SLOPE / SHELF))
 
 
@@ -351,16 +404,25 @@ func water_squares() -> Dictionary:
 
 
 ## Lowers ground height `h` (relative to the natural ground's `base` at `p`, 0 where it is level) to the shore's: not at
-## all on dry ground, and from the contour out to the shelf under the water.
+## all on dry ground, a short bank to the water and a shelf under it beside low ground, and where the bank is a pit's rim a
+## long slope from half its height at the grid line down over the water squares (the natural ground's own slope there is
+## replaced; inland of the grid line it blends in over PIT_BLEND).
 func lower(h: float, p: Vector2, base: float = 0.0) -> float:
 	var d := distance_at(p)
+	var bank := _sample(_bank, p, 0.0)
+	if bank > PIT_RISE:
+		var w := maxf(_sample(_shift, p, 0.0), 0.1)
+		if d <= -w - PIT_BLEND:
+			return h
+		return lerpf(h, shelf(d, 0.5 * bank, w) - base, smoothstep(-w - PIT_BLEND, -w, d))
 	if d <= -BANK:
 		return h
-	var ground := base + h
-	var w := 1.0 - smoothstep(LOW_BANK - 0.1, LOW_BANK + 0.1, ground)   # a raised bank keeps its face (N6)
-	if w <= 0.0:
-		return h
-	return lerpf(h, minf(h, shelf(d, ground) - base), w)
+	return minf(h, shelf(d, base + h) - base)
+
+
+## Whether the shore lowers or raises the ground at a point (for tests of the skin's own shape: it is meant to).
+func touches(p: Vector2) -> bool:
+	return distance_at(p) > -(PIT_MAX + PIT_BLEND + 0.1)
 
 
 ## Draws what the shore needs besides the ground: the water's mask (the foam and the depth colour follow the contour) and

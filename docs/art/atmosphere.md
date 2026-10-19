@@ -247,15 +247,19 @@ and kept near the grid line: out over a water square by up to 0.45 where the wat
 one-square stream keeps its banks), in over a walkable square by up to 0.28, and never nearer than 0.2 to the middle of
 a walkable square, so a token in the middle of a square and its ring stay dry and level (the ground there is within a
 hair of the floor). A square a build, a prop or a paved floor stands on (not drawn by the shaped ground, or kept flat)
-is never reached into, and a bank raised more than 0.35 above the floor (a step, Krezk's pool in its 5 ft pit, Van
-Richten's cliffs) keeps its own face for the cliffs lane (N6): `Shores.lower` leaves ground above that alone.
+is never reached into. A bank raised above the water (more than 0.35 above the floor beside it) is a pit's rim: Krezk's
+pool lies in a 5 ft pit, Van Richten's lake and the crossroads stream have banks too. There the water's edge moves out
+into the water squares by 0.65 of a unit of the rim's height above 0.3 (at most 0.8 of a square) and the bank slopes down
+over them, from half the rim's height at the grid line (what the natural ground makes of it there) to the water, so the
+rim is a rounded slope and not a kerb wall, and the pool looks smaller than its squares by about that much (they stay
+water to the rules). Rims higher than 2 units are cliffs (N6) and keep the board's own face.
 
 The ground follows the contour. `GroundRelief` (one line in `_heights`, `shore.lower`) lowers its grid points along it: a
 short bank down to the board's water level (`Shores.WATER_Y`, -0.13) at the contour with a slope of 0.9, then a shelf
 under the water, so the water plane (the board's own water boxes under the water squares, and a skirt of water under the
 walkable squares beside them, `Shores.dress`) meets the ground where the contour says and no kerb shows. The water
 squares beside land (`Shores.water_squares`) are drawn by the shaped ground too (kind `SHORE`, in the ground of the
-squares beside them), so land can reach out over them. On natural ground the squares at the water's level (elevation 0)
+squares beside them), so land can reach out over them. On natural ground the squares beside water, up to a 10 ft bank,
 count as rolling with their water neighbours (`ArenaBoard.rolling`, Modern only), which is what lets the skin draw
 most shores at all. The water shader's mask (`water_mask`, one texel per third of a square) is made from the contour, so
 the shore foam and the depth colour follow it; it is 0 on land and 0.125 at the contour, rising to 1 about 3.5 squares
