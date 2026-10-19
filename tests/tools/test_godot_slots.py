@@ -42,6 +42,11 @@ class Case(unittest.TestCase):
         rt.SLOT_ROOT = str(self.root)
         rt.ROOT = str(self.tmp / "checkout")
         (self.tmp / "checkout" / ".godot").mkdir(parents=True)
+        # The shell reads the build-lane marker of the checkout its script is in, so it runs from a copy in the temporary
+        # one, not from this folder (which holds the marker where the builder has opted in).
+        (self.tmp / "checkout" / "tools").mkdir()
+        self.script = self.tmp / "checkout" / "tools" / "godot_slot.sh"
+        self.script.write_text(SCRIPT.read_text())
         self.addCleanup(lambda: setattr(rt, "SLOT_ROOT", old_root))
         self.addCleanup(lambda: setattr(rt, "ROOT", old_repo))
         rt._told.clear()
@@ -65,7 +70,8 @@ class Case(unittest.TestCase):
             if pipe:
                 pipe.close()
 
-    def sh(self, snippet: str, script: Path = SCRIPT, **env) -> subprocess.CompletedProcess:
+    def sh(self, snippet: str, script: Path | None = None, **env) -> subprocess.CompletedProcess:
+        script = script or self.script
         full = {k: v for k, v in os.environ.items() if k not in KNOBS}
         full.update(STRAHD_SLOT_ROOT=str(self.root), **{k: str(v) for k, v in env.items()})
         return subprocess.run(["bash", "-c", '. "%s"; %s' % (script, snippet)], capture_output=True, text=True,
@@ -244,7 +250,7 @@ class Shell(Case):
         self.assertTrue((self.root / "test" / "4" / "build").exists())
 
     def test_a_slot_the_shell_holds_blocks_python_and_the_other_way_round(self):
-        holder = subprocess.Popen(["bash", "-c", '. "%s"; mkdir -p "$slot_root/test"; try_slot test 8; echo "${held_slot##*/}"; sleep 20' % SCRIPT],
+        holder = subprocess.Popen(["bash", "-c", '. "%s"; mkdir -p "$slot_root/test"; try_slot test 8; echo "${held_slot##*/}"; sleep 20' % self.script],
                                   stdout=subprocess.PIPE, text=True,
                                   env=dict(os.environ, STRAHD_SLOT_ROOT=str(self.root), BUILD_LANE="1"))
         self.addCleanup(self.reap, holder)
@@ -259,7 +265,7 @@ class Shell(Case):
             d = self.root / "test" / str(n)
             d.mkdir(parents=True)
             (d / "pid").write_text(str(os.getpid()))
-        proc = subprocess.Popen(["bash", "-c", '. "%s"; take_slot test 8; echo got' % SCRIPT], stdout=subprocess.PIPE,
+        proc = subprocess.Popen(["bash", "-c", '. "%s"; take_slot test 8; echo got' % self.script], stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE, text=True, env=dict(os.environ, STRAHD_SLOT_ROOT=str(self.root)))
         self.addCleanup(self.reap, proc)
         try:
