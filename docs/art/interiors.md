@@ -345,7 +345,7 @@ braziers burning in the antechamber and either side of the altar.
 
 - Their rock is no longer a block a square: it is drawn by `Caves` over a smooth, rounded, wandering contour (set_dressing
   doc "Caves, not rooms"; the vault's Natural Maps Plan I2). The den's caves and the lair are `cave: true`; the library,
-  cut into rock and walled in masonry, is `cave: "hewn"` (a lighter amount), and its stacks of shelves stay shelves. The
+  cut into rock and walled in masonry, is `cave: "hewn"` (a smoother face, less lean and stone) and has a ring of rock three squares wide round its hall so its outline has rock to swell into (Ashwin chose it 2026-10-19: every square of its data is three more each way), and its stacks of shelves stay shelves. The
   lair's keepers' post stays built (`built_areas: ["keepers_post"]`) until B2 bends it. The Amber Temple's deep (`amber_deep`)
   was the owner's own pass and has the look only if he says so.
 - The grid, the squares' heights, the doors and every prop are as before; a wall with something hung on it stays

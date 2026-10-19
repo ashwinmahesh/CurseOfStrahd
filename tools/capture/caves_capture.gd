@@ -4,7 +4,8 @@ extends Node3D
 ## places that matter (SPOTS). Not part of the game.
 ##   make capture SCENE=res://tools/capture/caves_capture.tscn NAME=caves/after FRAMES=10
 ## Environment: CV_LOCS=a,b (default the four caves), CV_VIEWS=whole,top,spots (default all three), CV_HOUR=12,
-## CV_OFF=1 (the cave look off, for before shots and build times), CV_WINDOW=1 (keep the see-through window), CV_LIGHT=1 (a strong lamp from above, so the
+## CV_OFF=1 (the cave look off, for before shots and build times), CV_WHOLE / CV_TOPD (the camera's distance for the whole
+## and straight-down shots, instead of the map's size), CV_WINDOW=1 (keep the see-through window), CV_LIGHT=1 (a strong lamp from above, so the
 ## contour and the rock's shape can be read in a map that is meant to be dark), CV_TIME=n (no shots: build each place n times and
 ## print the times, the first, which warms the caches, apart),
 ## CV_AT=x,z,dist,steps,pitch;... (extra shots, each at that square: dist in squares, steps = quarter turns, pitch = degrees
@@ -21,7 +22,7 @@ const SPOTS := {
 	"ghakis_lair": {"hoard": [22, 6, 15.0], "anchor": [22, 17, 13.0], "larder": [35, 18, 13.0],
 		"vents": [8, 17, 13.0], "tunnel": [21, 26, 12.0]},
 	"amber_deep": {"eye": [17, 6, 14.0], "hall": [16, 16, 15.0], "archive": [6, 22, 10.0], "stair": [26, 23, 10.0]},
-	"drowned_library": {"stacks": [12, 3, 14.0], "flood": [16, 9, 14.0], "foot": [8, 13, 12.0]},
+	"drowned_library": {"stacks": [15, 6, 14.0], "flood": [19, 12, 14.0], "foot": [11, 16, 12.0]},
 }
 
 var view: LocationView = null
@@ -109,7 +110,7 @@ func capture_shots(tool: Node, out: String) -> void:
 		var centre := Vector3(view.grid.width / 2.0, 0, view.grid.depth / 2.0)
 		if "whole" in views:
 			rig.horizon = 0.0
-			rig.distance = maxf(view.grid.width, view.grid.depth) * 1.05
+			rig.distance = float(OS.get_environment("CV_WHOLE")) if OS.get_environment("CV_WHOLE") != "" else maxf(view.grid.width, view.grid.depth) * 1.05
 			rig.shot_pitch = 0.0
 			rig.global_position = centre
 			rig.snap_to_target()
@@ -117,7 +118,7 @@ func capture_shots(tool: Node, out: String) -> void:
 			tool.call("_shot", "%s_%s_whole.png" % [out, id])
 		if "top" in views:
 			rig.horizon = 0.0
-			rig.distance = maxf(view.grid.width, view.grid.depth) * 0.9
+			rig.distance = float(OS.get_environment("CV_TOPD")) if OS.get_environment("CV_TOPD") != "" else maxf(view.grid.width, view.grid.depth) * 0.9
 			rig.shot_pitch = -49.0
 			rig.global_position = centre
 			rig.snap_to_target()

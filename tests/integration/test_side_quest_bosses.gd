@@ -566,8 +566,8 @@ func test_the_mist_wolves_at_level_1() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the wolves fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## By the catalogue desk in the middle of the Drowned Library.
-const AT_THE_DESK: Array[Vector2i] = [Vector2i(11, 14), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 12)]
+## By the catalogue desk in the middle of the Drowned Library (its map has a ring of rock three squares wide, 2026-10-19: every square is three more each way).
+const AT_THE_DESK: Array[Vector2i] = [Vector2i(14, 17), Vector2i(15, 17), Vector2i(16, 17), Vector2i(14, 15)]
 
 
 ## The Index at level 9: The Index (390 HP), 2 Mimics; 3 in 8.

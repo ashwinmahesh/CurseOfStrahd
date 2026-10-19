@@ -167,8 +167,9 @@ func test_what_is_built_stays_built() -> void:
 	view = null
 	await get_tree().process_frame
 	var lib := await _view(LIBRARY)
-	assert_false(Caves.owns(lib.board, Vector2i(3, 2)), "a stack of shelves isn't rock")
-	assert_true(Caves.owns(lib.board, Vector2i(0, 5)), "the library's outer wall is")
+	assert_false(Caves.owns(lib.board, Vector2i(6, 5)), "a stack of shelves isn't rock")
+	assert_true(Caves.owns(lib.board, Vector2i(3, 8)), "the library's outer wall is")
+	assert_true(Caves.owns(lib.board, Vector2i(0, 8)), "and so is the ring of rock round the map")
 	for key: String in ["round", "wander", "bays", "lean", "talus", "decor"]:
 		assert_true(float((Caves.AMOUNTS["hewn"] as Dictionary)[key]) <= float((Caves.AMOUNTS["full"] as Dictionary)[key]), "hewn is the lighter amount of %s" % key)
 
