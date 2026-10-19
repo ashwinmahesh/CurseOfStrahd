@@ -245,7 +245,7 @@ func move(c: Combatant, dest: Vector2i, avoid: Dictionary = {}) -> CombatResult:
 		e.log.add("info", "%s slips free (Freedom of Movement)" % c.name(), c.id)
 	if c.speed() <= 0:
 		return CombatResult.fail("Speed 0")
-	if c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2:
+	if can_stand(c):
 		stand_up(c)
 	var reach := reachable_for(c)
 	if not avoid.is_empty():
@@ -678,15 +678,27 @@ func _after_step(c: Combatant, from: Vector2i) -> void:
 	e.traps.stepped(c)   # a trap under it goes off (EncounterTraps)
 
 
+## What standing up from Prone costs `c`: half its Speed (2024), 5 ft with the Athlete feat's Hop Up.
+func stand_cost(c: Combatant) -> int:
+	return 5 if c.creature.has_flag("hop_up") else c.speed() / 2
+
+
+## Whether `c` is Prone with the Speed and the movement left to stand up now.
+func can_stand(c: Combatant) -> bool:
+	return c.creature.has_condition(&"prone") and c.speed() > 0 and c.movement_left >= stand_cost(c)
+
+
+## Standing up ends Prone however it was given: a plain condition (a shove, a knock-out) or an effect (a stat block's
+## rider, an air elemental's Whirlwind), which has no end of its own.
 func stand_up(c: Combatant) -> CombatResult:
 	var e := enc()
 	if not c.creature.has_condition(&"prone"):
 		return CombatResult.fail("Not Prone")
-	var cost := 5 if c.creature.has_flag("hop_up") else c.speed() / 2
+	var cost := stand_cost(c)
 	if c.speed() <= 0 or c.movement_left < cost:
 		return CombatResult.fail("Standing up costs %d ft" % cost)
 	c.movement_left -= cost
-	c.creature.remove_condition(&"prone")
+	c.creature.end_condition(&"prone")
 	c.stood_up = true
 	e.log.add("move", "%s stands up (%d ft)" % [c.name(), cost], c.id)
 	e.events.append({"type": "condition", "id": c.id})

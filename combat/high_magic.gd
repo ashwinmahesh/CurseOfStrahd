@@ -219,7 +219,7 @@ func power_word_heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 			sp().cure(t, cond)
 	if t.creature.has_condition(&"prone") and t.reaction_available:
 		t.reaction_available = false
-		t.creature.remove_condition(&"prone")
+		t.creature.end_condition(&"prone")
 		_log(ctx, "%s springs to its feet" % t.name(), t, r, "info")
 	e.events.append({"type": "condition", "id": t.id})
 

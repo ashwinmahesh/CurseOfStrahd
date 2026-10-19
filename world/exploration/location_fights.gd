@@ -766,8 +766,6 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	# web, a net or a grapple, and what lasted only rounds is gone (EncounterSetup.clear_fight_effects).
 	for m in view.members + view.guest_members:
 		EncounterSetup.clear_fight_effects(m.creature)
-		if m.creature.hp > 0:
-			m.creature.remove_condition(&"prone")
 	LocationStealth.after_fight(view, e)
 	BattleScenery.after_fight(view, e)   # broken doors stay open; what else broke stays broken this visit
 	LocationTraps.after_fight(view, e)   # traps sprung in the fight are spent

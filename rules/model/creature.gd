@@ -980,6 +980,19 @@ func _turned_away(c: StringName, tried: String) -> void:
 		condition_blocked.call(self, c, condition_immunity_source(c), tried)
 
 
+## Ends a condition however it was given: every plain source, and the effects that carry it. An effect that is only
+## there to impose it (a stat block's "Prone (Whirlwind)") goes; one that does more keeps the rest.
+func end_condition(c: StringName) -> void:
+	remove_condition(c)
+	for fx: Effect in effects.duplicate():
+		if c in fx.conditions:
+			if str(fx.data.get("primary_condition", "")) == str(c) or (fx.modifiers.is_empty() and fx.conditions.size() == 1):
+				remove_effect(fx)
+			else:
+				fx.conditions.erase(c)
+	_after_conditions_changed()
+
+
 func add_exhaustion(levels: int = 1) -> bool:
 	if is_condition_immune(&"exhaustion"):
 		_turned_away(&"exhaustion", "")

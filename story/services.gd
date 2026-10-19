@@ -164,14 +164,7 @@ static func bring_back(st: StoryState, ch: Character, full_hp: bool, ordeal: boo
 
 ## Ends a condition however it was given: as a plain condition or by an effect (as Lesser Restoration does in a fight).
 static func cure(cr: Creature, cond: StringName) -> void:
-	cr.remove_condition(cond)
-	for fx: Effect in cr.effects.duplicate():
-		if cond in fx.conditions:
-			if str(fx.data.get("primary_condition", "")) == str(cond) or (fx.modifiers.is_empty() and fx.conditions.size() == 1):
-				cr.remove_effect(fx)
-			else:
-				fx.conditions.erase(cond)
-	cr._after_conditions_changed()
+	cr.end_condition(cond)
 
 
 static func _restorable(ch: Character) -> StringName:

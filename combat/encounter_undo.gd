@@ -233,7 +233,7 @@ static func _combatant(c: Combatant) -> Dictionary:
 		st["spent"] = [ch.slots_used.duplicate(), ch.pact_slots_used, ch.heroic_inspiration, ch.inventory.duplicate(true)]
 	var fx: Array = []
 	for f in cr.effects:
-		if not _derived(f):
+		if not _derived(f) and not _prone_hold(f):
 			fx.append([f, f.to_dict()])
 	return {"vars": _vars(c), "metas": _metas(c),
 		"creature": {"state": st, "conditions": cr.conditions.duplicate(true), "effects": fx}}
@@ -283,6 +283,12 @@ static func _copy(v: Variant) -> Variant:
 	if v is Dictionary:
 		return (v as Dictionary).duplicate(true)
 	return v
+
+
+## An effect that does nothing but hold its creature Prone (a stat block's rider): standing up, which a move does first,
+## ends it, so the undo doesn't read that as something else happening (it comes back with the saved effects).
+static func _prone_hold(f: Effect) -> bool:
+	return f.modifiers.is_empty() and f.conditions.size() == 1 and f.conditions[0] == &"prone"
 
 
 static func _derived(f: Effect) -> bool:

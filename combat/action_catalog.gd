@@ -404,10 +404,13 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	lj["range"] = lj_ft
 	out.append(lj)
 	if c.creature.has_condition(&"prone"):
+		var stand := e.movement.stand_cost(c)
 		var stand_why := e._turn_check(c)
-		if stand_why == "" and c.movement_left < c.speed() / 2:
-			stand_why = "Needs %d ft of movement" % (c.speed() / 2)
-		out.append(_entry("stand", COMMON, "Stand Up", "%d ft" % (c.speed() / 2), "movement", stand_why, "none"))
+		if stand_why == "" and c.speed() <= 0:
+			stand_why = "Speed 0"
+		elif stand_why == "" and c.movement_left < stand:
+			stand_why = "Needs %d ft of movement" % stand
+		out.append(_entry("stand", COMMON, "Stand Up", "%d ft" % stand, "movement", stand_why, "none"))
 	else:
 		out.append(_entry("drop_prone", COMMON, "Drop Prone", "free", "movement", e._turn_check(c), "none"))
 	# Flying (F4): up or down 5 ft where it stands, at 1 ft of movement per foot; a rider flies its mount.
@@ -1891,8 +1894,8 @@ func slot_choices(c: Combatant, spell_id: String) -> Array[int]:
 ## Squares `c` could move to this turn, as move() would take them (a Prone creature with the movement for it stands
 ## up first): {cell: {cost, prev, occupied}} with costs including standing up.
 func move_reach(c: Combatant) -> Dictionary:
-	if c.creature.has_condition(&"prone") and c.speed() > 0 and c.movement_left >= c.speed() / 2:
-		var stand := c.speed() / 2
+	if e.movement.can_stand(c):
+		var stand := e.movement.stand_cost(c)
 		var r := e.reachable_for(c, c.movement_left - stand, true)
 		for cell: Vector2i in r:
 			(r[cell] as Dictionary)["cost"] = int((r[cell] as Dictionary)["cost"]) + stand
@@ -1964,16 +1967,17 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 	path = e.movement.safe_path(c, r, cell)
 	var cost := int(info["cost"])
 	# What each foot costs on top (crawling, dragging a grappled creature); move_reach already added standing up.
-	var standing := c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2
+	var standing := e.movement.can_stand(c)
+	var stand := e.movement.stand_cost(c)
 	var per_foot := e.movement.extra_cost(c, standing)
-	cost = (cost - c.speed() / 2) * per_foot + c.speed() / 2 if standing else cost * per_foot
+	cost = (cost - stand) * per_foot + stand if standing else cost * per_foot
 	out["ok"] = true
 	out["cost"] = cost
 	out["left"] = c.movement_left - cost
 	out["path"] = path
 	var warnings: Array[String] = []
 	if c.creature.has_condition(&"prone"):
-		warnings.append("Stands up first (%d ft)" % (c.speed() / 2) if c.movement_left >= c.speed() / 2 else "Crawling while Prone costs double")
+		warnings.append("Stands up first (%d ft)" % stand if standing else "Crawling while Prone costs double")
 	if not c.disengaged:
 		var seen := {}
 		for i in range(1, path.size()):

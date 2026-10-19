@@ -474,14 +474,7 @@ func _end_condition(ctx: Dictionary, t: Combatant, params: Dictionary, r: Combat
 
 ## Ends a condition however it was given: as a plain condition or by effects.
 func cure(t: Combatant, cond: StringName) -> void:
-	t.creature.remove_condition(cond)
-	for fx: Effect in t.creature.effects.duplicate():
-		if cond in fx.conditions:
-			if str(fx.data.get("primary_condition", "")) == str(cond) or (fx.modifiers.is_empty() and fx.conditions.size() == 1):
-				t.creature.remove_effect(fx)
-			else:
-				fx.conditions.erase(cond)
-	t.creature._after_conditions_changed()
+	t.creature.end_condition(cond)
 
 
 ## Light from a spell on a creature or the caster (Light, Produce Flame, Starry Wisp, Continual Flame, Daylight):

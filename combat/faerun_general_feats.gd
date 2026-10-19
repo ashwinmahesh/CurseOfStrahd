@@ -104,7 +104,7 @@ func _lordly_resolve(c: Combatant, picked: Array[Combatant]) -> CombatResult:
 	for t in picked:
 		if t.creature.has_condition(&"prone") and e.spells.can_react(t) and t.speed() > 0:
 			t.reaction_available = false
-			t.creature.remove_condition(&"prone")
+			t.creature.end_condition(&"prone")
 			_log("move", "%s gets back on its feet (Lordly Resolve)" % t.name(), t)
 		var fx := Effect.new("Lordly Resolve", &"feature", "lordly_resolve").with_modifier("condition_immunity", {"value": "charmed"}) \
 			.with_modifier("condition_immunity", {"value": "frightened"}).with_modifier("flag", {"value": "no_possession"}) \

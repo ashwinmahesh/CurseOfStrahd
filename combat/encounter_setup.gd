@@ -106,6 +106,10 @@ static func clear_fight_effects(cr: Creature) -> void:
 			cr.remove_effect(fx)
 	cr.remove_condition(&"grappled")
 	cr.remove_condition(&"restrained")
+	# The fallen-over get up: there's no turn left to spend standing, and a rider's Prone (an air elemental's Whirlwind)
+	# has no end of its own.
+	if cr.hp > 0 and not cr.dead:
+		cr.end_condition(&"prone")
 
 
 ## Creature ids the encounter data marks as surprised.

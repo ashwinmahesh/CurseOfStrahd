@@ -162,7 +162,7 @@ static func refresh_party(view: LocationView) -> void:
 	for m in view.members + view.guest_members:
 		var cr := m.creature
 		if cr.hp > 0 and not cr.dead and cr.has_condition(&"prone"):
-			cr.remove_condition(&"prone")
+			cr.end_condition(&"prone")
 		if view.tokens.has(m.id):
 			(view.tokens[m.id] as CombatToken).refresh()
 

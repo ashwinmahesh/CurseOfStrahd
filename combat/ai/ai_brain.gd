@@ -1137,7 +1137,7 @@ func _move_then_attack(c: Combatant, plan: Dictionary) -> CombatResult:
 		var r := e.move(c, dest, plan.get("avoid", {}) as Dictionary)
 		if r.ok:
 			return e.then(r, after)
-	elif c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2 and c.speed() > 0:
+	elif e.movement.can_stand(c):
 		e.stand_up(c)
 	return after.call() as CombatResult
 
