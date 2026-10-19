@@ -46,7 +46,7 @@ run-main:
 	@$(PLAYFRESH)
 	$(NOFOCUS) < /dev/null
 
-.PHONY: edge edge-list edge-add edge-remove edge-prune edge-reset edge-test
+.PHONY: edge edge-list edge-add edge-remove edge-prune edge-reset edge-test slots-test
 edge:
 	@python3 tools/edge/edge.py build
 edge-list:
@@ -61,6 +61,10 @@ edge-reset:
 	@python3 tools/edge/edge.py reset
 edge-test:
 	python3 -m unittest discover -s tests/tools -p 'test_edge*.py' -v
+
+## The Godot slot pools and the slots the build lane keeps (tools/godot_slot.sh, tools/run_tests.py); no Godot, no lane.
+slots-test:
+	python3 -m unittest discover -s tests/tools -p 'test_godot_slots.py' -v
 
 ## Release builds (owner, 2026-10-08): the Windows export (export_presets.cfg) and, from the same pack, the Mac app
 ## (tools/release/mac_app.py; Godot's own macOS export wants ETC2/ASTC textures we don't import), zipped for download.

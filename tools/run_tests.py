@@ -20,7 +20,9 @@ single process make test used to.
 Across all lanes at most TEST_SLOTS (8) of these processes run at once, and so at most IMPORT_SLOTS (3) import editors
 (tools/godot_slot.sh has why and how): a process takes a slot before it starts and waits for one if they are all in
 use, and a process still waiting when another has run out of files gives up, since there is nothing left for it.
-GODOT_SLOTS=off turns the cap off.
+GODOT_SLOTS=off turns the cap off. The top BUILD_TEST_SLOTS (3) of the 8 are kept for the build lane (BUILD_LANE=1, or
+.godot/build-lane in the checkout, see tools/godot_slot.sh): a development lane only claims the other five, the build
+lane tries the reserved ones first and then the rest.
 
 make test [ONLY=substr] [FILES=a.gd,b.gd] [JOBS=n]   Stdlib only.
 """
@@ -46,6 +48,9 @@ REPO_TIMES = os.path.join(ROOT, "tests", "support", "test_times.json")
 MAX_JOBS = 8
 WORKER_GB = 1.5
 SLOT_ROOT = os.environ.get("STRAHD_SLOT_ROOT", "/tmp/strahd-godot-slots-%d" % os.getuid())
+# Each pool's size (the default of its limit) and how many of its top slots the build lane keeps (tools/godot_slot.sh).
+POOL_SIZE = {"test": 8, "import": 3}
+BUILD_RESERVE = {"test": ("BUILD_TEST_SLOTS", 3), "import": ("BUILD_IMPORT_SLOTS", 1)}
 SUMMARY = re.compile(r"^\d+ tests, \d+ passed, \d+ failed$")
 # What tools/logcheck.sh fails a run on, besides FAIL lines.
 ERROR = re.compile(r"SCRIPT ERROR|ERROR:|Parse Error|Failed loading|WARNING: .*GDScript")
@@ -130,6 +135,38 @@ def _slot_stale(slot: str) -> bool:
 _told = threading.Event()  # the "waiting" note comes once a run, not once a process
 
 
+def is_build_lane() -> bool:
+    """Whether this run is the build lane's: BUILD_LANE set (anything but empty or 0), or this checkout's
+    .godot/build-lane holding its own absolute path (a copy of .godot in another folder names the wrong one)."""
+    if os.environ.get("BUILD_LANE", "") not in ("", "0"):
+        return True
+    try:
+        with open(os.path.join(ROOT, ".godot", "build-lane")) as f:
+            return f.read().strip() == os.path.realpath(ROOT)
+    except OSError:
+        return False
+
+
+def reserved_slots(pool: str) -> list[int]:
+    """The slot numbers kept for the build lane: the top ones of the pool, always leaving a slot for the lanes."""
+    size = POOL_SIZE.get(pool, 0)
+    env, default = BUILD_RESERVE.get(pool, ("", 0))
+    try:
+        reserve = int(os.environ.get(env, default)) if env else 0
+    except ValueError:
+        reserve = default
+    reserve = max(0, min(reserve, size - 1))
+    return list(range(size - reserve + 1, size + 1))
+
+
+def slot_candidates(pool: str, limit: int, build: bool) -> list[int]:
+    """The slot numbers a run may claim, in the order of preference groups: a development lane gets 1..limit without
+    the reserved ones; the build lane gets the reserved ones first, then the others, and no more than `limit`."""
+    kept = reserved_slots(pool)
+    dev = [i for i in range(1, max(1, limit) + 1) if i not in kept]
+    return (kept + dev)[:max(1, limit)] if build else dev
+
+
 def take_slot(pool: str, limit: int, giveup: threading.Event) -> str | None:
     """Waits for a free slot of the pool (the folders tools/godot_slot.sh makes) and returns its folder; "" when slots
     are off or can't be made (no cap); None when `giveup` was set while it waited."""
@@ -140,10 +177,15 @@ def take_slot(pool: str, limit: int, giveup: threading.Event) -> str | None:
         os.makedirs(root, mode=0o700, exist_ok=True)
     except OSError:
         return ""
+    build = is_build_lane()
+    kept = reserved_slots(pool)
     while True:
-        order = list(range(1, limit + 1))
-        random.shuffle(order)
-        for i in order:
+        order = slot_candidates(pool, limit, build)
+        # Shuffled within each group, so the build lane's reserved slots still come first.
+        groups = [[i for i in order if i in kept], [i for i in order if i not in kept]]
+        for g in groups:
+            random.shuffle(g)
+        for i in groups[0] + groups[1]:
             slot = os.path.join(root, str(i))
             if os.path.isdir(slot) and _slot_stale(slot):
                 shutil.rmtree(slot, ignore_errors=True)
@@ -157,13 +199,20 @@ def take_slot(pool: str, limit: int, giveup: threading.Event) -> str | None:
                 f.write(str(os.getpid()))
             with open(os.path.join(slot, "where"), "w") as f:
                 f.write(ROOT)
+            if build:
+                with open(os.path.join(slot, "build"), "w") as f:
+                    f.write("build\n")
             return slot
         if giveup.is_set():
             return None
         if not _told.is_set():
             _told.set()
-            print("make test: waiting for a Godot slot (%d at once across all lanes; TEST_SLOTS=n changes it)" % limit,
-                  flush=True)
+            if build:
+                print("make test: waiting for a Godot slot (the build lane: up to %d at once, the reserved ones first; "
+                      "TEST_SLOTS=n changes it)" % len(order), flush=True)
+            else:
+                print("make test: waiting for a Godot slot (%d at once for the development lanes across all lanes, "
+                      "the rest kept for the build lane; TEST_SLOTS=n changes it)" % len(order), flush=True)
         giveup.wait(random.uniform(2, 4))
 
 

@@ -20,7 +20,7 @@
 # done.
 set -uo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
-. "$root/tools/godot_slot.sh"   # take_slot / free_slot: at most IMPORT_SLOTS (3) editors across all lanes
+. "$root/tools/godot_slot.sh"   # take_slot / free_slot: at most IMPORT_SLOTS (3) editors across all lanes, one kept for the build lane
 godot="${GODOT:-/Applications/Godot.app/Contents/MacOS/Godot}"
 cd "$root"
 ERRORS='SCRIPT ERROR|ERROR:|Parse Error|Failed loading'   # what tools/logcheck.sh fails on
@@ -84,6 +84,7 @@ owned=1
 echo $$ > "$lock/pid"
 
 ## Then its turn among the other folders' imports: each editor holds about 1.8 GB, and a dozen at once swap the Mac.
+## The build lane (BUILD_LANE=1) has one slot of its own and may use the others too (tools/godot_slot.sh).
 take_slot import "${IMPORT_SLOTS:-3}"
 
 ## No import cache here yet: a clone of the main checkout's when it's on this volume (seconds, almost no disk), with
