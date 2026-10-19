@@ -406,7 +406,7 @@ func _scatter_boulders() -> void:
 
 ## Adds a boulder to the arrays (relative to `origin`): a unit icosahedron stretched to its size, each corner pushed in or
 ## out by the boulder's own seed so no two match, faces shaded flat.
-func _boulder(verts: PackedVector3Array, norms: PackedVector3Array, uvs: PackedVector2Array, b: Array, origin: Vector3) -> void:
+static func boulder(verts: PackedVector3Array, norms: PackedVector3Array, uvs: PackedVector2Array, b: Array, origin: Vector3) -> void:
 	if _ico.is_empty():
 		var t := (1.0 + sqrt(5.0)) / 2.0
 		var v: Array[Vector3] = [Vector3(-1, t, 0), Vector3(1, t, 0), Vector3(-1, -t, 0), Vector3(1, -t, 0),
@@ -468,7 +468,7 @@ func _mesh(c: Vector2i) -> Array:
 	for q: int in _margin.get(c, [] as Array[int]):
 		top = maxf(top, _quad(verts, norms, uvs, q % qw, floori(float(q) / qw), origin))
 	for bl: Array in _boulders.get(c, []):
-		_boulder(verts, norms, uvs, bl, origin)
+		Crags.boulder(verts, norms, uvs, bl, origin)
 	# The map's edge, where the rock carries on past it: a face down past the ground on each outer side, so the surface
 	# doesn't end in a bare slice.
 	for side in 4:

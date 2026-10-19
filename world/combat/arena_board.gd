@@ -190,6 +190,7 @@ func _build() -> void:
 	elif theme == "shrine_yard" and place != "":
 		TownBuilder.plan(self)   # a yard's sheds and shrines are buildings; lone stones stay pillars
 	_plan_crags()
+	cliffs = CliffFace.plan(self)
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
@@ -233,6 +234,16 @@ func _build() -> void:
 				_low_cover(c)
 			_dress(c, dressed)
 	InteriorWalls.finish(self)   # the floor under the bands thin walls leave of their squares (every floor is built now)
+	if cliffs != null:
+		# Faces hung from a square that drew no column of its own (a wall at floor level) stand on the board.
+		for orphan: Array in cliffs.orphan_rock():
+			var oc := orphan[0] as Vector2i
+			var om := MeshInstance3D.new()
+			om.name = "CliffFace"
+			om.mesh = orphan[1] as ArrayMesh
+			om.position = Vector3(oc.x, 0.0, oc.y)
+			om.material_override = _cliff_material()
+			add_child(om)
 	_flights(dais)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
@@ -339,6 +350,8 @@ var _corner_h := PackedFloat32Array()
 var _cliff_mat: Material = null
 ## The place's rock as one shaped mountain (place_looks `rock_shape: "crags"`); null where its rock is columns.
 var crags: Crags = null
+## The place's cliffs and drops as shaped ground (CliffFace, Modern only); null where it has none.
+var cliffs: CliffFace = null
 const _CORNERS: Array[Vector2i] = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1)]
 ## The side under each top edge (north, east, south, west), as the step to the square beyond it.
 const _SIDES: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
@@ -1207,7 +1220,11 @@ func _terrain_column(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 	var rock := SurfaceTool.new()
 	rock.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var faces := 0
+	# The cliff field draws this square's top and the faces hung from its sides (CliffFace), and nothing of its column shows.
+	var shaped := cliffs != null and cliffs.draws(c)
 	for i in 4:
+		if shaped:
+			break
 		var j := (i + 1) % 4
 		# The top: a fan round the middle, clockwise from above (Godot's front faces).
 		_vertex(st, mid, ground_normal(c))
@@ -1234,7 +1251,23 @@ func _terrain_column(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 	mi.material_override = mat
 	mi.set_meta("terrain", c)   # its square; already at its height (_lift passes it by)
 	add_child(mi)
-	if faces > 0:
+	if shaped:
+		# The field's ground (this square's top) and rock (the faces and scree hung from its cliff sides), in this square's frame.
+		var ground := cliffs.ground_mesh(c)
+		if ground != null:
+			var top_mi := MeshInstance3D.new()
+			top_mi.name = "Top"
+			top_mi.mesh = ground
+			top_mi.material_override = mat
+			mi.add_child(top_mi)
+		var cliff := cliffs.rock_mesh(c)
+		if cliff != null:
+			var face_mi := MeshInstance3D.new()
+			face_mi.name = "Cliff"
+			face_mi.mesh = cliff
+			face_mi.material_override = _cliff_material()
+			mi.add_child(face_mi)
+	elif faces > 0:
 		var face := MeshInstance3D.new()
 		face.name = "Cliff"
 		face.mesh = rock.commit()

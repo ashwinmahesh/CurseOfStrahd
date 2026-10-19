@@ -321,6 +321,23 @@ round the party). Mount Baratok's hut is the half-timbered thatched cottage with
 `tex_dungeon__stone_wall` (the hut interior's own stone), the thatch for `tex_village__roof_slate` and its timbers for
 dark stone: honestly a stone cottage with a slate roof. A rough-stone hut of its own shape needs a Blender model.
 
+## Cliffs and drops with shape (the vault's Natural Maps Plan, N6)
+
+Where natural ground drops 15 ft or more between two squares (`CombatGrid.is_cliff`), or over an empty square
+(`ArenaBoard._over_a_drop`: a lake, a gorge, a fall), the Modern look no longer draws a straight vertical slab of rock on
+a flat step: `CliffFace` (planned once by `ArenaBoard`, kept per place) draws the squares round each cliff as one height
+field, in a grid of 6 points a square. Each cliff side is a unit edge with a high side and a low side; the ground steps
+from one level to the other through a face whose line wanders in and out of the grid line by no more than a quarter of a
+square (the plan's rule 2; broad lobes plus flutes), rounds off at a plateau's corner (a smooth minimum of the distances),
+has a shelf half way down where the noise says, and spreads at its foot into a talus under a low apron of scree
+(0.25 high, gone by half a square) with a few boulders along it. Over a drop the lip reaches out over the empty square by a
+tenth to half a square. Where the surface is steep (or the apron) it is the place's rock (`ArenaBoard._cliff_material`), else
+its ground. The squares touching a cliff side (`CliffFace.draws`) leave their column's top and sides out; the high square's
+column gets two children, `Top` (its ground, in its own floor material) and `Cliff` (the rock hung from its sides, even where
+it reaches over the low square), so they hide with the floor as the slab did. A square's middle stays where a token stands
+(`ground_y`), and 0.55 of a square from a cliff the field is the board's own ground. Classic keeps the slabs.
+Cosmetic only; `tools/capture/crags_views.tscn` (CV_NOCLIFFS=1 shoots a place as it was) and test_cliffs check it.
+
 ## Crags, not columns (owner 2026-10-19: "why are all of our mountain tops flat?")
 
 A place look with `rock_walls` may also say `rock_shape: "crags"` (Modern only; Classic keeps the columns). Its rock

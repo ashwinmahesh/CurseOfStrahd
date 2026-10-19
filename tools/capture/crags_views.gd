@@ -7,7 +7,7 @@ extends Node3D
 ## Environment: CV_LOCS=a,b (default the places with crags), CV_YAWS=0,1,2,3 (rotate steps: 0 from the SW, 1 from the
 ## SE, 2 from the NE, 3 from the NW), CV_SHOTS=play,tilt,whole (default all three), CV_HOUR=12, CV_AT=x,z (the play and
 ## tilt shots look at this square instead of the spawn; with one place only), CV_NOSHOTS=1 (only the table),
-## CV_AIM=1 (each place's play and tilt shots look at its AIMS square, where the rock stands, instead of the spawn),
+## CV_NOCLIFFS=1 (the cliffs and drops as the board drew them before CliffFace), CV_AIM=1 (each place's play and tilt shots look at its AIMS square, where the rock stands, instead of the spawn),
 ## CV_DIST=16 (the play shots' camera distance; 8 for a close look at a foot), CV_WEATHER=overcast (the world's weather for the whole run, as natural_audit's NA_WEATHER does), CV_BEFORE=1 (the
 ## places drawn with their old rock columns, and the quarry and camp with their old stone yard walls, for the before
 ## shots), CV_TIME=n (builds each place n times first and
@@ -27,7 +27,11 @@ const PLAY_DISTANCE := 16.0
 ## Where the rock stands in each place: the square CV_AIM looks at.
 const AIMS := {"mount_baratok": Vector2i(18, 9), "mount_baratok_trail": Vector2i(22, 12), "tsolenka_pass": Vector2i(33, 13),
 	"werewolf_den": Vector2i(21, 4), "amber_temple_road": Vector2i(10, 3), "ghakis_quarry": Vector2i(5, 3),
-	"amber_road_camp": Vector2i(12, 3), "castle_ravenloft_gates": Vector2i(3, 22)}
+	"amber_road_camp": Vector2i(12, 3), "castle_ravenloft_gates": Vector2i(3, 22),
+	"mountain_pass": Vector2i(8, 9), "road_ravine": Vector2i(10, 8), "frozen_tarn": Vector2i(12, 5),
+	"van_richtens_tower": Vector2i(20, 12), "lake_inlet": Vector2i(16, 10), "lake_zarovich": Vector2i(15, 10), "tser_pool": Vector2i(16, 10),
+	"krezk_pool_of_the_white_sun": Vector2i(10, 8), "road_ravine_w": Vector2i(10, 9),
+	"lake_zarovich_trail": Vector2i(15, 12), "old_bonegrinder_track": Vector2i(15, 4), "yester_hill": Vector2i(12, 11)}
 
 
 var view: LocationView = null
@@ -43,6 +47,7 @@ func _ready() -> void:
 		climates[c] = {weather: 1}
 	d["climates"] = climates
 	Weather.use(d)
+	CliffFace.off = OS.get_environment("CV_NOCLIFFS") != ""
 	if OS.get_environment("CV_BEFORE") != "":
 		# The catalog is read once and kept: take `rock_shape` out of its place looks and the columns come back.
 		for id: String in (SetDressing.catalog().get("place_looks", {}) as Dictionary).keys():
@@ -71,6 +76,21 @@ func capture_shots(tool: Node, out: String) -> void:
 				var t0 := Time.get_ticks_usec()
 				_build(id, hour)
 				ms.append((Time.get_ticks_usec() - t0) / 1000.0)
+				if r == runs - 1 and view.board.cliffs != null:
+					CliffFace._kept.clear()   # a cold plan, not the kept one
+					var tc := Time.get_ticks_usec()
+					var cf := CliffFace.plan(view.board)
+					var tp := Time.get_ticks_usec()
+					var made := 0
+					for z in view.grid.depth:
+						for x in view.grid.width:
+							var c := Vector2i(x, z)
+							if cf.ground_mesh(c) != null:
+								made += 1
+							if cf.rock_mesh(c) != null:
+								made += 1
+					var tm := Time.get_ticks_usec()
+					print("CLIFFS_PLAN %s: plan %.0f ms (%s), %d sides, %d meshes %.0f ms" % [id, (tp - tc) / 1000.0, CliffFace.plan_ms, cf.side_count(), made, (tm - tp) / 1000.0])
 				if r == runs - 1 and view.board.crags != null:
 					var look := (SetDressing.catalog().get("place_looks", {}) as Dictionary).get(id, {}) as Dictionary
 					Crags._kept.clear()   # a cold plan, not the kept one
@@ -100,6 +120,8 @@ func capture_shots(tool: Node, out: String) -> void:
 			print("CRAGS_BUILD %s: first %.0f ms, median %.0f ms over %d builds (%s)" % [id, cold, ms[floori(ms.size() * 0.5)], runs, ", ".join(ms.map(func(v: float) -> String: return "%.0f" % v))])
 		_build(id, hour)
 		await tool.call("wait_frames", 30)
+		if view.board.cliffs != null:
+			print("CLIFFS_COVERAGE %s: %s sides %d" % [id, view.board.cliffs.coverage(), view.board.cliffs.side_count()])
 		if view.board.crags != null:
 			var top := 0.0
 			for c: Vector2i in view.board.crags.cells:
