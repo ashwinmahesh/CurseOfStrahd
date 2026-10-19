@@ -301,10 +301,19 @@ dark stone: honestly a stone cottage with a slate roof. A rough-stone hut of its
 
 A place look with `rock_walls` may also say `rock_shape: "crags"` (Modern only; Classic keeps the columns). Its rock
 squares are then one shaped mountain (`Crags`, planned by `ArenaBoard._plan_crags` before any square is built): the
-surface rises out of the walked ground in a ragged face whose foot wanders up to two-thirds of a square in from the grid
-line, climbs the deeper the rock runs (past the map's edge counts as more rock) and breaks into peaks, ridges and
-saddles from noise seeded by the place. Each rock square keeps its own piece of the surface (`Crags.piece`, meta
-`crag`), so it fades in the party's way (from farther off when it's tall: meta `fade_reach`) and a prop can still take
-its square. GroundRelief draws a crag's square flat in the place's own ground rather than as a woods bank, so the foot
-rises out of the same ground the party stands on. Mount Baratok is the first; the vault's "Natural Tops Plan" lists
-the rest.
+surface rises out of the walked ground in a ragged face, climbs the deeper the rock runs (past the map's edge counts
+as more rock) and breaks into peaks, ridges and saddles from noise seeded by the place. The face's foot wanders from a
+quarter of a square out over the walkable squares beside the rock to two-thirds of a square in under it (the plan's
+rule 2: edges bend both ways, and a face is taller than a knee, so a quarter at most), and a low scree apron of the same
+rock skirts it, gone by half a square from the grid line, so a token in the middle of the square beside the rock has
+its ring clear and the ground at its feet. Each rock square keeps its own piece of the surface (`Crags.piece`, meta
+`crag`; the quads of the walkable squares the foot and scree reach into go with the nearest rock square's piece), so
+it fades in the party's way (from farther off when it's tall: meta `fade_reach`) and a prop can still take its square.
+GroundRelief draws a crag's square flat in the place's own ground rather than as a woods bank, so the foot rises out
+of the same ground the party stands on. Two more place look keys tune it: `crag_floor` (world units: no point more
+than half a square in from open ground stands lower, so a thin band of rock stays a ridge instead of breaking into
+lone spikes; the Amber Temple road and Tsolenka) and `crag_scale` (a multiplier on the heights; the castle gates, so
+the castle stays the tallest thing). Crags are on Mount Baratok, its trail, the Tsolenka Pass, the werewolf den, the
+castle gates and the Amber Temple road (the castle's overlook has `rock_walls` but its builder claims every wall
+square, and most of the gates' and the pass's walls are buildings too, so only their loose rock is shaped).
+tools/capture/crags_views.tscn shoots them from the four headings and prints which squares a crag hides.

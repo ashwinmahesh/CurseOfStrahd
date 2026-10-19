@@ -1,9 +1,14 @@
 extends TestCase
 ## Mountain tops with shape (owner 2026-10-19: "why are all of our mountain tops flat? ... Things should look natural"):
 ## a place whose look says `rock_shape: "crags"` draws its rock squares as one shaped mountain (Crags) instead of a field
-## of flat-topped columns, in the Modern look; Classic keeps the columns. Mount Baratok is the first.
+## of flat-topped columns, in the Modern look; Classic keeps the columns. Mount Baratok was the first; the rest of the
+## rock places follow (the vault's Natural Maps Plan, N5).
 
 const LOC := "mount_baratok"
+## Every place whose look says `rock_shape: "crags"` (catalog place_looks). The castle's overlook has `rock_walls` too, but
+## the castle's own builder claims every one of its wall squares, so it has no loose rock to shape.
+const PLACES: Array[String] = ["mount_baratok", "mount_baratok_trail", "tsolenka_pass", "werewolf_den",
+	"castle_ravenloft_gates", "amber_temple_road"]
 
 var view: LocationView
 var _was := ""
@@ -26,8 +31,8 @@ func after_each() -> void:
 	GameState.reset()
 
 
-func _view() -> LocationView:
-	view = LocationView.create(LOC, GameState.story, null, Dice.roller, "default")
+func _view(loc: String = LOC) -> LocationView:
+	view = LocationView.create(loc, GameState.story, null, Dice.roller, "default")
 	add_child(view)
 	await get_tree().process_frame
 	return view
@@ -61,27 +66,115 @@ func test_the_tops_have_shape() -> void:
 	assert_true(high - low > 0.3, "the top over %s isn't flat (%.2f to %.2f)" % [deep, low, high])
 
 
-## The rock rises out of the ground: wherever it meets a square the party can stand on, it is at the ground or under it.
-func test_the_rock_meets_the_ground() -> void:
+## Every place the catalog gives crags to is drawn as one (and the list above is that list).
+func test_every_rock_place_has_crags() -> void:
 	Look.set_style("modern", false)
-	var v := await _view()
-	var crags := v.board.crags
-	if crags == null:
-		assert_true(false, "no crags")
-		return
-	var bad := 0
-	for c: Vector2i in crags.cells:
-		for d: Vector2i in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
-			var o := c + d
-			if not v.board.grid.in_bounds(o) or crags.cells.has(o):
+	var looks := (SetDressing.catalog().get("place_looks", {}) as Dictionary)
+	var named: Array[String] = []
+	for place: String in looks:
+		if str((looks[place] as Dictionary).get("rock_shape", "")) == "crags":
+			named.append(place)
+	named.sort()
+	var want := PLACES.duplicate()
+	want.sort()
+	assert_eq(named, want, "the places the catalog gives crags to")
+	for place in PLACES:
+		var v := await _view(place)
+		assert_true(v.board.crags != null and not v.board.crags.cells.is_empty(), "%s's rock is one shaped mountain" % place)
+		v.queue_free()
+		view = null
+		await get_tree().process_frame
+
+
+## The rock stays clear of where the party stands (the plan's rule 2): in a walkable square the face is never more than a
+## quarter of a square out from the grid line, the scree never more than half, so the middle of the square is at the
+## ground, a token's ring clear of the face, and the foot never runs straight along the grid line for long.
+func test_the_rock_leaves_the_walkable_middles_clear() -> void:
+	Look.set_style("modern", false)
+	for place in PLACES:
+		var v := await _view(place)
+		var crags := v.board.crags
+		if crags == null:
+			assert_true(false, "no crags at %s" % place)
+			continue
+		var bad_middle := 0
+		var bad_face := 0
+		var bad_scree := 0
+		var reached := 0
+		for z in v.grid.depth:
+			for x in v.grid.width:
+				var c := Vector2i(x, z)
+				if crags.cells.has(c) or v.grid.has_flag(c, CombatGrid.WALL):
+					continue
+				if crags.height_at(x * Crags.RES + 2, z * Crags.RES + 2) > 0.05:   # (RES 4: the middle point)
+					bad_middle += 1
+				for b in Crags.RES + 1:
+					for a in Crags.RES + 1:
+						var h := crags.height_at(x * Crags.RES + a, z * Crags.RES + b)
+						if h <= 0.0:
+							continue
+						reached += 1
+						var d := _away_from_rock(crags, Vector2(x + float(a) / Crags.RES, z + float(b) / Crags.RES))
+						if d > 0.3 and h > Crags.SCREE + 0.01:
+							bad_face += 1
+						if d > 0.52 and h > 0.0:
+							bad_scree += 1
+		assert_eq(bad_middle, 0, "%s: the middle of every walkable square is at the ground" % place)
+		assert_eq(bad_face, 0, "%s: nothing taller than the scree stands more than a quarter square out" % place)
+		assert_eq(bad_scree, 0, "%s: no scree reaches more than half a square out" % place)
+		v.queue_free()
+		view = null
+		await get_tree().process_frame
+	# The foot does reach out over the squares beside it, on Mount Baratok at least.
+	var bar := await _view()
+	var out := 0
+	for z in bar.grid.depth:
+		for x in bar.grid.width:
+			var c := Vector2i(x, z)
+			if bar.board.crags.cells.has(c) or bar.grid.has_flag(c, CombatGrid.WALL):
 				continue
-			# The grid points along the side the two squares share.
-			for s in Crags.RES + 1:
-				var i := c.x * Crags.RES + (Crags.RES if d.x > 0 else (0 if d.x < 0 else s))
-				var j := c.y * Crags.RES + (Crags.RES if d.y > 0 else (0 if d.y < 0 else s))
-				if crags.height_at(i, j) > 0.0:
-					bad += 1
-	assert_eq(bad, 0, "every point where the rock meets open ground is at the ground or under it")
+			for q in Crags.RES + 1:
+				for p in Crags.RES + 1:
+					if bar.board.crags.height_at(x * Crags.RES + p, z * Crags.RES + q) > 0.0:
+						out += 1
+	assert_true(out > 40, "the rock and its scree reach out over the walkable squares beside them (%d points)" % out)
+
+
+## The distance (squares) from point `p` to the nearest rock square of `crags`.
+func _away_from_rock(crags: Crags, p: Vector2) -> float:
+	var best := INF
+	var sq := Vector2i(floori(p.x), floori(p.y))
+	for dz in range(-2, 3):
+		for dx in range(-2, 3):
+			var o := sq + Vector2i(dx, dz)
+			if crags.cells.has(o):
+				var nearest := Vector2(clampf(p.x, o.x, o.x + 1.0), clampf(p.y, o.y, o.y + 1.0))
+				best = minf(best, p.distance_to(nearest))
+	return best
+
+
+## A thin band of rock keeps a height (`crag_floor`) instead of breaking into lone spikes: on the Amber Temple road every
+## rock square stands at least that tall, and the castle gates' `crag_scale` lowers their rock.
+func test_floor_and_scale() -> void:
+	Look.set_style("modern", false)
+	var road := await _view("amber_temple_road")
+	var floor_h := float((SetDressing.catalog().get("place_looks", {}) as Dictionary)["amber_temple_road"]["crag_floor"])
+	var low := INF
+	for c: Vector2i in road.board.crags.cells:
+		low = minf(low, road.board.crags.top_of(c))
+	assert_true(low >= floor_h - 0.05, "no rock square on the Amber Temple road stands under %.1f (lowest %.2f)" % [floor_h, low])
+	road.queue_free()
+	view = null
+	await get_tree().process_frame
+	var gates := await _view("castle_ravenloft_gates")
+	var scaled := 0.0
+	for c: Vector2i in gates.board.crags.cells:
+		scaled = maxf(scaled, gates.board.crags.top_of(c))
+	var plain := Crags.plan(gates.board, gates.board.crags.cells, {})
+	var full := 0.0
+	for c: Vector2i in gates.board.crags.cells:
+		full = maxf(full, plain.top_of(c))
+	assert_true(scaled < full * 0.8, "the gates' rock is lower with crag_scale (%.1f against %.1f)" % [scaled, full])
 
 
 ## Each rock square keeps a piece of its own (it fades in the party's way and a prop can take its square), and the

@@ -554,7 +554,7 @@ func _plan_crags() -> void:
 					and not (theme == "camp" and _wagon_cells.has(c)):
 				cells[c] = true
 	if not cells.is_empty():
-		crags = Crags.plan(self, cells)
+		crags = Crags.plan(self, cells, _look)
 
 
 ## Rock instead of trees (catalog place_looks "rock_walls"): a craggy column of cliff on each wall square, taller at

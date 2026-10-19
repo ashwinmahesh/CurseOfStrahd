@@ -1193,11 +1193,15 @@
     },
     "amber_temple_road": {
       "floor": "mountain/snow",
-      "rock_walls": "mountain/cliff"
+      "rock_walls": "mountain/cliff",
+      "rock_shape": "crags",
+      "crag_floor": 2.2
     },
     "tsolenka_pass": {
       "floor": "mountain/snow",
-      "rock_walls": "mountain/cliff"
+      "rock_walls": "mountain/cliff",
+      "rock_shape": "crags",
+      "crag_floor": 2.2
     },
     "mount_baratok": {
       "floor": "mountain/scree",
@@ -1259,10 +1263,12 @@
     },
     "mount_baratok_trail": {
       "floor": "mountain/scree",
-      "rock_walls": "mountain/cliff"
+      "rock_walls": "mountain/cliff",
+      "rock_shape": "crags"
     },
     "werewolf_den": {
-      "rock_walls": "mountain/cliff"
+      "rock_walls": "mountain/cliff",
+      "rock_shape": "crags"
     },
     "werewolf_den_caves": {
       "floor": "cave/rock_floor",
@@ -1318,7 +1324,9 @@
     },
     "castle_ravenloft_gates": {
       "floor": "castle/courtyard",
-      "rock_walls": "mountain/cliff"
+      "rock_walls": "mountain/cliff",
+      "rock_shape": "crags",
+      "crag_scale": 0.6
     },
     "castle_ravenloft_overlook": {
       "floor": "castle/flagstones",
