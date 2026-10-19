@@ -361,7 +361,7 @@ func _page_tabs(page: String) -> void:
 			_place(mark)
 
 
-## Game: the playthrough's difficulty, how fights (Flanking among them) and the Narrator play, attunement, turn-based
+## Game: the playthrough's difficulty, how fights (Flanking and the Battle grid among them) and the Narrator play, attunement, turn-based
 ## exploring, and the respec option. More rows than fit above Back, so they scroll (the wheel, Page Up and Down, Home and
 ## End, the pad's focus moving down them), with the scroll bar showing and Back and Resume where they were.
 func _game_rows() -> void:
@@ -382,6 +382,13 @@ func _game_rows() -> void:
 	_choice_row(y, "Flanking", ["On", "Off"], 0 if GameSettings.flanking() else 1, func(i: int) -> void:
 		GameSettings.set_flanking(i == 0),
 		"On: a creature with an ally on the far side of its foe, both next to it, has Advantage on melee attacks against that foe. For heroes and foes alike.")
+	y += ROW_PITCH
+	# The battle grid (Ashwin 2026-10-19, Natural Maps plan N1): the Modern look's grid laid over the ground when it helps.
+	_choice_row(y, "Battle grid", ["In fights", "Always", "Never"], maxi(0, GameSettings.BATTLE_GRIDS.find(GameSettings.battle_grid())),
+		func(i: int) -> void:
+			GameSettings.set_battle_grid(GameSettings.BATTLE_GRIDS[i])
+			_note.text = "" if Look.modern() else "The Classic look keeps its grid painted in the ground; this is for Modern.",
+		InputActions.fill("In fights: thin lines show the squares round whoever's turn it is, and over the whole map in the tactical view ({camera_tactical}). Always: round the party when you explore too. Never: no lines at all."))
 	y += ROW_PITCH
 	# Attunement (a house option, Ashwin 2026-10-17): the book's limit of three, or none at all.
 	_choice_row(y, "Attunement", ["Three at most", "Unlimited"], 1 if GameSettings.unlimited_attunement() else 0, func(i: int) -> void:

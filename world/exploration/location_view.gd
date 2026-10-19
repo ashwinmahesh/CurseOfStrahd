@@ -204,6 +204,7 @@ func _ready() -> void:
 	add_child(HiddenAreas.create(self))   # rooms behind undiscovered secret doors stay out of sight
 	add_child(FoundGlow.create(self))   # what a Search or a check turns up glows orange until it's used
 	add_child(SightOverlay.create(self))   # who can see the party while it sneaks or plans (U10)
+	add_child(ExploreGrid.create(self))   # the battle grid, where the setting wants it out of fights too (N1)
 	add_child(WorldSounds.create(self))   # footsteps, fires and running water heard from where they are (A3)
 	if arrive_sneaking:
 		LocationStealth.set_sneaking(self, true)   # before the areas are looked at: it may slip into a fight's area

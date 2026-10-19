@@ -19,9 +19,6 @@ uniform vec2 uv_offset = vec2(0.0);
 uniform bool wall_band = false;
 uniform float band_top = 1.15;
 uniform float band_height = 1.15;
-// A faint line around each square on top faces (0 = none).
-uniform float grid_strength : hint_range(0.0, 1.0) = 0.0;
-uniform vec3 grid_line : source_color = vec3(0.15, 0.13, 0.18);
 // Relief: the surface's own normal map, or one made from the texture's brightness (Look.normal_map); 0 = flat.
 uniform sampler2D normal_tex : hint_normal, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform float normal_strength : hint_range(0.0, 2.0) = 0.0;
@@ -76,11 +73,6 @@ void fragment() {
 	if (macro_strength > 0.0) {
 		macro = texture(macro_tex, world_axes(world_pos, world_normal) / macro_units).r;
 		base *= mix(1.0, 0.72 + 0.56 * macro, macro_strength);
-	}
-	if (top && grid_strength > 0.0) {
-		vec2 f = fract(world_pos.xz);
-		float line = step(f.x, 0.02) + step(f.y, 0.02);
-		base = mix(base, grid_line, clamp(line, 0.0, 1.0) * grid_strength);
 	}
 	vec3 wn = normalize(world_normal);
 	if (normal_strength > 0.0) {

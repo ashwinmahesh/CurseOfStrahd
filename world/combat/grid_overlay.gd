@@ -3,7 +3,8 @@ extends Node3D
 ## Marks painted on the combat floor, only while they answer something the player is pointing at (owner 2026-10-06:
 ## the always-lit blue squares of where a creature could move were noise). Hovering the floor shows a dotted trail to
 ## a ring where the creature would stop, red when the walk provokes; aiming shows an area's edge and who can be
-## targeted; a controller's cursor is a pale ring. Drawn just above the floor, one instance per mark per layer.
+## targeted; a controller's cursor is a pale ring. Drawn just above the floor, one instance per mark per layer. Under them lies the battle grid, thin lines
+## along every square's edge (BattleGrid, `lines`), which the Modern look draws only while a fight or the setting wants it.
 
 const LAYERS := {
 	"path": {"colour": "wick", "alpha": 0.85, "lift": 0.02, "size": 0.2, "shape": "dot"},
@@ -37,6 +38,9 @@ const OUTLINE_MITRE := 2.5
 const OUTLINE_SHADER := preload("res://shaders/fx/area_outline.gdshader")
 
 var board: ArenaBoard
+## The battle grid's lines over the whole board: CombatView gathers them round the creature whose turn it is (set_wanted,
+## gather); nothing shows until something does.
+var lines: BattleGrid
 var _layers: Dictionary = {}
 var _outline: MeshInstance3D
 ## What the outline shows now, so pointing again at the same aim doesn't rebuild it.
@@ -50,6 +54,8 @@ static func create(board_: ArenaBoard) -> GridOverlay:
 	for key: String in LAYERS:
 		o._make_layer(key)
 	o._make_outline()
+	o.lines = BattleGrid.create(board_)
+	o.add_child(o.lines)
 	return o
 
 

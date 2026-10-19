@@ -100,6 +100,23 @@ static func set_unlimited_attunement(on: bool) -> void:
 	MagicItems.attunement_off = on
 
 
+## The battle grid (Ashwin 2026-10-19, Natural Maps plan N1): the Modern look draws its places as natural land and lays a
+## grid of thin lines over it only when it helps. "fights": round the creature whose turn it is, and over the whole map
+## in the tactical view; "always": round the party when exploring too; "never". The Classic look keeps its grid painted
+## in the ground and ignores this (BattleGrid).
+const BATTLE_GRIDS: Array[String] = ["fights", "always", "never"]
+
+
+static func battle_grid() -> String:
+	var v := str(value("battle_grid", "fights"))
+	return v if v in BATTLE_GRIDS else "fights"
+
+
+static func set_battle_grid(v: String) -> void:
+	if v in BATTLE_GRIDS:
+		set_value("battle_grid", v)
+
+
 ## Controller fights (owner pick 2026-10-09): false the bar (LB's radial picks a tab, LT/RT/RB the slots), true the
 ## wheels, Baldur's Gate 3's console way (LB's radial holds the actions themselves).
 static func pad_wheels() -> bool:

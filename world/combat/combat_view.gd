@@ -131,6 +131,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	catalog = ActionCatalog.new(e)
 	picker = TargetPicker.new(e)
 	overlay = GridOverlay.create(board)
+	overlay.lines.rig = rig   # (the whole map's grid as the camera goes tactical)
 	add_child(overlay)
 	field = FieldView.create(board)
 	add_child(field)
@@ -316,6 +317,7 @@ func close_softly() -> void:
 	input_locked = true
 	mode = Mode.OVER
 	overlay.clear_all()
+	overlay.lines.set_wanted(false)
 	hud.hide_tooltip()
 	if boss_bar != null:
 		LayerFade.fade(self, boss_bar, false, 0.35)
@@ -334,6 +336,7 @@ func _advance() -> void:
 	if e.state == Encounter.State.OVER:
 		mode = Mode.OVER
 		overlay.clear_all()
+		overlay.lines.set_wanted(false)
 		hud.hide_tooltip()
 		var tail := "R: fight again" if restart_allowed else "Space or A: continue"
 		var head := e.legendary.end_title()
@@ -349,6 +352,7 @@ func _advance() -> void:
 	# The camera stays where it is for an Invisible foe's turn: going to it would show where it is.
 	if not (_tok(c.id) != null and _tok(c.id).unseen):
 		rig.follow = tokens[c.id] as Node3D
+	_gather_grid(c)
 	_looked_at = ""
 	if not c.is_player_controlled() or e.compelled(c):
 		mode = Mode.BUSY
@@ -618,6 +622,24 @@ func _focus_on(id: String) -> void:
 	rig.follow = tok
 	for k: String in tokens:
 		(tokens[k] as CombatToken).set_highlight(tokens[k] == tok)
+
+
+## The battle grid (BattleGrid; the Modern look's, laid over natural ground): its lines gather round the creature whose
+## turn it is, as far as it can move, unless the setting says never. An Invisible foe's turn leaves them where they were,
+## as it leaves the camera, and so does one nobody can see; with none yet, they gather round the hero looked through.
+func _gather_grid(c: Combatant) -> void:
+	overlay.lines.set_wanted(BattleGrid.wanted_in_fights())
+	var tok := _tok(c.id)
+	if tok == null or tok.unseen or not tok.visible:
+		if overlay.lines.follow != null:
+			return
+		tok = _tok(viewer.id) if viewer != null else null
+		if tok == null:
+			for own: Variant in _own_tokens.values():
+				tok = own as CombatToken
+				break
+	if tok != null:
+		overlay.lines.gather(tok, c.speed() if tok.combatant == c else 0)
 
 
 ## The last creature looked at from the turn order (_focus_on), where the pad's next look starts from.

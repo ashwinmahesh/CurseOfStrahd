@@ -199,7 +199,7 @@ them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm a
 
 Improvement Ideas W11. On an outdoor wild map (ArenaBoard.WILD) the ground people walk on is drawn as one shaped
 skin instead of flat squares, with shallow hollows. It never rises above the squares' floor level and is never deeper
-than `GroundRelief.DEEPEST`, so tokens, grid overlays and spell templates still stand on the same 5 ft grid
+than `GroundRelief.DEEPEST`, so tokens, the battle grid and spell templates still stand on the same 5 ft grid
 (`floor_y`/`cell_center` are untouched; real heights are F4's), and it settles flat round any square drawn flat (a
 prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there stop drawing themselves (render
 layers 0; `ArenaBoard.floor_box`, `floor_material`); a trap's square keeps its box, so a pit still opens it. Under the
@@ -218,6 +218,28 @@ and drawn again from that on the next visit. `AtmosphereLand.build_ms` says what
 
     make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/clay FRAMES=10 \
       LAND_SHOTS=crossroads LAND_CLAY=1     # the shaped ground in plain clay; LAND_NO_RELIEF=1 for without
+
+## The battle grid in the Modern finish
+
+Natural Maps plan N1 (Ashwin, 2026-10-19: "we don't need to draw our real world maps as a battle grid. It can look like a
+real natural map that we just overlay a grid on top afterwards"). The Modern look paints no grid into its ground:
+`Look.cel_textured`'s `grid` argument (the faint line round each square on top faces) only draws in Classic, which
+is frozen, and `lit_world.gdshader` has no grid at all. The grid is a layer laid over the land instead,
+`BattleGrid` (`world/combat/battle_grid.gd`, `shaders/fx/battle_grid.gdshader`, `GridOverlay.lines`):
+
+- **What it is.** One mesh per board, made the first time it is wanted and kept with the board. Every square a creature
+  can stand in (not a wall, a tree, water or the void, nor a square of a hidden room) is a patch lying 0.012 above the
+  ground a creature stands on (0.03 on natural ground), the four triangles round its middle on a slope
+  (`ArenaBoard.corner_height`, so it follows slopes, steps and cliffs corner by corner), and the shader draws a line
+  along its border: a pale core with a dark soft edge, never thinner than a pixel, drawn half by each of two squares
+  so a crossing is one line deep. It lies under the fight's marks (path, goal, rings, area edge).
+- **When.** The Battle grid setting (Settings, Game; `GameSettings.battle_grid`): *In fights* (the default) fades it in
+  round the creature whose turn it is (its movement plus two squares, at least 8 and at most 14, fading out over the last
+  2.5; an Invisible foe's turn leaves it where it was, as it leaves the camera) and out when the fight ends, and shows it
+  over the whole map while the camera is in the tactical view (O), easing with the camera; *Always* does the same round
+  the party's leader when exploring (`ExploreGrid`); *Never* shows none. Classic has none to lay: its grid stays painted
+  in its ground and the setting does nothing there (the row's note says so).
+- **Not.** Turn-based exploring (plan mode) shows no grid unless the setting is *Always*.
 
 ## The sky in the Modern finish
 

@@ -153,7 +153,8 @@ static func theme_surface(theme: String, part: String) -> String:
 
 
 ## A cel material with a seamless world-mapped texture ("village/cobbles"), or null if the surface doesn't exist.
-## `grid` draws a faint square grid on top faces.
+## `grid` draws a faint square grid on top faces in the Classic look. The Modern look draws none in its ground, which
+## is natural land: its battle grid is laid over it in fights (BattleGrid, Natural Maps plan N1).
 static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	var key := "%s|%.2f|%s" % [surface, grid, style()]   # a change of look gets fresh materials
 	if _textured.has(key):
@@ -173,8 +174,9 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	m.set_shader_parameter("albedo_tex", load(path) as Texture2D)
 	m.set_shader_parameter("tile_units", float(info.get("tile_world_units", 2.0)))
 	m.set_shader_parameter("wall_band", str(info.get("wrap", "xy")) == "x")
-	m.set_shader_parameter("grid_strength", grid)
-	m.set_shader_parameter("grid_line", color("ink"))
+	if not modern():
+		m.set_shader_parameter("grid_strength", grid)
+		m.set_shader_parameter("grid_line", color("ink"))
 	m.set_meta("surface", surface)   # what the ground is, for footprints (Atmosphere)
 	if _surface_tints.has(surface):
 		m.set_shader_parameter("tint", surface_tint(surface))
