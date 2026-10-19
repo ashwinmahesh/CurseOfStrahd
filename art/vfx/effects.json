@@ -208,6 +208,7 @@
     "ranged": "shot@steel"
   },
   "spells": {
+    "absorb_elements": "ward",
     "acid_splash": "burst",
     "aid": "buff",
     "alarm": "cloud",

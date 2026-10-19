@@ -233,6 +233,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		details.append("Siege Monster: double damage to objects")
 	parts = e.damage_responses.synchronous(target, parts, details, responses_resolved)
 	parts = e.faerun.synchronous_damage(source, target, parts, details, responses_resolved)
+	e.spells.reaction_spells.absorb_synchronous(target, parts, responses_resolved)
 	parts = _reduce_by_dice(target, parts, details)
 	parts = _bastion(target, parts, details)
 	e.feature_actions.adjust_incoming(source, target, parts)

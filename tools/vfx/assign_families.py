@@ -71,7 +71,7 @@ SPELL_LOOKS = {
     "word_of_recall": "teleport", "tree_stride": "teleport@nature", "transport_via_plants": "teleport@nature",
     "arcane_gate": "summon", "gate": "summon", "teleportation_circle": "summon", "wind_walk": "transform@thunder",
     # defence
-    "shield": "ward", "sanctuary": "ward", "mage_armor": "ward", "blade_ward": "ward", "resistance": "ward",
+    "shield": "ward", "absorb_elements": "ward", "sanctuary": "ward", "mage_armor": "ward", "blade_ward": "ward", "resistance": "ward",
     "protection_from_evil_and_good": "ward", "protection_from_energy": "ward", "protection_from_poison": "ward",
     "death_ward": "ward", "stoneskin": "ward", "barkskin": "ward@nature", "warding_bond": "ward", "mind_blank": "ward",
     "mirror_image": "transform@illusion", "blur": "transform@illusion", "invisibility": "transform@illusion",

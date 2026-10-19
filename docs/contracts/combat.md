@@ -100,7 +100,7 @@ Queries: `current()`, `order`, `living()`, `hostiles_of(c)`, `distance(a, b)`, `
 
 `kind` (opportunity_attack, shield, uncanny_dodge, readied_attack, heroic_inspiration, hellish_rebuke, storms_thunder,
 sentinel, reactive_strike, warding_flare, protection, lucky, precision_attack, guided_strike, defensive_duelist,
-illusory_self, riposte, parry, stones_endurance, interception, protective_field, projected_ward, homing_strikes),
+illusory_self, riposte, parry, stones_endurance, interception, protective_field, projected_ward, homing_strikes, absorb_elements),
 `reactor_id`, `trigger_id`,
 `title`, `text` (the trigger with its numbers), `cost`. A player-controlled creature's
 `reaction_rules[kind]` = ask (default) / auto / never decides whether it's asked.
@@ -393,7 +393,9 @@ Immunity/Resistance/Vulnerability calculation without changing HP or rolling sav
 
 Reaction offers may supply `target_choices`, `selected_ids`, `min_targets`, `max_targets`, `validate_selected`,
 and `select`. A bounded single selection uses radio behavior in the HUD. The encounter validates again before
-clearing `pending`; an invalid or exhausted selection costs nothing and leaves the decision open.
+clearing `pending`; an invalid or exhausted selection costs nothing and leaves the decision open. An offer with
+`several_ways` (a Callable returning true while its spell has more than one way to be paid for) is asked even when a
+hero's rule for it is Automatic (`Reactions.decide`; Absorb Elements).
 
 A prompt can divide a pool (`ReactionRequest.pool` > 0, kind `preserve_life`; owner question 2026-10-14): each
 `target_choices` entry gives a creature (`id`, `name`, `label`) and the most it can take (`room`), `amounts` (id ->

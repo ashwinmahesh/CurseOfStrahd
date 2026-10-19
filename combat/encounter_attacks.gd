@@ -690,11 +690,17 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	for m in c.creature.modifiers_for(&"extra_damage"):
 		if m.data.has("vs") and str(m.data["vs"]) != target.id:
 			continue
+		# Absorb Elements' stored charge: the first melee hit only, and the hit uses it up.
+		var first_melee := m.text("on", "weapon") == "first_melee"
+		if first_melee and not bool(option["melee"]):
+			continue
 		var xt := e.spells.extra_damage_type(c, target, m, str(p.damage_type))
 		if xt == "":
 			continue
 		dice_list.append({"dice": m.text("dice", "1d4"), "type": xt, "label": m.source_name,
 			"penalty": bool(m.data.get("penalty", false))})
+		if first_melee:
+			e.spells.reaction_spells.spend_stored_charge(c, m)
 	var turn_key := "%d:%d" % [e.round_no, e.turn_index]
 	var savage := c.creature.has_flag("savage_attacker") and str(e._savage_turn.get(c.id, "")) != turn_key and c.creature is Character
 	var exploit := e.faerun.exploit_opening(c, opts)

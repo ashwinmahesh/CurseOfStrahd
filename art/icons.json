@@ -49,6 +49,7 @@
     "plan": "lorc/hourglass", "wait": "skoll/pocket-watch"
   },
   "spells": {
+    "absorb_elements": "lorc/magic-shield@arcane",
     "acid_splash": "lorc/acid-blob@acid",
     "aid": "delapouite/healing-shield@healing",
     "alarm": "lorc/ringing-bell@ward",

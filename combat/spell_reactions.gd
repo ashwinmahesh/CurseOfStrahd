@@ -381,3 +381,164 @@ func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> Comba
 		spells.zones.prune()
 		e._check_over()
 		return r)
+
+
+# --- Absorb Elements (Xanathar's) --------------------------------------------------------------------
+
+## The five damage types Absorb Elements answers.
+const ABSORB_TYPES := ["acid", "cold", "fire", "lightning", "thunder"]
+
+
+## Whether `c` can answer damage with Absorb Elements now: a hero or guest the player runs that knows it and has a
+## Reaction and a slot (or a free casting). Foes never cast it (docs/rules/deviations.md): no stat block lists it, and
+## the AI has no rule for when it is worth a slot.
+func absorb_ready(c: Combatant) -> bool:
+	return c.creature is Character and c.is_player_controlled() and can_cast_reaction(c, "absorb_elements")
+
+
+## The type Absorb Elements would answer in `amounts` (damage type -> amount): the biggest of its five that `c` neither
+## resists nor is immune to, or "" when there is none (a resistance already in force makes the spell pointless).
+func absorb_type(c: Combatant, amounts: Dictionary) -> String:
+	var best := ""
+	for ty: String in ABSORB_TYPES:
+		var amount := int(amounts.get(ty, 0))
+		if amount <= 0 or c.creature.resistance_source(StringName(ty)) != "" or c.creature.immunity_source(StringName(ty)) != "":
+			continue
+		if best == "" or amount > int(amounts[best]):
+			best = ty
+	return best
+
+
+## Damage given as a packet list ({amount, type}) as a type -> amount dictionary.
+static func amounts_of(parts: Array) -> Dictionary:
+	var out := {}
+	for p: Variant in parts:
+		var d := p as Dictionary
+		out[str(d["type"])] = int(out.get(str(d["type"]), 0)) + maxi(0, int(d["amount"]))
+	return out
+
+
+## How many ways `c` could pay for the Reaction spell `spell_id` now: each slot level and a free casting left.
+func payment_ways(c: Combatant, spell_id: String) -> int:
+	var ch := c.creature as Character
+	if ch == null:
+		return 0
+	var level := maxi(1, int(_comp().spell_data(spell_id).get("level", 1)))
+	return slot_levels(ch, level).size() + (1 if free_casting(c, spell_id) else 0)
+
+
+## A prompt's payment picks for the Reaction spell `spell_id`, the way Hellish Rebuke's list them (one per slot level, a
+## warlock's pact level named, the free casting first unless it waits for the pact slots): {cost, choices, selected}.
+## `describe` is given the level a casting is made at and returns what it does. With a single way to pay there is no
+## pick, only the cost.
+func payment_prompt(c: Combatant, spell_id: String, describe: Callable) -> Dictionary:
+	var ch := c.creature as Character
+	var out := {"cost": "Reaction and a spell slot", "choices": [] as Array[Dictionary], "selected": [] as Array[String]}
+	if ch == null:
+		return out
+	var from := maxi(1, int(_comp().spell_data(spell_id).get("level", 1)))
+	var levels := slot_levels(ch, from)
+	var free_at := free_level(c, spell_id) if free_casting(c, spell_id) else 0
+	if levels.is_empty() and free_at == 0:
+		return out
+	var pact := int(ch.pact_magic()["level"])
+	if levels.is_empty():
+		out["cost"] = "Reaction and its free casting (no spell slot)"
+		return out
+	if levels.size() == 1 and free_at == 0:
+		out["cost"] = "Reaction and a level %d spell slot%s" % [levels[0], " (Pact Magic)" if levels[0] == pact else ""]
+		return out
+	out["cost"] = "Reaction and the casting you choose" if free_at > 0 else "Reaction and the spell slot you choose"
+	var choices: Array[Dictionary] = []
+	for l in levels:
+		choices.append({"id": str(l), "label": "Level %d slot%s · %s" % [l, " (Pact Magic)" if l == pact else "", describe.call(l)]})
+	if free_at > 0:
+		var free := {"id": "free", "label": "Free casting, no slot · %s" % describe.call(free_at)}
+		if free_first(c, spell_id):
+			choices.push_front(free)
+		else:
+			choices.append(free)
+	out["choices"] = choices
+	out["selected"] = [str(choices[0]["id"])] as Array[String]
+	return out
+
+
+## Absorb Elements on the reaction prompt for damage aimed at `target` (an attack's, `parts`: type -> amount, cut as the
+## offers before it cut it): Resistance to the biggest of its types for the blow itself and to the start of its next
+## turn, and the same type stored for its next melee hit. `responded` learns it was offered, so the damage that follows
+## doesn't act on it again (absorb_synchronous).
+func absorb_offers(target: Combatant, source: Combatant, parts: Dictionary, responded: Array) -> Array:
+	var ty := absorb_type(target, parts)
+	if ty == "" or not absorb_ready(target):
+		return []
+	responded.append("absorb_elements")
+	var prompt := payment_prompt(target, "absorb_elements", func(level: int) -> String: return "%dd6 %s stored" % [level, ty.capitalize()])
+	var pick := {"slot": 0}
+	return [{"kind": "absorb_elements", "reactor": target, "trigger": source.id if source != null else "", "title": "Reaction: Absorb Elements?",
+		"text": "%s takes %d %s damage. Absorb Elements: Resistance to %s until your next turn, the blow included, and your next melee hit deals extra %s damage." \
+			% [target.name(), int(parts[ty]), ty.capitalize(), ty.capitalize(), ty.capitalize()],
+		"cost": prompt["cost"], "target_choices": prompt["choices"], "selected_ids": prompt["selected"],
+		"min_targets": 1 if not (prompt["choices"] as Array).is_empty() else 0, "max_targets": 1 if not (prompt["choices"] as Array).is_empty() else 0,
+		# A hero on Automatic is still asked when there are several ways to cast it (Hellish Rebuke's rule).
+		"several_ways": func() -> bool: return payment_ways(target, "absorb_elements") > 1,
+		"still": func() -> bool: return absorb_ready(target) and absorb_type(target, parts) == ty,
+		"select": func(ids: Array[String]) -> void:
+			if not ids.is_empty():
+				pick["slot"] = -1 if ids[0] == "free" else int(ids[0]),
+		"use": func() -> void: cast_absorb_elements(target, ty, int(pick["slot"]))}]
+
+
+## Damage that can't pause (spells, hazards): Absorb Elements is cast only on Automatic, at the casting Hellish Rebuke's
+## rule would pay with (a free casting first unless it waits for the pact slots, else the lowest slot).
+func absorb_synchronous(target: Combatant, parts: Array, resolved: Array) -> void:
+	if "absorb_elements" in resolved or not target.creature is Character or str(target.reaction_rules.get("absorb_elements", "ask")) != "auto":
+		return
+	if not absorb_ready(target):
+		return
+	var ty := absorb_type(target, amounts_of(parts))
+	if ty != "":
+		cast_absorb_elements(target, ty)
+
+
+## Casts Absorb Elements as `c`'s Reaction against `ty` damage: the Reaction and a slot (`slot_choice`, what its prompt
+## picked: pay) are spent, Resistance to `ty` lasts until the start of `c`'s next turn, and 1d6 of `ty` a slot level
+## waits for its next melee hit, to the end of its next turn.
+func cast_absorb_elements(c: Combatant, ty: String, slot_choice: int = 0) -> bool:
+	var e := enc()
+	if not can_cast_reaction(c, "absorb_elements"):
+		return false
+	c.reaction_available = false
+	if not sp().casting_gate(c):
+		return false
+	var paid := pay(c, "absorb_elements", slot_choice)
+	var level := maxi(1, int(paid["level"]))
+	var ward := Effect.new("Absorb Elements (%s)" % ty.capitalize(), &"spell", "absorb_elements").with_modifier("resistance", {"value": ty})
+	ward.caster_id = c.id
+	ward.spell_level = level
+	ward.stack_key = "spell:absorb_elements:ward"
+	ward.ends = Effect.Ends.START_OF_TURN
+	ward.turn_owner_id = c.id
+	c.creature.add_effect(ward)
+	var stored := Effect.new("Absorb Elements (stored %s)" % ty.capitalize(), &"spell", "absorb_elements") \
+		.with_modifier("extra_damage", {"dice": "%dd6" % level, "type": ty, "on": "first_melee"})
+	stored.caster_id = c.id
+	stored.spell_level = level
+	stored.stack_key = "spell:absorb_elements:stored"
+	stored.ends = Effect.Ends.END_OF_TURN
+	stored.turn_owner_id = c.id
+	stored.skip_turn_ends = e.own_turn_skip(c)
+	stored.data["await_owner_start"] = true   # idle until the start of its next turn (Effect.on_turn_start)
+	c.creature.add_effect(stored)
+	sp().trigger_ends(c, "cast_spell")
+	e.log.add("spell", "%s casts Absorb Elements (%s; Resistance to %s until its next turn, %dd6 stored for its next melee hit)" \
+		% [c.name(), "free casting" if bool(paid["free"]) else "level %d slot" % level, ty.capitalize(), level], c.id)
+	e.events.append({"type": "spell", "caster": c.id, "spell": "absorb_elements", "cells": [], "targets": [c.id]})
+	return true
+
+
+## A melee hit uses up the charge Absorb Elements stored (`m`, its extra_damage modifier): the spell ends.
+func spend_stored_charge(c: Combatant, m: Modifier) -> void:
+	for fx: Effect in c.creature.effects.duplicate():
+		if m in fx.modifiers:
+			c.creature.remove_effect(fx)
+			enc().log.add("info", "%s's stored %s is spent (Absorb Elements ends)" % [c.name(), str(m.data.get("type", "")).capitalize()], c.id)

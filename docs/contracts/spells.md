@@ -81,7 +81,7 @@ Dancing Lights, Mage Hand), `dash` (Expeditious Retreat), `heal_one` (Aura of Vi
 
 ## Reactions and readied spells
 
-Shield (when hit or targeted by Magic Missile), Hellish Rebuke (after being damaged), Counterspell (data only:
+Shield (when hit or targeted by Magic Missile), Hellish Rebuke (after being damaged), Absorb Elements (when acid, cold, fire, lightning or thunder damage lands: Resistance before the damage is taken, then a stored `first_melee` extra_damage charge; `SpellReactions.absorb_offers` for an attack, `absorb_synchronous` for damage that can't pause), Counterspell (data only:
 monsters' spells resolve at once). Any one-action spell can be readied (hotbar right-click → Ready): it's cast and
 its slot spent, held with Concentration, and released at the first enemy to come within range.
 

@@ -161,7 +161,9 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 		var parts: Array = [{"amount": int(rolled["total"]), "type": spells._damage_type(ctx), "spell": true, "spell_id": str(s["id"])}]
 		# Extra damage on any attack roll that hits (Hunter's Mark, Hex).
 		for m in c.creature.modifiers_for(&"extra_damage"):
-			if m.text("on", "weapon") != "attack" or (m.data.has("vs") and str(m.data["vs"]) != t.id):
+			# Absorb Elements' stored charge rides a melee spell attack too, once.
+			var first_melee := m.text("on", "weapon") == "first_melee" and melee
+			if (m.text("on", "weapon") != "attack" and not first_melee) or (m.data.has("vs") and str(m.data["vs"]) != t.id):
 				continue
 			var xt := spells.extra_damage_type(c, t, m, spells._damage_type(ctx))
 			if xt == "":
@@ -169,6 +171,8 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 			var xr := e._roll_damage_dice(m.text("dice", "1d6"), critical, 0, m.source_name)
 			parts.append({"amount": int(xr["total"]), "type": xt, "spell": true})
 			details.append("%s %s: %s" % [m.source_name, m.text("dice"), xr["text"]])
+			if first_melee:
+				spells.reaction_spells.spend_stored_charge(c, m)
 		e.hit_context = {"attacker": c.id, "target": t.id, "melee": melee, "spell": true}
 		var dr := spells.deal_spell_damage(ctx, t, parts, critical, str(s["name"]), details)
 		e.hit_context = {}

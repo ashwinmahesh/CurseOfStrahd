@@ -245,6 +245,9 @@ func decide(o: Dictionary, st: Dictionary = {}) -> String:
 	if bool(o.get("forced", false)):
 		return "auto"
 	var decision := e._reaction_decision(o["reactor"] as Combatant, str(o["kind"]), str(o.get("default", "")))
+	# A hero on Automatic is still asked when the spell has several ways to be cast (Hellish Rebuke, Absorb Elements).
+	if decision == "auto" and o.has("several_ways") and (o["reactor"] as Combatant).is_player_controlled() and (o["several_ways"] as Callable).call():
+		decision = "ask"
 	if decision == "ask" and not bool(o.get("ask", true)):
 		decision = "auto" if e.d20.sync_allows(o) else "never"
 	if decision == "ask" and o.has("helps") and not (o["helps"] as Callable).call():
@@ -597,6 +600,7 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 		return int(total.call()) if target.creature.preview_damage_parts(packet).final > 0 else 0
 	out.append_array(e.damage_responses.offers(target, incoming, cut, responded))
 	e.faerun.against_damage(st, parts, incoming, cut, out, responded)
+	out.append_array(e.spells.reaction_spells.absorb_offers(target, c, parts, responded))
 	st["damage_responses"] = responded
 	# Psi Warrior protecting itself.
 	if target.creature is Character:
@@ -631,7 +635,7 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 		# A spell that acts on its own once allowed (Alustriel's Mooncloak's Reaction): Automatic or Off.
 		if spell.has("policy") and not seen.has(str(spell["id"])):
 			seen[str(spell["id"])] = true
-			out.append({"id": str(spell["id"]), "name": str(spell["name"]), "cost": "Your Reaction" + (" and a spell slot" if str(spell["id"]) == "backlash" else ""),
+			out.append({"id": str(spell["id"]), "name": str(spell["name"]), "cost": "Your Reaction" + (" and a spell slot" if str(spell["id"]) in ["backlash", "absorb_elements"] else ""),
 				"modes": spell.get("policy_modes", ["auto", "never"]), "default": str(spell["policy"])})
 			continue
 		if not spell.has("roll_response") or seen.has(str(spell["id"])):
