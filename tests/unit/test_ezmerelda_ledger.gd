@@ -32,6 +32,15 @@ const NAMES := {
 }
 const RARITY_FROM := {"common": 1, "uncommon": 1, "rare": 5, "very_rare": 9, "legendary": 11}
 
+## What each name pays (Ashwin, 2026-10-19): the six easier names in gold, the seven hardest in one lasting magic item
+## nobody else in the story hands out (tests/unit/test_loot_distinct.gd keeps each kind to one place).
+const GOLD := {"falls": 1000, "wagon": 1250, "fowlers": 1500, "vine": 1750, "morgantha": 2000, "wint": 2500}
+const ITEMS := {
+	"huntsman": "armor_plus_1__ring_mail", "grandsire": "weapon_plus_2__battleaxe", "kiril": "weapon_plus_2__spear",
+	"khazan": "sun_blade__longsword", "lysaga": "weapon_plus_2__greataxe", "sarkhaza": "armor_plus_2__scale_mail",
+	"eye": "weapon_plus_3__maul",
+}
+
 
 func _party(level: int = 8, location: String = TOWER) -> StoryState:
 	var st := SideQuestPlay.party(["ilse_varga", "hedda_ironvow"], level, location, 12)
@@ -331,56 +340,88 @@ func test_a_briefing_is_words_only() -> void:
 		assert_true(_ended(beats), "and the talk closes")
 
 
-func test_a_claim_strikes_the_name_once_pays_scaled_to_level_and_moves_the_quest() -> void:
-	var low := _party(6, "svalich_crossroads")
-	_kill(low, "falls")
-	var beats := SideQuestPlay.play(low, HUB, [LEDGER, _option_for("ledger_menu", "claim_falls")])
-	assert_eq(SideQuestPlay.missing(beats), "")
-	assert_true(_says(beats, "His name comes out of the book"))
-	assert_true(bool(low.get_flag("ledger_paid_falls", false)))
-	assert_eq(int(low.get_flag("ezmerelda_ledger_paid", 0)), 1)
-	assert_eq(_count(low, "crossbow_bolt"), 10, "silver-headed bolts")
-	assert_eq(_count(low, "potion_of_healing"), 3, "healing below level 7")
-	assert_eq(_count(low, "potion_of_healing_greater"), 0)
-	assert_eq(low.quest_stage(QUEST), "paying")
-	assert_eq(int(low.get_flag("ezmerelda_trust", 0)), 1, "the first payment warms her")
-	assert_true(_ended(beats))
-	var again := _offers(low)
-	assert_false(again.get("falls", "") == "claim", "a name is paid once")
-	for pair: Array in [[7, "potion_of_healing_greater", 2], [8, "potion_of_healing_greater", 2], [9, "potion_of_healing_superior", 1]]:
-		var st := _party(int(pair[0]), "svalich_crossroads")
+func test_a_claim_strikes_the_name_once_pays_gold_at_any_level_and_moves_the_quest() -> void:
+	for level: int in [6, 9]:
+		var st := _party(level, "svalich_crossroads")
 		_kill(st, "falls")
-		SideQuestPlay.play(st, HUB, [LEDGER, _option_for("ledger_menu", "claim_falls")])
-		assert_eq(_count(st, str(pair[1])), int(pair[2]), "level %d pays %s" % [int(pair[0]), pair[1]])
-		assert_eq(_count(st, "potion_of_healing"), 0, "and not the plain potion")
+		var before := st.gold
+		var beats := SideQuestPlay.play(st, HUB, [LEDGER, _option_for("ledger_menu", "claim_falls")])
+		assert_eq(SideQuestPlay.missing(beats), "")
+		assert_true(bool(st.get_flag("ledger_paid_falls", false)))
+		assert_eq(int(st.get_flag("ezmerelda_ledger_paid", 0)), 1)
+		assert_eq(st.gold - before, 1000.0, "a thousand gold at level %d, however high the party is" % level)
+		for potion: String in ["potion_of_healing", "potion_of_healing_greater", "potion_of_healing_superior", "crossbow_bolt"]:
+			assert_eq(_count(st, potion), 0, "no hunter's goods any more: %s" % potion)
+		assert_eq(st.quest_stage(QUEST), "paying")
+		assert_eq(int(st.get_flag("ezmerelda_trust", 0)), 1, "the first payment warms her")
+		assert_true(_ended(beats))
+		assert_false(_offers(st).get("falls", "") == "claim", "a name is paid once")
+		var again := st.gold
+		SideQuestPlay.play(st, HUB, [LEDGER])
+		assert_eq(st.gold, again, "and not paid twice")
 
 
-func test_every_payment_gives_real_items_and_none_is_rarer_than_the_names_level_allows() -> void:
+func test_the_six_easier_names_pay_gold_that_grows_and_the_seven_hardest_pay_one_fresh_magic_item_each() -> void:
 	var f := DialogueFile.load_key(FILE)
 	var comp := Compendium.shared()
-	var seen := {}
+	var order: Array[String] = []
 	for id: String in NAMES:
+		order.append(id)
+	var last_gold := 0
+	var kinds := {}
+	for id: String in order:
 		var min_level := int((NAMES[id] as Array)[2])
-		var fixed := 0
+		var golds: Array[int] = []
+		var gives: Array[Dictionary] = []
 		for s: Dictionary in f.nodes["claim_" + id]:
-			if str(s["t"]) != "give":
-				continue
-			var item := str(s["item"])
-			var data := comp.item_data(item)
-			assert_false(data.is_empty(), "%s is an item" % item)
-			seen[item] = true
-			if item.begins_with("potion_of_healing"):
-				continue   # by level, below
-			fixed += 1
-			var rarity := str((data.get("magic", {}) as Dictionary).get("rarity", "common"))
-			assert_true(int(RARITY_FROM.get(rarity, 99)) <= min_level,
-				"%s (%s) is not too rare for %s, named from level %d" % [item, rarity, id, min_level])
-		assert_true(fixed >= 1, "%s pays in more than potions" % id)
-	for item: String in ["potion_of_healing", "potion_of_healing_greater", "potion_of_healing_superior", "weapon_plus_1__light_crossbow", "mage_breaker__dagger"]:
-		assert_false(comp.item_data(item).is_empty(), "%s is an item" % item)
-	assert_true(seen.has("holy_water") and seen.has("crossbow_bolt") and seen.has("scroll_of_protection_undead"), "her hunter's goods")
-	for pair: Array in [["potion_of_healing_greater", "uncommon"], ["potion_of_healing_superior", "rare"], ["weapon_plus_1__light_crossbow", "uncommon"], ["mage_breaker__dagger", "rare"]]:
-		assert_eq(str((comp.item_data(str(pair[0])).get("magic", {}) as Dictionary).get("rarity", "")), str(pair[1]), "%s" % pair[0])
+			match str(s["t"]):
+				"gold":
+					golds.append(int(s["amount"]))
+				"give":
+					gives.append(s)
+		if GOLD.has(id):
+			assert_eq(golds, [int(GOLD[id])] as Array[int], "%s pays %d gp" % [id, int(GOLD[id])])
+			assert_true(int(GOLD[id]) >= 1000, "%s: significant gold" % id)
+			assert_true(int(GOLD[id]) >= last_gold, "%s pays at least what the name before it did" % id)
+			last_gold = int(GOLD[id])
+			assert_eq(gives.size(), 0, "%s pays in gold alone" % id)
+			continue
+		assert_true(ITEMS.has(id), "%s has a reward" % id)
+		assert_eq(golds.size(), 0, "%s pays in an item, not coin" % id)
+		assert_eq(gives.size(), 1, "%s pays one item" % id)
+		var item := str(gives[0]["item"])
+		assert_eq(item, str(ITEMS[id]))
+		assert_eq(int(gives[0]["qty"]), 1)
+		var data := comp.item_data(item)
+		assert_false(data.is_empty(), "%s is an item" % item)
+		assert_eq(str((data.get("source", {}) as Dictionary).get("book", "")), "DMG2024", "%s is a 2024 DMG item" % item)
+		var rarity := str((data.get("magic", {}) as Dictionary).get("rarity", "common"))
+		assert_true(int(RARITY_FROM.get(rarity, 99)) <= min_level and rarity in ["rare", "very_rare"],
+			"%s (%s) is rare enough for %s, named from level %d, and not too rare" % [item, rarity, id, min_level])
+		var kind := Treasure.kind_of(item)
+		assert_true(kind != "", "%s is a lasting item" % item)
+		assert_false(kinds.has(kind), "%s: a second %s among the ledger's payments" % [id, kind])
+		kinds[kind] = id
+	assert_eq(kinds.size(), 7, "seven items, seven kinds")
+	assert_true(not kinds.has(Treasure.kind_of("weapon_plus_1__light_crossbow")) and not kinds.has(Treasure.kind_of("mage_breaker__dagger")),
+		"and none of them is the milestone gifts' kind")
+
+
+func test_each_name_hands_over_its_gold_or_its_item_when_claimed() -> void:
+	for id: String in NAMES:
+		var st := _party(10, TOWER)
+		_kill(st, id)
+		var before := st.gold
+		var beats := SideQuestPlay.play(st, HUB, [LEDGER, _option_for("ledger_menu", "claim_" + id)])
+		assert_eq(SideQuestPlay.missing(beats), "", id)
+		assert_true(bool(st.get_flag("ledger_paid_" + id, false)), "%s is paid" % id)
+		if GOLD.has(id):
+			assert_eq(st.gold - before, float(GOLD[id]), "%s: the gold" % id)
+			assert_true(_says(beats, "Gained %d gp" % int(GOLD[id])), "%s: the party is told" % id)
+		else:
+			assert_eq(st.gold, before, "%s: no coin" % id)
+			assert_eq(_count(st, str(ITEMS[id])), 1, "%s: %s" % [id, ITEMS[id]])
+			assert_true(_says(beats, " receives "), "%s: the party is told what it received" % id)
 
 
 func test_the_whole_ledger_can_be_struck_out_and_every_talk_closes() -> void:

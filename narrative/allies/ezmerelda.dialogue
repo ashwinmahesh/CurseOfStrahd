@@ -433,15 +433,8 @@ Ezmerelda: Put silver in him first, keep your back off that drop, and come tell 
 set ledger_paid_falls
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sly]: One less of Kiril's on the hills, and nothing left at the falls but scratches in the stone.
-Ezmerelda: His name comes out of the book. Take the silver-headed bolts and a healing draught, and stitch yourselves up.
-give crossbow_bolt 10
-if level >= 9
-give potion_of_healing_superior 1
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('gold', 1000)
+gold +1000
 -> claim_end
 
 # the Tinker's Wagon (flag wagon_slain; fought in svalich_road; named from level 4).
@@ -454,16 +447,8 @@ Ezmerelda: Don't touch its pots, and stay clear of the tailboard. Burn it from r
 set ledger_paid_wagon
 set ezmerelda_ledger_paid += 1
 Ezmerelda [weary]: Seven years on that board, bait for his own wagon. I'm glad Iosif walked back to the Tser Pool camp.
-Ezmerelda: The wagon's crossed off. Take the alchemist's fire and the silver-headed bolts, and a healing draught for the road.
-give alchemists_fire 3
-give crossbow_bolt 10
-if level >= 9
-give potion_of_healing_superior 1
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('gold', 1250)
+gold +1250
 -> claim_end
 
 # the count's fowlers on the hill trail (flag fowlers_slain; fought in lake_zarovich; named from level 5).
@@ -476,16 +461,8 @@ Ezmerelda: The count's fowlers wait in the branches: vampire spawn and bats. Loo
 set ledger_paid_fowlers
 set ezmerelda_ledger_paid += 1
 Ezmerelda: A cage in a dead pine is a baited hook. Whoever hung it was fishing for you.
-Ezmerelda [smile]: The fowlers are struck from the page. Take the holy water and the silver-headed bolts, and a healing draught.
-give holy_water 3
-give crossbow_bolt 10
-if level >= 9
-give potion_of_healing_superior 1
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('gold', 1500)
+gold +1500
 -> claim_end
 
 # the Vine Mother (flag vine_mother_slain; fought in wizard_of_wines; named from level 5).
@@ -498,16 +475,8 @@ Ezmerelda: Clear the blights round it first, stay out of its reach, and tell me 
 set ledger_paid_vine
 set ezmerelda_ledger_paid += 1
 Ezmerelda: Druids plant one black stick and the whole row tries to drink you. I can smell the sour wine from here.
-Ezmerelda: The Vine Mother is crossed out. Take the scroll against plants, the alchemist's fire and a healing draught.
-give scroll_of_protection_plant
-give alchemists_fire 3
-if level >= 9
-give potion_of_healing_superior 1
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('gold', 1750)
+gold +1750
 -> claim_end
 
 # Morgantha of Old Bonegrinder (flag morgantha_slain; fought in old_bonegrinder; named from level 5).
@@ -520,17 +489,8 @@ Ezmerelda [angry]: Don't take on all three hags at once. Hold a holy symbol up i
 set ledger_paid_morgantha
 set ezmerelda_ledger_paid += 1
 Ezmerelda: She talked sugar the whole time she was locking children in cages. A hag alone is a coward, and a dead coven stays quiet.
-Ezmerelda: Morgantha's name is struck for good. Take the scroll against fiends, the holy water and the antitoxin.
-give scroll_of_protection_fiend
-give holy_water 2
-give antitoxin 2
-if level >= 9
-give potion_of_healing_superior 1
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('gold', 2000)
+gold +2000
 -> claim_end
 
 # Wintersplinter on Yester Hill (flag yester_hill_resolved; fought in yester_hill; named from level 6).
@@ -543,16 +503,8 @@ Ezmerelda: Don't let the druids pin you against their stacked skulls. Aim for th
 set ledger_paid_wint
 set ezmerelda_ledger_paid += 1
 Ezmerelda: They dug the mountain folk out of their mounds to stack skulls for a walking tree. Even for this valley, that's ugly.
-Ezmerelda: Wintersplinter is out of the ledger. Take the alchemist's fire and some bolts with a keener edge.
-give alchemists_fire 3
-give ammunition_plus_1__crossbow_bolt 6
-if level >= 9
-give potion_of_healing_superior 1
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('gold', 2500)
+gold +2500
 -> claim_end
 
 # the Count's Huntsman (flag huntsman_slain; fought in svalich_road; named from level 7).
@@ -565,17 +517,8 @@ Ezmerelda: Steady your nerve when the horn goes. Watch his boar spear and black 
 set ledger_paid_huntsman
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sad]: Every quarry he ran down became one of his hounds. My people scratched their names on cairns by the road.
-Ezmerelda: Toader's hunt is struck from the book. Take the scroll against the undead, the draught against grave-cold and the holy water.
-give scroll_of_protection_undead
-give potion_of_resistance_necrotic
-give holy_water 3
-if level >= 9
-give potion_of_healing_superior 2
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('give', 'armor_plus_1__ring_mail')
+give armor_plus_1__ring_mail
 -> claim_end
 
 # the Grandsire (flag grandsire_slain; fought in krezk; named from level 7).
@@ -588,15 +531,8 @@ Ezmerelda: His howl empties your nerve and his bite puts you on your back. Thin 
 set ledger_paid_grandsire
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sly]: He taught Kiril everything he knows and answered to nobody after. Sounds like another old teacher I could name.
-Ezmerelda: The Grandsire is crossed out. Take these keener bolts and a healing draught; they're yours.
-give ammunition_plus_1__crossbow_bolt 10
-if level >= 9
-give potion_of_healing_superior 2
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_2__battleaxe')
+give weapon_plus_2__battleaxe
 -> claim_end
 
 # Kiril Stoyanovich (flag kiril_defeated, or den_broken: the reckoning kills him with Emil's pack; fought in werewolf_den; named from level 7).
@@ -609,15 +545,8 @@ Ezmerelda: He laughs with his mouth open and calls armed men meat with swords. S
 set ledger_paid_kiril
 set ezmerelda_ledger_paid += 1
 Ezmerelda: That name has been in this book longer than any other, and the ink was wearing through the page.
-Ezmerelda: He's struck out for good. Take the keener bolts and a healing draught; they're yours.
-give ammunition_plus_1__crossbow_bolt 10
-if level >= 9
-give potion_of_healing_superior 2
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_2__spear')
+give weapon_plus_2__spear
 -> claim_end
 
 # Khazan, under the tower (flag khazan_destroyed; fought in van_richtens_tower; named from level 7).
@@ -630,17 +559,8 @@ Ezmerelda: He's polite right up until his touch freezes you. Don't offer him you
 set ledger_paid_khazan
 set ezmerelda_ledger_paid += 1
 Ezmerelda [weary]: I camped on that shore for months, knowing the lock answered to his name and never guessing what the name had made of him.
-Ezmerelda: One less courteous corpse under the tower. Take the scroll against the undead, the draught against grave-cold and the holy water.
-give scroll_of_protection_undead
-give potion_of_resistance_necrotic
-give holy_water 4
-if level >= 9
-give potion_of_healing_superior 2
-elif level >= 7
-give potion_of_healing_greater 2
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('give', 'sun_blade__longsword')
+give sun_blade__longsword
 -> claim_end
 
 # Baba Lysaga (flag lysaga_dead; fought in berez; named from level 8).
@@ -653,16 +573,8 @@ Ezmerelda: She casts like a wizard and fusses over her boy. Burn the straw men e
 set ledger_paid_lysaga
 set ezmerelda_ledger_paid += 1
 Ezmerelda: I've cut her scarecrows down on that marsh before, and there were always three more watching before my blade was dry.
-Ezmerelda: The old witch is struck from the page. Take the alchemist's fire and the rest; it's yours.
-give ammunition_plus_2__crossbow_bolt 6
-give alchemists_fire 3
-if level >= 9
-give potion_of_healing_superior 2
-elif level >= 7
-give potion_of_healing_greater 3
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_2__greataxe')
+give weapon_plus_2__greataxe
 -> claim_end
 
 # Sarkhaza (flag sarkhaza_slain; fought in mount_ghakis; named from level 9).
@@ -675,16 +587,8 @@ Ezmerelda: She's starved on grave-salt, and the count's cart brings a cage every
 set ledger_paid_sarkhaza
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sad]: Forty years in the dark on false gold, eating what came in cages. A ledger only asks who ate, not who held the leash.
-Ezmerelda: Her name is struck. Take the fire draughts and the bolts with it; they're yours.
-give potion_of_resistance_fire 2
-give ammunition_plus_2__crossbow_bolt 8
-if level >= 9
-give potion_of_healing_superior 2
-elif level >= 7
-give potion_of_healing_greater 3
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('give', 'armor_plus_2__scale_mail')
+give armor_plus_2__scale_mail
 -> claim_end
 
 # the Eye Below (flag eye_below_slain; fought in amber_temple; named from level 9).
@@ -697,16 +601,8 @@ Ezmerelda: The wardens could only sing it to sleep, and its ten small eyes will 
 set ledger_paid_eye
 set ezmerelda_ledger_paid += 1
 Ezmerelda [smile]: The wardens settled for a lullaby, and you lot went down there and finished the song.
-Ezmerelda: The Eye Below is struck out. Take the scroll against aberrations and the rest; it's yours.
-give scroll_of_protection_aberration
-give ammunition_plus_2__crossbow_bolt 8
-if level >= 9
-give potion_of_healing_superior 2
-elif level >= 7
-give potion_of_healing_greater 3
-else
-give potion_of_healing 3
-endif
+Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_3__maul')
+give weapon_plus_3__maul
 -> claim_end
 
 # ---------------------------------------------------------------- After a payment

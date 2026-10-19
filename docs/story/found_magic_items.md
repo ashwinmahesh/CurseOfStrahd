@@ -270,6 +270,13 @@ leaves a smaller purse and one find.
 | ✅ | Van Richten's tower, the wall of trophies | Wand of Binding (rare) | Search (Investigation DC 16) |
 | ✅ | Van Richten's tower, the jars and bottles | Oil of Etherealness (rare) | Search (Investigation DC 15) |
 | ✅ | Ezmerelda | Glamoured Studded Leather (rare) | Gift: once she trusts you |
+| ✅ | Ezmerelda's Hunter's Ledger, the Count's Huntsman | +1 Ring Mail (rare) | Gift: the bounty for the name, from party level 7 (Ezmerelda's rewards, Ashwin 2026-10-19; The Hunter's Ledger, docs/story/side_quests.md) |
+| ✅ | Ezmerelda's Hunter's Ledger, the Grandsire | +2 Battleaxe (rare) | Gift: the bounty for the name, from party level 7 |
+| ✅ | Ezmerelda's Hunter's Ledger, Kiril Stoyanovich | +2 Spear (rare) | Gift: the bounty for the name, from party level 7 |
+| ✅ | Ezmerelda's Hunter's Ledger, Khazan | Sun Blade (rare) | Gift: the bounty for the name, from party level 7 |
+| ✅ | Ezmerelda's Hunter's Ledger, Baba Lysaga | +2 Greataxe (rare) | Gift: the bounty for the name, from party level 8 |
+| ✅ | Ezmerelda's Hunter's Ledger, Sarkhaza | +2 Scale Mail (very rare) | Gift: the bounty for the name, from party level 9 |
+| ✅ | Ezmerelda's Hunter's Ledger, the Eye Below | +3 Maul (very rare) | Gift: the bounty for the name, from party level 9 |
 | ✅ | Van Richten's tower, his strongbox | Arrow of Undead Slaying, two (very rare) | Hoard: the hunter's own (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots; or a Tip from Mircea, whose they were, in the bone midden (Speak with Dead) |
 | ✅ | Werewolf caves, Kiril's trophies | Shortsword of Wounding (rare) | Search (Perception DC 15) (a shortsword for a rogue, (magic item audit, 2026-10-17)) |

@@ -1290,8 +1290,8 @@ drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the to
 
 ### The Hunter's Ledger (`hunters_ledger`, narrative/allies/ezmerelda.dialogue; Story Allies Presence Plan, package M2)
 
-Ezmerelda d'Avenir keeps a book of the valley's killers, each with a price beside the name, and pays in a hunter's goods
-for proof. It is the recurring reason to go back to her, not a test: there is no deadline, no penalty and no fight she
+Ezmerelda d'Avenir keeps a book of the valley's killers, each with a price beside the name, and pays for proof: gold for the
+six easier names and one magic item from her wagon for each of the seven hardest. It is the recurring reason to go back to her, not a test: there is no deadline, no penalty and no fight she
 didn't see coming (a name she briefs is words only). Her hub, `allies/ezmerelda:talk`, carries the ledger and four
 topics that each play once (Rudolph, her leg, the Vistani, and what she thinks of where the party is going; the hub
 offers at most the three first, newest first). It opens from where she stands (one menu option each in her tower,
@@ -1304,30 +1304,45 @@ lowest level reaches. A name the story can no longer end by a kill (Morgantha af
 Grandsire after Petru is given up, Kiril once he leads the pack, Lysaga after she was bought off or broken) is never
 offered as a hunt. The kills are the flags the regions already set, so the ledger reads and never writes the story.
 
-| Name | Flag read | Fought in | Named from level | Pays (always) |
+| Name | Flag read | Fought in | Named from level | Pays (once) |
 |---|---|---|---|---|
-| Dragan, the werewolf at Tser Falls | `falls_werewolf_slain` | svalich_road | 3 | 10 bolts |
-| The Tinker's Wagon | `wagon_slain` | svalich_road | 4 | 3 alchemist's fire, 10 bolts |
-| The count's fowlers | `fowlers_slain` | lake_zarovich | 5 | 3 holy water, 10 bolts |
-| The Vine Mother | `vine_mother_slain` | wizard_of_wines | 5 | scroll of protection (plants), 3 alchemist's fire |
-| Morgantha | `morgantha_slain` | old_bonegrinder | 5 | scroll of protection (fiends), 2 holy water, 2 antitoxin |
-| Wintersplinter | `yester_hill_resolved` | yester_hill | 6 | 3 alchemist's fire, 6 +1 bolts |
-| The Count's Huntsman | `huntsman_slain` | svalich_road | 7 | scroll of protection (undead), potion of resistance (necrotic), 3 holy water |
-| The Grandsire | `grandsire_slain` | krezk | 7 | 10 +1 bolts |
-| Kiril Stoyanovich | `kiril_defeated` or `den_broken` (the reckoning) | werewolf_den | 7 | 10 +1 bolts |
-| Khazan | `khazan_destroyed` | van_richtens_tower | 7 | scroll of protection (undead), potion of resistance (necrotic), 4 holy water |
-| Baba Lysaga | `lysaga_dead` | berez | 8 | 6 +2 bolts, 3 alchemist's fire |
-| Sarkhaza | `sarkhaza_slain` | mount_ghakis | 9 | 2 potions of resistance (fire), 8 +2 bolts |
-| The Eye Below | `eye_below_slain` | amber_temple | 9 | scroll of protection (aberrations), 8 +2 bolts |
+| Dragan, the werewolf at Tser Falls | `falls_werewolf_slain` | svalich_road | 3 | 1,000 gp |
+| The Tinker's Wagon | `wagon_slain` | svalich_road | 4 | 1,250 gp |
+| The count's fowlers | `fowlers_slain` | lake_zarovich | 5 | 1,500 gp |
+| The Vine Mother | `vine_mother_slain` | wizard_of_wines | 5 | 1,750 gp |
+| Morgantha | `morgantha_slain` | old_bonegrinder | 5 | 2,000 gp |
+| Wintersplinter | `yester_hill_resolved` | yester_hill | 6 | 2,500 gp |
+| The Count's Huntsman | `huntsman_slain` | svalich_road | 7 | +1 Ring Mail (rare) |
+| The Grandsire | `grandsire_slain` | krezk | 7 | +2 Battleaxe (rare) |
+| Kiril Stoyanovich | `kiril_defeated` or `den_broken` (the reckoning) | werewolf_den | 7 | +2 Spear (rare) |
+| Khazan | `khazan_destroyed` | van_richtens_tower | 7 | Sun Blade (rare) |
+| Baba Lysaga | `lysaga_dead` | berez | 8 | +2 Greataxe (rare) |
+| Sarkhaza | `sarkhaza_slain` | mount_ghakis | 9 | +2 Scale Mail (very rare) |
+| The Eye Below | `eye_below_slain` | amber_temple | 9 | +3 Maul (very rare) |
 
-Every payment also adds healing by the party's lowest level: three Potions of Healing below level 7, Greater Healing
-(two; three for the last three names) from 7, Superior Healing (one; two for the last seven names) from 9. Rarity follows
-docs/story/found_magic_items.md (uncommon to level 4, rare from 5): the scrolls, +1 and +2 bolts and resistance potions
-are consumables, so they may repeat. **The fourth name** struck brings her spare light crossbow (a +1 Light Crossbow,
-uncommon) and **the eighth** a dagger (Mage Breaker, rare); each is the only one of its kind among the ledger's own
-gifts (tests/unit/test_loot_distinct.gd; Dmitri Krezkov also sells a Mage Breaker from party level 5, so it is not one of a
-kind in the story). The first payment warms her (`ezmerelda_trust` +1), the seventh moves the quest to
-`half_struck`, and the thirteenth ends it (`ledger_struck`); after that the ledger option goes.
+**What she pays (Ashwin, 2026-10-19).** The old hunter's goods (bolts, holy water, scrolls, healing draughts by level) were
+too slight for the names they paid for. The six easier names now pay gold, a thousand or more and growing with the name,
+at any party level; the seven hardest pay one magic item each from her wagon, a lasting 2024 DMG item that nothing else in the
+story hands out (tests/unit/test_loot_distinct.gd keeps each kind to one place), rare from level 7 and very rare for the two
+level 9 names (rarity follows docs/story/found_magic_items.md: rare from level 5, very rare from level 9). The pick for each
+name and why is below. The fourth name struck still brings her spare light crossbow (a +1 Light Crossbow, uncommon) and the
+eighth a dagger (Mage Breaker, rare); each is the only one of its kind among the ledger's own gifts
+(tests/unit/test_loot_distinct.gd; Dmitri Krezkov also sells a Mage Breaker from party level 5, so it is not one of a kind
+in the story). The first payment warms her (`ezmerelda_trust` +1), the seventh moves the quest to `half_struck`, and the
+thirteenth ends it (`ledger_struck`); after that the ledger option goes.
+
+| Name | Why that reward |
+|---|---|
+| Dragan, the Tinker's Wagon | The first two names are the road's: 1,000 and 1,250 gp buy a party at level 3 or 4 a real kit (the wagon's own quest pays 300 gp more). |
+| Fowlers, the Vine Mother, Morgantha | Level 5 hunts: 1,500, 1,750 and 2,000 gp, in the range of a rare item's shop price. |
+| Wintersplinter | The last gold name, 2,500 gp, before the hunts that deserve steel. |
+| The Huntsman | +1 Ring Mail (rare): heavy armour, AC 15 with no Dex limit to worry about, for a party in need of a better coat. |
+| The Grandsire | +2 Battleaxe (rare): a martial weapon, versatile (1d8 or 1d10) with the Topple mastery. |
+| Kiril | +2 Spear (rare): a simple weapon (thrown, versatile), so a Cleric or Druid can use it as well as a Fighter. |
+| Khazan | Sun Blade (rare, attunement): radiant, a finesse longsword, extra damage against Undead and a light in the dark, for the lich's own cellar. |
+| Baba Lysaga | +2 Greataxe (rare): the d12 weapon for a Barbarian or Fighter. |
+| Sarkhaza | +2 Scale Mail (very rare): medium armour, AC 16 plus up to 2 Dex, at the level very rare items begin. |
+| The Eye Below | +3 Maul (very rare): 2d6 two-handed with Topple, the last hunt's prize. |
 
 **Closing the book short (sq-stuck, findings 133 to 135).** Kiril killed in the den's reckoning (`den_broken`, the "pack
 broken" ending) counts as his death everywhere the ledger reads `kiril_defeated`. A party that has struck every name in
@@ -1343,7 +1358,8 @@ which have none: it opens only from where she stands or by clicking her as a gue
   visit, not state), all in data/flags/allies_ezmerelda.json. Stories are hers and use only the facts our data holds for
   each name.
 - Lines: 87 spoken (Ezmerelda and the Narrator), drafted by Gemini through the ai-bridge and edited
-  (docs/plans/gemini_allies/M2/), all unvoiced. Test: tests/unit/test_ezmerelda_ledger.gd.
+  (docs/plans/gemini_allies/M2/), all unvoiced; the payment lines, her opening and the quest's journal were redrafted for the
+  new payments (docs/plans/gemini_ezmerelda_rewards/). Test: tests/unit/test_ezmerelda_ledger.gd.
 
 ## The Amber Temple (level 10)
 
