@@ -24,7 +24,7 @@ signal moment_shown(kind: String, id: String)
 const STEP_TIME := 0.37   # seconds a square (owner 2026-10-07: about 30% slower than 0.26)
 const AI_PAUSE := 0.35
 ## How long damage and healing numbers stay over a creature.
-const FLOAT_TIME := 2.4
+const FLOAT_TIME := FloatText.TIME
 ## The opening beat before the first turn (owner 2026-10-06: going into a fight felt abrupt): the camera takes in the
 ## field, the foes step into view, the HUD fades up and Initiative is rolled.
 const INTRO_TIME := 1.5
@@ -2566,24 +2566,7 @@ func _stop_walking(walking: Dictionary) -> void:
 
 ## A number or word rising over a creature: stays readable for about 2 seconds, then fades (damage a little bigger).
 func _float(t: CombatToken, text: String, colour: String, size: int = 52) -> void:
-	if t.unseen:
-		return   # a number over an Invisible foe nobody sees would show where it stands
-	var l := Label3D.new()
-	l.text = text
-	l.font_size = size
-	l.pixel_size = 0.006
-	l.outline_size = 12
-	l.modulate = Look.color(colour)
-	l.outline_modulate = Look.color("void")
-	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	l.no_depth_test = true
-	l.render_priority = 11
-	l.position = t.position + Vector3(0, CombatToken.height_of(t.combatant) + 0.2, 0)
-	add_child(l)
-	var tw := create_tween()
-	tw.tween_property(l, "position", l.position + Vector3(0, 0.6, 0), FLOAT_TIME).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tw.parallel().tween_property(l, "modulate:a", 0.0, 0.7).set_delay(FLOAT_TIME - 0.7)
-	tw.tween_callback(l.queue_free)
+	FloatText.rise(self, t, text, colour, size)   # the same mark a trap's damage gets outside a fight (LocationHurt)
 
 
 # --- Test and capture hooks -----------------------------------------------------------------------

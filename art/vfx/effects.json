@@ -933,5 +933,33 @@
     "storm_of_vengeance": "storm@lightning",
     "gust_of_wind": "wind@thunder",
     "wind_wall": "wind@thunder"
+  },
+  "_traps": "What a trap, or a fall or swim that goes wrong, looks like on whoever it catches outside a fight (world/exploration/trap_fx.gd, TrapFx): `traps` by a trap's id, `checks` by a world check's id, then `trap_damage` by damage type. A pick is \"<family>@<flavour>\" or an object {family, flavour, size, count, from}. The fights' families burst, strike, nova, cloud, ground, psychic, slash and ward play as they do there; `darts` (count of needles, bolts or shards flying in `from` above, the side or below) and `crash` (a falling weight or a failing floor) are the traps' own. A pit is a crash whatever it has at the bottom; a save that held plays at 60%.",
+  "trap_damage": {
+    "fire": "burst@fire",
+    "cold": "cloud@cold",
+    "lightning": "strike@lightning",
+    "thunder": "nova@thunder",
+    "acid": "burst@acid",
+    "poison": "cloud@poison",
+    "necrotic": "cloud@necrotic",
+    "radiant": "strike@radiant",
+    "psychic": "psychic@mind",
+    "force": "nova@force",
+    "piercing": "darts@steel",
+    "slashing": "slash@steel",
+    "bludgeoning": "crash@earth"
+  },
+  "traps": {
+    "snow_cornice": "crash@cold",
+    "stair_ice": {"family": "crash", "flavour": "cold", "size": 0.6},
+    "soot_cloud": "cloud@shadow",
+    "court_trophy_crossbow": {"family": "darts", "flavour": "steel", "from": "side", "count": 3},
+    "amber_shards": {"family": "darts", "flavour": "steel", "from": "above", "count": 8},
+    "mists_wolf_trap": {"family": "darts", "flavour": "steel", "from": "below", "count": 4},
+    "hall_chandelier": {"family": "crash", "flavour": "steel", "size": 1.2}
+  },
+  "checks": {
+    "ravens_scatter": "slash@steel"
   }
 }

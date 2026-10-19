@@ -137,6 +137,12 @@ static func _resolve(view: LocationView, spec: Dictionary, check: Dictionary, wh
 	var res := WorldChecks.apply(view.st, outcome, who, view.dice, str(check.get("label", "")))
 	if not (res["lines"] as Array).is_empty():
 		view.check_rolled.emit(" · ".join(res["lines"] as Array))
+	# A slip, a cold swim or a ritual gone wrong that hurt them: the effect, the damage over their head and the party
+	# panel, once the roll has been seen (LocationHurt).
+	var hurt := res["hurt"] as Dictionary
+	if not hurt.is_empty():
+		LocationHurt.show(view, LocationHurt.member(view, hurt["who"] as Creature), int(hurt["amount"]),
+			TrapFx.cue("checks", str(check["id"]), hurt["type"] as StringName))
 	# XP levelling (story/xp.gd): a check passed is worth a little, and so is each hiding place, secret door or trap it
 	# brings to light (_reveal_here). The XP rides on the notice the thing already has.
 	var passed := Xp.award(view.st, "check", "%s:%s" % [view.loc_id, check["id"]]) if success else 0

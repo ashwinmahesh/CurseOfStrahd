@@ -43,6 +43,9 @@ signal banter(lines: Array)
 signal travel_requested
 ## A party member down outside a fight was stabilized or healed from the right-click menu.
 signal party_tended
+## A party member took damage outside a fight (a trap, a pit, a failed climb: LocationHurt) and it has been shown: the
+## party panel shows their new Hit Points. `who` is null when only the panel needs to catch up.
+signal party_hurt(who: Combatant)
 ## Guidance before a skill check (ask_guidance): the game shows the prompt (GuidancePrompt) and calls `answered` with
 ## the caster picked (-1: nobody) and the casters' rule from now on.
 signal guidance_asked(offer: Dictionary, answered: Callable)

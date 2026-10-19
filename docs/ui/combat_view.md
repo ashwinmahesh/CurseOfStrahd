@@ -201,7 +201,9 @@ template), `_5_end.png` (the end of a fight). Where the build differs from the w
 - **Heroic Inspiration** uses the reaction prompt after a missed attack roll ("Spend Heroic Inspiration to reroll?").
 
 - **Combat log** minimizes to its title bar (the – button or L), which then shows the latest line (owner request).
-- **Damage and healing numbers** stay over the creature for about 2.5 seconds (owner request).
+- **Damage and healing numbers** stay over the creature for about 2.5 seconds (owner request); every Hit Point lost
+  comes with a `damage` event, so a trap's damage floats like a blow's (FloatText, world/combat/fx/float_text.gd, which
+  a trap outside a fight uses too).
 - **Right-click any hotbar slot** (weapon, spell, ability, action) for a menu: Info (the full details: attack and
   damage breakdowns, properties and mastery, or a spell's level, school, casting time, range, components, duration,
   save DC or attack bonus, dice, upcasting and its text), Use, and for spells "Cast at level N" for each slot level

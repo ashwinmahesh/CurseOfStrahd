@@ -258,10 +258,12 @@ static func record(st: StoryState, loc_id: String, check: Dictionary, who: Chara
 
 ## Does the part of an outcome (a check's `success` or `failure`) that lives in the story, for `who`: items and gold to
 ## them, a flag, a codex entry, Heroic Inspiration, healing or harm, time lost. Returns {gains: [String] for a toast,
-## lines: [String] for the roll log}. Items aren't in `gains`: each has its own notice (StoryState.gain_item).
+## lines: [String] for the roll log, hurt: {who, amount (what got through), type} when it dealt damage}. Items aren't in
+## `gains`: each has its own notice (StoryState.gain_item).
 static func apply(st: StoryState, outcome: Dictionary, who: Character, dice: DiceRoller, source: String) -> Dictionary:
 	var gains: Array[String] = []
 	var lines: Array[String] = []
+	var hurt := {}
 	for e: Variant in outcome.get("items", []):
 		var entry := e as Dictionary
 		var qty := int(entry.get("qty", 1))
@@ -296,9 +298,10 @@ static func apply(st: StoryState, outcome: Dictionary, who: Character, dice: Dic
 		var amount := int(dice.roll_expr(str(outcome["damage"]), source)["total"])
 		var dr := who.take_damage(amount, StringName(str(outcome.get("damage_type", "bludgeoning"))), false, dice, source)
 		lines.append(dr.describe(who.name))
+		hurt = {"who": who, "amount": dr.final, "type": StringName(str(outcome.get("damage_type", "bludgeoning")))}
 	if int(outcome.get("minutes", 0)) > 0:
 		st.advance_minutes(int(outcome["minutes"]))
-	return {"gains": gains, "lines": lines}
+	return {"gains": gains, "lines": lines, "hurt": hurt}
 
 
 ## Heroic Inspiration for `who`; someone who already has it passes it to the first party member who lacks it (2024 PHB,

@@ -96,6 +96,7 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 	var lines: Array[String] = []
 	var save := trap.get("save", {}) as Dictionary
 	var success := false
+	var hurt := -1   # what the trap did to them, once it rolled damage (LocationHurt shows it)
 	if not save.is_empty():
 		var t := victim.creature.roll_save(view.dice, StringName(str(save["ability"])), int(save["dc"]))
 		CheckAids.own_luck_on_save(victim.creature, t, view.dice)   # Automatic only: a trap can't wait to ask
@@ -110,13 +111,14 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 		# Thief's Thimble: its wearer's trap damage soaks into it first.
 		var dr := victim.creature.take_damage(FaerunItems.thimble(victim.creature, amount), StringName(str(trap.get("damage_type", "bludgeoning"))), false, view.dice, str(trap.get("label", "a trap")))
 		lines.append(dr.describe(victim.name()))
-		(view.tokens[victim.id] as CombatToken).flash(Look.color("vampire_red"))
+		hurt = dr.final
 	if str(trap.get("condition", "")) != "" and not success:
 		victim.creature.add_condition(StringName(str(trap["condition"])), str(trap.get("label", "a trap")))
-	(view.tokens[victim.id] as CombatToken).refresh()
 	if trap.has("flag"):
 		view.st.set_flag(str(trap["flag"]))
 	view.check_rolled.emit(" · ".join(lines))
+	# Once the roll has been seen: the flash, the trap's own effect, the damage over their head and the party panel.
+	LocationHurt.show(view, victim, hurt, TrapFx.cue("traps", id, StringName(str(trap.get("damage_type", "bludgeoning"))), false, success))
 	view._say("trap:%s:triggered" % id, victim.creature as Character, str(trap.get("text", "A trap springs!")))
 
 

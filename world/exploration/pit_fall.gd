@@ -75,6 +75,7 @@ static func spring(view: LocationView, trap: Dictionary, victim: Combatant) -> v
 		lines.append(t.describe())
 		view.big_roll.emit(t, victim.name(), "%s saving throw" % Creature.ABILITY_NAMES.get(StringName(str(save["ability"])), "A"))
 	var label := str(trap.get("label", "a pit"))
+	var hurt := -1   # the fall and the stakes together, once either rolled damage (LocationHurt shows it)
 	if not caught:
 		var feet := int(trap["pit_ft"])
 		# A pit whose own damage is bludgeoning (an oubliette) already counts the fall; any other (stakes) adds to it.
@@ -83,19 +84,20 @@ static func spring(view: LocationView, trap: Dictionary, victim: Combatant) -> v
 			var fall := view.dice.roll_expr("%dd6" % maxi(1, feet / 10), "Falling %d ft" % feet)
 			var dr := victim.creature.take_damage(FaerunItems.thimble(victim.creature, int(fall["total"])), &"bludgeoning", false, view.dice, "the fall")
 			lines.append(dr.describe(victim.name()))
+			hurt = dr.final
 		if str(trap.get("damage", "")) != "":
 			var rolled := view.dice.roll_expr(str(trap["damage"]), "Trap: %s" % label)
 			var dr2 := victim.creature.take_damage(FaerunItems.thimble(victim.creature, int(rolled["total"])), StringName(str(trap.get("damage_type", "piercing"))), false, view.dice, label)
 			lines.append(dr2.describe(victim.name()))
+			hurt = maxi(hurt, 0) + dr2.final
 		victim.creature.add_condition(&"prone", label)
 		fallen(view)[victim.name()] = id
-		(view.tokens[victim.id] as CombatToken).flash(Look.color("vampire_red"))
 	if trap.has("flag"):
 		view.st.set_flag(str(trap["flag"]))
 	_redress(view, trap)
 	_place_fallen(view)
-	(view.tokens[victim.id] as CombatToken).refresh()
 	view.check_rolled.emit(" · ".join(lines))
+	LocationHurt.show(view, victim, hurt, TrapFx.cue("traps", id, StringName(str(trap.get("damage_type", "piercing"))), true, caught))
 	var first := victim.name().get_slice(" ", 0)
 	if caught:
 		view.call("_say", "trap:%s:caught" % id, victim.creature as Character, "The floor tips away under %s, who catches the edge and hauls back up. The pit below is ten feet deep and full of stakes." % first)

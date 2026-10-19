@@ -166,6 +166,7 @@ func enter_location(location_id: String, spawn: String, sneaking: bool = false) 
 			_check_fallen())
 	view.big_roll.connect(func(t: D20Test, who: String, label: String) -> void: DiceRoll.show_roll(self, DiceRoll.from_test(t, who, label)))
 	view.party_tended.connect(_refresh)
+	view.party_hurt.connect(func(_who: Combatant) -> void: _refresh_panel())   # not a refresh: a pit's victim stays Prone
 	view.guidance_asked.connect(_ask_guidance)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
@@ -202,10 +203,18 @@ func _refresh() -> void:
 	view.update_daylight()
 	if not view.in_combat:
 		view.refresh_party()   # healed outside a fight: back on their feet, chips up to date
-	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo and not view.planning, view.planning)
+	_refresh_panel()
 	Achievements.check_story(st, hud.toast)   # a hidden achievement whose `when` now holds (data/achievements)
 	if not view.in_combat:
 		_check_fallen()
+
+
+## The party cards and the command bar from the party as it is now, without tending anyone (`_refresh` stands the
+## conscious back up): a trap that hurt someone shows it here.
+func _refresh_panel() -> void:
+	if view == null:
+		return
+	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo and not view.planning, view.planning)
 
 
 ## Everyone down outside a fight (the last one standing caught by a trap while the rest lie where a fight left them):

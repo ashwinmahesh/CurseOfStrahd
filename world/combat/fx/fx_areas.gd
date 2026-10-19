@@ -272,6 +272,8 @@ static func strike(fx: SpellFx, cue: Dictionary, caster: CombatToken, targets: A
 	for pl in places:
 		_strike_one(fx, cue, pl["at"] as Vector3, float(pl["radius"]) * float(cue.get("size", 1.0)))
 		await fx.wait(0.08)
+		if not is_instance_valid(fx):
+			return   # the view went away under the strike (a trap by an exit, a fight closed mid-spell)
 	await fx.wait(0.25)
 
 
@@ -308,8 +310,11 @@ static func _strike_one(fx: SpellFx, cue: Dictionary, ground: Vector3, radius: f
 		down.tween_property(shaft, "scale", Vector3(0.2, 1.0, 0.2), 0.45 * fx.pace()).set_ease(Tween.EASE_IN)
 		down.parallel().tween_method(func(v: float) -> void: sm.set_shader_parameter("fade", v), 1.0, 0.0, 0.45 * fx.pace())
 		down.tween_callback(shaft.queue_free)
-	var t := fx.get_tree().create_timer(0.08 * fx.pace())
-	t.timeout.connect(func() -> void:
+	# On a tween of the effect's own: if its view is freed before the splash, the splash goes with it (a timer's lambda
+	# that captured the freed effect would be called all the same, with an error).
+	var t := fx.create_tween()
+	t.tween_interval(0.08 * fx.pace())
+	t.tween_callback(func() -> void:
 		shockwave(fx, cue, ground, radius * 3.0, 0.4)
 		var splash := FxKit.particles({"amount": int(clampf(radius * 26.0, 24.0, 160.0)), "lifetime": 0.7, "emit": "ring",
 			"radius": radius * 0.6, "inner": 0.0, "dir": Vector3.UP, "spread": 40.0, "speed": Vector2(2.0, 5.0), "damping": Vector2(2.0, 4.0),

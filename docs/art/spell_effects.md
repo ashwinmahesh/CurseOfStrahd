@@ -105,6 +105,30 @@ slicks on the floor (shaders/fx/fx_slick.gdshader). `VFX_SET=zones` captures the
   look the data can't tell) and writes the picks a spell is missing; Faerûn, Arcana Unleashed and Ravenloft: The
   Horrors Within content is skipped.
 
+## Traps and falls
+
+Outside a fight a trap that goes off, a pit's fall and a climb or swim that fails and hurts show themselves the same
+way (owner todo, 2026-10-17). Once the big d20 has been seen, and no cutscene or screen holds the game
+(`world/exploration/location_hurt.gd`, `LocationHurt`; its waiting runs on timers that run while the game is paused):
+
+- the figure flashes red and flinches;
+- the trap's own effect plays on it (`world/exploration/trap_fx.gd`, `TrapFx`), built from the same parts as the
+  fights' effects: a lamp or tripwire that burns bursts into flame, a glyph or ward calls down lightning, a ward of
+  thunder or force sends a shockwave, a vent of frost or a breath of soot billows, blades slash, needles, bolts and
+  shards fly in (`darts`, from above, the side or below), and a weight or a failing floor comes down in chunks, dust
+  and a ring across the ground (`crash`: a rotten floorboard, a beam, a pit, a slip from a ledge). A save that held
+  plays at 60%. Physical harm sounds as a blow lands (`CombatSfx.hit`);
+- the damage floats over their head (`FloatText`, the mark a fight uses, about 2.4 seconds), the fall and the stakes of
+  a pit as one number, "Unhurt" when nothing got through;
+- the party panel shows their new Hit Points (`LocationView.party_hurt`; before this the cards kept the old value until
+  something else refreshed them).
+
+The looks are data: `art/vfx/effects.json` `traps` (by trap id), `checks` (by a world check's id), then `trap_damage` (by
+damage type). A pick is `"<family>@<flavour>"` or `{family, flavour, size, count, from}`; `tests/integration/test_trap_fx.gd`
+checks that every trap in the game has a look and that no pick names something that isn't there. In a fight the same
+damage numbers come from the `damage` event, so a trap there floats its damage like a blow does
+(`tests/integration/test_combat_damage_marks.gd`).
+
 ## Checking it
 
 - `make capture SCENE=res://tools/capture/vfx_capture.tscn NAME=vfx/vfx FRAMES=30` plays each staged spell in the

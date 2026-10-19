@@ -128,6 +128,11 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   Set it off (enabled within 5 ft of it, or standing in it: whoever stands in its squares takes it, else it goes off
   on nothing) and Disarm (thieves' tools, the player's choice). A spent trap loses its marks; an open pit stays shown
   and is walked round.
+- A trap that goes off on someone (owner todo, 2026-10-17) shows it once the big d20 has been seen: the figure flashes,
+  the trap's own effect plays on them (fire, lightning, blades, needles, a falling beam or floor: docs/art/spell_effects.md
+  "Traps and falls"), the damage floats over their head as in a fight, and their card on the left shows the new Hit
+  Points (it kept the old value until something else refreshed the panel). A pit's fall and its stakes are one number; a
+  climb, swim or ritual that fails and hurts does the same.
 - A noticed trap's border also shows through a wall in front of it as red hatching (shaders/world/xray_mark.gdshader),
   so a trap in a one-square passage still reads from the diagonal camera.
 
