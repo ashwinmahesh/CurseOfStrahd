@@ -288,8 +288,9 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
 not set square on their square's middle.
 
 - **Loose pieces** (`hand_placed.loose`: a barrel, a crate, a basket, a sack, a chair, a stool, a stack of books, a pot, a
-  bale, a small table ...): each stands up to `shift` (a fifth of a square) off its square's middle and is turned up to
-  `turn` (15 degrees) from the way it faced, seeded by its square (`ModelPiece.hand_offsets`), so a place is built the
+  bale, a small table ...): each stands between half of `shift` and all of it (`shift` is a fifth of a square) off its
+  square's middle and is turned between half of `turn` and all of it (`turn` is 15 degrees) from the way it faced (never
+  less than half, so none stands nearly square), seeded by its square (`ModelPiece.hand_offsets`), so a place is built the
   same way every time. `ModelPiece.hand_place` (3D pieces, called by `ModelPiece.stand`) never lets the turned piece leave
   its square, never moves it toward a wall or door beside it (what hangs on the wall, and the wall's face, stay clear),
   and leaves a piece alone when the location's data puts another prop or container on its square (a pot on a hearth);

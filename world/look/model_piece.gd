@@ -252,10 +252,17 @@ static func loose(board: ArenaBoard, art: String) -> bool:
 
 
 ## How far off its square's middle and how far turned a loose piece on `cell` is: (x, z, turn), each from -1 to 1 times
-## its limit (catalog hand_placed shift, in squares, and turn, in degrees), the same every time the place is built.
+## its limit (catalog hand_placed shift, in squares, and turn, in degrees; never less than half of it), the same every
+## time the place is built.
 static func hand_offsets(cell: Vector2i) -> Vector3:
 	var h := hash_cell(cell)
-	return Vector3(float((h / 7) % 201) / 100.0 - 1.0, float((h / 1013) % 201) / 100.0 - 1.0, float((h / 31) % 201) / 100.0 - 1.0)
+	return Vector3(_spread(float((h / 7) % 201) / 100.0 - 1.0), _spread(float((h / 1013) % 201) / 100.0 - 1.0), _spread(float((h / 31) % 201) / 100.0 - 1.0))
+
+
+## A value from -1 to 1 pushed out from the middle to between a half and one either way, so every loose piece stands
+## visibly off its middle and turned, not a third of them nearly square (owner 2026-10-19: "nothing even changes").
+static func _spread(v: float) -> float:
+	return (0.5 + 0.5 * absf(v)) * (1.0 if v >= 0.0 else -1.0)
 
 
 ## Sets loose piece `model` (in `holder`, already facing) a little off the middle of `cell` and a little turned, never

@@ -4895,7 +4895,7 @@
     "heart_of_sorrow"
   ],
   "hand_placed": {
-    "about": "Things placed by hand (Natural Maps Plan I3, interiors, Modern look only). loose: the pieces a person sets down rather than lines up (a barrel, a crate, a chair, a basket, a stack of books): each stands up to `shift` of a square off its square's middle and turned up to `turn` degrees, seeded by the square and never out of it. Pieces people line up (pews, beds, shelves, wardrobes, counters, tables against a wall) are not listed and keep their lines. one_piece: a straight run of three or more low-cover squares of one of these (a long table) is built as one long piece, its ends as modelled and its middle stretched, instead of a row of short ones; a run with something of the location's on it stays a row.",
+    "about": "Things placed by hand (Natural Maps Plan I3, interiors, Modern look only). loose: the pieces a person sets down rather than lines up (a barrel, a crate, a chair, a basket, a stack of books): each stands off its square's middle by between half of `shift` of a square and all of it, and turned by between half of `turn` degrees and all of it, seeded by the square and never out of it. Pieces people line up (pews, beds, shelves, wardrobes, counters, tables against a wall) are not listed and keep their lines. one_piece: a straight run of three or more low-cover squares of one of these (a long table) is built as one long piece, its ends as modelled and its middle stretched, instead of a row of short ones; a run with something of the location's on it stays a row.",
     "shift": 0.2,
     "turn": 15,
     "loose": [
