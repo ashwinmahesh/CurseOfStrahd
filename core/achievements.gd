@@ -3,9 +3,24 @@ extends RefCounted
 ## Local achievements (N8): earned in the story (from its run stats, its fights and its endings) and in Skirmish, and
 ## kept across playthroughs in achievements.json beside the saves (SaveSystem.save_dir, so a test run keeps its own),
 ## apart from any one save. Nothing is sent anywhere. Captures never earn any.
+## Besides the sixteen in LIST and the endings' own, hidden ones are defined in data/achievements/*.json (one file per
+## easter-egg package, docs/story/eggs.md): the panel reads "A secret" for each until it is earned. A package earns its
+## own in code (the for_* functions here) or with a `when` condition that check_story evaluates against the story.
 
 ## Where they're kept; "" means beside the saves.
 static var path := ""
+## The hidden ones' data files, and what a hidden, unearned achievement reads as in the list.
+const DATA := "res://data/achievements/"
+const HIDDEN_NAME := "A secret"
+const HIDDEN_TEXT := "Hidden until it is earned."
+## Foes knocked out (the Knock Out rule), over one playthrough, for Knocked, Not Killed.
+const KNOCKED_OUT_NEEDED := 10
+
+static var _defs: Array[Dictionary] = []
+static var _loaded := false
+## The `when` achievements check_story has already seen earned, for the earned file it last read.
+static var _settled := {}
+static var _settled_for := ""
 
 
 static func file() -> String:
@@ -38,9 +53,46 @@ const WOLVES: Array[String] = ["wolf", "dire_wolf", "werewolf", "winter_wolf"]
 static func watch(cv: CombatView, st: StoryState, toast: Callable = Callable()) -> void:
 	cv.finished.connect(func(_outcome: String) -> void:
 		var t := RunStats.add_fight(st, cv.e, CombatToken.art_for)
+		note_fight(st, cv.e, t)
 		for n in earn(st, for_story_fight(st, cv.e, t)):
 			if toast.is_valid():
 				toast.call("Achievement: %s" % n))
+
+
+## What a story fight leaves in the run's side flags (data/flags/eggs_engine.json; the camp's banter and the castle's
+## gargoyle read them): a foe sent over a map's open drop on a hero's turn, a barrel of lamp oil burst, an improvised
+## object thrown. Side flags only: nothing in the main story reads them.
+static func note_fight(st: StoryState, e: Encounter, t: Dictionary) -> void:
+	var rows := FightTally.side_rows(e, t, "party")
+	if rows.any(func(r: Dictionary) -> bool: return int(r["pushed_over"]) > 0):
+		st.set_flag("eggs_pushed_over_edge", true)
+	if e.objects.fire.bursts > 0:
+		st.set_flag("eggs_barrel_burst", true)
+	if rows.any(func(r: Dictionary) -> bool: return int(r["improvised"]) > 0):
+		st.set_flag("eggs_threw_furniture", true)
+
+
+## Earns the hidden achievements whose `when` holds in the story now, toasting each new one. Called whenever the party's
+## state may have changed (the game's refresh), so it is cheap: an achievement already seen earned is skipped.
+static func check_story(st: StoryState, toast: Callable = Callable()) -> Array[String]:
+	if _settled_for != file():
+		_settled.clear()
+		_settled_for = file()
+	var ids: Array[String] = []
+	for d in hidden_defs():
+		var id := str(d["id"])
+		if not _settled.has(id) and str(d.get("when", "")) != "" and StoryConditions.check(str(d["when"]), st):
+			ids.append(id)
+	var names: Array[String] = []
+	if ids.is_empty():
+		return names
+	names = earn(st, ids)
+	for id in ids:
+		_settled[id] = true
+	if toast.is_valid():
+		for n in names:
+			toast.call("Achievement: %s" % n)
+	return names
 
 
 ## Grants achievements reached in this run and notes the new ones in it (the ending lists them); returns their names.
@@ -54,17 +106,63 @@ static func earn(st: StoryState, ids: Array[String]) -> Array[String]:
 	return names
 
 
-## Every achievement in order, the endings' last: [{id, name, text, earned (a date or "")}].
+## Every achievement in order, the hidden ones before the endings: [{id, name, text, earned (a date or ""), hidden}].
+## A hidden one that isn't earned yet comes with HIDDEN_NAME and HIDDEN_TEXT, so nothing that lists them can give one away.
 static func all() -> Array[Dictionary]:
 	var got := earned()
 	var out: Array[Dictionary] = []
 	for id: String in LIST:
-		out.append({"id": id, "name": str(LIST[id][0]), "text": str(LIST[id][1]), "earned": str(got.get(id, ""))})
+		out.append({"id": id, "name": str(LIST[id][0]), "text": str(LIST[id][1]), "earned": str(got.get(id, "")), "hidden": false})
+	for d in hidden_defs():
+		var id := str(d["id"])
+		var secret := bool(d.get("hidden", true)) and not got.has(id)
+		out.append({"id": id, "name": HIDDEN_NAME if secret else str(d["name"]), "text": HIDDEN_TEXT if secret else str(d["text"]),
+			"earned": str(got.get(id, "")), "hidden": bool(d.get("hidden", true))})
 	for e in Endings.all():
 		var id := "ending_" + str(e["id"])
 		out.append({"id": id, "name": str(e.get("title", e["id"])), "text": "Reach this ending: %s" % str(e.get("summary", "")),
-			"earned": str(got.get(id, ""))})
+			"earned": str(got.get(id, "")), "hidden": false})
 	return out
+
+
+## The hidden achievements' definitions from data/achievements/*.json, in file order: [{id, name, text, hidden, when}].
+static func hidden_defs() -> Array[Dictionary]:
+	_load()
+	return _defs
+
+
+## Adds a definition as if it were in a data file (tests and tools); clear_cache drops it.
+static func register(def: Dictionary) -> void:
+	_load()
+	_defs.append(def)
+
+
+## Drops the loaded files and what check_story has seen (tests that change the earned file or add definitions).
+static func clear_cache() -> void:
+	_defs.clear()
+	_loaded = false
+	_settled.clear()
+	_settled_for = ""
+
+
+static func _load() -> void:
+	if _loaded:
+		return
+	_loaded = true
+	var dir := DirAccess.open(DATA)
+	if dir == null:
+		return
+	var files := dir.get_files()
+	files.sort()
+	for f in files:
+		if not f.ends_with(".json"):
+			continue
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(DATA + f))
+		if not parsed is Dictionary:
+			continue
+		for a: Variant in (parsed as Dictionary).get("achievements", []) as Array:
+			if a is Dictionary and (a as Dictionary).has("id"):
+				_defs.append(a as Dictionary)
 
 
 ## {id: when it was earned (an ISO date and time)}.
@@ -106,6 +204,9 @@ static func name_of(id: String) -> String:
 		return str(LIST[id][0])
 	if id.begins_with("ending_"):
 		return str(Endings.get_ending(id.trim_prefix("ending_")).get("title", id))
+	for d in hidden_defs():
+		if str(d["id"]) == id:
+			return str(d["name"])
 	return id
 
 
@@ -136,12 +237,14 @@ static func for_story_fight(st: StoryState, e: Encounter, t: Dictionary) -> Arra
 		out.append("undead_50")
 	if float(rs.get("gold_most", 0.0)) >= 1000.0:
 		out.append("purse_1000")
+	if int(totals["knocked_out"]) >= KNOCKED_OUT_NEEDED:
+		out.append("knocked_not_killed")
 	out.append_array(for_fight(e, t))
 	return out
 
 
 ## What one fight earns anywhere (the story or Skirmish): the hardest blows, untouched and last-stand wins, a natural
-## 20 on a Death Saving Throw.
+## 20 on a Death Saving Throw, a foe sent over a map's open drop, one burst barrel that caught two foes or more.
 static func for_fight(e: Encounter, t: Dictionary) -> Array[String]:
 	var out: Array[String] = []
 	var heroes := FightTally.side_rows(e, t, "party")
@@ -150,6 +253,10 @@ static func for_fight(e: Encounter, t: Dictionary) -> Array[String]:
 		out.append("big_hit")
 	if heroes.any(func(r: Dictionary) -> bool: return int(r["death_save_20"]) > 0):
 		out.append("death_save_20")
+	if heroes.any(func(r: Dictionary) -> bool: return int(r["pushed_over"]) > 0):
+		out.append("a_little_push")
+	if e.objects.fire.most_foes_hit >= 2:
+		out.append("spark_and_barrel")
 	if e.outcome == "victory":
 		if foes.size() >= 4 and heroes.all(func(r: Dictionary) -> bool: return int(r["damage_taken"]) == 0):
 			out.append("untouched")

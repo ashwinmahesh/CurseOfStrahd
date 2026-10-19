@@ -3,15 +3,23 @@ extends RefCounted
 ## What each creature did in one fight, read from the encounter's combat log once it's over (N1's results, N8's run
 ## stats): damage dealt and taken, kills, Critical Hits, natural 20s and 1s, hits and misses, falls and deaths. The
 ## log holds every roll's full line (D20Test.describe) and every hit with its source, so nothing in the rules has
-## to count for it.
+## to count for it. The hidden achievements (E1, docs/story/eggs.md) read three more from it: foes knocked out (not
+## killed), foes sent over a map's open drop on a hero's turn, and improvised throws.
 
 const KEYS: Array[String] = ["damage_dealt", "damage_taken", "kills", "crits", "nat20", "nat1", "hits", "misses", "downs",
-	"died", "best_hit", "death_save_20"]
+	"died", "best_hit", "death_save_20", "knocked_out", "pushed_over", "improvised"]
+## The log's own words for the three E1 counts (EncounterDamage.knock_out, EncounterMovement.fall_away, and the label
+## ObjectActions gives a thrown thing that isn't a weapon).
+const KNOCKS := " knocks "
+const KNOCKED_OUT := " out (1 Hit Point"
+const OVER_THE_EDGE := " goes over the edge"
+const IMPROVISED_ROLL := "(improvised)): d20 "
 
 
 ## {combatant id: {name, side, damage_dealt, damage_taken, kills, crits, nat20, nat1, hits, misses, downs, died,
-## best_hit (the most damage in one blow), death_save_20, killed_by (the killer's id, or "")}}. A kill goes to whoever
-## dealt the blow that killed (the last hit logged before the death).
+## best_hit (the most damage in one blow), death_save_20, knocked_out (foes it knocked out, which live), pushed_over
+## (foes sent over a map's open drop on its turn), improvised (improvised weapons thrown), killed_by (the killer's id,
+## or "")}}. A kill goes to whoever dealt the blow that killed (the last hit logged before the death).
 static func tally(e: Encounter) -> Dictionary:
 	var out := {}
 	var by_name := {}
@@ -22,6 +30,7 @@ static func tally(e: Encounter) -> Dictionary:
 			row[k] = 0
 		out[c.id] = row
 	var last_hitter := ""
+	var turn_of := ""
 	for en in e.log.entries:
 		var kind := str(en["kind"])
 		var actor := str(en["actor"])
@@ -32,6 +41,8 @@ static func tally(e: Encounter) -> Dictionary:
 			if who == "":
 				continue
 			var row := out[who] as Dictionary
+			if str(d).contains(IMPROVISED_ROLL):
+				row["improvised"] = int(row["improvised"]) + 1
 			match int(r["natural"]):
 				20:
 					row["nat20"] = int(row["nat20"]) + 1
@@ -48,6 +59,14 @@ static func tally(e: Encounter) -> Dictionary:
 				"miss":
 					row["misses"] = int(row["misses"]) + 1
 		match kind:
+			"turn":
+				if actor != "":
+					turn_of = actor
+			"move":
+				# A foe sent over a map's open drop on a hero's own turn (a shove, a spell's push): the hero's.
+				if str(en["text"]).ends_with(OVER_THE_EDGE) and out.has(actor) and str(out[actor]["side"]) == "enemy" \
+						and out.has(turn_of) and str(out[turn_of]["side"]) in ["party", "guest"]:
+					out[turn_of]["pushed_over"] = int(out[turn_of]["pushed_over"]) + 1
 			"hit":
 				last_hitter = actor
 				var taken := read_taken(details)
@@ -63,6 +82,14 @@ static func tally(e: Encounter) -> Dictionary:
 			"death":
 				var text := str(en["text"])
 				if not out.has(actor):
+					continue
+				# "Ilse knocks Bandit out (1 Hit Point, ...)": alive, so no kill. The line comes before the blow's own
+				# hit line, so it names who did it.
+				var knocks := text.find(KNOCKS)
+				if knocks > 0 and text.contains(KNOCKED_OUT):
+					var knocker := str(by_name.get(text.substr(0, knocks), ""))
+					if out.has(knocker) and str(out[actor]["side"]) == "enemy":
+						out[knocker]["knocked_out"] = int(out[knocker]["knocked_out"]) + 1
 					continue
 				if text.ends_with("falls unconscious"):
 					out[actor]["downs"] = int(out[actor]["downs"]) + 1

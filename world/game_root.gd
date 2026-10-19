@@ -203,6 +203,7 @@ func _refresh() -> void:
 	if not view.in_combat:
 		view.refresh_party()   # healed outside a fight: back on their feet, chips up to date
 	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo and not view.planning, view.planning)
+	Achievements.check_story(st, hud.toast)   # a hidden achievement whose `when` now holds (data/achievements)
 	if not view.in_combat:
 		_check_fallen()
 

@@ -15,6 +15,10 @@ const SPREAD_ON := 4
 var _enc: WeakRef
 ## Bursts under way (object id -> true), so a chain of barrels goes off one at a time.
 var _bursting: Dictionary = {}
+## What the fight's bursts have done, for the hidden achievements (Achievements.for_fight, the story's side flags): how
+## many barrels burst, and the most foes (the enemy side) one burst hurt.
+var bursts := 0
+var most_foes_hit := 0
 
 
 func _init(encounter: Encounter) -> void:
@@ -94,9 +98,11 @@ func burst(o: BattleObject, by: Combatant) -> void:
 		area.append(at)
 	e.events.append({"type": "object_burst", "id": o.id, "cells": area})
 	e.log.add("info", "%s bursts in a sheet of flame" % o.title(), by.id if by != null else "")
+	bursts += 1
 	var rolled := e._roll_damage_dice(str(b.get("damage", "2d6")), false, 0, "The bursting %s" % o.name)
 	var ab := StringName(str(b.get("save", "dex")))
 	var ty := str(b.get("type", "fire"))
+	var caught := 0
 	for t in e.living():
 		# Within the radius as the game measures it, height and all: a flyer high enough above it is out of reach.
 		if t.has_meta("left_fight") or t.creature.has_flag("ethereal") \
@@ -105,7 +111,10 @@ func burst(o: BattleObject, by: Combatant) -> void:
 		var sv := t.creature.roll_save(e.dice, ab, int(b.get("dc", 12)), [], [], "%s save vs the bursting %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()])
 		var amount := int(rolled["total"]) if not sv.success else int(rolled["total"]) / 2
 		if amount > 0:
+			if t.side == &"enemy":
+				caught += 1
 			e.deal_damage(by, t, [{"amount": amount, "type": ty}], false, "The bursting %s" % o.name, [sv.describe(), str(rolled["text"])])
+	most_foes_hit = maxi(most_foes_hit, caught)
 	for o2: BattleObject in objs().list.duplicate():
 		if o2 == o or o2.destroyed or o2.holds != "" or o2.hangs or not objs().cells_of(o2).any(func(cell: Vector2i) -> bool: return cell in area):
 			continue

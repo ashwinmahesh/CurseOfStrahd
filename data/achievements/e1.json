@@ -1,0 +1,24 @@
+{
+  "id": "e1",
+  "summary": "Package E1 of the easter-egg plan: hidden achievements the fights earn. Earned in code (Achievements.for_fight and for_story_fight) from the fight tally, the burst barrels and the run's counts.",
+  "achievements": [
+    {
+      "id": "a_little_push",
+      "name": "A Little Push",
+      "text": "On a hero's turn, send a foe over the edge of a map's open drop.",
+      "hidden": true
+    },
+    {
+      "id": "spark_and_barrel",
+      "name": "Spark and Barrel",
+      "text": "Catch two foes or more in the burst of one barrel of lamp oil.",
+      "hidden": true
+    },
+    {
+      "id": "knocked_not_killed",
+      "name": "Knocked, Not Killed",
+      "text": "Knock out 10 foes in one playthrough instead of killing them.",
+      "hidden": true
+    }
+  ]
+}

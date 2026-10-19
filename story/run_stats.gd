@@ -5,12 +5,13 @@ extends RefCounted
 ## log (FightTally); and for the party, fights won, rounds fought, foes defeated by kind, and gold. Kept in
 ## StoryState.run_stats, so it saves with the game. Gold is read at each fight's end and at the ending: what came in
 ## and went out between two readings counts as found or spent. Pure data with no autoloads (make lint compiles story/
-## on its own); Achievements (core/) watches the game's fights and calls add_fight.
+## on its own); Achievements (core/) watches the game's fights and calls add_fight. `knocked_out` is the foes a hero
+## knocked out rather than killed (the Knock Out rule), which a hidden achievement counts over the run.
 
 ## The purse a new game starts with (main_menu.gd, game_root.gd).
 const START_GOLD := 10.0
 const HERO_KEYS: Array[String] = ["fights", "kills", "crits", "nat20", "nat1", "hits", "misses", "damage_dealt",
-	"damage_taken", "downs", "deaths"]
+	"damage_taken", "downs", "deaths", "knocked_out"]
 
 
 ## Adds one fight to the run and returns its tally. `art_of(character) -> String` names each hero's portrait (the

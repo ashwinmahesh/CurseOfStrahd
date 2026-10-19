@@ -11,8 +11,8 @@ Capture: `make capture SCENE=res://scenes/game.tscn NAME=ending ARGS="--ending=s
 
 Every story fight, when the player goes on from its banner, is read from its combat log (`FightTally`): for each hero,
 kills (the last blow before a death), Critical Hits, natural 20s and 1s on any d20 (attacks, saves, checks, Death
-Saving Throws), hits and misses, damage dealt and taken, the hardest blow, falls to 0 Hit Points and deaths. The run
-adds them up per hero (by character id, so a hero at camp keeps theirs), with fights won, rounds, and the foes defeated
+Saving Throws), hits and misses, damage dealt and taken, the hardest blow, falls to 0 Hit Points, deaths, and the foes it
+knocked out (Knock Out) rather than killed. The run adds them up per hero (by character id, so a hero at camp keeps theirs), with fights won, rounds, and the foes defeated
 by kind and by creature type. Gold is read at each fight's end and at the ending: what came in between two readings
 counts as found, what went out as spent (a new game's 10 gp is the first reading).
 
@@ -32,3 +32,8 @@ from any one save; captures earn none. Sixteen from play (First Blood, Fortune F
 of the Night, Wolfsbane, Rest in Peace, Overwhelming Force, Not a Scratch, Last One Standing, Not Today, Burgomaster's
 Purse, None Left Behind, Proving Grounds, Against All Odds, Dress Rehearsal) and one for each ending
 (`ending_<id>`, from data/endings). The list and what earns each are in `Achievements.LIST` and its `for_*` functions.
+
+Hidden achievements (easter-egg package E1, docs/story/eggs.md) are defined in `data/achievements/*.json` and listed after
+these sixteen: the panel shows "A secret" for each until it is earned, then its name, how it is earned and the date. A
+fight's tally also counts foes knocked out, foes sent over a map's open drop on a hero's turn and improvised throws, and
+`RunStats` adds the knock-outs to each hero's record (`knocked_out`).

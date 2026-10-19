@@ -1,0 +1,23 @@
+{
+  "region": "eggs_engine",
+  "flags": [
+    {
+      "id": "eggs_pushed_over_edge",
+      "type": "bool",
+      "set_by": "engine",
+      "summary": "A hero sent a foe over a map's open drop on their own turn in a story fight (Achievements.note_fight, from the fight's tally). A side flag for the castle's gargoyle; nothing in the main story reads it, and it stays set once it is."
+    },
+    {
+      "id": "eggs_barrel_burst",
+      "type": "bool",
+      "set_by": "engine",
+      "summary": "A barrel of lamp oil burst in a story fight, whoever set it off and whoever it caught (Achievements.note_fight, from ObjectFire.bursts). A side flag; it stays set once it is."
+    },
+    {
+      "id": "eggs_threw_furniture",
+      "type": "bool",
+      "set_by": "engine",
+      "summary": "A hero threw an improvised object (a chair, a stool, a crate, a thing lying about) in a story fight (Achievements.note_fight, from the fight's tally). A side flag for the camp's banter; it stays set once it is."
+    }
+  ]
+}
