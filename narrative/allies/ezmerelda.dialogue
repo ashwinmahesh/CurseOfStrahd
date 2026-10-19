@@ -31,7 +31,7 @@ endif
 set ezmerelda_ledger_shown
 Narrator: She unwraps a battered book from its oilcloth. The pages are crowded with names, and the best ones are struck through in black ink.
 Ezmerelda: Every killer in this valley I trust enough to ink, with a price beside each. I pay for proof, not promises.
-Ezmerelda [sly]: I pay in gold for the easy names and good kit from my wagon for the hard ones. Rudolph taught me to count the teeth before I count the coin.
+Ezmerelda [sly]: Rudolph taught me to count the teeth before I count the coin. The easy names pay gold from my strongbox; the hard ones, good kit from the wagon.
 Ezmerelda: Three names at a time, though. Four is a chore list, and I've had a lifetime of Rudolph's.
 -> menu
 
@@ -434,7 +434,7 @@ Ezmerelda: Put silver in him first, keep your back off that drop, and come tell 
 set ledger_paid_falls
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sly]: One less of Kiril's on the hills, and nothing left at the falls but scratches in the stone.
-Ezmerelda: His name comes out of the book. Take a thousand gold and stitch yourselves up.
+Ezmerelda: One line through Dragan's name, and a thousand gold from the strongbox. Spend it on silver.
 gold +1000
 -> claim_end
 
@@ -448,7 +448,7 @@ Ezmerelda: Don't touch its pots, and stay clear of the tailboard. Burn it from r
 set ledger_paid_wagon
 set ezmerelda_ledger_paid += 1
 Ezmerelda [weary]: Seven years on that board, bait for his own wagon. I'm glad Iosif walked back to the Tser Pool camp.
-Ezmerelda: The wagon's crossed off. Take twelve hundred and fifty gold for the road.
+Ezmerelda: Cross the wagon off, and take this purse of twelve hundred and fifty gold.
 gold +1250
 -> claim_end
 
@@ -462,7 +462,7 @@ Ezmerelda: The count's fowlers wait in the branches: vampire spawn and bats. Loo
 set ledger_paid_fowlers
 set ezmerelda_ledger_paid += 1
 Ezmerelda: A cage in a dead pine is a baited hook. Whoever hung it was fishing for you.
-Ezmerelda [smile]: The fowlers are struck from the page. Take fifteen hundred gold.
+Ezmerelda [sly]: Fifteen hundred gold for clearing those branches. I never did like a trap that uses a cage.
 gold +1500
 -> claim_end
 
@@ -476,7 +476,7 @@ Ezmerelda: Clear the blights round it first, stay out of its reach, and tell me 
 set ledger_paid_vine
 set ezmerelda_ledger_paid += 1
 Ezmerelda: Druids plant one black stick and the whole row tries to drink you. I can smell the sour wine from here.
-Ezmerelda: The Vine Mother is crossed out. Take seventeen hundred and fifty gold.
+Ezmerelda: Seventeen hundred and fifty from the strongbox, and the Seventh Row crossed out for good.
 gold +1750
 -> claim_end
 
@@ -490,7 +490,7 @@ Ezmerelda [angry]: Don't take on all three hags at once. Hold a holy symbol up i
 set ledger_paid_morgantha
 set ezmerelda_ledger_paid += 1
 Ezmerelda: She talked sugar the whole time she was locking children in cages. A hag alone is a coward, and a dead coven stays quiet.
-Ezmerelda: Morgantha's name is struck for good. Take two thousand gold.
+Ezmerelda: Two thousand gold in this purse, and a thick black line through Morgantha and her cages.
 gold +2000
 -> claim_end
 
@@ -504,7 +504,7 @@ Ezmerelda: Don't let the druids pin you against their stacked skulls. Aim for th
 set ledger_paid_wint
 set ezmerelda_ledger_paid += 1
 Ezmerelda: They dug the mountain folk out of their mounds to stack skulls for a walking tree. Even for this valley, that's ugly.
-Ezmerelda: Wintersplinter is out of the ledger. Take twenty-five hundred gold.
+Ezmerelda [smile]: Cross the walking tree off the hill; twenty-five hundred gold is yours.
 gold +2500
 -> claim_end
 
@@ -518,7 +518,7 @@ Ezmerelda: Steady your nerve when the horn goes. Watch his boar spear and black 
 set ledger_paid_huntsman
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sad]: Every quarry he ran down became one of his hounds. My people scratched their names on cairns by the road.
-Ezmerelda: Toader's hunt is struck from the book. Take the ring mail from my wagon.
+Ezmerelda: Toader's horn is done. Take the enchanted ring mail from my wagon; it'll turn a blade better than any coat you have.
 give armor_plus_1__ring_mail
 -> claim_end
 
@@ -532,7 +532,7 @@ Ezmerelda: His howl empties your nerve and his bite puts you on your back. Thin 
 set ledger_paid_grandsire
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sly]: He taught Kiril everything he knows and answered to nobody after. Sounds like another old teacher I could name.
-Ezmerelda: The Grandsire is crossed out. Take this battleaxe from my wagon; it's yours.
+Ezmerelda: A line through the old wolf's name, and an enchanted battleaxe from the wagon for you, keen as a razor.
 give weapon_plus_2__battleaxe
 -> claim_end
 
@@ -546,7 +546,7 @@ Ezmerelda: He laughs with his mouth open and calls armed men meat with swords. S
 set ledger_paid_kiril
 set ezmerelda_ledger_paid += 1
 Ezmerelda: That name has been in this book longer than any other, and the ink was wearing through the page.
-Ezmerelda: He's struck out for good. Take this spear from my wagon; it's yours.
+Ezmerelda [sly]: Kiril is struck from the book at last. Take this enchanted spear from my wagon, for when you want reach.
 give weapon_plus_2__spear
 -> claim_end
 
@@ -560,7 +560,7 @@ Ezmerelda: He's polite right up until his touch freezes you. Don't offer him you
 set ledger_paid_khazan
 set ezmerelda_ledger_paid += 1
 Ezmerelda [weary]: I camped on that shore for months, knowing the lock answered to his name and never guessing what the name had made of him.
-Ezmerelda: One less courteous corpse under the tower. Take the Sun Blade from my wagon.
+Ezmerelda: Khazan's name comes out of my book. The Sun Blade has ridden in my wagon against the dark; the hilt is yours.
 give sun_blade__longsword
 -> claim_end
 
@@ -574,7 +574,7 @@ Ezmerelda: She casts like a wizard and fusses over her boy. Burn the straw men e
 set ledger_paid_lysaga
 set ezmerelda_ledger_paid += 1
 Ezmerelda: I've cut her scarecrows down on that marsh before, and there were always three more watching before my blade was dry.
-Ezmerelda: The old witch is struck from the page. Take this greataxe from my wagon; it's yours.
+Ezmerelda: A woodsman's weapon for a hut on a stump: take the enchanted greataxe from the wagon, and I'll blot Baba Lysaga out.
 give weapon_plus_2__greataxe
 -> claim_end
 
@@ -588,7 +588,7 @@ Ezmerelda: She's starved on grave-salt, and the count's cart brings a cage every
 set ledger_paid_sarkhaza
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sad]: Forty years in the dark on false gold, eating what came in cages. A ledger only asks who ate, not who held the leash.
-Ezmerelda: Her name is struck. Take this scale mail from my wagon; it's yours.
+Ezmerelda [weary]: Scratch Sarkhaza from the mountain, and take the enchanted scale mail from my wagon; it's as good as medium armour gets.
 give armor_plus_2__scale_mail
 -> claim_end
 
@@ -602,7 +602,7 @@ Ezmerelda: The wardens could only sing it to sleep, and its ten small eyes will 
 set ledger_paid_eye
 set ezmerelda_ledger_paid += 1
 Ezmerelda [smile]: The wardens settled for a lullaby, and you lot went down there and finished the song.
-Ezmerelda: The Eye Below is struck out. Take this maul from my wagon; it's yours.
+Ezmerelda: The Eye Below is struck. Take the enchanted maul, the best weapon in my wagon, for knocking big things down.
 give weapon_plus_3__maul
 -> claim_end
 

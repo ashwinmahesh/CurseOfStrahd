@@ -1,0 +1,46 @@
+~ pay_falls
+Ezmerelda: One line through Dragan's name, and a thousand gold from the strongbox so the next traveller keeps his footing.
+
+~ pay_wagon
+Ezmerelda: Strike Iosif from the crossroads, and take this purse of twelve hundred and fifty gold.
+
+~ pay_fowlers
+Ezmerelda [sly]: Fifteen hundred gold for clearing those branches; I never did like a trap that uses a cage.
+
+~ pay_vine
+Ezmerelda: Seventeen hundred and fifty from the strongbox, and the Seventh Row crossed out for good.
+
+~ pay_morgantha
+Ezmerelda: Two thousand gold in this purse, and a thick black line through the baker and her cages.
+
+~ pay_wint
+Ezmerelda [smile]: Cross the walking tree off the hill; twenty-five hundred gold is yours.
+
+~ pay_huntsman
+Ezmerelda: Toader's horn is done; take the enchanted ring mail from my wagon, it'll turn a blade better than any coat you have.
+
+~ pay_grandsire
+Ezmerelda: A line through the old wolf's name, and an enchanted battleaxe from the wagon for you, keen as a razor.
+
+~ pay_kiril
+Ezmerelda [sly]: For the meat with swords who beat Kiril in his own den, an enchanted spear from my wagon when you want reach.
+
+~ pay_khazan
+Ezmerelda: Khazan's name comes out of my book; the Sun Blade has ridden in my wagon against the dark, and now that hilt is yours.
+
+~ pay_lysaga
+Ezmerelda: A woodsman's weapon for a walking stump: take the enchanted greataxe from the wagon, and I'll blot Baba Lysaga out.
+
+~ pay_sarkhaza
+Ezmerelda [weary]: Scratch Sarkhaza from the mountain, and take the enchanted scale mail from my wagon; it's as good as medium armour gets.
+
+~ pay_eye
+Ezmerelda: The Eye Below is struck; take the enchanted maul, the best weapon in my wagon, for knocking big things down.
+
+~ ledger_intro
+Ezmerelda [sly]: Rudolph taught me to count the teeth before I count the coin; the easier names pay gold from my strongbox, and the hardest earn fine kit from the wagon.
+
+~ journal
+heard: Ezmerelda d'Avenir keeps a Hunter's Ledger: a battered book of the valley's killers, each with a price beside the name. She names three at a time and pays in gold for the easier names, and in good kit from her wagon for the hardest, for every one we kill.
+paying: Ezmerelda has paid in gold for a name struck from her ledger, and the harder names will pay in kit from her wagon. She will name the next three whenever we ask.
+summary: Ezmerelda d'Avenir keeps a book of the valley's killers with a price beside each name, paying gold for the easier names and kit from her wagon for the hardest.

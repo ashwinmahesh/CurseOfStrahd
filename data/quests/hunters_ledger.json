@@ -1,13 +1,13 @@
 {
   "id": "hunters_ledger",
   "name": "The Hunter's Ledger",
-  "summary": "Ezmerelda d'Avenir keeps a book of the valley's killers with a price beside each name, and pays in gold or in kit from her wagon for proof that one is dead.",
+  "summary": "Ezmerelda d'Avenir keeps a book of the valley's killers with a price beside each name, paying gold for the easier names and kit from her wagon for the hardest.",
   "giver": "ezmerelda",
   "region": "van_richtens_tower",
   "stages": [
     {
       "id": "heard",
-      "journal": "Ezmerelda d'Avenir keeps a Hunter's Ledger: a battered book of the valley's killers, each with a price beside the name. She names three at a time and pays, in gold or in kit from her wagon, for every one the party kills.",
+      "journal": "Ezmerelda d'Avenir keeps a Hunter's Ledger: a battered book of the valley's killers, each with a price beside the name. She names three at a time and pays in gold for the easier names, and in good kit from her wagon for the hardest, for every one we kill.",
       "objectives": [
         "Ask Ezmerelda which names are in her ledger",
         "Kill one of them"
@@ -17,7 +17,7 @@
     },
     {
       "id": "paying",
-      "journal": "Ezmerelda has paid for a name struck from her ledger: gold for the easier names, and kit from her wagon for the hardest. She will name the next three whenever we ask.",
+      "journal": "Ezmerelda has paid in gold for a name struck from her ledger, and the harder names will pay in kit from her wagon. She will name the next three whenever we ask.",
       "objectives": [
         "Keep killing the names in her ledger",
         "Take each kill to Ezmerelda"

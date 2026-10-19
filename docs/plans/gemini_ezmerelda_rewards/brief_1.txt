@@ -1,0 +1,104 @@
+You are drafting dialogue for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. I need you to write lines for ONE scene package at a time. Reply with plain text only: the lines under the node names given below, nothing else. Finish without sending messages to anyone else.
+
+## The feature: Ezmerelda's Hunter's Ledger
+
+Ezmerelda d'Avenir is a young Vistana monster hunter (long dark coat, rapier, a small crossbow with silver-headed bolts, a spyglass, and an oak-and-steel brace below her right knee where a werewolf took her leg). She was trained by Rudolph van Richten, the legendary hunter, who walked into the mists twelve years ago and has been calling himself Rictavio ever since (a loud half-elf showman at the Blue Water Inn in the town of Vallaki). She hunts the things that hunt people, and she is now an ally the player's party can talk to whenever they find her (at the shore of Lake Baratok by Van Richten's tower, on the switchback above the abbey, in the inn's stable yard in Vallaki, or beside them on the road once she has joined).
+
+She keeps THE HUNTER'S LEDGER: a battered book of the valley's killers, each with a price on its head. She pays for proof, and the pay has just changed: the easier names now bring her gold (a purse from her wagon's strongbox), and the seven hardest bring one fine piece of magical kit from her wagon, a weapon or armour she has carried for years and has decided these hunters have earned. The game records which of these killers the party has actually killed; the ledger pays for exactly those and nothing else. She names three names at a time: first any she can pay now, then hunts near where the party is, then the hardest hunt the party is ready for. There is no deadline and no penalty: the ledger is a reason to come back and talk to her, not a test. A hunt she briefs the party on is words only; nothing in her briefing forces a fight.
+
+## Ezmerelda d'Avenir - voice bible
+
+Quick, sardonic, practical; hunter's rules delivered as jokes. Teases, then means it. Calls Van Richten "Rudolph" and treats his legend with exasperated love. Pet phrases: "Say something a vampire wouldn't." "Silver first, questions never." "Stopping's the one thing I'm bad at." Funny through showman timing (she grew up in wagons that put on shows), self-mockery about her own missing parts, and her running complaint about her teacher's habits. Wants: the end of the vampire lord in the castle; to find Rudolph and have a word with him first. Fears: being too late again; being left behind again. Secret: she isn't sure she's as brave as her reputation, and has started to think that's wisdom. She never says the vampire lord's name aloud: she says "the count", "the castle", "the devil in the castle" or nothing. She never calls the party "kids" or "girl". She treats the party as capable colleagues.
+
+Existing Ezmerelda lines (match this register; do not repeat them):
+- "Stop there. Say something a vampire wouldn't say."
+- "Ezmerelda d'Avenir. Vistani, when the wagons will have me. I hunt the things that hunt people. I'm very good at it, as you can tell from all the bits of me that are left."
+- "Nobody with fangs has ever asked to buy silver. Not twice, anyway. Sit."
+- "He's making tea. He's terrible at tea. Don't tell him; he thinks it's the only thing he's good at besides killing."
+- "Stopping's the one thing I'm bad at. Rudolph says it'll kill me. Rudolph says a lot, from very far away."
+- "I go first through doors. Not because I'm brave. Because I've got the leg that doesn't bleed."
+
+## Canon limits (important)
+
+Use ONLY the facts given in this brief about every monster and place. Do not invent new monsters, names, places, victims, dates, past hunts of hers, or lore for any target. She is working from what the party tells her and what she has tracked, so she may be wrong-footed or dry about a target, but she may not state invented facts about it. No named characters beyond those in the brief. The party's own words are not in the lines: the party chooses menu options; Ezmerelda answers. Never mention flags, the game, a "ledger entry number", a level, dice, or the player.
+
+## Format
+
+One line per row, exactly: `Speaker [mood]: Text` where Speaker is Ezmerelda. Moods allowed for Ezmerelda: smile, angry, sad, sly, weary (or no mood; most lines should have none; use a mood only where it clearly fits). The Narrator never has a mood. Each line is 1-2 sentences, ideally under 22 words in total, written to be spoken aloud by an actor: so NO stage directions in brackets or asterisks, NO "{name}" or other placeholders, no emoji, no markdown. Use plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names given below, each as a line `~ node_name`, in the order given. Where option texts (what the PARTY says) are requested, write them as `* text` rows under the node named, each under 12 words, in the party's voice ("we", or an imperative), no attitude beyond the intent given. Do not add nodes, code or commentary.
+
+## This message: the payment lines for all thirteen names, her opening, and three journal entries
+
+The ledger's payments have changed. Until now she paid in bolts, holy water, scrolls and healing draughts. From now on each name pays EITHER gold (the six easier names) OR one piece of magical kit from her wagon (the seven hardest names). I need only the PAYMENT LINE of each name, which replaces line 2 of its claim_ node (the line in which she strikes the name from the book and pays). Line 1 (her reaction to the news) already exists and is not part of this request.
+
+### Rules for the payment line
+- One line in the format above: `Ezmerelda [mood]: Text` (mood optional, most should have none), 1-2 sentences, ideally under 24 words, to be spoken aloud.
+- She strikes the name from the book and pays. For the six GOLD names she says the amount in words as a plain sum ("a thousand gold", "twelve hundred and fifty gold", "fifteen hundred", "seventeen hundred and fifty", "two thousand", "twenty-five hundred"); she may call it a purse or the strongbox's gold, but no other number, and no invented backstory for the money.
+- For the seven ITEM names she names the kind of item plainly as given below (ring mail, battleaxe, spear, the Sun Blade, greataxe, scale mail, maul) and may say in one phrase why it suits that hunt, using only the facts given. She does NOT say "plus one", "plus two", "rare", "magic item" as a game term, a level, a rarity, or any number. "Enchanted" or "it holds an edge a smith couldn't give it" is the right register.
+- The items come out of her wagon, where they have been carried and never used. Do not give any item a history, a previous owner or a name (except the Sun Blade, which is called the Sun Blade). The line may say "take" or "that's yours".
+- Each line must be different in shape from the others (not "Take X. Take Y." thirteen times): vary the structure, and a few of the lines may carry a dry joke, as she does.
+- Use ONLY the facts given about each name; no new lore.
+
+### The names, in order, with what each pays (facts are the ones the earlier scenes use)
+
+### Name 1: `falls` - Dragan, the werewolf at Tser Falls
+Facts: Tser Falls is where the River Ivlis throws itself off a cliff in a long white fall; a shelf of rock juts over the drop where the Barovians leave tokens for the drowned and the fallen. A werewolf named Dragan waits at the lip of the falls at night for travellers, with wolves (a dire wolf and some wolves).
+Pays now: gold, 1000 gp
+
+### Name 2: `wagon` - the Tinker's Wagon
+Facts: A green painted tinker's wagon stands at the crossroads on the Old Svalich Road, selling pots and trinkets (some of them taken from a haunted house). Travellers who bought from the tinker never came back down the road. The tinker, Iosif, used to be one of the Vistani; he sat on the board and never climbed down.
+Pays now: gold, 1250 gp
+
+### Name 3: `fowlers` - the count's fowlers on the hill trail
+Facts: On the hill trail above Lake Zarovich, a silver cage hung in a dead pine with a raven in it that would not change back. It was a trap. The count's fowlers - vampire spawn, a leader and several more, with swarms of bats - waited in the branches for whoever came for the cage. The party killed them. (Ezmerelda knows only the trap and the fowlers, not whose cage or whose raven; she may have a hunter's opinion about cages.)
+Pays now: gold, 1500 gp
+
+### Name 4: `vine` - the Vine Mother
+Facts: The Seventh Row of a vineyard came up black every night and was picked bare by morning. It was a cutting of the old Gulthias tree, planted under the row by druids and grown into the row itself: a heaving mass of black vine-wood twice the height of a house. Its branches reach, its vines drag you in and squeeze, and it spits fermenting black wine. Smaller vine blights and needle blights grew around it. The party cut it down.
+Pays now: gold, 1750 gp
+
+### Name 5: `morgantha` - Morgantha of Old Bonegrinder
+Facts: Morgantha is a night hag who keeps Old Bonegrinder, a windmill on a crag between the village of Barovia and the town of Vallaki, with her two "daughters", who are hags too. She sold dream pastries from a cart at the village and kept in cages the children whose parents couldn't pay. She talks sugar and endearments, speaks of herself in the third person, fears being alone and fears sunlight on holy symbols.
+Pays now: gold, 2000 gp
+
+### Name 6: `wint` - Wintersplinter on Yester Hill
+Facts: Wintersplinter is a tree blight on the crown of Yester Hill, the walking tree at the druids' stone circle; a green stone the size of a plum pulses in its split heartwood. The druids of the hill dug the mountain folk's dead out of the mounds at the foot of Yester Hill and stacked their skulls up the slope. The party destroyed Wintersplinter on the crown.
+Pays now: gold, 2500 gp
+
+### Name 7: `huntsman` - the Count's Huntsman
+Facts: On cold nights a horn sounds in the Svalich woods, and in the morning whoever the count is displeased with lies under the crossroads gallows, run to death. The Huntsman is Toader, a poacher the count ran down himself in his first winter; he stood and turned at the crossroads and was made huntsman for it. Every quarry since has become one of his hounds; the Vistani have scratched the quarries' names on cairns by the road.
+Pays now: a suit of ring mail, enchanted (heavy armour; she can say it will turn a blade better than any coat the party has)
+
+### Name 8: `grandsire` - the Grandsire
+Facts: The Grandsire is the werewolf pack's eldest: a wolf the size of a cart horse, grey to white with age, missing an ear, who taught Kiril everything and answers to nobody now. His bite knocks you down; his howl empties your nerve; the pack fights better around him. He came over the wall at night to the goat pens below the walled town of Krezk, with the old wolves. The party killed him in Krezk's square.
+Pays now: a battleaxe, enchanted (a fine hand axe-and-a-half, keen as a razor)
+
+### Name 9: `kiril` - Kiril Stoyanovich
+Facts: Kiril leads the werewolf pack that dens in the hills above Lake Zarovich. He is brutal and jovial, laughs with his mouth open and talks of people as food ("Meat with swords"). He came home from the castle with a new law: grow the pack for the master, out of children stolen from the farms below Krezk. The party killed him in the den, in the leader's challenge.
+Pays now: a spear, enchanted (light, throwable, for hunters who want reach)
+
+### Name 10: `khazan` - Khazan, under Rudolph's tower
+Facts: Khazan was an archmage who built the tower on the island in Lake Baratok before the count was born. He became a lich the cheap way: with his own name, cut over the tower door, which everyone who comes in says to open it. He is courteous, curious and very old, and he collects the names of his visitors; his touch freezes, his bursts tear, and his cellar whispers your name back.
+Pays now: the Sun Blade, a sword hilt that grows a blade of sunlight, which she has carried against the dark and calls by its name
+
+### Name 11: `lysaga` - Baba Lysaga
+Facts: Baba Lysaga is an ancient witch who lives in the drowned village of Berez in the marsh, in a hut that stands on a giant stump and walks when it likes. She guards the place with straw men and scarecrows, keeps swarms of insects in jars, and casts like a powerful wizard. She fusses, feeds, scolds and boasts about "her boy"; the stew is not what it seems. The party killed her.
+Pays now: a greataxe, enchanted (a woodsman's weapon)
+
+### Name 12: `sarkhaza` - Sarkhaza
+Facts: Sarkhaza is a red dragon who came through the mists forty years ago after a dead silver dragon's gold and found the count waiting. She was chained by the neck in a cavern under Mount Ghakis, her wings riveted shut, starved on grave-salt, lying on a hoard that was only gilded lead. Every new moon the count's black cart took a cage up the mountain to her. She ate what was sent. The party killed her.
+Pays now: a suit of scale mail, enchanted (as good as medium armour gets)
+
+### Name 13: `eye` - the Eye Below
+Facts: The Eye Below is a beholder the wardens of the Amber Temple sealed in amber under their vaults and put to sleep with the memory of one of their number (the wardens could not kill it, only sing it to sleep). It is a floating orb of mottled hide as wide as a cart with one great clouded eye, a mouth like a sack of knives, and ten small eyes on stalks, each of which does something terrible.
+Pays now: a maul, enchanted (a heavy hammer that will knock a big thing down; the best weapon in her wagon)
+
+### Her opening (`ledger_intro`, replaces one line)
+Currently: "I pay in what a hunter has: silver, holy water, remedies. Rudolph taught me to count the teeth before I count the coin." (Ezmerelda [sly]). She is showing the party the ledger for the first time. Write ONE replacement line (mood optional) that keeps the Rudolph joke about counting teeth before the coin, and tells the party in her voice that the easier names pay gold from the wagon's strongbox and the hardest names pay in fine kit from the wagon. No numbers.
+
+### Quest journal entries (the party's own journal, written in the party's voice, plain past tense, "we", 1-3 sentences each, no mood tags)
+- `heard` (currently: "Ezmerelda d'Avenir keeps a Hunter's Ledger: a battered book of the valley's killers, each with a price beside the name. She names three at a time and pays, in a hunter's goods, for every one the party kills."): rewrite so it says she pays in gold for the easier names and in good kit from her wagon for the hardest, for every one we kill.
+- `paying` (currently: "Ezmerelda has paid for a name struck from her ledger: silver-headed bolts, holy water, remedies, and later scrolls and better bolts. She will name the next three whenever we ask."): rewrite it to say she has paid for a name struck from her ledger in gold, and that the harder names will pay in kit from her wagon. She will name the next three whenever we ask.
+- Also rewrite the quest's one-line summary (currently: "Ezmerelda d'Avenir keeps a book of the valley's killers with a price beside each name, and pays in a hunter's goods for proof that one is dead."): one sentence, gold for the easier names, kit from her wagon for the hardest.
+
+### Reply layout
+First `~ pay_falls` through `~ pay_eye` in the order above, each with exactly one line under it. Then `~ ledger_intro` with one line. Then `~ journal` with three rows prefixed `heard:`, `paying:` and `summary:`. Nothing else.

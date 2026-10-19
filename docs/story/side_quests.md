@@ -1430,9 +1430,8 @@ which have none: it opens only from where she stands or by clicking her as a gue
   visit, not state), all in data/flags/allies_ezmerelda.json. Stories are hers and use only the facts our data holds for
   each name.
 - Lines: 87 spoken (Ezmerelda and the Narrator), drafted by Gemini through the ai-bridge and edited
-  (docs/plans/gemini_allies/M2/), all unvoiced. The payment lines, her opening and the quest's journal changed only in the
-  sums and item names for the new payments (2026-10-19); fresh flavour wording for them waits on Gemini
-  (branch ezmerelda-rewards-lines). Test: tests/unit/test_ezmerelda_ledger.gd.
+  (docs/plans/gemini_allies/M2/), all unvoiced. The thirteen payment lines, her opening line and the quest's journal were
+  redrafted by Gemini for the new payments (2026-10-19; docs/plans/gemini_ezmerelda_rewards/) and edited. Test: tests/unit/test_ezmerelda_ledger.gd.
 
 ## The Amber Temple (level 10)
 
