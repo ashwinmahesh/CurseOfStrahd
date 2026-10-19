@@ -357,8 +357,8 @@ lone spikes; its crest stands at 0.55 to 1.2 times that, peaks and saddles meand
 road, Tsolenka, the Ghakis quarry and the Amber road camp) and `crag_scale` (a multiplier on the heights; the castle gates, so
 the castle stays the tallest thing). Crags are on Mount Baratok, its trail, the Tsolenka Pass, the werewolf den, the
 castle gates, the Amber Temple road, and the two shrine-yard maps in rock country, the Ghakis quarry and the Amber
-road camp (their yard walls and pillars are rock, not stone: the houses TownBuilder puts on their corner blocks stay;
-the castle's overlook has `rock_walls` but its builder claims every wall
+road camp (their yard walls, pillars and corner blocks are rock, not stone, and TownBuilder builds no sheds there: their
+look says `no_sheds`, `ArenaBoard._no_sheds`; Classic keeps them; the castle's overlook has `rock_walls` but its builder claims every wall
 square, and most of the gates' and the pass's walls are buildings too, so only their loose rock is shaped).
 Boulders lie along every foot (`Crags._scatter_boulders`, drawn with the rock square's piece): about two a side of a rock
 square that a walkable square touches, low faceted rocks no taller than a knee (0.32) that reach no further than half

@@ -86,6 +86,33 @@ func test_every_rock_place_has_crags() -> void:
 		await get_tree().process_frame
 
 
+## The two shrine yards in rock country have no sheds sitting inside the rock rim (their corner blocks of wall are rock like
+## the rest); Classic keeps them. The rules grid is the same either way: the blocks are walls.
+func test_rock_country_yards_have_no_sheds() -> void:
+	for place: String in ["ghakis_quarry", "amber_road_camp"]:
+		Look.set_style("modern", false)
+		var v := await _view(place)
+		assert_true(v.board.buildings.is_empty() and v.board.house_cells.is_empty(), "%s has no sheds in the rock" % place)
+		var walls := 0
+		var rocky := 0
+		for z in v.grid.depth:
+			for x in v.grid.width:
+				var c := Vector2i(x, z)
+				if v.grid.has_flag(c, CombatGrid.WALL) and x > 0 and z > 0 and x < v.grid.width - 1 and z < v.grid.depth - 1:
+					walls += 1
+					rocky += 1 if v.board.crags != null and v.board.crags.cells.has(c) else 0
+		assert_true(walls > 0 and rocky == walls, "%s: every wall square is rock (%d of %d)" % [place, rocky, walls])
+		v.queue_free()
+		view = null
+		await get_tree().process_frame
+		Look.set_style("classic", false)
+		var old := await _view(place)
+		assert_false(old.board.buildings.is_empty(), "%s keeps its sheds in the Classic look" % place)
+		old.queue_free()
+		view = null
+		await get_tree().process_frame
+
+
 ## The rock stays clear of where the party stands (the plan's rule 2): in a walkable square the face is never more than a
 ## quarter of a square out from the grid line, the scree never more than half, so the middle of the square is at the
 ## ground, a token's ring clear of the face, and the foot never runs straight along the grid line for long.

@@ -187,7 +187,7 @@ func _build() -> void:
 		_plan_rooms(Compendium.shared().get_entry("locations", place))
 	if theme in TOWNS:
 		_yard = TownBuilder.plan(self)
-	elif theme == "shrine_yard" and place != "":
+	elif theme == "shrine_yard" and place != "" and not _no_sheds():
 		TownBuilder.plan(self)   # a yard's sheds and shrines are buildings; lone stones stay pillars
 	_plan_crags()
 	cliffs = CliffFace.plan(self)
@@ -559,6 +559,13 @@ func _tree_wall(c: Vector2i) -> bool:
 func _rocky(c: Vector2i) -> bool:
 	return _rock_tex != null and not house_cells.has(c) and not _tree_wall(c) \
 		and (theme in WILD or theme == "shrine_yard" or theme in TOWNS and _on_border(c))
+
+
+## A shrine yard whose look says `no_sheds` (place_looks, Modern only: the Ghakis quarry and the Amber road camp, rock
+## country): its corner blocks of wall are rock like the rest of the rim, not sheds sitting inside the rock (owner
+## 2026-10-19: "Basically we want the world to look more natural"). Classic keeps its sheds.
+func _no_sheds() -> bool:
+	return bool(_look.get("no_sheds", false)) and Look.modern()
 
 
 ## A place whose rock is one shaped mountain (place_looks `rock_shape: "crags"`, Modern only): its rock squares' surface,
