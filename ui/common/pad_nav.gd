@@ -615,15 +615,22 @@ func step(dir: Vector2i) -> void:
 		focus_on(to)
 
 
-## The choice nearest `from` in direction `dir`: straight ahead first, then the least sideways.
+## The choice nearest `from` in direction `dir`: straight ahead first, then the least sideways. From a choice in a scrolling
+## window marked "pad_clip" the window's own choices come first (the D-pad walks all of its rows, scrolling each in, before it
+## steps out to Back), and a choice the window has scrolled out of sight is no neighbour of anything outside it.
 static func neighbour(from: Control, dir: Vector2i, list: Array[Control]) -> Control:
 	var a := rect_of(from)
 	var ac := a.get_center()
+	var window := clip_window(from)
 	var best: Control = null
 	var best_score := INF
+	var inner: Control = null
+	var inner_score := INF
 	for c in list:
 		if c == from:
 			continue   # a row and the button inside it reach each other by their middles, like any two choices
+		if out_of_sight(c, from):
+			continue
 		var b := rect_of(c)
 		var bc := b.get_center()
 		if (bc - ac).dot(Vector2(dir)) <= 1.0:
@@ -641,7 +648,30 @@ static func neighbour(from: Control, dir: Vector2i, list: Array[Control]) -> Con
 		if score < best_score:
 			best_score = score
 			best = c
-	return best
+		if window != null and score < inner_score and window.is_ancestor_of(c):
+			inner_score = score
+			inner = c
+	return inner if inner != null else best
+
+
+## The scrolling window marked "pad_clip" that holds `c` (a ScrollContainer whose rows keep their places in its content, the
+## settings' Game page), or null.
+static func clip_window(c: Control) -> ScrollContainer:
+	var p := c.get_parent()
+	while p != null:
+		var s := p as ScrollContainer
+		if s != null and s.has_meta(&"pad_clip"):
+			return s
+		p = p.get_parent()
+	return null
+
+
+## Whether `c` sits in such a window that has scrolled it out of sight while `from` is outside the window. A row scrolled
+## away lies over whatever is beside the window (the settings' page tabs, Back) in the layout, and the pad would step onto it
+## instead of them. To the pad it isn't there until focus moves among the window's own choices and scrolls it in.
+static func out_of_sight(c: Control, from: Control) -> bool:
+	var s := clip_window(c)
+	return s != null and not s.is_ancestor_of(from) and not rect_of(s).intersects(rect_of(c))
 
 
 ## Gives `c` focus (one that takes none from the mouse gets it until it loses it), brings it into view and moves the

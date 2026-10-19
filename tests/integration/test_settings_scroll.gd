@@ -192,12 +192,10 @@ func test_the_pad_can_reach_and_change_the_last_choice() -> void:
 			rows.append(it as Button)
 	var last := rows.back() as Button
 	assert_true(last.has_meta(&"pad_adjust"), "turns with left and right")
-	var pad := PadNav.new()
-	add_child(pad)
+	var pad := UiFeel.pad   # the game's own: a tracker made here and freed would leave PadNav.current empty for the tests after it
 	pad.focus_on(last)
 	await _frames(2)
 	assert_true(last.get_global_rect().end.y <= sc.get_global_rect().end.y + 1.0, "in view after the pad focuses it")
-	pad.queue_free()
 
 
 func test_nothing_in_the_window_swallows_the_wheel() -> void:

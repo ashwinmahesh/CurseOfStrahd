@@ -436,6 +436,7 @@ func _open_scroll() -> void:
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
 	_scroll.follow_focus = true   # a row that takes focus (the pad's, a Tab) scrolls into view
+	_scroll.set_meta(&"pad_clip", true)   # a row scrolled out of it lies over the tabs and Back: not the pad's to step onto (PadNav.out_of_sight)
 	_scroll.clip_contents = true
 	_scroll.position = _u(GAME_SCROLL.position.x, GAME_SCROLL.position.y)
 	_scroll.size = _u(GAME_SCROLL.size.x, GAME_SCROLL.size.y)

@@ -49,6 +49,7 @@ A screen or control can take over any part (the hooks are listed at the top of `
 | `pad_button(button)` on the screen | The on-screen keyboard's X, Y, LB and Start |
 | `pad_prompts()` on the screen | Extra prompt-bar entries, replacing the general ones for the same buttons |
 | `pad_first` meta | Where a screen opens: the conversation's and ending's Continue, the travel map |
+| `pad_clip` meta on a ScrollContainer | A window whose rows keep their places in its content: a row scrolled out of sight is no neighbour of a control outside the window (PadNav.out_of_sight), only of the window's own choices, whose focus scrolls it in. The settings' Game page |
 
 Item tiles are picked when focus lands on them (their card shows), A is their double-click and X their menu, so the
 pack never needs a drag: the menu gives, stashes and wears.
