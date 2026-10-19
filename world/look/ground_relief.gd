@@ -41,6 +41,7 @@ const WOODS := 1
 const SKIN := 2
 const OPEN := 3   ## empty ground the land covers, and everything past the map
 const PAVED := 4   ## drawn by the blend like the walked ground, but flat: paving, and the square a prop stands on
+const SHORE := 5   ## a water square the ground reaches out over (Shores): drawn by the blend, in the ground beside it
 ## Surfaces that are built, not ground: a room's boards and tiles, the Amber Temple's black stone, the kit's wood and stone.
 ## Their squares keep the board's own boxes.
 const BUILT_SURFACES: Array[String] = ["interior/", "amber/", "kit/", "tent/", "dungeon/"]
@@ -78,6 +79,8 @@ var _h := PackedFloat32Array()
 var _b := PackedFloat32Array()
 ## The ways between the map's ways out, as smoothed lines through square middles.
 var _roads: Array[PackedVector2Array] = []
+## The place's shore (Natural Maps plan N3): the ground dips along its contour and reaches out over the water squares beside it.
+var shore: Shores = null
 
 
 static func enabled() -> bool:
@@ -108,9 +111,11 @@ static func build(board_: ArenaBoard, loc: Dictionary, woods: ShaderMaterial = n
 		r._nx = k._nx
 		r._nz = k._nz
 		r._roads = k._roads
+		r.shore = k.shore
 		return r
 	if eligible(board_, loc):
 		r._choose_skin(AtmosphereLand._trap_cells(loc), woods)
+		r._take_shore()
 	if board_.theme in ArenaBoard.WILD:
 		r._lay_roads(loc)
 	r._kinds()
@@ -245,6 +250,27 @@ func _choose_skin(traps: Dictionary, woods: ShaderMaterial) -> void:
 					_slot_of[z * _w + x] = woods_slot
 
 
+## The shore of the place's water (Shores): the water squares it draws take the ground of the walkable squares beside them.
+func _take_shore() -> void:
+	shore = Shores.build(board, _skin, _flat)
+	if shore == null:
+		return
+	for c: Vector2i in shore.water_squares():
+		var votes := {}
+		for d: Vector2i in CombatGrid.DIRS:
+			var n := c + d
+			if _skin.has(n):
+				var slot := int(_slot_of[n.y * _w + n.x])
+				votes[slot] = int(votes.get(slot, 0)) + 1
+		var best := 255
+		var most := 0
+		for slot: int in votes:
+			if int(votes[slot]) > most:
+				most = int(votes[slot])
+				best = slot
+		_slot_of[c.y * _w + c.x] = best
+
+
 func _kinds() -> void:
 	var g := board.grid
 	_kind.resize(_w * _d)
@@ -256,6 +282,8 @@ func _kinds() -> void:
 				k = PAVED if _flat.has(c) else SKIN
 			elif _is_woods(c):
 				k = WOODS
+			elif shore != null and shore.water_squares().has(c):
+				k = SHORE
 			elif g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER):
 				k = OPEN
 			_kind[z * _w + x] = k
@@ -401,7 +429,7 @@ func _heights() -> void:
 	for z in _d + 2:
 		for x in _w + 2:
 			var kind := _kind_of(Vector2i(x - 1, z - 1))
-			bit[z * (_w + 2) + x] = 1 << (FLAT if kind == PAVED else kind)   # (paving is flat ground)
+			bit[z * (_w + 2) + x] = 1 << (FLAT if kind == PAVED or kind == SHORE else kind)   # (paving is flat ground, and so is a shore's)
 	var touch := PackedInt32Array()
 	touch.resize(_nx * _nz)
 	var out_bit := 1 << OPEN
@@ -437,6 +465,8 @@ func _heights() -> void:
 				var d := bank_d[k]
 				var n := _noise(p * 0.55) * 0.65 + _noise(p * 1.3 + Vector2(4.7, 1.9)) * 0.35
 				h = BANK * smoothstep(0.0, RISE, d) + (n - 0.42) * MOUNDS * smoothstep(0.3, RISE, d) * 2.0
+			if shore != null:
+				h = shore.lower(h, p, _b[k])   # the bank and the shelf under the water (Shores)
 			_h[k] = h + _b[k]
 
 
@@ -453,7 +483,7 @@ func shape(p: Vector2) -> float:
 ## Whether the shaped ground draws square `c` (its walked skin, or the banks under its woods).
 func draws(c: Vector2i) -> bool:
 	var k := _kind_of(c)
-	return k == SKIN or k == WOODS or k == PAVED
+	return k == SKIN or k == WOODS or k == PAVED or k == SHORE
 
 
 func _read(a: PackedFloat32Array, p: Vector2) -> float:
@@ -525,7 +555,7 @@ func _slot_at(c: Vector2i) -> int:
 	if c.x < 0 or c.y < 0 or c.x >= _w or c.y >= _d or _slot_of.is_empty():
 		return -1
 	var k := _kind[c.y * _w + c.x]
-	if k != SKIN and k != WOODS and k != PAVED:
+	if k != SKIN and k != WOODS and k != PAVED and k != SHORE:
 		return -1
 	var slot := _slot_of[c.y * _w + c.x]
 	return slot if slot < _slots.size() else -1

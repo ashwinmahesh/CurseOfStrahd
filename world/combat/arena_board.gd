@@ -1493,15 +1493,16 @@ func shaped() -> bool:
 	return has_terrain() or not grid.raised.is_empty()
 
 
-## Natural ground whose every neighbour is natural ground too, none across a cliff: one rolling surface with them
-## (GroundRelief's skin can draw it).
+## Natural ground whose every neighbour is natural ground too (or water, for ground at the water's level where the Modern
+## look draws natural shores: Natural Maps plan N3), none across a cliff: one rolling surface with them (GroundRelief's
+## skin can draw it).
 func rolling(c: Vector2i) -> bool:
 	if not grid.in_bounds(c) or not grid.has_flag(c, CombatGrid.NATURAL):
 		return false
 	for dz in range(-1, 2):
 		for dx in range(-1, 2):
 			var o := c + Vector2i(dx, dz)
-			if grid.in_bounds(o) and (not grid.has_flag(o, CombatGrid.NATURAL) or grid.is_cliff(c, o)):
+			if grid.in_bounds(o) and ((not grid.has_flag(o, CombatGrid.NATURAL) and not (grid.has_flag(o, CombatGrid.WATER) and Shores.on() and grid.height(c) == 0)) or grid.is_cliff(c, o)):
 				return false
 	return true
 

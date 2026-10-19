@@ -118,6 +118,8 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 		l._woods_material = Look.cel_textured(str(l.spec.get("ground", "village/grass")))   # (the banks' ground: one of the blend's surfaces)
 		l.relief = GroundRelief.build(board_, loc, l._woods_material as ShaderMaterial)
 		Clutter.ruts(board_, l.relief.roads())   # wheel-rut decals along its roads (lane 7's W10)
+		if l.relief.shore != null:
+			l.relief.shore.dress(l.root, water)   # the water's mask and the water under the bank's dip (Shores, N3)
 	t = l._lap("relief", t)
 	l._terrain()
 	t = l._lap("terrain", t)

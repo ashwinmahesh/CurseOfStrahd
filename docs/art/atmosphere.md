@@ -237,6 +237,34 @@ places and drawn again from that on the next visit. `AtmosphereLand.build_ms` sa
     make capture SCENE=res://tools/capture/natural_ground.tscn NAME=natural/ground FRAMES=10 \
       NG_SHOTS="amber_temple_road:14,6:9"   # a close-up of a place's ground (natural maps plan)
 
+## Natural shores in the Modern finish
+
+(Natural Maps plan N3, `world/look/shores.gd`.) A map's water squares used to be 1 x 1 boxes at -0.18 beside ground at 0:
+a pond was a square cut out of the land with a kerb round it, a lake a staircase. In the Modern look the edge of the
+water is one smooth contour per place. It is the signed distance from the water squares' outline (positive over the
+water), blurred so convex corners round off, moved about by noise seeded by the place (smooth over two squares or so),
+and kept near the grid line: out over a water square by up to 0.45 where the water is wide enough to spare it (a
+one-square stream keeps its banks), in over a walkable square by up to 0.28, and never nearer than 0.2 to the middle of
+a walkable square, so a token in the middle of a square and its ring stay dry and level (the ground there is within a
+hair of the floor). A square a build, a prop or a paved floor stands on (not drawn by the shaped ground, or kept flat)
+is never reached into, and a bank raised more than 0.35 above the floor (a step, Krezk's pool in its 5 ft pit, Van
+Richten's cliffs) keeps its own face for the cliffs lane (N6): `Shores.lower` leaves ground above that alone.
+
+The ground follows the contour. `GroundRelief` (one line in `_heights`, `shore.lower`) lowers its grid points along it: a
+short bank down to the board's water level (`Shores.WATER_Y`, -0.13) at the contour with a slope of 0.9, then a shelf
+under the water, so the water plane (the board's own water boxes under the water squares, and a skirt of water under the
+walkable squares beside them, `Shores.dress`) meets the ground where the contour says and no kerb shows. The water
+squares beside land (`Shores.water_squares`) are drawn by the shaped ground too (kind `SHORE`, in the ground of the
+squares beside them), so land can reach out over them. On natural ground the squares at the water's level (elevation 0)
+count as rolling with their water neighbours (`ArenaBoard.rolling`, Modern only), which is what lets the skin draw
+most shores at all. The water shader's mask (`water_mask`, one texel per third of a square) is made from the contour, so
+the shore foam and the depth colour follow it; it is 0 on land and 0.125 at the contour, rising to 1 about 3.5 squares
+out. Cosmetic only: water squares stay water and walkable squares walkable to the rules. The Classic look keeps its
+squares (`Shores.on()`; `Shores.off` is for before shots).
+
+Worked out once per place (flat arrays over the water's bounding box, kept like GroundRelief's). Checked by
+`tests/integration/test_shores.gd`.
+
 ## The battle grid in the Modern finish
 
 Natural Maps plan N1 (Ashwin, 2026-10-19: "we don't need to draw our real world maps as a battle grid. It can look like a
