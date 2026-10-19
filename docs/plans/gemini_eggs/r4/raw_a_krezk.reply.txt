@@ -1,0 +1,9 @@
+1A: {name} heaves the frost-stiffened wheel aside to uncover a neat stair of cheeses stacked up the wall, each round scuffed with boot-mud. Tucked beneath the lowest step sits a small cheesecloth purse, and high above, a leather glove is wedged into the stones.
+1B: You haul the heavy round off the board and find the cheeses behind it stacked like steps up the house wall, their rinds dirtied by someone's boots. A fat cheesecloth purse rests under the bottom wheel, and a lone glove sticks out of the wall-top above.
+2A: You set your fingers under the cold rind and heave, but the wheel sits on its board like a millstone and will not give an inch.
+2B: {name} braces against the wall and pulls, yet the goat cheese has frozen fast to the plank and weighs as much as the stone behind it.
+3A: {name} works the stiff leather glove free of the top stones and finds a small brown vial tucked inside the palm.
+3B: Reaching the top of the wall, {name} pulls a weathered climbing glove from the chink and slips a small brown vial out of its thumb.
+4A: Watchman Lazar: No. We eat the cheese in Krezk, we don't go up it.
+Watchman Lazar: Come down from the dairy.
+4B: Watchman Lazar: The wall is for keeping the road out, and the cheese is for keeping the winter out. No climbing the cheese.

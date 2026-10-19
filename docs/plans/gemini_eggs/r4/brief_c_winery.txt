@@ -1,0 +1,33 @@
+You are drafting short lines of game text for a single-player D&D 2024 computer RPG set in Curse of Strahd's Barovia. Reply in plain text only. Do not message, route to, or ask anyone else; finish with your reply.
+
+HOUSE RULES FOR ALL LINES
+- ALLUDE, NEVER QUOTE. This game winks at other games in small ways, but no line may contain a name, quote, or phrase from another game, and no line may mention a game, a player, dice, rolls, levels or saving. Everything happens inside the world.
+- Gothic, dry, quietly funny, never cruel. The joke is in what is there.
+- Give TWO options for every item so the editor can choose (label them A and B). Keep to the length limits.
+
+PART 1: A NOTICE NAILED UP IN THE PRESS HOUSE
+Place: the press house of the Wizard of Wines winery. Davian Martikov, master of the winery, white-bearded, black-eyed, a wereraven and the family's stern patriarch, nailed up a notice in his press house some time before the druids took the place. Someone on his household keeps stacking barrels of lamp oil against the great press and the wall "for later", and Davian is sick of it: the winery is full of dry old wood, straw and spirit. His notice is addressed to the stacker. The beat: the blights (twig-and-thorn creatures) are not that stupid, and neither is he. It is a notice from an old man to a household, not a joke told to a player. Keep the joke deadpan.
+Davian's voice (his real lines): "My house smells of druid. It will smell of wine again by spring or I'll know the reason. Speak." / "A winery without wine is a farm with airs." / "Strangers, at my fire. Either you've come to rob me, and you're three months late, or you've come to help, and you're very welcome." / "They're tearing my house apart to find it. So far my house is winning." He is grand and blunt, a merchant-king who has outlived his courtesy. Short declaratives, then a dry turn. Wine and vine for everything. Begins and ends with "Hm." Calls his orders "terms". Never says thank you.
+
+WRITE:
+1. THE NOTICE: the whole text of the notice as it is lettered on the board. Between 30 and 55 words. It may open with a heading line in capitals addressed to the stacker. It may end with his name or a "Hm." but not both.
+
+PART 2: A TWIG DOG BEING PATTED
+Place: the vine rows of the same winery. Sprig is a twig blight (a small knot of dry sticks and thorns) sent to spy on the winery by the druids of Yester Hill. It has decided it is a dog. It follows people, sits, fetches a different stick every time, and has no voice; the Narrator speaks for it. When the party pats it for the FIRST time, it understands, for the first time, that it is being told it is a good dog. It is very proud. Existing Narrator lines for this scene, for register:
+- "Something small and wooden trots out from between two rows of dead vines and comes to a halt at your boots."
+- "It is a knot of dry sticks and thorns, crowned with a single brown leaf that twitches when the wind moves."
+- "You reach down and pat the crown of dry twigs, and the whole bundle trembles from root to thorn with fierce, silent effort."
+- "Its lone leaf detaches and drifts to the dirt; the blight stares at the fallen leaf, then back up at you, waiting."
+- "You toss a dead branch down the row, and the creature scrambles after it in a dry clatter of small wooden knees."
+The Narrator voice here: second person, present tense, one or two sentences, concrete senses, gentle comedy, never cruel. No game terms, no slang.
+
+WRITE (the Narrator, two sentences in total per option, written as TWO separate lines so the editor can split them):
+2. THE FIRST PAT: Sprig is very proud. It sits taller than it ever has; its single leaf and root-tip show it. Line one is the pat landing, line two is Sprig's pride. Each line under 30 words.
+
+Return exactly this layout:
+1A: ...
+1B: ...
+2A line one: ...
+2A line two: ...
+2B line one: ...
+2B line two: ...
