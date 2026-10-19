@@ -1007,7 +1007,7 @@
   },
   "$defs": {
     "lying": {
-      "description": "Owner 2026-10-13 (the text has Vasilka lying under a sheet, very still; she stood beside her table): the figure lies down here with no condition (LyingFigures), until the entry changes or, for a foe, its fight opens and it gets up. true, or {on, head, sheet, pose, lift}. A person lies on their back on their own square, on top of the furniture standing there, or on the prop `on` names (a bier beside them), head along the furniture or toward `head`; `sheet` lays linen over them to the chest or over the face. A beast or a dragon lies on its belly, low on the ground (`pose` back or belly says otherwise). `lift` sets how high it lies instead of the top of what it lies on.",
+      "description": "Owner 2026-10-13 (the text has Vasilka lying under a sheet, very still; she stood beside her table): the figure lies down here with no condition (LyingFigures), until the entry changes or, for a foe, its fight opens and it gets up. true, or {on, head, sheet, pose, lift}. A person lies on their back on their own square, on top of the furniture standing there, or on the prop `on` names (a bier beside them), head along the furniture or toward `head`; `sheet` lays linen over them to the chest or over the face. A beast or a dragon lies on its belly, low on the ground (`pose` back or belly says otherwise). `lift` sets how high it lies instead of the top of what it lies on. `picture` names a drawing of the figure lying down (art/sprites/lying/<id>.png: Sarkhaza across her gold) that stands in for it until it gets up; until that drawing exists, the figure lies as it would without one.",
       "anyOf": [
         {
           "type": "boolean"
@@ -1044,6 +1044,9 @@
             },
             "lift": {
               "type": "number"
+            },
+            "picture": {
+              "type": "string"
             }
           }
         }

@@ -129,6 +129,27 @@ func test_sarkhaza_lies_low_across_her_hoard_until_the_chain_hauls_her_up() -> v
 	assert_true(tok != null and not tok.resting, "hauled up on the chain she stands")
 
 
+## A drawn picture of a figure lying down (`picture`) stands in for it, turned to the camera, as wide as its footprint
+## and then some, until it gets up: the picture goes and the figure comes up in its place. Until Sarkhaza's drawing
+## exists (art/sprites/lying/sarkhaza.png), she lies as before; this plays the pose with another picture.
+func test_a_lying_picture_stands_in_for_the_figure_until_it_gets_up() -> void:
+	var v := await _boot("ghakis_lair")
+	var tok := v.npc_tokens.get("sarkhaza", null) as CombatToken
+	assert_true(tok != null)
+	assert_eq(LyingFigures.picture_path("no_such_drawing"), "", "no drawing yet: the figure lies as it would")
+	tok.lie_down({"pose": "picture", "picture": "res://art/generated/characters/draconic_spirit_turnaround.png"})
+	await _frames(1)
+	var pic := tok.get_node_or_null("LyingPicture") as Sprite3D
+	assert_true(pic != null and pic.visible, "the picture lies in her place")
+	assert_false(tok.sprite.visible, "and her standing figure is gone")
+	var wide := pic.texture.get_width() * pic.pixel_size
+	assert_between(wide, 4 * CombatToken.PICTURE_SPAN - 0.01, 4 * CombatToken.PICTURE_SPAN + 0.01, "four squares and a quarter again, Gargantuan")
+	tok.get_up()
+	await get_tree().create_timer(0.6).timeout
+	assert_false(pic.visible, "up: the picture is gone")
+	assert_true(tok.sprite.visible and not tok.resting, "and she stands")
+
+
 ## Every `lying.on` names a prop of its own place (the figure lies on it).
 func test_every_lying_figure_lies_on_a_prop_that_is_there() -> void:
 	for loc: Dictionary in Compendium.shared().all("locations"):

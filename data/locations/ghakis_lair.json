@@ -908,7 +908,8 @@
       "facing": "south",
       "approach": 8,
       "lying": {
-        "head": "west"
+        "head": "west",
+        "picture": "sarkhaza"
       }
     }
   ],
@@ -988,7 +989,8 @@
             "grave_salted"
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],
@@ -1016,7 +1018,8 @@
             "grave_salted"
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],
@@ -1041,7 +1044,8 @@
             6
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],
@@ -1066,7 +1070,8 @@
             6
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],
@@ -1149,7 +1154,8 @@
             "grave_salted"
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],
@@ -1178,7 +1184,8 @@
             "grave_salted"
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],
@@ -1258,7 +1265,8 @@
             "chained"
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],
@@ -1285,7 +1293,8 @@
             "chained"
           ],
           "lying": {
-            "head": "west"
+            "head": "west",
+            "picture": "sarkhaza"
           }
         }
       ],

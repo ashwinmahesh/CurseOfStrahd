@@ -10,6 +10,8 @@ extends RefCounted
 const HEADS := {"north": Vector2(0, -1), "south": Vector2(0, 1), "east": Vector2(1, 0), "west": Vector2(-1, 0)}
 ## Creature types that lie on their bellies (four legs, or wings and a tail) unless the entry says `pose`.
 const BELLY_TYPES: Array[StringName] = [&"beast", &"dragon"]
+## Where a `picture` (a drawing of the figure lying down) is: art/sprites/lying/<id>.png.
+const PICTURES := "res://art/sprites/lying/%s.png"
 ## How far a sheet hangs over the edge of what the figure lies on, and its spread on bare floor (half the width).
 const SHEET_DROP := 0.14
 const FLOOR_SPREAD := 0.34
@@ -17,12 +19,17 @@ const FLOOR_SPREAD := 0.34
 const TOP_BAND := 0.1
 
 
-## Lays `tok` (in the tree, on square `cell`) down as `how` says: true, or {on, head, sheet, pose, lift}.
+## Lays `tok` (in the tree, on square `cell`) down as `how` says: true, or {on, head, sheet, pose, lift, picture}. A
+## `picture` that has been drawn (picture_path) stands in for the figure; until it is, the figure lies as it would.
 static func lay(view: LocationView, tok: CombatToken, how: Variant, cell: Vector2i) -> void:
 	var spec := how as Dictionary if how is Dictionary else {}
 	var pose := str(spec.get("pose", "belly" if tok.combatant.creature.creature_type in BELLY_TYPES else "back"))
 	var rest := {"pose": pose, "sheet": str(spec.get("sheet", "")), "lift": 0.0, "offset": Vector2.ZERO,
 		"half": FLOOR_SPREAD, "drop": 0.0}
+	var picture := picture_path(str(spec.get("picture", "")))
+	if picture != "":
+		rest["pose"] = "picture"
+		rest["picture"] = picture
 	if HEADS.has(str(spec.get("head", ""))):
 		rest["head"] = HEADS[str(spec["head"])]
 	var under := furniture(view, str(spec.get("on", "")), cell)
@@ -45,6 +52,14 @@ static func lay(view: LocationView, tok: CombatToken, how: Variant, cell: Vector
 	elif spec.has("lift"):
 		rest["lift"] = float(spec["lift"])
 	tok.lie_down(rest)
+
+
+## The drawing of figure `id` lying down (PICTURES), or "" when there is none (yet).
+static func picture_path(id: String) -> String:
+	if id == "":
+		return ""
+	var path := PICTURES % id
+	return path if ResourceLoader.exists(path) else ""
 
 
 ## The prop node the figure lies on: the one `on` names, else furniture standing on its own square; null for none.

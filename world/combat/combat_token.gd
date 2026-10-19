@@ -101,6 +101,9 @@ var _lying: Sprite3D
 ## down to the chest leaves this share of the lying view's frame showing above its hem, the head and neck.
 const BELLY_SINK := 0.38
 const KEEP_ABOVE_HEM := 0.27
+## A drawn picture of a figure lying down (lie_down's `picture`: Sarkhaza on her gold) spans this many squares a square
+## of its footprint, its tail and wings past the edge.
+const PICTURE_SPAN := 1.25
 ## A figure lying on furniture is drawn no longer than the furniture and this much more, down to MIN_FIT of its size.
 const FURNITURE_OVERHANG := 0.15
 const MIN_FIT := 0.8
@@ -114,6 +117,8 @@ var _rising := false
 ## What the lying view and a sheet over it hang from: moved onto what the figure lies on, turned head first along it.
 var _rest_pivot: Node3D
 var _sheet: MeshInstance3D
+## The drawn lying picture standing in for the figure while it rests (lie_down's `picture`), or null.
+var _picture: Sprite3D
 var body: Node3D
 var _ring: MeshInstance3D
 var _active_ring: MeshInstance3D
@@ -463,7 +468,7 @@ func refresh() -> void:
 	elif cr.hp <= 0:
 		_base_modulate = Color(0.6, 0.55, 0.6, 0.85)
 	if sprite != null:
-		var down: bool = not cr.dead and (cr.hp <= 0 or cr.has_condition(&"prone") or (resting and str(_rest.get("pose")) != "belly"))
+		var down: bool = not cr.dead and (cr.hp <= 0 or cr.has_condition(&"prone") or (resting and not str(_rest.get("pose")) in ["belly", "picture"]))
 		_status.position.y = 0.75 + float(_rest.get("lift", 0.0)) if down else _status_y
 		if DirectionalSprite.has_anim(sprite.sprite_frames, "down"):
 			# Drawn falls and a drawn lying pose: the figure itself lies down (fall() plays the fall).
@@ -476,6 +481,13 @@ func refresh() -> void:
 		else:
 			sprite.visible = not down
 			_lying.visible = down and str(_rest.get("sheet", "")) != "face"   # a sheet drawn over the face hides it
+		if _picture != null:
+			# A drawn lying picture stands in for the figure until it gets up (get_up shows the figure as it rises).
+			_picture.visible = resting and not _rising and str(_rest.get("pose")) == "picture" and not cr.dead
+			if _picture.visible:
+				sprite.visible = false
+				_lying.visible = false
+			_picture.modulate = _faded(_base_modulate)
 		if cr.dead and sprite.modulate.a > 0.01 and is_inside_tree():
 			var tw := create_tween()
 			tw.tween_property(sprite, "modulate", _base_modulate, 0.7)
@@ -487,8 +499,9 @@ func refresh() -> void:
 
 ## Lies down apart from any condition, as a figure the story has lying there (LyingFigures.lay; owner 2026-10-13:
 ## the text has Vasilka lying under a sheet, very still, and she stood beside her table), until get_up(). `how`:
-## `pose` "back" (the lying view: a person on their back) or "belly" (a beast or a dragon: its figure low on the
-## ground, legs under it); `lift` up onto what it lies on and `offset` (x, z) across to it; `head` (x, z) the way its
+## `pose` "back" (the lying view: a person on their back), "belly" (a beast or a dragon: its figure low on the
+## ground, legs under it) or "picture" (a drawn picture of it lying down, the texture `picture`, `width` wide, in its
+## place: Sarkhaza across her gold); `lift` up onto what it lies on and `offset` (x, z) across to it; `head` (x, z) the way its
 ## head points (a beast without one looks the way it did); `sheet` "chest" (linen turned down under the collarbone) or
 ## "face" (drawn over it), spreading `half` either side and hanging `drop` over the edge of what it lies on. On furniture
 ## `long` long, a figure much longer is drawn a little smaller (the game's tables are short for its people).
@@ -501,6 +514,10 @@ func lie_down(how: Dictionary) -> void:
 	var lift := float(how.get("lift", 0.0))
 	var offset := how.get("offset", Vector2.ZERO) as Vector2
 	var head := how.get("head", Vector2(1, 0)) as Vector2
+	if str(how.get("pose", "back")) == "picture":
+		_show_picture(how, Vector3(offset.x, lift, offset.y))
+		refresh()
+		return
 	if str(how.get("pose", "back")) == "belly":
 		if how.has("head"):
 			face(head, false)   # else the way it already looks
@@ -532,6 +549,24 @@ func lie_down(how: Dictionary) -> void:
 	refresh()
 
 
+## The `picture` pose: the drawn picture of the figure lying down (a texture path), standing on the ground at `at` and
+## turning to the camera as the figures do, `width` world units wide (else PICTURE_SPAN squares a square it holds).
+func _show_picture(how: Dictionary, at: Vector3) -> void:
+	var tex := load(str(how.get("picture", ""))) as Texture2D
+	if tex == null:
+		return
+	if _picture == null:
+		_picture = Sprite3D.new()
+		_picture.name = "LyingPicture"
+		_picture.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+		add_child(_picture)
+	_picture.texture = tex
+	_picture.pixel_size = float(how.get("width", combatant.size_cells * PICTURE_SPAN)) / float(tex.get_width())
+	_picture.offset = Vector2(0, tex.get_height() * 0.5)
+	_picture.position = at
+	DirectionalSprite.setup_material(_picture)
+
+
 ## Gets up from lying down (lie_down) after `delay` seconds: a person rises out of a crouch on its own square as the
 ## lying view goes (fall() played backwards), a beast comes up off the ground. A sheet over it is left behind.
 func get_up(delay: float = 0.0) -> void:
@@ -543,6 +578,13 @@ func get_up(delay: float = 0.0) -> void:
 	if sprite == null or _lying == null:
 		tw.tween_callback(_stood)
 	elif str(_rest.get("pose", "back")) == "belly":
+		tw.tween_property(sprite, "position", Vector3.ZERO, 0.45).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tw.tween_callback(_stood)
+	elif str(_rest.get("pose", "back")) == "picture":
+		# The picture goes and the figure comes up off the ground in its place, as a beast's does.
+		tw.tween_callback(func() -> void:
+			sprite.position = Vector3(0, -BELLY_SINK * _height(art_override if art_override != "" else art_id(combatant)), 0)
+			refresh())
 		tw.tween_property(sprite, "position", Vector3.ZERO, 0.45).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 		tw.tween_callback(_stood)
 	else:

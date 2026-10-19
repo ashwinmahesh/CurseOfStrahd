@@ -109,10 +109,12 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   first, once, when the leader comes within n squares and can see them. `asleep: true` lays the NPC down asleep
   (Unconscious, so Incapacitated and Prone, as the 2024 rules have a sleeper); the hover hint, Look and the Alt plates
   say so. `lying` lays the figure down with no condition (owner 2026-10-13, Vasilka "lies under a sheet, very still"):
-  `true`, or `{on, head, sheet, pose, lift}` (world/exploration/lying_figures.gd). A person lies on their back on
+  `true`, or `{on, head, sheet, pose, lift, picture}` (world/exploration/lying_figures.gd). A person lies on their back on
   their own square, on top of the furniture standing there (a table, a bier, a pallet), or on the prop `on` names
   beside them; head along the furniture, or toward `head`; `sheet` lays linen over them to the `chest` or over the
-  `face`. A beast or a dragon lies low on its belly (`pose`: back or belly). The hover names them and the menu offers
+  `face`. A beast or a dragon lies low on its belly (`pose`: back or belly). `picture` names a drawing of the figure
+  lying down (art/sprites/lying/<id>.png) that stands in for it, turned to the camera, until it gets up (Sarkhaza
+  across her gold); until the drawing exists the figure lies as it would without one. The hover names them and the menu offers
   Approach. `path: [[x, y], [x, y, seconds], ...]` walks the NPC from its cell through each waypoint and back, standing
   `pause` seconds (default 3, or a waypoint's own) at each (NpcRoutes): it holds while anyone talks or fights, while
   the leader stands beside it and while its next square is taken, and under turn-based exploring walks only as a
