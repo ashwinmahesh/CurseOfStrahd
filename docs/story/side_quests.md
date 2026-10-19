@@ -1320,6 +1320,12 @@ whispering thing in the dark is the frightened one. The predator is the great ca
 readers and filed their things (Insight DC 13: his eye never leaves it). **Escalation:** open one drawer and every
 drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the tower's own plot are never read or set.
 
+- **Getting down (Ashwin, 2026-10-19: "How to climb down old head well to reach drowned library?").** Examining the well-head
+  (prop `vrt_wellhead`, level 9 and up) starts the quest at `asked` and offers "Climb down the well-shaft." (five minutes,
+  then the library's `from_shore` spawn) or "Leave it be."; the shaft square beside it (exit `vrt_well_down`, open once the
+  quest has begun) still leads down on its own. The exit carries `sets_quest` (a new exit field, data/schemas/location.schema.json,
+  `LocationWalk._exit_moves_quest`), so walking straight down also moves a `rumored` quest to `asked`.
+  tests/integration/test_well_climb.gd.
 - **Boss: the Index** (data/monsters/the_index.json, `source.book: custom`, built up from the 2025 Monster Manual's
   mimic and drawn with its sprite at Huge, `art_height` 2.4): Huge monstrosity, AC 14, 157 HP (135 in this fight), a
   Bite and two long Pseudopods that grapple, a Spray of Pages (recharge 5-6, three creatures, DC 15 Dex, acid),

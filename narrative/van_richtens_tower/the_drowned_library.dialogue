@@ -5,7 +5,8 @@
 # catalogue desk, the Index, which has eaten every other reader and filed their things
 # (data/monsters/the_index.json). **Escalation:** the moment anyone opens a drawer, every chair and trolley in the
 # room stands up. Van Richten, Ezmerelda and the tower's own plot are never read or set. Reached from Mordenkainen's
-# news once Khazan is unmade (mount_baratok/the_mages_lost_pages:news) and from the well-head on the shore from level 9.
+# news once Khazan is unmade (mount_baratok/the_mages_lost_pages:news) and from the well-head on the shore from level 9
+# (examine it, then "Climb down the well-shaft", or walk to the shaft beside it).
 # Every line here is unvoiced for now.
 
 # --- Mordenkainen (mount_baratok/the_mages_lost_pages:news jumps here) ---
@@ -21,14 +22,28 @@ Mordenkainen: Since you unmade him I've been dreaming of a voice coming up a wel
 ~ wellhead
 if flag.index_destroyed
 Narrator: The old well-head on the shore. A rope ladder goes down it now, and from far below comes the sound of pages being turned, very carefully.
--> END
+-> wellhead_menu
 endif
 Narrator: An old well-head of mossy stone on the shore, choked with reeds. When you lean over it, the air coming up is colder than the lake and smells of wet paper.
 Narrator: From very far down, a whisper, as if someone had their mouth right up against the stone: "Don't come down. Don't read anything. Please. Don't touch the desk."
 if not quest.the_drowned_library or quest.the_drowned_library == rumored
 quest the_drowned_library asked
 endif
--> END
+-> wellhead_menu
+
+# The way down, from the well-head itself (the exit square beside it, vrt_well_down, does the same): a few minutes' climb,
+# and the quest is at "asked" whichever way the party goes down (Ashwin, 2026-10-19: "How to climb down old head well to
+# reach drowned library?").
+~ wellhead_menu
+* [if quest.the_drowned_library] Climb down the well-shaft. -> climb
+* Leave it be. -> END
+
+~ climb
+if not quest.the_drowned_library or quest.the_drowned_library == rumored
+quest the_drowned_library asked
+endif
+time +5
+move drowned_library:from_shore
 
 # --- Xaver, on top of a bookcase (npc library_xaver) ---
 

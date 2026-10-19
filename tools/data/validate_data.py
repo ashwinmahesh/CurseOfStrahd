@@ -1020,6 +1020,15 @@ def story_checks(data, errors, need):
             elif ex.get("spawn") and ex["spawn"] not in locations[ex["to"]].get("spawns", {}):
                 errors.append(f"{w}: exit {ex['id']} uses spawn '{ex['spawn']}' that {ex['to']} doesn't have")
             cond(ex.get("when", ""), w)
+            sq = ex.get("sets_quest")
+            if sq:
+                if sq["id"] not in quests:
+                    errors.append(f"{w}: exit {ex['id']} moves unknown quest '{sq['id']}'")
+                else:
+                    stage_ids = {st["id"] for st in quests[sq["id"]]["stages"]}
+                    for sid in [sq["stage"]] + [f for f in sq["from"] if f]:
+                        if sid not in stage_ids:
+                            errors.append(f"{w}: exit {ex['id']}: quest {sq['id']} has no stage '{sid}'")
         for d in loc.get("doors", []):
             on_floor(d["cell"], f"door {d['id']}")
             cond(d.get("when", ""), w)

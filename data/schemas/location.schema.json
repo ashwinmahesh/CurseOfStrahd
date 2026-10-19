@@ -189,6 +189,30 @@
           },
           "locked_text": {
             "type": "string"
+          },
+          "sets_quest": {
+            "type": "object",
+            "description": "Taking this exit moves a quest on, like a conversation's `quest` line, but only from the listed stages (\"\" is not started): the way into a place a quest sends the party must leave the quest where its own talk would.",
+            "required": [
+              "id",
+              "stage",
+              "from"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "stage": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "from": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }

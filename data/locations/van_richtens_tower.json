@@ -202,7 +202,15 @@
       "spawn": "from_shore",
       "label": "Down the old well-shaft",
       "when": "quest.the_drowned_library",
-      "locked_text": "An old well-head on the shore, choked with reeds. Something down there is whispering."
+      "locked_text": "An old well-head on the shore, choked with reeds. Something down there is whispering.",
+      "sets_quest": {
+        "id": "the_drowned_library",
+        "stage": "asked",
+        "from": [
+          "",
+          "rumored"
+        ]
+      }
     }
   ],
   "props": [

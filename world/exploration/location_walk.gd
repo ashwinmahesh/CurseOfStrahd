@@ -210,10 +210,22 @@ static func _check_cell_events(view: LocationView) -> bool:
 			if str(exit["to"]) == "travel":
 				view.travel_requested.emit()
 				return true
+			_exit_moves_quest(view, exit)
 			view.st.advance_minutes(5)   # walking between places takes a few minutes; rests take the hours
 			view.exit_requested.emit(str(exit["to"]), str(exit.get("spawn", "default")))
 			return true
 	return false
+
+
+## An exit's `sets_quest` (data/schemas/location.schema.json): walking through it moves the quest on from the stages it
+## lists, as a conversation at the door would have (the Old Head well-shaft: going down leaves The Drowned Library at "asked").
+static func _exit_moves_quest(view: LocationView, exit: Dictionary) -> void:
+	var sq: Variant = exit.get("sets_quest", null)
+	if not sq is Dictionary:
+		return
+	var d := sq as Dictionary
+	if (d.get("from", []) as Array).has(view.st.quest_stage(str(d["id"]))):
+		view.st.set_quest_stage(str(d["id"]), str(d["stage"]))
 
 
 static func _check_areas(view: LocationView) -> bool:
