@@ -498,6 +498,12 @@ class Story:
             if self.possible(e.get("when", "")):
                 self.walk(f"endings/{eid}", "start", "the ending screen")
         for nid, n in self.npcs.items():
+            # A story ally who travels with the party: a click on them opens their guest_talk, and Give... starts a gift's
+            # conversation (story/guest_talk.gd).
+            if ("guest", nid) in self.facts:
+                self.walk_ref(n.get("guest_talk", ""), f"{nid}'s guest_talk")
+                for g in n.get("gifts") or []:
+                    self.walk_ref(g.get("ref", ""), f"{nid}'s gift {g.get('id', '')}")
             if ("met", nid) not in self.facts:
                 continue
             for w in (n.get("shop") or {}).get("sells", []):
