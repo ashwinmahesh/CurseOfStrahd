@@ -139,7 +139,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   neighbours, whose squares stay unfurnished (SetDressing.scaled_squares); the rules' grid never changes, so give it
   room by where you put it (nothing else of the prop's own should stand in the squares it covers). A prop's `tint` (a palette
   colour's name or `"#rrggbb"`) multiplies the colours of its 3D piece: the dead colossus at the Amber Temple's doors in dark
-  amber (ModelPiece.tint, applied before it opens round the party). A `model` of
+  amber (ModelPiece.tint, applied before it can fade in the party's way). A `model` of
   `silver_heap` is a heap of coins built from the coins (CoinHeap), `scale` times the gold heap's size.
   A prop's `stand_ft` (5 to 60, in 5 ft steps) makes it something stood on: its squares (its cell, or all its `span`)
   are that many feet above the ground underneath (LocationView.grid_for, CombatGrid.raise). 5 ft is a step up (a

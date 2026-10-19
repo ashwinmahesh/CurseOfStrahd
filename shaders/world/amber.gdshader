@@ -11,7 +11,6 @@ shader_type spatial;
 // (cull_back: the face seen from outside; AmberGlow makes a copy of this shader with cull_front for the far inside of the
 // glass, drawn first, so a block reads as thick glass with its back showing through its front.)
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
-#include "res://shaders/world/see_through.gdshaderinc"
 
 // The honey of the glowing middle and the ember of the edges (palette colours, set from AmberGlow).
 uniform vec3 core : source_color = vec3(0.98, 0.88, 0.54);
@@ -29,6 +28,8 @@ uniform vec3 cloud_tint : source_color = vec3(1.0);
 // How see-through the glass is at its middle and at its edges.
 uniform float alpha_core : hint_range(0.0, 1.0) = 0.52;
 uniform float alpha_edge : hint_range(0.0, 1.0) = 0.86;
+// How far the block has faded out of the party's way (SeeThrough.mark_glass): 0 as it is, 1 gone.
+uniform float see_fade : hint_range(0.0, 1.0) = 0.0;
 // The block's height, for the glow rising from its foot (local units).
 uniform float body_height = 2.0;
 // A block broken open (the Eye's egg of amber): the way the break faces on the ground (x, z), how wide it opens (the
@@ -50,9 +51,6 @@ void vertex() {
 }
 
 void fragment() {
-	if (see_cut(VERTEX, VIEW_MATRIX, INV_VIEW_MATRIX, CAMERA_POSITION_WORLD, FRAGCOORD.xy)) {
-		discard;
-	}
 	if (cut_open < 0.999) {
 		// Broken open on one side: the shell is gone there, from the foot of the break up.
 		vec2 radial = normalize(lp.xz + vec2(1e-4));
@@ -85,7 +83,7 @@ void fragment() {
 	float lit = glow * (1.0 - dead);
 	ALBEDO = col * 0.3;
 	EMISSION = col * lit * 0.6;
-	ALPHA = clamp(mix(alpha_core, alpha_edge, 1.0 - facing) + dead * 0.1, 0.0, 1.0);
+	ALPHA = clamp(mix(alpha_core, alpha_edge, 1.0 - facing) + dead * 0.1, 0.0, 1.0) * (1.0 - see_fade);
 	ROUGHNESS = 0.5;
 	SPECULAR = 0.12;
 }

@@ -33,7 +33,7 @@ static func stand(view: LocationView, rising: bool = false) -> void:
 	var tower := FortressTower.build(at, str(fs["looks"]), hi - lo)
 	view.add_child(tower)
 	view.exit_nodes[FortressSite.ENTRY] = tower
-	SeeThrough.mark(tower.get_node("Structure"))   # the walls open a window round the party where they hide it, as walls do
+	SeeThrough.mark(tower.get_node("Structure"))   # the walls fade where they hide the party, as walls do
 	if rising:
 		FortressTower.rise(tower)
 

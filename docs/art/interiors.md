@@ -39,8 +39,7 @@ A board whose interior style is `tent` (catalog `building_kit.interiors.themes.t
 - **Pieces stand off the canvas.** The board's `wall_inset` (set by `TentWalls`) is how far in from the wall square's
   face the canvas stands at about chest height; pieces hung on the wall or backed onto it are set that far forward
   (a deep piece is squeezed to stay in its square), so nothing disappears into the leaning canvas.
-- **Standing.** In the Modern look the canvas stands full height on every side and opens a window round the party
-  where it hides it, as a room's walls do (`SeeThrough`, docs/art/building_kit.md); with `interiors.cut_away` on, the
+- **Standing.** In the Modern look the canvas stands full height on every side and fades where it hides the party, as a room's walls do (`SeeThrough`, docs/art/building_kit.md); with `interiors.cut_away` on, the
   canvas toward the camera drops to 1.15 instead (`InteriorWalls.cut`). Classic builds it at 1.15 only, with no charms
   or roof.
 

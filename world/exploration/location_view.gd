@@ -185,7 +185,9 @@ func _ready() -> void:
 	atmosphere.attach(rig, post)
 	rig.follow = tokens[members[0].id] as Node3D if not members.is_empty() else null
 	rig.snap_to_target()
-	add_child(SeeThrough.create(rig))   # walls in the way open a window round the party (owner 2026-10-17)
+	var see := SeeThrough.create(rig)   # walls and roofs in the way fade, as trees do (owner 2026-10-19; no x-ray window)
+	see.also = _party_feet
+	add_child(see)
 	StoryConditions.note_departure(st, st.location, str(loc.get("region", "")))   # leaving Castle Ravenloft ends its truce
 	var left := QuestClosures.region_left(st.location, str(loc.get("region", "")))   # a quest that ends as the party leaves
 	st.location = loc_id
@@ -232,6 +234,19 @@ func _process(delta: float) -> void:
 		board.cut_buildings(rig.camera.global_position, focus, delta)
 	LocationWalk._update_glides(self, delta)
 	LocationWalk.tick(self, delta)
+
+
+## Where the rest of the party stands while exploring (SeeThrough keeps them in sight too); in a fight the camera is on the
+## one acting and that is all.
+func _party_feet() -> Array[Vector3]:
+	var out: Array[Vector3] = []
+	if in_combat:
+		return out
+	for m in members:
+		var t := tokens.get(m.id) as Node3D
+		if t != null and is_instance_valid(t) and t.is_inside_tree() and m.creature.hp > 0:
+			out.append(t.global_position)
+	return out
 
 
 func leader() -> Combatant:

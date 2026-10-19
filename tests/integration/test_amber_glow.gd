@@ -84,8 +84,8 @@ func test_the_vestiges_stand_upright_on_their_squares() -> void:
 			assert_eq(str(case.light.get_meta("light_kind", "")), "amber", "the amber kind, once dressed")
 			assert_true(case.light.has_meta("no_shadow"), "casting no shadow")
 			assert_true(LightFlicker.of(case.light) != null or case.locked, "and breathing (Savnok's holds still)")
-			for m in case.glass:
-				assert_true(bool(m.get_shader_parameter("see_through")), "%s opens a window round the party like a wall" % id)
+			for g in case.find_children("Glass*", "MeshInstance3D", true, false):
+				assert_true(SeeThrough.marked(g as MeshInstance3D) and g.has_meta(SeeThrough.GLASS), "%s fades while it hides the party, like a wall" % id)
 		v.queue_free()
 		await _frames(1)
 

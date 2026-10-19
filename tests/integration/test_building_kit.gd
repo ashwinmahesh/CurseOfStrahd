@@ -1,7 +1,7 @@
 extends TestCase
 ## The building kit (Improvement Ideas W7, docs/art/building_kit.md): towns are put together from Blender modules in
 ## their region's style instead of textured boxes: Barovia's timber framing, Vallaki's clapboard and palisade, Krezk's
-## stone. A door hung on a house makes a door bay; a house in the way stands and opens a window round the party.
+## stone. A door hung on a house makes a door bay; a house in the way stands and fades.
 
 
 var _cut_away: Variant = null
@@ -145,7 +145,7 @@ func test_a_kit_house_cuts_away_to_its_footing() -> void:
 ## Owner decisions (2026-10-13: "why do buildings shrink down ... when I get near them? Same things with walls. Lets
 ## disable this effect"; 2026-10-17: big walls all round going see-through "looks really weird"): outside, a house or
 ## Castle Ravenloft's wall between the camera and the party stands whole and solid, roof and all, with every mesh of it
-## marked to open a window round the party (SeeThrough), never fading whole.
+## marked to fade where it hides the party (SeeThrough), never fading whole.
 func test_buildings_and_walls_in_the_way_stand() -> void:
 	assert_false(bool(BuildingKit.settings().get("cut_away", false)), "the catalog's cut_away is off")
 	var v := _view("village_of_barovia")
@@ -159,7 +159,7 @@ func test_buildings_and_walls_in_the_way_stand() -> void:
 	assert_false((b0["stub"] as Node3D).visible, "no footing in its place")
 	assert_true((b0["upper"] as Node3D).visible, "roof and all")
 	assert_true(is_zero_approx(_fade_of(b0["walls"] as Node3D)) and is_zero_approx(_fade_of(b0["upper"] as Node3D)), "solid, never see-through whole")
-	assert_true(_all_marked(b0["root"] as Node3D), "every mesh of it opens round the party")
+	assert_true(_all_marked(b0["root"] as Node3D), "every mesh of it fades when it hides the party")
 	for i in 2:
 		v.board.cut_buildings(behind + Vector3(0, 5, -14), behind, 1.0)
 	assert_true(is_zero_approx(_fade_of(b0["walls"] as Node3D)) and (b0["walls"] as Node3D).visible, "and the same once clear")
@@ -181,7 +181,7 @@ func test_buildings_and_walls_in_the_way_stand() -> void:
 	c.queue_free()
 
 
-## Whether every mesh under `n` opens round the party (SeeThrough.mark).
+## Whether every mesh under `n` fades when it hides the party (SeeThrough.mark).
 func _all_marked(n: Node3D) -> bool:
 	var meshes := n.find_children("*", "GeometryInstance3D", true, false)
 	if n is GeometryInstance3D:
@@ -371,7 +371,7 @@ func test_lone_wall_squares_are_pillars() -> void:
 				found = true
 				assert_true((n as MeshInstance3D).get_aabb().size.y > 2.0, "%s's pillar stands tall" % pair[0])
 				assert_true(SeeThrough.marked(n as MeshInstance3D) and not n in v.board.mesh_occluders,
-					"and opens round the party when it hides it, never fading whole")
+					"and fades when it hides the party, never fading with the trees")
 		assert_true(found, "%s has a %s pillar at %s" % [pair[0], pair[2], cell])
 		assert_eq(BuildingKit.interior_style(v.board), str(pair[2]))
 		v.queue_free()
@@ -380,7 +380,7 @@ func test_lone_wall_squares_are_pillars() -> void:
 
 ## W8: a room's walls stand a full storey from every heading (owner 2026-10-17: "walls collapse down when looking from
 ## certain angles ... I don't like this behavior"): a wall between the camera and the party stands whole and opens a
-## window round the party instead (SeeThrough), with no cut-away version built. Past the house's outer walls there's the
+## fade when they hide the party instead (SeeThrough), with no cut-away version built. Past the house's outer walls there's the
 ## street, a storey below on the Death House's upper floor, and a doorway has wall over it. With the catalog's interiors
 ## cut_away on, the near walls still drop to the cut-away height, turning with the camera. Classic keeps the low walls.
 func test_interiors_have_full_walls_that_stand() -> void:

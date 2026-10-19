@@ -322,7 +322,7 @@ func test_vallakis_rooms_have_what_their_text_names() -> void:
 	for w: Dictionary in (inn.board.get_meta("interior_walls", {}) as Dictionary).get("walls", []):
 		if Rect2i(15, 13, 7, 3).has_point(w["cell"] as Vector2i):
 			for mi in (w["full"] as Node).find_children("*", "MeshInstance3D", true, false):
-				if (mi as MeshInstance3D).material_override in [paint, SeeThrough.opening(paint)]:   # (a wall's own copy, SeeThrough)
+				if (mi as MeshInstance3D).material_override == paint:
 					red += 1
 					break
 	assert_true(red >= 10, "its sides are painted red (%d)" % red)

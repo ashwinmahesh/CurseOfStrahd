@@ -622,8 +622,9 @@ static func _glass(parent: Node3D, mesh: Mesh, at: Vector3, spec: Dictionary, jo
 		m.set_shader_parameter("dead_tint", Look.color("ember_deep"))
 		m.set_shader_parameter("dead", float(spec.get("dead", 0.0)))
 		m.set_shader_parameter("cloud", float(spec.get("cloud", 0.15)))
-		m.set_shader_parameter("see_through", bool(spec.get("window", false)))   # a tall block opens a window round the party, as a wall does
 		mi.material_override = m
+		if bool(spec.get("window", false)):
+			SeeThrough.mark_glass(mi)   # a tall block fades while it hides the party, as a wall does (by its material's see_fade)
 		parent.add_child(mi)
 		if join != null:
 			join.glass.append(m)

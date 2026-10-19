@@ -68,32 +68,36 @@ past it, looking away from the camera, within 7 squares of the party (`InteriorW
 the cut-away height and their cut version takes over; the rest stand. A header goes down with either wall beside it.
 The rules grid, line of sight and the Classic look are unchanged.
 
-## Walls in the party's way (`world/look/see_through.gd`, `shaders/world/see_through.gdshaderinc`)
+## Walls in the party's way (`world/look/see_through.gd`)
 
 Owner, 2026-10-17: walls dropping to a stub as the camera turned (the Tsolenka guard tower, the Amber Temple) and
 Castle Ravenloft's big walls going see-through whole ("they are in opaque view but it looks really weird") are gone.
-Every wall, house, castle piece, town wall, pillar, tower and statue stands whole and solid from every heading, and
-where one stands nearer the camera than the party a window opens in it: an oval round the party on screen (1.9 squares
-wide at the party, a little taller than wide), its rim dithered, the party and the ground round it showing through.
-It moves with the party and turns with the camera; nothing beside or behind the party opens (a piece must stand 0.75
-nearer the camera than the party's middle), and nothing below the party's feet (it hides nothing from above).
+Every wall, house, castle piece, town wall, pillar, tower and statue stands whole and solid from every heading, and a
+piece that hides the party (or whoever the camera follows) fades to the trees' opacity (transparency 0.72, 28% opaque)
+over a quarter of a second while it does, and comes back to solid when it no longer does. Owner, 2026-10-19: "remove the
+weird visual effect where we get an x-ray if a player is blocked by an object, and instead use the opacity change": the
+oval window that was cut in whatever stood nearer the camera than the party (its rim dithered, the party showing through
+it) is gone, and no shader cuts a hole any more.
 
-- **What opens**: meshes marked with the instance uniform `see_through` (`SeeThrough.mark`): houses and Castle
-  Ravenloft (the board marks every building when it's built, and `TownBuilder._kit_walls` a house's rebuilt walls),
-  an interior's walls, headers, blocks and tent canvas (`InteriorWalls`, `TentWalls`), pillars, a town wall three men
-  high, pieces hung on walls (`ArenaBoard.attach_to_building`), a building-sized piece standing in for a house (the
-  windmill, the bell tower, Van Richten's tower) and catalog pieces with `see_through: true` (the Amber Temple's
-  colossus, the faceless statue, Baba Lysaga's hut, the wicker effigy). Floors, furniture, props and figures never
-  open; trees and rocks still fade whole like foliage (`ArenaBoard.fade_occluders`); a waist-high yard wall hides
-  nobody and stays whole.
-- **Where**: one `SeeThrough` node per view (`LocationView`) puts the window, just before each frame is drawn
-  (`RenderingServer.frame_pre_draw`), on a boss making an entrance (`CameraRig.cutaway_focus`), else on whoever the
-  camera follows (the leader exploring, the one acting in a fight), else where the camera looks; the global uniforms
-  `see_window` (the party's feet and the window's size) and `see_window_eye` (the camera it's for). Only that
-  camera cuts: a lamp's or the moon's shadow pass and any other view draw every wall whole, so walls keep their
-  shadows.
-- **The shaders**: `cel`, `cel_world`, `cel_sprite`, `lit` and `lit_world` include `see_through.gdshaderinc` and
-  discard a marked fragment inside the window (`see_cut`). A new world shader for walls needs the same two lines.
+- **What fades**: pieces marked by `SeeThrough.mark` (they join the group `see_fade`): houses and Castle Ravenloft (the
+  board marks every building when it's built, and `TownBuilder._kit_walls` a house's rebuilt walls), an interior's
+  walls, headers, blocks and tent canvas (`InteriorWalls`, `TentWalls`), pillars, a town wall three men high, pieces
+  hung on walls (`ArenaBoard.attach_to_building`), a building-sized piece standing in for a house (the windmill, the
+  bell tower, Van Richten's tower) and catalog pieces with `see_through: true` (the Amber Temple's colossus, the faceless
+  statue, Baba Lysaga's hut, the wicker effigy). Floors, furniture, props and figures never fade; trees and rocks fade
+  the same way (`ArenaBoard.fade_occluders`); a waist-high yard wall hides nobody and stays whole. A house's walls and
+  its roof are one piece each, so they fade whole; an interior's walls fade a square at a time.
+- **Which are in the way**: one `SeeThrough` node per view (`LocationView`) looks, about every 0.05 s while the camera
+  or the party moves, for the marked pieces crossed by a sight line from the camera to the figure the camera is on (feet,
+  chest, head, either side) and to the rest of the party while exploring (`LocationView._party_feet`): on a boss making an
+  entrance (`CameraRig.cutaway_focus`), else whoever the camera follows (the leader exploring, the one acting in a
+  fight), else where the camera looks. A piece wider than `SeeThrough.LARGE` (a house's walls, a castle wall) counts
+  only where one of its faces is crossed (its mesh's triangles), not whenever the party is inside the box round it. A line
+  stops just short of the figure, so a wall it stands against doesn't hide it. Nothing beside or behind the party fades.
+- **How**: `GeometryInstance3D.transparency` (shadows stay), which every world shader keeps; the Amber Temple's tall
+  blocks, whose shader has an alpha of its own, fade by their material's `see_fade` uniform (`SeeThrough.mark_glass`).
+- `tools/capture/look_capture.gd` has shots with the party behind a house, a guardroom wall and a courtyard
+  (`behind_house`, `behind_house_wide`, `behind_guardroom`, `behind_guardroom_wall`, `behind_courtyard`).
 - `tools/capture/walls_capture.gd` shoots any place with the party on a named square from all four headings
   (`WALLS_SPOTS`, `WALLS_LOAD` for a bug report's save.json).
 
@@ -123,7 +127,7 @@ catalog (`building_kit.castle.places`); the maps' squares are unchanged.
   the roofs (`cliffs` false) the void is the drop off the roof, the castle's masonry going on down under every square
   beside it.
 - **Cut away** (only with the catalog's `building_kit.cut_away` on; off since the owner's call on 2026-10-13, so the
-  walls stand, and a piece in the way opens a window round the party, above): the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
+  walls stand, and a piece in the way fades, above): the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
   party, or of the squares beside it or just past it, squashes down to its foot (1.25, coped) and comes back when it's
   clear, so the party and the squares round it are always in view. The walls are buildings to the board, so props on
   them (the keep's windows, its crest) hang on their faces and go with them.
@@ -165,7 +169,7 @@ TownBuilder still finds the houses in the map's `#` squares as before (docs/art/
   costs a few dozen draws, not thousands.
 - **Cut away** (only with the catalog's `building_kit.cut_away` on: the owner turned it off on 2026-10-13, "why do
   buildings shrink down ... when I get near them? Same things with walls. Lets disable this effect", so houses stand,
-  and one in the way opens a window round the party, above; it went see-through whole until 2026-10-17).
+  and one in the way fades, above; it went see-through whole until 2026-10-17).
   A house between the camera and the party squashes down and is replaced by its low band: a ring of wall 0.5 high,
   capped dark like the cut-away interiors, round a floor of boards, with its footing.
 
@@ -181,7 +185,7 @@ Yard walls are the kit's too: a stone arm from each square's middle toward each 
 pier where the wall turns, ends or branches, and a gate pier each side of a gateway (gates there hang between them,
 with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons; it rings a walled
 town at the map's edge too, where an open village thins into pines (`TownBuilder.walled`, `ArenaBoard._town_wall`),
-stands on ground of its own, and opens round the party when it hides it, as the houses do. Vallaki's palisade is one mesh for the
+stands on ground of its own, and fades when it hides the party, as the houses do. Vallaki's palisade is one mesh for the
 whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
 
 ## Making and changing the modules (`blender/building_kit.py`)

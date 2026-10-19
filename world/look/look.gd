@@ -132,8 +132,6 @@ static func set_surface_tints(tints: Dictionary) -> void:
 		var surface := str(m.get_meta("surface", ""))
 		if touched.has(surface):
 			m.set_shader_parameter("tint", surface_tint(surface))
-			if m.has_meta(SeeThrough.COPY):   # (the walls drawn with it that open round the party)
-				(m.get_meta(SeeThrough.COPY) as ShaderMaterial).set_shader_parameter("tint", surface_tint(surface))
 
 
 ## A surface's tint in the place being built (white unless its mood tints it).

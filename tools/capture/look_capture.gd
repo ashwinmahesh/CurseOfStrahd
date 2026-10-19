@@ -54,6 +54,13 @@ const SHOTS := {
 	# square after rain.
 	"pool_shore_dusk": {"loc": "tser_pool", "hour": 18, "cells": [[9, 4], [10, 4], [11, 4], [10, 3]]},
 	"village_wet_dusk": {"loc": "village_of_barovia", "hour": 18, "wet": 1.0},
+	# The party standing behind what the camera looks over, where walls and roofs hide it (SeeThrough): a village house, a
+	# guard tower's guardroom, a castle courtyard.
+	"behind_house": {"loc": "village_of_barovia", "hour": 12, "cells": [[11, 14], [12, 14], [11, 13], [12, 13]], "zoom": 9},
+	"behind_guardroom": {"loc": "tsolenka_pass_guard_tower", "cells": [[10, 8], [11, 8], [10, 9], [11, 9]]},
+	"behind_courtyard": {"loc": "castle_ravenloft_gates", "hour": 12, "cells": [[30, 12], [31, 12], [30, 13], [31, 13]]},
+	"behind_guardroom_wall": {"loc": "tsolenka_pass_guard_tower", "cells": [[4, 9], [5, 9], [4, 8], [5, 8]]},
+	"behind_house_wide": {"loc": "village_of_barovia", "hour": 12, "cells": [[11, 14], [12, 14], [11, 13], [12, 13]]},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
