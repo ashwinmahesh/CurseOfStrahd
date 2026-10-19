@@ -1450,6 +1450,39 @@ func pact_only_level(from_level: int) -> int:
 	return pl
 
 
+## The levels a spell of `from_level` can be cast into a Ring of Spell Storing (or an Ioun Stone of Reserve) at, lowest
+## first, none above `up_to`: each level with a slot left, and every level from the spell's own up to the pact level
+## while a Pact Magic slot is. The ring keeps as many of its levels for the spell as the slot it was cast with (2024
+## DMG), so a caster who can pick a lower slot leaves room for more. Pact Magic slots are all one level, but the ring is
+## the one place they cast below it (owner, 2026-10-19).
+func storing_levels(from_level: int, up_to: int = 5) -> Array[int]:
+	var out: Array[int] = []
+	var pact := pact_magic()
+	for l in range(maxi(1, from_level), mini(up_to, 9) + 1):
+		if slots_left(l) > 0 or (int(pact["left"]) > 0 and l <= int(pact["level"])):
+			out.append(l)
+	return out
+
+
+## The level of the slot that pays for a spell stored at `level`: that level when a slot of it is left (a Pact Magic
+## slot first, as expend_slot has it), else the pact level while a Pact Magic slot is, cast down to `level`. 0 if neither.
+func storing_slot_for(level: int) -> int:
+	if level < 1 or level > 9:
+		return 0
+	if slots_left(level) > 0:
+		return level
+	var pact := pact_magic()
+	if int(pact["left"]) > 0 and int(pact["level"]) > level:
+		return int(pact["level"])
+	return 0
+
+
+## Spends the slot storing_slot_for(level) names. False, and nothing spent, when there is none.
+func expend_storing_slot(level: int) -> bool:
+	var slot := storing_slot_for(level)
+	return slot > 0 and expend_slot(slot)
+
+
 ## Spends a slot of that level: a Pact Magic slot first (they return on a Short Rest), else a Spellcasting slot.
 ## Expended slots of either pool at this level; used by effects that restore spell slots without a pool restriction.
 func expended_slots(level: int) -> int:

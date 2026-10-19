@@ -311,6 +311,28 @@ func test_the_party_screens() -> void:
 		await _check("the %s" % kind, _screen(kind, 0), _close_screen)
 
 
+## A Ring of Spell Storing's card (owner, 2026-10-19): the pickers for who casts which spell and the row of levels to store
+## it at, with an empty ring so every level is offered.
+func test_the_ring_of_spell_storing_card() -> void:
+	if not await _game(LATE):
+		return
+	var ch := GameState.story.party[0]
+	ch.add_item("ring_of_spell_storing")
+	ch.entry_of("ring_of_spell_storing")["stored"] = []
+	var open := func() -> Variant:
+		root.call("open_screen", "inventory", 0)
+		await _frames(2)
+		var inv := root.get("screen") as InventoryScreen
+		inv.selected = "ring_of_spell_storing"
+		inv.call("_draw")
+		await _frames(2)
+		var levels := (inv.get("_card") as Node).find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+			return (b as Button).text.begins_with("Level "))
+		assert_false(levels.is_empty(), "the ring's card offers levels to store at")
+		return inv
+	await _check("the Ring of Spell Storing's card", open, _close_screen)
+
+
 ## XP levelling's rows (story/xp.gd): the experience strip on the Party screen and the sheet at its longest (a level 10 pool a
 ## point short of 11 with a big reserve held), the level-up screen when there's no level to take, and Settings' Game page
 ## saying how heroes grow.

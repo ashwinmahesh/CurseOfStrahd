@@ -115,7 +115,9 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 
 
 ## Ring of Spell Storing: the spells party members could cast into the ring now (any creature can, touching it), at
-## each level they have a slot for and the ring has room for: [{caster, spell, level, label}].
+## each level the ring has room for and they have a slot to cast it at (a Pact Magic caster at any level from the
+## spell's own up to its pact level, Character.storing_levels): [{caster, spell, level, base, slot, label}]. `slot` is the
+## level of the slot that pays, `base` the spell's own level.
 static func store_options(party: Array[Character], p: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var cap := int(((p["power"] as Dictionary).get("params", {}) as Dictionary).get("capacity", 5))
@@ -131,10 +133,9 @@ static func store_options(party: Array[Character], p: Dictionary) -> Array[Dicti
 			if seen.has(sid) or base < 1 or base > 5:
 				continue
 			seen[sid] = true
-			for lvl in range(base, mini(5, room) + 1):
-				if m.slots_left(lvl) > 0:
-					out.append({"caster": m.id, "spell": sid, "level": lvl, "label": "%s: %s (level %d)" % [m.name.get_slice(" ", 0),
-						sd.get("name", sid), lvl]})
+			for lvl in m.storing_levels(base, mini(5, room)):
+				out.append({"caster": m.id, "spell": sid, "level": lvl, "base": base, "slot": m.storing_slot_for(lvl),
+					"label": "%s: %s (level %d)" % [m.name.get_slice(" ", 0), sd.get("name", sid), lvl]})
 	return out
 
 
@@ -506,16 +507,18 @@ static func _store_spell(st: StoryState, ch: Character, p: Dictionary, opts: Dic
 	var used := stored_levels(entry)
 	if used + lvl > cap:
 		return {"ok": false, "text": "Not enough room (%d of %d levels used)" % [used, cap]}
-	if not caster.expend_slot(lvl):
-		return {"ok": false, "text": "No level %d slot left" % lvl}
+	var slot := caster.storing_slot_for(lvl)
+	if not caster.expend_storing_slot(lvl):
+		return {"ok": false, "text": "No slot left to cast a level %d spell with" % lvl}
 	var cid := str(known.get("class_id", ""))
 	var rec := {"spell": spell_id, "level": lvl, "dc": caster.spell_save_dc(cid).total(), "attack": caster.spell_attack_bonus(cid).total(),
 		"ability": str(known.get("ability", "int"))}
 	var stored := entry.get("stored", []) as Array
 	stored.append(rec)
 	entry["stored"] = stored
-	return {"ok": true, "text": "%s casts %s (level %d) into the %s: %d of %d levels now stored." % [caster.name.get_slice(" ", 0),
-		spell.get("name", ""), lvl, (p["data"] as Dictionary).get("name", ""), used + lvl, cap]}
+	return {"ok": true, "text": "%s casts %s (level %d%s) into the %s: %d of %d levels now stored." % [caster.name.get_slice(" ", 0),
+		spell.get("name", ""), lvl, ", from a level %d Pact Magic slot" % slot if slot > lvl else "", (p["data"] as Dictionary).get("name", ""),
+		used + lvl, cap]}
 
 
 ## Robe of Useful Items: a patch becomes what it shows.

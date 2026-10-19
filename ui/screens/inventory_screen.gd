@@ -134,7 +134,7 @@ func _draw() -> void:
 	strip.add_child(purse)
 	_frame.add_child(strip)
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 16)
+	row.add_theme_constant_override("separation", 12)   # a tall card (a ring's) shows a 6 px scroll bar: 16 pushed the frame 3 px past its border
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(row)
 	row.add_child(_doll(ch))
@@ -1812,24 +1812,99 @@ func _show_put_in(res: String) -> void:
 			_card.add_child(UiKit.label(res, 14, "flame", 420))
 
 
-## Ring of Spell Storing: pick who casts which spell into the ring, then store it.
+## Ring of Spell Storing: pick who casts which spell into the ring, then the level to store it at. The levels are a row of
+## buttons that follows the spell: one for each level the ring has room for and the caster has a slot to cast it at (a
+## Pact Magic caster's go down from its pact level, FieldItems.store_options), and pressing one stores the spell. The
+## pickers are dropdowns, so B backs out of one on the pad and the screen's own Escape leaves the rest.
 func _store_picker(acts: Control, opt: Dictionary) -> void:
-	var pick := OptionButton.new()
 	var choices := opt["store"] as Array
-	for i in choices.size():
-		pick.add_item(str((choices[i] as Dictionary)["label"]), i)
-	pick.disabled = choices.is_empty() or not bool(opt["legal"])
-	pick.tooltip_text = str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
-	acts.add_child(pick)
+	if choices.is_empty() or not bool(opt["legal"]):
+		acts.add_child(UiKit.label(str(opt["reason"]), 13, "bone", 420))
+		return
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 4)
+	box.custom_minimum_size.x = 420   # a row of its own, whatever buttons come before it
+	acts.add_child(box)
+	var casters: Array[String] = []
+	var spells := {}   # caster id -> [{spell, name, base, options}], the lowest spells first
+	for c: Dictionary in choices:
+		var cid := str(c["caster"])
+		if not spells.has(cid):
+			casters.append(cid)
+			spells[cid] = []
+		var entry := {}
+		for s: Dictionary in spells[cid]:
+			if str(s["spell"]) == str(c["spell"]):
+				entry = s
+		if entry.is_empty():
+			entry = {"spell": str(c["spell"]), "base": int(c["base"]), "options": [],
+				"name": str(Compendium.shared().spell_data(str(c["spell"])).get("name", c["spell"]))}
+			(spells[cid] as Array).append(entry)
+		(entry["options"] as Array).append(c)
+	for cid: String in casters:
+		(spells[cid] as Array).sort_custom(func(x: Dictionary, y: Dictionary) -> bool:
+			return [int(x["base"]), str(x["name"])] < [int(y["base"]), str(y["name"])])
+	var who := OptionButton.new()
+	for cid: String in casters:
+		who.add_item(_party_name(cid), casters.find(cid))
+	UiParts.compact(who)
+	who.tooltip_text = "Who casts the spell into the ring"
+	var what := OptionButton.new()
+	UiParts.compact(what)
+	what.fit_to_longest_item = false
+	what.clip_text = true
+	what.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	what.custom_minimum_size.x = 230
+	what.tooltip_text = "The spell to store"
+	var pickers := HFlowContainer.new()
+	pickers.add_theme_constant_override("h_separation", 6)
+	pickers.add_child(who)
+	pickers.add_child(what)
+	box.add_child(pickers)
+	var levels := HFlowContainer.new()
+	levels.add_theme_constant_override("h_separation", 6)
+	box.add_child(levels)
+	var note := UiKit.label("", 13, "bone", 420)
+	box.add_child(note)
 	var pid := str(opt["power_id"])
-	var b := UiKit.button("Cast it into the ring", func() -> void:
-		if pick.selected < 0:
+	var show_levels := func() -> void:
+		for old in levels.get_children():
+			levels.remove_child(old)
+			old.queue_free()
+		var list := spells[casters[maxi(who.selected, 0)]] as Array
+		if what.selected < 0 or what.selected >= list.size():
 			return
-		var c := choices[pick.selected] as Dictionary
-		_use_power(pid, {"caster": str(c["caster"]), "spell": str(c["spell"]), "level": int(c["level"])}), 14)
-	b.disabled = pick.disabled
-	b.tooltip_text = pick.tooltip_text
-	acts.add_child(b)
+		var pick := list[what.selected] as Dictionary
+		var down := false
+		for c: Dictionary in pick["options"]:
+			var lvl := int(c["level"])
+			var slot := int(c["slot"])
+			var b := UiParts.small_button("Level %d" % lvl, func() -> void:
+				_use_power(pid, {"caster": str(c["caster"]), "spell": str(c["spell"]), "level": lvl}))
+			b.tooltip_text = "Store %s at level %d: it takes %d of the ring's levels%s." % [pick["name"], lvl, lvl,
+				", and spends a level %d Pact Magic slot" % slot if slot > lvl else ""]
+			down = down or slot > lvl
+			levels.add_child(b)
+		note.text = "A Pact Magic slot is spent whatever the level."
+		note.visible = down
+	var show_spells := func() -> void:
+		what.clear()
+		for s: Dictionary in spells[casters[maxi(who.selected, 0)]]:
+			what.add_item("%s (level %d)" % [s["name"], int(s["base"])])
+		what.select(0)
+		show_levels.call()
+	who.item_selected.connect(func(_i: int) -> void: show_spells.call())
+	what.item_selected.connect(func(_i: int) -> void: show_levels.call())
+	who.select(0)
+	show_spells.call()
+
+
+## A party member's first name from their id, for a picker.
+func _party_name(id: String) -> String:
+	for m in st.party:
+		if m.id == id:
+			return m.name.get_slice(" ", 0)
+	return id
 
 
 ## Identify: a party caster with the spell casts it as a Ritual (no slot); otherwise a Short Rest spent studying the item

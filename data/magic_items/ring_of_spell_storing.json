@@ -30,7 +30,7 @@
       "custom": "ring_store",
       "combat": false,
       "field": true,
-      "text": "Outside a fight, any party member touching the ring can cast a spell of level 1 to 5 into it, up to 5 levels in all; it keeps their DC and attack bonus.",
+      "text": "Outside a fight, any party member touching the ring can cast a spell of level 1 to 5 into it, up to 5 levels in all; the slot level they cast it at decides how many it takes (a Pact Magic caster may cast below the level of their slots), and it keeps their DC and attack bonus.",
       "requires": "anyone"
     }
   ],

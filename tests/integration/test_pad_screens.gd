@@ -134,6 +134,32 @@ func test_the_party_screens() -> void:
 		await _frames(2)
 
 
+## The Ring of Spell Storing's card on a pad (owner, 2026-10-19): the caster and spell pickers and every level button
+## are in the D-pad's reach, and B goes back out of the screen.
+func test_the_ring_of_spell_storing_card_on_a_pad() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	var holder := st.party[0]
+	holder.add_item("ring_of_spell_storing")
+	holder.entry_of("ring_of_spell_storing")["stored"] = []
+	root.call("open_screen", "inventory", 0)
+	await _frames(3)
+	var inv := root.get("screen") as InventoryScreen
+	inv.selected = "ring_of_spell_storing"
+	inv.call("_draw")
+	await _frames(2)
+	var levels := (inv.get("_card") as Node).find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+		return (b as Button).text.begins_with("Level "))
+	assert_false(levels.is_empty(), "a caster in the party offers levels")
+	await _reach("the Ring of Spell Storing's card")
+	var scope := nav.scope_now()
+	var reachable := PadNav.choices(scope) if scope != null else []
+	for b: Node in levels:
+		assert_true(b in reachable, "%s is a choice the pad can reach" % (b as Button).text)
+	await _back("the inventory", _screen_gone)
+
+
 func test_the_sheet_tabs() -> void:
 	if not await _game(LATE):
 		return
