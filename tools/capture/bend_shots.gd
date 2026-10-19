@@ -29,10 +29,10 @@ const SHOTS := {
 	"abbey_a": {"loc": "abbey_of_st_markovia", "look": [18, 5], "dist": 18.0, "horizon": 0.35},
 	"argynvostholt_whole": {"loc": "argynvostholt", "whole": true},
 	"argynvostholt_a": {"loc": "argynvostholt", "look": [37, 23], "dist": 11.0, "horizon": 0.4},
-	"bonegrinder_mill": {"loc": "old_bonegrinder_hill", "look": [14, 8], "dist": 10.0, "horizon": 0.4},
-	"baratok_hut": {"loc": "mount_baratok", "look": [25, 9], "dist": 9.0, "horizon": 0.4},
-	"berez_hut": {"loc": "berez", "look": [30, 16], "dist": 10.0, "horizon": 0.4},
-	"abbey_bell_tower": {"loc": "abbey_of_st_markovia", "look": [12, 14], "dist": 12.0, "horizon": 0.4},
+	"bonegrinder_mill": {"loc": "old_bonegrinder_hill", "look": [14, 8], "dist": 8.0, "horizon": 0.4},
+	"baratok_hut": {"loc": "mount_baratok", "look": [25, 9], "dist": 7.0, "horizon": 0.4},
+	"berez_hut": {"loc": "berez", "look": [30, 16], "dist": 6.5, "horizon": 0.4},
+	"abbey_bell_tower": {"loc": "abbey_of_st_markovia", "look": [12, 14], "dist": 9.0, "horizon": 0.4},
 	"vrt_tower": {"loc": "van_richtens_tower", "look": [17, 11], "dist": 12.0, "horizon": 0.4},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]

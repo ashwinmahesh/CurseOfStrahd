@@ -1653,12 +1653,12 @@
       "*"
     ],
     "bend": {
-      "cottage": 0.9,
-      "hut_lysaga": 1.0,
-      "barn_collapsed": 0.5,
-      "windmill": 0.55,
-      "bell_tower": 0.25,
-      "tower_vr": 0.2
+      "cottage": 1.4,
+      "hut_lysaga": 1.5,
+      "barn_collapsed": 1.0,
+      "windmill": 1.3,
+      "bell_tower": 1.1,
+      "tower_vr": 1.1
     },
     "art": {
       "book_shelf": "bookcase",
@@ -2118,18 +2118,18 @@
       "night"
     ],
     "bend": {
-      "about": "Natural shapes for buildings (natural maps B1, owner 2026-10-19: \"We can give buildings natural shapes instead of their straight lines\"; BuildingBend, docs/art/building_kit.md): a building's points are moved once when it is built, so its walls lean and bow, its corners drift, a timber house's upper storey juts, the ridge sags and the eaves wave, never more than a quarter of a square sideways. styles: how far each style bends, 1 the most (a Barovian timber cottage); places: a place's own amount over its style's (Castle Ravenloft's outer yards stay as raised by power, the Abbey and Argynvostholt are old and tired); overhang: how far a style's upper storey juts out at full amount. A town's yard walls and palisade take the style's amount too. The Classic look never bends.",
+      "about": "Natural shapes for buildings (natural maps B1, owner 2026-10-19: \"We can give buildings natural shapes instead of their straight lines\"; BuildingBend, docs/art/building_kit.md): a building's points are moved once when it is built, so its walls lean and bow, its corners drift, a timber house's upper storey juts, the ridge sags and the eaves wave: a wall never more than a quarter of a square sideways, a roof (overhead) up to 0.45 at its ridge. styles: how far each style bends, 1 the most (a Barovian timber cottage); places: a place's own amount over its style's (Castle Ravenloft's outer yards stay as raised by power, the Abbey and Argynvostholt are old and tired); overhang: how far a style's upper storey juts out at full amount. A town's yard walls and palisade take the style's amount too. The Classic look never bends.",
       "styles": {
         "timber": 1.0,
-        "clapboard": 0.85,
-        "stone": 0.55,
-        "church": 0.35
+        "clapboard": 0.95,
+        "stone": 0.7,
+        "church": 0.5
       },
       "places": {
         "castle_ravenloft_gates": 0.0,
         "castle_ravenloft_overlook": 0.0,
-        "abbey_of_st_markovia": 0.65,
-        "argynvostholt": 0.65
+        "abbey_of_st_markovia": 0.8,
+        "argynvostholt": 0.8
       },
       "overhang": {
         "timber": 0.07

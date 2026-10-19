@@ -246,7 +246,10 @@ static func palisade(board: ArenaBoard, c: Vector2i, ground: Material) -> bool:
 static func _flush_palisade(board: ArenaBoard) -> void:
 	if not is_instance_valid(board) or not board.has_meta("palisade_parts"):
 		return
-	var mi := BuildingKit.merge(board.get_meta("palisade_parts") as Array, "", BuildingBend.for_logs(board, BuildingKit.style_for(board), PALISADE_H))
+	var logs := BuildingBend.for_logs(board, BuildingKit.style_for(board), PALISADE_H)
+	var parts := board.get_meta("palisade_parts") as Array
+	var keep := "" if logs == null else "palisade|%s|%d|%s|%s" % [board.place, parts.size(), logs.signature(), Look.style()]
+	var mi := BuildingKit.merge(parts, "", logs, Vector2.ZERO, false, keep)
 	if mi != null:
 		mi.name = "Palisade"
 		mi.set_meta("on_floor", true)   # (made while the last border square is built: not lifted to that one's height)
@@ -604,7 +607,8 @@ static func _kit_walls(board: ArenaBoard, idx: int) -> void:
 	walls.name = "Walls"
 	root.add_child(walls)
 	root.move_child(walls, 0)
-	var low := BuildingKit.merge(stub, str(b["paint"]), bend, Vector2.ZERO, true)
+	# (The cut-away band is only ever seen with the catalog's cut_away on; off, it stays straight and costs nothing.)
+	var low := BuildingKit.merge(stub, str(b["paint"]), bend if bool(BuildingKit.settings().get("cut_away", false)) else null, Vector2.ZERO, true)
 	low.name = "Stub"
 	root.add_child(low)
 	var cut := bool(b["cut"])
@@ -693,7 +697,11 @@ static func _kit_roof(board: ArenaBoard, b: Dictionary, along_x: bool, span: int
 		upper.add_child(ch)
 		parts.append(["kit_chimney_cap", Transform3D(Basis(), Vector3(at.x, h + rise + 0.7, at.y))])
 	if not parts.is_empty():
-		var roof := BuildingKit.merge(parts, str(b["paint"]), bend)
+		# (A bent roof is the heaviest mesh of a town, and comes out the same every visit: kept per place.)
+		var keep := ""
+		if bend != null:
+			keep = "roof|%s|%s|%s|%s|%d|%.2f|%.2f|%s|%s|%s" % [board.place, r, style, kind, seed, h, rise, bend.signature(), str(b["paint"]), Look.style()]
+		var roof := BuildingKit.merge(parts, str(b["paint"]), bend, Vector2.ZERO, false, keep)
 		roof.name = "Roof"
 		upper.add_child(roof)
 

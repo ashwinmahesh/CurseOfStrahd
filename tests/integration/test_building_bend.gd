@@ -38,8 +38,9 @@ func _house_bend(seed_: int = 1) -> BuildingBend:
 	return bend
 
 
-## Rule 2 of the plan: nothing moves more than a quarter of a square sideways, whatever the kind of bend or where on
-## the building the point is; the roof's ridge sags and the eaves wave a little, nothing leaps.
+## Rule 2 of the plan: nothing a token stands beside moves more than a quarter of a square sideways, whatever the kind of
+## bend or where on the building the point is. The roof is overhead and may reach further over the walls' top (ROOF_MAX, at
+## the ridge, over the middle of the building); the ridge sags and the eaves wave, nothing leaps.
 func test_a_bend_never_moves_a_point_more_than_a_quarter_square() -> void:
 	var bends: Array[BuildingBend] = [_house_bend(1), _house_bend(2), _house_bend(3)]
 	var board := ArenaBoard.new()
@@ -53,17 +54,22 @@ func test_a_bend_never_moves_a_point_more_than_a_quarter_square() -> void:
 		if bend == null:
 			continue
 		var worst := 0.0
+		var worst_low := 0.0
 		var worst_up := 0.0
 		for xi in 24:
 			for zi in 24:
 				for yi in 12:
 					var p := Vector3(2.0 + xi * 0.45, yi * 0.33, 1.0 + zi * 0.45)
 					var q := bend.apply(p)
-					worst = maxf(worst, Vector2(q.x - p.x, q.z - p.z).length())
+					var side := Vector2(q.x - p.x, q.z - p.z).length()
+					worst = maxf(worst, side)
+					if p.y <= 2.0:
+						worst_low = maxf(worst_low, side)
 					worst_up = maxf(worst_up, absf(q.y - p.y))
-		assert_true(worst <= BuildingBend.FIELD_MAX + 0.0001, "sideways a little under a quarter of a square (%.3f)" % worst)
+		assert_true(worst_low <= BuildingBend.FIELD_MAX + 0.0001, "the walls: sideways a little under a quarter of a square (%.3f)" % worst_low)
+		assert_true(worst <= BuildingBend.ROOF_MAX + 0.0001, "the roof: at most %.2f (%.3f)" % [BuildingBend.ROOF_MAX, worst])
 		assert_true(worst > 0.04, "and it does move (%.3f)" % worst)
-		assert_true(worst_up < 0.4, "up and down only a little (%.3f)" % worst_up)
+		assert_true(worst_up < 1.2, "up and down: a sag and a wave, no leaps (%.3f)" % worst_up)
 
 
 ## `bent` over an array is `apply` point by point, for every kind of bend.
@@ -117,7 +123,7 @@ func test_each_style_bends_by_its_own_amount() -> void:
 
 ## The village's houses are bent kit houses: their points sit off the grid, and every point stays near the building's
 ## box (the cut-away's, which was never snug: eaves and the chimney cap stood outside it before the bend; a bent wall
-## reaches a quarter square past the straight one, a house's trim a little more).
+## reaches a quarter square past the straight one, a church's buttresses a good deal more).
 func test_village_houses_are_bent_and_stay_near_their_box() -> void:
 	var v := _view("village_of_barovia")
 	await _frames(2)
@@ -135,7 +141,7 @@ func test_village_houses_are_bent_and_stay_near_their_box() -> void:
 		var root := b["root"] as Node3D
 		# (Across only: the roof's eaves and the chimney cap stood a little outside the box before the bend, too.)
 		var flat_box := AABB(Vector3(box.position.x, -100.0, box.position.z), Vector3(box.size.x, 200.0, box.size.z))
-		for node: Array in [[b["walls"], 0.3], [(b["upper"] as Node3D).get_node("Roof"), 0.45]]:
+		for node: Array in [[b["walls"], 0.5], [(b["upper"] as Node3D).get_node("Roof"), 0.7]]:
 			var inside := ((node[0] as MeshInstance3D).mesh.get_aabb())
 			inside.position += root.position
 			assert_true(flat_box.grow(float(node[1])).encloses(AABB(Vector3(inside.position.x, 0.0, inside.position.z), Vector3(inside.size.x, 0.0, inside.size.z))),

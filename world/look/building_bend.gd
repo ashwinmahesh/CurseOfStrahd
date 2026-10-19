@@ -17,6 +17,9 @@ extends RefCounted
 const MAX_OUT := 0.25
 ## What the field itself is held to: a module bent whole (fold) can reach a few hundredths past the field at its far corners.
 const FIELD_MAX := 0.2
+## A roof is overhead, not a wall a token stands beside: over the walls' top the field may reach further, up to this at the
+## ridge (which stands over the middle of the building, so it moves within the footprint, not into the street).
+const ROOF_MAX := 0.45
 ## What simplex noise (about +-0.7 at most) is scaled by to run about +-1.
 const NORM := 1.2
 
@@ -36,6 +39,8 @@ var _rise := 1.0
 var _lean := Vector2.ZERO
 var _lean_var := 0.0
 var _lean_freq := 1.0
+## A palisade's logs take their lean along the line from the wave's own noise (one sample less for each of its 50,000 points).
+var _lean_shares_wave := false
 ## How far the walls bow and drift sideways, the noise scale across and up, and how much of that the foot keeps.
 var _bow := 0.07
 ## (A house is bent module by module, to first order, so its field stays smooth over a square: waves ten squares long.)
@@ -49,12 +54,21 @@ var _sag := 0.0
 var _ridge_a := Vector2.ZERO
 var _ridge_b := Vector2.ZERO
 var _wave := 0.0
-var _wave_freq := 0.22
+var _wave_freq := 0.28
 ## How far the whole building is turned about its middle at the footing and how much further at the eaves (radians): a
 ## footprint a few degrees off the grid is the plainest way to see a building was not laid out by a ruler.
 var _turn0 := 0.0
 var _turn1 := 0.0
 var _centre := Vector2.ZERO
+## The roof over the walls: how much further it is turned at the ridge, how far the ridge bows sideways (across `_ridge_n`),
+## how lopsided its sag is, and how much its slopes rise and fall.
+var _roof_turn := 0.0
+var _ridge_n := Vector2.ZERO
+var _ridge_bow := 0.0
+var _sag_skew := 0.0
+## How far the walls' top plate dips with the ridge (the long walls sag in the middle, the gable walls stay level).
+var _eave_sag := 0.0
+var _roof_wave := 0.0
 ## The parts of the building's footprint (world x, z), for which way is out.
 var _parts: Array[Rect2] = []
 
@@ -105,26 +119,39 @@ static func for_house(board: ArenaBoard, style: String, parts: Array[Rect2], mai
 	b._parts = parts
 	var rng := RandomNumberGenerator.new()
 	rng.seed = absi(s)
-	# A lean of a few degrees toward some side, about 3 at full amount.
+	# Every house its own amount: some barely off true, some properly crooked.
+	var k := a * lerpf(0.85, 1.4, rng.randf())
+	# A lean of several degrees toward some side.
 	var ang := rng.randf() * TAU
-	b._lean = Vector2(cos(ang), sin(ang)) * lerpf(0.5, 1.0, rng.randf()) * 0.07 * b._h * a
-	b._bow = 0.1 * a
-	b._over = _overhang(style) * a
+	b._lean = Vector2(cos(ang), sin(ang)) * lerpf(0.6, 1.0, rng.randf()) * 0.09 * b._h * k
+	b._bow = 0.13 * k
+	b._over = _overhang(style) * k
 	var whole := parts[0]
 	for r: Rect2 in parts:
 		whole = whole.merge(r)
 	b._centre = whole.get_center()
 	var reach := maxf(1.5, whole.size.length() / 2.0)
-	b._turn0 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.11, 0.18, rng.randf()) * a / reach
-	b._turn1 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.03, 0.07, rng.randf()) * a / reach
-	# The ridge sags toward its middle, more on a long roof.
+	b._turn0 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.16, 0.26, rng.randf()) * k / reach
+	b._turn1 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.04, 0.09, rng.randf()) * k / reach
+	# The roof goes further than the walls, and stiffer styles (stone, a church) less: its terms grow with the amount to the
+	# power of one and a half.
+	var kr := pow(a, 1.5) * lerpf(0.85, 1.4, rng.randf())
+	b._roof_turn = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.25, 0.45, rng.randf()) * kr / reach
+	# The ridge sags toward its middle (more on a long roof, and not the same each side of it), bows sideways and its
+	# slopes rise and fall.
 	var along_x := main.size.x >= main.size.y
 	var mid := main.get_center()
 	var length := main.size.x if along_x else main.size.y
 	b._ridge_a = Vector2(main.position.x, mid.y) if along_x else Vector2(mid.x, main.position.y)
 	b._ridge_b = Vector2(main.end.x, mid.y) if along_x else Vector2(mid.x, main.end.y)
-	b._sag = lerpf(0.16, 0.28, rng.randf()) * a * clampf(length / 4.0, 0.55, 1.25)
-	b._wave = 0.05 * a
+	b._ridge_n = Vector2(0.0, 1.0) if along_x else Vector2(1.0, 0.0)
+	var long_roof := clampf(length / 4.0, 0.55, 1.25)
+	b._sag = lerpf(0.4, 0.7, rng.randf()) * kr * long_roof
+	b._eave_sag = b._sag * 0.4
+	b._sag_skew = lerpf(-0.45, 0.45, rng.randf())
+	b._ridge_bow = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.15, 0.32, rng.randf()) * kr * long_roof
+	b._roof_wave = 0.12 * kr
+	b._wave = 0.05 * k
 	return b
 
 
@@ -158,6 +185,7 @@ static func _of_place(board: ArenaBoard, style: String, height: float, kind_: in
 		# Logs: each its own lean (a log is about a third of a square across), uneven tops, a slow drift along the line.
 		b._lean_var = 0.05 * b._h * a
 		b._lean_freq = 2.1
+		b._lean_shares_wave = true
 		b._bow = 0.0
 		b._freq = 0.35
 		b._freq_y = 0.3
@@ -192,21 +220,31 @@ static func for_prop(amount_: float, box: AABB, seed_: int) -> BuildingBend:
 	b._parts = [rect] as Array[Rect2]
 	var rng := RandomNumberGenerator.new()
 	rng.seed = absi(seed_)
+	var k := amount_ * lerpf(0.9, 1.3, rng.randf())
 	var ang := rng.randf() * TAU
-	b._lean = Vector2(cos(ang), sin(ang)) * lerpf(0.5, 1.0, rng.randf()) * 0.045 * b._h * amount_
-	b._bow = 0.06 * amount_
+	b._lean = Vector2(cos(ang), sin(ang)) * lerpf(0.6, 1.0, rng.randf()) * 0.08 * b._h * k
+	b._bow = 0.1 * k
 	b._centre = rect.get_center()
-	b._turn0 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.11, 0.18, rng.randf()) * amount_ / maxf(1.5, rect.size.length() / 2.0)
-	b._turn1 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.03, 0.07, rng.randf()) * amount_ / maxf(1.5, rect.size.length() / 2.0)
+	var reach := maxf(1.5, rect.size.length() / 2.0)
+	b._turn0 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.16, 0.26, rng.randf()) * k / reach
+	b._turn1 = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.04, 0.09, rng.randf()) * k / reach
+	b._roof_turn = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.25, 0.45, rng.randf()) * k / reach
 	b._freq = 0.22
 	b._freq_y = 0.25
 	b._over = 0.0
 	var along_x := rect.size.x >= rect.size.y
 	var mid := rect.get_center()
+	var length := rect.size.x if along_x else rect.size.y
 	b._ridge_a = Vector2(rect.position.x, mid.y) if along_x else Vector2(mid.x, rect.position.y)
 	b._ridge_b = Vector2(rect.end.x, mid.y) if along_x else Vector2(mid.x, rect.end.y)
-	b._sag = 0.2 * amount_ * clampf((rect.size.x if along_x else rect.size.y) / 4.0, 0.55, 1.25)
-	b._wave = 0.028 * amount_
+	b._ridge_n = Vector2(0.0, 1.0) if along_x else Vector2(1.0, 0.0)
+	var long_roof := clampf(length / 4.0, 0.55, 1.25)
+	b._sag = 0.4 * k * long_roof
+	b._eave_sag = b._sag * 0.4
+	b._sag_skew = lerpf(-0.45, 0.45, rng.randf())
+	b._ridge_bow = (1.0 if rng.randf() < 0.5 else -1.0) * lerpf(0.15, 0.32, rng.randf()) * k * long_roof
+	b._roof_wave = 0.12 * k
+	b._wave = 0.05 * k
 	return b
 
 
@@ -214,6 +252,11 @@ static func for_prop(amount_: float, box: AABB, seed_: int) -> BuildingBend:
 static func _overhang(style: String) -> float:
 	var cfg := BuildingKit.settings().get("bend", {}) as Dictionary
 	return float((cfg.get("overhang", {}) as Dictionary).get(style, 0.0))
+
+
+## What makes this bend this bend, for the key of a mesh kept from an earlier visit.
+func signature() -> String:
+	return "%d|%.3f|%d|%.3f" % [kind, amount, _noise.seed, _lean.x + _turn0 * 100.0]
 
 
 # --- The displacement ----------------------------------------------------------------------------------------------
@@ -228,8 +271,12 @@ func apply(p: Vector3) -> Vector3:
 	var nz := _noise.get_noise_3d(p.x * _freq + 17.3, p.y * _freq_y + 9.1, p.z * _freq + 41.7)
 	var lean := _lean
 	if _lean_var > 0.0:
-		lean += Vector2(_noise.get_noise_2d(p.x * _lean_freq + 71.0, p.z * _lean_freq),
-			_noise.get_noise_2d(p.x * _lean_freq, p.z * _lean_freq + 93.0)) * (_lean_var * NORM)
+		if _lean_shares_wave:
+			lean += Vector2(0.7 * _noise.get_noise_2d(p.x * _wave_freq + 5.0, p.z * _wave_freq - 7.0),
+				_noise.get_noise_2d(p.x * _lean_freq, p.z * _lean_freq + 93.0)) * (_lean_var * NORM)
+		else:
+			lean += Vector2(_noise.get_noise_2d(p.x * _lean_freq + 71.0, p.z * _lean_freq),
+				_noise.get_noise_2d(p.x * _lean_freq, p.z * _lean_freq + 93.0)) * (_lean_var * NORM)
 	var dx := lean.x * u + _bow * w * nx * NORM
 	var dz := lean.y * u + _bow * w * nz * NORM
 	if _turn0 != 0.0 or _turn1 != 0.0:
@@ -243,27 +290,51 @@ func apply(p: Vector3) -> Vector3:
 		var j := _over * uw
 		dx += o.x * j
 		dz += o.y * j
+	var cap := FIELD_MAX
+	var dy := 0.0
+	var wave_k := 0.0
+	if u > 0.55:
+		wave_k = _wave * NORM * smoothstep(0.55, 1.0, u)
+	if p.y > _h and _rise > 0.0:
+		# The roof: further turned toward the ridge, the ridge bowed sideways, the slopes rising and falling.
+		var rw := minf((p.y - _h) / _rise, 1.0)
+		if _roof_turn != 0.0:
+			var ang2 := _roof_turn * rw
+			dx += -ang2 * (p.z - _centre.y)
+			dz += ang2 * (p.x - _centre.x)
+		var prof := _ridge_profile(p.x, p.z)
+		if _ridge_bow != 0.0:
+			dx += _ridge_n.x * _ridge_bow * rw * prof
+			dz += _ridge_n.y * _ridge_bow * rw * prof
+		cap += (ROOF_MAX - FIELD_MAX) * minf((p.y - _h) / (0.35 * _rise), 1.0)
+		wave_k += _roof_wave * NORM * minf((p.y - _h) / 0.3, 1.0)
+		if _sag > 0.0:
+			dy -= _sag * rw * prof * (1.0 + _sag_skew * (2.0 * _ridge_t(p.x, p.z) - 1.0))
 	var l2 := dx * dx + dz * dz
-	if l2 > FIELD_MAX * FIELD_MAX:
-		var k := FIELD_MAX / sqrt(l2)
+	if l2 > cap * cap:
+		var k := cap / sqrt(l2)
 		dx *= k
 		dz *= k
-	var dy := 0.0
-	if _wave > 0.0 and u > 0.55:
-		# The top plate and the eaves wave up and down (the logs of a palisade are uneven in height).
-		dy += _wave * NORM * _noise.get_noise_2d(p.x * _wave_freq + 5.0, p.z * _wave_freq - 7.0) * smoothstep(0.55, 1.0, u)
-	if _sag > 0.0 and p.y > _h:
-		dy -= _sag * clampf((p.y - _h) / _rise, 0.0, 1.0) * _ridge_profile(p.x, p.z)
+	if wave_k > 0.0:
+		# The top plate and the eaves wave up and down, the roof more (the logs of a palisade are uneven in height).
+		dy += wave_k * _noise.get_noise_2d(p.x * _wave_freq + 5.0, p.z * _wave_freq - 7.0)
+	if _eave_sag > 0.0 and u > 0.55:
+		dy -= _eave_sag * smoothstep(0.55, 1.0, u) * _ridge_profile(p.x, p.z) * (1.0 + _sag_skew * (2.0 * _ridge_t(p.x, p.z) - 1.0))
 	return Vector3(p.x + dx, p.y + dy, p.z + dz)
+
+
+## How far along the main ridge (x, z) stands: 0 at one end, 1 at the other.
+func _ridge_t(x: float, z: float) -> float:
+	var ab := _ridge_b - _ridge_a
+	var len2 := ab.length_squared()
+	if len2 <= 0.0001:
+		return 0.5
+	return clampf((Vector2(x, z) - _ridge_a).dot(ab) / len2, 0.0, 1.0)
 
 
 ## 0 at the ends of the main ridge, 1 in the middle (a parabola), 0 beyond them.
 func _ridge_profile(x: float, z: float) -> float:
-	var ab := _ridge_b - _ridge_a
-	var len2 := ab.length_squared()
-	if len2 <= 0.0001:
-		return 0.0
-	var t := clampf((Vector2(x, z) - _ridge_a).dot(ab) / len2, 0.0, 1.0)
+	var t := _ridge_t(x, z)
 	return 4.0 * t * (1.0 - t)
 
 
@@ -298,11 +369,19 @@ func bent(verts: PackedVector3Array, at: Vector2 = Vector2.ZERO) -> PackedVector
 	var lean := _lean
 	var lean_var := _lean_var * NORM
 	var lean_freq := _lean_freq
+	var share := _lean_shares_wave
 	var over := _over
 	var wave := _wave * NORM
 	var wave_freq := _wave_freq
 	var sag := _sag
+	var skew := _sag_skew
+	var roof_turn := _roof_turn
+	var ridge_bow := _ridge_bow
+	var ridge_n := _ridge_n
+	var eave_sag := _eave_sag
+	var roof_wave := _roof_wave * NORM
 	var h := _h
+	var rise := _rise
 	var inv_rise := 1.0 / maxf(_rise, 0.01)
 	var max2 := FIELD_MAX * FIELD_MAX
 	var turn0 := _turn0
@@ -312,13 +391,18 @@ func bent(verts: PackedVector3Array, at: Vector2 = Vector2.ZERO) -> PackedVector
 	var ra := _ridge_a
 	var ab := _ridge_b - _ridge_a
 	var inv_len2 := 1.0 / maxf(ab.length_squared(), 0.0001)
+	var has_ridge := ab.length_squared() > 0.0001
 	for i in verts.size():
 		var v := verts[i]
 		var x := v.x + at.x
 		var y := v.y
 		var z := v.z + at.y
 		var u := y * inv_h
-		var uw := clampf(u, 0.0, 1.0)
+		var uw := u
+		if uw < 0.0:
+			uw = 0.0
+		elif uw > 1.0:
+			uw = 1.0
 		var w := foot + (1.0 - foot) * uw
 		var dx := lean.x * u
 		var dz := lean.y * u
@@ -332,24 +416,68 @@ func bent(verts: PackedVector3Array, at: Vector2 = Vector2.ZERO) -> PackedVector
 			dx += -ang * cz - 0.5 * ang * ang * cx
 			dz += ang * cx - 0.5 * ang * ang * cz
 		if lean_var > 0.0:
-			dx += lean_var * u * noise.get_noise_2d(x * lean_freq + 71.0, z * lean_freq)
+			if share:
+				dx += lean_var * u * 0.7 * noise.get_noise_2d(x * wave_freq + 5.0, z * wave_freq - 7.0)
+			else:
+				dx += lean_var * u * noise.get_noise_2d(x * lean_freq + 71.0, z * lean_freq)
 			dz += lean_var * u * noise.get_noise_2d(x * lean_freq, z * lean_freq + 93.0)
 		if over > 0.0 and uw > 0.0:
 			var o := _outward(x, z)
 			var j := over * uw
 			dx += o.x * j
 			dz += o.y * j
+		var cap2 := max2
+		var dy := 0.0
+		# The one wave: the top plate and eaves (above u 0.55) and the roof over them (more, from the walls' top up).
+		var wave_k := 0.0
+		if u > 0.55:
+			var st := (u - 0.55) * 2.2222222
+			if st > 1.0:
+				st = 1.0
+			wave_k = wave * st * st * (3.0 - 2.0 * st)
+		var t := 0.5
+		var prof := 1.0
+		if has_ridge and (eave_sag > 0.0 and u > 0.55 or y > h):
+			t = (Vector2(x, z) - ra).dot(ab) * inv_len2
+			if t < 0.0:
+				t = 0.0
+			elif t > 1.0:
+				t = 1.0
+			prof = 4.0 * t * (1.0 - t)
+		if y > h and rise > 0.0:
+			var rw := (y - h) * inv_rise
+			if rw > 1.0:
+				rw = 1.0
+			if roof_turn != 0.0:
+				var ang2 := roof_turn * rw
+				dx += -ang2 * (z - centre.y)
+				dz += ang2 * (x - centre.x)
+			if ridge_bow != 0.0:
+				dx += ridge_n.x * ridge_bow * rw * prof
+				dz += ridge_n.y * ridge_bow * rw * prof
+			var rc := (y - h) / (0.35 * rise)
+			if rc > 1.0:
+				rc = 1.0
+			var cap := FIELD_MAX + (ROOF_MAX - FIELD_MAX) * rc
+			cap2 = cap * cap
+			var rl := (y - h) * 3.3333333
+			if rl > 1.0:
+				rl = 1.0
+			wave_k += roof_wave * rl
+			if sag > 0.0:
+				dy -= sag * rw * prof * (1.0 + skew * (2.0 * t - 1.0))
 		var l2 := dx * dx + dz * dz
-		if l2 > max2:
-			var k := FIELD_MAX / sqrt(l2)
+		if l2 > cap2:
+			var k := sqrt(cap2 / l2)
 			dx *= k
 			dz *= k
-		var dy := 0.0
-		if wave > 0.0 and u > 0.55:
-			dy = wave * noise.get_noise_2d(x * wave_freq + 5.0, z * wave_freq - 7.0) * smoothstep(0.55, 1.0, u)
-		if sag > 0.0 and y > h:
-			var t := clampf((Vector2(x, z) - ra).dot(ab) * inv_len2, 0.0, 1.0)
-			dy -= sag * clampf((y - h) * inv_rise, 0.0, 1.0) * 4.0 * t * (1.0 - t)
+		if wave_k > 0.0:
+			dy += wave_k * noise.get_noise_2d(x * wave_freq + 5.0, z * wave_freq - 7.0)
+		if eave_sag > 0.0 and u > 0.55:
+			var se := (u - 0.55) * 2.2222222
+			if se > 1.0:
+				se = 1.0
+			dy -= eave_sag * se * se * (3.0 - 2.0 * se) * prof * (1.0 + skew * (2.0 * t - 1.0))
 		out[i] = Vector3(v.x + dx, y + dy, v.z + dz)
 	return out
 

@@ -226,14 +226,17 @@ square the party can stand on." (the vault's Natural Maps Plan, rule 4 and packa
 ruler-straight: `BuildingBend` is one smooth displacement of a building's points, worked out when it is built.
 
 - **What bends.** The whole footprint is turned a couple of degrees off the grid (a little more at the eaves), walls lean a
-  few degrees and bow along their length, corners drift off true at the footing, a timber house flares out toward its eaves, the roof ridge sags toward its middle (more on a long roof), the eaves and the top
+  few degrees and bow along their length, the long walls' top plate dips with the ridge, the roof sags like a swayback (up
+  to 0.9 on a long roof), its ridge bows sideways and is turned further than the eaves, its slopes rise and fall (the
+  roof is overhead, so it reaches up to `ROOF_MAX` 0.45 sideways at the ridge, over the middle of the building, where
+  the walls stay inside the quarter square; stiffer styles bend their roofs less, by the amount to the power 1.5), corners drift off true at the footing, a timber house flares out toward its eaves, the roof ridge sags toward its middle (more on a long roof), the eaves and the top
   plate wave up and down, and the chimney leans with the roof under it. Yard walls and a town wall lean and wander and
   have an uneven coping, a palisade's logs each lean their own way with uneven tops, and building-sized props (the
   cottage, Baba Lysaga's hut, the windmill: catalog `models3d.bend`, `ModelPiece.instance_bent`) bend as houses do.
 - **How far.** Never more than a quarter of a square sideways (rule 2: a wall is taller than a token's knee, so a token
   in the middle of the square beside it and its ring stay clear; the field itself is held to 0.2, `FIELD_MAX`, so a
-  module bent whole stays inside 0.25). Per style, catalog `building_kit.bend`: `styles` (timber 1, clapboard 0.85, stone
-  0.55, church 0.35), `places` (Castle Ravenloft's outer yards 0, the Abbey and Argynvostholt 0.65) and `overhang`. The
+  module bent whole stays inside 0.25). Per style, catalog `building_kit.bend`: `styles` (timber 1, clapboard 0.95, stone
+  0.7, church 0.5), `places` (Castle Ravenloft's outer yards 0, the Abbey and Argynvostholt 0.8) and `overhang`. The
   field is seeded by the place and the building, so a place comes out the same every time and no two houses lean alike.
   The Classic look and the rules grid are untouched.
 - **How.** Only vertices move: no new art, so a window, a door bay or a beam goes with its wall. A house's wall modules
@@ -247,6 +250,10 @@ ruler-straight: `BuildingBend` is one smooth displacement of a building's points
   bent point, turned and tilted with the wall (`TownBuilder.follow_bend`, from `face_taken`; `BuildingBend.frame`); a gate
   in a bent yard wall too (`follow_yard`). An arm of a yard wall that meets a house reaches a little way into it, and
   runs a little long, so a bent house leaning away from it leaves no gap.
+- **Kept.** A bent roof (with its gable frames and chimney cap) and Vallaki's palisade are the heaviest meshes (40,000 and
+  50,000 points), so `BuildingKit.merge` keeps them per place (`keep` key, the newest 90, `BuildingKit.forget`): a
+  first arrival costs up to about a tenth more than before, a repeat arrival is back to what it was. `tools/capture/bend_time`
+  times both.
 - **Not bent.** Castle Ravenloft (CastleBuilder), interiors (B2 will), the Classic look, tents, ground-level props.
   `kit_capture` takes `KIT_NO_BEND=1` for the same shots ruler-straight.
 

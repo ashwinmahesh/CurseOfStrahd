@@ -18,6 +18,11 @@ static var _meshes: Dictionary = {}
 static var _arrays: Dictionary = {}
 ## Each module's box, read once.
 static var _extents: Dictionary = {}
+## Merged meshes from earlier visits (a place comes out the same every time it is built), by the key their caller gave
+## `merge` (a bent roof is 40,000 points of work): the newest KEPT_MESHES.
+static var _kept: Dictionary = {}
+static var _kept_order: Array[String] = []
+const KEPT_MESHES := 90
 
 
 ## Every module: id -> {file, part, size, materials, span, rise, paint}.
@@ -96,11 +101,16 @@ static func mesh(id: String) -> Mesh:
 ## name] for a mesh made in code); a module's `paint` surfaces take `paint` (a palette colour) instead. Each material
 ## is one surface. Null when nothing was drawn.
 ## With a `bend` (BuildingBend, natural maps B1) the merged mesh is bent once, here; `at` is where its node will stand in
-## x and z when its parts are about its own middle (a yard wall's square), else the origin. A small module goes whole
+## x and z when its parts are about its own middle (a yard wall's square), else the origin. With a `keep` key the mesh is
+## kept for the next visit to the same place (the key says everything the mesh depends on). A small module goes whole
 ## when `whole_modules` is set (a house's wall faces: BuildingBend.fold, no work per vertex); everything else, the roofs,
 ## a palisade's logs, the core and the gables made in code, has its points moved one by one.
 static func merge(parts: Array, paint: String = "", bend: BuildingBend = null, at: Vector2 = Vector2.ZERO,
-		whole_modules: bool = false) -> MeshInstance3D:
+		whole_modules: bool = false, keep: String = "") -> MeshInstance3D:
+	if keep != "" and _kept.has(keep):
+		var again := MeshInstance3D.new()
+		again.mesh = _kept[keep] as Mesh
+		return again
 	var tools := {}
 	var order: Array[String] = []
 	for part: Array in parts:
@@ -150,7 +160,18 @@ static func merge(parts: Array, paint: String = "", bend: BuildingBend = null, a
 		am.surface_set_material(am.get_surface_count() - 1, material(name))
 	var mi := MeshInstance3D.new()
 	mi.mesh = am
+	if keep != "":
+		_kept[keep] = am
+		_kept_order.append(keep)
+		while _kept_order.size() > KEPT_MESHES:
+			_kept.erase(_kept_order.pop_front())
 	return mi
+
+
+## Forgets the kept meshes (a tool timing first arrivals, a test that changes what a place is built from).
+static func forget() -> void:
+	_kept.clear()
+	_kept_order.clear()
 
 
 ## The box of module `id` (loaded once).
