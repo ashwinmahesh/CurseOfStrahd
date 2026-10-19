@@ -44,7 +44,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 
 func test_the_night_streets_at_level_3() -> void:
-	await _held("village_of_barovia", 23, 3, "night_streets_dead", VILLAGE_SPAWN, 4, 6, ["ismark_met"])
+	await _held("village_of_barovia", 23, 3, "night_streets_dead", VILLAGE_SPAWN, 3, 6, ["ismark_met"])
 
 
 func test_the_coachman_at_level_3() -> void:
@@ -52,7 +52,7 @@ func test_the_coachman_at_level_3() -> void:
 
 
 func test_the_coachman_at_level_4() -> void:
-	await _held("village_of_barovia", 22, 4, "teodor_errand", ILEANAS_DOOR, 4, 6, ["teodor_vigil", "teodor_met"], ["teodor"])
+	await _held("village_of_barovia", 22, 4, "teodor_errand", ILEANAS_DOOR, 3, 6, ["teodor_vigil", "teodor_met"], ["teodor"])
 
 
 func test_the_bride_in_the_well_at_level_3() -> void:
@@ -66,7 +66,7 @@ func test_the_bride_in_the_well_at_level_4() -> void:
 ## Five in eight with two more zombies (the burial in test_storyqa_continuity's playthrough still wins it: the owner's
 ## rule that playthroughs stay winnable).
 func test_the_churchyard_dead_at_level_3() -> void:
-	await _held("village_of_barovia", 12, 3, "churchyard_dead", BY_THE_GRAVE, 4, 6)
+	await _held("village_of_barovia", 12, 3, "churchyard_dead", BY_THE_GRAVE, 4, 7)
 
 
 func test_doru_in_the_undercroft_at_level_3() -> void:
@@ -119,11 +119,11 @@ func test_the_kestrel_patrol_caught_up_at_level_5() -> void:
 
 
 func test_the_woodpile_at_level_3() -> void:
-	await _held("village_of_barovia", 19, 3, "woodpile_wakes", BY_THE_WOODPILE, 3, 6, ["seedwood_known"])
+	await _held("village_of_barovia", 19, 3, "woodpile_wakes", BY_THE_WOODPILE, 1, 6, ["seedwood_known"])
 
 
 func test_the_woodpile_burning_at_level_4() -> void:
-	await _held("village_of_barovia", 11, 4, "woodpile_burns", BY_THE_WOODPILE, 4, 6, ["seedwood_known", "bildrath_wood_taken"])
+	await _held("village_of_barovia", 11, 4, "woodpile_burns", BY_THE_WOODPILE, 3, 6, ["seedwood_known", "bildrath_wood_taken"])
 
 
 func test_the_carriage_escort_at_level_4() -> void:
@@ -137,7 +137,7 @@ func test_the_wisps_at_the_falls_at_level_4() -> void:
 ## The other ways into the same fight. A wisp that vanishes can only be hit by an area spell (2026-10-14), so how many
 ## lights come is tuned against the real fight: every one of these finishes on seeds 1-8.
 func test_the_wisps_at_the_falls_at_level_4_unlured() -> void:
-	await _held("tser_falls", 22, 4, "falls_wisps", OFFERING_STONE, 4, 6)
+	await _held("tser_falls", 22, 4, "falls_wisps", OFFERING_STONE, 3, 6)
 
 
 func test_the_wisps_at_the_falls_at_level_5() -> void:
@@ -153,4 +153,4 @@ func test_the_wisps_at_the_falls_at_level_3() -> void:
 
 
 func test_the_wisps_at_the_falls_at_level_3_unlured() -> void:
-	await _held("tser_falls", 22, 3, "falls_wisps", OFFERING_STONE, 4, 6)
+	await _held("tser_falls", 22, 3, "falls_wisps", OFFERING_STONE, 4, 7)

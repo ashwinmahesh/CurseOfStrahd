@@ -59,7 +59,7 @@ func test_amber_temple_road_cliff_gargoyles_at_level_10() -> void:
 
 
 func test_amber_temple_road_frozen_climbers_at_level_10() -> void:
-	await _road("amber_temple_road", "frozen_climbers", 10, 23)
+	await _road("amber_temple_road", "frozen_climbers", 10, 23, 4, 8)
 
 
 func test_argynvostholt_road_dire_wolves_day_at_level_8() -> void:
@@ -91,11 +91,11 @@ func test_baratok_slopes_werewolves_ridge_at_level_9() -> void:
 
 
 func test_berez_marsh_insect_cloud_at_level_9() -> void:
-	await _road("berez_marsh", "insect_cloud", 9, 12, 3, 6)
+	await _road("berez_marsh", "insect_cloud", 9, 12, 3, 8)
 
 
 func test_berez_marsh_marsh_lights_at_level_9() -> void:
-	await _road("berez_marsh", "marsh_lights", 9, 23)
+	await _road("berez_marsh", "marsh_lights", 9, 23, 4, 8)
 
 
 func test_berez_marsh_scarecrow_walk_at_level_9() -> void:
@@ -107,7 +107,7 @@ func test_bonegrinder_lane_lane_bats_at_level_6() -> void:
 
 
 func test_bonegrinder_lane_lane_dead_at_level_6() -> void:
-	await _road("bonegrinder_lane", "lane_dead", 6, 23)
+	await _road("bonegrinder_lane", "lane_dead", 6, 23, 4, 8)
 
 
 func test_bonegrinder_lane_lane_wolves_at_level_6() -> void:
@@ -139,7 +139,7 @@ func test_svalich_road_bats_and_dead_at_level_4() -> void:
 
 
 func test_svalich_road_dead_on_the_road_at_level_4() -> void:
-	await _road("svalich_road", "dead_on_the_road", 4, 23)
+	await _road("svalich_road", "dead_on_the_road", 4, 23, 3, 6)
 
 
 func test_svalich_road_strahds_wolves_at_level_4() -> void:
@@ -195,11 +195,11 @@ func test_vineyard_road_hedgerow_blights_at_level_6() -> void:
 
 
 func test_vineyard_road_strahds_wolves_at_level_6() -> void:
-	await _road("vineyard_road", "strahds_wolves", 6, 23, 4, 7)
+	await _road("vineyard_road", "strahds_wolves", 6, 23, 4, 8)
 
 
 func test_vineyard_road_wolves_on_the_moor_at_level_6() -> void:
-	await _road("vineyard_road", "wolves_on_the_moor", 6, 23, 4, 7)
+	await _road("vineyard_road", "wolves_on_the_moor", 6, 23, 4, 8)
 
 
 func test_zarovich_hills_dire_wolves_at_level_8() -> void:

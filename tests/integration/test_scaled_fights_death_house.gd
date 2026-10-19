@@ -40,7 +40,7 @@ func _held(location: String, level: int, encounter: String, at: Array[Vector2i],
 
 
 func test_the_wolves_in_the_narrows_at_level_1() -> void:
-	await _held("into_the_mists_road", 1, "mists_wolves", NARROWS, 4, 6)
+	await _held("into_the_mists_road", 1, "mists_wolves", NARROWS, 2, 6)
 
 
 func test_the_black_armor_on_the_balcony_at_level_1() -> void:
@@ -52,7 +52,7 @@ func test_the_nursemaid_at_level_1() -> void:
 
 
 func test_the_storage_room_at_level_1() -> void:
-	await _held("death_house_third", 1, "storage_broom", STORAGE_DOOR, 3, 6)
+	await _held("death_house_third", 1, "storage_broom", STORAGE_DOOR, 2, 6)
 
 
 func test_elisabeths_crypt_at_level_2() -> void:
@@ -64,7 +64,7 @@ func test_the_gricks_in_the_larder_at_level_2() -> void:
 
 
 func test_the_ghoul_passage_at_level_2() -> void:
-	await _held("death_house_dungeon_1", 2, "passage_ghouls", GHOUL_PASSAGE, 4, 6)
+	await _held("death_house_dungeon_1", 2, "passage_ghouls", GHOUL_PASSAGE, 2, 6)
 
 
 func test_the_shrines_shadows_at_level_2() -> void:

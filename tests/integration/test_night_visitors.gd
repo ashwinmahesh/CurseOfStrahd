@@ -29,7 +29,7 @@ const DRIFT := 1
 
 
 ## Groups whose measured wins are their target instead (accepted 2026-10-19: harder fights are fine, Ashwin).
-const TARGET_OVERRIDES := {"mountain_berserkers": 3, "indoors_wraith": 3}
+const TARGET_OVERRIDES := {"mountain_berserkers": 3, "indoors_wraith": 3, "castle_spawn": 3}
 
 
 func after_each() -> void:

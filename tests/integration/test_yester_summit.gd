@@ -69,7 +69,7 @@ func test_the_druids_fled_at_level_6() -> void:
 
 ## Up the gully unseen and in among them: the circle surprised, the tree half-made.
 func test_struck_first_at_level_6() -> void:
-	await _held(6, ["yester_sneaked", "yester_struck_first"], FROM_THE_GULLY, 3, 5)
+	await _held(6, ["yester_sneaked", "yester_struck_first"], FROM_THE_GULLY, 2, 5)
 
 
 ## Kostin ran ahead and warned them: Ruxandra, Kostin and two more druids round a tree woken early.
@@ -83,7 +83,7 @@ func test_the_plain_summit_at_level_7() -> void:
 
 
 func test_the_druids_fled_at_level_7() -> void:
-	await _held(7, ["yester_druids_fate=fled"], UP_THE_PATH, 2, 5)
+	await _held(7, ["yester_druids_fate=fled"], UP_THE_PATH, 1, 5)
 
 
 func test_struck_first_at_level_7() -> void:

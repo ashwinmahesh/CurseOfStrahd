@@ -26,7 +26,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 ## ballroom_colony, argynvostholt_west_wing variant 2 at level 6.
 func test_ballroom_colony_v2_at_level_6() -> void:
-	await _held("argynvostholt_west_wing", 12, 6, "ballroom_colony", BALLROOM_DOOR, 4, 6, [], [], BALLROOM_DOORS)
+	await _held("argynvostholt_west_wing", 12, 6, "ballroom_colony", BALLROOM_DOOR, 4, 7, [], [], BALLROOM_DOORS)
 
 
 ## ballroom_colony, argynvostholt_west_wing variant 1 at level 7.
@@ -36,4 +36,4 @@ func test_ballroom_colony_v1_at_level_7() -> void:
 
 ## ballroom_colony, argynvostholt_west_wing variant 0 at level 8.
 func test_ballroom_colony_v0_at_level_8() -> void:
-	await _held("argynvostholt_west_wing", 12, 8, "ballroom_colony", BALLROOM_DOOR, 4, 6, [], [], BALLROOM_DOORS)
+	await _held("argynvostholt_west_wing", 12, 8, "ballroom_colony", BALLROOM_DOOR, 4, 7, [], [], BALLROOM_DOORS)

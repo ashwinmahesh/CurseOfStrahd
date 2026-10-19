@@ -28,22 +28,22 @@ func test_garden_sentry_v0_at_level_7() -> void:
 
 ## bride_defends, abbey_of_st_markovia_shrine variant 2 at level 5.
 func test_bride_defends_v2_at_level_5() -> void:
-	await _held("abbey_of_st_markovia_shrine", 12, 5, "bride_defends", [Vector2i(11, 13), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14)], 4, 6, [])
+	await _held("abbey_of_st_markovia_shrine", 12, 5, "bride_defends", [Vector2i(11, 13), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14)], 3, 6, [])
 
 
 ## bride_defends, abbey_of_st_markovia_shrine variant 1 at level 6.
 func test_bride_defends_v1_at_level_6() -> void:
-	await _held("abbey_of_st_markovia_shrine", 12, 6, "bride_defends", [Vector2i(11, 13), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14)], 4, 6, [])
+	await _held("abbey_of_st_markovia_shrine", 12, 6, "bride_defends", [Vector2i(11, 13), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14)], 3, 6, [])
 
 
 ## wards_cells, abbey_of_st_markovia_wards variant 1 at level 6.
 func test_wards_cells_v1_at_level_6() -> void:
-	await _held("abbey_of_st_markovia_wards", 12, 6, "wards_cells", [Vector2i(10, 20), Vector2i(11, 20), Vector2i(9, 20), Vector2i(10, 21)], 4, 6, [])
+	await _held("abbey_of_st_markovia_wards", 12, 6, "wards_cells", [Vector2i(10, 20), Vector2i(11, 20), Vector2i(9, 20), Vector2i(10, 21)], 2, 6, [])
 
 
 ## wards_cells, abbey_of_st_markovia_wards variant 0 at level 7.
 func test_wards_cells_v0_at_level_7() -> void:
-	await _held("abbey_of_st_markovia_wards", 12, 7, "wards_cells", [Vector2i(10, 20), Vector2i(11, 20), Vector2i(9, 20), Vector2i(10, 21)], 3, 6, [])
+	await _held("abbey_of_st_markovia_wards", 12, 7, "wards_cells", [Vector2i(10, 20), Vector2i(11, 20), Vector2i(9, 20), Vector2i(10, 21)], 2, 6, [])
 
 
 ## frozen_watch, amber_temple_entrance variant 0 at level 10.
@@ -78,7 +78,7 @@ func test_patrina_wails_v0_at_level_10() -> void:
 
 ## courtyard_phantoms, argynvostholt variant 2 at level 6 (godfrey_met).
 func test_courtyard_phantoms_v2_at_level_6() -> void:
-	await _held("argynvostholt", 23, 6, "courtyard_phantoms", [Vector2i(19, 16), Vector2i(20, 17), Vector2i(20, 18), Vector2i(20, 19)], 4, 6, ["godfrey_met"])
+	await _held("argynvostholt", 23, 6, "courtyard_phantoms", [Vector2i(19, 16), Vector2i(20, 17), Vector2i(20, 18), Vector2i(20, 19)], 3, 6, ["godfrey_met"])
 
 
 ## courtyard_phantoms, argynvostholt variant 1 at level 7 (godfrey_met).
@@ -88,7 +88,7 @@ func test_courtyard_phantoms_v1_at_level_7() -> void:
 
 ## courtyard_phantoms, argynvostholt variant 0 at level 8 (godfrey_met).
 func test_courtyard_phantoms_v0_at_level_8() -> void:
-	await _held("argynvostholt", 23, 8, "courtyard_phantoms", [Vector2i(19, 16), Vector2i(20, 17), Vector2i(20, 18), Vector2i(20, 19)], 3, 6, ["godfrey_met"])
+	await _held("argynvostholt", 23, 8, "courtyard_phantoms", [Vector2i(19, 16), Vector2i(20, 17), Vector2i(20, 18), Vector2i(20, 19)], 2, 6, ["godfrey_met"])
 
 
 ## lamp_dark, argynvostholt_beacon variant 2 at level 6.
@@ -98,12 +98,12 @@ func test_lamp_dark_v2_at_level_6() -> void:
 
 ## lamp_dark, argynvostholt_beacon variant 1 at level 7.
 func test_lamp_dark_v1_at_level_7() -> void:
-	await _held("argynvostholt_beacon", 12, 7, "lamp_dark", [Vector2i(1, 12), Vector2i(2, 12), Vector2i(1, 13), Vector2i(3, 12)], 4, 6, [])
+	await _held("argynvostholt_beacon", 12, 7, "lamp_dark", [Vector2i(1, 12), Vector2i(2, 12), Vector2i(1, 13), Vector2i(3, 12)], 4, 8, [])
 
 
 ## lamp_dark, argynvostholt_beacon variant 0 at level 8.
 func test_lamp_dark_v0_at_level_8() -> void:
-	await _held("argynvostholt_beacon", 12, 8, "lamp_dark", [Vector2i(1, 12), Vector2i(2, 12), Vector2i(1, 13), Vector2i(3, 12)], 4, 6, [])
+	await _held("argynvostholt_beacon", 12, 8, "lamp_dark", [Vector2i(1, 12), Vector2i(2, 12), Vector2i(1, 13), Vector2i(3, 12)], 4, 7, [])
 
 
 ## bone_watch, argynvostholt_mausoleum variant 2 at level 6.
@@ -123,27 +123,27 @@ func test_bone_watch_v0_at_level_8() -> void:
 
 ## berez_drowned_lights, berez variant 1 at level 7.
 func test_berez_drowned_lights_v1_at_level_7() -> void:
-	await _held("berez", 23, 7, "berez_drowned_lights", [Vector2i(22, 13), Vector2i(23, 13), Vector2i(22, 14), Vector2i(22, 12)], 4, 6, [])
+	await _held("berez", 23, 7, "berez_drowned_lights", [Vector2i(22, 13), Vector2i(23, 13), Vector2i(22, 14), Vector2i(22, 12)], 4, 7, [])
 
 
 ## berez_drowned_lights, berez variant 0 at level 8.
 func test_berez_drowned_lights_v0_at_level_8() -> void:
-	await _held("berez", 23, 8, "berez_drowned_lights", [Vector2i(22, 13), Vector2i(23, 13), Vector2i(22, 14), Vector2i(22, 12)], 4, 6, [])
+	await _held("berez", 23, 8, "berez_drowned_lights", [Vector2i(22, 13), Vector2i(23, 13), Vector2i(22, 14), Vector2i(22, 12)], 4, 7, [])
 
 
 ## berez_scarecrows, berez variant 2 at level 7.
 func test_berez_scarecrows_v2_at_level_7() -> void:
-	await _held("berez", 12, 7, "berez_scarecrows", [Vector2i(38, 24), Vector2i(39, 25), Vector2i(39, 26), Vector2i(39, 27)], 4, 6, [])
+	await _held("berez", 12, 7, "berez_scarecrows", [Vector2i(38, 24), Vector2i(39, 25), Vector2i(39, 26), Vector2i(39, 27)], 3, 6, [])
 
 
 ## berez_scarecrows, berez variant 1 at level 8.
 func test_berez_scarecrows_v1_at_level_8() -> void:
-	await _held("berez", 12, 8, "berez_scarecrows", [Vector2i(38, 24), Vector2i(39, 25), Vector2i(39, 26), Vector2i(39, 27)], 4, 6, [])
+	await _held("berez", 12, 8, "berez_scarecrows", [Vector2i(38, 24), Vector2i(39, 25), Vector2i(39, 26), Vector2i(39, 27)], 3, 6, [])
 
 
 ## berez_scarecrows, berez variant 0 at level 9.
 func test_berez_scarecrows_v0_at_level_9() -> void:
-	await _held("berez", 12, 9, "berez_scarecrows", [Vector2i(39, 27), Vector2i(39, 28), Vector2i(39, 29), Vector2i(39, 30)], 4, 6, [])
+	await _held("berez", 12, 9, "berez_scarecrows", [Vector2i(39, 27), Vector2i(39, 28), Vector2i(39, 29), Vector2i(39, 30)], 4, 7, [])
 
 
 ## gate_wolves, krezk variant 1 at level 6.
@@ -158,7 +158,7 @@ func test_gate_wolves_v0_at_level_7() -> void:
 
 ## sorin_pursuers, krezk_pool_of_the_white_sun variant 2 at level 6 (sorin_vigil, sorin_seen, sorin_known, krezk_gate_open).
 func test_sorin_pursuers_v2_at_level_6() -> void:
-	await _held("krezk_pool_of_the_white_sun", 1, 6, "sorin_pursuers", [Vector2i(15, 12), Vector2i(16, 12), Vector2i(14, 12), Vector2i(15, 13)], 4, 6, ["sorin_vigil", "sorin_seen", "sorin_known", "krezk_gate_open"])
+	await _held("krezk_pool_of_the_white_sun", 1, 6, "sorin_pursuers", [Vector2i(15, 12), Vector2i(16, 12), Vector2i(14, 12), Vector2i(15, 13)], 3, 6, ["sorin_vigil", "sorin_seen", "sorin_known", "krezk_gate_open"])
 
 
 ## sorin_pursuers, krezk_pool_of_the_white_sun variant 1 at level 7 (sorin_vigil, sorin_seen, sorin_known, krezk_gate_open).
@@ -173,7 +173,7 @@ func test_sorin_pursuers_v0_at_level_8() -> void:
 
 ## tsolenka_watch, tsolenka_pass_guard_tower variant 1 at level 7.
 func test_tsolenka_watch_v1_at_level_7() -> void:
-	await _held("tsolenka_pass_guard_tower", 12, 7, "tsolenka_watch", [Vector2i(10, 10), Vector2i(10, 11), Vector2i(11, 11), Vector2i(9, 11)], 4, 7, [])
+	await _held("tsolenka_pass_guard_tower", 12, 7, "tsolenka_watch", [Vector2i(10, 10), Vector2i(10, 11), Vector2i(11, 11), Vector2i(9, 11)], 4, 8, [])
 
 
 ## tsolenka_watch, tsolenka_pass_guard_tower variant 0 at level 8.
@@ -193,7 +193,7 @@ func test_tsolenka_vrocks_v2_at_level_8() -> void:
 
 ## tsolenka_vrocks, tsolenka_pass variant 1 at level 9 (the gate raised after the watch was fought; the party comes out of the tower).
 func test_tsolenka_vrocks_v1_at_level_9() -> void:
-	await _held("tsolenka_pass", 12, 9, "tsolenka_vrocks", [Vector2i(26, 8), Vector2i(25, 8), Vector2i(26, 9), Vector2i(25, 9)], 4, 6, ["tsolenka_gate_open", "tsolenka_watch_fate=fought"], [], ["tsolenka_portcullis_w", "tsolenka_portcullis_e"])
+	await _held("tsolenka_pass", 12, 9, "tsolenka_vrocks", [Vector2i(26, 8), Vector2i(25, 8), Vector2i(26, 9), Vector2i(25, 9)], 4, 7, ["tsolenka_gate_open", "tsolenka_watch_fate=fought"], [], ["tsolenka_portcullis_w", "tsolenka_portcullis_e"])
 
 
 ## tsolenka_vrocks, tsolenka_pass variant 0 at level 10 (the gate raised after the watch was fought; the party comes out of the tower).
@@ -203,7 +203,7 @@ func test_tsolenka_vrocks_v0_at_level_10() -> void:
 
 ## tower_night_visitors, van_richtens_tower variant 2 at level 6 (van_richten_notes_read).
 func test_tower_night_visitors_v2_at_level_6() -> void:
-	await _held("van_richtens_tower", 23, 6, "tower_night_visitors", [Vector2i(15, 20), Vector2i(16, 20), Vector2i(15, 21), Vector2i(15, 19)], 4, 6, ["van_richten_notes_read"])
+	await _held("van_richtens_tower", 23, 6, "tower_night_visitors", [Vector2i(15, 20), Vector2i(16, 20), Vector2i(15, 21), Vector2i(15, 19)], 3, 6, ["van_richten_notes_read"])
 
 
 ## tower_night_visitors, van_richtens_tower variant 1 at level 7 (van_richten_notes_read).

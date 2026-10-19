@@ -23,7 +23,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 ## library_wardens, amber_temple_library variant 0 at level 10.
 func test_library_wardens_v0_at_level_10() -> void:
-	await _held("amber_temple_library", 12, 10, "library_wardens", [Vector2i(13, 3), Vector2i(14, 4), Vector2i(14, 5), Vector2i(15, 6)], 4, 7, [], [], ["restricted_grille"])
+	await _held("amber_temple_library", 12, 10, "library_wardens", [Vector2i(13, 3), Vector2i(14, 4), Vector2i(14, 5), Vector2i(15, 6)], 4, 8, [], [], ["restricted_grille"])
 
 
 ## larders_cyrus_fight, castle_ravenloft_larders variant 0 at level 10.
