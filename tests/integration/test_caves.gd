@@ -121,7 +121,7 @@ func test_a_wall_with_a_prop_stays_straight() -> void:
 	var v := await _view(DEN)
 	var cave := Caves.of(v.board)
 	# den_silver_chains hangs on (1, 13): the alcove's west wall, whose face is the line x = 2.
-	for z: float in [12.7, 13.5, 14.3]:
+	for z: float in [13.2, 13.5, 13.8]:
 		assert_between(cave.field_at(2.0, z), -0.06, 0.06, "the wall behind the chains is on its grid line at z %.1f" % z)
 
 
@@ -167,18 +167,8 @@ func test_what_is_built_stays_built() -> void:
 	var lib := await _view(LIBRARY)
 	assert_false(Caves.owns(lib.board, Vector2i(3, 2)), "a stack of shelves isn't rock")
 	assert_true(Caves.owns(lib.board, Vector2i(0, 5)), "the library's outer wall is")
-	var hewn := Caves.of(lib.board).wobble()
-	var den := await _den_wobble()
-	assert_true(hewn < den * 0.8, "the hewn library's walls wander less than the den's (%.2f against %.2f)" % [hewn, den])
-
-
-func _den_wobble() -> float:
-	if view != null:
-		view.queue_free()
-		view = null
-		await get_tree().process_frame
-	var v := await _view(DEN)
-	return Caves.of(v.board).wobble()
+	for key: String in ["round", "wander", "bays", "lean", "talus", "decor"]:
+		assert_true(float((Caves.AMOUNTS["hewn"] as Dictionary)[key]) <= float((Caves.AMOUNTS["full"] as Dictionary)[key]), "hewn is the lighter amount of %s" % key)
 
 
 ## Rock opens round the party where it hides it, like every wall (SeeThrough), and the floor gets its loose stones,

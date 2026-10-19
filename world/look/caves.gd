@@ -805,6 +805,11 @@ func _give(owner: Vector2i, qx: int, qz: int) -> void:
 	var k := qz * _vw + qx
 	if minf(minf(_s[k], _s[k + 1]), minf(_s[k + _vw], _s[k + _vw + 1])) >= TALUS_W:
 		return
+	# No rubble over a step in the floor (a ledge's end): the ground it would slope up from is two levels at once.
+	if 0.25 * (_s[k] + _s[k + 1] + _s[k + _vw] + _s[k + _vw + 1]) >= -0.02 \
+			and maxf(maxf(_vbase[k], _vbase[k + 1]), maxf(_vbase[k + _vw], _vbase[k + _vw + 1])) \
+			- minf(minf(_vbase[k], _vbase[k + 1]), minf(_vbase[k + _vw], _vbase[k + _vw + 1])) > 0.5:
+		return
 	var list: PackedInt32Array = _quads.get(owner, PackedInt32Array())
 	list.append(qz * _tw + qx)
 	_quads[owner] = list
