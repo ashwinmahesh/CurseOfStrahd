@@ -10,9 +10,9 @@ each, 4 to 6 wins in 8 and every seed finishing. Measured with the four pregens 
 | `ballroom_colony` | argynvostholt_west_wing, from the ballroom doors onto the dance floor | 8 | 20 giant spiders at 100 HP, 3 swarms of spiderlings at 70 HP | 5 | 12.0 | 2.6 |
 | `ballroom_colony` | the same | 7 | 12 giant spiders at 90 HP, 2 swarms at 60 HP | 5 | 7.8 | 1.9 |
 | `ballroom_colony` | the same | 6 | 8 giant spiders at 80 HP, 1 swarm at 60 HP | 5 | 8.2 | 1.9 |
-| `chapel_revenants` | argynvostholt_hall, from the west gallery's door into the nave | 8 | 4 revenants at 200 HP | 5 | 9.4 | 1.9 |
+| `chapel_revenants` | argynvostholt_hall, from the west gallery's door into the nave | 8 | 4 revenants at 180 HP | 5 | 10.1 | 2.0 |
 | `chapel_revenants` | the same | 7 | 4 revenants at 120 HP | 5 | 6.2 | 2.5 |
-| `chapel_revenants` | the same | 6 | 4 revenants at 140 HP | 5 | 7.9 | 2.9 |
+| `chapel_revenants` | the same | 6 | 4 revenants at 135 HP | 5 | 7.1 | 2.4 |
 
 Both fights wait in plain view (`waiting`): the revenants kneel in the chapel with their backs to the door, and the first six
 spiders hang in view in the ballroom's webs while the rest of the colony is `unseen` in the high webs, with the swarms in
@@ -65,3 +65,12 @@ rest in that doorway; it was not measured).
 Both fights are on the xp sim's Argynvostholt stage (`ballroom_colony` as an optional fight, `chapel_revenants` a night one;
 tools/balance/xp_sim.py). `make xp-sim` after: no gate moved by more than 0.03 of a level (route all at gate 10 -0.40 to -0.38, route alt
 at gate 8 -0.31 to -0.28, plus the 11 and 9 gates by 0.01); the one-level ceiling holds on every route.
+
+## The batch's combat changes (2026-10-19)
+
+The builder's batch 5 checked this fight on a tree with the lanes' combat changes ahead of GitHub main (foes through
+dangerous ground, Divine Smite asked on every hit, free aim for foes' cones and more): the chapel at level 8 with 4 revenants
+at 200 HP won 3 of 8 there (5 of 8 on main alone), level 6 at 140 HP 4. A sweep on that tree: level 8 at 150, 160 and 170 HP
+won 6, at 180 HP 5, at 190 HP 4, at 200 HP 3; level 6 at 125, 130 and 135 HP won 5, at 145 HP 4; level 7 at 110 HP won 6, at
+125 HP 5. The chapel is now 180 HP at level 8 and 135 HP at level 6 (level 7 stays 120): 5 of 8 on GitHub main and on the batch's
+tree both. The ballroom did not move (5 of 8 on both).
