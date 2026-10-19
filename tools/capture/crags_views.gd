@@ -7,8 +7,10 @@ extends Node3D
 ## Environment: CV_LOCS=a,b (default the places with crags), CV_YAWS=0,1,2,3 (rotate steps: 0 from the SW, 1 from the
 ## SE, 2 from the NE, 3 from the NW), CV_SHOTS=play,tilt,whole (default all three), CV_HOUR=12, CV_AT=x,z (the play and
 ## tilt shots look at this square instead of the spawn; with one place only), CV_NOSHOTS=1 (only the table),
+## CV_AIM=1 (each place's play and tilt shots look at its AIMS square, where the rock stands, instead of the spawn),
 ## CV_DIST=16 (the play shots' camera distance; 8 for a close look at a foot), CV_WEATHER=overcast (the world's weather for the whole run, as natural_audit's NA_WEATHER does), CV_BEFORE=1 (the
-## places drawn with their old rock columns, for the before shots), CV_TIME=n (builds each place n times first and
+## places drawn with their old rock columns, and the quarry and camp with their old stone yard walls, for the before
+## shots), CV_TIME=n (builds each place n times first and
 ## prints the median build time: view and board, as the game builds a place on arrival).
 ## Shots: <out>_<loc>_y<yaw>_play.png, _tilt.png, _whole.png (one per place).
 
@@ -22,6 +24,10 @@ const COLUMN_EDGE := 3.2
 ## How tall a token stands, and how far the camera sits when the table looks from it.
 const HEAD := 1.0
 const PLAY_DISTANCE := 16.0
+## Where the rock stands in each place: the square CV_AIM looks at.
+const AIMS := {"mount_baratok": Vector2i(18, 9), "mount_baratok_trail": Vector2i(22, 12), "tsolenka_pass": Vector2i(33, 13),
+	"werewolf_den": Vector2i(21, 4), "amber_temple_road": Vector2i(10, 3), "ghakis_quarry": Vector2i(5, 3),
+	"amber_road_camp": Vector2i(12, 3), "castle_ravenloft_gates": Vector2i(3, 22)}
 
 
 var view: LocationView = null
@@ -39,8 +45,11 @@ func _ready() -> void:
 	Weather.use(d)
 	if OS.get_environment("CV_BEFORE") != "":
 		# The catalog is read once and kept: take `rock_shape` out of its place looks and the columns come back.
-		for id: String in (SetDressing.catalog().get("place_looks", {}) as Dictionary):
-			((SetDressing.catalog()["place_looks"] as Dictionary)[id] as Dictionary).erase("rock_shape")
+		for id: String in (SetDressing.catalog().get("place_looks", {}) as Dictionary).keys():
+			if id in ["ghakis_quarry", "amber_road_camp"]:
+				(SetDressing.catalog()["place_looks"] as Dictionary).erase(id)
+			else:
+				((SetDressing.catalog()["place_looks"] as Dictionary)[id] as Dictionary).erase("rock_shape")
 
 
 func capture_shots(tool: Node, out: String) -> void:
@@ -72,6 +81,16 @@ func capture_shots(tool: Node, out: String) -> void:
 					for c: Vector2i in k.cells:
 						k.piece(c, mat).free()
 					var t3 := Time.get_ticks_usec()
+					# What the land past the edge asks of the rock (N8): every corner of the land, as AtmosphereLand._terrain does.
+					var reach := int(AtmosphereLand.REACH)
+					var t4 := Time.get_ticks_usec()
+					var asked := 0
+					for j in view.grid.depth + 2 * reach + 1:
+						for i in view.grid.width + 2 * reach + 1:
+							k.beyond_edge(Vector2(i - reach, j - reach))
+							asked += 1
+					var t5 := Time.get_ticks_usec()
+					print("CRAGS_BEYOND %s: %d corners asked %.0f ms (%s)" % [id, asked, (t5 - t4) / 1000.0, view.atmosphere.land.build_ms])
 					print("CRAGS_PLAN %s: plan %.0f ms (%s), %d pieces %.0f ms" % [id, (t2 - t1) / 1000.0, Crags.plan_ms, k.cells.size(), (t3 - t2) / 1000.0])
 				view.queue_free()
 				view = null
@@ -88,6 +107,8 @@ func capture_shots(tool: Node, out: String) -> void:
 			print("CRAGS_CELLS %s: %d rock squares, highest %.1f" % [id, view.board.crags.cells.size(), top])
 		var rig := view.rig
 		var at := view.board.cell_center(_spawn())
+		if OS.get_environment("CV_AIM") != "" and AIMS.has(id):
+			at = view.board.cell_center(AIMS[id] as Vector2i)
 		if OS.get_environment("CV_AT") != "":
 			var a := OS.get_environment("CV_AT").split(",")
 			at = view.board.cell_center(Vector2i(int(a[0]), int(a[1])))

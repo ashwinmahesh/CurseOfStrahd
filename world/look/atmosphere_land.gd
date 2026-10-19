@@ -15,6 +15,12 @@ const NEAR_RING := 4.0
 const WATER_Y := -0.13
 ## How far past the edge (squares) natural ground at the map's edge takes to settle into the land.
 const TERRAIN_SETTLE := 8.0
+## Past the edge of a place with crags, the rock carries on (Crags.beyond_edge): the land is rock where it has risen
+## this far, and no tree or plant grows where it has risen this much.
+const ROCK_FROM := 0.35
+const TREE_ROCK := 0.6
+## The land's own surface for those squares (past the kinds of Edge).
+const SURFACE_ROCK := 4
 
 enum Edge { FOREST, OPEN, WATER, DROP }
 
@@ -344,6 +350,11 @@ func _terrain() -> void:
 	var nz := _nz
 	var kinds := _kinds
 	var terrain := board.has_terrain()
+	# A place with crags: its rock carries on past the edge, rising out of the land (Crags.beyond_edge, N8).
+	var crags := board.crags
+	var rises := PackedFloat32Array()
+	if crags != null:
+		rises.resize((nx + 1) * (nz + 1))
 	# Corner heights: water or a drop next to a corner pins it down; a road beside it flattens it; a corner touching
 	# the map's own squares sits level with its floor (or the shaped ground's, W11).
 	var heights := PackedFloat32Array()
@@ -387,6 +398,14 @@ func _terrain() -> void:
 					# carries on past the edge and settles into the land.
 					var out := maxf(absf(p.x - edge.x), absf(p.y - edge.y))
 					h = lerpf(board.ground_y(edge), h, smoothstep(0.0, TERRAIN_SETTLE, out))
+			if crags != null:
+				var rise := 0.0
+				if on_map:
+					rise = crags.edge_rise(p)   # level with the rock's own surface at the edge
+				elif not water:
+					rise = crags.beyond_edge(p) * (1.0 - float(road) / 4.0)
+				h += rise
+				rises[j * (nx + 1) + i] = rise
 			heights[j * (nx + 1) + i] = h
 	_corner_h = heights
 	# One grid of corners, smooth normals across it, and a list of squares per surface (ground, road, water): built
@@ -415,8 +434,20 @@ func _terrain() -> void:
 	var mats: Array[Material] = []
 	var ground := Look.cel_textured(str(spec.get("ground", "village/grass")))
 	var road := Look.cel_textured(str(spec.get("road", spec.get("ground", "village/mud_road"))))
-	for kind: int in [Edge.FOREST, Edge.OPEN, Edge.WATER]:
-		var idx := _quads(kinds, kind, nx, nz)
+	# The land that has risen into the mountain past a rock edge is the place's rock, not its ground.
+	var surfaces := kinds
+	var rock: Material = board.rock_material() if crags != null else null
+	if rock != null:
+		surfaces = kinds.duplicate()
+		for j in nz:
+			for i in nx:
+				if kinds[j * nx + i] != Edge.FOREST:
+					continue
+				var a := j * w1 + i
+				if maxf(maxf(rises[a], rises[a + 1]), maxf(rises[a + w1], rises[a + w1 + 1])) > ROCK_FROM:
+					surfaces[j * nx + i] = SURFACE_ROCK
+	for kind: int in [Edge.FOREST, Edge.OPEN, Edge.WATER, SURFACE_ROCK]:
+		var idx := _quads(surfaces, kind, nx, nz)
 		if idx.is_empty():
 			continue
 		var arrays := []
@@ -425,7 +456,7 @@ func _terrain() -> void:
 		arrays[Mesh.ARRAY_NORMAL] = up if kind == Edge.WATER else normals
 		arrays[Mesh.ARRAY_INDEX] = idx
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-		var m: Material = ground if kind == Edge.FOREST else (road if kind == Edge.OPEN else water_material)
+		var m: Material = ground if kind == Edge.FOREST else (road if kind == Edge.OPEN else (water_material if kind == Edge.WATER else rock))
 		mats.append(m if m != null else Look.cel("bog_deep"))
 	_snap["terrain"] = [heights, mesh, mats]
 	_land_node(mesh, mats)
@@ -759,6 +790,7 @@ func _flora_trees() -> void:
 	var step := 1.0 / sqrt(density)
 	var near := {}
 	var far := {}
+	var crags := board.crags
 	var y := -REACH
 	while y < _d + REACH:
 		var x := -REACH
@@ -768,6 +800,8 @@ func _flora_trees() -> void:
 			var k := _cell(p)
 			if k < 0:
 				continue
+			if crags != null and crags.beyond_edge(p) > TREE_ROCK:
+				continue   # the range carries on here: rock, not woods
 			var out := _dist[k]
 			if out < 0.5 or _walk[k] < 2.0 or out > REACH - 1.0 or _land_kind(p) != Edge.FOREST:
 				continue
@@ -830,6 +864,8 @@ func _flora_ground() -> void:
 				continue
 			var p := Vector2(i - REACH + 0.5, j - REACH + 0.5)
 			if _land_kind(p) != Edge.FOREST or (mists != "" and _beyond(p, mists)):
+				continue
+			if board.crags != null and board.crags.beyond_edge(p) > TREE_ROCK:
 				continue
 			var by_water := false
 			for d: Vector2 in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:

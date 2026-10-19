@@ -580,6 +580,12 @@ func _rock(c: Vector2i) -> void:
 	_dress(c, first)
 
 
+## The rock of a place whose walls are rock (catalog place_looks `rock_walls`), or null: the land past its edge carries
+## its mountains on in it (AtmosphereLand).
+func rock_material() -> Material:
+	return _rock_tex
+
+
 ## A town house's walls.
 func house_wall_material() -> Material:
 	return _wall_tex if _wall_tex != null else Look.cel("bone_dark")

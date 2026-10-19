@@ -41,6 +41,8 @@ const CREST_HIGH := 1.2
 const TUCK := 0.04
 ## How far (squares) the face's line is bent off the grid.
 const WARP := 0.55
+## How far (squares) past the map's edge the rock carries on before it settles into the land (N8).
+const BEYOND := 8.0
 ## How many places' plans and meshes are kept.
 const KEEP := 8
 const FAR := 1e6
@@ -72,6 +74,10 @@ var _scale := 1.0
 var _margin: Dictionary = {}
 ## Rock square -> its mesh and how high it stands, made the first time its piece is asked for.
 var _meshes: Dictionary = {}
+## The rock's height along each side of the map's edge, for the range that carries on past it (N8): four arrays, one
+## value a quarter square (0 north, 1 east, 2 south, 3 west), made the first time they are asked for.
+var _edge_prof: Array = []
+var _beyond_noise: FastNoiseLite = null
 
 
 ## Plans the surface over `cells` (square -> true), the board's rock squares, once for the whole board (or takes the
@@ -433,6 +439,92 @@ static func _tri(verts: PackedVector3Array, norms: PackedVector3Array, uvs: Pack
 		verts.append(v)
 		norms.append(nrm)
 		uvs.append(Vector2(v.x, v.z))
+
+
+## The rock's height along each side of the map's edge: the surface's height at the edge where the square beside it is
+## rock, 0 where it isn't, blurred over a square either way so the rock ramps down beside a way out instead of ending
+## in a cliff.
+func _build_profiles() -> void:
+	_edge_prof.clear()
+	for side in 4:
+		var length := _w if side % 2 == 0 else _d
+		var n := length * RES + 1
+		var raw := PackedFloat32Array()
+		raw.resize(n)
+		for t in n:
+			var a := minf(float(t) / RES, length - 0.001)
+			var cell := Vector2i.ZERO
+			var pt := Vector2.ZERO
+			match side:
+				0:
+					cell = Vector2i(floori(a), 0)
+					pt = Vector2(a, 0.0)
+				1:
+					cell = Vector2i(_w - 1, floori(a))
+					pt = Vector2(_w, a)
+				2:
+					cell = Vector2i(floori(a), _d - 1)
+					pt = Vector2(a, _d)
+				_:
+					cell = Vector2i(0, floori(a))
+					pt = Vector2(0.0, a)
+			raw[t] = maxf(top_at(pt.x, pt.y), 0.0) if cells.has(cell) else 0.0
+		var blurred := PackedFloat32Array()
+		blurred.resize(n)
+		for t in n:
+			var sum := 0.0
+			for o in range(-RES, RES + 1):
+				sum += raw[clampi(t + o, 0, n - 1)]
+			blurred[t] = sum / (2 * RES + 1)
+		_edge_prof.append(blurred)
+
+
+## The rock's height along `side` of the map's edge at `along` squares from its start, read between its values.
+func _profile(side: int, along: float) -> float:
+	if _edge_prof.is_empty():
+		_build_profiles()
+	var arr := _edge_prof[side] as PackedFloat32Array
+	var f := clampf(along * RES, 0.0, arr.size() - 1.001)
+	var i := floori(f)
+	return lerpf(arr[i], arr[i + 1], f - i)
+
+
+## How high (world units above the ground) the rock stands at point `p` on the map's edge line, where the land past the
+## edge starts (0 anywhere else, and where the edge square beside it isn't rock).
+func edge_rise(p: Vector2) -> float:
+	if p.y == 0.0 and p.x >= 0.0 and p.x <= _w:
+		return _profile(0, p.x)
+	if p.y == _d and p.x >= 0.0 and p.x <= _w:
+		return _profile(2, p.x)
+	if p.x == 0.0 and p.y >= 0.0 and p.y <= _d:
+		return _profile(3, p.y)
+	if p.x == _w and p.y >= 0.0 and p.y <= _d:
+		return _profile(1, p.y)
+	return 0.0
+
+
+## How high (world units above the land) the rock stands at point `p` past the map's edge (N8: the range carries on):
+## the rock's height at the edge beside it, settling into the land over BEYOND squares and ridged by noise so it isn't
+## a ramp. 0 on the map, where the edge square beside it isn't rock and further out than BEYOND.
+func beyond_edge(p: Vector2) -> float:
+	var ox := maxf(maxf(-p.x, p.x - _w), 0.0)
+	var oz := maxf(maxf(-p.y, p.y - _d), 0.0)
+	var out := sqrt(ox * ox + oz * oz)
+	if out <= 0.0 or out >= BEYOND:
+		return 0.0
+	var rise := 0.0
+	if oz >= ox:
+		rise = _profile(0 if p.y < 0.0 else 2, p.x)
+	else:
+		rise = _profile(3 if p.x < 0.0 else 1, p.y)
+	if rise <= 0.001:
+		return 0.0
+	if _beyond_noise == null:
+		_beyond_noise = FastNoiseLite.new()
+		_beyond_noise.seed = hash(board.place) if board != null else 1
+		_beyond_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+		_beyond_noise.frequency = 0.35
+	return rise * (1.0 - smoothstep(0.0, BEYOND, out)) * (0.8 + 0.35 * _beyond_noise.get_noise_2d(p.x, p.y))
 
 
 ## The surface's height above the ground at grid point (i, j) (tests, art QA).

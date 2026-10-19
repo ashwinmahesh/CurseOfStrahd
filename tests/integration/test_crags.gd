@@ -140,6 +140,35 @@ func test_the_rock_leaves_the_walkable_middles_clear() -> void:
 	assert_true(out > 40, "the rock and its scree reach out over the walkable squares beside them (%d points)" % out)
 
 
+## N8: the range carries on past the map's edge. On the Baratok trail, whose north rows are rock, the land just past the
+## north edge is raised into the mountain (in the place's rock), settles into the land within BEYOND squares, and ramps
+## down beside a way out; on the map and further out the rock adds nothing.
+func test_the_range_carries_on_past_the_edge() -> void:
+	Look.set_style("modern", false)
+	var v := await _view("mount_baratok_trail")
+	await get_tree().process_frame
+	var crags := v.board.crags
+	var land := v.atmosphere.land
+	assert_true(crags != null and land != null, "the trail has crags and land around it")
+	if crags == null or land == null:
+		return
+	var near := Vector2(16.0, -1.5)
+	assert_true(crags.beyond_edge(near) > 1.0, "the rock stands past the north edge (%.2f)" % crags.beyond_edge(near))
+	assert_true(land.surface_y(near) > 1.0, "the land is raised there (%.2f)" % land.surface_y(near))
+	assert_true(crags.beyond_edge(Vector2(16.0, -Crags.BEYOND - 0.5)) == 0.0, "it has settled into the land by %d squares" % int(Crags.BEYOND))
+	assert_true(crags.beyond_edge(Vector2(16.0, 9.0)) == 0.0, "on the map the rock adds nothing")
+	assert_true(crags.beyond_edge(Vector2(-1.0, 10.0)) < 0.3 * crags.beyond_edge(Vector2(-1.0, 6.0)), "it ramps down beside the way out on the west edge")
+	var rock := false
+	for node in land.root.get_children():
+		if node is MeshInstance3D and node.name == "Land":
+			var mi := node as MeshInstance3D
+			for i in mi.mesh.get_surface_count():
+				var mat := mi.get_surface_override_material(i)
+				if mat != null and str(mat.get_meta("surface", "")) == "mountain/cliff":
+					rock = true
+	assert_true(rock, "the raised land is drawn in the place's rock")
+
+
 ## The distance (squares) from point `p` to the nearest rock square of `crags`.
 func _away_from_rock(crags: Crags, p: Vector2) -> float:
 	var best := INF
