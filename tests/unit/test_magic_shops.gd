@@ -273,6 +273,33 @@ func test_the_merchants_open_as_the_story_lets_them() -> void:
 	assert_true("cloak_of_elvenkind" in costel and "robe_of_the_archmagi" in costel, "Costel's cloaks and robes")
 
 
+## Every merchant the story puts in a place can be talked into opening their shop: some line of their conversation
+## leads to a `shop` statement (Ashwin, 2026-10-19: Master Costel's whole magic stock sat behind a conversation with no
+## way to it; Xaver's, once the Index was gone, the same).
+func test_every_merchant_can_be_talked_into_their_shop() -> void:
+	var refs := {}   # npc id -> the conversations the locations give them
+	var comp := Compendium.shared()
+	for loc_id: String in comp.table("locations"):
+		for n: Variant in comp.get_entry("locations", loc_id).get("npcs", []):
+			var spec := n as Dictionary
+			if spec.has("npc") and str(spec.get("dialogue", "")) != "":
+				(refs.get_or_add(str(spec["npc"]), []) as Array).append(str(spec["dialogue"]))
+	var bot := DialoguePathBot.new()
+	var goal := func(stmt: Dictionary) -> bool: return str(stmt.get("t", "")) == "shop"
+	var checked := 0
+	for npc: String in _shops():
+		if not refs.has(npc):
+			continue   # not placed anywhere (a guest's shop, a test merchant)
+		checked += 1
+		var opens := false
+		for ref: Variant in refs[npc]:
+			opens = opens or bot.reaches(str(ref), goal)
+		assert_true(opens, "%s has a conversation that opens their shop (%s)" % [npc, str(refs[npc])])
+	assert_true(checked >= 15, "the audit saw the merchants (%d)" % checked)
+	for npc: String in ["vallaki_cloth_merchant", "library_xaver"]:
+		assert_true(refs.has(npc), "%s is placed" % npc)
+
+
 ## A merchant who buys magic items pays no more than the guide's price for the magic stock, so the party can't buy low
 ## and sell high (at the best terms anywhere: friendly and haggled).
 func test_nothing_bought_sells_back_for_more() -> void:

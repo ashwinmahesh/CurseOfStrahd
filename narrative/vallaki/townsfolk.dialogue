@@ -114,6 +114,7 @@ Old Smaranda: Because the Baron says there's nothing to fear, and the Baron is a
 ~ cloth_merchant
 Master Costel [smile]: Bunting! Festival bunting, by the yard or the bolt! I have sold yellow to every house in Vallaki and three of them twice. Business has never been better, which worries me more than you'd think.
 * What else do you keep in stock? -> costel_velvet
+* Do you sell anything to wear besides yellow bunting? -> costel_trade
 * Goodbye. -> END
 
 ~ porter
@@ -227,6 +228,14 @@ Old Kolya: The very first year, I crept into the square three nights early with 
 Old Kolya: The old Baron had the stocks full for a fortnight, but he never found out it was the carter who brought the wood.
 Old Kolya [sad]: Look at these knuckles now; I have built two thousand suns since then, and not one of them kept my hands warm.
 -> carter
+
+~ costel_trade
+Master Costel [sly]: Step behind the yellow, if you please, where the Baron's guards have less cause to admire your posture.
+Master Costel: A few cloaks, boots and stitched robes have come to me by odd roads. I never ask which road, and I never put them in the window.
+Master Costel: They do more than turn the rain, so if anyone in the square asks, you bought six yards of linen.
+shop
+Master Costel [smile]: Mind the yellow on your way out, and may the next festival find us all remarkably alive.
+-> cloth_merchant
 
 ~ costel_velvet
 Master Costel [smile]: Yellow linen, yellow wool, yellow ribbon by the bolt; if it looks like butter or brass, the town has bought me clean out of it.

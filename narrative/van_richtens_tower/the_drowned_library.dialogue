@@ -89,7 +89,7 @@ combat the_index
 ~ after
 if quest.the_drowned_library == done
 Xaver: (He's sitting on the floor for the first time, reading, very slowly, with his eye an inch from the page.) Shh. I've never read this one. I didn't dare go near that shelf.
--> END
+-> xaver_stores
 endif
 quest the_drowned_library done
 Narrator: Xaver comes down off the bookcase one long limb at a time, as if the floor might change its mind, and stands among the splinters of the desk for a long while.
@@ -102,4 +102,16 @@ if flag.mordenkainen_restored
 Xaver: And tell the old man up the mountain he can come down now. I'll stop whispering. I'd like somebody to talk to who isn't a book.
 endif
 approve wren_featherfoot +2 liriel_dawnsong +2 godrick_pendlebrook +1 ratatoille +2: You set Khazan's last apprentice free of the furniture
+-> xaver_stores
+
+~ xaver_stores
+* Is there anything left in Khazan's stores we could trade for? -> xaver_trade
+* (Leave him to his reading.) -> END
+
+~ xaver_trade
+Xaver: The floor is very wide down here, and I have read all the scrolls nine thousand times.
+Xaver: Khazan's wands and parchment are in the cases at the back. I can't eat them, and they make a poor pillow.
+Xaver: Take what you like. Leave coin for ink, and a candle if you've one: I want to read something I haven't memorised.
+shop
+Xaver [smile]: Thank you. I am going to sit on the low shelf now, simply because I can.
 -> END

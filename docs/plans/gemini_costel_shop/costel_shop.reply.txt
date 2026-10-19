@@ -1,0 +1,20 @@
+== costel_ask
+Player: Do you sell anything to wear besides yellow bunting?
+Player: What else are you keeping behind the festival cloth?
+Player: Show us the good wool and leather, if you have any.
+== costel_trade
+Master Costel [sly]: Step behind the yellow, if you please, where the Baron's guards have less cause to admire your posture.
+Master Costel: I keep a few cloaks, boots, and stitched robes from travelers who had no further use for their feet.
+Master Costel: They do more than turn the rain, so if anyone in the square asks, you bought six yards of linen.
+== costel_after
+Master Costel [smile]: Fold it small, keep it under your arm, and may the next festival find us all remarkably alive!
+== xaver_ask
+Player: Do you have any wands or scrolls from the shelves to spare?
+Player: Is there anything left in Khazan's stores we could trade for?
+Player: Would you part with some of the old magic on these shelves?
+== xaver_trade
+Xaver: The floor is very wide down here, and I have read all the scrolls nine thousand times.
+Xaver: Khazan left cases of wands and parchment in the back, and I cannot eat them or use them for a pillow.
+Xaver: Take what you like, if you have a bit of ink or a candle stub, or anything I have not looked at for three centuries.
+== xaver_after
+Xaver [weary]: Thank you, I am going to sit on the low shelf now, simply because I can.

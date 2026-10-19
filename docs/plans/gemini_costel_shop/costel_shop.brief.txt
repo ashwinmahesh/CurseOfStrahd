@@ -1,0 +1,33 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Vallaki is a walled town where the Baron has ordered a festival every week and everyone is cheerful on pain of the stocks, so cheer is nervous and everything is yellow. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Master Costel [smile]: Bunting! Festival bunting, by the yard or the bolt! I have sold yellow to every house in Vallaki and three of them twice. Business has never been better, which worries me more than you'd think.
+Master Costel [sly]: Of course, a sensible merchant keeps one roll of good, heavy black velvet wrapped in oilcloth behind the cellar stairs.
+Master Costel: I am holding that back for afterwards, and no, I will not say after what, though I have the yardstick ready.
+Gunther: Pleasure. Bring it back dented and I'll buy it for half. Bring it back bloody and I'll buy it for less.
+Urwin: Down in the cellar, behind the casks nobody drinks. Draughts that close a wound in a breath, prayers for the bad nights, a silver bird my father carved. For the Keepers' friends, at what it cost us. Nobody else ever hears about this room.
+Xaver: (From the top of the shelves.) Don't touch it. I mean it. I've watched it eat eleven people. I count them in the dark.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== costel_ask"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters. Where a label asks for several alternatives, give each on its own line, all under the one label.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+CHARACTERS: Master Costel is Vallaki's cloth merchant, plump, a man who loves a speech and has stopped asking why he sold so much yellow bunting. Behind the bunting his stall also holds good, strange, magical things to wear: cloaks, boots, robes, gloves, hats and bracers that do more than keep the rain off. He has never mentioned this in public, because Vallaki does not like to be reminded that magic exists, and he sells it quietly, by the cloak, to people he judges can keep their mouths shut. Xaver is a thin grey nothic, the last apprentice of the archmage Khazan, who spent three hundred years hiding on a bookcase in the drowned library under a lake from a hungry catalogue desk. The desk has now been destroyed. Xaver is shy, gentle, a little bewildered by the open floor, and the library still holds Khazan's wands and scrolls that he no longer needs to guard. He wants to be rid of what he cannot read and buy things he never could: ink, light, anything.
+
+THE SCENE: the player picks a menu choice to see the merchant's wares, the merchant says a few words, and then the shop screen opens (the game does this by itself). When the shop closes, the conversation carries on. No fight, no check.
+
+LABELS AND BEATS:
+== costel_ask
+Three alternative menu choices for the player, in the first person plural, for asking Master Costel whether he has anything besides bunting. Each under 60 characters, plain words, no quotes. (Speaker: write them as plain lines starting "Player:".)
+== costel_trade
+Master Costel lowers his voice, glances at the street, and offers what is behind the bunting: cloaks, boots, robes, things worth wearing. 3 lines (Master Costel, first line [sly]).
+== costel_after
+Master Costel after the shop closes, the festival back on his face. 1 line (Master Costel).
+== xaver_ask
+Three alternative menu choices for the player, for asking Xaver whether he has anything from the library to spare. Each under 60 characters. (Write them as plain lines starting "Player:".)
+== xaver_trade
+Xaver, on the floor among the splinters of the desk, offers wands, scrolls and old stores from Khazan's shelves, because he has read all of it nine thousand times. 3 lines (Xaver).
+== xaver_after
+Xaver after the shop closes, going back to his book. 1 line (Xaver).
