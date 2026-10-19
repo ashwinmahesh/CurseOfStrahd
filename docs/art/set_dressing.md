@@ -312,8 +312,11 @@ it fades in the party's way (from farther off when it's tall: meta `fade_reach`)
 GroundRelief draws a crag's square flat in the place's own ground rather than as a woods bank, so the foot rises out
 of the same ground the party stands on. Two more place look keys tune it: `crag_floor` (world units: no point more
 than half a square in from open ground stands lower, so a thin band of rock stays a ridge instead of breaking into
-lone spikes; the Amber Temple road and Tsolenka) and `crag_scale` (a multiplier on the heights; the castle gates, so
+lone spikes; its crest stands at 0.55 to 1.2 times that, peaks and saddles meandering along the band; the Amber Temple
+road, Tsolenka, the Ghakis quarry and the Amber road camp) and `crag_scale` (a multiplier on the heights; the castle gates, so
 the castle stays the tallest thing). Crags are on Mount Baratok, its trail, the Tsolenka Pass, the werewolf den, the
-castle gates and the Amber Temple road (the castle's overlook has `rock_walls` but its builder claims every wall
+castle gates, the Amber Temple road, and the two shrine-yard maps in rock country, the Ghakis quarry and the Amber
+road camp (their yard walls and pillars are rock, not stone: the houses TownBuilder puts on their corner blocks stay;
+the castle's overlook has `rock_walls` but its builder claims every wall
 square, and most of the gates' and the pass's walls are buildings too, so only their loose rock is shaped).
 tools/capture/crags_views.tscn shoots them from the four headings and prints which squares a crag hides.

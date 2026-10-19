@@ -15,7 +15,7 @@ extends Node3D
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 ## The places with crags (catalog place_looks `rock_shape`).
 const PLACES: Array[String] = ["mount_baratok", "mount_baratok_trail", "tsolenka_pass", "werewolf_den",
-	"castle_ravenloft_gates", "amber_temple_road"]
+	"castle_ravenloft_gates", "amber_temple_road", "ghakis_quarry", "amber_road_camp"]
 ## The old rock columns' average height, and at the map's edge.
 const COLUMN := 2.2
 const COLUMN_EDGE := 3.2

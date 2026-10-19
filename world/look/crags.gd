@@ -34,6 +34,9 @@ const FOOT_OUT := 0.25
 ## the walkable square's middle it is gone) and stands no higher than this (below a token's knee).
 const SCREE := 0.14
 const SCREE_REACH := 0.5
+## How much of its `crag_floor` a thin band's crest stands at in the saddles and at the peaks.
+const CREST_LOW := 0.55
+const CREST_HIGH := 1.2
 ## Where the surface is this low or lower it tucks under the ground beside it.
 const TUCK := 0.04
 ## How far (squares) the face's line is bent off the grid.
@@ -222,8 +225,10 @@ func _heights() -> void:
 			h = (face + climb) * (0.78 + 0.44 * r) + 0.1 * (rough[k] * unit * 2.0 - 1.0) * minf(t, 1.0)
 			h *= smoothstep(0.0, 0.2, t)   # down to the ground where the foot is
 		if u0 > 0.0 and _floor > 0.0:
-			# A thin band of rock keeps its height: half a square in from open ground it stands at least this tall.
-			h = maxf(h, _floor * smoothstep(0.0, 0.5, u0))
+			# A thin band of rock keeps its height: half a square in from open ground it stands at least this tall, less
+			# at the saddles and more at the peaks along its crest, and the crest meanders with the warp.
+			var crest := lerpf(CREST_LOW, CREST_HIGH, 0.45 * mass[k] * unit + 0.55 * sheer[k] * unit)
+			h = maxf(h, _floor * crest * smoothstep(0.0, 0.5, maxf(uw, 0.0)))
 		h *= _scale
 		# The scree apron: a low skirt round the foot that thins to nothing out over the open ground, and is gone by
 		# the middle of the walkable square beside it.

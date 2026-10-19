@@ -8,7 +8,7 @@ const LOC := "mount_baratok"
 ## Every place whose look says `rock_shape: "crags"` (catalog place_looks). The castle's overlook has `rock_walls` too, but
 ## the castle's own builder claims every one of its wall squares, so it has no loose rock to shape.
 const PLACES: Array[String] = ["mount_baratok", "mount_baratok_trail", "tsolenka_pass", "werewolf_den",
-	"castle_ravenloft_gates", "amber_temple_road"]
+	"castle_ravenloft_gates", "amber_temple_road", "ghakis_quarry", "amber_road_camp"]
 
 var view: LocationView
 var _was := ""
@@ -154,15 +154,19 @@ func _away_from_rock(crags: Crags, p: Vector2) -> float:
 
 
 ## A thin band of rock keeps a height (`crag_floor`) instead of breaking into lone spikes: on the Amber Temple road every
-## rock square stands at least that tall, and the castle gates' `crag_scale` lowers their rock.
+## rock square stands at least the floor's low crest tall (and some stand taller), and the castle gates' `crag_scale`
+## lowers their rock.
 func test_floor_and_scale() -> void:
 	Look.set_style("modern", false)
 	var road := await _view("amber_temple_road")
 	var floor_h := float((SetDressing.catalog().get("place_looks", {}) as Dictionary)["amber_temple_road"]["crag_floor"])
 	var low := INF
+	var high := 0.0
 	for c: Vector2i in road.board.crags.cells:
 		low = minf(low, road.board.crags.top_of(c))
-	assert_true(low >= floor_h - 0.05, "no rock square on the Amber Temple road stands under %.1f (lowest %.2f)" % [floor_h, low])
+		high = maxf(high, road.board.crags.top_of(c))
+	assert_true(low >= floor_h * Crags.CREST_LOW - 0.05, "no rock square on the Amber Temple road stands under %.1f (lowest %.2f)" % [floor_h * Crags.CREST_LOW, low])
+	assert_true(high - low > 0.5, "the crest rises and falls (%.2f to %.2f)" % [low, high])
 	road.queue_free()
 	view = null
 	await get_tree().process_frame

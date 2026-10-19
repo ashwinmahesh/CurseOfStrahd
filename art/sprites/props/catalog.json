@@ -1261,6 +1261,16 @@
         ]
       ]
     },
+    "ghakis_quarry": {
+      "rock_walls": "mountain/cliff",
+      "rock_shape": "crags",
+      "crag_floor": 3.0
+    },
+    "amber_road_camp": {
+      "rock_walls": "mountain/cliff",
+      "rock_shape": "crags",
+      "crag_floor": 2.2
+    },
     "mount_baratok_trail": {
       "floor": "mountain/scree",
       "rock_walls": "mountain/cliff",
