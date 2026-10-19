@@ -89597,6 +89597,482 @@
   "recipe": "71f51bdb43",
   "text": "The house is yours tonight. Do not let me keep you."
  },
+ "sunsword/013cb8e8e47d7dff": {
+  "chars": 101,
+  "direction": "[incensed, icy, disdainful]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "You expect me to sit dark at my master's murderer's table while he plays the host with stolen silver."
+ },
+ "sunsword/020fb0e52c0c93eb": {
+  "chars": 67,
+  "direction": "[awed, triumphant, solemn]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Look, bearer: no crystal, no steel, only the sun he could not kill."
+ },
+ "sunsword/02c707798f093ecd": {
+  "chars": 99,
+  "direction": "[firm, solemn, protective]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Do not dip me in it. Let the pool keep the memory it has of him, when I still had my crystal whole."
+ },
+ "sunsword/06bad3285dd6bf41": {
+  "chars": 107,
+  "direction": "[smug, majestic, contemptuous]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Take note of how the mist parts when I am bare. Even the weather in this miserable ditch knows its betters."
+ },
+ "sunsword/1129bd779570ec6f": {
+  "chars": 91,
+  "direction": "[scornful, dignified, stinging]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "He held on to his honour, elder brother, which is more than remains in all your cold house."
+ },
+ "sunsword/14820425c5e9fc09": {
+  "chars": 73,
+  "direction": "[vengeful, radiant, ringing]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Take the light you broke, elder brother. Take all of it, down to the ash."
+ },
+ "sunsword/185d0c5f4fb43a5d": {
+  "chars": 113,
+  "direction": "[radiant, proud, grandly smug]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Observe the blade: pure dawn, without need of steel or stone. You may admire it now, to save us time on the road."
+ },
+ "sunsword/18aff5739d944a4f": {
+  "chars": 94,
+  "direction": "[peremptory, affronted, curt]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Take me out of this sack at once, before you go into battle armed with that dreary iron stick."
+ },
+ "sunsword/1c57b9a3ce5eb485": {
+  "chars": 105,
+  "direction": "[sardonic, cold, knowing]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "So the elder brother has kept the towers standing. He always had a taste for cold stone and long shadows."
+ },
+ "sunsword/2088ecd1365d607a": {
+  "chars": 130,
+  "direction": "[bitter, haunted, restrained]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "When the elder brother shattered my crystal on the flagstones, the cold went through my hilt, and I have never quite warmed since."
+ },
+ "sunsword/20faa5adc9cc3d14": {
+  "chars": 124,
+  "direction": "[stately, admiring, stern]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Walk with some dignity among these stones. They died standing up against the elder brother, which is more than most managed."
+ },
+ "sunsword/237c5b6c2cdbc041": {
+  "chars": 103,
+  "direction": "[contemptuous, warning, firm]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Do not listen to him, bearer. He speaks like a king, and he is only a thief who outlived the witnesses."
+ },
+ "sunsword/23b80b28f79534ac": {
+  "chars": 107,
+  "direction": "[imperious, dryly scornful, curt]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Do not stare at me as though I were a turnip that had learned to sing. Tell me the year, and speak clearly."
+ },
+ "sunsword/24d71f86f2f2f0d8": {
+  "chars": 84,
+  "direction": "[menacing, eager, regal]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "One word from you, bearer, only one, and I will turn his whole banquet hall to noon."
+ },
+ "sunsword/27a19526ed93d56e": {
+  "chars": 100,
+  "direction": "[earnest, stiffly proud, vulnerable]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "I do not fear the fight, understand me, only the silence on the stones if I am broken a second time."
+ },
+ "sunsword/27dabc1703c28ee8": {
+  "chars": 112,
+  "direction": "[wistful, courtly, quietly proud]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Sergei knelt on these stones before the wedding was even spoken of. The water was warmer then, or perhaps I was."
+ },
+ "sunsword/28b8fc96043069be": {
+  "chars": 101,
+  "direction": "[impatient, sarcastic, imperious]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Are we taking root, squire, or merely waiting for the moss to climb our boots? The road goes forward."
+ },
+ "sunsword/2b677baa55d938cb": {
+  "chars": 115,
+  "direction": "[sharp, indignant, scolding]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Your heels are pointed the wrong way, bearer: the elder brother is behind us, and my light does not shine backward."
+ },
+ "sunsword/305be9298f1e2592": {
+  "chars": 93,
+  "direction": "[solemn, urgent, resolute]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Hold fast to my hilt when we enter his halls, bearer: do not let me fall into the dark alone."
+ },
+ "sunsword/34d42ebb55644f20": {
+  "chars": 107,
+  "direction": "[sorrowful, proud, halting]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Four hundred years I have kept his light, and still I do not know how to tell him I failed his wedding day."
+ },
+ "sunsword/3718181624e0cad7": {
+  "chars": 77,
+  "direction": "[challenging, steely, defiant]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Come within reach of my edge, while we are both looking, and see what I save."
+ },
+ "sunsword/376c15357ef2a48d": {
+  "chars": 76,
+  "direction": "[commanding, burning, resolute]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Lift me high, bearer. Four hundred years is long enough to wait for morning."
+ },
+ "sunsword/38182413c2805848": {
+  "chars": 111,
+  "direction": "[vain, airy, commanding]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "A lesser blade gleams; I preside. Try to look a little more heroic in my glow, for the sake of the composition."
+ },
+ "sunsword/38711e8079b456f9": {
+  "chars": 81,
+  "direction": "[accusing, cold, grave]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "You killed him at his own wedding, elder brother, when his arms were open to you."
+ },
+ "sunsword/38fd2a4991ae7b02": {
+  "chars": 73,
+  "direction": "[urgent, pleading, stricken]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "No, do not open your hand! Do not give me back to him, not into the dark!"
+ },
+ "sunsword/3ba6010ac50973d0": {
+  "chars": 120,
+  "direction": "[mortified, dry, haughty]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "I am the royal blade of Prince Sergei von Zarovich, currently keeping company with a salt herring and three spare boots."
+ },
+ "sunsword/3f7f585b563e905d": {
+  "chars": 99,
+  "direction": "[fond, wistful, dryly amused]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Sergei always polished my hilt before a prayer, though I told him a blade of light needed no cloth."
+ },
+ "sunsword/4814d4272d3389ac": {
+  "chars": 108,
+  "direction": "[tender, formal, dignified]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Good evening, my prince. I am very late, and I have brought a stranger, but I have not forgotten our errand."
+ },
+ "sunsword/48cb58f340cb6d95": {
+  "chars": 103,
+  "direction": "[wry, proud, quietly weary]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Whole in light, perhaps, though a blade without its crystal is only a memory holding its edge by pride."
+ },
+ "sunsword/492f102f2be201f7": {
+  "chars": 100,
+  "direction": "[proud, nostalgic, crisp]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "That is how matters were settled in Sergei's day: brightly, briefly, and without all this slouching."
+ },
+ "sunsword/493a9d0fc66197e8": {
+  "chars": 83,
+  "direction": "[brisk, superior, dry]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Hold your wrist firm and try not to embarrass us, squire. I shall do the real work."
+ },
+ "sunsword/4f330a296207f70a": {
+  "chars": 86,
+  "direction": "[scolding, regal, scornful]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Keep that iron stick in your belt next time. They deserve a proper sunrise at the end."
+ },
+ "sunsword/52da05b02a5f5036": {
+  "chars": 102,
+  "direction": "[low, reverent, gently commanding]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Be quiet here. Lower my light, if you know how, and take your hand from the pommel for a little while."
+ },
+ "sunsword/559feec27422d5be": {
+  "chars": 115,
+  "direction": "[defiant, vengeful, ringing]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Turn about and plant your boots, I say, for I did not wait four centuries to watch a vampire's cloak from a sprint."
+ },
+ "sunsword/5699e710f531c774": {
+  "chars": 92,
+  "direction": "[triumphant, radiant, self-satisfied]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Ah, how cleanly they go to ash! That is the work I was forged to do, and I do it handsomely."
+ },
+ "sunsword/57a352e4b3f81c44": {
+  "chars": 109,
+  "direction": "[vengeful, satisfied, grimly proud]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Ashes to ashes, and good riddance to cheap rot. Four centuries of waiting, and it still feels like a holiday."
+ },
+ "sunsword/593205d674c158c4": {
+  "chars": 117,
+  "direction": "[bitter, dry, indignant]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "At this pace the elder brother will die of old age, which would be a theological miracle and a personal insult to me."
+ },
+ "sunsword/59583d3c492f5fc0": {
+  "chars": 106,
+  "direction": "[grave, wary, commanding]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Keep your both hands on my grip as we cross the threshold. The stone here remembers how a blade is broken."
+ },
+ "sunsword/5d631a2f08af2f8c": {
+  "chars": 98,
+  "direction": "[gentle, nostalgic, gracious]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "You have the very step of one who used to walk the castle gardens when the roses still had colour."
+ },
+ "sunsword/625bf39ebb9fdc99": {
+  "chars": 72,
+  "direction": "[exultant, ringing, fierce]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Make way, make way! The morning has arrived, and it is in a foul temper."
+ },
+ "sunsword/628b7723398bc1a5": {
+  "chars": 66,
+  "direction": "[contemptuous, cold, vengeful]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Look at him in his box of dirt, pretending to be a prince at rest."
+ },
+ "sunsword/72da2f0206f4cc0a": {
+  "chars": 127,
+  "direction": "[nostalgic, haughty, amused]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "The Silver Dragon's hall. In my day their armour shone so fiercely I considered them rivals, though naturally they came second."
+ },
+ "sunsword/73d8354eec0be0d9": {
+  "chars": 97,
+  "direction": "[outraged, proud, withering]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Give her to the elder brother for peace? I would sooner melt my own bronze in a blacksmith's pan."
+ },
+ "sunsword/763e9dd635a6267b": {
+  "chars": 119,
+  "direction": "[threatening, wry, haughty]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "If you haggle over one more copper piece, I shall shine directly into the merchant's eyes until we are both thrown out."
+ },
+ "sunsword/766426601ef580e6": {
+  "chars": 112,
+  "direction": "[proud, contemptuous, demanding]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Where is Sergei? Tell him the elder brother has had his little tantrum, and I require a smith of the first rank."
+ },
+ "sunsword/8190aef7113f6f9c": {
+  "chars": 68,
+  "direction": "[tender, spent, reverent]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "It is done, my prince. Your brother is gone, and I may rest at last."
+ },
+ "sunsword/85efcb252ec67410": {
+  "chars": 108,
+  "direction": "[imperious, dry, impatient]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "At last. You have kept me in the dark for a very dull hour, friend, and the dust on my pommel is a disgrace."
+ },
+ "sunsword/8f83d0ccb13e595c": {
+  "chars": 107,
+  "direction": "[commanding, fastidious, disdainful]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Stand straight when you hold me. A prince's hilt is not a walking stick, and your grip is abominably slack."
+ },
+ "sunsword/919106b413bddca1": {
+  "chars": 121,
+  "direction": "[defiant, grand, vengeful]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Tell his messenger that the lady is spoken for by four feet of morning light, and we shall deliver the refusal in person."
+ },
+ "sunsword/9724df004a4e48a8": {
+  "chars": 102,
+  "direction": "[grim, bitter, solemn]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "I was there at the last wedding in that house, and I know what his promises cost in blood and crystal."
+ },
+ "sunsword/99dab51769701c94": {
+  "chars": 112,
+  "direction": "[stern, clipped, exacting]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "I expect brisk marching, dry scabbards, and strict punctuality. Dawdling is a vice I do not forgive in a squire."
+ },
+ "sunsword/9fe2f46cc70603a9": {
+  "chars": 106,
+  "direction": "[courtly, grudging, regal]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Very well, I accept your service. Your lineage is obscure and your posture is tragic, yet we shall manage."
+ },
+ "sunsword/b1c561a6070ee61b": {
+  "chars": 106,
+  "direction": "[withering, sardonic, weary]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Salt pork, hemp rope, and three kinds of tallow. Clearly this is the grand crusade for which I was forged."
+ },
+ "sunsword/bcb126522c218728": {
+  "chars": 86,
+  "direction": "[hushed, recognizing, solemn]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Hold a moment. I know this water, and the white light that sleeps at the bottom of it."
+ },
+ "sunsword/c13f51607df8b1e1": {
+  "chars": 89,
+  "direction": "[disgusted, prim, imperious]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Do wipe your sleeves before you sheathe me. I have no wish to smell of whatever that was."
+ },
+ "sunsword/c79cc161b47813d5": {
+  "chars": 113,
+  "direction": "[resolute, vengeful, crisply cheerful]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Our business is simple. We shall find every leech in this valley and turn them to ash before the soup grows cold."
+ },
+ "sunsword/cd3ecd055ee4797c": {
+  "chars": 98,
+  "direction": "[devoted, protective, noble]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Walk close beside my bearer, my lady: I was forged to keep the dark from touching hair like yours."
+ },
+ "sunsword/d19866e9b1f4096e": {
+  "chars": 91,
+  "direction": "[stiff, subdued, dignified]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Do not wrap me in the oilcloth yet, bearer: set me by the fire where the embers can see me."
+ },
+ "sunsword/d1c6d25db0ea71da": {
+  "chars": 122,
+  "direction": "[aghast, disdainful, pompous]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Must I travel beside that notched iron stick at your companion's hip? It looks as though it were hammered out of a kettle."
+ },
+ "sunsword/d527c6c8677b50e6": {
+  "chars": 75,
+  "direction": "[broken, grieving, ashamed]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Sergei, forgive me. I was so near the light, and I could not keep the hilt."
+ },
+ "sunsword/d5b9361beeab21a8": {
+  "chars": 96,
+  "direction": "[soft, reverent, urgent]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Step softly by this water, I beg you: the reflection upon the pool has the bearing of my prince."
+ },
+ "sunsword/d6a6a54e8dde5163": {
+  "chars": 112,
+  "direction": "[reluctant, proud, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "It is a foolish thing for a blade of pure noon to confess, yet the dark between these pines feels heavy tonight."
+ },
+ "sunsword/d8017f9e8a8f25b8": {
+  "chars": 115,
+  "direction": "[wistful, grand, mournful]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "There were banners in this courtyard once, gold and crimson, and music loud enough to drown the wind from the drop."
+ },
+ "sunsword/e02ee6e39af8f484": {
+  "chars": 72,
+  "direction": "[low, fierce, deadly]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Keep your thumb on my guard. When he steps closer, give me to his heart."
+ },
+ "sunsword/e164c153ac0df819": {
+  "chars": 67,
+  "direction": "[dry, grudgingly approving, smooth]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Still, your footwork was almost courtly on the third lunge. Almost."
+ },
+ "sunsword/e27399e936a55aea": {
+  "chars": 108,
+  "direction": "[pained, snooty, fastidious]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Tell the one with the little bread knife to stand downwind. Rusty steel gives me the most dreadful headache."
+ },
+ "sunsword/ea0895188bb10adc": {
+  "chars": 107,
+  "direction": "[gallant, softened, courtly]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Lady Ireena, if my glare offends your eyes upon the road, say the word and I shall dim myself to a lantern."
+ },
+ "sunsword/feae0153460689ba": {
+  "chars": 93,
+  "direction": "[fussy, dry, haughty]",
+  "model": "eleven_v3",
+  "recipe": "76edfa7738",
+  "text": "Wipe the hilt, if you please. Even a corpse that turns to dust leaves a smear on good silver."
+ },
  "szoldar/0c1e4ef01455c0e1": {
   "chars": 188,
   "direction": "[gruff, sardonic, fond]",

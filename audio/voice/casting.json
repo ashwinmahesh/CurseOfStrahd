@@ -2701,6 +2701,14 @@
       "accent_tag": "[strong Romanian accent]",
       "model": "eleven_v3",
       "released": true
+    },
+    "sunsword": {
+      "voice_id": "IgU6hJjYQEw7WjDafM83",
+      "name": "Barovia Sunsword",
+      "description": "The Sunsword, the sentient blade of Prince Sergei: an eternal presence with a vengeance; a commanding, radiant, imperious, courtly voice of ancient authority and vengeful purpose. Designed 2026-10-19 (Ashwin's pick, option B).",
+      "accent_tag": "[refined courtly accent]",
+      "model": "eleven_v3",
+      "released": true
     }
   },
   "sfx": {
