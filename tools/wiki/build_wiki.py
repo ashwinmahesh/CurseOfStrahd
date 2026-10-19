@@ -17,6 +17,7 @@ Stdlib only. Nothing here reads or writes the game's saves or settings.
 import argparse
 import datetime
 import json
+import math
 import os
 import difflib
 import re
@@ -348,11 +349,39 @@ class Game:
         if "__" in iid:
             tid, base = iid.split("__", 1)
             t = dict(self.all_items.get(tid, {}))
+            if (t.get("template") or {}).get("on") == "spell":
+                return self.scroll_data(t, base, iid)
             b = self.all_items.get(base, {})
             if t and b and not t.get("cost_gp"):
                 t["cost_gp"] = b.get("cost_gp", 0)
             return t
         return {}
+
+    def scroll_consts(self):
+        """Spell Scroll price, rarity and save DC by spell level (rules/equipment/magic_items.gd SCROLL_*)."""
+        if not hasattr(self, "_scroll_consts"):
+            src = (self.root / "rules" / "equipment" / "magic_items.gd").read_text()
+            vals = {}
+            for name in ("SCROLL_PRICE", "SCROLL_RARITY", "SCROLL_DC"):
+                m = re.search(rf"const {name}: Array\[\w+\] = \[(.*?)\]", src, re.S)
+                vals[name] = [x.strip().strip('"') for x in m[1].split(",")] if m else []
+            self._scroll_consts = {"price": [float(x) for x in vals["SCROLL_PRICE"]], "rarity": vals["SCROLL_RARITY"],
+                                   "dc": [int(x) for x in vals["SCROLL_DC"]]}
+        return self._scroll_consts
+
+    def scroll_data(self, t, sid, iid):
+        """"spell_scroll__fireball" as MagicItems.combine_scroll builds it: its rarity and price by the spell's level."""
+        sp = self.spells.get(sid)
+        if not sp:
+            return {}
+        sc = self.scroll_consts()
+        lvl = max(0, min(9, int(sp.get("level", 0) or 0)))
+        out = dict(t)
+        out.pop("template", None)
+        out.update({"id": iid, "name": f"Spell Scroll ({sp.get('name', title_id(sid))})", "scroll_spell": sid,
+                    "scroll_level": lvl, "magic": {"rarity": sc["rarity"][lvl], "attunement": False},
+                    "cost_gp": sc["price"][lvl]})
+        return out
 
     def item_cost(self, iid):
         d = self.item_data(iid)
@@ -851,6 +880,10 @@ class Wiki:
                 s.anchor(f"item/{iid}", *self.item_heads[base])
             else:
                 s.anchor(f"item/{iid}", "Items/Where to Find Items", safe_heading(g.item_name(iid)))
+        for sid, sp in g.spells.items():
+            if sp.get("playable", True):
+                lvl = int(sp.get("level", 0) or 0)
+                s.anchor(f"item/spell_scroll__{sid}", "Items/Spell Scrolls", "Cantrip scrolls" if lvl == 0 else f"Level {lvl} scrolls")
         self.quest_files = self._quest_files()
         main = [q for q in MAIN_ORDER if q in g.quests and g.quests[q].get("kind") == "main"]
         main += [q for q, d in g.quests.items() if d.get("kind") == "main" and q not in main]
@@ -1022,12 +1055,14 @@ class Wiki:
                     f" (found with Search, {dc}" + (f"; only when {human_cond(src['when'])}" if src.get("when") else "")
                     + ")")
         if k == "check":
-            return f"{qty}A {src['check'][0]} check (DC {src['check'][1]}) at {src['label']}, {s.loc(src['location'])}"
+            art = "An" if src["check"][0][:1].lower() in "aeiou" else "A"
+            return f"{qty}{art} {src['check'][0]} check (DC {src['check'][1]}) at {src['label']}, {s.loc(src['location'])}"
         if k == "loot":
             q = f", {s.quest(src['quest'])}" if src.get("quest") else ""
             return f"{qty}Loot from the fight in {s.loc(src['location'])}{q}"
         if k == "gift":
-            who = self.where_node(src["file"], src["node"], limit=2, short=True)
+            who = [w if w.startswith("[[") else w[:1].lower() + w[1:]
+                   for w in self.where_node(src["file"], src["node"], limit=2, short=True)]
             q = ", ".join(s.quest(x) for x in src.get("quests", []) if x in g.quests)
             text = f"{qty}Given" + (f" by {' or '.join(who)}" if who else "")
             return text + (f" ({q})" if q else "")
@@ -2058,6 +2093,8 @@ class Wiki:
                  (f" · **Cheat code:** `{code}`" + (f" ({pick})" if pick else "") if code else ""), ""]
         if d.get("summary"):
             lines += [d["summary"], ""]
+        if iid in ("spell_scroll", "spell_scroll_cantrip", "spell_scroll_level_1"):
+            lines += [f"Every spell's scroll, who sells it and where it's found: {s.link('page/scrolls', 'Spell Scrolls')}.", ""]
         where = self.item_where(iid)
         if where:
             lines += ["**Where to find it:**"] + where
@@ -2384,6 +2421,66 @@ class Wiki:
         return int(self.shop_levels().get(rarity, 1))
 
     @staticmethod
+    def open_words(closed):
+        """A shop's `closed` condition as when it trades: "open only when ..." for a plain "not ..."."""
+        c = str(closed or "").strip()
+        if not c:
+            return "always open"
+        rest = c[4:].strip() if c.startswith("not ") else ""
+        if rest.startswith("(") and rest.endswith(")") and rest.count("(") == 1:
+            rest = rest[1:-1].strip()
+        if rest and (re.fullmatch(r"[\w.:]+", rest) or c.startswith("not (")):
+            return f"open only when {human_cond(rest)}"
+        return f"closed when {human_cond(c)}"
+
+    @staticmethod
+    def whole_gp(gp):
+        """Trade.whole_gp: every price is a whole number of gold pieces, rounded up; free stays free."""
+        v = round(float(gp), 2)
+        return 0 if v <= 0 else int(math.ceil(v))
+
+    def shop_lot(self, iid):
+        """StoryState.shop_lot: ammunition sells by its bundle (20 Arrows), anything else (magic included) singly."""
+        d = self.g.item_data(iid)
+        if d.get("magic"):
+            return 1
+        return max(1, int(d.get("bundle", 1) or 1)) if d.get("stackable") else 1
+
+    def shop_price(self, shop, line, magic=False):
+        """A shop line's price before attitude and haggling, as StoryState.shop_wares works it out."""
+        if "price" in line:
+            return self.whole_gp(line["price"])
+        mk = 1.0 if magic else float(line.get("markup", shop.get("markup", 1.0)))
+        return self.whole_gp(self.g.item_cost(line["id"]) * self.shop_lot(line["id"]) * mk)
+
+    def magic_qty(self, iid):
+        """Trade.magic_qty: how many of a magic item a shop's magic stock holds."""
+        if not hasattr(self, "_magic_qty"):
+            m = re.search(r"const MAGIC_QTY := (\{.*?\})", (self.g.root / "story" / "trade.gd").read_text())
+            self._magic_qty = json.loads(m[1]) if m else {"lasting": 1, "consumable": 3, "ammunition": 20}
+        d = self.g.item_data(iid)
+        if d.get("category") == "ammunition":
+            return int(self._magic_qty["ammunition"])
+        cons = bool(d["consumable"]) if "consumable" in d else d.get("category") in ("potion", "scroll")
+        return int(self._magic_qty["consumable" if cons else "lasting"])
+
+    def magic_wares(self, shop):
+        """A shop's magic stock as Trade.magic_stock lists it (rarest last), less its level and magic_if gates."""
+        g = self.g
+        order = ["common", "uncommon", "rare", "very_rare", "legendary"]
+        out = []
+        for iid in shop.get("magic", []):
+            d = g.item_data(iid)
+            if not d or not d.get("playable", True) or (d.get("template") or {}).get("on") == "spell":
+                continue
+            out.append(iid)
+
+        def rarity(iid):
+            r = str((g.item_data(iid).get("magic") or {}).get("rarity", "common"))
+            return order.index(r) if r in order else 9
+        return sorted(out, key=lambda iid: (rarity(iid), g.item_name(iid)))
+
+    @staticmethod
     def gp(v):
         if v in (None, ""):
             return ""
@@ -2438,12 +2535,32 @@ class Wiki:
                  f"at {round(magic_rate * 100)}% of their price, whatever else they buy or pay for other goods.",
                  ""]
         services = self._services()
-        for nid, n in g.npcs.items():
-            shop = n.get("shop")
-            if not shop:
-                continue
+        shops = [(nid, n) for nid, n in g.npcs.items() if n.get("shop")]
+        lines += ["## Who sells what", "",
+                  f"Every merchant's whole stock is listed below: what they always sell, their magic items and any stock "
+                  f"that changes with the days. Spell scrolls, shop by shop and spell by spell, are on "
+                  f"{s.link('page/scrolls', 'Spell Scrolls')}.", "",
+                  "| Merchant | Where | For sale |", "|---|---|---|"]
+        for nid, n in shops:
+            shop = n["shop"]
+            where = sorted({s.loc(p["location"]) for p in self.npc_places.get(nid, [])})
+            parts = []
+            sells = [it for it in shop.get("sells", []) if g.item_data(it["id"]).get("playable", True)]
+            if sells:
+                parts.append(f"{len(sells)} always for sale")
+            magic = self.magic_wares(shop)
+            if magic:
+                parts.append(f"{len(magic)} magic items")
+            pool = [x for grp in (shop.get("rotating") or {}).get("groups", []) for x in grp.get("pool", [])]
+            if pool:
+                parts.append(f"a changing stock drawn from {len(pool)}")
+            lines.append(f"| [[{WIKI}/Items/Merchants#{safe_heading(n['name'])}\\|{n['name']}]] | {', '.join(where)} | "
+                         f"{', '.join(parts)} |")
+        lines.append("")
+        for nid, n in shops:
+            shop = n["shop"]
             pic = self.img.portrait(n.get("portrait", nid))
-            lines.append(f"## {n['name']}")
+            lines.append(f"## {safe_heading(n['name'])}")
             if pic:
                 lines.append(embed(pic, 96))
             places = self.npc_places.get(nid, [])
@@ -2455,7 +2572,7 @@ class Wiki:
             if shop.get("buys"):
                 bits.append("buys " + ", ".join(shop["buys"]))
             if shop.get("closed"):
-                bits.append(f"closed when {human_cond(shop['closed'])}")
+                bits.append(self.open_words(shop["closed"]))
             if shop.get("haggle"):
                 h = shop["haggle"]
                 if isinstance(h, dict) and h.get("dc"):
@@ -2471,42 +2588,46 @@ class Wiki:
                 bits.append(f"×{float(pf.get('buy', 1)):g} on what you buy"
                             + (f" priced {float(pf['min_price']):g} gp or more" if pf.get("min_price") else "")
                             + (f" after {why[0].lower() + why[1:]}" if why else f" when {human_cond(str(pf.get('if', '')))}"))
-            lines += [f"*{'; '.join(bits)}*", "", "| Item | Price | Stock | Only when |", "|---|---|---|---|"]
-            for it in shop.get("sells", []):
-                if not g.item_data(it["id"]).get("playable", True):
-                    continue
-                if "price" in it:
-                    price = float(it["price"])
-                else:
-                    price = g.item_cost(it["id"]) * float(it.get("markup", mk))
-                price = 0 if price <= 0 else int(-(-price // 1))
-                qty = "∞" if it.get("qty", -1) == -1 else str(it.get("qty"))
-                lines.append(f"| {s.item(it['id'])} | {'free' if price == 0 else str(price) + ' gp'} | {qty} | "
-                             f"{esc(human_cond(it.get('if', '')))} |")
-            lines.append("")
-            magic = [iid for iid in shop.get("magic", []) if g.item_data(iid).get("playable", True)]
+            lines += [f"*{'; '.join(bits)}*", ""]
+            sells = [it for it in shop.get("sells", []) if g.item_data(it["id"]).get("playable", True)]
+            if sells:
+                lines += [f"**Always for sale ({len(sells)}):**", "", "| Item | Price | Stock | Only when |", "|---|---|---|---|"]
+                for it in sells:
+                    price = self.shop_price(shop, it)
+                    lot = self.shop_lot(it["id"])
+                    qty = "∞" if it.get("qty", -1) == -1 else str(it.get("qty"))
+                    lines.append(f"| {s.item(it['id'])}{f' ×{lot}' if lot > 1 else ''} | "
+                                 f"{'free' if price == 0 else f'{price:,} gp'} | {qty} | {esc(human_cond(it.get('if', '')))} |")
+                lines.append("")
+            magic = self.magic_wares(shop)
             if magic:
-                order = ["common", "uncommon", "rare", "very_rare", "legendary"]
-                def rarity(iid):
-                    return str((g.item_data(iid).get("magic") or {}).get("rarity", "common"))
-                magic.sort(key=lambda iid: (order.index(rarity(iid)) if rarity(iid) in order else 9, g.item_name(iid)))
-                rows = ["| Item | Rarity | Price | From party level |", "|---|---|---|---|"]
+                when = f", only while {human_cond(shop['magic_if'])}" if shop.get("magic_if") else ""
+                lines += [f"**Magic items ({len(magic)}{when}):** sold at their own price whatever the markup; each "
+                          "shows once the party reaches its level.", "",
+                          "| Item | Rarity | Price | Stock | From party level |", "|---|---|---|---|---|"]
                 for iid in magic:
                     d = g.item_data(iid)
                     on = str((d.get("template") or {}).get("on", ""))
-                    cost = int(-(-float(d.get("cost_gp", 0) or 0) // 1))
+                    cost = self.whole_gp(float(d.get("cost_gp", 0) or 0))
                     price = f"{cost:,} gp" + (f" + the {on}" if on in ("weapon", "armor") else "")
-                    lines_r = rarity(iid).replace("_", " ")
-                    rows.append(f"| {s.item(iid)} | {lines_r} | {price} | {self.magic_shop_level(iid)} |")
-                when = f", only when {human_cond(shop['magic_if'])}" if shop.get("magic_if") else ""
-                lines.append(collapsed("example", f"Magic items ({len(magic)}{when})", rows))
+                    rar = str((d.get("magic") or {}).get("rarity", "common")).replace("_", " ")
+                    lines.append(f"| {s.item(iid)} | {rar} | {price} | {self.magic_qty(iid)} | {self.magic_shop_level(iid)} |")
                 lines.append("")
             rot = shop.get("rotating")
             if rot:
-                lines.append(f"**Changing stock:** every {rot.get('days', 1)} days the stock is redrawn:")
-                for grp in rot.get("groups", []):
-                    lines.append(f"- {grp.get('count', 1)} of: " + ", ".join(
-                        g.item_name(x) for x in grp.get("pool", []) if g.item_data(x).get("playable", True)))
+                groups = rot.get("groups", [rot])
+                picks = [f"{grp.get('count', 3)} from list {i + 1}" if len(groups) > 1 else str(grp.get("count", 3))
+                         for i, grp in enumerate(groups)]
+                counts = ", ".join(picks[:-1]) + " and " + picks[-1] if len(picks) > 1 else picks[0]
+                lines += [f"**Changing stock:** every {rot.get('days', 3)} days {n['name']} lays out {counts} of these, "
+                          f"one of each, at the markup above. What you buy comes back with the next stretch's picks.", "",
+                          "| Item | Price | List |", "|---|---|---|"]
+                for i, grp in enumerate(groups):
+                    for iid in grp.get("pool", []):
+                        if not g.item_data(iid).get("playable", True):
+                            continue
+                        price = self.shop_price(shop, {"id": iid})
+                        lines.append(f"| {s.item(iid)} | {price:,} gp | {i + 1} |")
                 lines.append("")
         lines += ["# Services", "", "Temples sell spells cast for the party, and inns sell a night's room.", "",
                   "| Service | Base price | What it does |", "|---|---|---|"]
@@ -2521,6 +2642,206 @@ class Wiki:
                                                              for x in n["services"]) + " |")
         self.w.write("page/merchants", "Items/Merchants", "Merchants and Services", [auto("list", "\n".join(lines))],
                      tags=["wiki", "items"])
+
+    # Spell scrolls ---------------------------------------------------------------------------------------------------
+
+    def scroll_spell(self, iid):
+        """"spell_scroll__fireball" -> "fireball"; "" for anything else."""
+        iid = str(iid)
+        if iid.startswith("spell_scroll__") and iid.split("__", 1)[1] in self.g.spells:
+            return iid.split("__", 1)[1]
+        return ""
+
+    def scroll_sellers(self):
+        """spell id -> [(npc id, price, notes)]: every shop line that sells that spell's scroll, at its price before
+        attitude and haggling (a shop's own counter at its markup, its magic stock at the guide price)."""
+        g = self.g
+        out = defaultdict(list)
+        for nid, n in g.npcs.items():
+            shop = n.get("shop") or {}
+            for it in shop.get("sells", []):
+                sid = self.scroll_spell(it["id"])
+                if sid:
+                    notes = ([f"{it['qty']} in stock"] if it.get("qty", -1) != -1 else []) + \
+                            ([f"only when {human_cond(it['if'])}"] if it.get("if") else [])
+                    out[sid].append((nid, self.shop_price(shop, it), notes))
+            for iid in self.magic_wares(shop):
+                sid = self.scroll_spell(iid)
+                if sid:
+                    lvl = self.magic_shop_level(iid)
+                    notes = ([f"from party level {lvl}"] if lvl > 1 else []) + \
+                            ([f"only while {human_cond(shop['magic_if'])}"] if shop.get("magic_if") else [])
+                    out[sid].append((nid, self.shop_price(shop, {"id": iid}, magic=True), notes))
+            for grp in (shop.get("rotating") or {}).get("groups", []):
+                for iid in grp.get("pool", []):
+                    sid = self.scroll_spell(iid)
+                    if sid:
+                        out[sid].append((nid, self.shop_price(shop, {"id": iid}), ["sometimes, in the changing stock"]))
+        return out
+
+    def scrolls_page(self):
+        g, s = self.g, self.site
+        sc = g.scroll_consts()
+        sellers = self.scroll_sellers()
+        spells = OrderedDict(sorted(((sid, sp) for sid, sp in g.spells.items() if sp.get("playable", True)),
+                                    key=lambda kv: kv[1].get("name", kv[0])))
+        finds = {sid: [x for x in self.item_sources.get(f"spell_scroll__{sid}", []) if x["kind"] != "shop"]
+                 for sid in spells}
+        n_sold = sum(1 for sid in spells if sellers.get(sid))
+        n_found = sum(1 for sid in spells if finds[sid])
+        n_none = sum(1 for sid in spells if not sellers.get(sid) and not finds[sid])
+        n_cheat = sum(1 for sid, sp in spells.items() if not sellers.get(sid) and not finds[sid]
+                      and int(sp.get("level", 0) or 0) == 0 and not self.item_sources.get("spell_scroll_cantrip"))
+        levels = self.shop_levels()
+        lines = [f"Every one of the game's {len(spells)} spells can be had on a Spell Scroll. This page lists each "
+                 f"spell's scroll by level: whose list it's on, who sells it and for how much, and every fixed place "
+                 f"it's found. {n_sold} are sold by a merchant and {n_found} lie somewhere in the world. Of the rest, "
+                 f"{n_none - n_cheat} come only from random finds" +
+                 (f", and {n_cheat} cantrips only with a cheat code, since nothing random holds a cantrip." if n_cheat else ".")
+                 + "", "",
+                 "## Reading a scroll", "",
+                 "- Right-click the scroll in the inventory and pick **Cast**. It works only if the spell is on the "
+                 "reader's class list, and needs no Material components.",
+                 "- A spell above the level the reader can cast needs a spellcasting ability check, DC 10 + the spell's "
+                 "level. The scroll is used up either way.",
+                 "- The scroll's own save DC and attack bonus are used, whoever reads it (the table below).",
+                 "- A Wizard can copy a scroll's spell into their spellbook from the inventory: 2 hours and 50 gp per "
+                 f"spell level, for a level they can prepare ({s.link('page/magic', 'How Magic Works')}).", "",
+                 "| Spell level | Rarity | Price | Save DC | Attack | In shops from party level |",
+                 "|---|---|---|---|---|---|"]
+        for lvl in range(10):
+            rar = sc["rarity"][lvl] if lvl < len(sc["rarity"]) else ""
+            dc = sc["dc"][lvl] if lvl < len(sc["dc"]) else 0
+            price = sc["price"][lvl] if lvl < len(sc["price"]) else 0
+            lines.append(f"| {'Cantrip' if lvl == 0 else lvl} | {rar.replace('_', ' ')} | {self.whole_gp(price):,} gp | "
+                         f"{dc} | {dc - 8:+d} | {int(levels.get(rar, 1))} |")
+        lines += ["", f"The price is the guide price ({s.link('page/merchants', 'Merchants')} explains it): a scroll in a "
+                  "merchant's magic stock costs exactly that, three at a time, while one on a merchant's own counter "
+                  "carries their markup. A friendly merchant or a won haggle takes a little off either.", ""]
+        # Who sells them.
+        lines += ["## Where scrolls come from", "", "**Merchants:**", "",
+                  "| Merchant | Where | Scrolls | Spell levels | Open |", "|---|---|---|---|---|"]
+        by_npc = defaultdict(set)
+        for sid, rows in sellers.items():
+            for nid, _price, _notes in rows:
+                by_npc[nid].add(sid)
+        for nid, n in g.npcs.items():
+            if not by_npc.get(nid):
+                continue
+            shop = n.get("shop") or {}
+            where = sorted({s.loc(p["location"]) for p in self.npc_places.get(nid, [])})
+            lv = sorted({int(g.spells[x].get("level", 0)) for x in by_npc[nid]})
+            lvtxt = ", ".join("cantrip" if x == 0 else str(x) for x in lv)
+            open_ = self.open_words(shop.get("closed", "")).replace("always open", "always").replace("open only when", "only when")
+            lines.append(f"| [[{WIKI}/Items/Merchants#{safe_heading(n['name'])}\\|{n['name']}]] | {', '.join(where)} | "
+                         f"{len(by_npc[nid])} | {lvtxt} | {esc(open_)} |")
+        rbl = g.treasure.get("rarity_by_level") or []
+        lines += ["", "**Fixed finds and gifts:** chests, hiding places, skill checks and people that hand you a "
+                  "particular scroll, listed under each spell below.", "",
+                  "**Random treasure:** a place's containers roll random magic items the first time you come, for the "
+                  "level the region is built for, and some of those are spell scrolls. A random scroll holds any spell "
+                  "of a level its rarity allows: levels 2 and 3 for an uncommon one, 4 and 5 rare, 6 to 8 very rare, "
+                  "9 legendary (" + "; ".join(
+                      f"party level {lo}–{row.get('max_level')}: " + ", ".join(
+                          f"{w}% {r.replace('_', ' ')}" for r, w in (row.get("weights") or {}).items())
+                      for lo, row in zip([1] + [int(r.get("max_level", 0)) + 1 for r in rbl[:-1]], rbl)) +
+                  f"; {s.link('page/random_treasure', 'Random Treasure')}).", "",
+                  "**Fight spoils:** a won road fight, or a story fight whose foes carry treasure, leaves one find, "
+                  "and 3 finds in 10 are a scroll of a random spell. Its level is half the party's level, rounded up, "
+                  "from 1 to 6 (a road meeting with no fight: a third of the party's level, at least 1).", ""]
+        # Scrolls that only say their level.
+        generic = [("spell_scroll_cantrip", "a cantrip"), ("spell_scroll_level_1", "a level 1 spell")]
+        rows = []
+        for iid, what in generic:
+            for src in self.item_sources.get(iid, []):
+                rows.append(f"- {self.source_words(src)}: {what}")
+        if rows:
+            lines += ["## Scrolls of a random spell", "",
+                      "These scrolls say only their level. Each becomes a scroll of one spell of that level when you get "
+                      "it, picked from the spells of the level and different in each playthrough.", ""] + rows + [""]
+        # Scrolls the story asks for.
+        uses = defaultdict(list)
+        for key, node, st in g.statements({"take"}):
+            sid = self.scroll_spell(st.get("item", ""))
+            if sid:
+                uses[sid].append((key, node))
+        if uses:
+            lines += ["## Scrolls the story asks for", ""]
+            for sid, places in sorted(uses.items(), key=lambda kv: g.spells[kv[0]].get("name", kv[0])):
+                quests = sorted({q for key, node in places for q in self._node_quests(key, node) if q in g.quests},
+                                key=lambda q: g.quests[q].get("name", q))
+                who = []
+                for key, node in places:
+                    for w in self.where_node(key, node, limit=2, short=True):
+                        if w not in who:
+                            who.append(w)
+                lines.append(f"- {s.spell(sid)}: read in a conversation with {' or '.join(who) if who else 'someone'}"
+                             + (f" ({', '.join(s.quest(q) for q in quests)})" if quests else "") + ".")
+            lines.append("")
+        # Every spell, level by level, and what random finds can hold at each.
+        m = re.search(r"var levels := (\{.*?\})\n", (g.root / "story" / "treasure.gd").read_text())
+        by_rarity = json.loads(m[1]) if m else {"common": [0, 1], "uncommon": [2, 3], "rare": [4, 5],
+                                                "very_rare": [6, 7, 8], "legendary": [9]}
+        rar_from, lo = {}, 1
+        for row in rbl:
+            for r, w in (row.get("weights") or {}).items():
+                if w:
+                    rar_from.setdefault(r, lo)
+            lo = int(row.get("max_level", 0)) + 1
+        top = max([int(r.get("max_level", 20)) for r in rbl] or [20])
+
+        def spoils(lvl, small):
+            ps = [pl for pl in range(1, top + 1) if max(1, min(6, pl // 3 if small else (pl + 1) // 2)) == lvl]
+            if not ps:
+                return ""
+            if ps[-1] == top:
+                return f"party level {ps[0]} and up"
+            return f"party level {ps[0]}" if len(ps) == 1 else f"party level {ps[0]}–{ps[-1]}"
+        generic_lv = {0: "spell_scroll_cantrip", 1: "spell_scroll_level_1"}
+
+        def randoms(lvl):
+            out = []
+            r = next((k for k, v in by_rarity.items() if lvl in v), "")
+            if r in rar_from:
+                out.append(f"random treasure ({r.replace('_', ' ')}" + (f", from level {rar_from[r]})" if rar_from[r] > 1 else ")"))
+            if spoils(lvl, False):
+                out.append(f"a fight's spoils ({spoils(lvl, False)})")
+            if spoils(lvl, True):
+                out.append(f"a road meeting's ({spoils(lvl, True)})")
+            if self.item_sources.get(generic_lv.get(lvl, "")):
+                out.append(f"the {'cantrip' if lvl == 0 else f'level {lvl}'} scrolls of a random spell above")
+            return out
+        cls_names = {cid: c.get("name", title_id(cid)) for cid, c in g.classes.items()}
+        for lvl in range(10):
+            ids = [sid for sid, sp in spells.items() if int(sp.get("level", 0) or 0) == lvl]
+            if not ids:
+                continue
+            rar = (sc["rarity"][lvl] if lvl < len(sc["rarity"]) else "").replace("_", " ")
+            head = "Cantrip scrolls" if lvl == 0 else f"Level {lvl} scrolls"
+            rnd = randoms(lvl)
+            what = "a cantrip" if lvl == 0 else f"a level {lvl} spell"
+            if rnd:
+                also = (f"A scroll of a random {what[2:]} can also come from "
+                        + (", ".join(rnd[:-1]) + " or " + rnd[-1] if len(rnd) > 1 else rnd[0]) + ".")
+            else:
+                also = (f"Nothing random holds {what} scroll, so one nobody sells and nobody leaves lying about "
+                        f"can only be had with its cheat code ({s.link('page/cheat_codes', 'Cheat Codes')}).")
+            lines += [f"## {head}", "",
+                      f"{len(ids)} spells. {rar[:1].upper() + rar[1:]}, {self.whole_gp(sc['price'][lvl]):,} gp at the guide "
+                      f"price, save DC {sc['dc'][lvl]}, attack {sc['dc'][lvl] - 8:+d}. {also}", "",
+                      "| Spell | Read by | Sold by | Found |", "|---|---|---|---|"]
+            for sid in ids:
+                sp = spells[sid]
+                readers = ", ".join(cls_names[c] for c in g.classes if c in (sp.get("classes") or []))
+                sold = "; ".join(f"{s.npc(nid)} {price:,} gp" + (f" ({', '.join(notes)})" if notes else "")
+                                 for nid, price, notes in sellers.get(sid, []))
+                found = "; ".join(self.source_words(x) for x in finds[sid])
+                if not sold and not found:
+                    found = "random finds only" if rnd else "cheat code only"
+                lines.append(f"| {s.spell(sid)} | {readers or '—'} | {sold or '—'} | {found or '—'} |")
+            lines.append("")
+        self.w.write("page/scrolls", "Items/Spell Scrolls", "Spell Scrolls", [auto("list", "\n".join(lines))],
+                     tags=["wiki", "items"], meta={"type": "item-list"})
 
     # World skill checks and talking creatures -------------------------------------------------------------------
 
@@ -3160,6 +3481,7 @@ class Wiki:
                                  s.link("page/equipment", "Equipment") + ": weapons, armor and gear",
                                  s.link("page/cheat_codes", "Cheat Codes") + ": every item's code, and how to use one",
                                  s.link("page/merchants", "Merchants and Services") + ": who sells what, and for how much",
+                                 s.link("page/scrolls", "Spell Scrolls") + ": every spell's scroll, who sells it and where it's found",
                                  s.link("page/random_treasure", "Random Treasure") + ": how chests are filled"]),
             ("Heroes and magic", [s.link("page/heroes", "Heroes") + " and " + s.link("page/approval", "Companion Approval"),
                                   "Classes: " + ", ".join(s.link(f"class/{c}") for c in g.classes),
@@ -3275,6 +3597,7 @@ class Wiki:
                                  ("page/equipment", "Items/Equipment", "Equipment"),
                                  ("page/random_treasure", "Items/Random Treasure", "Random Treasure"),
                                  ("page/merchants", "Items/Merchants", "Merchants and Services"),
+                                 ("page/scrolls", "Items/Spell Scrolls", "Spell Scrolls"),
                                  ("page/cheat_codes", "Items/Cheat Codes", "Cheat Codes"),
                                  ("page/checks", "World/Skill Checks", "World Skill Checks"),
                                  ("page/talking", "World/Talking Creatures", "Talking Creatures"),
@@ -3315,6 +3638,7 @@ class Wiki:
         self.monster_pages()
         self.item_pages()
         self.merchant_page()
+        self.scrolls_page()
         self.checks_page()
         self.character_pages()
         self.spell_pages()
