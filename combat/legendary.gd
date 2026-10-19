@@ -636,12 +636,17 @@ func _strike(c: Combatant, opt: Dictionary, target: Combatant) -> CombatResult:
 	if str(act.get("kind", "")) == "save":
 		if not target in e.monster_actions.save_targets(c, act):
 			return CombatResult.new()
+		# Whoever it catches has been struck, for the blows it deals after (AiTactics.dealt).
+		for victim in e.monster_actions.save_victims(c, act, target):
+			if c.hostile_to(victim):
+				e.ai.tactics.note_strike(victim, c)
 		var r := CombatResult.new()
 		e.monster_actions.save_action(c, act, target, r)
 		return e.run_reaction_queue(r)
 	var o := e.option_by_id(c, "monster:" + str(act["id"]))
 	if o.is_empty() or e.attack_legal(c, target, o) != "":
 		return CombatResult.new()
+	e.ai.tactics.note_strike(target, c)
 	return e._resolve_attack(c, target, o, {"legendary": true})
 
 

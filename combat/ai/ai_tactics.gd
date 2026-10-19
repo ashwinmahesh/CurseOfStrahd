@@ -6,6 +6,8 @@ extends RefCounted
 ##   sharp (Tactician):   focus fire on the hurt, on a foe its side is already on, on concentrating casters and healers.
 ##   ruthless (Honour):   sharp, and a cruel foe (evil, Intelligence 6 or more) strikes a hero at 0 Hit Points when
 ##                        that's its best move (each hit is a failed Death Saving Throw, two from within 5 ft).
+## At Story and Balanced a foe also spreads its own blows (spread_rank): each blow of a Multiattack or Legendary Action
+## goes to a foe it hasn't struck since its own turn began, unless it has a reason to go on with one (focus_reason).
 ## With the mode's kit, an armed foe drinks its Potion of Healing when Bloodied (a Bonus Action); badly hurt and in
 ## reach of a foe, it Disengages and steps away first. With morale, when its side breaks (half of it down, or its
 ## leader fallen) a foe that isn't mindless, fearless or a boss flees, and leaves the fight once well away. In every
@@ -19,8 +21,15 @@ var _enc: WeakRef
 ## Attacks the AI made this round on each target: target id -> count.
 var _struck: Dictionary = {}
 var _struck_round: int = -1
+## Blows each creature has dealt since its own turn began (its Multiattack, then the Legendary Actions it takes before
+## its next turn): creature id -> {target id -> count}. Cleared when its turn begins (begin_turn).
+var _dealt: Dictionary = {}
 ## Each side as it first fought: side -> {ids: [...], leader: id or ""}.
 var _sides: Dictionary = {}
+
+## Where a familiar, a steed or an Echo Knight's image stands in a creature's list of foes to strike: after every
+## foe worth striking, however many blows those have had (spread_rank).
+const IMAGE_RANK := 1000
 
 
 func _init(encounter: Encounter) -> void:
@@ -37,17 +46,78 @@ func mode() -> String:
 
 # --- Choosing targets ---------------------------------------------------------------------------------------------
 
-## Notes an AI attack on `t` this round (for spreading or focusing blows).
-func note_strike(t: Combatant) -> void:
+## Notes an AI attack on `t` this round (for spreading or focusing blows), and with `by`, the blow it dealt (dealt).
+func note_strike(t: Combatant, by: Combatant = null) -> void:
 	var e := enc()
 	if _struck_round != e.round_no:
 		_struck_round = e.round_no
 		_struck.clear()
 	_struck[t.id] = int(_struck.get(t.id, 0)) + 1
+	if by != null:
+		var mine := _dealt.get(by.id, {}) as Dictionary
+		mine[t.id] = int(mine.get(t.id, 0)) + 1
+		_dealt[by.id] = mine
 
 
 func struck(t: Combatant) -> int:
 	return int(_struck.get(t.id, 0)) if _struck_round == enc().round_no else 0
+
+
+## `c`'s own turn begins: what it struck in its last one is behind it.
+func begin_turn(c: Combatant) -> void:
+	_dealt.erase(c.id)
+
+
+## Blows `c` has dealt `t` since its own turn began.
+func dealt(c: Combatant, t: Combatant) -> int:
+	return int((_dealt.get(c.id, {}) as Dictionary).get(t.id, 0))
+
+
+## Whether `c` has dealt any blow since its own turn began.
+func dealt_any(c: Combatant) -> bool:
+	return not (_dealt.get(c.id, {}) as Dictionary).is_empty()
+
+
+## Why `c` may go on striking `t` rather than turn its blows on another foe, "" when it has no reason (a foe that
+## spreads its blows, spread_rank): "finish" when a blow of `avg` could end `t` and "nearly down" under a quarter of its
+## Hit Points (neither at Story: no killing-blow bonus there, finish_scale), "concentrating" on a spell, and for Strahd
+## "prize": a hero carrying a treasure of the reading, the one he holds, or one he has charmed.
+func focus_reason(c: Combatant, t: Combatant, avg: float) -> String:
+	if EchoKnight.is_echo(t):
+		return ""
+	if finish_scale() > 0.0:
+		var left := t.creature.hp + t.creature.temp_hp
+		if avg >= float(left):
+			return "finish"
+		if left * 4 <= t.creature.max_hp():
+			return "nearly down"
+	if t.creature.concentration != null:
+		return "concentrating"
+	if str(c.ai_profile) == "strahd" and (BossBrain.carries_treasure(t) or str(enc().grapples.get(t.id, "")) == c.id \
+			or Legendary.charmed_by(t, c)):
+		return "prize"
+	return ""
+
+
+## Where `t` stands in the list of foes `c` strikes next with a blow of `avg`, the lowest first (owner, 2026-10-18:
+## monsters with Legendary Actions went for one hero, and so did every blow of a Multiattack). A foe that spreads its
+## blows (Story and Balanced, `spreads`) puts first those it hasn't struck since its own turn began: each blow already
+## dealt `t` is a place down the list, unless it has a reason to go on (focus_reason: with a concentrating caster or
+## Strahd's prize it only keeps its place, but a foe it can finish, or that is nearly down, goes ahead of the rest, -1).
+## A familiar, a steed or an Echo Knight's image comes after every real foe. Tactician and Honour foes focus: every foe
+## is 0, and the callers' own worth decides.
+func spread_rank(c: Combatant, t: Combatant, avg: float) -> int:
+	if not spreads(c):
+		return 0
+	var rank := 0
+	if AiBrain.companion(t) or EchoKnight.is_echo(t):
+		rank += IMAGE_RANK
+	var why := focus_reason(c, t, avg)
+	if why == "finish" or why == "nearly down":
+		return rank - 1
+	if why == "":
+		rank += dealt(c, t)
+	return rank
 
 
 ## Spreading blows (owner, 2026-10-12: every foe went for the hero with the lowest Armor Class). At Tactician and
@@ -81,6 +151,28 @@ func taste(c: Combatant, t: Combatant) -> float:
 ## How much of the killing-blow bonus counts (none when the AI spreads its blows).
 func finish_scale() -> float:
 	return 0.0 if mode() == "kind" else 1.0
+
+
+## What a blow on `t` is worth to `c` for the blows after the plan's, where its target is the only thing left to choose:
+## `chance` to hit for `avg` damage, `finish` the foe's profile value. The target-dependent part of AiBrain._score (the
+## odds as it weighs them, an image's worth, the killing-blow bonus, a concentrating caster, the boss's lean, the
+## difficulty's spreading and the foe's taste), without the walk there.
+func blow_worth(c: Combatant, t: Combatant, avg: float, chance: float, finish: float) -> float:
+	var echo := EchoKnight.is_echo(t)
+	var expected := (sqrt(maxf(0.0, chance)) if spreads(c) else chance) * avg
+	if echo:
+		expected *= 0.3
+	var worth := expected
+	if avg >= float(t.creature.hp + t.creature.temp_hp) and not echo:
+		worth += finish * 3.0 * chance * finish_scale()
+	if t.creature.concentration != null:
+		worth += 1.0
+	worth += enc().ai.boss.target_bonus(c, t)
+	if not echo:
+		worth += target_adjust(t, expected)
+		if c.side == &"enemy":
+			worth += expected * taste(c, t)
+	return worth
 
 
 ## Whether foes move to flank (Flanking, owner 2026-10-12): Tactician and Honour's sharp foes pick squares across from an

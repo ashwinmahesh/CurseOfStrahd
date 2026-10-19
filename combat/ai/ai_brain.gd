@@ -122,6 +122,7 @@ func _move_mark(c: Combatant) -> void:
 ## Null when the plan comes next (think, then finish_turn); the combat view thinks on a worker thread (FN-14).
 func begin_turn(c: Combatant) -> CombatResult:
 	var e := enc()
+	tactics.begin_turn(c)
 	var fear := e.features.fleeing_from(c)
 	if fear != null:
 		var by_spell := c.creature.has_flag("fear_flee")
@@ -1173,7 +1174,7 @@ func _attack_step(c: Combatant, target: Combatant, option_id: String) -> CombatR
 		if _multi_reaches(c, queue):
 			return _multi_step(c, t, queue)
 	var r: CombatResult
-	tactics.note_strike(t)
+	tactics.note_strike(t, c)
 	if c.creature is Monster:
 		r = e.monster_attack(c, t, str(option.get("action_id", "")))
 	else:
@@ -1182,7 +1183,10 @@ func _attack_step(c: Combatant, target: Combatant, option_id: String) -> CombatR
 		e.log.add("info", "%s can't attack: %s" % [c.name(), r.reason], c.id)
 		return r
 	if c.attacks_left > 0:
-		return e.then(r, func() -> CombatResult: return _attack_step(c, t, option_id))
+		return e.then(r, func() -> CombatResult:
+			# A foe that spreads its blows turns the next one on another foe in reach (_blow_target); null: it looks itself.
+			var next := _blow_target(c, option, t) if tactics.spreads(c) else t
+			return _attack_step(c, next, option_id))
 	return r
 
 
@@ -1219,7 +1223,11 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 			var st := e.monster_actions.save_targets(c, act)
 			if not st.is_empty():
 				var r0 := CombatResult.new()
-				e.monster_actions.save_action(c, act, st[0], r0)
+				var aim := _save_aim(c, act, st)
+				for victim in e.monster_actions.save_victims(c, act, aim):
+					if c.hostile_to(victim):
+						tactics.note_strike(victim, c)
+				e.monster_actions.save_action(c, act, aim, r0)
 				return e.then(r0, func() -> CombatResult: return _multi_step(c, target, queue))
 	# Otherwise the best attack among the choices that can reach the target (or another foe): a ranged attack
 	# when the foe is out of reach, the bigger damage when both work.
@@ -1230,16 +1238,7 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 		var act2 := m.action(cid2)
 		if not act2.has("attack") or e.monster_actions.why_not(c, act2) != "":
 			continue
-		var option := e.option_by_id(c, "monster:" + cid2)
-		var tt := target
-		if tt == null or (tt.is_down() and tt != _finishing) or option.is_empty() or e.attack_legal(c, tt, option) != "":
-			tt = null
-			for h in e.hostiles_of(c):
-				if not h.is_down() and not option.is_empty() and e.attack_legal(c, h, option) == "":
-					if tt == null or (companion(tt) and not companion(h)):
-						tt = h   # a hero in reach before a familiar or a steed
-					if not companion(tt):
-						break
+		var tt := _blow_target(c, e.option_by_id(c, "monster:" + cid2), target)
 		if tt == null:
 			continue
 		var avg := m.average_damage(cid2) + boss.action_bonus(c, act2)
@@ -1249,9 +1248,64 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 			t = tt
 	if t == null:
 		return _multi_step(c, target, queue)
-	tactics.note_strike(t)
+	tactics.note_strike(t, c)
 	var r := e.monster_attack(c, t, best_id)
 	return e.then(r, func() -> CombatResult: return _multi_step(c, t, queue))
+
+
+## Whom `c`'s next blow with `option` goes to, among the foes it can strike from where it stands: `target` (the plan's,
+## or its last blow's) while it can still be struck, else the first hero in reach (a hero before a familiar or a steed).
+## A foe that spreads its blows (Story and Balanced, AiTactics.spread_rank) keeps the plan's target for the first blow
+## of its turn and turns each one after on the foe it has struck least since its own turn began, the likeliest to be hit
+## and hurt most first (AiTactics.blow_worth), unless it has a reason to go on with one (AiTactics.focus_reason); with
+## only the same foes left in reach it strikes them again. Null when nothing is in reach.
+func _blow_target(c: Combatant, option: Dictionary, target: Combatant) -> Combatant:
+	var e := enc()
+	if option.is_empty():
+		return null
+	var spread := tactics.spreads(c) and tactics.dealt_any(c)
+	var held := target != null and (not target.is_down() or target == _finishing) and e.attack_legal(c, target, option) == ""
+	if held and not spread:
+		return target
+	var avg := _avg(c, option)
+	var finish := float(profile(c)["finish"])
+	var best: Combatant = null
+	var best_rank := 0
+	var best_worth := 0.0
+	for h in e.hostiles_of(c):
+		if h.is_down() or e.attack_legal(c, h, option) != "":
+			continue
+		var rank := 0
+		var worth := 0.0
+		if spread:
+			rank = tactics.spread_rank(c, h, avg)
+			worth = tactics.blow_worth(c, h, avg, float(e.hit_chance(c, h, option)["chance"]), finish)
+		if best != null:
+			if spread:
+				if rank > best_rank or (rank == best_rank and worth <= best_worth):
+					continue
+			elif companion(h) or not companion(best):
+				continue
+		best = h
+		best_rank = rank
+		best_worth = worth
+	return best
+
+
+## Whom a save action in the Multiattack is aimed at: the first foe it can reach, or for a foe that spreads its blows and
+## an action that catches one foe at a time, the one it has struck least since its own turn began (AiTactics.spread_rank).
+func _save_aim(c: Combatant, act: Dictionary, targets: Array[Combatant]) -> Combatant:
+	var aim := targets[0]
+	if not tactics.spreads(c) or act.has("area"):
+		return aim
+	var avg := (c.creature as Monster).average_damage(str(act["id"]))
+	var best_rank := tactics.spread_rank(c, aim, avg)
+	for t in targets:
+		var rank := tactics.spread_rank(c, t, avg)
+		if rank < best_rank:
+			best_rank = rank
+			aim = t
+	return aim
 
 
 ## The best attack from where the creature stands: {target, option} or {}.

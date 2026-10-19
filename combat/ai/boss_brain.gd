@@ -272,6 +272,10 @@ func legendary_plan(c: Combatant) -> Dictionary:
 			return {"option": str(move_opt["id"]), "cell": out}
 	var best := {}
 	var best_v := 0.0
+	# A foe that spreads its blows (Story and Balanced) puts a strike on a hero it hasn't struck since its own turn began
+	# before one more on a hero it has, whatever the odds, unless it has a reason to go on (AiTactics.spread_rank).
+	var spread := e.ai.tactics.spreads(c)
+	var best_rank := 1 << 30
 	for o2: Variant in L.options(c):
 		var od2 := o2 as Dictionary
 		if Legendary.cost(od2) > left or L.spent_once(c, od2):
@@ -282,8 +286,10 @@ func legendary_plan(c: Combatant) -> Dictionary:
 			if L.use_why(c, od2, null, Vector2i(-1, -1)) != "":
 				continue
 			var cast := e.ai.spells._best_use(c, str(od2["spell"]))
-			if not cast.is_empty() and float(cast["score"]) / float(Legendary.cost(od2)) > best_v:
-				best_v = float(cast["score"]) / float(Legendary.cost(od2))
+			var cast_v := float(cast["score"]) / float(Legendary.cost(od2)) if not cast.is_empty() else 0.0
+			if cast_v > 0.0 and (best_rank > 0 or cast_v > best_v):
+				best_v = cast_v
+				best_rank = 0
 				best = {"option": str(od2["id"]), "spell": cast}
 			continue
 		if not od2.has("action"):
@@ -303,11 +309,18 @@ func legendary_plan(c: Combatant) -> Dictionary:
 				cell = _cell_in_reach(c, t, L.move_ft(c, od2), _strike_ft(c))
 				if cell == c.cell or L.use_why(c, od2, t, cell) != "":
 					continue
-			var v := _expected(c, act, t) + target_bonus(c, t)
+			var v := 0.0
+			var rank := 0
+			if spread:
+				v = _spread_value(c, act, t)
+				rank = _spread_rank(c, act, t)
+			else:
+				v = _expected(c, act, t) + target_bonus(c, t)
 			# A life-drinking bite is his favourite: taken whenever it can land, whatever it costs.
 			v = v + 100.0 if action_bonus(c, act) > 0.0 else v / float(Legendary.cost(od2))
-			if v > best_v:
+			if v > 0.0 and (rank < best_rank or (rank == best_rank and v > best_v)):
 				best_v = v
+				best_rank = rank
 				best = {"option": str(od2["id"]), "target": t}
 				if cell != Vector2i(-1, -1):
 					best["cell"] = cell
@@ -348,6 +361,38 @@ func _cell_in_reach(c: Combatant, t: Combatant, budget: int, strike: int) -> Vec
 			best_cost = cost
 			best = cell
 	return best
+
+
+## What a strike of `act` on `t` is worth to a foe that spreads its blows: the odds as it weighs them, the killing-blow
+## bonus, a concentrating caster, the foe's own lean (AiTactics.blow_worth), as AiBrain._score weighs a plan's attack.
+func _spread_value(c: Combatant, act: Dictionary, t: Combatant) -> float:
+	var e := enc()
+	var chance := 1.0
+	if str(act.get("kind", "")) != "save":
+		var o := e.option_by_id(c, "monster:" + str(act["id"]))
+		if o.is_empty():
+			return 0.0
+		chance = float(e.hit_chance(c, t, o)["chance"])
+	return e.ai.tactics.blow_worth(c, t, _strike_avg(c, act), chance, float(e.ai.profile(c)["finish"]))
+
+
+## Where `t` stands among the foes a strike of `act` could go to (AiTactics.spread_rank), the lowest first: 0 for an
+## action that catches several foes whoever it is aimed at (a cone, a line, an aura), so no foe is spared its blow.
+func _spread_rank(c: Combatant, act: Dictionary, t: Combatant) -> int:
+	var e := enc()
+	if act.has("area"):
+		var caught := 0
+		for v in e.monster_actions.save_victims(c, act, t):
+			if c.hostile_to(v):
+				caught += 1
+		if caught > 1:
+			return 0
+	return e.ai.tactics.spread_rank(c, t, _strike_avg(c, act))
+
+
+## What a hit of `act` is worth in damage: its average, with a little for its riders (as AiBrain._avg does).
+func _strike_avg(c: Combatant, act: Dictionary) -> float:
+	return (c.creature as Monster).average_damage(str(act["id"])) + (4.0 if act.has("on_hit") or act.has("on_fail") else 0.0)
 
 
 ## The fewest uses any of `c`'s legendary strikes costs (a huge number when it has none).
