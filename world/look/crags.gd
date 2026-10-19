@@ -43,6 +43,15 @@ const TUCK := 0.04
 const WARP := 0.55
 ## How far (squares) past the map's edge the rock carries on before it settles into the land (N8).
 const BEYOND := 8.0
+## Boulders along the foot (owner 2026-10-19, rule 2: "scree and boulders up to half a square"): on average this many
+## per side of a rock square that a walkable square touches, none reaching further than BOULDER_REACH (squares from the
+## grid line, so never into the middle of the square) with a radius in this range and no taller than BOULDER_TALL
+## (world units, below a token's knee), and a big one now and then.
+const BOULDERS_A_SIDE := 2.0
+const BOULDER_REACH := 0.5
+const BOULDER_RADIUS := Vector2(0.1, 0.26)
+const BOULDER_BIG := 0.34
+const BOULDER_TALL := 0.32
 ## How many places' plans and meshes are kept.
 const KEEP := 8
 const FAR := 1e6
@@ -74,6 +83,10 @@ var _scale := 1.0
 var _margin: Dictionary = {}
 ## Rock square -> its mesh and how high it stands, made the first time its piece is asked for.
 var _meshes: Dictionary = {}
+## Rock square -> its boulders: [centre (x, y, z), radius, height, seed], on the walkable squares it touches.
+var _boulders: Dictionary = {}
+## A unit icosahedron's 20 faces, three corners each, made once for every boulder.
+static var _ico: Array = []
 ## The rock's height along each side of the map's edge, for the range that carries on past it (N8): four arrays, one
 ## value a quarter square (0 north, 1 east, 2 south, 3 west), made the first time they are asked for.
 var _edge_prof: Array = []
@@ -246,6 +259,7 @@ func _heights() -> void:
 	var t4 := Time.get_ticks_usec()
 	_normals(pts, pis, pjs)
 	_reach_into_open_squares(act)
+	_scatter_boulders()
 	var t5 := Time.get_ticks_usec()
 	plan_ms = {"squares": (t1 - t0) / 1000.0, "distance": (t2 - t1) / 1000.0, "noise": (t3 - t2) / 1000.0,
 		"heights": (t4 - t3) / 1000.0, "normals": (t5 - t4) / 1000.0}
@@ -334,6 +348,69 @@ func _reach_into_open_squares(act: PackedByteArray) -> void:
 						(_margin[best] as Array[int]).append(j * qw + i)
 
 
+## Boulders along the foot: for each side of a rock square that a walkable square touches, one or two (rarely three), a
+## little off the grid line and along it, sized and spaced unevenly, seeded by the place.
+func _scatter_boulders() -> void:
+	_boulders.clear()
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(board.place) + 7
+	for c: Vector2i in cells:
+		for d: Vector2i in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]:
+			var o := c + d
+			if cells.has(o) or o.x < 0 or o.y < 0 or o.x >= _w or o.y >= _d:
+				continue
+			var g := board.grid
+			if g.has_flag(o, CombatGrid.WALL) or g.has_flag(o, CombatGrid.VOID) or g.has_flag(o, CombatGrid.WATER):
+				continue   # nobody stands there
+			var count := floori(BOULDERS_A_SIDE) + (1 if rng.randf() < BOULDERS_A_SIDE - floorf(BOULDERS_A_SIDE) else 0)
+			if rng.randf() < 0.15:
+				count += 1
+			for q in count:
+				var along := clampf((q + 0.5) / count + rng.randf_range(-0.25, 0.25) / count, 0.05, 0.95)
+				var radius := rng.randf_range(BOULDER_RADIUS.x, BOULDER_RADIUS.y)
+				if rng.randf() < 0.12:
+					radius = BOULDER_BIG
+				var out := rng.randf_range(radius * 0.4, BOULDER_REACH - radius * 0.8)
+				var tall := minf(radius * rng.randf_range(0.7, 1.15), BOULDER_TALL)
+				# The point `out` from the shared side, `along` it: this square's side is the one facing `d`.
+				var at := Vector2(c.x + 0.5 + d.x * (0.5 + out) + (1 - absi(d.x)) * (along - 0.5),
+						c.y + 0.5 + d.y * (0.5 + out) + (1 - absi(d.y)) * (along - 0.5))
+				if not _boulders.has(c):
+					_boulders[c] = []
+				(_boulders[c] as Array).append([Vector3(at.x, _ground(at.x, at.y) + tall * 0.25, at.y), radius, tall, rng.randi()])
+
+
+## Adds a boulder to the arrays (relative to `origin`): a unit icosahedron stretched to its size, each corner pushed in or
+## out by the boulder's own seed so no two match, faces shaded flat.
+func _boulder(verts: PackedVector3Array, norms: PackedVector3Array, uvs: PackedVector2Array, b: Array, origin: Vector3) -> void:
+	if _ico.is_empty():
+		var t := (1.0 + sqrt(5.0)) / 2.0
+		var v: Array[Vector3] = [Vector3(-1, t, 0), Vector3(1, t, 0), Vector3(-1, -t, 0), Vector3(1, -t, 0),
+				Vector3(0, -1, t), Vector3(0, 1, t), Vector3(0, -1, -t), Vector3(0, 1, -t),
+				Vector3(t, 0, -1), Vector3(t, 0, 1), Vector3(-t, 0, -1), Vector3(-t, 0, 1)]
+		for i in v.size():
+			v[i] = v[i].normalized()
+		for f: Array in [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2],
+				[10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11],
+				[6, 2, 10], [8, 6, 7], [9, 8, 1]]:
+			_ico.append([v[f[0] as int], v[f[1] as int], v[f[2] as int]])
+	var at := b[0] as Vector3
+	var radius := float(b[1])
+	var tall := float(b[2])
+	var seed_ := int(b[3])
+	var scale := Vector3(radius, tall, radius * lerpf(0.75, 1.0, float(seed_ % 7) / 6.0))
+	var spin := float(seed_ % 360) * PI / 180.0
+	for face: Array in _ico:
+		var p: Array[Vector3] = []
+		for corner: Vector3 in face:
+			# A different push for each corner, from the seed and where the corner is.
+			var push := 0.78 + 0.44 * fposmod(sin(corner.x * 12.9898 + corner.y * 78.233 + corner.z * 37.719 + float(seed_ % 97)) * 43758.5453, 1.0)
+			var w := (corner * push * scale).rotated(Vector3.UP, spin)
+			w.y = maxf(w.y, -tall * 0.5)   # what's under the ground doesn't matter
+			p.append(at + w - origin)
+		_tri(verts, norms, uvs, p[0], p[2], p[1])
+
+
 ## The patch of the surface over square `c` as its own piece, standing at the square's middle, in material `mat`.
 func piece(c: Vector2i, mat: Material) -> MeshInstance3D:
 	if not _meshes.has(c):
@@ -366,6 +443,8 @@ func _mesh(c: Vector2i) -> Array:
 	var qw := _w * RES
 	for q: int in _margin.get(c, [] as Array[int]):
 		top = maxf(top, _quad(verts, norms, uvs, q % qw, floori(float(q) / qw), origin))
+	for bl: Array in _boulders.get(c, []):
+		_boulder(verts, norms, uvs, bl, origin)
 	# The map's edge, where the rock carries on past it: a face down past the ground on each outer side, so the surface
 	# doesn't end in a bare slice.
 	for side in 4:
@@ -525,6 +604,14 @@ func beyond_edge(p: Vector2) -> float:
 		_beyond_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 		_beyond_noise.frequency = 0.35
 	return rise * (1.0 - smoothstep(0.0, BEYOND, out)) * (0.8 + 0.35 * _beyond_noise.get_noise_2d(p.x, p.y))
+
+
+## Every boulder along the foot (tests, art QA): [centre, radius, height, seed].
+func boulders() -> Array:
+	var all := []
+	for c: Vector2i in _boulders:
+		all.append_array(_boulders[c] as Array)
+	return all
 
 
 ## The surface's height above the ground at grid point (i, j) (tests, art QA).

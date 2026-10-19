@@ -104,7 +104,7 @@ func capture_shots(tool: Node, out: String) -> void:
 			var top := 0.0
 			for c: Vector2i in view.board.crags.cells:
 				top = maxf(top, view.board.crags.top_of(c))
-			print("CRAGS_CELLS %s: %d rock squares, highest %.1f" % [id, view.board.crags.cells.size(), top])
+			print("CRAGS_CELLS %s: %d rock squares, highest %.1f, %d boulders" % [id, view.board.crags.cells.size(), top, view.board.crags.boulders().size()])
 		var rig := view.rig
 		var at := view.board.cell_center(_spawn())
 		if OS.get_environment("CV_AIM") != "" and AIMS.has(id):

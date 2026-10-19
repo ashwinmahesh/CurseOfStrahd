@@ -169,6 +169,33 @@ func test_the_range_carries_on_past_the_edge() -> void:
 	assert_true(rock, "the raised land is drawn in the place's rock")
 
 
+## Boulders lie along the foot, on walkable squares: none reaches further than half a square from the rock, so none is in
+## the middle of a square, and none is taller than a knee.
+func test_boulders_lie_along_the_foot() -> void:
+	Look.set_style("modern", false)
+	var total := 0
+	for place in PLACES:
+		var v := await _view(place)
+		var crags := v.board.crags
+		if crags == null:
+			assert_true(false, "no crags at %s" % place)
+			continue
+		var bad := 0
+		for b: Array in crags.boulders():
+			total += 1
+			var at := Vector3(b[0] as Vector3)
+			var sq := Vector2i(floori(at.x), floori(at.z))
+			if not v.grid.in_bounds(sq) or crags.cells.has(sq) or v.grid.has_flag(sq, CombatGrid.WALL):
+				bad += 1
+			if _away_from_rock(crags, Vector2(at.x, at.z)) - float(b[1]) * 0.5 > 0.5 or float(b[2]) > Crags.BOULDER_TALL + 0.001:
+				bad += 1
+		assert_eq(bad, 0, "%s: its boulders stand on walkable squares within half a square of the rock, below the knee" % place)
+		v.queue_free()
+		view = null
+		await get_tree().process_frame
+	assert_true(total > 100, "the places have boulders along their feet (%d)" % total)
+
+
 ## The distance (squares) from point `p` to the nearest rock square of `crags`.
 func _away_from_rock(crags: Crags, p: Vector2) -> float:
 	var best := INF

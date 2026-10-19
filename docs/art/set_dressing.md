@@ -319,6 +319,10 @@ castle gates, the Amber Temple road, and the two shrine-yard maps in rock countr
 road camp (their yard walls and pillars are rock, not stone: the houses TownBuilder puts on their corner blocks stay;
 the castle's overlook has `rock_walls` but its builder claims every wall
 square, and most of the gates' and the pass's walls are buildings too, so only their loose rock is shaped).
+Boulders lie along every foot (`Crags._scatter_boulders`, drawn with the rock square's piece): about two a side of a rock
+square that a walkable square touches, low faceted rocks no taller than a knee (0.32) that reach no further than half
+a square from the grid line, so the middle of the square stays clear (the plan's rule 2: "scree and boulders up to half
+a square").
 The range carries on past the map's edge (the vault's Natural Maps Plan, N8): where a rock square stands on the edge,
 `AtmosphereLand._terrain` raises the land past it by the rock's height there (`Crags.beyond_edge`: the edge profile,
 blurred a square either way so it ramps down beside a way out, settling into the land over 8 squares and ridged by
