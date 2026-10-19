@@ -107,8 +107,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   built by TownBuilder (houses, roofs, yard walls). Never fall back to plain boxes for new content.
 - Every character sprite walks and attacks in 8 directions (docs/art/animation.md; a test checks): after
   `make sprite`, add the character to art/anim/animations.json and run `make anims ONLY=<id> GENERATE=1`. The six
-  heroes have the fuller HD set instead: `make keys [ONLY=<id>]` (docs/art/animation.md); their walk, idle, attack and
-  cast are cut from Veo clips by `make veo-anims [ONLY=<id>] [GENERATE=1]` (run it again after `make keys`).
+  heroes have the fuller HD set instead: `make keys [ONLY=<id>]` (docs/art/animation.md); their walk, idle, attack,
+  cast and hurt are cut from Veo clips by `make veo-anims [ONLY=<id>] [GENERATE=1]` (run it again after `make keys`).
 - UI draws on CanvasLayers so the palette pass never touches it.
 - Git LFS (owner decision 2026-10-07; .gitattributes): new or changed images under art/generated, art/sprites,
   art/portraits, art/creator and art/textures, voice mp3s, and sound clips under art/sourced, are stored in LFS. Older

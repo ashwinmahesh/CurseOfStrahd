@@ -40,7 +40,7 @@ sys.path.insert(0, str(ROOT / "tools" / "art"))
 import gemini_budget as gb  # noqa: E402
 
 HEROES = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wren_featherfoot", "kip_smudgewick"]
-KINDS = ["walk", "idle", "attack", "cast"]
+KINDS = ["walk", "idle", "attack", "cast", "hurt"]
 DIRS = ["s", "se", "e", "ne", "n"]          # the drawn directions; the sheets show nw, w and sw as mirror images
 SHE = {"liriel_dawnsong", "thistle"}
 MODEL = "veo-3.1-lite-generate-preview"
@@ -63,7 +63,7 @@ SCREENS = {"green": (0, 177, 64), "cyan": (0, 190, 190)}
 SCREEN_OF = {"kip_smudgewick": "cyan", "thistle": "cyan"}
 OUT = ROOT / "art" / "generated" / "veo"
 API = "https://generativelanguage.googleapis.com/v1beta"
-SHEET_OF = {"walk": "walk", "idle": "walk", "attack": "attack", "cast": "cast"}
+SHEET_OF = {"walk": "walk", "idle": "walk", "attack": "attack", "cast": "cast", "hurt": "hurt"}
 # What each kind becomes: frames, playback fps, and for the one-shots the frame the blow (or the spell) lands on.
 WALK_FRAMES, WALK_FPS = 24, 24.0            # one cycle (two steps) a second at the sheet's own pace
 IDLE_FPS = 6.0
@@ -71,6 +71,9 @@ IDLE_LOOP = (36, 72)                        # 1.5 to 3 s of the clip: 9 to 18 fr
 SEAM = 8                                    # clip frames an idle loop's end is faded into its start over
 ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS = 16, 7, 16.0
 CAST_FRAMES, CAST_HIT, CAST_FPS = 12, 4, 16.0
+HURT_FRAMES, HURT_PEAK, HURT_FPS = 8, 2, 16.0     # a flinch and back (the hurt sheet's die_ and down_ stay drawn)
+# A hero whose blow should feel heavier: (frames, hit frame, fps), a longer wind-up before the same quick strike.
+ATTACK_TIMING = {"godrick_pendlebrook": (18, 11, 16.0)}
 PAD = 12                                    # border kept round each trimmed frame (the shader's outline)
 CLIPS_LOCK = threading.Lock()
 
@@ -86,15 +89,20 @@ def read_tres(path):
         reg = [int(float(v)) for v in m.group(2).split(",")]
         mar = [int(float(v)) for v in m.group(3).split(",")] if m.group(3) else [0, 0, 0, 0]
         subs[m.group(1)] = (reg, mar)
-    anims, speeds = {}, {}
+    anims, speeds, loops = {}, {}, {}
     block = t.split("animations = [", 1)[1]
     for a in re.finditer(r'\{\s*"frames": \[(.*?)\],\s*"loop": (\w+),\s*"name": &"(\w+)",\s*"speed": ([\d.]+)',
                          block, re.S):
+        loops[a.group(3)] = a.group(2) == "true"
         anims[a.group(3)] = [(sid, float(d)) for d, sid in
                              re.findall(r'"duration": ([\d.]+),\s*"texture": SubResource\("(\w+)"\)', a.group(1))]
         speeds[a.group(3)] = float(a.group(4))
     meta = {k: json.loads(v) for k, v in re.findall(r"^metadata/(\w+) = (.*)$", t, re.M)}
+    READ_LOOPS[str(path)] = loops
     return anims, speeds, subs, meta
+
+
+READ_LOOPS = {}
 
 
 def sheet_frame(hero, kind, d, index=0):
@@ -110,7 +118,7 @@ def sheet_frame(hero, kind, d, index=0):
 
 
 def seconds_of(kind):
-    return ONE_SHOT_SECONDS if kind in ("attack", "cast") else SECONDS
+    return ONE_SHOT_SECONDS if kind in ("attack", "cast") else SECONDS     # a flinch is short: 4 s, no lastFrame
 
 
 def size_of(kind):
@@ -162,8 +170,42 @@ def first_entry(hero, kind, d):
 
 # ---- prompts -------------------------------------------------------------------------------------------------------
 
+# The motions only (owner 2026-10-19: "no effects when spellcasting or making an attack, just the motions; the effects
+# come from our game engine"): animations.json's wind-ups and strikes describe the drawn strips' glows and bursts, so
+# the clips use these words instead.
+MOVES = {
+    "godrick_pendlebrook": {
+        # A heavier blow (owner 2026-10-19: "make it look like a heavier attack").
+        "attack": "heavy overhead chop with his longsword",
+        "windup": "the longsword heaved up high above his head, the round shield pulled tight to his chest, knees bent "
+                  "and weight sinking back, holding for a moment at the top",
+        "strike": "the longsword brought down hard in one heavy chop to waist height in front of him, his whole body "
+                  "dropping into the blow and the front knee bending with the impact, then a short, heavy "
+                  "follow-through"},
+    "liriel_dawnsong": {
+        "windup": "the gold sunburst holy symbol raised high in her right hand, her other hand at her heart, robes "
+                  "swirling",
+        "strike": "the holy symbol thrust out toward the enemy at shoulder height, leaning forward onto the front foot"},
+    "thistle": {
+        "strike": "the arrow loosed, the bowstring snapping forward, her drawing hand flung back past her ear"},
+    "ratatoille": {
+        "windup": "the wooden staff raised high in the right hand, the left hand pulled back beside the hip with the "
+                  "fingers curled, torso leaning back",
+        "strike": "the left arm thrust straight out toward the enemy at shoulder height with the palm open, the staff "
+                  "swept forward too, robes and apron swinging"},
+    "kip_smudgewick": {
+        "windup": "both hands pulled back beside his right hip with the palms facing each other, knees bent, leaning "
+                  "back",
+        "strike": "both hands thrust straight out toward the enemy at chest height, leaning forward onto the front "
+                  "foot, the straw hat tilted back"},
+}
+CAST_MOVES = ("one hand raised before the chest with the palm open, the other arm drawn back, eyes intent",
+              "the hand thrust forward with the palm out, leaning forward")
+
+
 def prompt(hero, kind, d="s"):
     spec = json.loads((ROOT / "art" / "anim" / "animations.json").read_text()).get(hero, {})
+    spec.update(MOVES.get(hero, {}))
     he, his = ("she", "her") if hero in SHE else ("he", "his")
     He = he.capitalize()
     who = spec.get("who", "the character")
@@ -179,10 +221,8 @@ def prompt(hero, kind, d="s"):
               f"shadow, no other objects or people. Keep {his} face, clothes, colours and gear exactly as in the image. "
               f"Silent.")
     head = f"Hand-painted 2D game character animation of {who}, from the image. "
-    # Veo's spell bursts grew past the picture's edge (cut off flat in the sheet): keep magic small (the game draws its
-    # own spell effects).
-    small_magic = (f" Any magical light stays small and close to {his} hands, well inside the picture: no big bursts, "
-                   f"beams or flashes reaching its edges.")
+    no_fx = (f" Only {his} body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, "
+             f"magic, energy, beams, impact flashes, motion trails or swooshes.")
     if kind == "walk":
         body = (f"{He} walks in place as if on a treadmill, {facing}: a steady, natural walk cycle with the arms "
                 f"swinging and {his} clothes and hair moving. {gear}{He} never moves forward or sideways.")
@@ -191,17 +231,20 @@ def prompt(hero, kind, d="s"):
                 f"slightly; {his} hair and clothes stir in a light breeze. {gear}{He} does not walk, speak or move "
                 f"{his} feet.")
     elif kind == "attack":
-        body = (f"One fast, powerful {spec.get('attack', 'attack')}, {facing}: first the wind-up, "
+        body = (f"One powerful {spec.get('attack', 'attack')}, {facing}: first the wind-up, "
                 f"{spec.get('windup', '')}; then the strike, {spec.get('strike', '')}; then {he} returns to the pose in "
-                f"the image and holds still. The whole attack takes about one second and {his} feet stay planted." + small_magic)
+                f"the image and holds still. The whole attack takes about one second and {his} feet stay planted."
+                + no_fx)
+    elif kind == "hurt":
+        body = (f"{He} is struck by an unseen blow, {facing}: {he} flinches hard, the body jolting back and the head "
+                f"snapping aside, staggers on the spot, then recovers to the pose in the image and holds still. The "
+                f"whole flinch takes about half a second and {his} feet stay in place." + no_fx)
     else:
-        gather = spec.get("cast_gather", "one hand raised before the chest with a small glowing light gathering in "
-                                         "the palm, the other arm drawn back, eyes intent")
-        release = spec.get("cast_release", "the hand thrust forward with a small burst of light leaving it, leaning "
-                                            "forward")
+        gather = CAST_MOVES[0] if "cast_gather" not in MOVES.get(hero, {}) else spec["cast_gather"]
+        release = CAST_MOVES[1] if "cast_release" not in MOVES.get(hero, {}) else spec["cast_release"]
         body = (f"{He} casts a spell, {facing}: first gathering it, {gather}; then releasing it, {release}; then {he} "
                 f"returns to the pose in the image and holds still. The whole spell takes about one second and {his} "
-                f"feet stay planted." + small_magic)
+                f"feet stay planted." + no_fx)
     return head + body + common
 
 
@@ -470,7 +513,10 @@ def choose(hero, kind, d):
         chosen, fps, info = idle_frames(frames, thumbs)
         picks = [0]
     elif kind == "attack":
-        picks, fps, info = one_shot_frames(frames, thumbs, ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS)
+        picks, fps, info = one_shot_frames(frames, thumbs, *ATTACK_TIMING.get(hero, (ATTACK_FRAMES, ATTACK_HIT,
+                                                                                      ATTACK_FPS)))
+    elif kind == "hurt":
+        picks, fps, info = one_shot_frames(frames, thumbs, HURT_FRAMES, HURT_PEAK, HURT_FPS)
     else:
         picks, fps, info = one_shot_frames(frames, thumbs, CAST_FRAMES, CAST_HIT, CAST_FPS)
     # The framing (owner 2026-10-19: no zooming): the clip's first frame must sit where the frame Veo was given sat, at
@@ -612,7 +658,7 @@ def build_sheet(hero, sheet, kinds, dirs, notes):
         if (kind, d) in chosen:
             fr, fps = chosen[(kind, d)]
             placed = [trim(f, cell) for f in fr]
-            order.append((name, fps, kind != "attack" and kind != "cast", placed))
+            order.append((name, fps, kind in ("walk", "idle"), placed))
         else:
             # An animation the clips don't replace: its old frames, moved onto the new cell.
             placed = []
@@ -620,7 +666,7 @@ def build_sheet(hero, sheet, kinds, dirs, notes):
                 (x, y, w, h), (ml, mt, mw, mh) = old_subs[sid]
                 dx, dy = (cell[0] - (w + mw)) // 2, (cell[1] - (h + mh)) // 2
                 placed.append((old_png.crop((x, y, x + w, y + h)), (ml + dx, mt + dy)))
-            order.append((name, old_speeds[name], name.split("_")[0] in ("walk", "idle"), placed))
+            order.append((name, old_speeds[name], READ_LOOPS[str(tres)].get(name, False), placed))
     for _name, _fps, _loop, placed in order:
         crops.extend(c for c, _ in placed)
     atlas, rects = pack(crops)
@@ -632,8 +678,9 @@ def build_sheet(hero, sheet, kinds, dirs, notes):
             i += 1
         entries.append((name, fps, loop, frames))
     if "attack" in kinds and sheet == "attack":
-        meta["hit_frames"] = {"attack": ATTACK_HIT}
-        meta["hit_frame"] = ATTACK_HIT
+        hit = ATTACK_TIMING.get(hero, (ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS))[1]
+        meta["hit_frames"] = {"attack": hit}
+        meta["hit_frame"] = hit
     if "cast" in kinds and sheet == "cast":
         meta["hit_frames"] = {"cast": CAST_HIT}
     meta["veo"] = True

@@ -1,0 +1,322 @@
+{
+ "walk_s": {
+  "loop": [
+   26,
+   44
+  ],
+  "score": 2.74,
+  "picks": [
+   42,
+   43,
+   45,
+   47,
+   49,
+   51,
+   53,
+   54,
+   56,
+   58,
+   60,
+   62,
+   64,
+   65,
+   67,
+   69,
+   27,
+   29,
+   31,
+   32,
+   34,
+   36,
+   38,
+   40
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 1.002,
+   "feet": 0,
+   "x": 0,
+   "vs_sheet": 0.998
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "walk_se": {
+  "loop": [
+   27,
+   34
+  ],
+  "score": 3.56,
+  "picks": [
+   37,
+   38,
+   39,
+   41,
+   42,
+   44,
+   45,
+   46,
+   48,
+   49,
+   51,
+   52,
+   54,
+   55,
+   56,
+   58,
+   59,
+   27,
+   28,
+   29,
+   31,
+   32,
+   34,
+   35
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 0.999,
+   "feet": -1,
+   "x": 0,
+   "vs_sheet": 0.994
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "walk_e": {
+  "loop": [
+   29,
+   37
+  ],
+  "score": 3.77,
+  "picks": [
+   32,
+   33,
+   35,
+   36,
+   38,
+   39,
+   41,
+   42,
+   44,
+   45,
+   47,
+   48,
+   50,
+   52,
+   53,
+   55,
+   56,
+   58,
+   59,
+   61,
+   62,
+   64,
+   65,
+   30
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 1.002,
+   "feet": 0,
+   "x": 0,
+   "vs_sheet": 0.997
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "walk_ne": {
+  "loop": [
+   12,
+   32
+  ],
+  "score": 1.39,
+  "picks": [
+   15,
+   16,
+   17,
+   19,
+   20,
+   21,
+   23,
+   24,
+   25,
+   27,
+   28,
+   29,
+   31,
+   32,
+   33,
+   35,
+   36,
+   37,
+   39,
+   40,
+   41,
+   43,
+   12,
+   13
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 0.998,
+   "feet": -2,
+   "x": 0,
+   "vs_sheet": 0.995
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "walk_n": {
+  "loop": [
+   19,
+   29
+  ],
+  "score": 1.94,
+  "picks": [
+   29,
+   30,
+   31,
+   32,
+   33,
+   35,
+   36,
+   37,
+   38,
+   39,
+   41,
+   42,
+   43,
+   44,
+   45,
+   47,
+   19,
+   20,
+   21,
+   22,
+   24,
+   25,
+   26,
+   27
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 0.997,
+   "feet": -2,
+   "x": 0,
+   "vs_sheet": 0.994
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "idle_s": {
+  "loop": [
+   12,
+   72
+  ],
+  "score": 1.61,
+  "seam_in_steps": 4.3,
+  "picks": [
+   0
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 1.001,
+   "feet": 0,
+   "x": 0,
+   "vs_sheet": 0.999
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "idle_se": {
+  "loop": [
+   10,
+   72
+  ],
+  "score": 1.02,
+  "seam_in_steps": 4.5,
+  "picks": [
+   0
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 1.001,
+   "feet": 0,
+   "x": 0,
+   "vs_sheet": 0.997
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "idle_e": {
+  "loop": [
+   9,
+   72
+  ],
+  "score": 1.42,
+  "seam_in_steps": 12.0,
+  "picks": [
+   0
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 1.001,
+   "feet": 0,
+   "x": 0,
+   "vs_sheet": 0.999
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "idle_ne": {
+  "loop": [
+   16,
+   72
+  ],
+  "score": 2.93,
+  "seam_in_steps": 3.5,
+  "picks": [
+   0
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 1.001,
+   "feet": 0,
+   "x": -1,
+   "vs_sheet": 0.999
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "idle_n": {
+  "loop": [
+   16,
+   72
+  ],
+  "score": 3.03,
+  "seam_in_steps": 6.3,
+  "picks": [
+   0
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 0.999,
+   "feet": -1,
+   "x": -1,
+   "vs_sheet": 0.996
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ }
+}

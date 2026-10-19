@@ -143,11 +143,17 @@ keep the earlier behaviour (the lunge, the flattened fall, the attack used as a 
 `tools/art/preview/anim_showcase.tscn` plays a before/after of one hero (old sheets copied to
 `art/sprites/<id>_before`, not committed) for review; recorded with Godot's movie writer through `tools/godot`.
 
-## Veo clips: the heroes' walk, idle, attack and cast (owner 2026-10-19)
+## Veo clips: the heroes' walk, idle, attack, cast and hurt (owner 2026-10-19)
 
-The owner asked for smoother motion from video for the most common animations. The six heroes' walk, idle, attack and
-cast are now cut from Veo 3.1 Lite clips (image to video), not from the drawn strips. Their hurt, fall, riding and
-sneaking stay drawn. The tool is `tools/art/veo_anims.py` (`make veo-anims [ONLY=<id>] [KINDS=…] [GENERATE=1]
+The owner asked for smoother motion from video for the most common animations. The six heroes' walk, idle, attack,
+cast and hurt (the flinch) are cut from Veo 3.1 Lite clips (image to video) as the clips come in. Until a hero's clips
+for a kind are in, that kind stays on its drawn frames. Their fall, lying down, riding and sneaking stay drawn.
+
+The clips show the motions only (owner 2026-10-19: "no effects when spellcasting or making an attack, just the
+motions; the effects come from our game engine"). The tool's `MOVES` gives each hero's wind-up and strike in words
+without the glows and bursts that `animations.json` describes for the drawn strips, and every one-shot prompt rules out
+glow, light, sparks, beams and motion trails. Godrick's attack is a heavy overhead chop (owner 2026-10-19: "make it
+look like a heavier attack"): 18 frames with the blow on frame 11 (`ATTACK_TIMING`). The tool is `tools/art/veo_anims.py` (`make veo-anims [ONLY=<id>] [KINDS=…] [GENERATE=1]
 [REDO="cast_se …"]`). The sheets are still sprite sheets: the game plays frames as before, and nothing decodes
 video at run time.
 
@@ -180,6 +186,7 @@ video at run time.
 | Idle | 9 to 18 (a 1.5 to 3 second loop whose last third of a second is faded into its start, since an idle drifts and seldom comes back on its own) | 6 fps |
 | Attack | 16, the fastest motion (the blow) landing on frame 7 (`hit_frames`) | 16 fps |
 | Cast | 12, the release landing on frame 4 | 16 fps |
+| Hurt | 8, the flinch landing on frame 2 (4-second clips; the sheet's die_ and down_ stay drawn) | 16 fps |
 
 For the attack and cast, the frames run from just before the hero moves to the first frame back at the starting
 pose.
