@@ -197,27 +197,45 @@ them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm a
 
 ## Ground with shape in the Modern finish
 
-Improvement Ideas W11. On an outdoor wild map (ArenaBoard.WILD) the ground people walk on is drawn as one shaped
-skin instead of flat squares, with shallow hollows. It never rises above the squares' floor level and is never deeper
-than `GroundRelief.DEEPEST`, so tokens, the battle grid and spell templates still stand on the same 5 ft grid
-(`floor_y`/`cell_center` are untouched; real heights are F4's), and it settles flat round any square drawn flat (a
-prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there stop drawing themselves (render
-layers 0; `ArenaBoard.floor_box`, `floor_material`); a trap's square keeps its box, so a pit still opens it. Under the
-map's woods (tree squares) the ground rises into banks with mounds on them, and the land past the edge starts on the
-banks and settles into its hills. The trees and plants stand on all of it. Towns keep their streets, rooms and yards
-their floors, and Classic stays flat. `GroundRelief.roads()` lays the shortest walks between the map's ways out; the
-surfaces lane's wheel-rut decals (W10) follow them.
+Improvement Ideas W11, then Natural Maps plan N2. On every outdoor map (not an outdoor dungeon map: the Amber Temple's
+doors, Daern's roof, the tower roofs and the castle's spires keep their built floors, nor a board with no place) the
+ground people walk on is drawn as one shaped skin instead of flat squares, with shallow hollows. It never rises above the
+squares' floor level and is never deeper than `GroundRelief.DEEPEST`, so tokens, the battle grid and spell templates still
+stand on the same 5 ft grid (`floor_y`/`cell_center` are untouched; real heights are F4's), and it settles flat round any
+square drawn flat (a prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there stop drawing
+themselves (render layers 0; `ArenaBoard.floor_box`, `floor_material`); a trap's square keeps its box, so a pit still
+opens it. Under the map's woods (tree squares) the ground rises into banks with mounds on them, and the land past the edge
+starts on the banks and settles into its hills. The trees and plants stand on all of it. Paving (cobbles, flags, a
+courtyard) and the squares props stand on are part of the skin but flat; towns keep their streets, rooms and the
+built floors (boards, tiles, black stone) keep theirs, and Classic stays flat. `GroundRelief.roads()` lays the shortest
+walks between a wild map's ways out; the surfaces lane's wheel-rut decals (W10) follow them.
+
+**Blended ground (N2).** The skin and the banks are one mesh (`Ground`) in one material, `Look.blend_ground`
+(`shaders/world/lit_world_blend.gdshader`), which draws up to four of the place's surfaces (the most used squares'
+floors, the difficult ground and an area's floor among them, and always the woods' bank ground) and melts them into each
+other at their edges instead of meeting on a square's: no square tile of mud, drift, flags or bank shows. A control map
+(`GroundRelief._control_map`, one texel a square, a channel for each surface) says which surface each square is; the
+shader reads it between the squares' middles, so the weights ramp over a square, breaks the edges up with noise (they
+wander about a fifth of a square) and steepens them so each surface stays itself over most of its ground. A square of
+difficult ground (mud, drifts, litter: the surface whose squares are mostly `~`) must still read as one, so its middle 60%
+is always its own surface, and it spills into the squares round it, up to half a square, as natural edges do; every other
+square keeps its middle quarter. Each layer is exactly what its square's floor was (the same tile and variants, normal and
+ORM maps, tint, way of taking light and macro patches, read off the floor's own material), so a place looks the same where
+the surfaces don't meet, and weather (rain, puddles, snow) is the same code as lit_world.gdshader's. Footprints and step puffs
+ask the ground what shows at the point they are (`GroundRelief.surface_at`) rather than what the square's floor was.
 
 Hidden until found: the skin, the banks and the map's ground plants leave out squares HiddenAreas hides
 (AtmosphereLand's HiddenWatch redraws them when a secret door is found).
 
 A place is built on every arrival, so all of it is worked out on one coarse grid of points (two a square), from
-distance fields over flat arrays, and indexed into a few meshes; and since a place comes out the same every time, what
-a build works out (the land's fields and mesh, the relief, the trees, the plants) is kept for the newest eight places
-and drawn again from that on the next visit. `AtmosphereLand.build_ms` says what each phase took.
+distance fields over flat arrays, and indexed into one mesh; and since a place comes out the same every time, what
+a build works out (the land's fields and mesh, the relief and its blend, the trees, the plants) is kept for the newest eight
+places and drawn again from that on the next visit. `AtmosphereLand.build_ms` says what each phase took.
 
     make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/clay FRAMES=10 \
       LAND_SHOTS=crossroads LAND_CLAY=1     # the shaped ground in plain clay; LAND_NO_RELIEF=1 for without
+    make capture SCENE=res://tools/capture/natural_ground.tscn NAME=natural/ground FRAMES=10 \
+      NG_SHOTS="amber_temple_road:14,6:9"   # a close-up of a place's ground (natural maps plan)
 
 ## The battle grid in the Modern finish
 

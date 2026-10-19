@@ -115,15 +115,15 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 		and Compendium.shared().has("locations", board_.place) else {}
 	t = l._lap("fields", t)
 	if GroundRelief.enabled():
-		l.relief = GroundRelief.build(board_, loc)
+		l._woods_material = Look.cel_textured(str(l.spec.get("ground", "village/grass")))   # (the banks' ground: one of the blend's surfaces)
+		l.relief = GroundRelief.build(board_, loc, l._woods_material as ShaderMaterial)
 		Clutter.ruts(board_, l.relief.roads())   # wheel-rut decals along its roads (lane 7's W10)
 	t = l._lap("relief", t)
 	l._terrain()
 	t = l._lap("terrain", t)
 	if l.relief != null:
 		l.relief.quiet_floors()
-		l._woods_material = Look.cel_textured(str(l.spec.get("ground", "village/grass")))
-		l._ground = l.relief.meshes(l._woods_material)
+		l._ground = l.relief.meshes()
 		for mi in l._ground:
 			l.root.add_child(mi)
 	t = l._lap("shaped_ground", t)
@@ -665,7 +665,7 @@ func respect_hidden(hidden: Dictionary) -> void:
 			if is_instance_valid(mi):
 				root.remove_child(mi)
 				mi.queue_free()
-		_ground = relief.meshes(_woods_material, hidden)
+		_ground = relief.meshes(hidden)
 		for mi in _ground:
 			root.add_child(mi)
 	if flora != null:

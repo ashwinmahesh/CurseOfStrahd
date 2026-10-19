@@ -132,6 +132,11 @@ static func set_surface_tints(tints: Dictionary) -> void:
 		var surface := str(m.get_meta("surface", ""))
 		if touched.has(surface):
 			m.set_shader_parameter("tint", surface_tint(surface))
+	for b in _blends:   # (the ground blended from them, N2)
+		var surfaces := b.get_meta("blend_surfaces", []) as Array
+		for i in surfaces.size():
+			if touched.has(str(surfaces[i])):
+				b.set_shader_parameter("tint_" + str(BLEND_LETTERS[i]), surface_tint(str(surfaces[i])))
 
 
 ## A surface's tint in the place being built (white unless its mood tints it).
@@ -268,6 +273,131 @@ static func _layer_image(res: String) -> Image:
 
 static func _same_shape(a: Image, b: Image) -> bool:
 	return a.get_size() == b.get_size() and a.get_format() == b.get_format() and a.has_mipmaps() == b.has_mipmaps()
+
+
+## The Modern look's blended ground (Natural Maps plan N2, shaders/world/lit_world_blend.gdshader): one material that draws
+## up to BLEND_SLOTS of the floors `cel_textured` makes over a place's ground, as `control` (one texel per square, a channel
+## for each slot) says, the surfaces melting into each other at their edges instead of meeting on a square's. Each layer is
+## the surface's own: its tile (every variant), normal and ORM maps, tint and way of taking light, read off the floor
+## material it was made from. `size` is the map's squares across and down; `difficult` says in which channels the surface
+## is difficult ground (1), which spills into the squares round it and keeps its own square's middle 60%.
+const LIT_BLEND_SHADER := preload("res://shaders/world/lit_world_blend.gdshader")
+const BLEND_SLOTS := 4
+const BLEND_LETTERS := "abcd"
+## What a surface's layers are for the blend shader, by surface and look: {"albedo", "normal", "orm": Texture2DArray,
+## "layers": int, "use_orm": bool}, made once (a surface with variants hands over the arrays its own floor material
+## holds).
+static var _blend_layers: Dictionary = {}
+## The blends made, to tint again when a place's mood tints surfaces (set_surface_tints); the newest few.
+static var _blends: Array[ShaderMaterial] = []
+static var _flat_normal: Texture2DArray = null
+static var _white_array: Texture2DArray = null
+
+
+static func blend_ground(slots: Array[ShaderMaterial], control: Texture2D, size: Vector2, difficult: Vector4 = Vector4.ZERO) -> ShaderMaterial:
+	var m := ShaderMaterial.new()
+	m.shader = LIT_BLEND_SHADER
+	m.set_shader_parameter("control", control)
+	m.set_shader_parameter("grid_size", size)
+	m.set_shader_parameter("difficult", difficult)
+	var surfaces: Array[String] = []
+	for i in BLEND_SLOTS:
+		var src: ShaderMaterial = slots[i] if i < slots.size() else slots[0]   # (a slot with no surface repeats the first; nothing weighs it)
+		var k := str(BLEND_LETTERS[i])
+		var surface := str(src.get_meta("surface", ""))
+		surfaces.append(surface)
+		var layers := _blend_layers_of(src, surface)
+		m.set_shader_parameter("albedo_" + k, layers["albedo"])
+		m.set_shader_parameter("normal_" + k, layers["normal"])
+		m.set_shader_parameter("orm_" + k, layers["orm"])
+		m.set_shader_parameter("layers_" + k, int(layers["layers"]))
+		m.set_shader_parameter("use_orm_" + k, bool(layers["use_orm"]))
+		m.set_shader_parameter("tile_" + k, _param(src, "tile_units", 2.0))
+		m.set_shader_parameter("tint_" + k, surface_tint(surface))
+		m.set_shader_parameter("relief_" + k, float(layers["relief"]))
+		m.set_shader_parameter("light_" + k, Vector4(_param(src, "roughness", 0.8), _param(src, "metallic", 0.0),
+			_param(src, "roughness_spread", 0.35), _param(src, "roughness_cap", 1.0)))
+		m.set_shader_parameter("macro_" + k, _param(src, "macro_strength", 0.0))
+		if i == 0 and src.get_shader_parameter("macro_tex") != null:
+			m.set_shader_parameter("macro_tex", src.get_shader_parameter("macro_tex"))
+	m.set_meta("blend_surfaces", surfaces)
+	_blends.append(m)
+	while _blends.size() > 16:
+		_blends.pop_front()
+	return m
+
+
+## A floor material's layers as arrays for the blend shader: its variants' arrays where it has them, else its one tile
+## as an array of one; a missing normal map is flat (relief 0) and a missing ORM map is white (use_orm off).
+static func _blend_layers_of(src: ShaderMaterial, surface: String) -> Dictionary:
+	var key := "%s|%s" % [surface, style()]
+	if _blend_layers.has(key):
+		return _blend_layers[key] as Dictionary
+	var out := {"albedo": null, "normal": _flat_normal_array(), "orm": _white_layer_array(), "layers": 1, "use_orm": false,
+		"relief": _param(src, "normal_strength", 0.0)}
+	var count := int(_param(src, "layer_count", 0.0))
+	if count > 0 and src.get_shader_parameter("albedo_layers") != null:
+		out["albedo"] = src.get_shader_parameter("albedo_layers")
+		out["layers"] = count
+		if src.get_shader_parameter("normal_layers") != null:
+			out["normal"] = src.get_shader_parameter("normal_layers")
+		else:
+			out["relief"] = 0.0
+		if src.get_shader_parameter("orm_layers") != null:
+			out["orm"] = src.get_shader_parameter("orm_layers")
+			out["use_orm"] = true
+	else:
+		out["albedo"] = _one_layer(src.get_shader_parameter("albedo_tex") as Texture2D)
+		var nm := src.get_shader_parameter("normal_tex") as Texture2D
+		var one_n := _one_layer(nm)
+		if one_n != null:
+			out["normal"] = one_n
+		else:
+			out["relief"] = 0.0
+		var orm := src.get_shader_parameter("orm_tex") as Texture2D
+		var one_o := _one_layer(orm) if bool(src.get_shader_parameter("use_orm")) else null
+		if one_o != null:
+			out["orm"] = one_o
+			out["use_orm"] = true
+	if out["albedo"] == null:
+		out["albedo"] = _white_layer_array()
+	_blend_layers[key] = out
+	return out
+
+
+static func _param(m: ShaderMaterial, name: String, default: float) -> float:
+	var v: Variant = m.get_shader_parameter(name)
+	return float(v) if v != null else default
+
+
+static func _one_layer(tex: Texture2D) -> Texture2DArray:
+	if tex == null:
+		return null
+	var img := tex.get_image()
+	if img == null:
+		return null
+	var a := Texture2DArray.new()
+	return a if a.create_from_images([img]) == OK else null
+
+
+static func _flat_normal_array() -> Texture2DArray:
+	if _flat_normal == null:
+		_flat_normal = _array_of(Color(0.5, 0.5, 1.0))
+	return _flat_normal
+
+
+static func _white_layer_array() -> Texture2DArray:
+	if _white_array == null:
+		_white_array = _array_of(Color.WHITE)
+	return _white_array
+
+
+static func _array_of(c: Color) -> Texture2DArray:
+	var img := Image.create(2, 2, false, Image.FORMAT_RGBA8)
+	img.fill(c)
+	var a := Texture2DArray.new()
+	a.create_from_images([img])
+	return a
 
 
 ## How deep the modern finish's relief reads (lit_world.gdshader normal_strength, times the surface's `relief`).

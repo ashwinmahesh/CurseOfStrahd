@@ -11,6 +11,13 @@ extends RefCounted
 ## (ArenaBoard.ground_y): it takes the rolling natural squares, and the board's own columns keep cliff edges and
 ## built floors.
 ##
+## Natural Maps plan N2: the skin is on every outdoor map but the built-floor ones (towns, yards, outdoor ruins, the road
+## and the castle gates, not the Amber Temple's doors or a roof), and it is one mesh with one blended material
+## (Look.blend_ground, lit_world_blend.gdshader): up to four of the place's surfaces (its floor, its difficult ground, an
+## area's floor, the woods' bank ground) melt into each other at their edges, noise-broken and softened over about half a
+## square, so mud, drifts, a path of flags and the banks under the trees have no square tiles. Paving and the squares
+## props stand on are drawn by the blend too but kept flat. A surface's own square keeps its middle 60%.
+##
 ## Built for speed (a place is built on every arrival): the height of every grid point is worked out once, from
 ## distance fields over flat arrays, and the meshes index that one grid.
 
@@ -33,6 +40,12 @@ const FLAT := 0
 const WOODS := 1
 const SKIN := 2
 const OPEN := 3   ## empty ground the land covers, and everything past the map
+const PAVED := 4   ## drawn by the blend like the walked ground, but flat: paving, and the square a prop stands on
+## Surfaces that are built, not ground: a room's boards and tiles, the Amber Temple's black stone, the kit's wood and stone.
+## Their squares keep the board's own boxes.
+const BUILT_SURFACES: Array[String] = ["interior/", "amber/", "kit/", "tent/", "dungeon/"]
+## Surfaces that are paved (their squares stay flat, and edges between them and earth are what blends).
+const PAVED_SURFACES: Array[String] = ["cobble", "flag", "courtyard", "stone_floor"]
 ## Set by art QA tools only, to shoot a place as it was before (tools/capture/land_capture.gd LAND_NO_RELIEF).
 static var off := false
 ## Reliefs built on earlier visits, by place and board shape (a place comes out the same every time); the newest few.
@@ -47,6 +60,17 @@ var _nx := 0
 var _nz := 0
 ## Squares whose ground the skin draws: cell -> the material their floor box had.
 var _skin: Dictionary = {}
+## The surfaces blended (the floor materials of the squares drawn, and the woods' bank ground), at most
+## Look.BLEND_SLOTS, and each square's slot in them (255 where nothing is blended).
+var _slots: Array[ShaderMaterial] = []
+## Which squares roll (ArenaBoard.rolling), once worked out.
+var _rolling := PackedByteArray()
+## Squares of the skin kept flat (paving, a prop's square): cell -> true.
+var _flat: Dictionary = {}
+var _slot_of := PackedByteArray()
+## The blend's control map and the material made from it, once there are meshes to draw.
+var _control: ImageTexture = null
+var _blend: ShaderMaterial = null
 ## Each map square's kind (FLAT, WOODS, SKIN, OPEN), row by row.
 var _kind := PackedByteArray()
 ## The height at every grid point, and the natural ground's under it (0 on a map without any).
@@ -62,7 +86,7 @@ static func enabled() -> bool:
 
 ## `loc` is the location's data (its exits lay the roads, its traps keep their squares as the board drew them). The
 ## skin is drawn on wild outdoor maps only.
-static func build(board_: ArenaBoard, loc: Dictionary) -> GroundRelief:
+static func build(board_: ArenaBoard, loc: Dictionary, woods: ShaderMaterial = null) -> GroundRelief:
 	var key := "%s|%dx%d|%d|%d" % [board_.place, board_.grid.width, board_.grid.depth, board_.occupied.size(),
 		board_.house_cells.size()]
 	var r := GroundRelief.new()
@@ -74,6 +98,10 @@ static func build(board_: ArenaBoard, loc: Dictionary) -> GroundRelief:
 		# own, cached by Look).
 		var k := _kept[key] as GroundRelief
 		r._skin = k._skin
+		r._slots = k._slots
+		r._flat = k._flat
+		r._slot_of = k._slot_of
+		r._control = k._control
 		r._kind = k._kind
 		r._h = k._h
 		r._b = k._b
@@ -81,8 +109,9 @@ static func build(board_: ArenaBoard, loc: Dictionary) -> GroundRelief:
 		r._nz = k._nz
 		r._roads = k._roads
 		return r
+	if eligible(board_, loc):
+		r._choose_skin(AtmosphereLand._trap_cells(loc), woods)
 	if board_.theme in ArenaBoard.WILD:
-		r._choose_skin(AtmosphereLand._trap_cells(loc))
 		r._lay_roads(loc)
 	r._kinds()
 	r._heights()
@@ -97,15 +126,64 @@ static func build(board_: ArenaBoard, loc: Dictionary) -> GroundRelief:
 ## empty ground.
 func is_flat(c: Vector2i) -> bool:
 	var k := _kind_of(c)
-	return k == FLAT or k == SKIN
+	return k == FLAT or k == SKIN or k == PAVED
 
 
-## The squares people walk on whose ground is a plain floor box at floor level in the place's floor (or mud)
-## material, that nothing stands on and no trap lies under (a pit opens its floor box).
-func _choose_skin(traps: Dictionary) -> void:
+## Whether the skin is drawn on this place: every outdoor map but the ones whose floors are built (an outdoor dungeon
+## map: the Amber Temple's doors, Daern's roof, the tower roofs, the castle's spires), and a board with no place.
+static func eligible(board_: ArenaBoard, loc: Dictionary) -> bool:
+	if board_.theme in ArenaBoard.WILD:
+		return true
+	return bool((loc.get("map", {}) as Dictionary).get("outdoors", false)) and board_.theme != "dungeon"
+
+
+## Whether a floor material can be blended: a textured ground surface, not a built one (boards, tiles, black stone).
+static func blendable(m: ShaderMaterial) -> bool:
+	var surface := str(m.get_meta("surface", "")) if m != null else ""
+	if surface == "":
+		return false
+	for built in BUILT_SURFACES:
+		if surface.begins_with(built):
+			return false
+	return true
+
+
+static func paved(m: ShaderMaterial) -> bool:
+	var surface := str(m.get_meta("surface", ""))
+	for p in PAVED_SURFACES:
+		if surface.contains(p):
+			return true
+	return false
+
+
+## Whether square `c` is under the woods: a tree square on rolling ground, which the banks rise under.
+func _is_woods(c: Vector2i) -> bool:
+	# (a crag's square is drawn flat in the place's own ground, which its foot rises out of)
+	return board.is_tree(c) and (not board.has_terrain() or _rolls(c)) \
+			and not (board.crags != null and board.crags.cells.has(c))
+
+
+## ArenaBoard.rolling for square `c`, worked out once each (it looks at the eight squares round it).
+func _rolls(c: Vector2i) -> bool:
+	if _rolling.is_empty():
+		_rolling.resize(_w * _d)
+		_rolling.fill(2)
+	var k := c.y * _w + c.x
+	if _rolling[k] == 2:
+		_rolling[k] = 1 if board.rolling(c) else 0
+	return _rolling[k] == 1
+
+
+## The squares whose ground is drawn by the blend: walked ground whose floor is a plain box at floor level (or, on rolling
+## natural ground, rolling) in a ground surface, that no door, house or trap lies under (a pit opens its floor box), at
+## most Look.BLEND_SLOTS surfaces, the most used first, with the woods' bank ground always one of them. Paving and the
+## squares props stand on stay flat (PAVED); the rest take hollows (SKIN).
+func _choose_skin(traps: Dictionary, woods: ShaderMaterial) -> void:
 	var g := board.grid
-	var plain := board.floor_material()
 	var terrain := board.has_terrain()
+	var picks := {}    # cell -> floor material
+	var counts := {}   # material -> squares
+	var usable := {}   # material -> whether it can be blended (worked out once each)
 	for z in _d:
 		for x in _w:
 			var c := Vector2i(x, z)
@@ -113,17 +191,58 @@ func _choose_skin(traps: Dictionary) -> void:
 			if (f & (CombatGrid.WALL | CombatGrid.VOID | CombatGrid.WATER)) != 0:
 				continue
 			# Raised ground only where it rolls (natural slopes); built floors and cliff edges stay the board's.
-			var level := board.rolling(c) if terrain else board.floor_y(c) == 0.0
+			var level := _rolls(c) if terrain else board.floor_y(c) == 0.0
 			if not level:
 				continue
-			if board.occupied.has(c) or board.door_cells.has(c) or board.house_cells.has(c) or traps.has(c):
+			if board.door_cells.has(c) or board.house_cells.has(c) or traps.has(c):
 				continue
 			var box := board.floor_box(c)
-			if box == null or box.material_override == null:
+			var m := box.material_override as ShaderMaterial if box != null else null
+			if m == null:
 				continue
-			if box.material_override != plain and (f & CombatGrid.DIFFICULT) == 0:
-				continue   # a room's own floor, a yard's flags: left as the board drew them
-			_skin[c] = box.material_override
+			if not usable.has(m):
+				usable[m] = blendable(m)
+			if not usable[m]:
+				continue
+			picks[c] = m
+			counts[m] = int(counts.get(m, 0)) + 1
+	var tree_squares := 0
+	if woods != null:
+		for z in _d:
+			for x in _w:
+				if _is_woods(Vector2i(x, z)):
+					tree_squares += 1
+		if tree_squares > 0:
+			counts[woods] = int(counts.get(woods, 0)) + tree_squares
+	var ranked: Array = counts.keys()
+	ranked.sort_custom(func(a: ShaderMaterial, b: ShaderMaterial) -> bool:
+		if a == woods or b == woods:
+			return a == woods and b != woods   # (the bank ground first: the woods are drawn only by it)
+		var ca := int(counts[a])
+		var cb := int(counts[b])
+		return ca > cb or (ca == cb and str(a.get_meta("surface")) < str(b.get_meta("surface"))))
+	_slots.clear()
+	for m: ShaderMaterial in ranked:
+		if _slots.size() < Look.BLEND_SLOTS:
+			_slots.append(m)
+	_slot_of.resize(_w * _d)
+	_slot_of.fill(255)
+	var slot_of := {}   # material -> its slot, and whether it is paving
+	for i in _slots.size():
+		slot_of[_slots[i]] = [i, paved(_slots[i])]
+	for c: Vector2i in picks:
+		var info: Variant = slot_of.get(picks[c])
+		if info != null:
+			_skin[c] = picks[c]
+			_slot_of[c.y * _w + c.x] = int((info as Array)[0])
+			if bool((info as Array)[1]) or board.occupied.has(c):
+				_flat[c] = true
+	if woods != null and tree_squares > 0:
+		var woods_slot := _slots.find(woods)
+		for z in _d:
+			for x in _w:
+				if _is_woods(Vector2i(x, z)) and woods_slot >= 0:
+					_slot_of[z * _w + x] = woods_slot
 
 
 func _kinds() -> void:
@@ -134,10 +253,9 @@ func _kinds() -> void:
 			var c := Vector2i(x, z)
 			var k := FLAT
 			if _skin.has(c):
-				k = SKIN
-			elif board.is_tree(c) and (not board.has_terrain() or board.rolling(c)) \
-					and not (board.crags != null and board.crags.cells.has(c)):
-				k = WOODS   # (a crag's square is drawn flat in the place's own ground, which its foot rises out of)
+				k = PAVED if _flat.has(c) else SKIN
+			elif _is_woods(c):
+				k = WOODS
 			elif g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER):
 				k = OPEN
 			_kind[z * _w + x] = k
@@ -282,7 +400,8 @@ func _heights() -> void:
 	bit.resize((_w + 2) * (_d + 2))
 	for z in _d + 2:
 		for x in _w + 2:
-			bit[z * (_w + 2) + x] = 1 << _kind_of(Vector2i(x - 1, z - 1))
+			var kind := _kind_of(Vector2i(x - 1, z - 1))
+			bit[z * (_w + 2) + x] = 1 << (FLAT if kind == PAVED else kind)   # (paving is flat ground)
 	var touch := PackedInt32Array()
 	touch.resize(_nx * _nz)
 	var out_bit := 1 << OPEN
@@ -334,7 +453,7 @@ func shape(p: Vector2) -> float:
 ## Whether the shaped ground draws square `c` (its walked skin, or the banks under its woods).
 func draws(c: Vector2i) -> bool:
 	var k := _kind_of(c)
-	return k == SKIN or k == WOODS
+	return k == SKIN or k == WOODS or k == PAVED
 
 
 func _read(a: PackedFloat32Array, p: Vector2) -> float:
@@ -367,10 +486,89 @@ func quiet_floors() -> void:
 			box.layers = 0
 
 
-## The shaped ground, leaving out the `hidden` squares: the skin over the walked squares in their floor's material(s)
-## and the banks over the woods in `woods` (tucked just under the board's own ground where they meet the clearing, so
-## the two never flicker). One grid of points for both; each mesh only indexes the squares it draws.
-func meshes(woods: Material, hidden: Dictionary = {}) -> Array[MeshInstance3D]:
+## The surfaces the blend draws, the most used first (for tests and QA).
+func slots() -> Array[ShaderMaterial]:
+	return _slots
+
+
+## The surface (as `Look.cel_textured` names it, "village/mud_road") the shaped ground shows at point `p` of the map, or ""
+## where the blend doesn't draw it (the caller asks the square's floor box). A square's middle 60% is its own surface; past
+## that, the squares round it as the blend shader reads them without its noise: the surface whose weight is the most.
+func surface_at(p: Vector2) -> String:
+	var c := Vector2i(floori(p.x), floori(p.y))
+	var own := _slot_at(c)
+	if own < 0:
+		return ""
+	var f := Vector2(p.x - c.x - 0.5, p.y - c.y - 0.5)
+	if maxf(absf(f.x), absf(f.y)) <= 0.3:
+		return str(_slots[own].get_meta("surface", ""))
+	# The four squares whose middles are nearest, weighed bilinearly.
+	var x0 := c.x - (1 if f.x < 0.0 else 0)
+	var z0 := c.y - (1 if f.y < 0.0 else 0)
+	var tx := p.x - (x0 + 0.5)
+	var tz := p.y - (z0 + 0.5)
+	var weight := {}
+	for dz in 2:
+		for dx in 2:
+			var slot := _slot_at(Vector2i(x0 + dx, z0 + dz))
+			if slot >= 0:
+				weight[slot] = float(weight.get(slot, 0.0)) + (tx if dx == 1 else 1.0 - tx) * (tz if dz == 1 else 1.0 - tz)
+	var best := own
+	for slot: int in weight:
+		if float(weight[slot]) > float(weight.get(best, 0.0)) + 0.0001:
+			best = slot
+	return str(_slots[best].get_meta("surface", ""))
+
+
+## The blend slot the shaped ground has on square `c` (-1 where it blends nothing).
+func _slot_at(c: Vector2i) -> int:
+	if c.x < 0 or c.y < 0 or c.x >= _w or c.y >= _d or _slot_of.is_empty():
+		return -1
+	var k := _kind[c.y * _w + c.x]
+	if k != SKIN and k != WOODS and k != PAVED:
+		return -1
+	var slot := _slot_of[c.y * _w + c.x]
+	return slot if slot < _slots.size() else -1
+
+
+## The slots whose squares are mostly difficult ground (a 1 in their channel): mud, drifts, litter. They spill into the
+## ground beside them and keep their own squares' middle 60%.
+func _difficult_slots() -> Vector4:
+	var hard := [0, 0, 0, 0]
+	var all := [0, 0, 0, 0]
+	for c: Vector2i in _skin:
+		var slot := int(_slot_of[c.y * _w + c.x])
+		if slot < Look.BLEND_SLOTS:
+			all[slot] += 1
+			if board.grid.has_flag(c, CombatGrid.DIFFICULT):
+				hard[slot] += 1
+	var v := Vector4.ZERO
+	for i in Look.BLEND_SLOTS:
+		v[i] = 1.0 if all[i] > 0 and hard[i] * 2 > all[i] else 0.0
+	return v
+
+
+## The blend's control map: a texel for every square of the map, a channel for each slot, set where the square is
+## drawn with that slot's surface.
+func _control_map() -> ImageTexture:
+	if _control == null:
+		var img := Image.create(_w, _d, false, Image.FORMAT_RGBA8)
+		for z in _d:
+			for x in _w:
+				var slot := _slot_at(Vector2i(x, z))
+				if slot >= 0:
+					img.set_pixel(x, z, Color(1.0 if slot == 0 else 0.0, 1.0 if slot == 1 else 0.0, 1.0 if slot == 2 else 0.0, 1.0 if slot == 3 else 0.0))
+		_control = ImageTexture.create_from_image(img)
+	return _control
+
+
+## The shaped ground, leaving out the `hidden` squares: the walked squares and the woods' banks as one mesh, in one blended
+## material (Look.blend_ground) with the squares' surfaces melting into each other. One grid of points for the whole of it;
+## the mesh only indexes the squares it draws.
+func meshes(hidden: Dictionary = {}) -> Array[MeshInstance3D]:
+	var out: Array[MeshInstance3D] = []
+	if _slots.is_empty():
+		return out
 	var verts := PackedVector3Array()
 	var normals := PackedVector3Array()
 	verts.resize(_nx * _nz)
@@ -384,69 +582,44 @@ func meshes(woods: Material, hidden: Dictionary = {}) -> Array[MeshInstance3D]:
 			var dx := _h[mini(i + 1, _nx - 1) + row] - _h[maxi(i - 1, 0) + row]
 			var dz := _h[mini(j + 1, _nz - 1) * _nx + i] - _h[maxi(j - 1, 0) * _nx + i]
 			normals[k] = Vector3(-dx, e, -dz).normalized()
-	# The materials drawn, then each one's squares in a pass of its own (an index array held in a dictionary would be
-	# copied every time it grew).
-	var mats: Array[Material] = []
-	var cell_mat: Array[Material] = []
-	cell_mat.resize(_w * _d)
+	var drawn := PackedInt32Array()
 	for z in _d:
 		for x in _w:
-			var c := Vector2i(x, z)
-			if hidden.has(c):
-				continue
-			var m: Material = null
-			match _kind[z * _w + x]:
-				SKIN:
-					m = _skin[c] as Material
-				WOODS:
-					m = woods
-			cell_mat[z * _w + x] = m
-			if m != null and not m in mats:
-				mats.append(m)
-	var groups := {}
-	for m in mats:
-		var n := 0
-		for k in _w * _d:
-			if cell_mat[k] == m:
-				n += 1
-		var idx := PackedInt32Array()
-		idx.resize(n * RES * RES * 6)
-		var f := 0
-		for z in _d:
-			for x in _w:
-				if cell_mat[z * _w + x] != m:
-					continue
-				var i0 := (x + MARGIN) * RES
-				var j0 := (z + MARGIN) * RES
-				for sj in RES:
-					for si in RES:
-						var a := (j0 + sj) * _nx + i0 + si
-						idx[f] = a
-						idx[f + 1] = a + 1
-						idx[f + 2] = a + _nx
-						idx[f + 3] = a + 1
-						idx[f + 4] = a + _nx + 1
-						idx[f + 5] = a + _nx
-						f += 6
-		groups[m] = idx
-	var out: Array[MeshInstance3D] = []
-	var walked := 0
-	for mat: Material in groups:
-		var arrays := []
-		arrays.resize(Mesh.ARRAY_MAX)
-		arrays[Mesh.ARRAY_VERTEX] = verts
-		arrays[Mesh.ARRAY_NORMAL] = normals
-		arrays[Mesh.ARRAY_INDEX] = groups[mat]
-		var mesh := ArrayMesh.new()
-		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-		var mi := MeshInstance3D.new()
-		mi.name = "Banks" if mat == woods else "Walked%d" % walked
-		if mat != woods:
-			walked += 1
-		mi.mesh = mesh
-		mi.material_override = mat
-		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		if mat == woods:
-			mi.position.y = -0.012
-		out.append(mi)
+			if _slot_at(Vector2i(x, z)) >= 0 and not hidden.has(Vector2i(x, z)):
+				drawn.append(z * _w + x)
+	if drawn.is_empty():
+		return out
+	var idx := PackedInt32Array()
+	idx.resize(drawn.size() * RES * RES * 6)
+	var f := 0
+	for cell in drawn:
+		var x := cell % _w
+		var z := cell / _w
+		var i0 := (x + MARGIN) * RES
+		var j0 := (z + MARGIN) * RES
+		for sj in RES:
+			for si in RES:
+				var a := (j0 + sj) * _nx + i0 + si
+				idx[f] = a
+				idx[f + 1] = a + 1
+				idx[f + 2] = a + _nx
+				idx[f + 3] = a + 1
+				idx[f + 4] = a + _nx + 1
+				idx[f + 5] = a + _nx
+				f += 6
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	if _blend == null:
+		_blend = Look.blend_ground(_slots, _control_map(), Vector2(_w, _d), _difficult_slots())
+	var mi := MeshInstance3D.new()
+	mi.name = "Ground"
+	mi.mesh = mesh
+	mi.material_override = _blend
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	out.append(mi)
 	return out

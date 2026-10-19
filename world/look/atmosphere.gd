@@ -608,16 +608,21 @@ func _footprints() -> void:
 			continue
 		var foot := -int(last[1])
 		_last_step[id] = [at, foot]
-		var ground := _ground_at(Vector2i(floori(at.x), floori(at.z)))
+		var ground := _ground_at(Vector2i(floori(at.x), floori(at.z)), Vector2(at.x, at.z))
 		if ground != "":
 			_print(at, step.normalized(), foot, ground)
 
 
-## What the ground is on a square ("snow", "mud" ...) if it takes footprints, else "".
-func _ground_at(c: Vector2i) -> String:
-	var box := board.floor_box(c)
-	var m := box.material_override as ShaderMaterial if box != null else null
-	var surface := str(m.get_meta("surface", "")) if m != null else ""
+## What the ground is on a square ("snow", "mud" ...) if it takes footprints, else "". At a point `at` (x, z) of the square
+## it asks the shaped ground, where mud and paving blend into each other across a square's edge (N2), what shows there.
+func _ground_at(c: Vector2i, at: Vector2 = Vector2.INF) -> String:
+	var surface := ""
+	if at != Vector2.INF and land != null and land.relief != null:
+		surface = land.relief.surface_at(at)
+	if surface == "":
+		var box := board.floor_box(c)
+		var m := box.material_override as ShaderMaterial if box != null else null
+		surface = str(m.get_meta("surface", "")) if m != null else ""
 	if surface == "":
 		return ""
 	if snow_cover >= SNOW_GROUND:

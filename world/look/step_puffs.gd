@@ -60,14 +60,19 @@ static func build(atmo: Atmosphere, view_: Node) -> StepPuffs:
 	return s
 
 
-## What a step on square `c` kicks up: "dust", "snow", "splash" or "" for nothing.
-func kind_at(c: Vector2i) -> String:
+## What a step on square `c` kicks up: "dust", "snow", "splash" or "" for nothing. At a point `at` (x, z) of the square it
+## asks the shaped ground what shows there, where surfaces blend across a square's edge (N2).
+func kind_at(c: Vector2i, at: Vector2 = Vector2.INF) -> String:
 	var board := atmosphere.board
 	if not board.grid.in_bounds(c):
 		return ""
-	var box := board.floor_box(c)
-	var m := box.material_override as ShaderMaterial if box != null else null
-	var surface := str(m.get_meta("surface", "")) if m != null else ""
+	var surface := ""
+	if at != Vector2.INF and atmosphere.land != null and atmosphere.land.relief != null:
+		surface = atmosphere.land.relief.surface_at(at)
+	if surface == "":
+		var box := board.floor_box(c)
+		var m := box.material_override as ShaderMaterial if box != null else null
+		surface = str(m.get_meta("surface", "")) if m != null else ""
 	if surface == "":
 		return ""
 	if atmosphere.snow_cover >= Atmosphere.SNOW_GROUND or SNOWY.any(func(w: String) -> bool: return surface.contains(w)):
@@ -118,7 +123,7 @@ func _process(_delta: float) -> void:
 		if Vector2(at.x - from.x, at.z - from.z).length() < STEP:
 			continue
 		_last[id] = at
-		var kind := kind_at(Vector2i(floori(at.x), floori(at.z)))
+		var kind := kind_at(Vector2i(floori(at.x), floori(at.z)), Vector2(at.x, at.z))
 		if kind != "":
 			puff(kind, at)
 
