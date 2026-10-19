@@ -283,7 +283,7 @@ func test_the_wax_image_has_one_hit_point_and_the_knight_is_a_golem_with_the_pla
 	assert_eq(str(golems["trigger"]), "dialogue", "only a conversation's choice starts it: it can always be avoided")
 	assert_eq((golems["monsters"] as Array).size(), 1, "one golem: the other knight is only armour (two at any Hit Points lose the party in three rounds)")
 	assert_eq(_cell((golems["monsters"] as Array)[0]["cell"]), Vector2i(16, 4), "from the west alcove")
-	assert_eq(int((golems["monsters"] as Array)[0]["hp"]), 230, "tuned from the stat block's 252 to 3 wins in 8")
+	assert_eq(int((golems["monsters"] as Array)[0]["hp"]), 300, "tuned from the stat block's 252 to 3 wins in 8 under the current rules")
 	var comp := Compendium.shared()
 	var block := comp.get_entry("monsters", "iron_golem")
 	assert_eq(int((block["hp"] as Dictionary)["average"]), 252)
@@ -533,7 +533,7 @@ func test_the_west_knight_steps_out_as_a_large_golem_and_its_twin_stays() -> voi
 		assert_eq(f.size_cells, 2, "Large: two squares across")
 		assert_true(str(f.creature.id).begins_with("iron_golem"), "an iron golem (%s)" % f.creature.id)
 		assert_eq(f.cell, Vector2i(16, 4), "out of the west alcove")
-		assert_eq(f.creature.max_hp(), 230)
+		assert_eq(f.creature.max_hp(), 300)
 	assert_true(v.prop_nodes.has("brazier_knight_east"), "and the east knight stays on its square")
 
 

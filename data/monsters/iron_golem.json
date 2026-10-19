@@ -5,7 +5,7 @@
     "book": "MM2025",
     "checked_against": "MM2025",
     "edition": "2024",
-    "note": "The 2025 Monster Manual's Iron Golem, read twice from aidedd.org's page for it on 2026-10-18 (both reads agreed on every number; the 2014 block it replaces has 210 Hit Points, a Slam and a Sword, a 15-foot Poison Breath at DC 19, Magic Weapons and a nonmagical-weapons immunity, none of which the new block keeps). Fire Absorption is the engine's `absorb: fire` (the golem regains Hit Points equal to the Fire damage it takes, including the Fire half of its own Bladed Arm if that ever hit it). Immutable Form is text only. Its Hit Points are tuned down per fight in the encounter (data/locations/castle_ravenloft_brazier_room.json), as the plan's iron golem pair asks."
+    "note": "The 2025 Monster Manual's Iron Golem, read twice from aidedd.org's page for it on 2026-10-18 (both reads agreed on every number; the 2014 block it replaces has 210 Hit Points, a Slam and a Sword, a 15-foot Poison Breath at DC 19, Magic Weapons and a nonmagical-weapons immunity, none of which the new block keeps). Fire Absorption is the engine's `absorb: fire` (the golem regains Hit Points equal to the Fire damage it takes, including the Fire half of its own Bladed Arm if that ever hit it). Immutable Form is text only. Its Hit Points are set per fight in the encounter (data/locations/castle_ravenloft_brazier_room.json): one golem at 300 there, since two lose the party in about three rounds at any Hit Points."
   },
   "size": "large",
   "type": "construct",
