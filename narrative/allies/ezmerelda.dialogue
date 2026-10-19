@@ -4,8 +4,9 @@
 # (her guest_talk in data/npcs/ezmerelda.json). Its lines read right in all of those places.
 #   ledger  She names up to three of the thirteen killers below, from flags the regions already set: first the ones the
 #           party has killed and she has not paid for (claim_*), then hunts in the region the party stands in, then the
-#           hardest hunts the party's level reaches (brief_*, words only). Payment is her hunter's goods, scaled by level;
-#           the fourth and eighth names also bring something from her wagon. Quest: hunters_ledger (docs/story/side_quests.md).
+#           hardest hunts the party's level reaches (brief_*, words only). Payment is gold for the six easier names (1,000 gp
+#           and up) and one magic item from her wagon for each of the seven hardest (Ashwin, 2026-10-19); the fourth and
+#           eighth names also bring something from her wagon. Quest: hunters_ledger (docs/story/side_quests.md).
 #   topics  Rudolph, her leg, the Vistani and what she thinks of where the party is going each play once (ezmerelda_heard_*),
 #           and the hub offers at most the three first in the order of TOPICS below.
 # Side flags are in data/flags/allies_ezmerelda.json; every flag read of the story's own is read-only here.
@@ -30,7 +31,7 @@ endif
 set ezmerelda_ledger_shown
 Narrator: She unwraps a battered book from its oilcloth. The pages are crowded with names, and the best ones are struck through in black ink.
 Ezmerelda: Every killer in this valley I trust enough to ink, with a price beside each. I pay for proof, not promises.
-Ezmerelda [sly]: I pay in what a hunter has: silver, holy water, remedies. Rudolph taught me to count the teeth before I count the coin.
+Ezmerelda [sly]: I pay in gold for the easy names and good kit from my wagon for the hard ones. Rudolph taught me to count the teeth before I count the coin.
 Ezmerelda: Three names at a time, though. Four is a chore list, and I've had a lifetime of Rudolph's.
 -> menu
 
@@ -433,7 +434,7 @@ Ezmerelda: Put silver in him first, keep your back off that drop, and come tell 
 set ledger_paid_falls
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sly]: One less of Kiril's on the hills, and nothing left at the falls but scratches in the stone.
-Ezmerelda: TODO-GEMINI pays ('gold', 1000)
+Ezmerelda: His name comes out of the book. Take a thousand gold and stitch yourselves up.
 gold +1000
 -> claim_end
 
@@ -447,7 +448,7 @@ Ezmerelda: Don't touch its pots, and stay clear of the tailboard. Burn it from r
 set ledger_paid_wagon
 set ezmerelda_ledger_paid += 1
 Ezmerelda [weary]: Seven years on that board, bait for his own wagon. I'm glad Iosif walked back to the Tser Pool camp.
-Ezmerelda: TODO-GEMINI pays ('gold', 1250)
+Ezmerelda: The wagon's crossed off. Take twelve hundred and fifty gold for the road.
 gold +1250
 -> claim_end
 
@@ -461,7 +462,7 @@ Ezmerelda: The count's fowlers wait in the branches: vampire spawn and bats. Loo
 set ledger_paid_fowlers
 set ezmerelda_ledger_paid += 1
 Ezmerelda: A cage in a dead pine is a baited hook. Whoever hung it was fishing for you.
-Ezmerelda: TODO-GEMINI pays ('gold', 1500)
+Ezmerelda [smile]: The fowlers are struck from the page. Take fifteen hundred gold.
 gold +1500
 -> claim_end
 
@@ -475,7 +476,7 @@ Ezmerelda: Clear the blights round it first, stay out of its reach, and tell me 
 set ledger_paid_vine
 set ezmerelda_ledger_paid += 1
 Ezmerelda: Druids plant one black stick and the whole row tries to drink you. I can smell the sour wine from here.
-Ezmerelda: TODO-GEMINI pays ('gold', 1750)
+Ezmerelda: The Vine Mother is crossed out. Take seventeen hundred and fifty gold.
 gold +1750
 -> claim_end
 
@@ -489,7 +490,7 @@ Ezmerelda [angry]: Don't take on all three hags at once. Hold a holy symbol up i
 set ledger_paid_morgantha
 set ezmerelda_ledger_paid += 1
 Ezmerelda: She talked sugar the whole time she was locking children in cages. A hag alone is a coward, and a dead coven stays quiet.
-Ezmerelda: TODO-GEMINI pays ('gold', 2000)
+Ezmerelda: Morgantha's name is struck for good. Take two thousand gold.
 gold +2000
 -> claim_end
 
@@ -503,7 +504,7 @@ Ezmerelda: Don't let the druids pin you against their stacked skulls. Aim for th
 set ledger_paid_wint
 set ezmerelda_ledger_paid += 1
 Ezmerelda: They dug the mountain folk out of their mounds to stack skulls for a walking tree. Even for this valley, that's ugly.
-Ezmerelda: TODO-GEMINI pays ('gold', 2500)
+Ezmerelda: Wintersplinter is out of the ledger. Take twenty-five hundred gold.
 gold +2500
 -> claim_end
 
@@ -517,7 +518,7 @@ Ezmerelda: Steady your nerve when the horn goes. Watch his boar spear and black 
 set ledger_paid_huntsman
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sad]: Every quarry he ran down became one of his hounds. My people scratched their names on cairns by the road.
-Ezmerelda: TODO-GEMINI pays ('give', 'armor_plus_1__ring_mail')
+Ezmerelda: Toader's hunt is struck from the book. Take the ring mail from my wagon.
 give armor_plus_1__ring_mail
 -> claim_end
 
@@ -531,7 +532,7 @@ Ezmerelda: His howl empties your nerve and his bite puts you on your back. Thin 
 set ledger_paid_grandsire
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sly]: He taught Kiril everything he knows and answered to nobody after. Sounds like another old teacher I could name.
-Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_2__battleaxe')
+Ezmerelda: The Grandsire is crossed out. Take this battleaxe from my wagon; it's yours.
 give weapon_plus_2__battleaxe
 -> claim_end
 
@@ -545,7 +546,7 @@ Ezmerelda: He laughs with his mouth open and calls armed men meat with swords. S
 set ledger_paid_kiril
 set ezmerelda_ledger_paid += 1
 Ezmerelda: That name has been in this book longer than any other, and the ink was wearing through the page.
-Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_2__spear')
+Ezmerelda: He's struck out for good. Take this spear from my wagon; it's yours.
 give weapon_plus_2__spear
 -> claim_end
 
@@ -559,7 +560,7 @@ Ezmerelda: He's polite right up until his touch freezes you. Don't offer him you
 set ledger_paid_khazan
 set ezmerelda_ledger_paid += 1
 Ezmerelda [weary]: I camped on that shore for months, knowing the lock answered to his name and never guessing what the name had made of him.
-Ezmerelda: TODO-GEMINI pays ('give', 'sun_blade__longsword')
+Ezmerelda: One less courteous corpse under the tower. Take the Sun Blade from my wagon.
 give sun_blade__longsword
 -> claim_end
 
@@ -573,7 +574,7 @@ Ezmerelda: She casts like a wizard and fusses over her boy. Burn the straw men e
 set ledger_paid_lysaga
 set ezmerelda_ledger_paid += 1
 Ezmerelda: I've cut her scarecrows down on that marsh before, and there were always three more watching before my blade was dry.
-Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_2__greataxe')
+Ezmerelda: The old witch is struck from the page. Take this greataxe from my wagon; it's yours.
 give weapon_plus_2__greataxe
 -> claim_end
 
@@ -587,7 +588,7 @@ Ezmerelda: She's starved on grave-salt, and the count's cart brings a cage every
 set ledger_paid_sarkhaza
 set ezmerelda_ledger_paid += 1
 Ezmerelda [sad]: Forty years in the dark on false gold, eating what came in cages. A ledger only asks who ate, not who held the leash.
-Ezmerelda: TODO-GEMINI pays ('give', 'armor_plus_2__scale_mail')
+Ezmerelda: Her name is struck. Take this scale mail from my wagon; it's yours.
 give armor_plus_2__scale_mail
 -> claim_end
 
@@ -601,7 +602,7 @@ Ezmerelda: The wardens could only sing it to sleep, and its ten small eyes will 
 set ledger_paid_eye
 set ezmerelda_ledger_paid += 1
 Ezmerelda [smile]: The wardens settled for a lullaby, and you lot went down there and finished the song.
-Ezmerelda: TODO-GEMINI pays ('give', 'weapon_plus_3__maul')
+Ezmerelda: The Eye Below is struck out. Take this maul from my wagon; it's yours.
 give weapon_plus_3__maul
 -> claim_end
 
