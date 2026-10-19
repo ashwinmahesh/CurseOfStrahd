@@ -39,6 +39,10 @@ const THIN := 0.35
 ## where cutting is on), a solid block, or outside ground; a tent's canvas (TentWalls). False where W8 isn't on for
 ## this board (its walls stay as before).
 static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
+	var cave := Caves.of(board)
+	if cave != null and cave.claims(c):
+		cave.build(c)   # a cave's rock is one surface, not a block a square (Caves, the Natural Maps Plan's I2)
+		return true
 	var st := _state(board)
 	if not st.is_empty() and (st["outside"] as Dictionary).has(c):
 		_outside(board, c, st)
@@ -244,6 +248,8 @@ static func _framed_sides(board: ArenaBoard, n: Vector2i, along: Vector2i, style
 	if not BuildingKit.has("kit_%s_doorway" % style) or CastleBuilder.claims(board, n - along) \
 			or CastleBuilder.claims(board, n + along):
 		return out   # the castle's roofs: a passage through its own walls (W19)
+	if Caves.owns(board, n - along) or Caves.owns(board, n + along):
+		return out   # a gap in a cave's rock: the door brings its own frame
 	# A gap between free-standing walls (the Amber Temple's book stacks) is an aisle, unless a door hangs in it.
 	if not (_anchored(board, n - along) and _anchored(board, n + along)) and not _door_at(board, n):
 		return out

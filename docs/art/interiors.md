@@ -341,6 +341,16 @@ braziers burning in the antechamber and either side of the altar.
     (two of the god's pilgrim candles), amber shards and a standing shard (by the Eye's broken block), and four icicle pieces
     (hung from the doors' lintel, see the colossi below).
 
+### Caves (the werewolf den, Ghakis's lair, the drowned library)
+
+- Their rock is no longer a block a square: it is drawn by `Caves` over a smooth, rounded, wandering contour (set_dressing
+  doc "Caves, not rooms"; the vault's Natural Maps Plan I2). The den's caves and the lair are `cave: true`; the library,
+  cut into rock and walled in masonry, is `cave: "hewn"` (a lighter amount), and its stacks of shelves stay shelves. The
+  lair's keepers' post stays built (`built_areas: ["keepers_post"]`) until B2 bends it. The Amber Temple's deep (`amber_deep`)
+  was the owner's own pass and has the look only if he says so.
+- The grid, the squares' heights, the doors and every prop are as before; a wall with something hung on it stays
+  straight where it hangs.
+
 ### Castle Ravenloft
 
 - The guest bedroom is the yellow room its text describes: `interior/wallpaper_yellow`, the green damask recoloured

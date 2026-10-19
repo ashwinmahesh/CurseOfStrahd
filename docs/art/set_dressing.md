@@ -423,3 +423,38 @@ N2's skin draws the rest):
   way and not stretched long, and a sprite stays under a token's height.
 
 `FloorPatch.enabled` switches the patch off for tests and timing runs; tests/integration/test_natural_small_things.gd.
+## Caves, not rooms (owner 2026-10-19: "Ex cave rooms should have natural shapes instead of it all being square rooms")
+
+A cave's rock was drawn like a house's walls, a box a square a storey high with a flat black cap, so a great cave was a
+rectangle cut out of a slab. A place look with `cave: true` (or `cave: "hewn"`, the lighter amount, for rooms cut into
+the rock) draws it as `Caves` instead, in the Modern look only (Classic keeps its blocks; the vault's "Natural Maps
+Plan", I2). `InteriorWalls.build` asks `Caves.of(board)` for each wall square and lets the cave draw the squares it
+claims; the cave is planned the first time it's asked, once for the whole board (`Caves._plan`), and kept for the next
+visit like GroundRelief's arrays (the newest eight places).
+
+- **The outline.** The floor's boundary is traced into loops and every corner rounded as far as the walls beside it
+  allow: a corner between two long walls takes a tangent of up to two squares (the curve's control point is pushed out
+  into the rock, as far as that rock is thick, so the cut over the floor stays a fifth of a square), a one-square niche
+  hardly rounds. The loops are filled into texels, a signed distance (a chamfer sweep) and a small blur make the field,
+  and noise seeded by the place moves the contour: a slow winding, a wobble, and bays that swell into the rock by up to
+  what its thickness leaves (a one-square wall keeps about four tenths of a square between two rooms), never more than a
+  quarter of a square in over the floor (rule 2 of the plan: a token in a square's middle and its ring stay clear;
+  `test_caves` measures it). The grid is then moved onto the field's levels near the contour (a third of a square apart)
+  so the rows of the surface run along the wall, not along the grid.
+- **The rock.** One surface over that field, each rock square keeping a piece of its own (meta `cave`): a steep face
+  that leans over the cave toward its top, a ragged lip, a dark top (the cave rock's `CUT_FACE` colour, as every
+  interior's wall top), and at its foot a slope of rubble that runs up to half a square out over the floor, with loose
+  stones and, in the bays the walls swell into, stalagmites. The rock far from any cave (more than two squares) is one
+  plain top (`CaveRockFar`). Everything opens round the party like any wall (SeeThrough). Bays get a floor box of the
+  room's own floor; the floor carries loose stones, and puddles where the look says `cave_puddles` (the den).
+- **What stays straight.** A wall square with something on it (a prop, a door's gap, an exit; anything in
+  `ArenaBoard.occupied` on a wall) keeps a straight, plumb stretch of wall about two squares long, so what hangs on it
+  hangs on a wall. A look's `built_areas` name areas that stay built (Ghakis's keepers' post): a wall that faces only
+  those, and a free-standing stack of shelves (the drowned library's), are InteriorWalls' as before, and a door in a gap
+  of the rock brings its own frame.
+- **Keys.** `cave` (true or "hewn"), `built_areas` (area ids), `cave_height` (the rock's top above the floor, default
+  2.6), `cave_puddles`. The amounts are `Caves.AMOUNTS`. `docs/art/interiors.md` lists the places.
+- **Looking at it.** `make capture SCENE=res://tools/capture/caves_capture.tscn NAME=caves/x` shoots the cave places
+  whole, from straight above and close from each heading with the screens hidden (`CV_LIGHT=1` adds a strong lamp, so
+  the shape can be read in a map made to be dark; `CV_OFF=1` the old blocks; `CV_FORCE=amber_deep` the look on a place
+  that doesn't have it yet; `CV_TIME=n` builds each place n times with it off and on for the build times).

@@ -1283,7 +1283,9 @@
     "werewolf_den_caves": {
       "floor": "cave/rock_floor",
       "wall": "cave/rock_wall",
-      "keep": true
+      "keep": true,
+      "cave": true,
+      "cave_puddles": true
     },
     "wizard_of_wines_cellar": {
       "wall": "dungeon/damp_brick"
@@ -1379,7 +1381,12 @@
     "ghakis_lair": {
       "floor": "cave/ember_basalt",
       "wall": "cave/ember_basalt_wall",
-      "keep": true
+      "keep": true,
+      "cave": true,
+      "built_areas": [
+        "keepers_post"
+      ],
+      "cave_height": 3.0
     },
     "amber_deep": {
       "floor": "amber/black_stone",
@@ -1392,7 +1399,8 @@
     "drowned_library": {
       "wall": "dungeon/slimed_brick",
       "keep": true,
-      "floor": "dungeon/drowned_flags"
+      "floor": "dungeon/drowned_flags",
+      "cave": "hewn"
     },
     "tsolenka_pass_guard_tower": {
       "floor": "church/frosted_flags"
