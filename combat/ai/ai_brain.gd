@@ -464,12 +464,17 @@ func _save_action_plan(c: Combatant) -> Dictionary:
 				if not h.is_down() and reach.has(h.cell):
 					return {"kind": "save_action", "action": act, "target": h, "move_to": h.cell, "why": "%s on %s" % [act.get("name", ""), h.name()]}
 		if not targets.is_empty():
-			var pick: Combatant = targets[0]
+			# Only a foe the area takes in: a wall between it and the monster keeps the area off a foe in range (the
+			# Penitent's Winter's Embrace and a ranger round the corner of the gorge wall). Picked anyway, the action caught
+			# no one, did nothing and stayed charged, so it was the plan again every turn while the monster stood still.
+			var pick: Combatant = null
 			for t1 in targets:
-				if not companion(t1):
+				if spread and not t1 in e.monster_actions.save_victims(c, act, t1):
+					continue
+				if pick == null or (companion(pick) and not companion(t1)):
 					pick = t1   # a hero before a familiar or a steed
-					break
-			return {"kind": "save_action", "action": act, "target": pick, "why": "%s on %s" % [act.get("name", ""), pick.name()]}
+			if pick != null:
+				return {"kind": "save_action", "action": act, "target": pick, "why": "%s on %s" % [act.get("name", ""), pick.name()]}
 	return {}
 
 
