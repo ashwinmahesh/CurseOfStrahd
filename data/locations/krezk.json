@@ -559,7 +559,22 @@
       ],
       "kind": "examine",
       "label": "Goat cheeses",
-      "model": "cheeses"
+      "model": "cheeses",
+      "checks": [
+        {
+          "id": "lift_a_cheese",
+          "skill": "athletics",
+          "dc": 8,
+          "label": "Lift one",
+          "success": {
+            "gold": 30,
+            "flag": "eggs_cheese_stair_found",
+            "reveal": [
+              "cheese_stair_glove"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "gate_handcart",
@@ -656,6 +671,18 @@
       "label": "a tin behind the wayside shrine",
       "model": "satchel",
       "item": "potion_of_invulnerability"
+    },
+    {
+      "id": "cheese_stair_glove",
+      "cell": [
+        14,
+        23
+      ],
+      "kind": "search",
+      "label": "a glove wedged in the stones above the cheeses",
+      "model": "satchel",
+      "search_dc": 14,
+      "item": "potion_of_climbing"
     }
   ],
   "containers": [

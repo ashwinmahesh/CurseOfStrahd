@@ -255,5 +255,18 @@ once
 ~ check:stealth:krezkov_listen:failure
 | A board creaks under your boot, and the voices inside stop. The shutters close.
 
+# ---------------------------------------------------------------- Small winks (docs/plans/gemini_eggs/r4/)
+# Lines drafted by Gemini through the ai-bridge and edited; every one is unvoiced for now.
+
+~ check:athletics:lift_a_cheese:success
+| You haul one wheel off the board and find the rest stacked behind it into a stair up the house wall, every rind scuffed by boots. A cheesecloth purse is tucked under the lowest step, and high in the stones a lone glove sticks out.
+
+~ check:athletics:lift_a_cheese:failure
+| You get your fingers under the cold rind and heave, but the wheel sits on its board like a millstone and gives nothing.
+
+~ search:cheese_stair_glove
+| {name} climbs the cheese, works the stiff glove out of the stones, and finds a small brown vial tucked in the palm. The cheese, to its credit, holds.
+once
+
 ~ scene:krezk_gate_lamps
 | At the black oak gate two watchmen with lanterns look you over, then the road behind you, and then, with great care, you again.

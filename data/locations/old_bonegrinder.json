@@ -197,7 +197,23 @@
       "model": "book",
       "codex": "morganthas_receipts",
       "flag": "bonegrinder_recipe_read",
-      "text": "Morgantha's receipt book, in three hands. The first is old and spiky; the second large and round, with drawings of cakes; the third neat and bored. DREAM PASTRY: flour of the mill, honey, poppy-milk, a sweet sleep-root from the garden, one pinch of the special flour per dozen. The special flour has its own page. Under it someone has written, in the round hand: NOT THE LITTLE ONES YET, MOTHER SAYS. Further on, a ledger: households in the village and on the Vallaki road, how many pastries a week, and a column headed OWING."
+      "text": "Morgantha's receipt book, in three hands. The first is old and spiky; the second large and round, with drawings of cakes; the third neat and bored. DREAM PASTRY: flour of the mill, honey, poppy-milk, a sweet sleep-root from the garden, one pinch of the special flour per dozen. The special flour has its own page. Under it someone has written, in the round hand: NOT THE LITTLE ONES YET, MOTHER SAYS. Further on, a ledger: households in the village and on the Vallaki road, how many pastries a week, and a column headed OWING.",
+      "checks": [
+        {
+          "id": "receipt_back_pages",
+          "skill": "investigation",
+          "dc": 12,
+          "label": "Read the back pages",
+          "when": "flag.bonegrinder_recipe_read",
+          "success": {
+            "codex": {
+              "id": "aunt_by_the_river",
+              "title": "A letter from the river",
+              "text": "My dearest Morgantha,\nSend back the scone receipt by the next crow, the good one with the marrow-salt. You have had it since autumn, and my tea-cups do not wash themselves. The parlour has been wonderfully full since the rains: three guests took such a fancy to the place that they stayed for good. They sit by the hearth and never leave a crumb. Quite my favourite arrangement.\nMind your ovens, petal.\nYour loving aunt, by the river"
+            }
+          }
+        }
+      ]
     },
     {
       "id": "bonegrinder_flour_sacks",

@@ -20,6 +20,11 @@
       "id": "court_stack_climbed",
       "type": "bool",
       "summary": "Someone climbed down the keep roof's smokestack (spires_smokestack): the way down to the study's hearth is open."
+    },
+    {
+      "id": "eggs_cheese_stair_found",
+      "type": "bool",
+      "summary": "Someone lifted a goat cheese at Krezk (lift_a_cheese) and found the stair of cheeses behind the board. Read by Watchman Lazar's wall_watch line."
     }
   ]
 }

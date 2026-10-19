@@ -29,6 +29,12 @@ Narrator: It folds its twig-thin legs beneath itself, sits very straight in the 
 * (Leave it.) -> END
 
 ~ pat
+if not flag.eggs_dog_sprig
+Narrator: You settle your palm on the brittle crown and give it two slow pats, right where a hound's ears would be.
+Narrator: With a dry creak the little creature draws itself up, its lone leaf standing bolt upright and a root-tip wagging in the dirt.
+set eggs_dog_sprig
+-> menu
+endif
 Narrator: You reach down and pat the crown of dry twigs, and the whole bundle trembles from root to thorn with fierce, silent effort.
 Narrator: Its lone leaf detaches and drifts to the dirt; the blight stares at the fallen leaf, then back up at you, waiting.
 -> menu

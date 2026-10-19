@@ -316,5 +316,20 @@ once
 ~ check:religion:lane_shrine_pray:failure
 | The words don't come. The mill's sails creak on behind you, keeping time.
 
+# ---------------------------------------------------------------- Small winks (docs/plans/gemini_eggs/r4/)
+# Lines drafted by Gemini through the ai-bridge and edited; every one is unvoiced for now.
+
+~ check:investigation:receipt_back_pages:success
+| Pinned behind the ledger with a rusted needle, a folded letter on river-reed paper, in a brisk looping hand that belongs to none of the book's three.
+
+~ check:investigation:receipt_back_pages:failure
+| The last leaves of the book are glued together with suet and brown sugar, and you can't get a thumbnail between them.
+
+~ search:sail_lashings
+| Tangled in the cut cords, a scrap of tiny leather harness and a pair of bent brass spectacles. Far below, the brambles are broken in a line that leads away down the hill.
+| [species:gnome] {name} knows the fit at a glance: spectacles made for a gnome's nose, still hung in the cut cords. Below, the brambles are broken in a line leading away down the hill.
+| [species:halfling] {name} measures the frames against a halfling's brow, and they match near enough. Below the sails, a crushed bush and a quick, light trail run off through the heather.
+once
+
 ~ scene:bonegrinder_far_castle
 | As the cloud shifts, the castle's one high window brightens, and for a moment, from up here, the whole sunless valley seems to hold still around it.

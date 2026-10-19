@@ -488,6 +488,18 @@
       "model": "satchel",
       "search_dc": 13,
       "item": "vicious_weapon__dagger"
+    },
+    {
+      "id": "sail_lashings",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "search",
+      "label": "something caught in the sail lashings",
+      "model": "satchel",
+      "search_dc": 14,
+      "item": "tiny_brass_spectacles"
     }
   ],
   "containers": [

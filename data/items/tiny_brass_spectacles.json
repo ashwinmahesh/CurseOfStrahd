@@ -1,0 +1,13 @@
+{
+  "id": "tiny_brass_spectacles",
+  "name": "Tiny Brass Spectacles",
+  "source": {
+    "book": "custom",
+    "note": "Found in the sail lashings of Old Bonegrinder; ours."
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 15,
+  "summary": "A pair of very small brass spectacles, bent at the bridge but whole.",
+  "text": "Lenses no wider than a thumbnail, a hinge mended twice, and a bridge worn bright by one very small nose. Whoever owned them left in a hurry."
+}

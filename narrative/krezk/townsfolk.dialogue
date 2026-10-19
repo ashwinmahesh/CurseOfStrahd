@@ -125,6 +125,9 @@ endif
 
 ~ wall_watch
 Watchman Lazar: The gate's watched, the wall's watched, and the road is watched most of all. Walk where you like inside. Just walk where I can see you.
+if flag.eggs_cheese_stair_found
+Watchman Lazar: And before you ask, no. The wall keeps the road out and the cheese keeps the winter out, and nobody climbs the cheese.
+endif
 -> END
 
 ~ goat

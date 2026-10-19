@@ -1,0 +1,10 @@
+{
+  "region": "eggs_west",
+  "flags": [
+    {
+      "id": "eggs_dog_sprig",
+      "type": "bool",
+      "summary": "The party has patted Sprig, the twig blight at the Wizard of Wines who thinks it is a dog (wizard_of_wines/sprig:pat). Its first pat is the proud one. One of the five good-dog marks the later Good Dogs, All achievement reads."
+    }
+  ]
+}

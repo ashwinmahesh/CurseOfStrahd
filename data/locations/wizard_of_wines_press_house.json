@@ -189,6 +189,17 @@
       "label": "Tools on pegs: rakes, forks, a cooper's hammer",
       "model": "tool_rack",
       "kind": "decor"
+    },
+    {
+      "id": "press_notice",
+      "cell": [
+        22,
+        7
+      ],
+      "kind": "book",
+      "label": "A notice nailed to the wall",
+      "model": "sign",
+      "text": "TO WHOEVER KEEPS STACKING THE LAMP-OIL BARRELS AGAINST THE PRESS \"FOR LATER\". This house is dry oak, old straw and a hundred casks of spirit. The blights on the hill are not that stupid, and neither am I. Clear them by dusk. Those are the terms. Hm."
     }
   ],
   "containers": [
