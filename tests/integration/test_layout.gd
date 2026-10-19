@@ -954,7 +954,8 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		var who := cv.e.combatants[k % cv.e.combatants.size()]
 		rows.append({"id": who.id, "name": "%s the Very Long-Named %d" % [who.name(), k], "ally": k % 3 == 0, "safe": k == 3,
 			"unaffected": false, "save_chance": 0.35, "damage": 21, "drops": "may drop" if k == 1 else ""})
-	# At the top right (his correction, 04:35): beside the log, or under it in the corner when it's minimized.
+	# At the top right, under the combat log and as wide as it (owner, 2026-10-19), whether the log is compact or
+	# minimized to its title bar; a log grown tall may leave it no room, and then it stands beside it (below).
 	for minimized: bool in [false, true]:
 		CombatHud.log_minimized = minimized
 		cv.hud.call("_apply_log_state")
@@ -965,11 +966,32 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 			var area := (cv.hud.get("_area_panel") as Control).get_global_rect()
 			var screen := get_tree().root.get_visible_rect()
 			assert_true(area.position.x > screen.size.x * 0.5, "on the right half (%s)" % area)
-			assert_false(area.intersects((cv.hud.get("_log_panel") as Control).get_global_rect()), "clear of the log")
+			var log_rect := (cv.hud.get("_log_panel") as Control).get_global_rect()
+			assert_false(area.intersects(log_rect), "clear of the log")
 			assert_false(area.intersects((cv.hud.get("_strip") as Control).get_global_rect()), "clear of the turn order")
 			assert_false(area.intersects((cv.hud.get("_hot_panel") as Control).get_global_rect()), "clear of the hotbar")
+			assert_true(area.position.y >= log_rect.end.y, "under the log (%s, the log %s)" % [area, log_rect])
+			assert_true(absf(area.end.x - log_rect.end.x) < 1.5 and absf(area.size.x - log_rect.size.x) < 1.5, "as wide as the log, edge to edge")
+			assert_true(screen.encloses(area), "inside the window")
 			return cv.hud,
 			func() -> void: cv.hud.hide_area_saves())
+	# Grown tall, the log leaves little room under it: the panel stands just left of it, under the turn order, unless the
+	# window is tall enough to leave the room.
+	CombatHud.log_tall = true
+	cv.hud.call("_apply_log_state")
+	await _check("the area saves panel with the log grown tall", func() -> Variant:
+		cv.hud.show_area_saves("Delayed Blast Fireball · slot level 9", "Dex save DC 19", rows, ["Ends your Concentration on Hunger of Hadar"])
+		await _frames(1)
+		var area := (cv.hud.get("_area_panel") as Control).get_global_rect()
+		var log_rect := (cv.hud.get("_log_panel") as Control).get_global_rect()
+		assert_false(area.intersects(log_rect), "clear of the log")
+		assert_false(area.intersects((cv.hud.get("_strip") as Control).get_global_rect()), "clear of the turn order")
+		assert_false(area.intersects((cv.hud.get("_hot_panel") as Control).get_global_rect()), "clear of the hotbar")
+		# Beside the log where the window leaves it under 150 px under it; a taller window has the room, and it's under.
+		assert_true(area.end.x <= log_rect.position.x or area.position.y >= log_rect.end.y, "beside the log, or under it where there's room")
+		return cv.hud,
+		func() -> void: cv.hud.hide_area_saves())
+	CombatHud.log_tall = false
 	CombatHud.log_minimized = false
 	cv.hud.call("_apply_log_state")
 	for i in 10:

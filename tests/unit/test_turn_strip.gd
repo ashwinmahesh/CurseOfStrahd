@@ -105,15 +105,16 @@ func test_a_long_order_stays_inside_its_panel_and_shows_whose_turn_it_is() -> vo
 	assert_true(_centred(view, e.current()), "...in the middle, or at the start of the row, which it is")
 	assert_false((view.get("_left") as Control).visible, "nothing before it: no arrow on the left")
 	assert_true((view.get("_right") as Control).visible, "more beyond: an arrow on the right")
-	assert_between((view.get("_right") as TurnStrip.End).beyond, 6, 16, "with how many are out of sight")
+	assert_between((view.get("_right") as TurnStrip.End).beyond, 4, 16, "with how many are out of sight")
 
 
 func test_every_turn_of_a_round_and_the_next_comes_into_view() -> void:
-	var view := _fight(20)
+	# 40 in the order: since the smaller cards (2026-10-19) 24 of them leave only a few turns off the ends of the row.
+	var view := _fight(36)
 	await _settle(view)
 	var round_no := e.round_no
 	var middles := 0
-	for k in 28:
+	for k in 44:
 		var c := e.current()
 		assert_true(view.in_view(c.id), "%s (turn %d of the order) is in view" % [c.name(), k])
 		assert_true(_centred(view, c), "%s is in the middle, or as near as the row's ends let it" % c.name())
@@ -127,7 +128,7 @@ func test_every_turn_of_a_round_and_the_next_comes_into_view() -> void:
 
 
 func test_hand_scrolling_holds_until_the_next_turn() -> void:
-	var view := _fight(20)
+	var view := _fight(36)
 	await _settle(view)
 	view.scroll_by(500.0, true)
 	await _settle(view)
@@ -148,7 +149,7 @@ func test_hand_scrolling_holds_until_the_next_turn() -> void:
 
 
 func test_the_wheel_the_trackpad_and_the_arrows_scroll() -> void:
-	var view := _fight(20)
+	var view := _fight(36)
 	await _settle(view)
 	var over := view.scroll.get_global_rect().get_center()
 	view.scroll.gui_input.emit(_wheel(MOUSE_BUTTON_WHEEL_DOWN, over))

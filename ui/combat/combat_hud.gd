@@ -91,8 +91,9 @@ var _undo_move: Button
 var _turn_note: Label
 var _tooltip: PanelContainer
 ## While an area spell is aimed (owner, 2026-10-12: "Put the saves for AoE spells in the top left corner of the HUD (not
-## directly next to the pointer)", then "I meant top right corner"): the save and its DC and every creature caught with
-## its chance to save, at the top right by the combat log (show_area_saves, _place_area_panel).
+## directly next to the pointer)", then "I meant top right corner", then 2026-10-19: "move the saves list when casting an
+## AoE spell to be under the combat log"): the save and its DC and every creature caught with its chance to save, at the
+## top right, under the combat log and as wide as it (show_area_saves, _place_area_panel).
 var _area_panel: PanelContainer
 var _area_title: Label
 var _area_sub: Label
@@ -100,6 +101,13 @@ var _area_rows: VBoxContainer
 var _area_key := 0
 ## Rows the area panel lists at most before it counts the rest ("+3 more"); fewer where the hotbar leaves less room.
 const AREA_ROWS := 8
+## The combat log's width (its offsets from the right edge), which the area panel takes too, and the portrait on each of
+## its rows.
+const LOG_WIDTH := 408.0
+const AREA_PORTRAIT := 28.0
+## The least room under the log the area panel stays there for (its title, the save and a few rows); a log grown tall
+## leaves less, and the panel stands beside it instead.
+const AREA_MIN_ROOM := 150.0
 ## The odds over a pointed-at target's head (show_odds).
 var _odds: PanelContainer
 var _odds_chance: Label
@@ -149,11 +157,33 @@ var _hot_panel: PanelContainer
 var _hot_portrait: Control
 var _hot_body: HBoxContainer
 var _hide_btn: Button
-const LOG_BOTTOM := 600.0
+## How the party frames and the turn order are sized (owner, 2026-10-19: "make the portraits and the initiative order
+## list smaller"): about a third under what they were (a portrait 64 px, a turn card's 54, the active turn's 72), the
+## names, Hit Point bars, condition icons and the turn's gilt ring kept readable. Everything the frames and the cards
+## are built from is here, so asking for more or less is a change to these numbers alone.
+const PARTY_PORTRAIT := 44.0
+const PARTY_COLUMN := 146.0
+const PARTY_CARD_WIDTH := 216.0
+const PARTY_NAME_SIZE := 14
+const PARTY_STATUS_SIZE := 12
+const PARTY_BAR_HEIGHT := 8.0
+const PARTY_ICON := 16.0
+const PARTY_GAP := 6
+const ORDER_PORTRAIT := 38.0
+const ORDER_PORTRAIT_ACTIVE := 50.0
+const ORDER_NAME_SIZE := 11
+const ORDER_NAME_SIZE_ACTIVE := 13
+const ORDER_BAR := 40
+const ORDER_BAR_ACTIVE := 52
+const ORDER_BAR_HEIGHT := 6.0
+const ORDER_GAP := 4
+## Where the party frames and the combat log start (under the turn order's panel, about 118 px tall with its margin).
+const TOP_ROW := 118.0
+const LOG_BOTTOM := 578.0
 ## The reaction prompt: its width, and its bottom edge (above the hotbar, whose top is 244 px up).
 const PROMPT_WIDTH := 440.0
 const PROMPT_BOTTOM := -254.0
-const LOG_COMPACT_BOTTOM := 372.0
+const LOG_COMPACT_BOTTOM := 350.0
 var _log_panel: PanelContainer
 var _log_title: Label
 var _log_toggle: Button
@@ -250,14 +280,14 @@ func _build_strip() -> void:
 	# A long order scrolls inside the panel and follows the turn (TurnStrip), so it never runs past the window.
 	_strip_view = TurnStrip.new()
 	_strip = _strip_view.strip
-	_strip.add_theme_constant_override("separation", 6)
+	_strip.add_theme_constant_override("separation", ORDER_GAP)
 	row.add_child(_strip_view)
 
 
 func _build_party() -> void:
 	_party_box = VBoxContainer.new()
-	_party_box.position = Vector2(12, 140)
-	_party_box.add_theme_constant_override("separation", 8)
+	_party_box.position = Vector2(12, TOP_ROW)
+	_party_box.add_theme_constant_override("separation", PARTY_GAP)
 	add_child(_party_box)
 
 
@@ -265,9 +295,9 @@ func _build_log() -> void:
 	_log_panel = _panel()
 	_log_panel.anchor_left = 1.0
 	_log_panel.anchor_right = 1.0
-	_log_panel.offset_left = -420
+	_log_panel.offset_left = -12.0 - LOG_WIDTH
 	_log_panel.offset_right = -12
-	_log_panel.offset_top = 140
+	_log_panel.offset_top = TOP_ROW
 	_log_panel.offset_bottom = LOG_BOTTOM
 	add_child(_log_panel)
 	var box := VBoxContainer.new()
@@ -353,6 +383,8 @@ func _apply_log_state() -> void:
 	_log_grow.text = "▴" if log_tall else "▾"
 	_log_grow.visible = not log_minimized
 	_log_panel.offset_bottom = _log_panel.offset_top + 46 if log_minimized else (LOG_BOTTOM if log_tall else LOG_COMPACT_BOTTOM)
+	# The area panel stands under the log, so a change to the log has the next hover rebuild it where it now fits.
+	_area_key = 0
 	_update_log_title()
 
 
@@ -579,7 +611,7 @@ func _build_area_saves() -> void:
 	_area_panel.name = "AreaSaves"
 	_area_panel.visible = false
 	_area_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_area_panel.custom_minimum_size = Vector2(350, 0)
+	_area_panel.custom_minimum_size = Vector2(LOG_WIDTH, 0)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 4)
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -623,7 +655,7 @@ func show_area_saves(title: String, sub: String, rows: Array, warnings: Array) -
 	for w: Variant in warnings:
 		var wl := _label(str(w), 13, "rose")
 		wl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		wl.custom_minimum_size = Vector2(330, 0)
+		wl.custom_minimum_size = Vector2(LOG_WIDTH - 20.0, 0)
 		_area_rows.add_child(wl)
 	# As many rows as fit above the hotbar where it stands, the rest counted.
 	_place_area_panel()
@@ -640,14 +672,19 @@ func show_area_saves(title: String, sub: String, rows: Array, warnings: Array) -
 	_area_panel.visible = true
 
 
-## The area panel's place at the top right: in the corner under the combat log when the log is minimized to its title
-## bar, else just left of the log, under the turn order. It depends only on the log, so it never jumps about as the
-## area moves; either way it clears the log, the turn order and the hotbar (test_layout).
+## The area panel's place at the top right: under the combat log, as wide as it and with its right edge on the log's, so
+## it follows the log's size (compact, or minimized to its title bar, where it climbs into the corner). A log grown tall
+## leaves under 150 px above the hotbar, and then the panel stands just left of it, under the turn order, as it did.
+## It depends only on the log and the hotbar, so it never jumps about as the area moves; either way it clears the log,
+## the turn order and the hotbar (test_layout).
 func _place_area_panel() -> void:
-	var w := _area_panel.get_combined_minimum_size().x
 	var log_rect := Rect2(_log_panel.position, _log_panel.size)
-	if log_minimized:
-		_area_panel.position = Vector2(log_rect.end.x - w, log_rect.end.y + 8.0)
+	# As wide as the log really is: its contents can keep it a few pixels wider than LOG_WIDTH.
+	_area_panel.custom_minimum_size.x = maxf(LOG_WIDTH, log_rect.size.x)
+	var w := _area_panel.get_combined_minimum_size().x
+	var under := log_rect.end.y + 8.0
+	if _hot_panel.position.y - 8.0 - under >= AREA_MIN_ROOM:
+		_area_panel.position = Vector2(log_rect.end.x - w, under)
 	else:
 		_area_panel.position = Vector2(log_rect.position.x - 8.0 - w, _strip_panel.position.y + _strip_panel.size.y + 10.0)
 
@@ -668,7 +705,7 @@ func _area_row(r: Dictionary) -> HBoxContainer:
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var who := e.get_c(str(r["id"]))
 	if who != null:
-		row.add_child(UiParts.framed_portrait(CombatToken.portrait_id(who), 34.0, who.is_down(), who.creature.dead))
+		row.add_child(UiParts.framed_portrait(CombatToken.portrait_id(who), AREA_PORTRAIT, who.is_down(), who.creature.dead))
 	var mid := VBoxContainer.new()
 	mid.add_theme_constant_override("separation", -2)
 	mid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -890,15 +927,15 @@ func _refresh_strip() -> void:
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 2)
 		card.add_child(v)
-		v.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), 72.0 if active else 54.0, c.is_down(), c.creature.dead))
+		v.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), ORDER_PORTRAIT_ACTIVE if active else ORDER_PORTRAIT, c.is_down(), c.creature.dead))
 		var short := c.name().get_slice(" ", 0) if c.side != &"enemy" else c.name().replace("Dire Wolf", "Dire")
-		var sl := _label(short, 13 if not active else 15, "gilt_light" if active else "vellum")
+		var sl := _label(short, ORDER_NAME_SIZE if not active else ORDER_NAME_SIZE_ACTIVE, "gilt_light" if active else "vellum")
 		sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(sl)
-		v.add_child(_hp_bar(c, 60 if not active else 76))
+		v.add_child(_hp_bar(c, ORDER_BAR if not active else ORDER_BAR_ACTIVE, ORDER_BAR_HEIGHT))
 		var pips := e.legendary.pips(c)
 		if pips != "":
-			var lg := _label(pips, 13, "crimson")
+			var lg := _label(pips, ORDER_NAME_SIZE, "crimson")
 			lg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			lg.tooltip_text = "Legendary actions left this round"
 			v.add_child(lg)
@@ -938,7 +975,7 @@ func _lair_card() -> PanelContainer:
 	var card := PanelContainer.new()
 	var done := e.legendary.lair_round >= e.round_no
 	card.add_theme_stylebox_override("panel", _style("ui_black", "crimson", 2))
-	var l := _label("Lair\n20" + (" ✓" if done else ""), 13, "parchment" if done else "vellum")
+	var l := _label("Lair\n20" + (" ✓" if done else ""), ORDER_NAME_SIZE, "parchment" if done else "vellum")
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.tooltip_text = "The lair acts on initiative count 20, losing ties"
@@ -959,7 +996,7 @@ func _refresh_party() -> void:
 		var card := PanelContainer.new()
 		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if alarm else "ui_black",
 			"vampire_red" if alarm or c.is_down() else ("gilt_light" if on else "gilt_dark"), 4 if alarm else (3 if on else 2)))
-		card.custom_minimum_size = Vector2(270, 0)
+		card.custom_minimum_size = Vector2(PARTY_CARD_WIDTH, 0)
 		card.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		var btn := Button.new()
 		card.add_child(btn)   # under the content, so the effect icons on top can name themselves on hover
@@ -967,16 +1004,16 @@ func _refresh_party() -> void:
 		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_theme_constant_override("separation", 8)
 		card.add_child(row)
-		row.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), 64.0, c.is_down(), c.creature.dead))
+		row.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), PARTY_PORTRAIT, c.is_down(), c.creature.dead))
 		var v := VBoxContainer.new()
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		v.add_theme_constant_override("separation", 3)
-		v.custom_minimum_size = Vector2(180, 0)
+		v.add_theme_constant_override("separation", 2)
+		v.custom_minimum_size = Vector2(PARTY_COLUMN, 0)
 		# The name, then what they are in small pills (a guest, DOWN), so a long name or a fall never widens the frame.
 		var head := HBoxContainer.new()
 		head.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		head.add_theme_constant_override("separation", 5)
-		var nm := _label(c.name(), 17, "vampire_red" if c.is_down() else ("gilt_light" if on else "vellum"))
+		var nm := _label(c.name(), PARTY_NAME_SIZE, "vampire_red" if c.is_down() else ("gilt_light" if on else "vellum"))
 		nm.add_theme_font_override("font", UiKit.display_font())
 		nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		nm.clip_text = true
@@ -991,7 +1028,7 @@ func _refresh_party() -> void:
 		if ready:
 			head.add_child(UiParts.pill("Ready", "bile", 11))
 		v.add_child(head)
-		v.add_child(_hp_bar(c, 170, 10.0))
+		v.add_child(_hp_bar(c, roundi(PARTY_COLUMN) - 6, PARTY_BAR_HEIGHT))
 		var cr := c.creature
 		var status := "%d/%d" % [cr.hp, cr.max_hp()]
 		if cr.temp_hp > 0:
@@ -1000,13 +1037,13 @@ func _refresh_party() -> void:
 		if chips != "":
 			status += " · " + chips
 		# One line, cut with an ellipsis; the whole list is in the frame's tooltip.
-		var sl := _label(status, 13, "parchment")
-		sl.custom_minimum_size = Vector2(180, 0)
+		var sl := _label(status, PARTY_STATUS_SIZE, "parchment")
+		sl.custom_minimum_size = Vector2(PARTY_COLUMN, 0)
 		sl.clip_text = true
 		sl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		v.add_child(sl)
 		# What's working on them (Rage, Bladesong, the spell they concentrate on...), an icon each.
-		var working := EffectIcons.row(cr, 20.0)
+		var working := EffectIcons.row(cr, PARTY_ICON)
 		if working != null:
 			v.add_child(working)
 		row.add_child(v)
@@ -1029,7 +1066,7 @@ func _sheet_button(c: Combatant) -> Control:
 	var b := Button.new()
 	b.flat = true
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	b.size = Vector2(64, 64)
+	b.size = Vector2(PARTY_PORTRAIT, PARTY_PORTRAIT)
 	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		b.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 	b.pressed.connect(func() -> void: sheet_requested.emit(c.id))

@@ -12,8 +12,8 @@ extends MarginContainer
 
 ## How wide the fade and arrow at each end are.
 const EDGE := 52.0
-## What one notch of the wheel moves, in pixels (a card with its gap is about 60 wide).
-const WHEEL_STEP := 96.0
+## What one notch of the wheel moves, in pixels (a card with its gap is about 44 wide).
+const WHEEL_STEP := 64.0
 ## How much of the view an arrow's click moves.
 const PAGE := 0.7
 ## How fast the glide closes the distance: after t seconds a fraction of exp(-EASE * t) of it is left.
