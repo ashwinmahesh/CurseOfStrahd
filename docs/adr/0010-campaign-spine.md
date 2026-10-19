@@ -20,7 +20,8 @@ needs a data format the validator can check, and the engine reads.
   built yet are ids the validator lists as pending, like other later-phase references.
 - **Travel is a node map.** `data/travel/barovia.json` holds places (each an entry into a location and spawn) and
   roads (hours, a random-encounter table). Travelling advances the clock; each leg rolls its table's day or night
-  chance (40% of it on a road already walked or a journey to a place already visited, 2026-10-18). A random fight
+  chance (a tenth of it on a road already walked, a leg to a place already visited or a journey to one, 2026-10-19; it was
+  40% from 2026-10-18). A random fight
   plays on a road map with the table's monsters; an event plays a conversation.
   The journey then waits (`StoryState.travel_resume`) only while the party stands on a road map (`Travel.is_road_scene`):
   no autosave is written between setting out and reaching it, and entering any other place drops a record left over,

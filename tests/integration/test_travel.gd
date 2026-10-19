@@ -74,7 +74,6 @@ func test_routes_follow_known_roads_and_places_appear_when_known() -> void:
 
 func test_a_fight_on_the_road_then_the_journey_goes_on() -> void:
 	var st := GameState.story
-	st.visited["test_ambush"] = true
 	st.set_flag("heard_of_town", true)
 	var start := st.total_minutes()
 	_view().walk_to(Vector2i(6, 2))
@@ -111,7 +110,6 @@ func test_a_fight_on_the_road_then_the_journey_goes_on() -> void:
 ## road with no fight and its journey stalled); won, the journey goes on.
 func test_a_road_fight_comes_back_after_a_load() -> void:
 	var st := GameState.story
-	st.visited["test_ambush"] = true
 	st.set_flag("heard_of_town", true)
 	_view().walk_to(Vector2i(6, 2))
 	for i in 200:
@@ -161,6 +159,11 @@ func test_road_fights_take_turns_on_the_road_s_battle_grounds() -> void:
 	(c.tables["random_encounters"]["test_road"] as Dictionary)["grounds"] = ["test_ambush", "test_glade"]
 	var grounds: Array[String] = []
 	for leg: Array in [["hall", "mid"], ["mid", "hall"]]:
+		# Each leg is a first walk: the road walked on the first and the hall the party set out from are familiar ground
+		# otherwise (RoadFamiliarity), where the table's sure chance would be a tenth.
+		GameState.story.flags.erase(RoadFamiliarity.FLAG)
+		if leg[1] == "hall":
+			GameState.story.visited.erase("test_hall")
 		root.call("travel", str(leg[0]), str(leg[1]))
 		await _frames(5)
 		assert_true(_view().in_combat, "wolves on the road from %s" % leg[0])

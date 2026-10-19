@@ -77,8 +77,10 @@ conversation instead of a fight (it may still end in `combat <id>` from that map
 `chance_day` and `chance_night` are a leg's chance the first time. Familiar ground rolls less (Ashwin, 2026-10-18: "if we
 are travelling a path to visit somewhere we have already been, reduce the rate of combat random encounters";
 story/road_familiarity.gd): a leg on a road the party has walked before (noted as each leg ends, either way along the
-road, in the save's `_roads_walked` flag), or on a journey bound for a place whose location is already in `visited`
-(which also covers a save from before roads were noted), rolls `RoadFamiliarity.SCALE` (40%) of the table's chance. The
+road, in the save's `_roads_walked` flag), or one that ends at a place whose location is already in `visited`, or on a
+journey bound for one (which also covers a save from before roads were noted), rolls `RoadFamiliarity.SCALE` (10%; it was
+40% until Ashwin, 2026-10-19: "still too many random combat encounters for paths we've already travelled") of the table's
+chance. The leg test quiets the stretches of a journey to somewhere new that run over ground the party has been to. The
 cut is made in `Travel.roll` before Strahd's attention and the weather are added, so his patrols and a storm still
 count; a first visit, Strahd's own visits on the road, story fights and a place's walk-in fights are never touched.
 

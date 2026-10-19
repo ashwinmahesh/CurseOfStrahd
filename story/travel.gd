@@ -151,8 +151,9 @@ static func hours(legs: Array[Dictionary]) -> float:
 
 ## Rolls a road's random encounter table for one leg (at the time the leg ends). Returns {} for a quiet road, or
 ## {table, entry} for a fight or an event. Uses the dice (d100 for the chance, then the weights). `journey_to` is the
-## place the journey is bound for: a road the party has walked, or a place it has been, is familiar ground (RoadFamiliarity).
-static func roll(road: Dictionary, st: StoryState, dice: DiceRoller, journey_to: String = "") -> Dictionary:
+## place the journey is bound for and `leg_to` the place this leg ends at: a road the party has walked, or a place it
+## has been, is familiar ground (RoadFamiliarity).
+static func roll(road: Dictionary, st: StoryState, dice: DiceRoller, journey_to: String = "", leg_to: String = "") -> Dictionary:
 	var tid := str(road.get("table", ""))
 	if tid == "":
 		return {}
@@ -164,7 +165,7 @@ static func roll(road: Dictionary, st: StoryState, dice: DiceRoller, journey_to:
 		return {}
 	var chance := float(table["chance_night"]) if st.is_night() else float(table["chance_day"])
 	# Ground the party knows is quieter (Ashwin, 2026-10-18); Strahd's eyes and the weather are added after.
-	chance *= RoadFamiliarity.scale(st, road, journey_to)
+	chance *= RoadFamiliarity.scale(st, road, journey_to, leg_to)
 	# Strahd's attention (F9): the more he has noticed the party, the more of his eyes and patrols are on the roads.
 	var watch := StrahdPresence.tier(st)
 	chance = minf(0.95, chance + float(watch.get("road_night" if st.is_night() else "road_day", 0.0)) + Weather.road_bonus(st))
