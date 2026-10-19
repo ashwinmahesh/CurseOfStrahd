@@ -219,6 +219,37 @@ town at the map's edge too, where an open village thins into pines (`TownBuilder
 stands on ground of its own, and fades when it hides the party, as the houses do. Vallaki's palisade is one mesh for the
 whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
 
+## Natural shapes (natural maps B1, `world/look/building_bend.gd`)
+
+Owner, 2026-10-19: "We can give buildings natural shapes instead of their straight lines. Natural edges can bend into a
+square the party can stand on." (the vault's Natural Maps Plan, rule 4 and package B1). In the Modern look no building is
+ruler-straight: `BuildingBend` is one smooth displacement of a building's points, worked out when it is built.
+
+- **What bends.** The whole footprint is turned a couple of degrees off the grid (a little more at the eaves), walls lean a
+  few degrees and bow along their length, corners drift off true at the footing, a timber house flares out toward its eaves, the roof ridge sags toward its middle (more on a long roof), the eaves and the top
+  plate wave up and down, and the chimney leans with the roof under it. Yard walls and a town wall lean and wander and
+  have an uneven coping, a palisade's logs each lean their own way with uneven tops, and building-sized props (the
+  cottage, Baba Lysaga's hut, the windmill: catalog `models3d.bend`, `ModelPiece.instance_bent`) bend as houses do.
+- **How far.** Never more than a quarter of a square sideways (rule 2: a wall is taller than a token's knee, so a token
+  in the middle of the square beside it and its ring stay clear; the field itself is held to 0.2, `FIELD_MAX`, so a
+  module bent whole stays inside 0.25). Per style, catalog `building_kit.bend`: `styles` (timber 1, clapboard 0.85, stone
+  0.55, church 0.35), `places` (Castle Ravenloft's outer yards 0, the Abbey and Argynvostholt 0.65) and `overhang`. The
+  field is seeded by the place and the building, so a place comes out the same every time and no two houses lean alike.
+  The Classic look and the rules grid are untouched.
+- **How.** Only vertices move: no new art, so a window, a door bay or a beam goes with its wall. A house's wall modules
+  go whole (`BuildingBend.fold`: the module's placement takes the bend to first order about its middle, a few field
+  evaluations a module, so a village's 200,000 wall points cost nothing); the roofs, the core, the gables made in code,
+  the palisade and the props have their points moved (`bent`). Both are in `BuildingKit.merge` (`bend`, `at`,
+  `whole_modules`). A house's field is smooth over a square (waves ten squares long) so folding stays within a few
+  hundredths. The whole L-shaped building shares one bend, so its wings still meet where they did, and the core and each
+  gable end are cut into small pieces to bow with the walls.
+- **Hung pieces follow the wall.** A sign, a lantern, a window light or a door's leaf hung on a bent house goes to the
+  bent point, turned and tilted with the wall (`TownBuilder.follow_bend`, from `face_taken`; `BuildingBend.frame`); a gate
+  in a bent yard wall too (`follow_yard`). An arm of a yard wall that meets a house reaches a little way into it, and
+  runs a little long, so a bent house leaning away from it leaves no gap.
+- **Not bent.** Castle Ravenloft (CastleBuilder), interiors (B2 will), the Classic look, tents, ground-level props.
+  `kit_capture` takes `KIT_NO_BEND=1` for the same shots ruler-straight.
+
 ## Making and changing the modules (`blender/building_kit.py`)
 
     blender -b --python blender/building_kit.py -- [--only kit_timber_low_b ...] [--preview captures/kit.png]
@@ -230,7 +261,11 @@ repaints, and the kit's constants). A wall module is one square's face, 1 unit w
 -Y (Godot +Z) points out of the house and the origin is the bottom middle of the face. Surfaces use palette colours
 and the existing texture sets; the HD surfaces (W4) will give the kit its own painted materials.
 
-Checks: `tests/integration/test_building_kit.gd` (every module TownBuilder asks for exists with real materials, the
+Checks: `tests/integration/test_building_bend.gd` (a bend never moves a point past the limit, is the same every time and
+differs by place, `bent` agrees with `apply`, each style bends by its amount, the village's houses are bent and stay near
+their boxes, a bent wall reaches no more than a quarter square past the straight one, pieces hung on a bent house stand
+where they did on the straight one, yard walls and palisades, building-sized props), and
+`tests/integration/test_building_kit.gd` (every module TownBuilder asks for exists with real materials, the
 village is built of kit houses with door bays and lit windows, a house cuts away to its footing, the churches are
 stone with their towers, Vallaki is clapboard behind its palisade and Krezk is stone inside its tall wall all round,
 and lone wall squares are pillars in the castle, the church and the Death House's dungeon; the Death House's upper

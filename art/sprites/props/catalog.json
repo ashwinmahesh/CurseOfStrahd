@@ -1652,6 +1652,14 @@
     "places": [
       "*"
     ],
+    "bend": {
+      "cottage": 0.9,
+      "hut_lysaga": 1.0,
+      "barn_collapsed": 0.5,
+      "windmill": 0.55,
+      "bell_tower": 0.25,
+      "tower_vr": 0.2
+    },
     "art": {
       "book_shelf": "bookcase",
       "book_shelf_front": "bookcase",
@@ -2109,6 +2117,24 @@
       "rust",
       "night"
     ],
+    "bend": {
+      "about": "Natural shapes for buildings (natural maps B1, owner 2026-10-19: \"We can give buildings natural shapes instead of their straight lines\"; BuildingBend, docs/art/building_kit.md): a building's points are moved once when it is built, so its walls lean and bow, its corners drift, a timber house's upper storey juts, the ridge sags and the eaves wave, never more than a quarter of a square sideways. styles: how far each style bends, 1 the most (a Barovian timber cottage); places: a place's own amount over its style's (Castle Ravenloft's outer yards stay as raised by power, the Abbey and Argynvostholt are old and tired); overhang: how far a style's upper storey juts out at full amount. A town's yard walls and palisade take the style's amount too. The Classic look never bends.",
+      "styles": {
+        "timber": 1.0,
+        "clapboard": 0.85,
+        "stone": 0.55,
+        "church": 0.35
+      },
+      "places": {
+        "castle_ravenloft_gates": 0.0,
+        "castle_ravenloft_overlook": 0.0,
+        "abbey_of_st_markovia": 0.65,
+        "argynvostholt": 0.65
+      },
+      "overhang": {
+        "timber": 0.07
+      }
+    },
     "interiors": {
       "about": "Interiors: the style a place's rooms are built in, by the start of its id, else by board theme. A lone wall square inside a room is a pillar in that style (kit_pillar_<style>); every open face of a cut-away wall gets the style's coping along its top and, where no panelling does, its face module (kit_<style>_coping, kit_<style>_face). full_walls (W8, Modern look only): rooms get full-height walls, height by style, which open a window round the party where they hide it (SeeThrough); cut_away: they drop to the cut-away height toward the camera instead (off: owner 2026-10-17, \"walls collapse down when looking from certain angles\"); thin_walls (Natural Maps Plan I1, owner 2026-10-19): the side of a wall that faces a room is set back into the wall square by inset (0.35 of a square), so a wall between two rooms stands a foot and a half thick, not a whole square, and the places named in not (starts of ids: the caves, which have their own walls) keep whole squares; ground: what lies outside the building by style, and outside: a place's own (its ground, how many storeys below it lies, its walls' height); a dungeon's outside is rock.",
       "places": {

@@ -144,7 +144,7 @@ func test_models_stay_in_their_square() -> void:
 			if m.has_meta("hung"):
 				var n := m.global_basis.z.normalized()
 				var front := v.grid.cell_at(m.global_position + n * 0.5)
-				room = Rect2(front.x - 0.06, front.y - 0.06, 1.12, 1.12)
+				room = Rect2(front.x - 0.06, front.y - 0.06, 1.12, 1.12).grow(BentWalls.slack(v.board, m.global_position))   # (a bent house's wall: natural maps B1)
 			if (m.has_meta("hung") or m.has_meta("against_wall")) and v.board.wall_inset < 0.0:
 				room = _reach_back(room, m, -v.board.wall_inset)   # thin walls: the wall's face lies back inside its square
 			if m.has_meta("scaled"):
@@ -224,7 +224,7 @@ func test_3d_pieces_dont_overlap() -> void:
 				continue   # stairs and door leaves fill their own square in the wall line
 			var b := _bounds(m)
 			rects.append([str(m.get_meta("model")), board.grid.cell_at(m.global_position), Rect2(b.position.x, b.position.z, b.size.x, b.size.z),
-				bool(info.get("big", false))])
+				bool(info.get("big", false)), BentWalls.slack(board, m.global_position)])
 		for i in rects.size():
 			var a := _shrink(rects[i][2] as Rect2)
 			for j in range(i + 1, rects.size()):
@@ -232,13 +232,16 @@ func test_3d_pieces_dont_overlap() -> void:
 					problems.append("%s: %s at %s overlaps %s at %s" % [loc_id, rects[i][0], rects[i][1], rects[j][0], rects[j][1]])
 			if bool(rects[i][3]):
 				continue
+			# (A piece hung on a bent house stands off the grid line with its wall: natural maps B1.)
+			var shrink := float(rects[i][4])
+			var against_wall := a.grow(-shrink) if a.size.x > 2.0 * shrink and a.size.y > 2.0 * shrink else Rect2(-100, -100, 0, 0)
 			for dx: int in [-1, 0, 1]:
 				for dz: int in [-1, 0, 1]:
 					var c := (rects[i][1] as Vector2i) + Vector2i(dx, dz)
 					# (A thin wall is only its middle: its faces lie back inside its square, ArenaBoard.wall_inset.)
 					if (dx != 0 or dz != 0) and board.grid.in_bounds(c) and board.grid.has_flag(c, CombatGrid.WALL) \
 							and not board.door_cells.has(c) and _drawn(board, c) \
-							and a.intersects(Rect2(c.x, c.y, 1, 1).grow(minf(board.wall_inset, 0.0))):
+							and against_wall.intersects(Rect2(c.x, c.y, 1, 1).grow(minf(board.wall_inset, 0.0))):
 						problems.append("%s: %s at %s reaches into the wall at %s" % [loc_id, rects[i][0], rects[i][1], c])
 		for n in board.find_children("*", "Sprite3D", true, false):
 			var sp := n as Sprite3D

@@ -107,6 +107,67 @@ static func instance(id: String) -> Node3D:
 static var _parts: Dictionary = {}
 
 
+## How much building-sized model `id` bends where it stands (catalog models3d "bend", 0 to 1: the cottage and Baba
+## Lysaga's hut most, a stone tower hardly), 0 for most pieces and in the Classic look.
+static func bend_amount(id: String) -> float:
+	if not Look.modern():
+		return 0.0
+	return float((settings().get("bend", {}) as Dictionary).get(id, 0.0))
+
+
+## A new copy of model `id` as `instance` makes it, bent (BuildingBend, natural maps B1) when the catalog names it:
+## its points moved once so its walls lean and bow and its ridge sags, differently on every square it stands on. The
+## copy's meshes are its own, with the part transforms folded into their points.
+static func instance_bent(board: ArenaBoard, id: String, cell: Vector2i) -> Node3D:
+	var amount := bend_amount(id)
+	if amount <= 0.0:
+		return instance(id)
+	var key := id + "|" + Look.style()
+	if not _parts.has(key):
+		_parts[key] = _read_parts(id)
+	var parts := _parts[key] as Array
+	var box := AABB()
+	var first := true
+	for part: Array in parts:
+		var b := (part[1] as Transform3D) * (part[0] as Mesh).get_aabb()
+		box = b if first else box.merge(b)
+		first = false
+	var bend := BuildingBend.for_prop(amount, box, BuildingBend.place_seed(board) * 131 + hash_cell(cell) + id.hash() % 9973)
+	var root := Node3D.new()
+	root.name = "Model_" + id
+	for part: Array in parts:
+		var mesh := part[0] as Mesh
+		var xf := part[1] as Transform3D
+		var am := ArrayMesh.new()
+		var mats := part[2] as Array
+		for i in mesh.get_surface_count():
+			var arrays := mesh.surface_get_arrays(i)
+			var verts := arrays[Mesh.ARRAY_VERTEX] as PackedVector3Array
+			var moved := PackedVector3Array()
+			moved.resize(verts.size())
+			for j in verts.size():
+				moved[j] = xf * verts[j]
+			arrays[Mesh.ARRAY_VERTEX] = bend.bent(moved)
+			if arrays[Mesh.ARRAY_NORMAL] is PackedVector3Array:
+				var normals := arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array
+				var turned := PackedVector3Array()
+				turned.resize(normals.size())
+				for j in normals.size():
+					turned[j] = xf.basis * normals[j]
+				arrays[Mesh.ARRAY_NORMAL] = turned
+			arrays[Mesh.ARRAY_TANGENT] = null   # (the cel shaders don't read them)
+			am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+			am.surface_set_material(i, mesh.surface_get_material(i))   # (the names Blender gave: swap_surfaces reads them)
+		var mi := MeshInstance3D.new()
+		mi.name = str(part[3])
+		mi.mesh = am
+		for i in mats.size():
+			mi.set_surface_override_material(i, mats[i] as Material)
+		root.add_child(mi)
+	root.set_meta("model", id)
+	return root
+
+
 ## Model `id`'s meshes as [mesh, transform under the model's root, the game's material per surface, node name].
 static func _read_parts(id: String) -> Array:
 	var info := manifest()[id] as Dictionary
@@ -185,7 +246,7 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	holder.set_meta("art", art)
 	holder.set_meta("model", id)
 	parent.add_child(holder)
-	var model := instance(id) if length <= 0.0 else instance_long(id, length)   # (`length`: one long piece, a run's)
+	var model := instance_bent(board, id, cell) if length <= 0.0 else instance_long(id, length)   # (`length`: one long piece, a run's; a building-sized piece bends: natural maps B1)
 	model.scale = Vector3.ONE * scale_
 	holder.add_child(model)
 	if length > 0.0:

@@ -279,7 +279,7 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
   on purpose.)
 - A piece's back is Gemini's idea of its back, drawn alongside the front; a few pairs differ in colour.
 - Wall pieces and door leaves are flat: seen along the wall they disappear, as the cut-away walls' faces do.
-- Houses are rectangles; a building the data draws as an L becomes two houses with their own roofs.
+- Houses bend (lean, bow, sag; docs/art/building_kit.md "Natural shapes") but their footprints are the data's rectangles: an L-shaped block is one building under one joined roof, its wings' roofs meeting in a valley.
 - Interiors stay dark at dusk and night by design; the party's lantern lights the pieces near the party.
 
 ## Things placed by hand (Natural Maps Plan I3, the catalog's `hand_placed`; owner 2026-10-19)

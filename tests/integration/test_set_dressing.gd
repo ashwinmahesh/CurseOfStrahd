@@ -429,13 +429,18 @@ func test_wall_pieces_sit_flush_with_their_wall() -> void:
 					and (node as Sprite3D).axis == Vector3.AXIS_Z and node.name != "Leaf" and not node.get_parent().has_meta("against_wall") \
 					and not node.get_parent().has_meta("door") and not node.get_parent().name == "Upper"):
 				var yaw := node.global_rotation.y
-				if absf(yaw / (PI / 2.0) - roundf(yaw / (PI / 2.0))) > 0.01:
+				# (A piece on a bent house follows its wall, a few degrees off true and up to a quarter square off its line:
+				# BentWalls, natural maps B1.)
+				var bent_turn := BentWalls.turn(board, node.global_position)
+				if absf(yaw / (PI / 2.0) - roundf(yaw / (PI / 2.0))) > 0.01 + bent_turn / (PI / 2.0):
 					problems.append("%s: %s turned %.0f degrees off its wall" % [loc_id, node.name, rad_to_deg(yaw)])
 					continue
 				var facing := node.global_basis.z
 				# (A tent's pieces stand off its canvas, which stands in from the wall square's face: ArenaBoard.wall_inset.
-				# A thin wall's face lies back inside its square, so there the piece only has further to reach: not looked for.)
-				var behind := node.global_position - Vector3(facing.x, 0, facing.z).normalized() * ((0.55 if against else 0.05) + maxf(board.wall_inset, 0.0))
+				# A thin wall's face lies back inside its square, so there the piece only has further to reach: not looked for.
+				# A piece on a bent house stands up to its wall's reach further out: BentWalls, natural maps B1.)
+				var behind := node.global_position - Vector3(facing.x, 0, facing.z).normalized() \
+					* ((0.55 if against else 0.05) + maxf(board.wall_inset, 0.0) + BentWalls.slack(board, node.global_position))
 				var c := board.grid.cell_at(behind)
 				var backed := board.grid.has_flag(c, CombatGrid.WALL) or board.door_cells.has(c)
 				if against and SetDressing.backing_side(board, board.grid.cell_at(node.global_position)) == Vector2i.ZERO:

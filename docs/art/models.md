@@ -88,6 +88,11 @@ panelling.
   a wall piece with no wall beside it takes its square like a standing prop; building-sized pieces shrink only as far
   as they must to keep clear of the location's other things and of each other (`ModelPiece.big_fit`).
 - **Stairs:** a stairwell down opens its square's floor while it shows.
+- **Bent buildings** (natural maps B1, docs/art/building_kit.md "Natural shapes"): the building-sized models named in
+  the catalog's `models3d.bend` (the cottage, Baba Lysaga's hut, the windmill, the collapsed barn, the bell tower and
+  Van Richten's tower, by amount) lean, bow and sag where they stand (`ModelPiece.instance_bent`: a copy of the model
+  with its points moved, differently on every square, keeping the surfaces' Blender names so a `swap` or a tint still
+  finds them), by at most a quarter of a square sideways. A piece hung on a bent house follows its wall.
 - **Panelling:** one module per open face; a one-square gap in a wall (a doorway) is left to the door frame. The
   modules sit under one holder on the wall square, so a prop that takes the square, or a hidden area, hides them.
 - **Picking:** `SpritePick.hit` also tests the ray against each model's triangles, so pointing at any drawn part

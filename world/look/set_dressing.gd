@@ -344,6 +344,8 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 				_pillar(board, pc, h + 0.1, statue)
 	elif not secret:
 		_frame(board, base, along_x, h, 2.0 if pair != Vector2i.ZERO else 1.0)
+		if pair == Vector2i.ZERO and _yard_gate(board, cell, along_x):
+			TownBuilder.follow_yard(board, leaf)   # the yard wall it stands in is bent: the leaf goes with it
 	if secret:
 		# Hidden: a block of wall (the bookcase door shows its shelves on the wall faces) until it is found, with no
 		# doorway framed round it (W7).
@@ -423,12 +425,8 @@ static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, sp
 		return   # a gate in a passage through the castle's walls stands in the passage's arch (W19)
 	if span <= 1.0 and InteriorWalls.frames(board, board.grid.cell_at(base)):
 		return   # a doorway inside, framed in the place's style (W7)
-	if board.theme in ArenaBoard.TOWNS and BuildingKit.style_for(board) != "" and span <= 1.0:
-		# A gate in a kit town's yard wall hangs between the piers the wall puts at its ends (TownBuilder._kit_yard).
-		var c := board.grid.cell_at(base)
-		var side := Vector2i(1, 0) if along_x else Vector2i(0, 1)
-		if _yard_at(board, c + side) and _yard_at(board, c - side):
-			return
+	if _yard_gate(board, board.grid.cell_at(base), along_x, span):
+		return   # a gate in a kit town's yard wall hangs between the piers the wall puts at its ends (TownBuilder._kit_yard)
 	var mat := board.wall_material()
 	var post := Vector3(0.12, h, 0.34) if along_x else Vector3(0.34, h, 0.12)
 	var side := span / 2.0 - 0.03
@@ -437,6 +435,15 @@ static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, sp
 		_frame_box(board, post, base + off, mat)
 	_frame_box(board, Vector3(span, 0.12, 0.34) if along_x else Vector3(0.34, 0.12, span), base + Vector3(0, h + 0.06, 0),
 		Look.cel("bone_dark" if board.theme in ArenaBoard.TOWNS else ArenaBoard.CUT_FACE))
+
+
+## Whether the door on `c` (in a wall running `along_x`) is a gate in a kit town's yard wall, between the piers the wall
+## puts at its ends.
+static func _yard_gate(board: ArenaBoard, c: Vector2i, along_x: bool, span: float = 1.0) -> bool:
+	if not (board.theme in ArenaBoard.TOWNS and BuildingKit.style_for(board) != "" and span <= 1.0):
+		return false
+	var side := Vector2i(1, 0) if along_x else Vector2i(0, 1)
+	return _yard_at(board, c + side) and _yard_at(board, c - side)
 
 
 static func _yard_at(board: ArenaBoard, c: Vector2i) -> bool:

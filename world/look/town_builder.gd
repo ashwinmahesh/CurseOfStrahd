@@ -12,6 +12,8 @@ extends RefCounted
 
 const HOUSE_H := 2.2
 const YARD_WALL_H := 1.0
+const PALISADE_H := 2.2     ## how tall a palisade's logs stand, for the bend (BuildingBend.for_logs)
+const FOLLOW_LIFT := 0.02   ## how far off a bent wall a piece hung on it stands (the wall is a line between its points, off the curve a hair)
 const EAVE := 0.18          ## how far a roof overhangs the walls
 const CUT_H := 0.5          ## a cut-away building's wall height
 const STONE := "church/stone_wall"
@@ -116,11 +118,16 @@ static func walled(board: ArenaBoard) -> bool:
 	return (SetDressing.catalog().get("town_walls", {}) as Dictionary).has(board.place)
 
 
+## How high this board's yard walls stand.
+static func wall_height(board: ArenaBoard) -> float:
+	return float((SetDressing.catalog().get("town_walls", {}) as Dictionary).get(board.place, YARD_WALL_H))
+
+
 ## A low stone yard wall on one square: a post in the middle and an arm toward each neighbouring wall.
 static func yard_wall(board: ArenaBoard, c: Vector2i, stone: Material) -> void:
 	var base := Vector3(c.x + 0.5, 0, c.y + 0.5)
 	# A walled town's wall is tall (catalog "town_walls": Krezk); elsewhere a yard wall is waist high.
-	var h := float((SetDressing.catalog().get("town_walls", {}) as Dictionary).get(board.place, YARD_WALL_H))
+	var h := wall_height(board)
 	if _kit_yard(board, c, h):
 		return
 	board.add_box("YardWall", Vector3(0.5, h, 0.5), base + Vector3(0, h / 2.0, 0), stone)
@@ -157,10 +164,13 @@ static func _kit_yard(board: ArenaBoard, c: Vector2i, h: float) -> bool:
 		if board.grid.in_bounds(n) and (board.grid.has_flag(n, CombatGrid.WALL) or gates.has(n)):
 			dirs.append(d)
 	var stretch := Basis.from_scale(Vector3(1.0, s, 1.0))
+	var bend := BuildingBend.for_wall(board, style, h)
+	# A bent wall's arms run a little long, so where two parted by a hair they still overlap.
+	var arm_stretch := Basis.from_scale(Vector3(1.07, s, 1.0)) if bend != null else stretch
 	# Built about the square's middle and placed there, so fading knows where it stands.
 	var parts: Array = []
 	for d in dirs:
-		parts.append([arm, Transform3D(Basis(Vector3.UP, atan2(-float(d.y), float(d.x))) * stretch, Vector3.ZERO)])
+		parts.append([arm, Transform3D(Basis(Vector3.UP, atan2(-float(d.y), float(d.x))) * arm_stretch, Vector3.ZERO)])
 	if not (dirs.size() == 2 and dirs[0] == -dirs[1]):
 		parts.append([pier, Transform3D(stretch, Vector3.ZERO)])
 	var half := float(((BuildingKit.manifest()[pier] as Dictionary).get("size", [0.66, 1, 0.66]) as Array)[0]) / 2.0
@@ -168,7 +178,13 @@ static func _kit_yard(board: ArenaBoard, c: Vector2i, h: float) -> bool:
 		if gates.has(c + d):
 			# A gate pier at the end of the wall, its face on the gateway.
 			parts.append([pier, Transform3D(stretch, Vector3(d.x, 0, d.y) * (0.5 - half))])
-	var mi := BuildingKit.merge(parts)
+	# A bent house beside a bent wall may lean away from where the arm ends: an arm that meets a house reaches a little
+	# way into it.
+	if bend != null:
+		for d in dirs:
+			if board.house_cells.has(c + d):
+				parts.append([arm, Transform3D(Basis(Vector3.UP, atan2(-float(d.y), float(d.x))) * stretch, Vector3(d.x, 0, d.y) * 0.25)])
+	var mi := BuildingKit.merge(parts, "", bend, Vector2(base.x, base.z), true)
 	if mi == null:
 		return false
 	mi.name = "YardWall"
@@ -230,7 +246,7 @@ static func palisade(board: ArenaBoard, c: Vector2i, ground: Material) -> bool:
 static func _flush_palisade(board: ArenaBoard) -> void:
 	if not is_instance_valid(board) or not board.has_meta("palisade_parts"):
 		return
-	var mi := BuildingKit.merge(board.get_meta("palisade_parts") as Array)
+	var mi := BuildingKit.merge(board.get_meta("palisade_parts") as Array, "", BuildingBend.for_logs(board, BuildingKit.style_for(board), PALISADE_H))
 	if mi != null:
 		mi.name = "Palisade"
 		mi.set_meta("on_floor", true)   # (made while the last border square is built: not lifted to that one's height)
@@ -361,10 +377,11 @@ static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String, 
 	var upper := Node3D.new()
 	upper.name = "Upper"
 	root.add_child(upper)
+	var bend := _bend_of(board, style, kind, r, h, joined)
 	var over := maxf(BuildingKit.constant("EAVE"), BuildingKit.constant("VERGE"))
 	var b := {"root": root, "walls": null, "stub": null, "upper": upper, "height": h, "extras": [], "cut": false,
 		"aabb": AABB(Vector3(r.position.x - over, root.position.y, r.position.y - over), Vector3(r.size.x + 2 * over, h + rise + 0.5, r.size.y + 2 * over)),
-		"rect": r, "group": group, "kit": style, "roof": kind, "rise": rise, "seed": seed,
+		"rect": r, "group": group, "kit": style, "roof": kind, "rise": rise, "seed": seed, "bend": bend,
 		"paint": str(paints[seed % paints.size()]) if style == "clapboard" and not paints.is_empty() else "",
 		"core": str((cfg.get("cores", {}) as Dictionary).get(style, "")), "faces": {}, "markers": [],
 		"joined": joined.get("cells", {}), "butts": butts}
@@ -397,6 +414,22 @@ static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String, 
 	b["faces"] = faces
 	_kit_walls(board, idx)
 	_kit_roof(board, b, along_x, span, seed)
+
+
+## The bend of the building house `r` belongs to (B1), shared by every part of an L-shaped block so its walls and roofs
+## meet where they did: made by the first part built and kept in `joined`. Null where the style stays straight.
+static func _bend_of(board: ArenaBoard, style: String, kind: String, r: Rect2i, h: float, joined: Dictionary) -> BuildingBend:
+	if joined.has("bend"):
+		return joined["bend"] as BuildingBend
+	var main := joined.get("main", r) as Rect2i
+	var parts: Array[Rect2] = []
+	for part: Rect2i in joined.get("rects", [r]):
+		parts.append(Rect2(part))
+	var span := main.size.y if main.size.x >= main.size.y else main.size.x
+	var bend := BuildingBend.for_house(board, style, parts, Rect2(main), h, BuildingKit.rise(style, kind, span))
+	if not joined.is_empty():
+		joined["bend"] = bend
+	return bend
 
 
 ## The square of a church's doors (an exit named for the church) on the house `r`, or (-1, -1).
@@ -490,6 +523,7 @@ static func _kit_walls(board: ArenaBoard, idx: int) -> void:
 	var style := str(b["kit"])
 	var root := b["root"] as Node3D
 	var upper := b["upper"] as Node3D
+	var bend := b.get("bend") as BuildingBend
 	var core_name := str(b["core"]) if str(b["core"]) != "" else "pal_ink"
 	var KH := BuildingKit.constant("H")
 	var low_top := BuildingKit.constant("LOW_TOP")
@@ -499,6 +533,11 @@ static func _kit_walls(board: ArenaBoard, idx: int) -> void:
 	var centre := Vector3(r.position.x + r.size.x / 2.0, 0, r.position.y + r.size.y / 2.0)
 	var core := BoxMesh.new()
 	core.size = Vector3(r.size.x, h, r.size.y)
+	if bend != null:
+		# A point every square, so the core bows with the walls over it.
+		core.subdivide_width = r.size.x - 1
+		core.subdivide_depth = r.size.y - 1
+		core.subdivide_height = 1
 	var parts: Array = [[core, Transform3D(Basis(), centre + Vector3(0, h / 2.0, 0)), core_name]]
 	# Cut away, a house is its walls' foot round a floor of boards: a ring of core CUT_H high, capped dark like the
 	# cut-away interiors' walls.
@@ -542,8 +581,12 @@ static func _kit_walls(board: ArenaBoard, idx: int) -> void:
 			var glass := ((BuildingKit.manifest().get(wid, {}) as Dictionary).get("sockets", {}) as Dictionary).get("glass", [0, 1.5, 0]) as Array
 			var mark := Marker3D.new()
 			mark.name = "Window"
-			mark.position = base + Vector3(0, float(glass[1]), 0) + nv * 0.04
-			mark.rotation.y = yaw
+			var glass_at := base + Vector3(0, float(glass[1]), 0) + nv * 0.04
+			if bend != null:
+				mark.transform = bend.frame(glass_at, yaw)   # the light goes with the bent wall
+			else:
+				mark.position = glass_at
+				mark.rotation.y = yaw
 			mark.set_meta("lit", win == "window_lit")
 			upper.add_child(mark)
 			(b["markers"] as Array).append(mark)
@@ -557,11 +600,11 @@ static func _kit_walls(board: ArenaBoard, idx: int) -> void:
 		parts.append([BuildingKit.wall_id(style, "corner"), BuildingKit.face_xf(corner[0] as Vector3, float(corner[1]), s_corner, foot)])
 		stub.append([BuildingKit.wall_id(style, "corner"), BuildingKit.face_xf(corner[0] as Vector3, float(corner[1]),
 			(CUT_H + 0.06) / KH)])
-	var walls := BuildingKit.merge(parts, str(b["paint"]))
+	var walls := BuildingKit.merge(parts, str(b["paint"]), bend, Vector2.ZERO, true)
 	walls.name = "Walls"
 	root.add_child(walls)
 	root.move_child(walls, 0)
-	var low := BuildingKit.merge(stub, str(b["paint"]))
+	var low := BuildingKit.merge(stub, str(b["paint"]), bend, Vector2.ZERO, true)
 	low.name = "Stub"
 	root.add_child(low)
 	var cut := bool(b["cut"])
@@ -584,6 +627,7 @@ static func _kit_roof(board: ArenaBoard, b: Dictionary, along_x: bool, span: int
 	var kind := str(b["roof"])
 	var rise := float(b["rise"])
 	var upper := b["upper"] as Node3D
+	var bend := b.get("bend") as BuildingBend
 	var core_name := str(b["core"]) if str(b["core"]) != "" else "pal_ink"
 	var length := r.size.x if along_x else r.size.y
 	var cx := r.position.x + r.size.x / 2.0
@@ -597,7 +641,7 @@ static func _kit_roof(board: ArenaBoard, b: Dictionary, along_x: bool, span: int
 	if slice == "":
 		# Wider than the kit's roofs: the plain gabled roof.
 		upper.add_child(_gable(Vector2(r.position), Vector2(r.position + r.size), h - 0.02, rise, along_x,
-			board.roof_material(kind == "slate"), BuildingKit.material(core_name)))
+			board.roof_material(kind == "slate"), BuildingKit.material(core_name), bend))
 	else:
 		# A wing's ridge carries on into the part of the building it runs into, to under that part's ridge.
 		var ahead := int(butts.get("+x" if along_x else "+z", 0))
@@ -617,7 +661,8 @@ static func _kit_roof(board: ArenaBoard, b: Dictionary, along_x: bool, span: int
 				parts.append([end, Transform3D(Basis(Vector3.UP, float(g[1])) * flat, g[0] as Vector3)])
 			if BuildingKit.has(gable):
 				parts.append([gable, Transform3D(Basis(Vector3.UP, float(g[2])) * flat, g[0] as Vector3)])
-		parts.append([_gable_ends(r, h, rise, along_x, butts), Transform3D.IDENTITY, core_name])
+		# (A bent building's gable ends are cut into small triangles, so they bow with the walls under them.)
+		parts.append([_gable_ends(r, h, rise, along_x, butts, 1.0 if bend != null else 0.0), Transform3D.IDENTITY, core_name])
 		if style == "church" and BuildingKit.has("kit_church_tower"):
 			# The bell tower rises from the roof at the end with the church's doors.
 			var door := _church_door(board, r)
@@ -639,19 +684,23 @@ static func _kit_roof(board: ArenaBoard, b: Dictionary, along_x: bool, span: int
 		var cm := BoxMesh.new()
 		cm.size = Vector3(0.38, rise + 0.7, 0.38)
 		ch.mesh = cm
-		ch.position = Vector3(at.x, h + (rise + 0.7) / 2.0, at.y)
+		var ch_at := Vector3(at.x, h + (rise + 0.7) / 2.0, at.y)
+		if bend != null:
+			ch.transform = bend.frame(ch_at, 0.0)   # the stack leans with the roof it stands on
+		else:
+			ch.position = ch_at
 		ch.material_override = stone if stone != null else Look.cel("stone")
 		upper.add_child(ch)
 		parts.append(["kit_chimney_cap", Transform3D(Basis(), Vector3(at.x, h + rise + 0.7, at.y))])
 	if not parts.is_empty():
-		var roof := BuildingKit.merge(parts, str(b["paint"]))
+		var roof := BuildingKit.merge(parts, str(b["paint"]), bend)
 		roof.name = "Roof"
 		upper.add_child(roof)
 
 
 ## The triangles of wall under each end of a gabled roof, in the house's core material (none on the sides in `skip`,
 ## where the roof runs on into the rest of an L-shaped building).
-static func _gable_ends(r: Rect2i, h: float, rise: float, along_x: bool, skip: Dictionary = {}) -> ArrayMesh:
+static func _gable_ends(r: Rect2i, h: float, rise: float, along_x: bool, skip: Dictionary = {}, fine: float = 0.0) -> ArrayMesh:
 	var gs := SurfaceTool.new()
 	gs.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var a := Vector2(r.position)
@@ -660,15 +709,15 @@ static func _gable_ends(r: Rect2i, h: float, rise: float, along_x: bool, skip: D
 	if along_x:
 		var zc := (a.y + b.y) / 2.0
 		if not skip.has("-x"):
-			_tri(gs, Vector3(a.x, h, a.y), Vector3(a.x, h, b.y), Vector3(a.x, top, zc), Vector3(-1, 0, 0))
+			_tri_fine(gs, Vector3(a.x, h, a.y), Vector3(a.x, h, b.y), Vector3(a.x, top, zc), Vector3(-1, 0, 0), fine)
 		if not skip.has("+x"):
-			_tri(gs, Vector3(b.x, h, a.y), Vector3(b.x, h, b.y), Vector3(b.x, top, zc), Vector3(1, 0, 0))
+			_tri_fine(gs, Vector3(b.x, h, a.y), Vector3(b.x, h, b.y), Vector3(b.x, top, zc), Vector3(1, 0, 0), fine)
 	else:
 		var xc := (a.x + b.x) / 2.0
 		if not skip.has("-z"):
-			_tri(gs, Vector3(a.x, h, a.y), Vector3(b.x, h, a.y), Vector3(xc, top, a.y), Vector3(0, 0, -1))
+			_tri_fine(gs, Vector3(a.x, h, a.y), Vector3(b.x, h, a.y), Vector3(xc, top, a.y), Vector3(0, 0, -1), fine)
 		if not skip.has("+z"):
-			_tri(gs, Vector3(a.x, h, b.y), Vector3(b.x, h, b.y), Vector3(xc, top, b.y), Vector3(0, 0, 1))
+			_tri_fine(gs, Vector3(a.x, h, b.y), Vector3(b.x, h, b.y), Vector3(xc, top, b.y), Vector3(0, 0, 1), fine)
 	return gs.commit()
 
 
@@ -679,6 +728,7 @@ static func face_taken(board: ArenaBoard, wall: Vector2i, normal: Vector2i, hold
 	if not board.house_cells.has(wall):
 		return
 	var b := board.buildings[int(board.house_cells[wall])]
+	follow_bend(b, holder)
 	var faces := b.get("faces", {}) as Dictionary
 	if not faces.has(key):
 		var window := board.windows.get(key, null) as Node3D
@@ -702,9 +752,35 @@ static func face_taken(board: ArenaBoard, wall: Vector2i, normal: Vector2i, hold
 	_kit_walls(board, int(board.house_cells[wall]))
 
 
+## A piece hung on a bent house (a sign, a lantern, a door's leaf) follows its wall (B1): it goes to the bent point,
+## turned and tilted with the wall, a hair off it. The piece's parent stands at the board's origin, as the dressing's
+## holders do. Nothing happens on a house that stays straight.
+static func follow_bend(b: Dictionary, holder: Node3D) -> void:
+	var bend := b.get("bend") as BuildingBend
+	if bend == null or holder == null:
+		return
+	var foot := (b["root"] as Node3D).position.y
+	var at := holder.position
+	var t := bend.frame(Vector3(at.x, at.y - foot, at.z), holder.rotation.y, FOLLOW_LIFT)
+	t.origin.y += foot
+	t.basis = t.basis * Basis.from_scale(holder.scale)
+	holder.transform = t
+
+
+## A gate's leaf in a bent yard wall (B1) goes with the wall: to the bent point, turned and tilted with it.
+static func follow_yard(board: ArenaBoard, leaf: Node3D) -> void:
+	var bend := BuildingBend.for_wall(board, BuildingKit.style_for(board), wall_height(board))
+	if bend == null:
+		return
+	var t := bend.frame(leaf.position - Vector3(0, leaf.position.y, 0), leaf.rotation.y)   # (a wall's points are above its square's floor)
+	t.origin.y += leaf.position.y
+	leaf.transform = t * Transform3D(Basis.from_scale(leaf.scale), Vector3.ZERO)
+
+
 ## A gabled roof over the rectangle [a, b] (world x, z), its eaves at `eave`, the ridge `rise` above them, with
 ## gable ends in the wall material. Flat-shaded; texture comes from world position (cel_world.gdshader).
-static func _gable(a: Vector2, b: Vector2, eave: float, rise: float, along_x: bool, roof: Material, gable: Material) -> MeshInstance3D:
+static func _gable(a: Vector2, b: Vector2, eave: float, rise: float, along_x: bool, roof: Material, gable: Material,
+		bend: BuildingBend = null) -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var o := EAVE
@@ -745,12 +821,36 @@ static func _gable(a: Vector2, b: Vector2, eave: float, rise: float, along_x: bo
 	var mi := MeshInstance3D.new()
 	mi.name = "Roof"
 	mi.mesh = roof_mesh
+	if bend != null:
+		# Rebuilt with the bend's points (the roof is a few big quads, so it only leans and sags at its corners).
+		var bent_mesh := ArrayMesh.new()
+		for i in roof_mesh.get_surface_count():
+			var arrays := roof_mesh.surface_get_arrays(i)
+			arrays[Mesh.ARRAY_VERTEX] = bend.bent(arrays[Mesh.ARRAY_VERTEX] as PackedVector3Array)
+			bent_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+			bent_mesh.surface_set_material(i, roof_mesh.surface_get_material(i))
+		mi.mesh = bent_mesh
 	return mi
 
 
 static func _quad(st: SurfaceTool, p0: Vector3, p1: Vector3, p2: Vector3, p3: Vector3, n: Vector3) -> void:
 	_tri(st, p0, p1, p2, n)
 	_tri(st, p0, p2, p3, n)
+
+
+## A triangle facing `n` cut into four, again and again, until no side is longer than `fine` (a flat triangle that a bend
+## will bow needs points to bow at); `fine` 0 leaves it whole.
+static func _tri_fine(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, n: Vector3, fine: float) -> void:
+	if fine <= 0.0 or maxf(a.distance_to(b), maxf(b.distance_to(c), c.distance_to(a))) <= fine:
+		_tri(st, a, b, c, n)
+		return
+	var ab := (a + b) / 2.0
+	var bc := (b + c) / 2.0
+	var ca := (c + a) / 2.0
+	_tri_fine(st, a, ab, ca, n, fine)
+	_tri_fine(st, ab, b, bc, n, fine)
+	_tri_fine(st, ca, bc, c, n, fine)
+	_tri_fine(st, ab, bc, ca, n, fine)
 
 
 ## One triangle facing `n`: Godot draws clockwise triangles (seen from the front), so the winding is set from n.

@@ -7,12 +7,17 @@ extends RefCounted
 
 const MANIFEST_JSON := "res://art/models/kit/manifest.json"
 const PAINTED_WOOD := "kit/painted_wood"
+## A module no bigger than this across (x and z) and high is bent whole (merge's `whole_modules`): a wall face or a corner.
+const WHOLE_ACROSS := 1.3
+const WHOLE_HIGH := 3.4
 
 static var _manifest: Dictionary = {}
 static var _constants: Dictionary = {}
 static var _meshes: Dictionary = {}
 ## Each module's surfaces as arrays in memory (Arrays), read from its mesh once: see `merge`.
 static var _arrays: Dictionary = {}
+## Each module's box, read once.
+static var _extents: Dictionary = {}
 
 
 ## Every module: id -> {file, part, size, materials, span, rise, paint}.
@@ -90,7 +95,12 @@ static func mesh(id: String) -> Mesh:
 ## A house's modules merged into one mesh: `parts` is [[id, Transform3D], ...] (or [mesh, Transform3D, material
 ## name] for a mesh made in code); a module's `paint` surfaces take `paint` (a palette colour) instead. Each material
 ## is one surface. Null when nothing was drawn.
-static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
+## With a `bend` (BuildingBend, natural maps B1) the merged mesh is bent once, here; `at` is where its node will stand in
+## x and z when its parts are about its own middle (a yard wall's square), else the origin. A small module goes whole
+## when `whole_modules` is set (a house's wall faces: BuildingBend.fold, no work per vertex); everything else, the roofs,
+## a palisade's logs, the core and the gables made in code, has its points moved one by one.
+static func merge(parts: Array, paint: String = "", bend: BuildingBend = null, at: Vector2 = Vector2.ZERO,
+		whole_modules: bool = false) -> MeshInstance3D:
 	var tools := {}
 	var order: Array[String] = []
 	for part: Array in parts:
@@ -109,6 +119,13 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 		if m == null:
 			continue
 		var xf := part[1] as Transform3D
+		var by_points := false
+		if bend != null:
+			var box := _extent(str(part[0]), m) if whole_modules and not (part[0] is Mesh) else AABB()
+			if box.size.x > 0.0 and maxf(box.size.x, box.size.z) <= WHOLE_ACROSS and box.size.y <= WHOLE_HIGH:
+				xf = bend.fold(xf, box.get_center(), at)
+			else:
+				by_points = true
 		for i in m.get_surface_count():
 			var name := own
 			if name == "":
@@ -121,7 +138,10 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 				st.begin(Mesh.PRIMITIVE_TRIANGLES)
 				tools[name] = st
 				order.append(name)
-			(tools[name] as SurfaceTool).append_from(from, i, xf)
+			if by_points:
+				(tools[name] as SurfaceTool).append_from(_bent_surface(from, i, xf, bend, at), 0, Transform3D.IDENTITY)
+			else:
+				(tools[name] as SurfaceTool).append_from(from, i, xf)
 	if order.is_empty():
 		return null
 	var am := ArrayMesh.new()
@@ -131,6 +151,31 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	mi.mesh = am
 	return mi
+
+
+## The box of module `id` (loaded once).
+static func _extent(id: String, m: Mesh) -> AABB:
+	if not _extents.has(id):
+		_extents[id] = m.get_aabb()
+	return _extents[id] as AABB
+
+
+## Surface `i` of `from` (arrays in memory) placed by `xf` and then bent point by point: a one-surface mesh in memory,
+## for SurfaceTool.append_from.
+static func _bent_surface(from: Mesh, i: int, xf: Transform3D, bend: BuildingBend, at: Vector2) -> Mesh:
+	var arrays := from.surface_get_arrays(i).duplicate()
+	arrays[Mesh.ARRAY_VERTEX] = bend.bent(xf * (arrays[Mesh.ARRAY_VERTEX] as PackedVector3Array), at)
+	if arrays[Mesh.ARRAY_NORMAL] is PackedVector3Array:
+		var normals := Transform3D(xf.basis.inverse().transposed(), Vector3.ZERO) * (arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array)
+		var scale := xf.basis.get_scale()
+		if absf(scale.x - 1.0) + absf(scale.y - 1.0) + absf(scale.z - 1.0) > 0.01:
+			for k in normals.size():
+				normals[k] = normals[k].normalized()
+		arrays[Mesh.ARRAY_NORMAL] = normals
+	var a := Arrays.new()
+	a.surfaces.append(arrays)
+	a.primitives.append(Mesh.PRIMITIVE_TRIANGLES)
+	return a
 
 
 ## Module `id`'s mesh `m` with its surfaces held in memory, read once a session.
