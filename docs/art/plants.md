@@ -70,8 +70,10 @@ a birch among the spruces, `sick` twisted oaks on Yester Hill.
 - **The map's own trees** (ArenaBoard's wall squares in the woods) belong to their square and fade as before, 10 to 20 ft
   tall (`scale`, `shortest`, `tallest` for `map`; a leaning tree's box too), but they are no longer one tree a square in
   rows (Natural Maps Plan N4, `world/look/woods.gd`): each wall square's tree stands anywhere across it, varied in
-  size, lean and kind, and a smaller tree or two fringe an edge square (more of them in a thicker wood: the set's
-  `wood_density`, else from its `tree_density`). Along an edge the crowns' reach over the grid line wanders from a bay
+  size, lean and kind (groves of tall trees and patches of young ones, a few squares across), each leaning a little
+  and wearing its own shade (the foliage shader's `instance uniform hue`: groves a little warmer or cooler, lighter or
+  darker), and a smaller tree or two fringe an edge square (more of them in a thicker wood: the set's `wood_density`,
+  else from its `tree_density`). Along an edge the crowns' reach over the grid line wanders from a bay
   (a small tree drawn back into the wood square) to a headland, by noise seeded by the place and smooth over three
   squares or so; a trunk never stands more than 0.18 into the open square beside it (a quarter of a square less its
   girth) and none leans into a square a location's things stand on; every wood square keeps a crown over its middle,
@@ -90,8 +92,9 @@ a birch among the spruces, `sick` twisted oaks on Yester Hill.
 - **Ground plants**: on the forest land out to `land_reach` squares from the map, thinning with distance, reeds and
   sedge along shores, nothing on roads; on the map, under its trees (`under`), spilling out of the woods into the
   squares beside them (`edge`: `Woods.feather` feathers a band whose depth wanders from nothing to half a square,
-  thinning as it goes, with a sapling or a fallen dead tree against the wood's line now and then, none within 0.3 of
-  the square's middle or taller things than 0.2 from the line), and short and sparse on its other wild squares (`open`, `open_scale`), never
+  thinning as it goes and rounding off round the inside corners of a clearing, with saplings (a metre or two high) and
+  a fallen dead tree against the wood's line, none within 0.3 of the square's middle or taller things than 0.2 from
+  the line), and short and sparse on its other wild squares (`open`, `open_scale`), never
   within 0.3 of a square's middle (feet and the selection rings stay clear), on water, on a square a location's
   things stand on, in a building or on a door. Towns grow nothing on their streets.
 - **Sets** (`flora.json`): forest (the Svalich woods and everything like them), lake, mountain (Krezk, the Abbey,

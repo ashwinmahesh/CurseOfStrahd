@@ -12,6 +12,8 @@ render_mode world_vertex_coords, cull_disabled, diffuse_lambert_wrap, specular_s
 
 uniform sampler2D cards : source_color, filter_linear_mipmap_anisotropic, repeat_disable;
 uniform vec3 tint : source_color = vec3(1.0);
+// One tree's own shade, set per instance (Woods: groves a little warmer or cooler, lighter or darker); 1 leaves it be.
+instance uniform vec3 hue = vec3(1.0);
 uniform float alpha_cut : hint_range(0.0, 1.0) = 0.45;
 // How dark the inside of a crown gets (vertex alpha 0), and how much light shows through a leaf lit from behind.
 uniform float shade_floor : hint_range(0.0, 1.0) = 0.4;
@@ -51,7 +53,7 @@ void fragment() {
 	float mip = max(0.0, 0.5 * log2(max(dot(dx, dx), dot(dy, dy))));
 	ALPHA = clamp(t.a * (1.0 + mip * 0.22), 0.0, 1.0) * smoothstep(near_fade * 0.55, near_fade, distance(wpos, CAMERA_POSITION_WORLD));
 	ALPHA_SCISSOR_THRESHOLD = alpha_cut;
-	vec3 c = t.rgb * tint * COLOR.rgb * mix(shade_floor, 1.0, COLOR.a);
+	vec3 c = t.rgb * tint * hue * COLOR.rgb * mix(shade_floor, 1.0, COLOR.a);
 	if (autumn > 0.0) {
 		float lum = dot(t.rgb, vec3(0.3, 0.59, 0.11));
 		vec3 fall = mix(autumn_dark, autumn_light, smoothstep(0.08, 0.55, lum)) * COLOR.rgb * mix(shade_floor, 1.0, COLOR.a);

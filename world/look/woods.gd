@@ -16,11 +16,11 @@ extends RefCounted
 const TRUNK_OUT := 0.18
 ## How far a crown's edge reaches past the grid line over an open square: from a bay (it draws back inside the wood
 ## square) to a headland.
-const BAY := -0.3
+const BAY := -0.38
 const HEADLAND := 0.78
 ## A trunk stands within this many squares of its own square's middle across the edge, and at most this share of its
 ## crown's radius from the middle (so the crown always covers it: the square still reads as blocking).
-const ACROSS := 0.3
+const ACROSS := 0.42
 const HOLD := 0.93
 ## The map's trees stay 10 to 20 ft (docs/art/plants.md): they don't wall in the squares beside them. A leaning tree's
 ## box is a little taller than the tree, so a tree is fitted to the box (test_flora and test_models_3d measure 2 to 4).
@@ -110,7 +110,8 @@ static func plant(board: ArenaBoard, c: Vector2i, anchor: Node3D) -> Array[Node3
 	# Size: along an edge, bays of smaller trees and headlands of bigger ones.
 	var mi := anchor.get_child(0) as MeshInstance3D
 	var height := Flora.height_of(id)
-	var m := exp(rng.randfn(0.0, 0.1))
+	var grove := swing(Vector2(c) * 0.2 + seed_at + Vector2(31.7, 9.2), Vector2(c) * 0.5 + seed_at + Vector2(3.1, 17.3))
+	var m := exp(rng.randfn(0.0, 0.1)) * lerpf(0.7, 1.3, grove)   # groves of tall trees, patches of young ones
 	var wob := _wobble(c, open, seed_at)
 	if not open.is_empty():
 		m *= lerpf(0.66, 1.1, clampf(wob.z + rng.randf_range(-0.15, 0.15), 0.0, 1.0))   # bays hold the small trees
@@ -120,11 +121,16 @@ static func plant(board: ArenaBoard, c: Vector2i, anchor: Node3D) -> Array[Node3
 	anchor.position.x = mid.x + at.x
 	anchor.position.z = mid.y + at.y
 	_lean(anchor, id, open, rng)
+	_tone(anchor, grove, rng)
 	var dens := density_of(f)
 	if not open.is_empty():
-		if rng.randf() < lerpf(0.3, 0.8, clampf((dens - 1.0) / 0.25, 0.0, 1.0)):   # a smaller tree in the crowns' edge
+		# One smaller tree in the crowns' edge (more of them in a thick wood), a second on a headland.
+		var chance := lerpf(0.3, 0.6, clampf((dens - 1.0) / 0.25, 0.0, 1.0))
+		var fringe := (1 if rng.randf() < chance else 0) + (1 if wob.z > 0.75 and rng.randf() < 0.35 else 0)
+		for i in fringe:
 			var e := _fringe(board, f, c, mid, open, wob, at, rng)
 			if e != null:
+				_tone(e, grove, rng)
 				out.append(e)
 	elif rng.randf() < (dens - 1.0) * 0.5:   # and, in a thicker wood, one more among the rest
 		var e := _among(board, f, c, mid, rng)
@@ -170,10 +176,10 @@ static func _stand(open: Array[Vector2i], wob: Vector3, r: float, rng: RandomNum
 	var north := open.has(Vector2i(0, -1))
 	if east != west:
 		var edge_x := 0.5 + lerpf(BAY, HEADLAND, wob.x)
-		o.x = clampf(edge_x - r, -0.35, 0.5 + TRUNK_OUT) * (1.0 if east else -1.0) + rng.randf_range(-0.06, 0.06)
+		o.x = clampf(edge_x - r, -0.45, 0.5 + TRUNK_OUT) * (1.0 if east else -1.0) + rng.randf_range(-0.06, 0.06)
 	if south != north:
 		var edge_z := 0.5 + lerpf(BAY, HEADLAND, wob.y)
-		o.y = clampf(edge_z - r, -0.35, 0.5 + TRUNK_OUT) * (1.0 if south else -1.0) + rng.randf_range(-0.06, 0.06)
+		o.y = clampf(edge_z - r, -0.45, 0.5 + TRUNK_OUT) * (1.0 if south else -1.0) + rng.randf_range(-0.06, 0.06)
 	return o.limit_length(maxf(HOLD * r, 0.05))
 
 
@@ -184,13 +190,24 @@ static func _lean(tree: Node3D, id: String, open: Array[Vector2i], rng: RandomNu
 	var dir := Vector2.from_angle(rng.randf() * TAU)
 	if not open.is_empty() and rng.randf() < 0.7:
 		dir = (dir * 0.5 + Vector2(open[rng.randi() % open.size()])).normalized()
-	var tilt := deg_to_rad(clampf(absf(rng.randfn(0.0, 3.2 if dead else 1.8)), 0.0, 7.0 if dead else 4.0))
+	var tilt := deg_to_rad(clampf(absf(rng.randfn(0.0, 4.0 if dead else 2.5)), 0.0, 8.0 if dead else 5.5))
 	tree.basis = Basis(Vector3(dir.y, 0.0, -dir.x), tilt) * Basis(Vector3.UP, tree.rotation.y)   # (the lean in the world's frame)
 	var mi := tree.get_child(0) as MeshInstance3D
 	if mi != null and mi.mesh != null:
 		var h := (Transform3D(tree.basis * Basis.from_scale(mi.scale), Vector3.ZERO) * mi.mesh.get_aabb()).size.y
 		if h > 0.01 and (h < BOX_MIN or h > BOX_MAX):
 			mi.scale *= clampf(h, BOX_MIN, BOX_MAX) / h
+
+
+## The tree's leaves a shade warmer or cooler, lighter or darker (the foliage shader's instance `hue`): groves of yellower
+## trees and of bluer ones across a wood, and a touch of its own on every tree.
+static func _tone(tree: Node3D, grove: float, rng: RandomNumberGenerator) -> void:
+	var mi := tree.get_child(0) as GeometryInstance3D
+	if mi == null:
+		return
+	var warm := (grove - 0.5) * 0.2 + rng.randf_range(-0.04, 0.04)   # -0.1 .. 0.1
+	var light := 1.0 + (0.5 - grove) * 0.18 + rng.randf_range(-0.06, 0.06)
+	mi.set_instance_shader_parameter("hue", Vector3((1.0 + warm) * light, (1.0 + warm * 0.4) * light, (1.0 - warm * 1.4) * light))
 
 
 ## A second, smaller tree in the crowns' edge on an edge square, on the other side of the line the anchor stands on.
@@ -220,6 +237,7 @@ static func _among(board: ArenaBoard, f: Flora, c: Vector2i, mid: Vector2, rng: 
 	var p := Vector2(rng.randf_range(-0.4, 0.4), rng.randf_range(-0.4, 0.4))
 	tree.position = Vector3(mid.x + p.x, 0.0, mid.y + p.y)
 	(tree.get_child(0) as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_tone(tree, rng.randf(), rng)
 	return tree
 
 
@@ -257,7 +275,7 @@ static func feather(f: Flora, items: Dictionary, board: ArenaBoard, c: Vector2i,
 	var seed_at := _seed_of(board.place)
 	var mid := Vector2(c) + Vector2(0.5, 0.5)
 	var rng := f.rng
-	for i in ceili(Flora.density(choices) * 6.0):
+	for i in ceili(Flora.density(choices) * 8.0):
 		var p := Vector2(c) + Vector2(rng.randf(), rng.randf())
 		if (p - mid).length() < MIDDLE_CLEAR:
 			continue
@@ -273,25 +291,28 @@ static func feather(f: Flora, items: Dictionary, board: ArenaBoard, c: Vector2i,
 		(items[id] as Array).append(f.ground_item(Vector3(p.x, 0.0, p.y), 0.85))
 	if not wood:
 		return
-	# A sapling, against the line where the noise says the wood is spreading.
+	# Saplings (up to two) against the line, where the noise says the wood is spreading.
 	var pine := (f.spec.get("trees", {}) as Dictionary).get("pine", []) as Array
-	if not pine.is_empty() and noise(mid * 0.9 + seed_at + Vector2(7.3, 1.1)) > 0.4 and rng.randf() < 0.8:
-		for attempt in 4:
-			var p := Vector2(c) + Vector2(rng.randf(), rng.randf())
-			if _gap(boxes, p) >= TALL_REACH or (p - mid).length() < MIDDLE_CLEAR:
+	if not pine.is_empty() and noise(mid * 0.9 + seed_at + Vector2(7.3, 1.1)) > 0.3:
+		for k in 2:
+			if rng.randf() > (0.6 if k == 0 else 0.35):
 				continue
-			var id := str(pine[rng.randi() % pine.size()])
-			if Flora.mesh(id) == null:
+			for attempt in 4:
+				var p := Vector2(c) + Vector2(rng.randf(), rng.randf())
+				if _gap(boxes, p) >= TALL_REACH or (p - mid).length() < MIDDLE_CLEAR:
+					continue
+				var id := str(pine[rng.randi() % pine.size()])
+				if Flora.mesh(id) == null:
+					break
+				var s := rng.randf_range(1.0, 2.0) / Flora.height_of(id)
+				if not items.has(id):
+					items[id] = []
+				var v := rng.randf_range(0.85, 1.05)
+				(items[id] as Array).append([Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * s), Vector3(p.x, 0.0, p.y)), Color(v, v, v)])
 				break
-			var s := rng.randf_range(0.8, 1.7) / Flora.height_of(id)
-			if not items.has(id):
-				items[id] = []
-			var v := rng.randf_range(0.85, 1.05)
-			(items[id] as Array).append([Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * s), Vector3(p.x, 0.0, p.y)), Color(v, v, v)])
-			break
 	# A fallen dead tree lying along the line of the wood, now and then.
 	var dead := (f.spec.get("trees", {}) as Dictionary).get("dead_tree", []) as Array
-	if not dead.is_empty() and rng.randf() < 0.07:
+	if not dead.is_empty() and rng.randf() < 0.16:
 		for d: Vector2i in SIDES:
 			if not board.is_tree(c + d):
 				continue
@@ -314,11 +335,12 @@ static func feather(f: Flora, items: Dictionary, board: ArenaBoard, c: Vector2i,
 			break
 
 
-## How far point `p` is from the nearest of the boxes (0 inside one).
+## How far point `p` is from the nearest of the boxes (0 inside one), blended between them so the reach rounds off round
+## the inside corner of a clearing instead of following its square corner.
 static func _gap(boxes: Array[Rect2], p: Vector2) -> float:
-	var best := INF
+	var sum := 0.0
 	for b: Rect2 in boxes:
 		var dx := maxf(maxf(b.position.x - p.x, p.x - b.end.x), 0.0)
 		var dz := maxf(maxf(b.position.y - p.y, p.y - b.end.y), 0.0)
-		best = minf(best, sqrt(dx * dx + dz * dz))
-	return best
+		sum += exp(-8.0 * sqrt(dx * dx + dz * dz))
+	return maxf(-log(sum) / 8.0, 0.0) if sum > 0.0 else INF
