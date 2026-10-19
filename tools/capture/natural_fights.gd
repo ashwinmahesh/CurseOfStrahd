@@ -4,7 +4,7 @@ extends Node3D
 ## from the play camera and again in the tactical view (O). Not part of the game.
 ##   make capture SCENE=res://tools/capture/natural_fights.tscn NAME=natural/grid FRAMES=10
 ## Environment: NF_LOCS=a,b (default a few outdoor places), NF_SHOTS=fight,tactical,explore (default fight,tactical),
-## NF_HOUR=12, NF_GRID=always (the setting for the run: fights, always or never; default fights), NF_ENCOUNTER=id (with
+## NF_HOUR=12, NF_GRID=always (the setting for the run: held, fights, always or never; default fights), NF_ENCOUNTER=id (with
 ## one place only; default the first of its fights that can start).
 ## Shots: <out>_<loc>_fight.png, _tactical.png, _explore.png (the grid with no fight, under "always").
 
@@ -16,8 +16,8 @@ var view: LocationView = null
 
 func capture_shots(tool: Node, out: String) -> void:
 	InputActions.ensure()
-	if OS.get_environment("NF_GRID") != "":
-		GameSettings.set_battle_grid(OS.get_environment("NF_GRID"))
+	# The grid on its own through the fight (the default is a held key), unless the run says otherwise.
+	GameSettings.set_battle_grid(OS.get_environment("NF_GRID") if OS.get_environment("NF_GRID") != "" else "fights")
 	var ids := PLACES.duplicate()
 	if OS.get_environment("NF_LOCS") != "":
 		ids.assign(OS.get_environment("NF_LOCS").split(",", false))

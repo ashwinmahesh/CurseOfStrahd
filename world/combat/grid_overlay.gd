@@ -38,8 +38,8 @@ const OUTLINE_MITRE := 2.5
 const OUTLINE_SHADER := preload("res://shaders/fx/area_outline.gdshader")
 
 var board: ArenaBoard
-## The battle grid's lines over the whole board: CombatView gathers them round the creature whose turn it is (set_wanted,
-## gather); nothing shows until something does.
+## The battle grid's lines over the whole board: CombatView gathers them round the creature whose turn it is (set_auto,
+## gather); nothing shows until the Show the grid key is held, or the setting asks for it in fights.
 var lines: BattleGrid
 var _layers: Dictionary = {}
 var _outline: MeshInstance3D

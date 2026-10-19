@@ -251,13 +251,15 @@ is frozen, and `lit_world.gdshader` has no grid at all. The grid is a layer laid
   (`ArenaBoard.corner_height`, so it follows slopes, steps and cliffs corner by corner), and the shader draws a line
   along its border: a pale core with a dark soft edge, never thinner than a pixel, drawn half by each of two squares
   so a crossing is one line deep. It lies under the fight's marks (path, goal, rings, area edge).
-- **When.** The Battle grid setting (Settings, Game; `GameSettings.battle_grid`): *In fights* (the default) fades it in
-  round the creature whose turn it is (its movement plus two squares, at least 8 and at most 14, fading out over the last
-  2.5; an Invisible foe's turn leaves it where it was, as it leaves the camera) and out when the fight ends, and shows it
-  over the whole map while the camera is in the tactical view (O), easing with the camera; *Always* does the same round
-  the party's leader when exploring (`ExploreGrid`); *Never* shows none. Classic has none to lay: its grid stays painted
-  in its ground and the setting does nothing there (the row's note says so).
-- **Not.** Turn-based exploring (plan mode) shows no grid unless the setting is *Always*.
+- **When.** Ashwin, 2026-10-19: "we don't need to show the grid in combat it is unnecessary ... maybe it could be a
+  button the player holds". So by default (*Held*, Settings, Game; `GameSettings.battle_grid`) the lines show while the
+  Show the battle grid key is held (`show_grid`, B; Settings, Keys; no controller button yet), in a fight and exploring:
+  they fade in round the creature whose turn it is (its movement plus two squares, at least 8 and at most 14, fading out
+  over the last 2.5; an Invisible foe's turn leaves them where they were, as it leaves the camera; round the party's leader
+  when exploring, `ExploreGrid`) and over the whole map while the camera is in the tactical view (O), easing with the
+  camera. *In fights* shows them on their own through every fight, *Always* on their own when exploring too, *Never* not
+  even held. Classic has none to lay: its grid stays painted in its ground and the setting does nothing there (the row's
+  note says so).
 
 ## The sky in the Modern finish
 

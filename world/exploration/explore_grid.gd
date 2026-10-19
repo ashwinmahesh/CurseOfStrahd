@@ -1,8 +1,8 @@
 class_name ExploreGrid
 extends Node
-## The battle grid while exploring (Natural Maps plan N1): the "Always" choice of the Battle grid setting
-## (GameSettings.battle_grid) shows BattleGrid's lines round the party's leader, and over the whole map in the tactical
-## view. A fight has its own, gathered round whoever's turn it is (CombatView); by default nothing shows out of one.
+## The battle grid while exploring (Natural Maps plan N1): BattleGrid's lines round the party's leader, and over the whole
+## map in the tactical view, while the Show the grid key is held, or all the time with the Battle grid setting at Always.
+## A fight has its own, gathered round whoever's turn it is (CombatView); this one is quiet while a fight is on.
 
 var view: LocationView
 var lines: BattleGrid
@@ -23,10 +23,9 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var leader := view.leader() if not view.members.is_empty() else null
-	var on := BattleGrid.wanted_exploring() and not view.in_combat and leader != null and view.tokens.has(leader.id)
-	if on != lines.is_wanted():
-		lines.set_wanted(on)
-	if on:
+	lines.set_active(not view.in_combat)
+	lines.set_auto(BattleGrid.auto_exploring())
+	if leader != null and view.tokens.has(leader.id):
 		var tok := view.tokens[leader.id] as Node3D
 		if lines.follow != tok:
 			lines.gather(tok)

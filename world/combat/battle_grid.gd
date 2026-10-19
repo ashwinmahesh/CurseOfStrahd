@@ -2,10 +2,12 @@ class_name BattleGrid
 extends MeshInstance3D
 ## The battle grid (Ashwin 2026-10-19: "we don't need to draw our real world maps as a battle grid. It can look like a
 ## real natural map that we just overlay a grid on top afterwards", Natural Maps plan N1): the Modern look draws no grid
-## in its ground; this lays thin lines over it where a creature can stand, only while they help. A fight shows them round
-## the creature whose turn it is, fading out past its reach, and over the whole map in the tactical view; the Battle grid
-## setting (GameSettings) can also show them round the party when exploring, or never. The Classic look keeps its
-## painted grid and has none of this.
+## in its ground; this lays thin lines over it where a creature can stand, only while they help. By default the player
+## holds the Show the grid key (show_grid, B): the lines fade in round the creature whose turn it is (round the party's
+## leader when exploring), fading out past its reach, and over the whole map in the tactical view (Ashwin 2026-10-19:
+## "we don't need to show the grid in combat it is unnecessary ... maybe it could be a button the player holds"). The
+## Battle grid setting (GameSettings) can show them on their own in fights, or in fights and when exploring, or never.
+## The Classic look keeps its painted grid and has none of this.
 ##
 ## One mesh per board, made the first time it is wanted and kept with the board: every square a creature can stand in
 ## (not a wall, a tree, water or the void, nor a hidden room's) is a patch lying on the ground as it is drawn, the four
@@ -38,6 +40,10 @@ var follow: Node3D = null
 var rig: CameraRig = null
 ## How far from `follow` the lines reach (squares), set from the creature's movement.
 var reach := REACH_LEAST
+## Whether this grid's host wants it shown on its own (a fight, with the setting at In fights or Always), and whether the
+## host is live at all (a fight that is over, or exploring while a fight is on, shows nothing, even held).
+var auto := false
+var active := true
 var _want := false
 var _shown := 0.0
 var _mat: ShaderMaterial
@@ -54,14 +60,20 @@ static func create(board_: ArenaBoard) -> BattleGrid:
 	return g
 
 
-## Whether a fight shows the grid: the Modern look, unless the setting says never.
-static func wanted_in_fights() -> bool:
-	return Look.modern() and GameSettings.battle_grid() != "never"
+## Whether a fight shows the grid without being asked: the Modern look, when the setting is In fights or Always.
+static func auto_in_fights() -> bool:
+	return Look.modern() and GameSettings.battle_grid() in ["fights", "always"]
 
 
-## Whether exploring shows the grid.
-static func wanted_exploring() -> bool:
+## Whether exploring shows the grid without being asked: the Modern look, when the setting is Always.
+static func auto_exploring() -> bool:
 	return Look.modern() and GameSettings.battle_grid() == "always"
+
+
+## Whether the player is holding the Show the grid key, with the setting letting them (never says no).
+static func held() -> bool:
+	return Look.modern() and GameSettings.battle_grid() != "never" and InputMap.has_action(&"show_grid") \
+			and Input.is_action_pressed(&"show_grid")
 
 
 ## The squares a line is drawn in: where a creature can stand beside it, not a wall or a tree, water or the void, and
@@ -128,16 +140,17 @@ func drawn_cells() -> Array[Vector2i]:
 	return out
 
 
-## Shows the grid (or lets it fade out): whether the caller wants it, which changes as the setting or the fight does.
-## Made over the board's squares on the first call that wants it, and kept with the board.
-func set_wanted(on: bool) -> void:
-	_want = on and Look.modern()
-	if _want:
-		_ensure()
-		visible = true
-	set_process(_want or _shown > 0.0)
+## The host shows the grid on its own (or stops): a fight with the setting at In fights, exploring at Always.
+func set_auto(on: bool) -> void:
+	auto = on
 
 
+## The host is live (or not): a fight that is over, or exploring while a fight is on, shows no grid, held or not.
+func set_active(on: bool) -> void:
+	active = on
+
+
+## Whether the grid is wanted now: its host is live and either asks for it or the key is held.
 func is_wanted() -> bool:
 	return _want
 
@@ -178,10 +191,14 @@ func _hidden() -> Dictionary:
 
 
 func _process(delta: float) -> void:
+	var want := active and Look.modern() and (auto or held())
+	if want and not _want:
+		_ensure()   # (made over the board's squares the first time it is wanted, and kept with the board)
+		visible = true
+	_want = want
 	_shown = move_toward(_shown, 1.0 if _want else 0.0, delta / FADE_TIME)
 	if _shown <= 0.0 and not _want:
 		visible = false
-		set_process(false)
 		return
 	_recheck -= delta
 	if _recheck <= 0.0:

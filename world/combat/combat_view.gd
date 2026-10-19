@@ -317,7 +317,7 @@ func close_softly() -> void:
 	input_locked = true
 	mode = Mode.OVER
 	overlay.clear_all()
-	overlay.lines.set_wanted(false)
+	overlay.lines.set_active(false)
 	hud.hide_tooltip()
 	if boss_bar != null:
 		LayerFade.fade(self, boss_bar, false, 0.35)
@@ -336,7 +336,7 @@ func _advance() -> void:
 	if e.state == Encounter.State.OVER:
 		mode = Mode.OVER
 		overlay.clear_all()
-		overlay.lines.set_wanted(false)
+		overlay.lines.set_active(false)
 		hud.hide_tooltip()
 		var tail := "R: fight again" if restart_allowed else "Space or A: continue"
 		var head := e.legendary.end_title()
@@ -625,10 +625,11 @@ func _focus_on(id: String) -> void:
 
 
 ## The battle grid (BattleGrid; the Modern look's, laid over natural ground): its lines gather round the creature whose
-## turn it is, as far as it can move, unless the setting says never. An Invisible foe's turn leaves them where they were,
-## as it leaves the camera, and so does one nobody can see; with none yet, they gather round the hero looked through.
+## turn it is, as far as it can move, shown while the Show the grid key is held (or on their own, by the setting). An
+## Invisible foe's turn leaves them where they were, as it leaves the camera, and so does one nobody can see; with none
+## yet, they gather round the hero looked through.
 func _gather_grid(c: Combatant) -> void:
-	overlay.lines.set_wanted(BattleGrid.wanted_in_fights())
+	overlay.lines.set_auto(BattleGrid.auto_in_fights())
 	var tok := _tok(c.id)
 	if tok == null or tok.unseen or not tok.visible:
 		if overlay.lines.follow != null:

@@ -13,12 +13,14 @@ func before_each() -> void:
 		var ch := Pregens.build(id, 1)
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
-	GameSettings.set_battle_grid("fights")
+	GameSettings.set_battle_grid("held")
+	InputActions.ensure()
 
 
 func after_each() -> void:
+	Input.action_release(&"show_grid")
 	Look.set_style(Look.DEFAULT_STYLE, false)
-	GameSettings.set_battle_grid("fights")
+	GameSettings.set_battle_grid("held")
 
 
 func _frames(n: int) -> void:
@@ -48,15 +50,21 @@ func _view(loc_id: String) -> LocationView:
 	return v
 
 
-## The setting: in fights by default, three choices, anything else is ignored.
-func test_the_setting_defaults_to_fights() -> void:
-	assert_eq(GameSettings.battle_grid(), "fights")
+## The setting: a held key by default (Ashwin: the grid isn't needed in a fight, "maybe a button the player holds"), four
+## choices, anything else is ignored.
+func test_the_setting_defaults_to_a_held_key() -> void:
+	GameSettings.set_value("battle_grid", null, false)
+	assert_eq(GameSettings.battle_grid(), "held")
 	GameSettings.set_battle_grid("never")
 	assert_eq(GameSettings.battle_grid(), "never")
 	GameSettings.set_battle_grid("sometimes")
 	assert_eq(GameSettings.battle_grid(), "never", "a choice it doesn't have changes nothing")
+	GameSettings.set_battle_grid("fights")
+	assert_eq(GameSettings.battle_grid(), "fights")
 	GameSettings.set_battle_grid("always")
 	assert_eq(GameSettings.battle_grid(), "always")
+	assert_true(InputMap.has_action(&"show_grid"), "the key to hold is an action")
+	assert_true(InputActions.keys(&"show_grid")[0] != KEY_NONE, "with a key of its own")
 
 
 ## Modern: the ground's materials carry no grid, so exploring shows none on any map. Classic keeps the faint grid it
@@ -69,8 +77,12 @@ func test_modern_paints_no_grid_and_classic_keeps_its() -> void:
 	Look.set_style("classic", false)
 	var classic := Look.cel_textured("village/grass", 0.22)
 	assert_true(is_equal_approx(float(classic.get_shader_parameter("grid_strength")), 0.22), "Classic still paints its grid")
-	assert_false(BattleGrid.wanted_in_fights(), "and has no battle grid laid over it")
-	assert_false(BattleGrid.wanted_exploring())
+	GameSettings.set_battle_grid("always")
+	Input.action_press(&"show_grid")
+	assert_false(BattleGrid.auto_in_fights(), "and has no battle grid laid over it")
+	assert_false(BattleGrid.auto_exploring())
+	assert_false(BattleGrid.held(), "held or not")
+	Input.action_release(&"show_grid")
 
 
 ## No board in the Modern look has a grid in any floor: a town, a wild map and a room carry no `grid_strength` (the old
@@ -162,8 +174,9 @@ func test_lines_follow_the_slope_of_natural_ground() -> void:
 	v.queue_free()
 
 
-## A fight lays the grid round whoever's turn it is, and takes it away when the fight is over.
-func test_a_fight_shows_the_grid_round_whose_turn_it_is() -> void:
+## A fight shows no grid until the key is held; held, the lines gather round whoever's turn it is, and go when it is let
+## go of or the fight is over. In fights, the setting shows them on its own.
+func test_a_held_key_lays_the_grid_round_whose_turn_it_is() -> void:
 	Look.set_style("modern", false)
 	var arena := ARENA.instantiate() as Node3D
 	add_child(arena)
@@ -172,7 +185,11 @@ func test_a_fight_shows_the_grid_round_whose_turn_it_is() -> void:
 	var lines := view.overlay.lines
 	assert_false(lines.visible, "no grid in the opening beat")
 	await _opened(view)
-	assert_true(lines.is_wanted(), "the grid is wanted in a fight")
+	assert_false(lines.is_wanted(), "no grid in a fight by default")
+	assert_false(lines.visible, "none drawn")
+	Input.action_press(&"show_grid")
+	await _frames(3)
+	assert_true(lines.is_wanted(), "the grid is wanted while the key is held")
 	assert_true(lines.mesh != null and lines.visible, "and drawn")
 	assert_true(lines.drawn_cells().size() > 20, "over the board's squares")
 	await _seconds(0.5)
@@ -199,17 +216,29 @@ func test_a_fight_shows_the_grid_round_whose_turn_it_is() -> void:
 	assert_true(float(mat.get_shader_parameter("reach_out")) > 100.0, "the whole map from the tactical view")
 	view.rig.tactical = false
 	view.rig.tactical_shown = 0.0
-	# Over, it fades out.
+	# Let go, and it fades out.
+	Input.action_release(&"show_grid")
+	await _frames(3)
+	assert_false(lines.is_wanted(), "gone when the key is let go")
+	await _seconds(0.5)
+	assert_false(lines.visible, "and not drawn")
+	# In fights: on its own, and a fight that is over takes it away even with the key held.
+	GameSettings.set_battle_grid("fights")
+	view.call("_gather_grid", now)
+	await _frames(3)
+	assert_true(lines.is_wanted(), "In fights: the grid shows on its own")
 	view.close_softly()
+	await _frames(3)
 	assert_false(lines.is_wanted(), "gone with the fight")
-	await _seconds(0.1)
-	assert_true(lines.shown() < 1.0, "fading out")
+	Input.action_press(&"show_grid")
+	await _frames(3)
+	assert_false(lines.is_wanted(), "held or not")
 	arena.queue_free()
 	await _frames(1)
 
 
-## Never: not even in a fight. And the Classic look has none to lay.
-func test_never_and_classic_show_no_grid_in_a_fight() -> void:
+## Never: not even held. And the Classic look has none to lay.
+func test_never_and_classic_show_no_grid_held() -> void:
 	Look.set_style("modern", false)
 	GameSettings.set_battle_grid("never")
 	var arena := ARENA.instantiate() as Node3D
@@ -217,6 +246,8 @@ func test_never_and_classic_show_no_grid_in_a_fight() -> void:
 	await _frames(5)
 	var view := arena.get("view") as CombatView
 	await _opened(view)
+	Input.action_press(&"show_grid")
+	await _frames(3)
 	assert_false(view.overlay.lines.is_wanted(), "never means never")
 	assert_false(view.overlay.lines.visible)
 	arena.queue_free()
@@ -228,12 +259,14 @@ func test_never_and_classic_show_no_grid_in_a_fight() -> void:
 	await _frames(5)
 	view = arena.get("view") as CombatView
 	await _opened(view)
+	await _frames(3)
 	assert_false(view.overlay.lines.is_wanted(), "Classic keeps the grid painted in its ground")
 	arena.queue_free()
 	await _frames(1)
 
 
-## Out of a fight nothing shows by default; "Always" lays the grid round the party's leader, and "In fights" takes it away.
+## Exploring shows nothing by default; the held key lays the grid round the party's leader, "Always" keeps it there, and
+## a fight has its own.
 func test_exploring_shows_the_grid_only_when_asked() -> void:
 	Look.set_style("modern", false)
 	var v := _view("svalich_crossroads")
@@ -241,12 +274,18 @@ func test_exploring_shows_the_grid_only_when_asked() -> void:
 	var explore := v.get_node("ExploreGrid") as ExploreGrid
 	assert_false(explore.lines.is_wanted(), "no grid on the open road")
 	assert_false(explore.lines.visible)
-	GameSettings.set_battle_grid("always")
+	Input.action_press(&"show_grid")
 	await _frames(3)
-	assert_true(explore.lines.is_wanted(), "Always: round the party")
+	assert_true(explore.lines.is_wanted(), "held: round the party")
 	assert_true(explore.lines.follow == v.tokens[v.leader().id], "round its leader")
 	assert_true(explore.lines.visible and explore.lines.mesh != null)
-	GameSettings.set_battle_grid("fights")
+	Input.action_release(&"show_grid")
+	await _frames(3)
+	assert_false(explore.lines.is_wanted(), "let go")
+	GameSettings.set_battle_grid("always")
+	await _frames(3)
+	assert_true(explore.lines.is_wanted(), "Always: on its own")
+	GameSettings.set_battle_grid("held")
 	await _frames(3)
 	assert_false(explore.lines.is_wanted(), "back to none")
 	await _seconds(0.6)

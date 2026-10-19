@@ -40,6 +40,8 @@ const BINDINGS := {
 	&"plan_round": [KEY_SPACE],
 	# Hold to see what each foe in plain view can see (U10; always shown while sneaking).
 	&"show_sight": [KEY_L],
+	# Hold to lay the battle grid over the ground round whoever's turn it is, or the party (BattleGrid).
+	&"show_grid": [KEY_B],
 	# Combat (docs/ui/combat_view.md).
 	&"combat_end_turn": [KEY_SPACE],
 	&"combat_cancel": [KEY_ESCAPE],
@@ -90,6 +92,7 @@ const COMMANDS := [
 	[&"split", "Split the party", "explore"],
 	[&"show_names", "Show names (hold)", "explore"],
 	[&"show_sight", "Show what foes see (hold)", "explore"],
+	[&"show_grid", "Show the battle grid (hold)", "both"],
 	[&"plan_mode", "Turn-based exploring", "explore"],
 	[&"plan_round", "End the round (turn-based)", "explore"],
 	[&"quick_save", "Quicksave", "explore"],

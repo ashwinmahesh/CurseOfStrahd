@@ -101,15 +101,17 @@ static func set_unlimited_attunement(on: bool) -> void:
 
 
 ## The battle grid (Ashwin 2026-10-19, Natural Maps plan N1): the Modern look draws its places as natural land and lays a
-## grid of thin lines over it only when it helps. "fights": round the creature whose turn it is, and over the whole map
-## in the tactical view; "always": round the party when exploring too; "never". The Classic look keeps its grid painted
-## in the ground and ignores this (BattleGrid).
-const BATTLE_GRIDS: Array[String] = ["fights", "always", "never"]
+## grid of thin lines over it only when it helps. "held" (the default: "we don't need to show the grid in combat ... maybe
+## it could be a button the player holds"): while the Show the grid key is held, round the creature whose turn it is (the
+## party's leader when exploring), over the whole map in the tactical view; "fights": that on its own through every
+## fight; "always": and round the party when exploring too; "never": not even held. The Classic look keeps its grid
+## painted in the ground and ignores this (BattleGrid).
+const BATTLE_GRIDS: Array[String] = ["held", "fights", "always", "never"]
 
 
 static func battle_grid() -> String:
-	var v := str(value("battle_grid", "fights"))
-	return v if v in BATTLE_GRIDS else "fights"
+	var v := str(value("battle_grid", "held"))
+	return v if v in BATTLE_GRIDS else "held"
 
 
 static func set_battle_grid(v: String) -> void:

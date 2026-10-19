@@ -384,11 +384,11 @@ func _game_rows() -> void:
 		"On: a creature with an ally on the far side of its foe, both next to it, has Advantage on melee attacks against that foe. For heroes and foes alike.")
 	y += ROW_PITCH
 	# The battle grid (Ashwin 2026-10-19, Natural Maps plan N1): the Modern look's grid laid over the ground when it helps.
-	_choice_row(y, "Battle grid", ["In fights", "Always", "Never"], maxi(0, GameSettings.BATTLE_GRIDS.find(GameSettings.battle_grid())),
+	_choice_row(y, "Battle grid", ["Held", "In fights", "Always", "Never"], maxi(0, GameSettings.BATTLE_GRIDS.find(GameSettings.battle_grid())),
 		func(i: int) -> void:
 			GameSettings.set_battle_grid(GameSettings.BATTLE_GRIDS[i])
 			_note.text = "" if Look.modern() else "The Classic look keeps its grid painted in the ground; this is for Modern.",
-		InputActions.fill("In fights: thin lines show the squares round whoever's turn it is, and over the whole map in the tactical view ({camera_tactical}). Always: round the party when you explore too. Never: no lines at all."))
+		InputActions.fill("Held: thin lines show the squares round whoever's turn it is (or your party) while you hold {show_grid}, and over the whole map in the tactical view ({camera_tactical}). In fights: on their own through every fight. Always: and round the party when you explore. Never: no lines at all."))
 	y += ROW_PITCH
 	# Attunement (a house option, Ashwin 2026-10-17): the book's limit of three, or none at all.
 	_choice_row(y, "Attunement", ["Three at most", "Unlimited"], 1 if GameSettings.unlimited_attunement() else 0, func(i: int) -> void:
