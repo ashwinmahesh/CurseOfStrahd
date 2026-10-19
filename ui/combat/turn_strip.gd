@@ -19,6 +19,8 @@ const PAGE := 0.7
 ## How fast the glide closes the distance: after t seconds a fraction of exp(-EASE * t) of it is left.
 const EASE := 9.0
 
+## The widest the view gets (CombatHud sets it): up to that the box is as wide as its cards, and a longer order scrolls.
+var max_width := 1000000.0
 ## The cards, side by side (CombatHud adds them here).
 var strip := HBoxContainer.new()
 var scroll := ScrollContainer.new()
@@ -205,6 +207,10 @@ func _apply() -> void:
 
 
 func _process(delta: float) -> void:
+	# The box takes the room the cards need, up to max_width.
+	var want := minf(content_width(), max_width)
+	if not is_equal_approx(custom_minimum_size.x, want):
+		custom_minimum_size.x = want
 	_try_centre()
 	if view_width() > 1.0:
 		goal = clampf(goal, 0.0, max_scroll())

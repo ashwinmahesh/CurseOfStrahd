@@ -98,7 +98,7 @@ func test_a_long_order_stays_inside_its_panel_and_shows_whose_turn_it_is() -> vo
 	assert_eq(e.order.size(), 24, "24 in the order")
 	assert_true(view.can_scroll(), "24 portraits are wider than the panel")
 	var panel := hud.get("_strip_panel") as Control
-	assert_true(panel.size.x <= 1121.0, "the panel keeps its width (%.0f)" % panel.size.x)
+	assert_true(panel.size.x <= CombatHud.ORDER_MAX_WIDTH + 200.0, "the box stops growing at its widest (%.0f)" % panel.size.x)
 	assert_true(get_tree().root.get_visible_rect().encloses(panel.get_global_rect()), "and stays inside the window")
 	assert_true(view.get_global_rect().encloses(view.scroll.get_global_rect()), "the scrolling view stays in the strip")
 	assert_true(view.in_view(e.current().id), "the first turn is in view at the start of the fight")
@@ -248,4 +248,4 @@ func test_a_short_order_does_not_scroll_and_leaves_the_wheel_alone() -> void:
 		assert_eq(view.position_now(), 0.0, "no turn moves it")
 		assert_true(view.in_view(e.current().id), "everyone is in view")
 	var panel := hud.get("_strip_panel") as Control
-	assert_true(panel.size.x <= 1121.0, "the panel is the width it always was")
+	assert_true(panel.size.x < CombatHud.ORDER_MAX_WIDTH * 0.7, "a short order's box is only as wide as its cards (%.0f)" % panel.size.x)

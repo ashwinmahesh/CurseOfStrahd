@@ -169,21 +169,28 @@ const PARTY_STATUS_SIZE := 12
 const PARTY_BAR_HEIGHT := 8.0
 const PARTY_ICON := 16.0
 const PARTY_GAP := 6
-const ORDER_PORTRAIT := 38.0
-const ORDER_PORTRAIT_ACTIVE := 50.0
+const ORDER_PORTRAIT := 34.0
+const ORDER_PORTRAIT_ACTIVE := 44.0
 const ORDER_NAME_SIZE := 11
 const ORDER_NAME_SIZE_ACTIVE := 13
-const ORDER_BAR := 40
-const ORDER_BAR_ACTIVE := 52
-const ORDER_BAR_HEIGHT := 6.0
+const ORDER_BAR := 38
+const ORDER_BAR_ACTIVE := 48
+const ORDER_BAR_HEIGHT := 5.0
 const ORDER_GAP := 4
-## Where the party frames and the combat log start (under the turn order's panel, about 118 px tall with its margin).
-const TOP_ROW := 118.0
-const LOG_BOTTOM := 578.0
+## The turn order's box (owner, 2026-10-19: "the initiative tracker still takes too much of the display, I want the size
+## of that whole box reduced"): it is as wide as its cards, up to ORDER_MAX_WIDTH of them (a longer order scrolls), with
+## slim margins round the box and each card.
+const ORDER_MAX_WIDTH := 760.0
+const ORDER_BOX_MARGIN := 8
+const ORDER_CARD_MARGIN := 3
+const ORDER_TOP := 8
+## Where the party frames and the combat log start (under the turn order's panel, about 92 px tall).
+const TOP_ROW := 108.0
+const LOG_BOTTOM := 568.0
 ## The reaction prompt: its width, and its bottom edge (above the hotbar, whose top is 244 px up).
 const PROMPT_WIDTH := 440.0
 const PROMPT_BOTTOM := -254.0
-const LOG_COMPACT_BOTTOM := 350.0
+const LOG_COMPACT_BOTTOM := 340.0
 var _log_panel: PanelContainer
 var _log_title: Label
 var _log_toggle: Button
@@ -260,25 +267,28 @@ func _build_strip() -> void:
 	var panel := _panel()
 	panel.anchor_left = 0.5
 	panel.anchor_right = 0.5
-	panel.offset_left = -560
-	panel.offset_right = 560
-	panel.offset_top = 10
+	panel.offset_left = 0
+	panel.offset_right = 0
+	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	panel.offset_top = ORDER_TOP
+	(panel.get_theme_stylebox("panel") as StyleBoxFlat).set_content_margin_all(ORDER_BOX_MARGIN)
 	add_child(panel)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
 	panel.add_child(row)
 	var head := VBoxContainer.new()
-	_round_label = _label("Round 1", 24, "gilt_light")
+	_round_label = _label("Round 1", 20, "gilt_light")
 	head.add_child(_round_label)
-	head.add_child(_label("turn order", 14, "parchment"))
+	head.add_child(_label("turn order", 12, "parchment"))
 	# The controls card's key sits here, out of the way of the party frames (a guest's frame used to cover it).
-	var f1 := _label("F1: controls", 12, "gilt_dark")
+	var f1 := _label("F1: controls", 11, "gilt_dark")
 	PadGlyphs.hint(f1, "F1: controls", "{@combat_controls}: controls")
 	head.add_child(f1)
 	row.add_child(head)
 	_strip_panel = panel
 	# A long order scrolls inside the panel and follows the turn (TurnStrip), so it never runs past the window.
 	_strip_view = TurnStrip.new()
+	_strip_view.max_width = ORDER_MAX_WIDTH
 	_strip = _strip_view.strip
 	_strip.add_theme_constant_override("separation", ORDER_GAP)
 	row.add_child(_strip_view)
@@ -921,11 +931,13 @@ func _refresh_strip() -> void:
 			frame = "bile"
 		# On a pad, the creature the camera was last sent to along the order is ringed in white (look_at).
 		var seen := not active and c.id == _strip_view.looked
-		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else ("vellum" if seen else frame), 4 if active or seen else (3 if ready else 2)))
+		var box := _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else ("vellum" if seen else frame), 4 if active or seen else (3 if ready else 2))
+		box.set_content_margin_all(ORDER_CARD_MARGIN)
+		card.add_theme_stylebox_override("panel", box)
 		if c.id in e.shared_ended:
 			card.modulate = Color(1, 1, 1, 0.55)
 		var v := VBoxContainer.new()
-		v.add_theme_constant_override("separation", 2)
+		v.add_theme_constant_override("separation", 1)
 		card.add_child(v)
 		v.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), ORDER_PORTRAIT_ACTIVE if active else ORDER_PORTRAIT, c.is_down(), c.creature.dead))
 		var short := c.name().get_slice(" ", 0) if c.side != &"enemy" else c.name().replace("Dire Wolf", "Dire")
