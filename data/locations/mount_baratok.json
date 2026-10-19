@@ -619,6 +619,17 @@
       "kind": "window",
       "bright_ft": 5,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        14,
+        18
+      ],
+      "kind": "amber",
+      "color": "orchid",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "visual": true
     }
   ],
   "narration": {
