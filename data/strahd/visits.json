@@ -112,7 +112,7 @@
         "night": true,
         "days": 3
       },
-      "when": "flag.strahd_watcher_seen and flag.ireena_sanctuary == \"inn\" and not guest:ireena",
+      "when": "flag.strahd_watcher_seen and flag.ireena_sanctuary == \"inn\" and not guest:ireena and not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth)",
       "once": true,
       "urgent": true,
       "dialogue": "strahd/ireena:inn",
@@ -158,7 +158,7 @@
         "night": true,
         "days": 3
       },
-      "when": "flag.strahd_watcher_seen and flag.ireena_in_krezk and not guest:ireena",
+      "when": "flag.strahd_watcher_seen and flag.ireena_in_krezk and not guest:ireena and not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth)",
       "once": true,
       "urgent": true,
       "dialogue": "strahd/ireena:krezk",
@@ -204,7 +204,7 @@
         "night": true,
         "days": 3
       },
-      "when": "flag.strahd_watcher_seen and flag.ireena_sanctuary == \"st_andrals\" and not guest:ireena",
+      "when": "flag.strahd_watcher_seen and flag.ireena_sanctuary == \"st_andrals\" and not guest:ireena and not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth)",
       "once": true,
       "dialogue": "strahd/ireena:church"
     },

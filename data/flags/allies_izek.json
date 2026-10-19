@@ -1,0 +1,30 @@
+{
+  "region": "allies_izek",
+  "flags": [
+    {
+      "id": "izek_watching",
+      "type": "bool",
+      "summary": "Izek Strazni has taken to standing at night outside the place where Ireena shelters in Vallaki, staring at her window (the first stage of the ally visit izek_takes_ireena, data/visits/izek.json). It is what lets the second stage, the taking, come two days later (Story Allies Presence Plan, package Z1)."
+    },
+    {
+      "id": "izek_took_ireena",
+      "type": "bool",
+      "summary": "Izek carried Ireena off from her refuge in Vallaki to his room in the Baron's mansion (the visit's second stage). Set once and never cleared, so he takes her only once, however it ends."
+    },
+    {
+      "id": "izek_holds_ireena",
+      "type": "bool",
+      "summary": "Ireena is in Izek's room at the Baron's mansion now. She counts as held only while Izek lives and has not been told the truth (izek_dead, izek_told_truth) and she does not travel with the party: the inn and the church do not place her, nor Ismark, and Strahd's three visits to her skip her, for exactly as long. Cleared when the party frees her, when she is freed in the room's fight, or when she gets out alone."
+    },
+    {
+      "id": "izek_hold_ended",
+      "type": "string",
+      "summary": "How the taking ended: rescued (the party walked her out by day), threatened (Izek let her go under a threat), truth (he was told she is his sister), fought (the party fought him; she left before the fight) or escaped (two days passed and she got out alone, broke his nose with a candlestick in front of the watch and came back colder: it costs her trust, ireena_trust -= 2, and his pride). Empty if Izek died or was told the truth somewhere else while she was held. Read by Izek's room afterwards (narrative/allies/izek_takes:after_hold); later Ireena and Izek packages and the epilogues may read it."
+    },
+    {
+      "id": "izek_room_met",
+      "type": "bool",
+      "summary": "The party has found Ireena in Izek's room (narrative/allies/izek_takes), by night with Izek there or by day without him. It picks the first sight over the shorter return."
+    }
+  ]
+}

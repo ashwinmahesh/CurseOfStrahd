@@ -1,0 +1,34 @@
+Thank you, both batches were useful. One small last group, same rules and format (plain text only, nodes under `~ name`, `Speaker [mood]: Text`, 1-2 sentences, under about 22 words, ASCII only, no placeholders, finish without sending messages to anyone else).
+
+## The scene
+
+After Ireena has been taken to Izek's room and has got away from him (she got out alone and broke his nose with a candlestick in front of the watch; or the party walked her out by day; or the party made him let her go with a threat), the party can find Izek again at night in his room off the great hall at the Baron's mansion: the same bare room, the cot, the washstand, the sword in the corner, the open chest of red-haired wooden dolls. He is alone now. Ireena is not there. He does not know she is his sister, and nobody in this scene says so. He is not repentant: he still thinks he was keeping her safe, and he still wants her. But the thing that made him sure of himself has gone.
+
+Two variants, chosen by how it ended:
+- AFTER_ESCAPE: she got out alone and broke his nose in front of six of the Baron's watch. He is humiliated. His nose is swollen and bruised dark; he has splinted it with a strip of tin or a folded cloth. He sits on the cot with a doll in his ordinary (left) hand and does not look up when the party comes in. He is quiet, flat and, for him, almost honest. He admits (once, in his own flat way) that she walked past him and he did not stop her, and that he does not know why.
+- AFTER_PARTY: the party walked her out by day, or forced him to let her go. He is angry but cold, not loud: he counts what was taken out of his room (he does not say "mine" about a person: he says "she"), and he repeats that he is good at waiting.
+
+The first line the player hears is a Narrator line; Izek speaks next; then the conversation goes on into the menu that already exists (a menu where the party may threaten him, tell him the truth if they know it, draw steel, or go). So these lines only OPEN the scene. Do not write the menu.
+
+## Existing lines you must not repeat
+
+Izek: "You're in my room." / "Good. I've wanted to since the gate." / "Then you know I'm not mad. She's real. I'll find her and keep her, and she'll never be cold in the woods again." / "He said no. In front of everyone. I'll wait. I'm good at waiting." / "The Baron's happy. That makes one of us."
+In the last batch he also said: "She stays here where the walls are thick and the watch knows my door. Nobody takes her back into the trees while I'm breathing." and "I'm good at waiting. A man with one room and a long memory doesn't have to hurry." (so do not use that last phrase again in the party variant; find another way to say he will wait).
+
+## The nodes I need
+
+after_hold_escaped: Narrator x1 (what the party sees: the nose, the tin splint or cloth, the doll in his left hand, the chest of dolls shut now, perhaps the brass candlestick that broke his nose standing back on the washstand), Izek x2 (flat; the watch saw; nobody laughed to his face, which is worse; she walked past him and he did not stop her and he does not know why)
+after_hold_party: Narrator x1 (the same room with an empty chair set square in the middle, the doll on the cot, the chest shut), Izek x2 (cold; she is gone out of his room and he has counted the dolls twice; he does not threaten; he says he will wait without using the phrase "good at waiting" again)
+
+That is 6 lines.
+
+## Voice reminders
+
+IZEK: flat, short, imperatives; never more than two sentences unless about her; about her he goes quiet and almost gentle, which is worse. Moods: [angry], [sad] or none.
+NARRATOR: old gothic storyteller, second person or plain scene description, present tense, one or two sentences, the second a turn; concrete senses; never cruel; no game terms.
+
+## Canon limits
+
+No new characters, places or history. Nobody says Ireena's name in Izek's mouth unless it is "she"; Izek may say "her". Nobody says Strahd's name. Do not name Izek's lost sister. He does not hurt anyone in this scene.
+
+Format reminder: one line per row, `Speaker [mood]: Text`; speakers are Narrator and Izek. Group under `~ node_name` in the order given. No commentary.

@@ -720,7 +720,7 @@
         8
       ],
       "dialogue": "vallaki/ireena:at_inn",
-      "when": "flag.ireena_sanctuary == \"inn\" and not guest:ireena"
+      "when": "flag.ireena_sanctuary == \"inn\" and not guest:ireena and not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth)"
     },
     {
       "npc": "ismark",
@@ -729,7 +729,7 @@
         9
       ],
       "dialogue": "vallaki/ireena:ismark_at_inn",
-      "when": "flag.ismark_guards_ireena and flag.ireena_sanctuary == \"inn\" and not guest:ismark"
+      "when": "flag.ismark_guards_ireena and flag.ireena_sanctuary == \"inn\" and not guest:ismark and not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth)"
     },
     {
       "npc": "vallaki_goodwife",

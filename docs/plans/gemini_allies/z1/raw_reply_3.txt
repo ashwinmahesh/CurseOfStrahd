@@ -1,0 +1,9 @@
+~ after_hold_escaped
+Narrator: Izek sits by the shut chest with a doll in his left hand and a tin splint across his blackened nose. The bent brass candlestick stands washed upon the basin.
+Izek [angry]: Six of the watch saw it, and not one of them dared laugh to my face. That's worse.
+Izek: She walked right past me with my blood on her cuff, and I didn't lift a hand. I don't know why.
+
+~ after_hold_party
+Narrator: An empty chair sits square in the middle of the bare room, the chest shut tight beside the washstand. On the cot, a single red-haired doll lies beside his knee.
+Izek [angry]: She's gone out of this room, and I've counted the box twice to be sure what's left. The room's cold again.
+Izek: It doesn't matter where you hide her. The town has walls, and I have all the nights there are.

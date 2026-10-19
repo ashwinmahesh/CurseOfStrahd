@@ -1,0 +1,64 @@
+~ room_first
+Narrator: Izek sits on the narrow cot between you and the chair where Ireena sits upright, untied. A carved wooden doll lies face-down across her knee.
+Narrator: Beside the washstand, an open chest brims with dozens more of the little painted things, every one wearing her red hair.
+Izek: She stays here where the walls are thick and the watch knows my door. Nobody takes her back into the trees while I'm breathing.
+Izek: Look at her. She's warm, she has the candle, and nobody is going to touch a hair on her head.
+Ireena [angry]: He hasn't laid a finger on me, if that is what you came to ask. He only sits and stares like a dog guarding a bone, which is worse.
+Ireena [angry]: And I will thank you all to stop speaking over my head as though I were a crate of the Baron's wine.
+* Ireena, are you hurt? Has he harmed you?
+* Let her walk out, Izek, or you won't see another festival.
+
+~ room_again
+Izek: You're back. The door's where you left it, and so am I.
+Ireena [angry]: Take your time, by all means. The dolls are splendid company.
+
+~ room_hurt
+Ireena [angry]: No. He set me in this chair, put this wooden thing in my lap, and has been monstrously polite ever since.
+Ireena: I have counted thirty-four of my own face in that box. It is not the comfort he thinks it is.
+
+~ room_threat_ok
+Narrator: He measures your reach against the narrow room, and the red heat under his scales slowly dulls to ash. He does not rise from the cot.
+Izek [angry]: Take her, then. Get her out of my doorway before I change my mind.
+Izek: I'm good at waiting. A man with one room and a long memory doesn't have to hurry.
+
+~ room_truth_fail
+Ireena: Stand back a moment and let me speak to him myself. If he means to stare at me all night, he can hear it from my own mouth.
+
+~ room_truth_after
+Narrator: He sets the little wooden doll on the washstand with its painted face to the wall. Then he rises and steps clear of the doorway.
+Izek [sad]: Go on, then, and keep your cloak up in the wind. I won't follow you.
+Ireena [sad]: I don't know what to call you. Goodbye, Izek.
+
+~ room_fight
+Ireena: I will not sit in a chair and be fought over like a tavern prize. I'll be on the stairs when you are finished.
+Narrator: She walks past the cot with her chin up and slips out into the hall past the watch. Izek never looks away from your hands.
+
+~ alone_first
+Narrator: Daylight greys the bare room and the empty cot. Ireena sits at its foot beside the open chest of dolls, dark-eyed from a sleepless night.
+Ireena [angry]: He went out at first light on the Baron's business and didn't even turn the key. The watch down the hall won't look in, and they won't let me pass twice.
+Ireena: I was saving my one walk through that door until I knew you weren't dead in a ditch. He comes back at dusk.
+Ireena [angry]: Do not expect me to thank you for letting me spend a night with a box of my own wooden heads.
+* Come on. We're getting you out of here now.
+* Did he hurt you while he was here?
+* Stay here a little longer while we deal with him first.
+
+~ alone_again
+Ireena [angry]: Dusk comes early in this valley, in case you had forgotten.
+
+~ alone_rescue
+Ireena: Give me one second to pin my scarf straight. I will not go through the Baron's hall looking as though I were carried in.
+Ireena: Good. Walk beside me, not around me, and let us be out of this house before the lamps are lit.
+
+~ freed
+Ireena: Thank you. I'll say it once and plainly, and then we need not speak of that room again.
+Ireena [angry]: Half the Baron's watch saw me carried up those stairs and looked at their boots. This whole town is rotten with fear.
+Ireena: Say plainly what you mean to do next. I have had enough of sitting behind shut doors waiting for men to decide my safety.
+* Come with us again. You're safer on the road with us.
+* Let us take you back to where you were sheltering.
+
+~ freed_back
+Ireena: Very well, we'll go back for tonight. At least there they ask my name before they shut the door.
+
+~ watched
+Ireena [afraid]: Don't talk to me while he's watching your hands. Speak to him, and keep your voice flat.
+Ireena: He isn't listening to the words. He's waiting for an excuse to reach for that sword in the corner.

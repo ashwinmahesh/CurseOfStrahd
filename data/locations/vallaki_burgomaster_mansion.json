@@ -780,8 +780,48 @@
         3,
         11
       ],
+      "dialogue": "allies/izek_takes:room",
+      "approach": 5,
+      "when": "night and flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth and not guest:ireena"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        3,
+        11
+      ],
+      "dialogue": "allies/izek_takes:after_hold",
+      "when": "night and flag.izek_took_ireena and not flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth and (not flag.festival_begun or flag.vallaki_backed == \"baron\")"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        3,
+        11
+      ],
       "dialogue": "vallaki/izek:at_home",
-      "when": "night and not flag.izek_dead and not flag.izek_told_truth and (not flag.festival_begun or flag.vallaki_backed == \"baron\")"
+      "when": "night and not flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth and (not flag.festival_begun or flag.vallaki_backed == \"baron\")"
+    },
+    {
+      "npc": "ireena",
+      "cell": [
+        4,
+        12
+      ],
+      "dialogue": "allies/izek_takes:ireena_room",
+      "facing": "east",
+      "approach": 5,
+      "when": "day and flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth and not guest:ireena"
+    },
+    {
+      "npc": "ireena",
+      "cell": [
+        4,
+        12
+      ],
+      "dialogue": "allies/izek_takes:ireena_room",
+      "facing": "east",
+      "when": "flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth and not guest:ireena"
     },
     {
       "npc": "victor_vallakovich",

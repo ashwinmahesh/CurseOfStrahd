@@ -1,0 +1,68 @@
+~ omen_inn
+Narrator: A big man stands motionless in the dark street across from the inn, staring up at one shuttered window. The red-black scales of his arm give the mud at his boots a faint, patient glow.
+
+~ omen_church
+Narrator: A big man stands at the churchyard gate with one clawed hand on the iron, looking at the vestry window. Nothing stops him from coming in, which makes his waiting worse.
+
+~ omen_urwin
+Urwin: Izek has been out there since dusk, watching the window where she sleeps.
+Urwin [weary]: Nobody on the street goes near him. If you mean to keep her, don't leave her long.
+
+~ omen_lucian
+Father Lucian [weary]: Forgive me, friends, Izek has stood outside since dusk, watching the room where she sleeps.
+Father Lucian [sad]: A threshold only keeps out the dead. It will not stop a living man when he decides to walk through.
+
+~ omen_guard
+Town Guard [smile]: Evening, friends, and keep smiling. The Captain has stood outside her window since dusk, though I'm sure it's strictly official.
+Town Guard [afraid]: He isn't ours to question when he gets that look. Please don't tell the Baron I mentioned it.
+
+~ omen_menu
+* We'll keep watch on him ourselves.
+
+~ taken_inn
+Narrator: The bed in the upper room is empty, a tallow candle burned down to grease on the floorboards. The door hangs off one hinge, which is all the noise a large man needed to make.
+
+~ taken_church
+Narrator: The narrow cot in the vestry is empty, its wool blanket dragged across the stone floor. Outside, the iron gate stands wide to the dark street.
+
+~ taken_urwin
+Urwin [weary]: Third watch. Izek walked in, lifted her out of bed like a sleeping child, and carried her out.
+Urwin [sad]: She didn't scream, and I didn't draw on him. Say what you like about that.
+Urwin: He took her to the Baron's mansion, to his room off the great hall. The door's unlocked, and he's sitting in front of it.
+
+~ taken_lucian
+Father Lucian [sad]: I was at prayers when he came, and the door was not barred. A living man needs no invitation.
+Father Lucian [weary]: He carried her out in her cloak without an unkind word, and I had only an old man's hands to raise.
+Father Lucian: She is in the Baron's mansion, in Izek's room off the great hall. The door is unlocked, and he sits before it.
+
+~ taken_guard
+Town Guard [afraid]: Captain Izek carried the red-haired lady up to the Baron's mansion before dawn. Orders, he said, and nobody asked whose.
+Town Guard: He didn't lay a rough hand on her, mind. Just took her up to his room off the great hall.
+Town Guard [afraid]: The door isn't even locked, he just sits in the chair outside it. Please don't tell the Baron I told you.
+
+~ taken_ismark
+Narrator: Her brother's post by the door is empty. He followed them as far as the mansion gates, where he is currently shouting himself hoarse against four watchmen's spears.
+
+~ taken_menu
+* We're going to the mansion for her now.
+
+~ escape_inn
+Narrator: The upper room is lit again, a tin basin of pink water cooling on the washstand. Ireena sits on the edge of the bed with her knuckles bound in linen and does not look up.
+
+~ escape_church
+Narrator: A single candle burns in the vestry, where Ireena sits very straight on the narrow cot. Her right hand is wrapped in clean linen, and she does not look toward the door.
+
+~ escape_urwin
+Urwin: She came back at first light and asked for water and clean linen. Nothing else.
+Urwin [smile]: Word is she broke Izek's nose with a brass candlestick in front of six watchmen and walked out the front door.
+
+~ escape_lucian
+Father Lucian [weary]: She returned at dawn, asking not for a blessing, only for a basin of cold water. She asked if you had come.
+Father Lucian: They say she struck Izek across the face with a heavy candlestick and walked straight past six of the watch.
+
+~ escape_guard
+Town Guard [afraid]: The red-haired lady broke the Captain's nose with a brass candlestick and walked right out the front doors. Six of us stood there, and not one man moved.
+Town Guard [weary]: The Captain hasn't come out of his room since, and nobody is laughing where he can hear. Don't tell the Baron I said so.
+
+~ escape_menu
+* We'll go in and speak with her.

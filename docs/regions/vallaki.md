@@ -113,6 +113,12 @@ arm. He has dreamed of a red-haired woman ever since and has Blinsky carve her a
 - **Baron path:** after the festival Izek asks the Baron for Ireena as his reward. The party makes the Baron refuse
   (Persuasion 14, `izek_spurned`), tells Izek the truth, or fights him (`izek_duel`).
 - In the Wachter and town paths Izek dies in the festival fight if he's in it (`izek_dead`).
+- **While he doesn't know the truth, he comes for her** (Story Allies Presence Plan, package Z1; docs/story/izek_takes.md):
+  once he has seen her and she shelters at the inn or the church, an ally visit plays on three nights in Vallaki, each two
+  days after the last: he stands under her window, he carries her to his room in the mansion (`izek_holds_ireena`; the inn and
+  the church don't place her, and Strahd's visits to her skip her), and if nobody has freed her she gets out alone and comes
+  back colder (`ireena_trust -= 2`). In his room the party can threaten him, tell him the truth with her there, fight him (she
+  leaves first), or walk her out by day while he is away. No story flag moves beyond what the old scenes move.
 
 ### 4.4 Lady Wachter's coup
 

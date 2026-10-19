@@ -1,0 +1,69 @@
+Thank you. That was a good first batch. Here is the second and last group, same rules, same format, same canon (plain text only, nodes under `~ name`, `Speaker [mood]: Text`, 1-2 sentences, under about 22 words, ASCII only, no placeholders, finish without sending messages to anyone else). One correction to the first batch for context: in the room, Izek sits INSIDE his own room on the cot, between Ireena and the door; the door is not locked.
+
+## The scenes
+
+The party goes to the Baron's mansion to get Ireena back. She is in Izek's room, off the great hall: a bare soldier's room with a cot, a washstand with a basin, a sword leaning in a corner, a candle, and an open chest of small carved wooden dolls, every one with the same red-haired face (hers; the toymaker carves them for him). The door to the hall is not locked. Izek's right arm is the scaled, clawed, hot one; his left is ordinary. Ireena has not been hurt: he carried her here, put a doll in her lap and sat watching her. She is angry, very controlled, dry, proud; she does not scream and does not beg; she makes the grim joke before anyone can pity her. She will never say Strahd's name. Izek does NOT hurt her; he wants to keep her safe; with her he goes quiet and almost gentle, which is worse. He does not know she is his sister. Neither does she, unless the party tells them (one branch does: the lines for that moment already exist; see below).
+
+The player reaches the room in one of two ways, and some nodes serve both:
+- AT NIGHT: Izek is in the room with her. The scene starts by itself when the party comes in.
+- BY DAY: Izek is out on the Baron's business (nobody knows where); Ireena is alone in his room with the door shut, not locked, and the watch down the hall who do not ask what the Captain keeps in his room.
+
+How the scene can end (the engine handles the rules; you write the lines):
+1. The party threatens him and he gives way: he lets her go.
+2. The party tells him the truth (Ireena is his sister) and he believes it: the lines of that moment already exist (listed below); I need the lines AFTER them.
+3. The party walks her out by day.
+4. The party fights him: before the fight begins, Ireena slips out so she is not caught in it.
+Endings 1-3 then share a short tail where Ireena decides: rejoin the party, or be taken back to her refuge.
+
+## Existing lines you must NOT rewrite or repeat (they play already)
+
+Izek: "You're in my room." / "Good. I've wanted to since the gate." / "Kill me? In the Baron's house? Go on, then. Try." / "Liar. You saw the dolls and you made up a story to go with them. Get out of my sight before I forget the Baron likes you."
+Truth moment: Izek: "No." Narrator: "He looks at you, and then at nothing, for a very long time. The scaled hand opens and closes. When he speaks again his voice has gone quiet, the way a struck bell goes quiet." Izek: "My sister. My sister had red hair." Izek: "I won't touch her. I won't let anyone touch her. And I won't break any more heads for that fat fool in the sash. I'm done." Ireena [sad]: "I'm sorry. I don't remember you. I wish I did." Izek: "I remember enough for both of us."
+Existing at_home Narrator: "Izek sits on his cot in the dark with a doll in his ordinary hand, turning it so the candlelight moves across its painted face. He doesn't get up."
+Existing option texts: "We know about the dolls. And about her." / "Izek, we know who the red-haired woman is." / "(Draw steel.) This ends tonight." / "We'll go."
+
+## The nodes I need (one line = 1-2 short sentences)
+
+room_first: Narrator x2 (what the party sees on opening the door: Izek on the cot and Ireena upright in a chair, not tied, a doll face-down on her knee; the open chest; do not repeat the existing at_home narrator line), Izek x2 (AFTER he has said "You're in my room."; he is calm; he explains in his flat way that she is safe here and nobody will take her into the trees; he speaks of her almost gently), Ireena x2 (furious and controlled, dry: he has not touched her, and that is almost worse; she will not be talked about as luggage)
+room_again: Izek x1 (the party returns after leaving; short, flat), Ireena x1 (dry)
+room_hurt: Ireena x2 (answer to "Are you hurt?": no; he has been very polite; she has been counting the dolls and it is not a comfort)
+room_threat_ok: Narrator x1 (he weighs the party and the numbers and his arm stops glowing), Izek x2 (he lets her go; he stays seated; he does not like it; one of the two lines uses his pet phrase "I'm good at waiting" or a close variant)
+room_truth_fail: Ireena x1 (said right after Izek calls the party liars: she asks the party to let her speak to him herself)
+room_truth_after: Narrator x1 (after "I remember enough for both of us.": he puts the doll down face to the wall and stands out of the doorway), Izek x1 (he tells her to go; he will not follow; a brother's line, flat, no tenderness he can't afford), Ireena x1 (she does not know what to call him; she goes)
+room_fight: Ireena x1 (before the fight: she will not be a hostage in a brawl; she says she will be on the stairs; she does not ask them to be careful), Narrator x1 (she goes out past the watch; Izek does not stop her; he is looking at the party)
+alone_first: Narrator x1 (by day: Izek's room empty of him; Ireena at the foot of the cot with the doll box open beside her; she has plainly not slept), Ireena x3 (he left at first light; he locked nothing and told nobody; she has not tried the door because the watch in the hall would send word, and she is saving her one try; he comes back at dusk; she does not apologise for being angry at the party for being slow)
+alone_again: Ireena x1 (the party comes back by day before getting her out: short, dry)
+alone_rescue: Ireena x2 (the party says come on, we are getting you out: practical; she wants her scarf straight and out of the mansion before dusk)
+freed: Ireena x3 (shared tail after endings 1-3; written so it reads right after a threat, after the truth, and after a daytime walk-out: thanks, once and not warmly; anger at the Baron's men who did nothing; what she wants to do next)
+freed_back: Ireena x1 (the party offers to take her back to where she was sheltering; she accepts but not meekly)
+watched: Ireena x2 (the party speaks to her instead of to Izek while he is in the room; she answers low and fast: talk to HIM, not me; he listens to tone not words)
+
+## Option texts (what the party says; each under 12 words, party's voice, "we"; write them as `* text` rows under the node, in this order)
+
+room_first: (1) a question to Ireena asking whether she is hurt; (2) a threat: let her walk out or he will not see another festival
+alone_first: (1) tell her they are getting her out now; (2) ask whether he has hurt her; (3) tell her to stay a little longer while they deal with him first
+freed: (1) ask her to come with them again; (2) offer to take her back to where she was sheltering
+
+That is 32 spoken lines and 7 option texts.
+
+## Voice reminders
+
+IZEK: flat, short, imperatives; never more than two sentences unless about her. Pet phrases: "Not here." "I'm good at waiting." Moods: [angry], [sad] or none.
+- "I've seen you. Every night since I was nine years old. I didn't know your name. Now I do."
+- "She's real. I dream her every night. Her face, her hair. When I find her, I'll keep her safe. Nobody will ever take her into the trees again."
+- "Then you know I'm not mad. She's real. I'll find her and keep her, and she'll never be cold in the woods again."
+
+IREENA: direct and proud, short sentences, no ornament; asks questions like a magistrate; dry humour with an edge; more formal when grieving; never says "please" to Strahd's name, and does not say his name. Pet phrases: "Say it plainly." "Father would want it done properly." Moods: [angry], [afraid], [sad], [smile] or none.
+- "I am standing right here, and I am not a sack of flour to be handed over a counter."
+- "Ismark warned me there'd be men like you. I thought he meant the castle."
+- "Good. I was going mad sitting still. Walls didn't keep him out of my father's house; I'd rather take my chances with you."
+- "I'd rather he knew. If he's going to look at me like that, I'd rather he knew why."
+- "I won't sleep one night in a town that sends its compliments to the castle."
+
+NARRATOR: old gothic storyteller, second person or plain scene description, present tense, one or two sentences with the second as the turn, concrete senses, never cruel, no game terms. In this scene: tight and quiet, dread and a thread of grim comedy.
+
+## Canon limits
+
+Do not invent names, places or history: no new characters; no name for Izek's lost sister (nobody says it); the Baron is only "the Baron"; the watch is "the watch". Ireena does not fight and does not pick up anything to fight with in these scenes (she is kept out of fights). Izek never hurts her and no line says he did. Nobody says Strahd's name. No game terms. The consequence for waiting too long is in her coldness and his pride, not in injury.
+
+Format reminder: one line per row, `Speaker [mood]: Text`; speakers are Narrator, Izek, Ireena. Group under `~ node_name` in the order given. Option texts as `* text` rows under their node. No commentary.

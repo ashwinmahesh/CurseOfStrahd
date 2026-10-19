@@ -1,0 +1,26 @@
+{
+  "id": "izek",
+  "summary": "Izek Strazni comes for Ireena (Story Allies Presence Plan, package Z1). While he is alive and does not know she is his sister, and she shelters at the Blue Water Inn or St. Andral's, one visit plays on three nights in Vallaki, each at least two days after the last: he stands outside her window (the omen, once he has seen her), he carries her off to his room in the Baron's mansion (the taking, two days on, or the first night after a festival the Baron won), and, if nobody has freed her two days after that, she gets out alone, breaks his nose and comes back colder (the escape). Words only: the party plays the rescue in the mansion. Lines: narrative/allies/izek_takes.dialogue; the story: docs/story/izek_takes.md.",
+  "visits": [
+    {
+      "id": "izek_takes_ireena",
+      "summary": "Three nights in Vallaki, the same visit each time and each at least 48 hours after the last: Izek stands under her window; Izek takes her to his room; she gets out on her own. Which one plays is read from the flags (izek_watching, izek_took_ireena, izek_holds_ireena) in narrative/allies/izek_takes:night; whoever brings the news is the innkeeper at the inn, Father Lucian at the church and a watchman anywhere else in Vallaki.",
+      "trigger": {
+        "on": [
+          "arrive",
+          "rest"
+        ],
+        "night": true,
+        "at": [
+          "vallaki",
+          "vallaki_blue_water_inn",
+          "vallaki_st_andrals"
+        ]
+      },
+      "when": "(flag.izek_saw_ireena and not flag.izek_took_ireena and not flag.izek_dead and not flag.izek_told_truth and not guest:ireena and not flag.ireena_held_by_strahd and (flag.ireena_sanctuary == \"inn\" or flag.ireena_sanctuary == \"st_andrals\") and not (flag.festival_begun and not flag.festival_over)) or (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth and not guest:ireena)",
+      "max": 3,
+      "cooldown_hours": 48,
+      "dialogue": "allies/izek_takes:night"
+    }
+  ]
+}

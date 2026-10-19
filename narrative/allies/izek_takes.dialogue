@@ -1,0 +1,362 @@
+# Izek comes for Ireena (docs/voice/izek.md, docs/voice/ireena.md; Story Allies Presence Plan, package Z1; docs/story/izek_takes.md).
+# Three parts:
+#   night: the ally visit izek_takes_ireena (data/visits/izek.json) plays this on three nights in Vallaki, each at least two days
+#   after the last: omen (Izek stands under her window), taken (he carries her off to his room in the Baron's mansion) and
+#   escape (two days on, nobody having come, she gets out alone). Which one is read from izek_watching / izek_holds_ireena.
+#   Whoever brings the news depends on where the party stands: Urwin at the inn, Father Lucian at the church, a watchman
+#   anywhere else in Vallaki; the Narrator's line before it says which refuge she was in, so the speakers' lines stay neutral.
+#   room, freed: Izek's room, by night, with Izek and Ireena in it (the entry in data/locations/vallaki_burgomaster_mansion.json
+#   that replaces vallaki/izek:at_home while she is held). Ways out: a threat, the truth (the existing lines), a fight.
+#   ireena_room, alone_*: Ireena in the room by day, when Izek is out, or spoken to by night while he is there.
+#   after_hold: Izek's room by night once she is gone again (she got out alone, was walked out or was let go); it opens the
+#   scene and goes on into the old at_home options (a threat, the truth, steel).
+# Lines here were drafted by Gemini through the ai-bridge (docs/plans/gemini_allies/z1/) and edited. All unvoiced, except the
+# lines copied word for word from narrative/vallaki/izek.dialogue (marked "existing"), which already have their voices.
+# Side flags only (data/flags/allies_izek.json, ireena_trust); the one story flag set here is izek_told_truth, by the same
+# truth the room in vallaki/izek already tells (room_truth_ok).
+
+# ---------------------------------------------------------------- The visit
+
+~ night
+if flag.izek_holds_ireena
+-> escape
+endif
+if flag.izek_watching or (flag.vallaki_backed == "baron" and flag.festival_over)
+-> taken
+endif
+-> omen
+
+# ---------------------------------------------------------------- 1. The omen
+
+~ omen
+set izek_watching
+if flag.ireena_sanctuary == "st_andrals"
+-> omen_church
+endif
+-> omen_inn
+
+~ omen_inn
+Narrator: A big man stands motionless in the dark street across from the inn, staring up at one shuttered window. The red-black scales of his arm give the mud at his boots a faint, patient glow.
+-> omen_speaker
+
+~ omen_church
+Narrator: A big man stands at the churchyard gate with one clawed hand on the iron, looking at the vestry window. Nothing stops him from coming in, which makes his waiting worse.
+-> omen_speaker
+
+~ omen_speaker
+if at:vallaki_blue_water_inn
+-> omen_urwin
+elif at:vallaki_st_andrals
+-> omen_lucian
+endif
+-> omen_guard
+
+~ omen_urwin
+Urwin: Izek has been out there since dusk, watching the window where she sleeps.
+Urwin [weary]: Nobody goes near him. I wouldn't leave her alone for long.
+-> omen_menu
+
+~ omen_lucian
+Father Lucian [weary]: Forgive me, friends. Izek has stood out there since dusk, watching the room where she sleeps.
+Father Lucian [sad]: A threshold only keeps out the dead. It will not stop a living man who decides to walk through.
+-> omen_menu
+
+~ omen_guard
+Town Guard [smile]: Evening, and keep smiling. The Captain has stood outside her window since dusk, though I'm sure it's strictly official.
+Town Guard [afraid]: He isn't ours to question when he gets that look. Please don't tell the Baron I mentioned it.
+-> omen_menu
+
+~ omen_menu
+* We'll keep watch on him ourselves. -> END
+
+# ---------------------------------------------------------------- 2. Taken
+
+~ taken
+set izek_took_ireena
+set izek_holds_ireena
+if flag.ireena_sanctuary == "st_andrals"
+-> taken_church
+endif
+-> taken_inn
+
+~ taken_inn
+Narrator: The bed in the upper room is empty, a tallow candle burned down to grease on the floorboards. The door hangs off one hinge, which is all the noise a large man needed to make.
+-> taken_who
+
+~ taken_church
+Narrator: The narrow cot in the vestry is empty, its wool blanket dragged across the stone floor. Outside, the iron gate stands wide to the dark street.
+-> taken_who
+
+~ taken_who
+if flag.ismark_guards_ireena
+Narrator: Ismark's post by the door is empty. He followed them as far as the mansion gates, where he is shouting himself hoarse against four watchmen's spears.
+endif
+if at:vallaki_blue_water_inn
+-> taken_urwin
+elif at:vallaki_st_andrals
+-> taken_lucian
+endif
+-> taken_guard
+
+~ taken_urwin
+Urwin [weary]: Third watch. Izek walked in, lifted her out of bed like a sleeping child, and carried her out.
+Urwin [sad]: She didn't scream, and I didn't draw on him. Say what you like about that.
+Urwin: He took her to the Baron's mansion, to his room off the great hall. The door's unlocked, and he's sitting in front of it.
+-> taken_menu
+
+~ taken_lucian
+Father Lucian [sad]: I was at prayers when he came, and the door was not barred. A living man needs no invitation.
+Father Lucian [weary]: He carried her out wrapped in her blanket, gently, and I had only an old man's hands to raise.
+Father Lucian: She is in the Baron's mansion, in Izek's room off the great hall. The door is unlocked, and he sits before it.
+-> taken_menu
+
+~ taken_guard
+Town Guard [afraid]: Captain Izek carried the red-haired lady up to the Baron's mansion before dawn. Orders, he said, and nobody asked whose.
+Town Guard: He never laid a rough hand on her, mind. He took her to his room off the great hall.
+Town Guard [afraid]: The door isn't even locked. He just sits there between her and it. Please don't tell the Baron I told you.
+-> taken_menu
+
+~ taken_menu
+* We're going to the mansion for her now. -> END
+
+# ---------------------------------------------------------------- 3. She gets out alone
+
+~ escape
+set izek_holds_ireena = false
+set izek_hold_ended = "escaped"
+set ireena_trust -= 2
+if flag.ireena_sanctuary == "st_andrals"
+-> escape_church
+endif
+-> escape_inn
+
+~ escape_inn
+Narrator: The upper room is lit again, a tin basin of pink water cooling on the washstand. Ireena sits on the edge of the bed with her knuckles bound in linen and does not look up.
+-> escape_speaker
+
+~ escape_church
+Narrator: A single candle burns in the vestry, where Ireena sits very straight on the narrow cot. Her right hand is wrapped in clean linen, and she does not look toward the door.
+-> escape_speaker
+
+~ escape_speaker
+if at:vallaki_blue_water_inn
+-> escape_urwin
+elif at:vallaki_st_andrals
+-> escape_lucian
+endif
+-> escape_guard
+
+~ escape_urwin
+Urwin: She came back at first light and asked for water and clean linen. Nothing else.
+Urwin [smile]: Word is she broke Izek's nose with a brass candlestick in front of six watchmen and walked out the front door.
+-> escape_menu
+
+~ escape_lucian
+Father Lucian [weary]: She returned at dawn, asking not for a blessing, only for a basin of cold water. She asked if you had come.
+Father Lucian: They say she struck Izek across the face with a heavy candlestick and walked straight past six of the watch.
+-> escape_menu
+
+~ escape_guard
+Town Guard [afraid]: The red-haired lady broke the Captain's nose with a brass candlestick and walked right out the front doors. Six of us stood there, and not one man moved.
+Town Guard [weary]: The Captain hasn't come out of his room since, and nobody is laughing where he can hear. Don't tell the Baron I said so.
+-> escape_menu
+
+~ escape_menu
+* We'll go in and speak with her. -> END
+
+# ---------------------------------------------------------------- Izek's room, by night
+
+# Izek's entry in the mansion while she is held (night). The party opens the door on both of them.
+~ room
+if flag.izek_room_met
+-> room_again
+endif
+set izek_room_met
+Narrator: Izek sits on the narrow cot between you and the chair where Ireena sits upright, untied. A carved wooden doll lies face-down across her knee.
+Narrator: Against the wall, an open chest brims with dozens more of the little painted things, every one wearing her red hair.
+# existing (narrative/vallaki/izek.dialogue, at_home)
+Izek: You're in my room.
+Izek: She stays here where the walls are thick and the watch knows my door. Nobody takes her back into the trees while I'm breathing.
+Izek: Look at her. She's warm. She has a candle. Nobody touches a hair on her head.
+Ireena [angry]: He hasn't laid a finger on me, if that is what you came to ask. He only sits and stares like a dog guarding a bone, which is worse.
+Ireena: And I will thank you all to stop speaking over my head as though I were a crate of the Baron's wine.
+-> room_menu
+
+~ room_again
+Izek: You're back. The door's where you left it, and so am I.
+Ireena [angry]: Take your time, by all means. The dolls are splendid company.
+-> room_menu
+
+~ room_menu
+* Ireena, are you hurt? -> room_hurt
+* [if flag.izek_sister_truth and not flag.izek_told_truth] Izek, we know who the red-haired woman is. -> room_truth
+* [Intimidation DC 16] Let her walk out, Izek, or you won't see another festival. -> room_threat_ok | room_threat_fail
+* (Draw steel.) This ends tonight. -> room_fight
+* We'll go. -> END
+
+~ room_hurt
+Ireena [angry]: No. He set me in this chair, put this wooden thing in my lap, and has been monstrously polite ever since.
+Ireena: I have counted the dolls in that box. It is not the comfort he thinks it is.
+-> room_menu
+
+# The threat works: he lets her go, and keeps his grudge.
+~ room_threat_ok
+Narrator: He measures your reach against the narrow room, and the red heat under his scales slowly dulls to ash. He does not rise from the cot.
+Izek [angry]: Take her, then. Before I change my mind.
+Izek: I'm good at waiting. A man with one room and a long memory doesn't have to hurry.
+attitude izek hostile
+set izek_hold_ended = "threatened"
+set izek_holds_ireena = false
+set ireena_trust += 1
+-> freed
+
+# It doesn't: the same words as vallaki/izek:home_threat_fail (existing), then the fight.
+~ room_threat_fail
+Izek [angry]: Kill me? In the Baron's house? Go on, then. Try.
+-> room_fight
+
+# The fight. She slips out first so she is not a hostage in a brawl (she keeps out of fights); the fight itself is
+# vallaki/izek:fight, the one at_home plays.
+~ room_fight
+set izek_hold_ended = "fought"
+set izek_holds_ireena = false
+set ireena_trust += 1
+Ireena: I will not sit in a chair and be fought over like a tavern prize. I'll be on the stairs when you are finished.
+Narrator: She walks past the cot with her chin up and slips out into the hall past the watch. Izek never looks away from your hands.
+-> vallaki/izek:fight
+
+# ---------------------------------------------------------------- The truth, with her in the room
+
+~ room_truth
+# existing (narrative/vallaki/izek.dialogue, truth)
+Narrator: You tell him: the woods, the wolves, the little sister who was never found. The girl the burgomaster of Barovia took in, wandering, with no memory of where she came from. The red hair. The year.
+* [Persuasion DC 14] Make him hear it. -> room_truth_ok | room_truth_fail
+* Let Ireena tell him herself. -> room_truth_ireena
+
+~ room_truth_fail
+attitude izek hostile
+# existing (narrative/vallaki/izek.dialogue, truth_fail)
+Izek [angry]: Liar. You saw the dolls and you made up a story to go with them. Get out of my sight before I forget the Baron likes you.
+Ireena: Stand back a moment and let me speak to him myself. If he means to stare at me all night, he can hear it from my own mouth.
+-> room_truth
+
+# existing (narrative/vallaki/izek.dialogue, truth_ireena)
+~ room_truth_ireena
+Ireena: I don't remember anything before Kolyan's house. Only trees, and being cold, and a boy shouting a name. I always thought the name was mine.
+-> room_truth_ok
+
+# The same flags and lines as vallaki/izek:truth_ok (existing), with her in the room, then the way out.
+~ room_truth_ok
+set izek_told_truth
+quest izek_obsession truth_told
+Izek: No.
+cutscene izek_truth
+Narrator: He looks at you, and then at nothing, for a very long time. The scaled hand opens and closes. When he speaks again his voice has gone quiet, the way a struck bell goes quiet.
+Izek: My sister. My sister had red hair.
+Izek: I won't touch her. I won't let anyone touch her. And I won't break any more heads for that fat fool in the sash. I'm done.
+Ireena [sad]: I'm sorry. I don't remember you. I wish I did.
+Izek: I remember enough for both of us.
+Narrator: He sets the little wooden doll on the washstand with its painted face to the wall. Then he rises and steps clear of the doorway.
+Izek [sad]: Go on, then, and wrap up warm. I won't follow you.
+Ireena [sad]: I don't know what to call you. Goodbye, Izek.
+set izek_hold_ended = "truth"
+set izek_holds_ireena = false
+set ireena_trust += 1
+-> freed_menu
+
+# ---------------------------------------------------------------- Out of the room
+
+# After a threat or a walk out by day. (After the truth she has spoken for herself, so that goes straight to the menu.)
+~ freed
+Ireena: Thank you. I'll say it once and plainly, and then we need not speak of that room again.
+Ireena [angry]: Half the Baron's watch saw me carried up those stairs and looked at their boots. This whole town is rotten with fear.
+Ireena: Say plainly what you mean to do next. I've had enough of waiting behind doors for men to decide my safety.
+-> freed_menu
+
+~ freed_menu
+* Come with us again. -> freed_join
+* Let us take you back to where you were sheltering. -> freed_back
+
+# The existing rejoin (narrative/vallaki/ireena.dialogue): she joins, and Ismark with her if he was guarding.
+~ freed_join
+-> vallaki/ireena:rejoin
+
+~ freed_back
+Ireena: Very well, back where I was. At least there I can bar the door from my side.
+-> END
+
+# ---------------------------------------------------------------- Ireena in the room
+
+# Her entry in the mansion while she is held. By night Izek is there too, and his own entry speaks first.
+~ ireena_room
+if night
+-> watched
+endif
+if not flag.izek_room_met
+-> alone_first
+endif
+-> alone_again
+
+~ watched
+Ireena [afraid]: Don't talk to me while he's watching your hands. Speak to him, and keep your voice flat.
+Ireena: He isn't listening to the words. He's waiting for an excuse to reach for that sword in the corner.
+-> END
+
+# By day: Izek is out on the Baron's business.
+~ alone_first
+set izek_room_met
+Narrator: Daylight greys the bare room and the empty cot. Ireena sits in the chair at its foot beside the open chest of dolls, dark-eyed from a sleepless night.
+Ireena [angry]: He went out at first light on the Baron's business and didn't even turn the key. The watch down the hall won't look in, and they won't let me pass twice.
+Ireena: I was saving my one walk through that door until I knew you weren't dead in a ditch. He comes back at dusk.
+Ireena [angry]: Do not expect me to thank you for letting me spend a night with a box of my own wooden heads.
+-> alone_menu
+
+~ alone_again
+Ireena [angry]: Dusk comes early in this valley, in case you had forgotten.
+-> alone_menu
+
+~ alone_menu
+* Come on. We're getting you out of here now. -> alone_rescue
+* Did he hurt you while he was here? -> alone_hurt
+* Stay here a little longer while we deal with him first. -> END
+
+~ alone_hurt
+Ireena [angry]: No. He set me in this chair, put this wooden thing in my lap, and has been monstrously polite ever since.
+Ireena: I have counted the dolls in that box. It is not the comfort he thinks it is.
+-> alone_menu
+
+~ alone_rescue
+Ireena: Give me one second to pin my scarf straight. I will not go through the Baron's hall looking as though I were carried in.
+attitude izek hostile
+set izek_hold_ended = "rescued"
+set izek_holds_ireena = false
+set ireena_trust += 1
+-> freed
+
+# ---------------------------------------------------------------- Izek's room afterwards
+
+# Izek's entry in the mansion once the hold is over and he is alive, untold and at home: it opens the scene, and the way
+# on is the old at_home menu (the same option texts and nodes, vallaki/izek.dialogue).
+~ after_hold
+if flag.izek_hold_ended == "escaped"
+-> after_hold_escaped
+endif
+-> after_hold_party
+
+~ after_hold_escaped
+Narrator: Izek sits by the shut chest with a doll in his left hand and a tin splint across his blackened nose. The bent brass candlestick has been washed and stood on the washstand.
+Izek [angry]: Six of the watch saw it, and not one of them dared laugh to my face. That's worse.
+Izek: She walked right past me with my blood on her cuff, and I didn't lift a hand. I don't know why.
+-> after_hold_menu
+
+~ after_hold_party
+Narrator: An empty chair sits square in the middle of the bare room, the chest shut tight beside the washstand. On the cot, a single red-haired doll lies beside his knee.
+Izek [angry]: She's gone out of this room. I counted the box twice. The room's cold again.
+Izek: It doesn't matter where you hide her. The town has walls, and I have all the nights there are.
+-> after_hold_menu
+
+~ after_hold_menu
+* [if flag.izek_sister_truth and not flag.izek_told_truth] Izek, we know who the red-haired woman is. -> vallaki/izek:truth
+* [Intimidation DC 16] Stay away from Ireena, or you won't see another festival. -> vallaki/izek:home_threat_ok | vallaki/izek:home_threat_fail
+* (Draw steel.) This ends tonight. -> vallaki/izek:fight
+* We'll go. -> END
