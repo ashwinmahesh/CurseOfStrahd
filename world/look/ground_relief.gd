@@ -135,8 +135,9 @@ func _kinds() -> void:
 			var k := FLAT
 			if _skin.has(c):
 				k = SKIN
-			elif board.is_tree(c) and (not board.has_terrain() or board.rolling(c)):
-				k = WOODS
+			elif board.is_tree(c) and (not board.has_terrain() or board.rolling(c)) \
+					and not (board.crags != null and board.crags.cells.has(c)):
+				k = WOODS   # (a crag's square is drawn flat in the place's own ground, which its foot rises out of)
 			elif g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER):
 				k = OPEN
 			_kind[z * _w + x] = k

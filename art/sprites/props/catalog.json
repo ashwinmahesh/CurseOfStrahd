@@ -1202,6 +1202,7 @@
     "mount_baratok": {
       "floor": "mountain/scree",
       "rock_walls": "mountain/cliff",
+      "rock_shape": "crags",
       "difficult": "mountain/snow",
       "tree_walls": [
         [

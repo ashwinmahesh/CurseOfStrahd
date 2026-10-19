@@ -296,3 +296,15 @@ Blender gave them (`ModelPiece.swap_surfaces`, called by `SetDressing._place` be
 round the party). Mount Baratok's hut is the half-timbered thatched cottage with `tex_village__house_wall` swapped for
 `tex_dungeon__stone_wall` (the hut interior's own stone), the thatch for `tex_village__roof_slate` and its timbers for
 dark stone: honestly a stone cottage with a slate roof. A rough-stone hut of its own shape needs a Blender model.
+
+## Crags, not columns (owner 2026-10-19: "why are all of our mountain tops flat?")
+
+A place look with `rock_walls` may also say `rock_shape: "crags"` (Modern only; Classic keeps the columns). Its rock
+squares are then one shaped mountain (`Crags`, planned by `ArenaBoard._plan_crags` before any square is built): the
+surface rises out of the walked ground in a ragged face whose foot wanders up to two-thirds of a square in from the grid
+line, climbs the deeper the rock runs (past the map's edge counts as more rock) and breaks into peaks, ridges and
+saddles from noise seeded by the place. Each rock square keeps its own piece of the surface (`Crags.piece`, meta
+`crag`), so it fades in the party's way (from farther off when it's tall: meta `fade_reach`) and a prop can still take
+its square. GroundRelief draws a crag's square flat in the place's own ground rather than as a woods bank, so the foot
+rises out of the same ground the party stands on. Mount Baratok is the first; the vault's "Natural Tops Plan" lists
+the rest.

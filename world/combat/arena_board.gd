@@ -189,6 +189,7 @@ func _build() -> void:
 		_yard = TownBuilder.plan(self)
 	elif theme == "shrine_yard" and place != "":
 		TownBuilder.plan(self)   # a yard's sheds and shrines are buildings; lone stones stay pillars
+	_plan_crags()
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
@@ -334,6 +335,8 @@ var _town_wall_cells := {}  ## a walled town's wall squares (on ground of their 
 ## (_plan_terrain); empty when the map has none.
 var _corner_h := PackedFloat32Array()
 var _cliff_mat: Material = null
+## The place's rock as one shaped mountain (place_looks `rock_shape: "crags"`); null where its rock is columns.
+var crags: Crags = null
 const _CORNERS: Array[Vector2i] = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1)]
 ## The side under each top edge (north, east, south, west), as the step to the square beyond it.
 const _SIDES: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
@@ -531,12 +534,42 @@ func _tree_wall(c: Vector2i) -> bool:
 	return false
 
 
+## Whether wall square `c` is drawn as rock (catalog place_looks "rock_walls"): not a house's, not one of the place's
+## `tree_walls`, outdoors (a town only round its edge).
+func _rocky(c: Vector2i) -> bool:
+	return _rock_tex != null and not house_cells.has(c) and not _tree_wall(c) \
+		and (theme in WILD or theme == "shrine_yard" or theme in TOWNS and _on_border(c))
+
+
+## A place whose rock is one shaped mountain (place_looks `rock_shape: "crags"`, Modern only): its rock squares' surface,
+## planned once before any square is built (Crags). Classic keeps the columns.
+func _plan_crags() -> void:
+	if _rock_tex == null or str(_look.get("rock_shape", "")) != "crags" or not Look.modern():
+		return
+	var cells := {}
+	for z in grid.depth:
+		for x in grid.width:
+			var c := Vector2i(x, z)
+			if grid.has_flag(c, CombatGrid.WALL) and not grid.has_flag(c, CombatGrid.WATER) and _rocky(c) \
+					and not (theme == "camp" and _wagon_cells.has(c)):
+				cells[c] = true
+	if not cells.is_empty():
+		crags = Crags.plan(self, cells)
+
+
 ## Rock instead of trees (catalog place_looks "rock_walls"): a craggy column of cliff on each wall square, taller at
-## the map's edge, so mountains and caves are walled by rock.
+## the map's edge, so mountains and caves are walled by rock; or, where the place's rock is one shaped mountain
+## (crags), this square's patch of it.
 func _rock(c: Vector2i) -> void:
 	_ground_box("Ground", c, _floor_mat)
 	_has_ground[c] = true
 	var first := get_child_count()
+	if crags != null and crags.cells.has(c):
+		var piece := crags.piece(c, _rock_tex)
+		add_child(piece)
+		mesh_occluders.append(piece)
+		_dress(c, first)
+		return
 	var h := (3.2 if _on_border(c) else 2.2) + _rng.randf_range(-0.6, 0.6)
 	var w := _rng.randf_range(0.95, 1.08)
 	var rock := _box("Rock", Vector3(w, h, w), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), _rock_tex)
@@ -721,8 +754,7 @@ func _wall(c: Vector2i) -> void:
 	if theme == "camp" and _wagon_cells.has(c):
 		_wagon(c)
 		return
-	if _rock_tex != null and not house_cells.has(c) and not _tree_wall(c) \
-			and (theme in WILD or theme == "shrine_yard" or theme in TOWNS and _on_border(c)):
+	if _rocky(c):
 		_rock(c)
 		return
 	if theme in WILD:
@@ -1356,7 +1388,8 @@ func fade_occluders(camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 		if not is_instance_valid(t):
 			continue
 		var rel := Vector2(t.global_position.x - focus.x, t.global_position.z - focus.z)
-		var between := rel.length() < 4.0 and rel.normalized().dot(to_cam) > 0.35
+		# (a tall crag stands in the way from farther off: Crags.piece's `fade_reach`)
+		var between := rel.length() < float(t.get_meta("fade_reach", 4.0)) and rel.normalized().dot(to_cam) > 0.35
 		var was := float(t.get_meta("fade", 0.0))
 		var goal := 0.72 if between else 0.0
 		var f := move_toward(was, goal, delta * 4.0)

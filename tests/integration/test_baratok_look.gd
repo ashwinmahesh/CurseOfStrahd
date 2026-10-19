@@ -318,7 +318,8 @@ func test_snow_marks_not_leaves() -> void:
 	await _frames(1)
 
 
-## Whether the board drew wall square `c` as a tree (a 3D plant: meta `nature`) or as a rock column (a box).
+## Whether the board drew wall square `c` as a tree (a 3D plant: meta `nature`) or as rock (a column, or its patch of
+## the shaped crags: meta `crag`).
 func _is_tree(board: ArenaBoard, c: Vector2i) -> bool:
 	for n: Variant in board.dressing.get(c, []):
 		if (n as Node).has_meta("nature"):
@@ -328,7 +329,8 @@ func _is_tree(board: ArenaBoard, c: Vector2i) -> bool:
 
 func _is_rock(board: ArenaBoard, c: Vector2i) -> bool:
 	for n: Variant in board.dressing.get(c, []):
-		if n is MeshInstance3D and (n as MeshInstance3D).mesh is BoxMesh and not (n as Node).has_meta("nature"):
+		if n is MeshInstance3D and ((n as MeshInstance3D).mesh is BoxMesh or (n as Node).has_meta("crag")) \
+				and not (n as Node).has_meta("nature"):
 			return true
 	return false
 
