@@ -44,7 +44,8 @@
       "id": "ledger_closed",
       "journal": "Every name we were willing to strike is struck. The rest of Ezmerelda's ledger stays unmarked: names we spared, or made terms with. She closed the book at what was done and said she would open it again if one of them needed silver after all.",
       "objectives": [],
-      "ends": "failure"
+      "ends": "failure",
+      "then": ["ledger_struck"]
     }
   ]
 }

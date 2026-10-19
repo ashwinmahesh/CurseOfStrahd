@@ -52,6 +52,7 @@ func _ready() -> void:
 			SaveSystem.load_slot(a.get_slice("=", 1))   # captures: start from a save
 	st = GameState.story
 	st.time_passed.connect(_on_time_passed)
+	st.quest_finished.connect(_on_quest_finished)   # a failed quest tolls (the notice says "Quest failed: X")
 	add_child(notices)
 	st.item_gained.connect(notices.show_item)   # an item come by outside loot and shops, on the side
 	narrator = Narrator.new()
@@ -1264,10 +1265,18 @@ func _exit_tree() -> void:
 		_preload = null
 	if st != null and st.time_passed.is_connected(_on_time_passed):
 		st.time_passed.disconnect(_on_time_passed)
+	if st != null and st.quest_finished.is_connected(_on_quest_finished):
+		st.quest_finished.disconnect(_on_quest_finished)
 	if st != null and st.item_gained.is_connected(notices.show_item):
 		st.item_gained.disconnect(notices.show_item)
 	if st != null and is_instance_valid(hud) and st.xp_gained.is_connected(hud.toast):
 		st.xp_gained.disconnect(hud.toast)
+
+
+## A quest ended: a failure gets a short low bell under its notice (the existing "toll", quieter than a fight's).
+func _on_quest_finished(_quest_id: String, ending: String) -> void:
+	if ending == "failure":
+		Audio.sfx("toll", 0.0, -4.0)
 
 
 # --- Screens --------------------------------------------------------------------------------------

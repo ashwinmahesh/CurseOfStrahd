@@ -45,7 +45,8 @@
       "id": "unknighted",
       "journal": "We lit the beacon at the top of Argynvostholt, and the Order of the Silver Dragon laid down its swords and went home. Sir Godfrey Gwilym went with them before he could knight Godrick, so Sir Aldric's sword stays in its cloth, and the ladle is the only accolade Godrick has.",
       "objectives": [],
-      "ends": "failure"
+      "ends": "failure",
+      "then": ["knighted"]
     },
     {
       "id": "knighted",

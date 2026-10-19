@@ -33,7 +33,8 @@
       "id": "left_behind",
       "journal": "We left the house without laying the children to rest. The house still shows them at the village edge, begging strangers to come inside.",
       "objectives": [],
-      "ends": "failure"
+      "ends": "failure",
+      "then": ["at_rest"]
     }
   ]
 }

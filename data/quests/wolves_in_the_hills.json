@@ -42,7 +42,8 @@
       "id": "kiril_leads",
       "journal": "We stood aside and Emil died. Kiril Stoyanovich leads the pack, for the castle, and he let us walk out of his hills.",
       "objectives": [],
-      "ends": "success"
+      "ends": "success",
+      "then": ["pack_broken"]
     },
     {
       "id": "pack_broken",

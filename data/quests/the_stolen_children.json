@@ -24,7 +24,8 @@
       "id": "left",
       "journal": "We left the children in Kiril's pen. The moon is coming.",
       "objectives": [],
-      "ends": "failure"
+      "ends": "failure",
+      "then": ["freed"]
     }
   ]
 }

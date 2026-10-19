@@ -967,6 +967,9 @@ def story_checks(data, errors, need):
     def cond(expr, where):
         if expr:
             read(dialogue_lint.conditions_flags(expr), where)
+            for qid in dialogue_lint.conditions_quest_days(expr):
+                if qid not in data["quests"]:
+                    errors.append(f"{where}: quest_days.{qid}: no such quest")
 
     # A hidden achievement's `when` reads flags like any condition (data/achievements, core/achievements.gd).
     for pid, ach in sorted(data.get("achievements", {}).items()):
@@ -1199,6 +1202,9 @@ def story_checks(data, errors, need):
         for fid, wh in p["flags_set"].items():
             flags_set.setdefault(fid, []).extend(wh)
         approval_checks(data, p, errors)
+        for qid, where in p.get("quest_days_terms", []):
+            if qid not in quests:
+                errors.append(f"narrative/{where}: quest_days.{qid}: no such quest")
         move_checks(locations, p, errors)
     narrator_keys = set()
     for key, p in parsed.items():
@@ -1249,6 +1255,17 @@ def story_checks(data, errors, need):
         for st in q["stages"]:
             if not st.get("ends") and not str(st.get("hint", "")).strip():
                 errors.append(f"data/quests/{qid}.json: stage '{st['id']}' has no hint (what to do next, for the journal)")
+    # `then` names a failure's comebacks (StoryState.set_quest_stage): stages of the same quest, on a stage that ends.
+    for qid, q in sorted(quests.items()):
+        ids = {st["id"] for st in q["stages"]}
+        for st in q["stages"]:
+            if "then" not in st:
+                continue
+            if not st.get("ends"):
+                errors.append(f"data/quests/{qid}.json: stage '{st['id']}' has `then` but doesn't end the quest")
+            for nxt in st["then"]:
+                if nxt == st["id"] or nxt not in ids:
+                    errors.append(f"data/quests/{qid}.json: stage '{st['id']}' lists `then` stage '{nxt}', which isn't another stage of the quest")
     for fid, wh in sorted(flags_read.items()):
         if fid not in flags:
             errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")

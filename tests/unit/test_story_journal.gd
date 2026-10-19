@@ -35,9 +35,11 @@ func test_kips_freedom_scenes_need_him_free() -> void:
 	st.set_quest_stage("the_fine_print", "strahds_debtor")
 	assert_false(StoryConditions.check(home, st), "no letter home about being free when Strahd holds the contract")
 	assert_true(Banter._lines("banter/party_six:kip_free_apricots", st).is_empty(), "nor the free apricot")
-	st.set_quest_stage("the_fine_print", "free")
-	assert_true(StoryConditions.check(home, st), "the letter home once he's free")
-	assert_false(Banter._lines("banter/party_six:kip_free_apricots", st).is_empty(), "and the apricot")
+	# (A failure is final and Kip can't settle after selling his contract, so freedom is a party of its own.)
+	var freed := SideQuestPlay.party(["kip_smudgewick", "thistle"], 9, "vallaki", 20)
+	freed.set_quest_stage("the_fine_print", "free")
+	assert_true(StoryConditions.check(home, freed), "the letter home once he's free")
+	assert_false(Banter._lines("banter/party_six:kip_free_apricots", freed).is_empty(), "and the apricot")
 
 
 ## A save writes its keys sorted, so after a load the journal came back in alphabetical order, and the HUD's newest

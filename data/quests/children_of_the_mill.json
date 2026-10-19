@@ -52,7 +52,8 @@
       "id": "children_abandoned",
       "journal": "We left the Sarnov children in Morgantha's cages and walked away. She thanked us for being sensible.",
       "objectives": [],
-      "ends": "failure"
+      "ends": "failure",
+      "then": ["children_freed"]
     }
   ]
 }

@@ -67,6 +67,13 @@
               "success",
               "failure"
             ]
+          },
+          "then": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "description": "On a stage that ends in failure: the stages the quest may still move to afterwards, its comebacks. Without `then`, a failure is final: StoryState.set_quest_stage refuses every move out of it (side quest failure plan, F1)."
           }
         }
       }

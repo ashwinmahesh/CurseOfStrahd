@@ -50,7 +50,8 @@
       "id": "grudge",
       "journal": "We swore the commander's oath: when we reach Strahd, we break him and leave him alive in the prison he made. The Order will watch to see the oath kept, and it will not raise a sword to end him.",
       "objectives": [],
-      "ends": "failure"
+      "ends": "failure",
+      "then": ["rest"]
     }
   ]
 }

@@ -281,17 +281,19 @@ static func arrive(st: StoryState, loc_id: String) -> void:
 
 
 ## A quest reached a stage that ends in success: a main-quest goal (Moderate) or a side or companion quest (half of Low).
-## A region's own climax quest, whose milestone pays for it, and the walk out of the mists pay nothing.
-static func quest_done(st: StoryState, quest_id: String) -> void:
+## A region's own climax quest, whose milestone pays for it, and the walk out of the mists pay nothing. Returns what it
+## said ("" when nothing was paid), which StoryState.quest_notice shows in place of its own "Quest complete".
+static func quest_done(st: StoryState, quest_id: String) -> String:
 	if not active(st):
-		return
+		return ""
 	if quest_id in (data().get("milestone_quests", []) as Array) or quest_id in (data().get("no_xp_quests", []) as Array):
-		return
+		return ""
 	var q := Compendium.shared().get_entry("quests", quest_id)
 	var kind := "main_quest" if str(q.get("kind", "")) == "main" else "side_quest"
 	var said := _notice("Quest complete: %s" % q.get("name", quest_id), pay(st, kind, quest_id))
 	if said != "":
 		st.xp_gained.emit(said)
+	return said
 
 
 ## The Deck of Many Things' Sun card in Experience mode: enough XP for the next level. One-time, so the ceiling holds the

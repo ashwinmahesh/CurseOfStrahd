@@ -744,8 +744,8 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			view.st.set_flag(str(spec["flag"]))
 		if spec.has("quest"):
 			var q := spec["quest"] as Dictionary
-			view.st.set_quest_stage(str(q["id"]), str(q["stage"]))
-			view.toast.emit("Journal updated: %s" % str(Compendium.shared().get_entry("quests", str(q["id"])).get("name", q["id"])))
+			if view.st.set_quest_stage(str(q["id"]), str(q["stage"])):
+				view.toast.emit(view.st.quest_notice())   # "Quest failed: X", "Quest complete: X", else "Journal updated: X"
 		# Out of combat, the fallen are stabilized by their friends (a minute later) at 0 HP; nobody stays dying.
 		for m in view.members:
 			var cr := m.creature

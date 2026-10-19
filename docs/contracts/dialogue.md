@@ -66,8 +66,14 @@ lead <npc> to <where>              The party follows <npc> to <where> (docs/stor
 -> node                            Jump. "-> END" ends the conversation; "-> file:node" jumps to another file.
 if <condition>                     Conditional block, closed by "endif" ("elif <condition>" and "else" allowed).
 set flag_id                        Sets a flag to true. "set flag_id = 3", "set flag_id = \"string\"",
-                                   "set flag_id += 1".
-quest quest_id stage_id            Moves a quest to a stage (data/quests/<id>.json).
+                                   "set flag_id += 1". "set flag_id = now" stamps the game minute into the flag, the
+                                   start of a clock that `days_since.flag_id` counts from (register it as an int).
+                                   Setting it again restarts the clock: guard with `if not flag.flag_id` to keep the first.
+quest quest_id stage_id            Moves a quest to a stage (data/quests/<id>.json). The notice says how it moved:
+                                   "Quest failed: X" into a stage that ends in failure, "Quest complete: X" into one that
+                                   ends in success (with its XP in Experience mode), else "Journal updated: X". A quest at
+                                   a failure ending moves only to the stages that ending names in `then` (a comeback);
+                                   any other `quest` line for it is ignored (docs/story/side_quests.md, How a side quest fails).
 give item_id [qty]                 Puts items in the speaking character's pack (or the party stash if full).
                                    "give item_id to name:thistle" puts it in that party member's pack instead.
 take item_id [qty]                 Removes items.
@@ -145,6 +151,8 @@ inspire name:thistle: spoke her mind
 
 `flag.<id>` (truthy), `not flag.<id>`, `flag.<id> == 3` / `!= >= <= > <`, `class:cleric`, `species:elf`,
 `background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it), `quest.<id> == stage_id`,
+`quest_days.<id> >= 3` (whole days since the quest last moved to its current stage; false before the quest begins),
+`days_since.<flag> >= 2` (whole days since the flag was stamped with `set <flag> = now`; false while it hasn't been),
 `attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `day`, `indoors` (the party's map is under a roof or
 a dungeon; a night's line written for sleeping behind walls carries it, so a camp out of doors skips it), `hour >= 20`,
 `tarokka.drawn`,

@@ -95,11 +95,22 @@ func quest_stage(quest_id: String) -> String:
 	return str((quests.get(quest_id, {}) as Dictionary).get("stage", ""))
 
 
+## A quest has just moved into a stage that ends it ("success" or "failure"). The world marks a failure with a sting
+## (GameRoot); the notice itself is quest_notice.
+signal quest_finished(quest_id: String, ending: String)
+
+## What the player should be told about the last set_quest_stage that took (quest_notice). Not saved.
+var _quest_says := ""
+
+
 ## Moves a quest to `stage` (data/quests). Returns false if the quest or stage doesn't exist, or if `stage` is an
 ## earlier one that's still open and the quest has ended or `stage` is its first: a line that starts or moves a quest
 ## without asking where it is can't reopen a finished quest or start a begun one over (Storyline QA, 2026-10-12:
 ## Blinsky's doll talk put Izek's back to "Learn what Izek wants with her"; Davian's pledge put The Third Stone back to
-## "told" after the stone was found, Wiki finding 40).
+## "told" after the stone was found, Wiki finding 40). Also false when the quest stands at a failure ending that doesn't
+## list `stage` in its `then`: a failure is final, so a later success line can't paper over it (side quest failure
+## plan, F1); a comeback is a stage the failure names. The stage's `at` (when the quest last moved, which the clocks
+## count from) changes only when the stage does.
 func set_quest_stage(quest_id: String, stage: String) -> bool:
 	var q := Compendium.shared().get_entry("quests", quest_id)
 	if q.is_empty():
@@ -107,8 +118,12 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	var at := quest_stage_index(quest_id, stage)
 	if at < 0:
 		return false
-	var opens := str(((q["stages"] as Array)[at] as Dictionary).get("ends", "")) == ""
-	if opens and at < quest_stage_index(quest_id, quest_stage(quest_id)) and (at == 0 or quest_ended(quest_id)):
+	var ends := str(((q["stages"] as Array)[at] as Dictionary).get("ends", ""))
+	var was := quest_stage(quest_id)
+	var was_ending := quest_ending(quest_id)
+	if ends == "" and at < quest_stage_index(quest_id, was) and (at == 0 or quest_ended(quest_id)):
+		return false
+	if was != stage and _failure_is_final(q, was, stage):
 		return false
 	var entry := quests.get(quest_id, {"stage": "", "history": []}) as Dictionary
 	entry["stage"] = stage
@@ -116,13 +131,43 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	if not stage in hist:
 		hist.append(stage)
 	entry["history"] = hist
-	entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
+	var moved := was != stage
+	if moved or not entry.has("at"):
+		entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
 	quests[quest_id] = entry
-	if str(((q["stages"] as Array)[at] as Dictionary).get("ends", "")) == "success":
-		Xp.quest_done(self, quest_id)   # XP levelling: a quest finished is worth XP (nothing in milestone mode)
+	var xp_said := ""
+	if ends == "success":
+		xp_said = Xp.quest_done(self, quest_id)   # XP levelling: a quest finished is worth XP (nothing in milestone mode)
+	var quest_name := Compendium.shared().display_name("quests", quest_id)
+	_quest_says = "Journal updated: %s" % quest_name
+	if moved and ends != was_ending:   # (not again for one ending that gives way to another of its kind)
+		if ends == "failure":
+			_quest_says = "Quest failed: %s" % quest_name
+		elif ends == "success":
+			_quest_says = xp_said if xp_said != "" else "Quest complete: %s" % quest_name
+	if moved and ends != "":
+		quest_finished.emit(quest_id, ends)
 	if quest_id == "find_the_ally":
 		_settle_ally()
 	return true
+
+
+## Whether the quest stands at the failure ending `from_stage` and `to_stage` isn't one of the stages that ending's
+## `then` allows.
+func _failure_is_final(q: Dictionary, from_stage: String, to_stage: String) -> bool:
+	for s: Variant in q.get("stages", []):
+		var d := s as Dictionary
+		if str(d["id"]) == from_stage:
+			return str(d.get("ends", "")) == "failure" and not to_stage in (d.get("then", []) as Array)
+	return false
+
+
+## What the player is told about the quest the last set_quest_stage moved: "Quest failed: X" when it moved into a
+## stage that ends in failure, "Quest complete: X" into one that ends in success (in Experience mode the line that also
+## says the XP it paid, so the two never double), and "Journal updated: X" for anything else. The dialogue's `quest`
+## line and a won fight's `quest` both say it; read it straight after the call that returned true.
+func quest_notice() -> String:
+	return _quest_says
 
 
 ## The Tarokka ally's quest follows the party (Wiki finding 66): it's found the moment the one the cards named travels
@@ -141,11 +186,33 @@ func _settle_ally() -> void:
 
 ## Whether the quest stands at a stage that ends it (success or failure).
 func quest_ended(quest_id: String) -> bool:
+	return quest_ending(quest_id) != ""
+
+
+## How the quest's stage ends it: "success", "failure", or "" while the quest is open or hasn't begun.
+func quest_ending(quest_id: String) -> String:
 	var i := quest_stage_index(quest_id, quest_stage(quest_id))
 	if i < 0:
-		return false
+		return ""
 	var stages := Compendium.shared().get_entry("quests", quest_id).get("stages", []) as Array
-	return str((stages[i] as Dictionary).get("ends", "")) != ""
+	return str((stages[i] as Dictionary).get("ends", ""))
+
+
+## Whole days since the quest last moved (its `at`), for `quest_days.<id> >= 3`; -1 while it hasn't begun.
+func quest_days(quest_id: String) -> int:
+	var entry := quests.get(quest_id, {}) as Dictionary
+	if not entry.has("at"):
+		return -1
+	return maxi(0, total_minutes() - int(entry["at"])) / DAY_MINUTES
+
+
+## Whole days since a flag was stamped (`set <flag> = now`, dialogue contract), for `days_since.<flag> >= 2`; -1 while
+## it hasn't been stamped.
+func days_since(flag_id: String) -> int:
+	var stamp: Variant = flags.get(flag_id)
+	if not (stamp is int or stamp is float):
+		return -1
+	return maxi(0, total_minutes() - int(stamp)) / DAY_MINUTES
 
 
 ## The order of a quest's stages, for >= comparisons in conditions (-1 if not reached / unknown).
@@ -439,8 +506,11 @@ func send_to_camp(ch: Character) -> bool:
 
 # --- Time -----------------------------------------------------------------------------------------
 
+const DAY_MINUTES := 24 * 60
+
+
 func total_minutes() -> int:
-	return (day - 1) * 24 * 60 + minute_of_day
+	return (day - 1) * DAY_MINUTES + minute_of_day
 
 
 ## A stretch of time worth showing passed (half an hour or more: a rest, a journey, a long wait).

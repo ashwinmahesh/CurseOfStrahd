@@ -171,7 +171,7 @@ func next() -> Dictionary:
 			"quest":
 				pc += 1
 				if st.set_quest_stage(str(s["id"]), str(s["stage"])):
-					return {"kind": "notice", "text": "Journal updated: %s" % Compendium.shared().display_name("quests", str(s["id"]))}
+					return {"kind": "notice", "text": st.quest_notice()}   # "Quest failed: X", "Quest complete: X", else "Journal updated: X"
 			"give":
 				pc += 1
 				var taker := speaker
@@ -613,7 +613,10 @@ func _apply_set(s: Dictionary) -> void:
 		"-=":
 			st.set_flag(flag, int(st.get_flag(flag, 0)) - int(value))
 		_:
-			st.set_flag(flag, value)
+			if value is String and value == "now":
+				st.set_flag(flag, st.total_minutes())   # `set flag = now` stamps the game minute, for `days_since.flag`
+			else:
+				st.set_flag(flag, value)
 
 
 func _line_beat(speaker_name: String, mood: String, text: String) -> Dictionary:

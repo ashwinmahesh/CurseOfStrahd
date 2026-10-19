@@ -28,6 +28,32 @@ places or a place on the travel map. tests/integration/test_side_quests_endings.
 tests didn't reach (Teodor into the woods, Sorin back up the mountain). Each quest's fight is played in
 test_side_quest_fights.gd and, for the hard ones, simulated in test_side_quest_bosses.gd.
 
+## How a side quest fails
+
+Side quest failure plan (vault note "Side Quest Failure Plan - 2026-10-18", package F1). A failure is a story outcome
+the player can see coming: a stage with `"ends": "failure"` closes the quest under the journal's Finished tab with a red
+Failed pill. The engine's part:
+
+- **A failure is final.** `StoryState.set_quest_stage` refuses every move out of a failure ending, except to the stages
+  that ending lists in `"then": ["freed"]` (a comeback the story means to allow). A later line that would set a success
+  over a failure is ignored, and says nothing. A success ending behaves as before: another ending may follow it. Every
+  failure with a way back names it in its quest's data: The Children in the Pen (`left`, then `freed`), The Order of the
+  Silver Dragon (`grudge`, then `rest`), Rose and Thorn (`left_behind`, then `at_rest`), The Pack in the Hills
+  (`kiril_leads`, then `pack_broken`; still a success ending, so its `then` waits for the day it becomes a failure),
+  and three the survey found in play: A Knight, More or Less (`unknighted`, then `knighted`: Godfrey can still knight
+  Godrick later), The Hunter's Ledger (`ledger_closed`, then `ledger_struck`: a name struck later is a way back) and The
+  Children in the Mill (`children_abandoned`, then `children_freed`: the hags can still be fought, until the package
+  that moves that quest's point of no return decides otherwise).
+- **The notice says which.** A quest that moves into a failure ending toasts "Quest failed: X" and tolls a low bell; into a
+  success ending "Quest complete: X" (in Experience mode the line that also says the XP, so it is said once); any other move
+  "Journal updated: X". The dialogue's `quest` line and a won fight's `quest` both use `StoryState.quest_notice`.
+- **Clocks.** `quest_days.<id> >= n` counts whole days since the quest last moved to its current stage (its `at`, which a
+  line that sets the stage it is already at no longer touches), and `days_since.<flag> >= n` counts from a flag stamped
+  with `set <flag> = now`. Both are false until they start, so a clock only runs for a quest that has begun. A package
+  uses them in a `when`, never as a hidden timer: the NPC names the time and the journal warns (closures, F1's second
+  hand-off). Clock lengths are the plan's table: "tonight" is the next dawn, "a few days" is 3, "a week" is 7, a fever
+  or a slow siege is 10, and a named event is that event.
+
 ## Into the Mists (level 1)
 
 ### The Last Traveller (`the_last_traveller`, narrative/into_the_mists/the_last_traveller.dialogue; batch 5)

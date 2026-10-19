@@ -58,7 +58,9 @@ RE_SHOP = re.compile(r"^(shop|services|respec)$")
 RE_END_GAME = re.compile(r"^end_game$")
 RE_GUEST = re.compile(rf"^(join|leave)\s+({ID})$")
 RE_STAGE = re.compile(rf"^(appear\s+({ID})(?:\s+at\s+({ID}))?|vanish\s+({ID}))$")
-RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
+# A flag a condition reads: `flag.x`, or `days_since.x` (a flag stamped with `set x = now`, docs/contracts/dialogue.md).
+RE_FLAG_REF = re.compile(rf"\b(?:flag|days_since)\.({ID})")
+RE_QUEST_DAYS_REF = re.compile(rf"\bquest_days\.({ID})")
 RE_APPROVE = re.compile(r"^approve\s+((?:[a-z][a-z0-9_]*\s+[+-]\d+\s*)+)(?::\s*(.*))?$")
 RE_INSPIRE = re.compile(r"^inspire\s+(party|[a-z]+:[a-z0-9_]+)(?::\s*(.+))?$")
 RE_APPROVAL_REF = re.compile(r"\bapproval\.([a-z][a-z0-9_]*)(?:\s*(==|!=|>=|<=|>|<)\s*([a-z0-9_+-]+))?")
@@ -74,6 +76,11 @@ def _skill_id(name):
 
 def conditions_flags(expr):
     return RE_FLAG_REF.findall(expr)
+
+
+def conditions_quest_days(expr):
+    """The quests a condition's `quest_days.<id>` terms name."""
+    return RE_QUEST_DAYS_REF.findall(expr)
 
 
 def conditions_approval(expr):
@@ -98,6 +105,8 @@ def parse_file(path):
             for arg in RE_HERO_NAMED.findall(expr):
                 if not re.fullmatch(r"[A-Za-z0-9_]+", arg):
                     out["errors"].append(f"{where}: hero_named:{arg} needs a name: letters and digits, `_` for a space")
+            for qid in conditions_quest_days(expr):
+                out.setdefault("quest_days_terms", []).append((qid, where))
 
     for n, raw in enumerate(text.splitlines(), 1):
         line = raw.strip()

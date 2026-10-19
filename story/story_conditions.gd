@@ -2,7 +2,9 @@ class_name StoryConditions
 extends RefCounted
 ## Evaluates dialogue and location conditions (docs/contracts/dialogue.md): `flag.x`, `flag.x >= 2`, `class:cleric`,
 ## `species:elf`, `background:acolyte`, `tag:pious`, `name:ilse_varga`, `item:holy_symbol_amulet`,
-## `quest.q == stage`, `quest.q >= stage` (by stage order), `attitude.npc == friendly`, `visited:loc`, `night`,
+## `quest.q == stage`, `quest.q >= stage` (by stage order), `quest_days.q >= 3` (whole days since the quest last
+## moved; never true before it begins), `days_since.flag >= 2` (whole days since a flag was stamped with `set flag = now`;
+## never true while it isn't), `attitude.npc == friendly`, `visited:loc`, `night`,
 ## `day`, `hour >= 20`, `gold >= 25` (the party's purse), `level >= 3` (the lowest character level in the party),
 ## `tarokka.drawn`, `tarokka.sword == swords_3`, `tarokka.ally.npc == ezmerelda` (ADR 0010), `tarokka.enemy.roam`,
 ## `final_room:<room>` (the room Strahd waits in: the enemy card's, or the roam pick for `mists`, ADR 0014), `guest:ireena`,
@@ -245,6 +247,12 @@ func _term() -> bool:
 		if op == "":
 			return _truthy(value)
 		return _compare(value, op, _literal(rhs))
+	if t.begins_with("quest_days."):
+		var passed := st.quest_days(t.substr(11))
+		return passed >= 0 and _compare(passed, op if op != "" else ">", _literal(rhs) if op != "" else 0)
+	if t.begins_with("days_since."):
+		var gone := st.days_since(t.substr(11))
+		return gone >= 0 and _compare(gone, op if op != "" else ">", _literal(rhs) if op != "" else 0)
 	if t.begins_with("quest."):
 		var qid := t.substr(6)
 		var stage := st.quest_stage(qid)
