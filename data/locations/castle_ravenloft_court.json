@@ -1676,8 +1676,8 @@
         {
           "monster": "strahds_animated_armor",
           "cell": [
-            3,
-            22
+            2,
+            16
           ],
           "hp": 120
         }
