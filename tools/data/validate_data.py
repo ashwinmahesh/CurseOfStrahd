@@ -37,6 +37,7 @@ FOLDERS = {
     "weather": "weather",
     "camp": {"night_visitors": "night_visitors"},
     "progression": {"xp": "xp"},
+    "achievements": "achievements",
 }
 
 TYPES = {
@@ -288,6 +289,7 @@ def semantic_checks(data):
     story_checks(data, errors, need)
     object_checks(data, errors)
     camp_checks(data, errors)
+    achievement_checks(data, errors)
     xp_checks(data, errors)
     waiting_checks(data, errors)
     pending.extend(pending_list)
@@ -381,6 +383,34 @@ def camp_checks(data, errors):
             n = sum(1 for g in groups if g["land"] == land and g["levels"][0] <= level <= g["levels"][1])
             if n == 0:
                 errors.append(f"{w}: nothing comes for a level {level} camp in the {land}")
+
+
+def achievement_checks(data, errors):
+    """Hidden achievements (data/achievements/<package>.json, core/achievements.gd, docs/story/eggs.md): an id is unique
+    across the files, the sixteen in Achievements.LIST and the endings' own (ending_<id>), a name is unique among them
+    and the endings' titles, and a `when` condition (docs/contracts/dialogue.md) has balanced parentheses and quotes.
+    The flags a `when` reads are checked with the rest, in story_checks."""
+    listed = {m[0]: m[1] for m in re.findall(r'^\t"([a-z_0-9]+)": \["([^"]+)", "[^"]+"\]', (ROOT / "core" / "achievements.gd").read_text(), re.M)}
+    names = {name: f"Achievements.LIST {aid}" for aid, name in listed.items()}
+    for end in data.get("endings", {}).values():
+        names.setdefault(str(end.get("title", "")), f"ending {end['id']}")
+    ids = {}
+    for pid, f in sorted(data.get("achievements", {}).items()):
+        for a in f.get("achievements", []):
+            w = f"data/achievements/{pid}.json {a['id']}"
+            if a["id"] in listed or a["id"].startswith("ending_"):
+                errors.append(f"{w}: id clashes with a listed achievement or an ending's own")
+            if a["id"] in ids:
+                errors.append(f"{w}: id also in {ids[a['id']]}")
+            ids[a["id"]] = f"data/achievements/{pid}.json"
+            if a["name"] in names:
+                errors.append(f"{w}: name '{a['name']}' is already {names[a['name']]}")
+            names[a["name"]] = w
+            when = a.get("when", "")
+            if "when" in a and not when.strip():
+                errors.append(f"{w}: an empty `when` (leave it out to earn the achievement in code)")
+            if when.count("(") != when.count(")") or when.count('"') % 2:
+                errors.append(f"{w}: `when` has unbalanced parentheses or quotes: {when}")
 
 
 def object_checks(data, errors):
@@ -909,6 +939,7 @@ def world_check_checks(loc, w, data, need, cond, flags_set, check_lines, errors,
 def story_checks(data, errors, need):
     """Locations, NPCs, quests, the flag registry and every .dialogue file (ADR 0008, ADR 0009)."""
     flags = {}
+    engine_flags = {}   # flags the game itself sets from code ("set_by": "engine" in the registry), e.g. Achievements.note_fight
     for f in sorted((ROOT / "data" / "flags").glob("*.json")) if (ROOT / "data" / "flags").exists() else []:
         try:
             reg = json.loads(f.read_text())
@@ -922,6 +953,11 @@ def story_checks(data, errors, need):
             if fl["id"] in flags:
                 errors.append(f"data/flags/{f.name}: flag '{fl['id']}' also registered in {flags[fl['id']]}")
             flags[fl["id"]] = f.name
+            if "set_by" in fl:
+                if fl["set_by"] != "engine":
+                    errors.append(f"data/flags/{f.name}: flag '{fl['id']}': set_by is \"engine\" or left out")
+                else:
+                    engine_flags[fl["id"]] = f.name
     flags_read, flags_set = {}, {}
 
     def read(flag_ids, where):
@@ -931,6 +967,11 @@ def story_checks(data, errors, need):
     def cond(expr, where):
         if expr:
             read(dialogue_lint.conditions_flags(expr), where)
+
+    # A hidden achievement's `when` reads flags like any condition (data/achievements, core/achievements.gd).
+    for pid, ach in sorted(data.get("achievements", {}).items()):
+        for a in ach.get("achievements", []):
+            cond(a.get("when", ""), f"data/achievements/{pid}.json {a['id']}")
 
     npcs, quests, locations = data["npcs"], data["quests"], data["locations"]
     encounter_ids = set()
@@ -1211,12 +1252,14 @@ def story_checks(data, errors, need):
     for fid, wh in sorted(flags_read.items()):
         if fid not in flags:
             errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")
-        if fid not in flags_set:
+        if fid not in flags_set and fid not in engine_flags:
             errors.append(f"{wh[0]}: flag '{fid}' is read but never set")
     for fid, wh in sorted(flags_set.items()):
         if fid not in flags:
             errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")
-        if fid not in flags_read:
+        if fid in engine_flags:
+            errors.append(f"{wh[0]}: flag '{fid}' is set by the engine ({engine_flags[fid]}); data doesn't set it")
+        elif fid not in flags_read:
             errors.append(f"{wh[0]}: flag '{fid}' is set but never read")
 
 

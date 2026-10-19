@@ -182,7 +182,9 @@ reading). Every stage that doesn't end its quest has one; `make validate` fails 
 
 Types: `bool`, `int`, `string`. Every flag a dialogue file, location or quest reads or sets is registered in one of
 these files. `make validate` fails if a flag is
-read but never set, set but never read, or used but missing.
+read but never set, set but never read, or used but missing. A flag the game sets from code (the easter-egg packages'
+`eggs_engine.json`, set when a story fight ends) carries `"set_by": "engine"`: dialogue and locations may read it without
+setting it, and `make validate` refuses data that sets it.
 
 `make validate` also walks the whole story from a new game (tools/data/story_reach.py): exits and the travel map,
 every conversation from its NPC, prop, road event, Strahd visit, schedule, camp talk, banter, captive, watch and ending,

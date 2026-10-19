@@ -275,6 +275,10 @@ class Story:
         self.add(("loc", self.first), "the game starts here")
         for item in self.magic:   # random treasure can place any magic item (story/treasure.gd)
             self.add(("item", item), "random treasure")
+        for f in sorted((self.root / "data" / "flags").glob("*.json")):   # flags the game sets from code ("set_by": "engine")
+            for fl in json.loads(f.read_text()).get("flags", []):
+                if isinstance(fl, dict) and fl.get("set_by") == "engine":
+                    self.add(("flag", fl["id"], True), f"data/flags/{f.name} (set by the engine)")
         for name in ("pregens", "classes", "backgrounds"):
             for k, d in _table(self.root, name).items():
                 for m in re.findall(r'"(?:id|item)"\s*:\s*"([a-z0-9_]+)"', json.dumps(d)):

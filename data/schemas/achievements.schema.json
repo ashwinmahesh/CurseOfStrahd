@@ -1,0 +1,27 @@
+{
+  "$id": "achievements.schema.json",
+  "title": "Hidden achievements: one file per package (core/achievements.gd, docs/story/eggs.md)",
+  "type": "object",
+  "required": ["id", "achievements"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"$ref": "common.schema.json#/$defs/id", "description": "The package's id; the file is data/achievements/<id>.json."},
+    "summary": {"type": "string"},
+    "achievements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"$ref": "common.schema.json#/$defs/id", "description": "Unique across the achievements in Achievements.LIST, every file here and the endings' ending_<id>."},
+          "name": {"type": "string", "minLength": 1, "description": "Shown once earned; the panel's row reads \"A secret\" until then."},
+          "text": {"type": "string", "minLength": 1, "description": "How it is earned, shown once it has been."},
+          "hidden": {"type": "boolean", "description": "True (the default): the panel shows \"A secret\" until it is earned."},
+          "when": {"type": "string", "description": "A story condition (docs/contracts/dialogue.md) that earns it the moment it holds, checked whenever the party's state may have changed. Without one, the game earns it in code (Achievements.for_*)."}
+        }
+      }
+    }
+  }
+}
