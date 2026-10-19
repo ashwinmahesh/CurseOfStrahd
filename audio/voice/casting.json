@@ -291,12 +291,13 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "kasimir_velikov": {
-      "voice_id": "O9XgmQnaZveORWl6mTHm",
-      "name": "Tomislav - Calm, Clear and Narrative",
-      "description": "A man with a soft, melancholy, refined voice, an ageless dusk elf with a strong, clearly audible Eastern European (Romanian) accent. Quiet, sorrowful and ashamed; speaks slowly, as if every word costs him.",
+      "voice_id": "AdzuOebsbX9CdLNnn33T",
+      "name": "Barovia Kasimir",
+      "description": "Kasimir Velikov, a grave, soft-spoken dusk elf mourning a sister: a low-to-mid, gentle, weary, dignified voice, courteous with quiet resolve under old grief; a mild, refined Eastern European accent. Designed 2026-10-19 (Ashwin's pick, option A).",
       "settings": {},
-      "library": true,
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[mild Eastern European accent]",
+      "released": true
     },
     "victor_vallakovich": {
       "voice_id": "egtZ15cBfFMi3QlBJdxk",
