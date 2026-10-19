@@ -284,11 +284,11 @@ func test_khazan_with_his_name_at_level_10() -> void:
 	assert_true(wins >= 0 and wins <= 2, "Khazan is driven off in 0 to 2 of 8 (%d)" % wins)
 
 
-## Driven off, not destroyed: he leaves the fight below 30 Hit Points and goes back into his name (seed 7 since foes'
-## cones aim freely; it was seed 1).
+## Driven off, not destroyed: he leaves the fight below 30 Hit Points and goes back into his name (seed 1 since the
+## 2026-10-19 combat batch; it was seed 7 after foes' cones began to aim freely, and seed 1 before that).
 func test_khazan_withdraws_into_his_name() -> void:
-	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 7, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
-	assert_eq(str(res["outcome"]), "victory", "seed 7 drives him off")
+	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 1, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	assert_eq(str(res["outcome"]), "victory", "seed 1 drives him off")
 	assert_true((res["story_flags"] as Dictionary).has("khazan_withdrawn"), "back into his name")
 	assert_true((res["departed"] as Array).has("withdraw"), "he left the fight, he didn't die in it")
 
