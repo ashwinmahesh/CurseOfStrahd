@@ -26,7 +26,8 @@ func _comp() -> Compendium:
 
 
 ## The creature each of a spell's attack rolls is made against, in order: one per target, or one per ray or beam
-## (Scorching Ray, Eldritch Blast) shared round the targets.
+## (Scorching Ray, Eldritch Blast) shared round the targets. A cast that carries a `beam_cap` (a Reaction casting:
+## SpellReactions.cast_reactive_spell) sends no more beams than that.
 func attack_shots(ctx: Dictionary, tgt: Array[Combatant]) -> Array[Combatant]:
 	var spells := sp()
 	var s := ctx["s"] as Dictionary
@@ -36,6 +37,8 @@ func attack_shots(ctx: Dictionary, tgt: Array[Combatant]) -> Array[Combatant]:
 		count = spells.target_count(s, int(ctx["slot"]))
 	elif not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "beam":
 		count = spells.specials.beams(ctx["c"] as Combatant)
+		if ctx.has("beam_cap"):
+			count = mini(count, int(ctx["beam_cap"]))
 	var shots: Array[Combatant] = []
 	if count > 1 and not tgt.is_empty():
 		for i in count:

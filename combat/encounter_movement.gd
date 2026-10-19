@@ -418,7 +418,11 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 						if armed_hand:
 							req.target_choices.append({"id": "attack", "label": "Melee attack"})
 						for w in war:
-							req.target_choices.append({"id": "spell:%s" % w["id"], "label": "%s (%s)" % [w["name"], "cantrip" if int(w["level"]) == 0 else "level %d slot" % int(w["level"])]})
+							var beam_note := str(w["beam_note"])   # Eldritch Blast: one beam as a Reaction, and why
+							var what := "cantrip" if int(w["level"]) == 0 else "level %d slot" % int(w["level"])
+							req.target_choices.append({"id": "spell:%s" % w["id"], "label": "%s (%s%s)" % [w["name"], what, ", one beam" if beam_note != "" else ""]})
+							if beam_note != "":
+								req.text += " %s: %s." % [w["name"], beam_note]
 						req.max_targets = 1
 					var req_ref: WeakRef = weakref(req)
 					req.continuation = func(use: bool) -> CombatResult:

@@ -659,6 +659,29 @@ func beams(c: Combatant) -> int:
 	return 1 + Spellcasting.cantrip_tier(c.creature.character_level())
 
 
+## A spell whose damage is rolled for each beam (Eldritch Blast).
+static func is_beam_spell(s: Dictionary) -> bool:
+	var dmg := s.get("damage", []) as Array
+	return not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "beam"
+
+
+## A beam spell cast as a Reaction (War Caster's Reactive Spell in place of an Opportunity Attack) sends this many
+## beams, whatever the caster's level (owner's ruling, 2026-10-19; the 2024 text would let every beam fly at the one
+## creature: docs/rules/deviations.md). The cast carries it as ctx.beam_cap (SpellAttacks.attack_shots).
+const REACTION_BEAMS := 1
+
+
+## What the prompt and the log say about a Reaction casting of `s` by `c`: "" for a spell without beams, else that it
+## sends one beam and, when the Action casting would send more, how many it gives up and why.
+func reaction_beam_note(c: Combatant, s: Dictionary) -> String:
+	if not is_beam_spell(s):
+		return ""
+	var n := beams(c)
+	if n <= REACTION_BEAMS:
+		return "one beam"
+	return "one beam instead of %d, since a Reaction casting sends a single beam" % n
+
+
 ## Sorcerous Burst: each 8 rolled adds another d8, up to the spellcasting modifier in extra dice. Returns the extra
 ## total and a note.
 func sorcerous_burst_extra(ctx: Dictionary, text: String) -> Dictionary:

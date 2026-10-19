@@ -300,7 +300,8 @@ func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant, slo
 
 
 ## War Caster's Reactive Spell (2024): with the Reaction, instead of an Opportunity Attack, a spell with a casting time
-## of an action aimed at `target` alone (every dart or ray of a spell that has several), spending its lowest slot.
+## of an action aimed at `target` alone (every dart or ray of a spell that has several), spending its lowest slot. A spell
+## of beams (Eldritch Blast) sends one beam, whatever the caster's level (SpellSpecials.REACTION_BEAMS).
 func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> CombatResult:
 	var spells := sp()
 	var e := enc()
@@ -326,11 +327,15 @@ func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> C
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
 	var entry := spells._entry_any(c, spell_id)
-	e.log.add("spell", "%s answers with %s (War Caster%s)" % [c.name(), s["name"], ", level %d slot" % slot if slot > 0 else ""], c.id)
+	var beam_note := spells.specials.reaction_beam_note(c, s)
+	e.log.add("spell", "%s answers with %s (War Caster%s%s)" % [c.name(), s["name"], ", level %d slot" % slot if slot > 0 else "",
+		", " + beam_note if beam_note != "" else ""], c.id)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": [], "targets": [target.id]})
 	spells.trigger_ends(c, "cast_spell")
 	var ctx := {"c": c, "s": s, "slot": maxi(slot, level), "nums": spells.numbers(c, entry), "conc": conc, "opts": {}, "point": e.center_of(target),
 		"cells": [], "choice": SpellCaster.choice_of(s, {}), "direction": (e.center_of(target) - e.center_of(c)).normalized(), "cell": target.cell}
+	if beam_note != "":
+		ctx["beam_cap"] = SpellSpecials.REACTION_BEAMS
 	var r := CombatResult.new()
 	var tgt: Array[Combatant] = [target]
 	var count := int((s.get("targets", {}) as Dictionary).get("count", 1))

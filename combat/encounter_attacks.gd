@@ -61,7 +61,8 @@ func _readied_attack(p: Combatant, target: Combatant) -> CombatResult:
 
 
 ## War Caster's Reactive Spell (2024): the spells `p` could cast at `target` instead of an Opportunity Attack: a casting
-## time of an action, aimed at creatures (no area), reaching it, with a slot left if it needs one. [{id, name, level}]
+## time of an action, aimed at creatures (no area), reaching it, with a slot left if it needs one. [{id, name, level,
+## beam_note}]: the note says a spell of beams (Eldritch Blast) sends just one as a Reaction, and why ("" for the rest).
 func reactive_spells(p: Combatant, target: Combatant) -> Array[Dictionary]:
 	var e := enc()
 	var out: Array[Dictionary] = []
@@ -81,7 +82,7 @@ func reactive_spells(p: Combatant, target: Combatant) -> Array[Dictionary]:
 			continue   # its costly material component isn't carried
 		if e.spells.range_ft(data, p) < e.distance(p, target):
 			continue
-		out.append({"id": str(sp["id"]), "name": str(data["name"]), "level": level})
+		out.append({"id": str(sp["id"]), "name": str(data["name"]), "level": level, "beam_note": e.spells.specials.reaction_beam_note(p, data)})
 	return out
 
 
