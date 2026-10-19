@@ -2,11 +2,13 @@ extends TestCase
 ## Caves as caves (the vault's Natural Maps Plan, I2; owner 2026-10-19: "Ex cave rooms should have natural shapes instead
 ## of it all being square rooms"): a place whose look says `cave` draws its rock as one surface over a smooth contour
 ## (Caves) instead of a block a square, in the Modern look; Classic keeps the blocks. The werewolf den's caves, Ghakis's
-## lair (its keepers' post stays built) and the drowned library (the lighter `hewn` amount) have it.
+## lair (its keepers' post stays built), the Amber Temple's deep and the drowned library (the lighter `hewn` amount)
+## have it.
 
 const DEN := "werewolf_den_caves"
 const LAIR := "ghakis_lair"
 const LIBRARY := "drowned_library"
+const DEEP := "amber_deep"   # (the Amber Temple's deep: the owner said yes, 2026-10-19)
 
 var view: LocationView
 var _was := ""
@@ -42,7 +44,7 @@ func _view(loc: String) -> LocationView:
 ## "InteriorWall" or a "WallBlock" before).
 func test_the_rock_is_a_cave_not_blocks() -> void:
 	Look.set_style("modern", false)
-	for loc: String in [DEN, LAIR, LIBRARY]:
+	for loc: String in [DEN, LAIR, LIBRARY, DEEP]:
 		var v := await _view(loc)
 		var cave := Caves.of(v.board)
 		assert_true(cave != null, "%s is a cave" % loc)
@@ -68,7 +70,7 @@ func test_the_rock_is_a_cave_not_blocks() -> void:
 ## moves it, half a square in all, so a token in a square's middle and its ring are always clear of it.
 func test_the_rock_never_comes_far_over_the_floor() -> void:
 	Look.set_style("modern", false)
-	for loc: String in [DEN, LAIR, LIBRARY]:
+	for loc: String in [DEN, LAIR, LIBRARY, DEEP]:
 		var v := await _view(loc)
 		var cave := Caves.of(v.board)
 		var bad := 0

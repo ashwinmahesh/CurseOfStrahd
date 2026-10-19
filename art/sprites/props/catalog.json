@@ -1391,7 +1391,9 @@
     "amber_deep": {
       "floor": "amber/black_stone",
       "wall": "amber/warped_amber",
-      "keep": true
+      "keep": true,
+      "cave": true,
+      "cave_height": 2.8
     },
     "khazan_undercroft": {
       "wall": "dungeon/slimed_brick"
