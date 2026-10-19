@@ -308,8 +308,8 @@ func _classify() -> void:
 					queue.append(n)
 
 
-## How far the cave may swell into each wall square: what the wall's thickness leaves, so a one-square wall between two
-## rooms keeps about four tenths of a square of rock however both bow (a run of wall squares along each axis, the shorter
+## How far the cave may swell into each wall square: what the wall's thickness leaves, so a wall between two rooms keeps
+## a square of rock (a one square wall seven tenths) however both bow (a run of wall squares along each axis, the shorter
 ## counting; the map's edge counts as three squares more, the rock carries on past it).
 func _thickness() -> void:
 	var runx := PackedInt32Array()
@@ -344,7 +344,7 @@ func _thickness() -> void:
 			z = z1
 	_thick.resize(_w * _d)
 	for k in _w * _d:
-		_thick[k] = 0.0 if _open[k] == 1 else clampf((float(mini(runx[k], runz[k])) - 0.4) * 0.5, 0.0, 2.2)
+		_thick[k] = 0.0 if _open[k] == 1 else clampf((float(mini(runx[k], runz[k])) - 1.0) * 0.5, 0.15, 2.2)
 	# A floor square takes the limit of the rock beside it, so the contour between them reads the rock's.
 	var at_floor := _thick.duplicate()
 	for z in _d:
@@ -704,10 +704,14 @@ func _shape() -> void:
 			var mag := sqrt(gx * gx + gz * gz)
 			if mag < 0.0001:
 				continue
-			along[k] = Vector2(gx / mag, gz / mag)
-			var steep := clampf(mag / (2.0 * STEP), 0.5, 2.0)   # how fast the field changes over a square
-			var d := (roundf(s / STEP) * STEP - s) * (1.0 - smoothstep(0.7, 1.2, absf(s)))
-			moved[k] = along[k] * (d / steep)
+			# How fast the field changes over a square: about 1 beside a wall, down to 0 along the middle of a thin wall or
+			# a narrow passage, where there is no one direction into the cave, so nothing there is moved or leaned (it
+			# folded the thin walls' tops).
+			var rate := mag / (2.0 * STEP)
+			var trust := smoothstep(0.5, 0.9, rate)
+			along[k] = Vector2(gx / mag, gz / mag) * trust
+			var d := (roundf(s / STEP) * STEP - s) * (1.0 - smoothstep(0.7, 1.2, absf(s))) * trust
+			moved[k] = Vector2(gx / mag, gz / mag) * (d / clampf(rate, 0.5, 2.0))
 			level[k] = s + d
 	_s = level
 	var top := float(look.get("cave_height", 2.6))

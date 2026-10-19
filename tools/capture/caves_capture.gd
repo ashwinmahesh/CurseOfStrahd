@@ -4,7 +4,7 @@ extends Node3D
 ## places that matter (SPOTS). Not part of the game.
 ##   make capture SCENE=res://tools/capture/caves_capture.tscn NAME=caves/after FRAMES=10
 ## Environment: CV_LOCS=a,b (default the four caves), CV_VIEWS=whole,top,spots (default all three), CV_HOUR=12,
-## CV_OFF=1 (the cave look off, for before shots and build times), CV_LIGHT=1 (a strong lamp from above, so the
+## CV_OFF=1 (the cave look off, for before shots and build times), CV_WINDOW=1 (keep the see-through window), CV_LIGHT=1 (a strong lamp from above, so the
 ## contour and the rock's shape can be read in a map that is meant to be dark), CV_TIME=n (no shots: build each place n times and
 ## print the times, the first, which warms the caches, apart),
 ## CV_AT=x,z,dist,steps,pitch;... (extra shots, each at that square: dist in squares, steps = quarter turns, pitch = degrees
@@ -90,6 +90,14 @@ func capture_shots(tool: Node, out: String) -> void:
 			for spec: String in OS.get_environment("CV_DUMP").split(";", false):
 				var a := spec.split(",")
 				print(cave.describe(Vector2i(int(a[0]), int(a[1]))))
+		if OS.get_environment("CV_PROBE") != "" and cave != null:
+			# CV_PROBE=x0,z0,x1,z1: the contour field along that line, to see how much rock a wall keeps.
+			var q := OS.get_environment("CV_PROBE").split(",")
+			var line := ""
+			for i in 17:
+				var t := float(i) / 16.0
+				line += "%.2f " % cave.field_at(lerpf(float(q[0]), float(q[2]), t), lerpf(float(q[1]), float(q[3]), t))
+			print("probe %s: %s" % [id, line])
 		if OS.get_environment("CV_NAMES") != "":
 			var counts := {}
 			for n in view.board.get_children():
@@ -174,6 +182,11 @@ func _build(loc_id: String, hour: int) -> void:
 		sun.rotation_degrees = Vector3(-62, 35, 0)
 		sun.shadow_enabled = true
 		add_child(sun)
+	# No window cut round the party in the walls (SeeThrough), which in a QA shot of the whole map would sit in its middle
+	# (CV_WINDOW=1 keeps it).
+	if OS.get_environment("CV_WINDOW") == "" and view.has_node("SeeThrough"):
+		view.get_node("SeeThrough").free()
+		SeeThrough.shut()
 	# No screens over the rock.
 	for layer: Node in get_tree().root.find_children("*", "CanvasLayer", true, false):
 		(layer as CanvasLayer).visible = false

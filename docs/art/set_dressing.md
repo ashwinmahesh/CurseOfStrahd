@@ -437,7 +437,7 @@ visit like GroundRelief's arrays (the newest eight places).
   into the rock, as far as that rock is thick, so the cut over the floor stays a fifth of a square), a one-square niche
   hardly rounds. The loops are filled into texels, a signed distance (a chamfer sweep) and a small blur make the field,
   and noise seeded by the place moves the contour: a slow winding, a wobble, and bays that swell into the rock by up to
-  what its thickness leaves (a one-square wall keeps about four tenths of a square between two rooms), never more than a
+  what its thickness leaves (a wall between two rooms keeps a square of rock, a one-square wall seven tenths, and nothing swells through the map's own edge), never more than a
   quarter of a square in over the floor (rule 2 of the plan: a token in a square's middle and its ring stay clear;
   `test_caves` measures it). The grid is then moved onto the field's levels near the contour (a third of a square apart)
   so the rows of the surface run along the wall, not along the grid.
