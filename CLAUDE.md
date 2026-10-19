@@ -31,9 +31,10 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - At most 3 import editors and 8 headless test processes run at once across all lanes (tools/godot_slot.sh and
   tools/run_tests.py; IMPORT_SLOTS, TEST_SLOTS, GODOT_SLOTS=off): the Mac has 24 GB, and a dozen editors at ~1.8 GB
   each swapped it (load 82, 20 GB swap, 2026-10-18). A run past the cap waits its turn and says so; it isn't stuck.
-  The build lane keeps part of that for itself (owner, 2026-10-18): slots 6 to 8 of the 8 test slots and slot 3 of the 3
+  The build lane keeps part of that for itself (owner, 2026-10-18): slots 4 to 8 of the 8 test slots and slot 3 of the 3
   import slots (BUILD_TEST_SLOTS, BUILD_IMPORT_SLOTS) are only claimed by a build run, so a development lane waits for
-  its own 5 test and 2 import slots and can never starve the merge, test and push runs; the build lane tries its reserved
+  its own 3 test and 2 import slots (a fast build lane matters more than fast lane tests, owner) and can never starve the
+  merge, test and push runs; the build lane tries its reserved
   slots first and may use the others when they are free. The totals are unchanged (8 and 3): the reservation moves slots,
   it adds none, since the Mac sat at 88% swap and load 40 with the pool full. **Only the build thread opts in**, with
   `BUILD_LANE=1` in the environment (`BUILD_LANE=1 make ci JOBS=8`, or exported for a detached run), or once per builder

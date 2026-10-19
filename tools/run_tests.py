@@ -20,8 +20,8 @@ single process make test used to.
 Across all lanes at most TEST_SLOTS (8) of these processes run at once, and so at most IMPORT_SLOTS (3) import editors
 (tools/godot_slot.sh has why and how): a process takes a slot before it starts and waits for one if they are all in
 use, and a process still waiting when another has run out of files gives up, since there is nothing left for it.
-GODOT_SLOTS=off turns the cap off. The top BUILD_TEST_SLOTS (3) of the 8 are kept for the build lane (BUILD_LANE=1, or
-.godot/build-lane in the checkout, see tools/godot_slot.sh): a development lane only claims the other five, the build
+GODOT_SLOTS=off turns the cap off. The top BUILD_TEST_SLOTS (5) of the 8 are kept for the build lane (BUILD_LANE=1, or
+.godot/build-lane in the checkout, see tools/godot_slot.sh): a development lane only claims the other three, the build
 lane tries the reserved ones first and then the rest.
 
 make test [ONLY=substr] [FILES=a.gd,b.gd] [JOBS=n]   Stdlib only.
@@ -50,7 +50,7 @@ WORKER_GB = 1.5
 SLOT_ROOT = os.environ.get("STRAHD_SLOT_ROOT", "/tmp/strahd-godot-slots-%d" % os.getuid())
 # Each pool's size (the default of its limit) and how many of its top slots the build lane keeps (tools/godot_slot.sh).
 POOL_SIZE = {"test": 8, "import": 3}
-BUILD_RESERVE = {"test": ("BUILD_TEST_SLOTS", 3), "import": ("BUILD_IMPORT_SLOTS", 1)}
+BUILD_RESERVE = {"test": ("BUILD_TEST_SLOTS", 5), "import": ("BUILD_IMPORT_SLOTS", 1)}
 SUMMARY = re.compile(r"^\d+ tests, \d+ passed, \d+ failed$")
 # What tools/logcheck.sh fails a run on, besides FAIL lines.
 ERROR = re.compile(r"SCRIPT ERROR|ERROR:|Parse Error|Failed loading|WARNING: .*GDScript")

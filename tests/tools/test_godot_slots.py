@@ -74,11 +74,11 @@ class Case(unittest.TestCase):
 
 class Layout(Case):
     def test_a_development_lane_never_claims_the_top_slots(self):
-        self.assertEqual(rt.slot_candidates("test", 8, False), [1, 2, 3, 4, 5])
+        self.assertEqual(rt.slot_candidates("test", 8, False), [1, 2, 3])
         self.assertEqual(rt.slot_candidates("import", 3, False), [1, 2])
 
     def test_the_build_lane_tries_the_reserved_slots_first_and_may_use_them_all(self):
-        self.assertEqual(rt.slot_candidates("test", 8, True), [6, 7, 8, 1, 2, 3, 4, 5])
+        self.assertEqual(rt.slot_candidates("test", 8, True), [4, 5, 6, 7, 8, 1, 2, 3])
         self.assertEqual(rt.slot_candidates("import", 3, True), [3, 1, 2])
 
     def test_the_total_is_unchanged(self):
@@ -89,13 +89,13 @@ class Layout(Case):
 
     def test_a_smaller_limit_still_cuts_a_run_down(self):
         self.assertEqual(rt.slot_candidates("test", 2, False), [1, 2])
-        self.assertEqual(rt.slot_candidates("test", 2, True), [6, 7])
-        self.assertEqual(rt.slot_candidates("test", 4, True), [6, 7, 8, 1])
+        self.assertEqual(rt.slot_candidates("test", 2, True), [4, 5])
+        self.assertEqual(rt.slot_candidates("test", 6, True), [4, 5, 6, 7, 8, 1])
         self.assertEqual(rt.slot_candidates("test", 0, False), [1])
 
     def test_a_bigger_limit_adds_slots_for_both(self):
-        self.assertEqual(rt.slot_candidates("test", 10, False), [1, 2, 3, 4, 5, 9, 10])
-        self.assertEqual(rt.slot_candidates("test", 10, True), [6, 7, 8, 1, 2, 3, 4, 5, 9, 10])
+        self.assertEqual(rt.slot_candidates("test", 10, False), [1, 2, 3, 9, 10])
+        self.assertEqual(rt.slot_candidates("test", 10, True), [4, 5, 6, 7, 8, 1, 2, 3, 9, 10])
 
     def test_the_reserve_is_set_by_its_variable_and_always_leaves_the_lanes_a_slot(self):
         os.environ["BUILD_TEST_SLOTS"] = "0"
@@ -104,6 +104,8 @@ class Layout(Case):
         self.assertEqual(rt.slot_candidates("test", 8, False), [1])
         self.assertEqual(rt.slot_candidates("test", 8, True), [2, 3, 4, 5, 6, 7, 8, 1])
         os.environ["BUILD_TEST_SLOTS"] = "two"
+        self.assertEqual(rt.slot_candidates("test", 8, False), [1, 2, 3])
+        os.environ["BUILD_TEST_SLOTS"] = "3"
         self.assertEqual(rt.slot_candidates("test", 8, False), [1, 2, 3, 4, 5])
         os.environ["BUILD_IMPORT_SLOTS"] = "2"
         self.assertEqual(rt.slot_candidates("import", 3, False), [1])
@@ -123,33 +125,33 @@ class Layout(Case):
 
 class Python(Case):
     def test_development_lanes_stop_at_their_slots_while_the_reserved_ones_are_free(self):
-        got = [self.take("test", 8) for _ in range(6)]
-        self.assertEqual(sorted(Path(g).name for g in got[:5]), ["1", "2", "3", "4", "5"])
-        self.assertIsNone(got[5])
-        self.assertEqual(self.held("test"), [1, 2, 3, 4, 5])
+        got = [self.take("test", 8) for _ in range(4)]
+        self.assertEqual(sorted(Path(g).name for g in got[:3]), ["1", "2", "3"])
+        self.assertIsNone(got[3])
+        self.assertEqual(self.held("test"), [1, 2, 3])
 
     def test_the_build_lane_gets_a_slot_at_once_when_the_lanes_have_filled_theirs(self):
-        for _ in range(5):
+        for _ in range(3):
             self.take("test", 8)
         os.environ["BUILD_LANE"] = "1"
-        got = [Path(self.take("test", 8)).name for _ in range(3)]
-        self.assertEqual(sorted(got), ["6", "7", "8"])
+        got = [Path(self.take("test", 8)).name for _ in range(5)]
+        self.assertEqual(sorted(got), ["4", "5", "6", "7", "8"])
         self.assertIsNone(self.take("test", 8))
         self.assertEqual(self.held("test"), list(range(1, 9)))
 
     def test_the_build_lane_takes_the_reserved_slots_first_then_borrows_the_lanes_free_ones(self):
         os.environ["BUILD_LANE"] = "1"
         names = [Path(self.take("test", 8)).name for _ in range(8)]
-        self.assertEqual(sorted(names[:3]), ["6", "7", "8"])
-        self.assertEqual(sorted(names[3:]), ["1", "2", "3", "4", "5"])
+        self.assertEqual(sorted(names[:5]), ["4", "5", "6", "7", "8"])
+        self.assertEqual(sorted(names[5:]), ["1", "2", "3"])
         self.assertIsNone(self.take("test", 8))
 
     def test_a_lane_waits_for_a_lane_slot_even_when_the_build_lane_is_idle(self):
-        for _ in range(5):
+        for _ in range(3):
             self.take("test", 8)
         waited = self.take("test", 8)
         self.assertIsNone(waited)
-        self.assertEqual(self.held("test"), [1, 2, 3, 4, 5])
+        self.assertEqual(self.held("test"), [1, 2, 3])
 
     def test_the_import_pool_keeps_one_slot_too(self):
         got = [self.take("import", 3) for _ in range(3)]
@@ -168,14 +170,14 @@ class Python(Case):
         self.assertEqual((build / "pid").read_text(), str(os.getpid()))
 
     def test_a_slot_whose_holder_is_gone_is_cleared_for_either_kind_of_run(self):
-        for n in (1, 6, 7, 8):
+        for n in (1, 4, 5, 6, 7, 8):
             d = self.root / "test" / str(n)
             d.mkdir(parents=True)
             (d / "pid").write_text(str(dead_pid()))
         self.assertEqual(Path(self.take("test", 1)).name, "1")
         os.environ["BUILD_LANE"] = "1"
-        got = Path(self.take("test", 3))
-        self.assertIn(got.name, ("6", "7", "8"))
+        got = Path(self.take("test", 5))
+        self.assertIn(got.name, ("4", "5", "6", "7", "8"))
         self.assertEqual((got / "pid").read_text(), str(os.getpid()))
 
     def test_the_cap_off_takes_nothing(self):
@@ -187,13 +189,13 @@ class Python(Case):
         import contextlib
         import io
         out = io.StringIO()
-        for _ in range(5):
+        for _ in range(3):
             self.take("test", 8)
         flag = threading.Event()
         threading.Timer(0.5, flag.set).start()   # the note comes on the first pass that finds every slot in use
         with contextlib.redirect_stdout(out):
             self.assertIsNone(rt.take_slot("test", 8, flag))
-        self.assertIn("5 at once for the development lanes", out.getvalue())
+        self.assertIn("3 at once for the development lanes", out.getvalue())
         self.assertIn("kept for the build lane", out.getvalue())
 
 
@@ -232,14 +234,14 @@ class Shell(Case):
 
     def test_try_slot_follows_the_same_rules(self):
         # One shell holds what it takes (its PID is alive), so each pass moves on to the next free slot.
-        got = self.sh(self.LOOP % "1 2 3 4 5 6")
-        self.assertEqual(got.stdout.split(), ["1", "2", "3", "4", "5", "none"])
+        got = self.sh(self.LOOP % "1 2 3 4")
+        self.assertEqual(got.stdout.split(), ["1", "2", "3", "none"])
         self.assertFalse((self.root / "test" / "1" / "build").exists())
 
     def test_the_build_lane_in_the_shell_takes_the_reserved_slots_first(self):
         got = self.sh(self.LOOP % "1 2 3 4 5 6 7 8 9", BUILD_LANE="1")
-        self.assertEqual(got.stdout.split(), ["6", "7", "8", "1", "2", "3", "4", "5", "none"])
-        self.assertTrue((self.root / "test" / "6" / "build").exists())
+        self.assertEqual(got.stdout.split(), ["4", "5", "6", "7", "8", "1", "2", "3", "none"])
+        self.assertTrue((self.root / "test" / "4" / "build").exists())
 
     def test_a_slot_the_shell_holds_blocks_python_and_the_other_way_round(self):
         holder = subprocess.Popen(["bash", "-c", '. "%s"; mkdir -p "$slot_root/test"; try_slot test 8; echo "${held_slot##*/}"; sleep 20' % SCRIPT],
@@ -247,13 +249,13 @@ class Shell(Case):
                                   env=dict(os.environ, STRAHD_SLOT_ROOT=str(self.root), BUILD_LANE="1"))
         self.addCleanup(self.reap, holder)
         first = holder.stdout.readline().strip()
-        self.assertIn(first, ("6", "7", "8"))
+        self.assertIn(first, ("4", "5", "6", "7", "8"))
         os.environ["BUILD_LANE"] = "1"
-        got = {Path(self.take("test", 8)).name for _ in range(2)}
-        self.assertEqual(got | {first}, {"6", "7", "8"})
+        got = {Path(self.take("test", 8)).name for _ in range(4)}
+        self.assertEqual(got | {first}, {"4", "5", "6", "7", "8"})
 
     def test_take_slot_waits_in_the_shell_and_says_so(self):
-        for n in range(1, 6):
+        for n in range(1, 4):
             d = self.root / "test" / str(n)
             d.mkdir(parents=True)
             (d / "pid").write_text(str(os.getpid()))
@@ -267,8 +269,8 @@ class Shell(Case):
             pass
         proc.kill()
         proc.wait()
-        self.assertIn("5 at once for the development lanes", proc.stderr.read())
-        self.assertEqual(self.held("test"), [1, 2, 3, 4, 5])
+        self.assertIn("3 at once for the development lanes", proc.stderr.read())
+        self.assertEqual(self.held("test"), [1, 2, 3])
 
 
 if __name__ == "__main__":

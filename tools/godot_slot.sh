@@ -9,8 +9,8 @@
 #
 # The build lane (owner, 2026-10-18): the thread that merges, tests and pushes shares the Mac with every development
 # lane, and its runs sat in the same queue (a lane run waited up to an hour, a make check took 4 to 7 minutes, a full
-# ci 47). So the top slots of each pool are kept for it: BUILD_TEST_SLOTS (3) of the 8 test slots, 6 to 8, and
-# BUILD_IMPORT_SLOTS (1) of the 3 import slots, 3. A development lane only ever claims the others (1 to 5 and 1 to 2),
+# ci 47). So the top slots of each pool are kept for it: BUILD_TEST_SLOTS (5) of the 8 test slots, 4 to 8, and
+# BUILD_IMPORT_SLOTS (1) of the 3 import slots, 3. A development lane only ever claims the others (1 to 3 and 1 to 2),
 # so it can never hold a reserved slot, and the build lane always has them free. The build lane tries the reserved slots
 # first and then the others, so it can use all 8 and 3 when the lanes leave room, and the lanes keep what it doesn't
 # need. The totals stay 8 and 3: the reservation moves slots, it adds none (the Mac was at 88% swap and load 40 with
@@ -50,11 +50,11 @@ slot_candidates() {
   local pool="$1" limit="$2" build="$3" size reserve first i dev="" kept=""
   [ "$limit" -ge 1 ] || limit=1   # BSD seq counts down from 1 to 0
   case "$pool" in
-    test) size=8 reserve="${BUILD_TEST_SLOTS:-3}" ;;
+    test) size=8 reserve="${BUILD_TEST_SLOTS:-5}" ;;
     import) size=3 reserve="${BUILD_IMPORT_SLOTS:-1}" ;;
     *) size="$limit" reserve=0 ;;
   esac
-  case "$reserve" in "" | *[!0-9]*) reserve=$((size == 8 ? 3 : 1)) ;; esac
+  case "$reserve" in "" | *[!0-9]*) reserve=$((size == 8 ? 5 : 1)) ;; esac
   [ "$reserve" -lt "$size" ] || reserve=$((size - 1))
   first=$((size - reserve + 1))
   for i in $(seq 1 "$limit"); do
