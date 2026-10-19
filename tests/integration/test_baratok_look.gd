@@ -378,3 +378,23 @@ func test_the_hut_is_stone() -> void:
 	assert_false("village/house_wall" in surfaces or "village/roof_thatch" in surfaces, "no plaster and no thatch left")
 	v.queue_free()
 	await _frames(1)
+
+
+## Everything the plan adds is built (decor props with no label, no text), and every light it adds is only painted
+## (`visual`: it lights the picture and gives a fight no light zone), so the fights' light rules don't change at night.
+func test_the_new_pieces_are_built_and_the_new_lights_are_painted() -> void:
+	var v := _view()
+	await _frames(2)
+	for id: String in _things():
+		if OLD_THINGS.has(id):
+			continue
+		assert_true(v.prop_nodes.has(id) or v.container_nodes.has(id), "%s is built" % id)
+	for t: Variant in _loc()["props"] as Array:
+		if not OLD_THINGS.has(str((t as Dictionary)["id"])):
+			assert_eq(str((t as Dictionary)["kind"]), "decor", "%s is decor: no interaction and no new text" % (t as Dictionary)["id"])
+			assert_false((t as Dictionary).has("label"), "%s has no label" % (t as Dictionary)["id"])
+	for l: Variant in _loc()["lights"] as Array:
+		if _cell((l as Dictionary)["cell"]) != Vector2i(25, 9):
+			assert_true(bool((l as Dictionary).get("visual", false)), "the light at %s is only painted" % [(l as Dictionary)["cell"]])
+	v.queue_free()
+	await _frames(1)

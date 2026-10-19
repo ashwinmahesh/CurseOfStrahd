@@ -409,6 +409,71 @@
       "label": "The heart of the ring of glass",
       "model": "glass_ring",
       "dialogue": "mount_baratok/the_forgotten_storm:glass"
+    },
+    {
+      "id": "baratok_woodpile",
+      "cell": [
+        28,
+        9
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "baratok_frost_bed_1",
+      "cell": [
+        29,
+        9
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "baratok_frost_bed_2",
+      "cell": [
+        30,
+        9
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "baratok_frost_bed_3",
+      "cell": [
+        29,
+        10
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "baratok_frost_bed_4",
+      "cell": [
+        30,
+        10
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "baratok_bird_tree_1",
+      "cell": [
+        28,
+        11
+      ],
+      "kind": "decor",
+      "model": "frozen_birds",
+      "scale": 1.6
+    },
+    {
+      "id": "baratok_bird_tree_2",
+      "cell": [
+        30,
+        12
+      ],
+      "kind": "decor",
+      "model": "frozen_birds",
+      "scale": 1.4
     }
   ],
   "containers": [
