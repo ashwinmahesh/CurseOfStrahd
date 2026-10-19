@@ -58,7 +58,7 @@ Every visit after the first waits for `strahd_watcher_seen`, so he is first seen
 | `watcher` | a leg of travel | `burgomaster_buried` or `strahd_met` | once | `strahd/visits:watcher`. A rider in black on a ridge above the road watches the party pass; wave, stare or walk on; bats lift off toward the castle. Ireena warns not to look. Sets `strahd_watcher_seen`. |
 | `first_letter` | arriving outdoors, day 3 on | watcher seen | once | `strahd/letters:first`. A Vistani rider hands over a letter sealed with a Z: a host's welcome that knows the ridge, Death House, where Ireena is (with them, at the church, at the inn or in Krezk) and Madam Eva's reading. Burn it or keep it (`strahd_letter_kept`). |
 | `night_visit` | a Long Rest through the night, day 4 on | watcher seen | once | `strahd/visits:night`. The one on watch wakes to find him beyond the firelight. Wake the others, ask what he wants, stand before Ireena, hold up a holy symbol, attack (mist), or Insight DC 16 (spent on failure): he looks at the mountains like a prisoner (`strahd_seen_trapped`, a parley line). Sets `strahd_night_visit`. Not on holy ground. |
-| `test_of_strength` | a leg of travel at night | watcher seen, party level 7+ | once | `strahd/visits:test`. He walks out of the fog among wolves to see what they can do. Draw steel, or Persuasion DC 18 (spent; failure is the fight anyway): `strahd_test` = fought / talked. Fought: `strahd_test_of_strength` on the road (Strahd and two dire wolves), withdraw at 100 HP or after round 3, flag `strahd_withdrew`; then `test_after`, his words from the fog. |
+| `test_of_strength` | a leg of travel at night | watcher seen, party level 7+ | once | `strahd/visits:test`. He walks out of the fog among wolves to see what they can do. Draw steel, or Persuasion DC 18 (spent; failure is the fight anyway): `strahd_test` = fought / talked. Fought: `strahd_test_of_strength` on the road (Strahd and two dire wolves), he fights until beaten and withdraws when a blow would drop him below 1 HP (no round limit), flag `strahd_withdrew`; then `test_after`, his words from the fog. |
 | `ireena_at_the_inn` | arriving in Vallaki or at the Blue Water Inn, or resting there, at night, day 4 on | watcher seen, `ireena_sanctuary == "inn"`, Ireena not with the party | once, urgent | `strahd/ireena:inn` → the window (below). |
 | `ireena_in_krezk` | the same in Krezk or the Krezkovs' house | watcher seen, `ireena_in_krezk`, not with the party | once, urgent | `strahd/ireena:krezk` → the window. |
 | `ireena_at_the_church` | the same in Vallaki or St. Andral's | watcher seen, `ireena_sanctuary == "st_andrals"`, not with the party | once | `strahd/ireena:church`. The bell tolls by itself; he calls her from the churchyard gate and cannot come further. Holy ground holds. `strahd_window = "church"`. |
@@ -66,18 +66,19 @@ Every visit after the first waits for `strahd_watcher_seen`, so he is first seen
 
 ### The window (strahd/ireena)
 
-Ireena stands at her open window, entranced; Strahd waits outside it, standing on nothing. Ways to stop him: raise
-the Holy Symbol of Ravenkind (if carried), a Cleric or Paladin stands in the window, Religion DC 15 (a warding
-prayer), Persuasion DC 15 (call her back to herself; spent on failure), or go for him (`strahd_window = "fight"`: the
-visit's fight `strahd_at_the_window`, Strahd and a swarm of bats where the party stands, withdraw at 120 HP or after
-round 2, flag `strahd_withdrew`, then `after_fight`). A failed prayer or plea costs a step (`strahd_window_pull`); at
-two steps, or if the party lets her go, she goes with him: `ireena_held_by_strahd`, `strahd_window = "taken"`, and her
-place flag is cleared (`ireena_sanctuary = "taken"` or `ireena_in_krezk = false`); a guarding Ismark wakes and joins
-the party to bring her back. Saved, she may stay or rejoin the party (`vallaki/ireena:rejoin`, `krezk/ireena:rejoin`).
-Taken, she can be found: in the castle chapel she stands at the altar, entranced, and the party wakes her the ways that
-stop him at the window (`castle_ravenloft/chapel_ireena`, Story Allies Presence Plan package I5); waking her clears
-`ireena_held_by_strahd` and she joins the party. The parley's "upstairs, dressing for dinner" is what he says while she
-is still held (and the chapel hides her while the final battle waits there).
+Ireena stands at her open window, entranced; Strahd waits outside it, standing on nothing. Ways to stop him: raise the
+Holy Symbol of Ravenkind (if carried), a Cleric or Paladin stands in the window, Religion DC 15 (a warding prayer),
+Persuasion DC 15 (call her back to herself; spent on failure), or go for him (`strahd_window = "fight"`: the visit's
+fight `strahd_at_the_window`, Strahd and a swarm of bats where the party stands, withdraw when a blow would drop him
+below 1 HP (no round limit), flag `strahd_withdrew`, then `after_fight`). A failed prayer or plea costs a step
+(`strahd_window_pull`); at two steps, or if the party lets her go, she goes with him: `ireena_held_by_strahd`,
+`strahd_window = "taken"`, and her place flag is cleared (`ireena_sanctuary = "taken"` or `ireena_in_krezk = false`); a
+guarding Ismark wakes and joins the party to bring her back. Saved, she may stay or rejoin the party
+(`vallaki/ireena:rejoin`, `krezk/ireena:rejoin`). Taken, she can be found: in the castle chapel she stands at the altar,
+entranced, and the party wakes her the ways that stop him at the window (`castle_ravenloft/chapel_ireena`, Story Allies
+Presence Plan package I5); waking her clears `ireena_held_by_strahd` and she joins the party. The parley's "upstairs,
+dressing for dinner" is what he says while she is still held (and the chapel hides her while the final battle waits
+there).
 
 ### The parley (strahd/final:parley)
 
