@@ -67,8 +67,17 @@ a birch among the spruces, `sick` twisted oaks on Yester Hill.
 
 ## Where they grow
 
-- **The map's own trees** (ArenaBoard's wall squares in the woods) keep their square, heading and fading; only the
-  tree changes, 10 to 20 ft tall as before (`scale`, `shortest`, `tallest` for `map`).
+- **The map's own trees** (ArenaBoard's wall squares in the woods) belong to their square and fade as before, 10 to 20 ft
+  tall (`scale`, `shortest`, `tallest` for `map`; a leaning tree's box too), but they are no longer one tree a square in
+  rows (Natural Maps Plan N4, `world/look/woods.gd`): each wall square's tree stands anywhere across it, varied in
+  size, lean and kind, and a smaller tree or two fringe an edge square (more of them in a thicker wood: the set's
+  `wood_density`, else from its `tree_density`). Along an edge the crowns' reach over the grid line wanders from a bay
+  (a small tree drawn back into the wood square) to a headland, by noise seeded by the place and smooth over three
+  squares or so; a trunk never stands more than 0.18 into the open square beside it (a quarter of a square less its
+  girth) and none leans into a square a location's things stand on; every wood square keeps a crown over its middle,
+  so it still reads as the wall the rules make it. Every tree of a square is in `ArenaBoard.dressing` for that square (a
+  prop on it hides them all, `restore_cell` gives them back) and in `mesh_occluders` (they fade). The Classic look
+  keeps its one tree.
 - **The land's trees** stand where the old ones did (the same spacing rule, never within two squares of where people
   walk), but further apart (`tree_density`), since a spruce is fuller than the old cone. The first rows are nodes of
   their own and fade like the map's; the rest are drawn many at once in 10-square chunks, so the camera only draws
@@ -79,8 +88,10 @@ a birch among the spruces, `sick` twisted oaks on Yester Hill.
 - **Hidden until found**: plants on squares HiddenAreas hides are left out (AtmosphereLand's HiddenWatch redraws
   them when a secret door is found), and none grows on a trap's square, where a pit could open.
 - **Ground plants**: on the forest land out to `land_reach` squares from the map, thinning with distance, reeds and
-  sedge along shores, nothing on roads; on the map, under its trees (`under`), spilling out of the woods onto the side
-  of a square that faces them (`edge`), and short and sparse on its other wild squares (`open`, `open_scale`), never
+  sedge along shores, nothing on roads; on the map, under its trees (`under`), spilling out of the woods into the
+  squares beside them (`edge`: `Woods.feather` feathers a band whose depth wanders from nothing to half a square,
+  thinning as it goes, with a sapling or a fallen dead tree against the wood's line now and then, none within 0.3 of
+  the square's middle or taller things than 0.2 from the line), and short and sparse on its other wild squares (`open`, `open_scale`), never
   within 0.3 of a square's middle (feet and the selection rings stay clear), on water, on a square a location's
   things stand on, in a building or on a door. Towns grow nothing on their streets.
 - **Sets** (`flora.json`): forest (the Svalich woods and everything like them), lake, mountain (Krezk, the Abbey,
@@ -108,7 +119,11 @@ Bark and leaves share one function, so a tree moves as one, and its shadow sways
 
 ## Checks
 
-`tests/integration/test_flora.gd`: every set names built plants, every mood grows a set, the road's trees and forest
+`tests/integration/test_woods.gd`: every wood square keeps a crown over its middle, no trunk stands more than a quarter
+of a square into an open square or into one a location's things stand on, the crowns' edge wanders, sizes, leans and
+kinds vary, trees keep their 10 to 20 ft, a prop takes all of a square's trees, a place comes out the same every time,
+the feathered edge keeps off the middle of the open squares and within half a square of the wood, and Classic keeps its
+one tree a square. `tests/integration/test_flora.gd`: every set names built plants, every mood grows a set, the road's trees and forest
 are Flora's (the map's 10 to 20 ft), ground plants stand on the land and never on map squares, map plants keep off
 the middle of squares, off things and out of water, the castle's wind blows harder than the woods', and Classic keeps
 its old trees.

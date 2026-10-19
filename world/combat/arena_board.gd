@@ -884,6 +884,9 @@ func _tree(c: Vector2i) -> void:
 	if tree3d != null:
 		add_child(tree3d)   # a 3D tree (docs/art/models.md) where the 2D one would stand, as tall
 		mesh_occluders.append(tree3d)
+		for more: Node3D in Woods.plant(self, c, tree3d):   # the Modern look's woods: a scatter, an edge that wanders
+			add_child(more)
+			mesh_occluders.append(more)
 		_dress(c, first)
 		return
 	var tree := prop_sprite(kind, at, size)

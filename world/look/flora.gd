@@ -333,8 +333,9 @@ func ground_item(at: Vector3, s: float) -> Array:
 
 
 ## Ground plants on the map's own squares: thick under its trees, ferns and undergrowth spilling out of the woods
-## onto the side of a square that faces them, short and sparse grass elsewhere where people walk on wild ground
-## (never in the middle of a square, so feet and the selection rings stay clear), reeds on the shore. Squares a
+## into the squares beside them (a band whose depth wanders, with saplings and fallen trees: Woods.feather), short and
+## sparse grass elsewhere where people walk on wild ground (never in the middle of a square, so feet and the selection
+## rings stay clear), reeds on the shore. Squares a
 ## location's things stand on, buildings, furniture and traps are left bare. `ground_y` gives the ground's height at
 ## a point (the shaped ground, W11). The plants are kept by square (map_items), so plant_map can leave out squares
 ## that are hidden.
@@ -375,7 +376,10 @@ func dress_map(board: ArenaBoard, ground_y: Callable, bare: Dictionary = {}) -> 
 				if by_water and not shore.is_empty():
 					_scatter_square(items, c, shore, 0.8, 0.3, 0.0)
 				elif woods != Vector2.ZERO and not edge.is_empty():
-					_scatter_edge(items, c, edge, woods.normalized())
+					if Woods.off:
+						_scatter_edge(items, c, edge, woods.normalized())
+					else:
+						Woods.feather(self, items, board, c, edge)   # a band that wanders, saplings, deadfall
 				else:
 					_scatter_square(items, c, open, open_scale, 0.32, 0.0)
 			for id: String in items:
