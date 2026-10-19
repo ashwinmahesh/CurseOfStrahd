@@ -174,7 +174,7 @@ static func swap_surfaces(node: Node3D, swap: Dictionary) -> void:
 ## A standing piece on `cell` (SetDressing.stand_piece and exits): a holder on the square, turned to face into the
 ## room, with the model in it. Against-the-wall furniture stands with its back on the wall face. Returns the holder.
 static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, cell: Vector2i,
-		at_override: Variant = null, scale_: float = 1.0, yaw: Variant = null, centre: Variant = null) -> Node3D:
+		at_override: Variant = null, scale_: float = 1.0, yaw: Variant = null, centre: Variant = null, length := 0.0) -> Node3D:
 	var info := manifest()[id] as Dictionary
 	var mount := str(info.get("mount", "free"))
 	var holder := Node3D.new()
@@ -185,9 +185,11 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	holder.set_meta("art", art)
 	holder.set_meta("model", id)
 	parent.add_child(holder)
-	var model := instance(id)
+	var model := instance(id) if length <= 0.0 else instance_long(id, length)   # (`length`: one long piece, a run's)
 	model.scale = Vector3.ONE * scale_
 	holder.add_child(model)
+	if length > 0.0:
+		holder.set_meta("one_piece", length)
 	if bool(info.get("nature", false)):
 		holder.set_meta("nature", true)   # a tree that keeps its heading (its walkable bough lies along its squares)
 	if bool(info.get("turns", false)):
@@ -205,6 +207,8 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	var back := backing_side(board, cell)
 	var faces := Vector2i(0, 1) if back == Vector2i.ZERO else -back
 	holder.rotation.y = atan2(float(faces.x), float(faces.y)) if yaw == null else float(yaw)   # a prop's own `facing`
+	if yaw == null and at_override == null and centre == null and mount == "free" and loose(board, art):
+		hand_place(board, holder, model, cell)
 	if mount == "against_wall" or mount == "wall":
 		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2]) * scale_
@@ -236,6 +240,164 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit * scale_, mine[1] as Rect2)
 	_extras(model, info)
 	return holder
+
+
+## Things placed by hand (Natural Maps Plan I3, catalog `hand_placed`): a loose piece (a barrel, a crate, a chair)
+## stands a little off its square's middle and a little turned, as a person set it down, where lined-up pieces (pews,
+## beds, shelves, counters) keep their lines. Interiors in the Modern look only.
+static func loose(board: ArenaBoard, art: String) -> bool:
+	if not Look.modern() or not (board.theme in ArenaBoard.INTERIORS or board.theme == "dungeon"):
+		return false
+	return art in ((SetDressing.catalog().get("hand_placed", {}) as Dictionary).get("loose", []) as Array)
+
+
+## How far off its square's middle and how far turned a loose piece on `cell` is: (x, z, turn), each from -1 to 1 times
+## its limit (catalog hand_placed shift, in squares, and turn, in degrees), the same every time the place is built.
+static func hand_offsets(cell: Vector2i) -> Vector3:
+	var h := hash_cell(cell)
+	return Vector3(float((h / 7) % 201) / 100.0 - 1.0, float((h / 1013) % 201) / 100.0 - 1.0, float((h / 31) % 201) / 100.0 - 1.0)
+
+
+## Sets loose piece `model` (in `holder`, already facing) a little off the middle of `cell` and a little turned, never
+## so far that it leaves its square.
+static func hand_place(board: ArenaBoard, holder: Node3D, model: Node3D, cell: Vector2i) -> void:
+	if _stacked(board, cell):
+		return   # it stands under or on another of the location's pieces (a pot on a hearth): they keep their lines
+	var cfg := SetDressing.catalog().get("hand_placed", {}) as Dictionary
+	var off := hand_offsets(cell)
+	var facing := holder.rotation.y
+	var reach := float(cfg.get("shift", 0.2))
+	var square := Rect2(cell.x, cell.y, 1.0, 1.0)
+	var at := Vector2(holder.position.x, holder.position.z)
+	# Turned and moved if it still fits its square like that, else only moved, else as it was.
+	for turn: float in [deg_to_rad(float(cfg.get("turn", 15.0))) * off.z, 0.0]:
+		var foot := footprint_of(model, facing + turn)   # about the holder, turned
+		var lo := Vector2(maxf(-reach, square.position.x - (at.x + foot.position.x)), maxf(-reach, square.position.y - (at.y + foot.position.y)))
+		var hi := Vector2(minf(reach, square.end.x - (at.x + foot.end.x)), minf(reach, square.end.y - (at.y + foot.end.y)))
+		# Never toward a wall or a door beside it: what hangs there, and the wall's own face, stay clear of it.
+		for d: Vector2i in SetDressing.FACES:
+			var n := cell + d
+			if board.grid.in_bounds(n) and (board.grid.has_flag(n, CombatGrid.WALL) or board.door_cells.has(n)):
+				if d.x < 0:
+					lo.x = maxf(lo.x, 0.0)
+				elif d.x > 0:
+					hi.x = minf(hi.x, 0.0)
+				elif d.y < 0:
+					lo.y = maxf(lo.y, 0.0)
+				else:
+					hi.y = minf(hi.y, 0.0)
+		if lo.x > hi.x or lo.y > hi.y:
+			continue
+		holder.rotation.y = facing + turn
+		holder.position += Vector3((lo.x + hi.x) / 2.0 + off.x * (hi.x - lo.x) / 2.0, 0, (lo.y + hi.y) / 2.0 + off.y * (hi.y - lo.y) / 2.0)
+		return
+
+
+## Where a loose 2D piece `width` wide stands off the middle of `cell` (x, 0, z), by the same rules as `hand_place`.
+static func hand_shift(board: ArenaBoard, cell: Vector2i, width: float) -> Vector3:
+	if _stacked(board, cell):
+		return Vector3.ZERO
+	var off := hand_offsets(cell)
+	var room := maxf(0.0, minf(float((SetDressing.catalog().get("hand_placed", {}) as Dictionary).get("shift", 0.2)), 0.5 - width / 2.0))
+	var lo := Vector2(-room, -room)
+	var hi := Vector2(room, room)
+	for d: Vector2i in SetDressing.FACES:
+		var n := cell + d
+		if board.grid.in_bounds(n) and (board.grid.has_flag(n, CombatGrid.WALL) or board.door_cells.has(n)):
+			if d.x < 0:
+				lo.x = 0.0
+			elif d.x > 0:
+				hi.x = 0.0
+			elif d.y < 0:
+				lo.y = 0.0
+			else:
+				hi.y = 0.0
+	return Vector3((lo.x + hi.x) / 2.0 + off.x * (hi.x - lo.x) / 2.0, 0, (lo.y + hi.y) / 2.0 + off.y * (hi.y - lo.y) / 2.0)
+
+
+## Whether the location's data puts more than one prop or container on `cell` (a candle on a table, a pot on a hearth):
+## they were set to stand on each other, so none of them is moved.
+static func _stacked(board: ArenaBoard, cell: Vector2i) -> bool:
+	if not board.has_meta("piece_cells"):
+		var counts := {}
+		if board.place != "" and Compendium.shared().has("locations", board.place):
+			var loc := Compendium.shared().get_entry("locations", board.place) as Dictionary
+			for key: String in ["props", "containers"]:
+				for t: Variant in loc.get(key, []):
+					var c := (t as Dictionary).get("cell", []) as Array
+					if c.size() == 2:
+						var at := Vector2i(int(c[0]), int(c[1]))
+						counts[at] = int(counts.get(at, 0)) + 1
+		board.set_meta("piece_cells", counts)
+	return int((board.get_meta("piece_cells") as Dictionary).get(cell, 0)) > 1
+
+
+## Model `id` as one longer piece, `length` units long along x (a run's): its ends keep their shape (a table's legs) and
+## its middle is stretched, so a run of tables is one long table rather than a row of short ones (Natural Maps Plan I3).
+## Made once for each length.
+static func instance_long(id: String, length: float) -> Node3D:
+	var key := "%s|%s|%.2f" % [id, Look.style(), length]
+	if not _long_parts.has(key):
+		_long_parts[key] = _stretch_parts(id, length)
+	var root := Node3D.new()
+	root.name = "Model_" + id
+	for part: Array in _long_parts[key]:
+		var mi := MeshInstance3D.new()
+		mi.name = str(part[3])
+		mi.mesh = part[0] as Mesh
+		mi.transform = part[1] as Transform3D
+		var mats := part[2] as Array
+		for i in mats.size():
+			mi.set_surface_override_material(i, mats[i] as Material)
+		root.add_child(mi)
+	root.set_meta("model", id)
+	return root
+
+
+static var _long_parts: Dictionary = {}
+static var _stretch_source: Dictionary = {}   ## mesh -> its surfaces' arrays, read back once
+
+
+## Model `id`'s parts (as _read_parts) with every vertex's x moved: the part of the model beyond `STRETCH_ENDS` from its
+## middle slides out with its end, the middle between is stretched to fill.
+static func _stretch_parts(id: String, length: float) -> Array:
+	var width := float(((manifest()[id] as Dictionary).get("size", [1.0, 1.0, 1.0]) as Array)[0])
+	var mid := minf(STRETCH_MIDDLE, width * 0.26)
+	var slide := (length - width) / 2.0
+	var out: Array = []
+	for part: Array in _parts_of(id):
+		var src := part[0] as Mesh
+		if not _stretch_source.has(src):
+			var surfaces: Array = []
+			for i in src.get_surface_count():
+				surfaces.append(src.surface_get_arrays(i))
+			_stretch_source[src] = surfaces
+		var xf := part[1] as Transform3D
+		var back := xf.affine_inverse()
+		var mesh := ArrayMesh.new()
+		for i in src.get_surface_count():
+			var arrays := (_stretch_source[src] as Array)[i].duplicate() as Array
+			var verts := (arrays[Mesh.ARRAY_VERTEX] as PackedVector3Array).duplicate()
+			for k in verts.size():
+				var p := xf * verts[k]
+				p.x = p.x * (mid + slide) / mid if absf(p.x) <= mid else p.x + signf(p.x) * slide
+				verts[k] = back * p
+			arrays[Mesh.ARRAY_VERTEX] = verts
+			mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+			mesh.surface_set_material(i, src.surface_get_material(i))
+		out.append([mesh, xf, part[2], part[3]])
+	return out
+
+
+## Half the width of the middle of a model that stretches (the rest slides out with the ends).
+const STRETCH_MIDDLE := 0.25
+
+
+static func _parts_of(id: String) -> Array:
+	var key := id + "|" + Look.style()
+	if not _parts.has(key):
+		_parts[key] = _read_parts(id)
+	return _parts[key] as Array
 
 
 ## A 3D tree for 2D tree art `kind` (a pine, a dead tree) standing at `at`, as tall as the 2D tree drawn at `size`

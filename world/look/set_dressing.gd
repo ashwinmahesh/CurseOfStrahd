@@ -666,11 +666,11 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## board's own scenery around it, or with `foot` (span_foot) only what stands under it (a horse keeps its pen's rails).
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
 		at_override: Variant = null, front_override: String = "", big: bool = false, yaw: Variant = null,
-		centre: Variant = null, foot := Rect2(), model_scale: float = 1.0) -> Node3D:
+		centre: Variant = null, foot := Rect2(), model_scale: float = 1.0, length := 0.0) -> Node3D:
 	var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 	if model != "":
-		# A 3D piece (docs/art/models.md), at its modelled size times the prop's own `scale`.
-		return ModelPiece.stand(board, parent, model, art, cell, at_override, model_scale, yaw, centre)
+		# A 3D piece (docs/art/models.md), at its modelled size times the prop's own `scale`; `length`: one long piece.
+		return ModelPiece.stand(board, parent, model, art, cell, at_override, model_scale, yaw, centre, length)
 	if art == "flame" and Look.modern():
 		var fire := flame(float((manifest().get("flame", {}) as Dictionary).get("world_height", 0.9)) * scale_)
 		if fire != null:
@@ -718,6 +718,9 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 	if art in (catalog().get("glows", []) as Array):
 		piece.shaded = false   # it gives light rather than taking it (the Heart of Sorrow)
 	piece.position = at
+	if yaw == null and at_override == null and centre == null and ModelPiece.loose(board, art):
+		# Set down by hand (Natural Maps Plan I3): a little off its square's middle, never out of it.
+		piece.position += ModelPiece.hand_shift(board, cell, _width(art) * scale_)
 	piece.set_meta("art", art)
 	parent.add_child(piece)
 	return piece

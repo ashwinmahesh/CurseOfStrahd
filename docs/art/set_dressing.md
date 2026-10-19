@@ -274,11 +274,34 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
 
 ## Not right yet
 
-- A long piece (a bar, a pew) drawn on each square of a run reads as a row of pieces rather than one long one.
+- A long piece (a bar, a pew) drawn on each square of a run reads as a row of pieces rather than one long one. (Tables are
+  one long piece now: "Things placed by hand" below; bars and counters are flush end to end already, pews are lined up
+  on purpose.)
 - A piece's back is Gemini's idea of its back, drawn alongside the front; a few pairs differ in colour.
 - Wall pieces and door leaves are flat: seen along the wall they disappear, as the cut-away walls' faces do.
 - Houses are rectangles; a building the data draws as an L becomes two houses with their own roofs.
 - Interiors stay dark at dusk and night by design; the party's lantern lights the pieces near the party.
+
+## Things placed by hand (Natural Maps Plan I3, the catalog's `hand_placed`; owner 2026-10-19)
+
+"We don't need to draw our real world maps as a battle grid": indoors, in the Modern look, pieces people set down are
+not set square on their square's middle.
+
+- **Loose pieces** (`hand_placed.loose`: a barrel, a crate, a basket, a sack, a chair, a stool, a stack of books, a pot, a
+  bale, a small table ...): each stands up to `shift` (a fifth of a square) off its square's middle and is turned up to
+  `turn` (15 degrees) from the way it faced, seeded by its square (`ModelPiece.hand_offsets`), so a place is built the
+  same way every time. `ModelPiece.hand_place` (3D pieces, called by `ModelPiece.stand`) never lets the turned piece leave
+  its square, never moves it toward a wall or door beside it (what hangs on the wall, and the wall's face, stay clear),
+  and leaves a piece alone when the location's data puts another prop or container on its square (a pot on a hearth);
+  `ModelPiece.hand_shift` does the same for a 2D piece (`SetDressing.stand_piece`). A prop with its own `facing`, or
+  spanning squares, keeps it. Outdoors (the wilds' own passes), the Classic look and pieces not listed are untouched.
+- **Pieces people line up** (pews, beds, shelves, wardrobes, counters, a table against a wall) are not in the list and keep
+  their lines.
+- **A long run of tables** (`hand_placed.one_piece`): a straight run of three or more `=` squares of one of these, with
+  nothing of the location's on it, is built as long tables (`ArenaBoard._one_piece`, from `_low_cover`): the model's
+  middle stretched and its ends as modelled (`ModelPiece.instance_long`, so the legs stand at the ends), up to five
+  squares a table, a table of twelve being three on their own legs. The squares are still low cover to the rules.
+  Counters and bars are flush end to end already and stay a row.
 
 ## Mount Baratok's treeline (the vault's Mount Baratok Look Plan, 2026-10-19)
 

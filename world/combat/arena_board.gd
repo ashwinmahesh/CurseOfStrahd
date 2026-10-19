@@ -955,13 +955,15 @@ func _low_run(c: Vector2i) -> Dictionary:
 			elif grid.has_flag(n, CombatGrid.LOW) and not seen.has(n):
 				seen[n] = true
 				open.append(n)
-	var run := {"size": seen.size(), "by_wall": by_wall}
+	var run := {"size": seen.size(), "by_wall": by_wall, "cells": seen.keys()}
 	for k: Vector2i in seen:
 		_runs[k] = run
 	return run
 
 
 func _low_cover(c: Vector2i) -> void:
+	if _one_piece_cells.has(c):
+		return   # a square of a run already built as one long piece (_one_piece)
 	var sets := SetDressing.catalog().get("low_cover", {}) as Dictionary
 	var key := place if place != "" and sets.has(place) else _dressing_key()
 	var choices := sets.get(key, []) as Array
@@ -993,6 +995,17 @@ func _low_cover(c: Vector2i) -> void:
 				pick = cand
 				break
 		if SetDressing.has_art(pick):
+			var one := _one_piece(c, pick)
+			if not one.is_empty():
+				# A long table: a few long pieces along its run, not a row of short ones (Natural Maps Plan I3).
+				for part: Dictionary in one["parts"]:
+					var long_piece := SetDressing.stand_piece(self, self, pick, c, 1.0, null, "", false, one["yaw"], part["centre"], Rect2(),
+						1.0, float(part["length"]))
+					for k: Vector2i in part["cells"]:
+						_one_piece_cells[k] = true
+						if k != c:
+							dressing[k] = (dressing.get(k, []) as Array) + [long_piece]   # (c's own is recorded by the caller)
+				return
 			# Fixed in place and turned like the location's own props (against a wall, or facing south); a fence
 			# (catalog "runs_along") lies along its run, so a pen's rails go round the pen.
 			SetDressing.stand_piece(self, self, pick, c, 1.0, null, "", false, _along_run(c, pick))
@@ -1025,6 +1038,56 @@ func _low_cover(c: Vector2i) -> void:
 		_box("Plinth", Vector3(0.8, 0.18, 0.5), Vector3(c.x + 0.5, base + 0.09, c.y + 0.5), Look.cel("stone"))
 		var stone := _box("Gravestone", Vector3(0.6, 0.85, 0.18), Vector3(c.x + 0.5, base + 0.6, c.y + 0.5), Look.cel("pewter"))
 		stone.rotation.z = _rng.randf_range(-0.12, 0.12)
+
+
+## The squares of runs already built as one long piece.
+var _one_piece_cells: Dictionary = {}
+
+
+## Square `c` is the first of a straight run of three or more '=' squares, none with a piece of the location's on it, and
+## `art` is one of the pieces that join up (catalog hand_placed "one_piece": a table): how to build the run as one long
+## piece, {cells, yaw, parts: [{cells, centre (world), length}]}; empty for anything else (Natural Maps Plan I3; the Modern look, indoors).
+func _one_piece(c: Vector2i, art: String) -> Dictionary:
+	if not Look.modern() or not (theme in INTERIORS or theme == "dungeon") or ModelPiece.for_art(self, art) == "":
+		return {}
+	if not art in ((SetDressing.catalog().get("hand_placed", {}) as Dictionary).get("one_piece", []) as Array):
+		return {}
+	var run := _low_run(c)
+	var cells: Array = (run["cells"] as Array).duplicate()
+	if cells.size() < 3:
+		return {}
+	cells.sort()
+	var along_x := true
+	var along_z := true
+	for k: Vector2i in cells:
+		along_x = along_x and k.y == (cells[0] as Vector2i).y
+		along_z = along_z and k.x == (cells[0] as Vector2i).x
+		if occupied.has(k):
+			return {}   # something of the location's stands in it: the run stays as it is
+	if not (along_x or along_z) or cells[0] != c:
+		return {}
+	# It faces away from a wall along it, else south (or east, along the map).
+	var faces := Vector2i(0, 1) if along_x else Vector2i(1, 0)
+	var normals: Array[Vector2i] = [faces, -faces]
+	for k: Vector2i in cells:
+		for d: Vector2i in normals:
+			if grid.in_bounds(k + d) and grid.has_flag(k + d, CombatGrid.WALL):
+				faces = -d
+				break
+	var width := float((ModelPiece.manifest()[ModelPiece.for_art(self, art)] as Dictionary).get("size", [1.0])[0])
+	# One piece up to ONE_PIECE_MAX squares, else equal pieces end to end, each on its own legs (a table 60 ft long).
+	var count := ceili(float(cells.size()) / ONE_PIECE_MAX)
+	var parts: Array[Dictionary] = []
+	for i in count:
+		var part: Array = cells.slice(i * cells.size() / count, (i + 1) * cells.size() / count)
+		var first := cell_center(part[0])
+		var last := cell_center(part[part.size() - 1])
+		parts.append({"cells": part, "centre": (first + last) / 2.0, "length": part.size() - (1.0 - width)})   # (the gap at each end)
+	return {"cells": cells, "parts": parts, "yaw": atan2(float(faces.x), float(faces.y))}
+
+
+## The most squares one long piece spans.
+const ONE_PIECE_MAX := 5
 
 
 ## A heading that lays a long, thin piece (a fence: catalog "runs_along") along a run of low cover that goes up and

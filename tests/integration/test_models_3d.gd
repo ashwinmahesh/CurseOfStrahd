@@ -137,6 +137,8 @@ func test_models_stay_in_their_square() -> void:
 			if bool(info.get("big", false)):
 				continue   # building-sized pieces (a wagon) stand over several squares, clearing trees as the 2D ones do
 			var mount := str(info["mount"])
+			if m.has_meta("one_piece"):
+				continue   # a long table over its run of squares (hand_placed one_piece): test_hand_placed keeps it to them
 			var cell := v.grid.cell_at(m.global_position)
 			var room := Rect2(cell.x - 0.03, cell.y - 0.03, 1.06, 1.06)
 			if m.has_meta("hung"):
