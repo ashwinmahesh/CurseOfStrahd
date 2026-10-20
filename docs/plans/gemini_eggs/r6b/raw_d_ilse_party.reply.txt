@@ -1,0 +1,22 @@
+T5-A: Ilse: Served with a yellow-skinned woman once, out of the astral seas where her people ride red dragons. | Ilse: Divided the whole world into two lists: prey, and worth killing later. | Ilse [smile]: You lot are worth killing later. Stay that way.
+T5-B: Ilse: Fought beside a dragon-rider once, yellow skin, serrated silver blade, nose like a knife-scabbard. | Ilse: Only had two words for anyone breathin'—either you were prey, or you were worth killing later. | Ilse [smile]: Looking around this fire, I'd say you're all worth killing later.
+T5-BACK: > You're worth killing later too, Ilse. | Ilse [smile]: Noted. Try it before breakfast and I'll break your wrist.
+T5-WHAT: > What happened to the warrior woman? | Ilse [weary]: Rode her red lizard into a sky full of squid-ships and didn't come back. Still owe her three silver and a sharpening stone.
+T6-START-A: Godrick [smile]: Right then! The vineyard folk sent a whole oak barrel after us, and my back is tired of carrying it! | Godrick: Bring your cups to the fire, friends—Sir Pellam always said a heavy cask makes for light hearts!
+T6-START-B: Godrick [smile]: Fear not the mist tonight, friends, for the vintners have blessed our camp with their finest barrel! | Godrick: Leave the pouring to me—I have never spilled a drop that I did not mean to share!
+T6-PARTY-A: Narrator: Wren dances the length of a mossy pine log with a tin mug balanced on her head while Thistle pins a fourth challenger's wrist into the mud. By the coals, Ratatouille tosses wild garlic into the skillet by the handful, his recipe book left shut in the pack.
+T6-PARTY-B: Narrator: Thistle flattens another bruised forearm against the stump as Wren heels-and-toes along a fallen cedar without spilling a drop. Over the flames, Ratatouille flings herbs into the pan entirely by eye, humming through his teeth.
+TOAST-THISTLE: Thistle [smile]: Bark and bones! To teeth that hold and wine that bites back!
+TOAST-WREN: Wren [sly]: To the gracious landlord of this gloomy little valley—shame we're drinking his cellar dry without him.
+TOAST-RATATOUILLE: Ratatouille [smile]: Voilà—a vintage that does not taste of wet cellar rat! To our palates, mes amis, may they survive the province!
+TOAST-LIRIEL: Liriel [smile]: Morning's grace upon this cup, and upon every weary mile we have walked together.
+TOAST-KIP: Kip [sly]: To free samples, deep pockets, and waking up with all our own blood—no obligation, of course!
+TOAST-HEDDA: Hedda [smile]: Drink it down while it's red and warm, lambs. Saves me stitching you up for the shivers come dawn.
+TOAST-ILSE: Ilse: Count off. Ten cups full, ten throats whole. Drink.
+TOAST-SILVAIN: Silvain [sly]: Fascinating bouquet—oak, crushed plum, and a faint note of existential dread. To continued empirical survival.
+TOAST-TAMSIN: Tamsin [smile]: To the kind folk who grew the grapes, and the kinder folk who forgot to padlock the wagon!
+TOAST-GODRICK: Godrick [smile]: To the finest company a heavy shield ever stood beside! May our boots stay dry and our barrel never bottom out!
+T6-END-A: Narrator: The embers sink into grey ash and a drowsy head slips against Godrick's knee. The big man sits like a boundary stone until morning, his cup gone cold in his fist, rather than stir a single knuckle.
+T6-END-B: Narrator: The oak logs collapse into red dust and someone curls fast asleep against Godrick's broad shoulder. He does not shift his weight once before the grey dawn, holding his breath whenever the sleeper sighs.
+NIGHT-A: Narrator: You wake in the wet dark before dawn to find one of your company crouched over a sleeper's bare throat. Two fingers lift from the jugular as they whisper that they were only checking for a fever.
+NIGHT-B: Narrator: A snapped twig wakes you in the small hours: one companion kneels over another's neck, face inches from the carotid pulse. They draw back into their cloak, swearing softly they only feared a chill.
