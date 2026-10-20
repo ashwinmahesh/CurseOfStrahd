@@ -12773,6 +12773,13 @@
   "recipe": "3a41b7b8c7",
   "text": "The Eye Below is struck out. Take the scroll against aberrations and the rest; it's yours."
  },
+ "ezmerelda/04940a00c4757fd0": {
+  "chars": 99,
+  "direction": "[wry, grudging, dry]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The Grandsire in Krezk stays open too, since you brought him little Petru instead of a silver bolt."
+ },
  "ezmerelda/0545627be7ab614b": {
   "chars": 102,
   "direction": "[exasperated, wry]",
@@ -12821,6 +12828,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "He's inside the Blue Water Inn, and I'm out here hunting so I don't have to knock."
+ },
+ "ezmerelda/08986fb0d482846a": {
+  "chars": 91,
+  "direction": "[flat, businesslike, gallows humour]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "One line through Dragan's name, and a thousand gold from the strongbox. Spend it on silver."
  },
  "ezmerelda/08a90c932691e984": {
   "chars": 115,
@@ -12885,6 +12899,13 @@
   "recipe": "3a41b7b8c7",
   "text": "The abbey. The locals call the man in charge an angel. Angels don't stitch, and somebody up there stitches a great deal. I've seen a sack carried in at night that was shaped like a woman."
  },
+ "ezmerelda/1044e1c42d28bfa4": {
+  "chars": 104,
+  "direction": "[low, heavy, grimly proud]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Kiril is struck from the book at last. Take this enchanted spear from my wagon, for when you want reach."
+ },
  "ezmerelda/10ab4ad4351b163d": {
   "chars": 82,
   "direction": "[brisk, gallows humour, gruff]",
@@ -12926,6 +12947,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "They're my people when the wagons will have me. Guiding travellers through a valley that eats them is a tightrope, and they walk it."
+ },
+ "ezmerelda/16eee1a120505912": {
+  "chars": 91,
+  "direction": "[dry, hard, a little proud]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Fifteen hundred gold for clearing those branches. I never did like a trap that uses a cage."
  },
  "ezmerelda/173f4db7f71eec28": {
   "chars": 91,
@@ -12983,6 +13011,13 @@
   "recipe": "3a41b7b8c7",
   "text": "Take this spare light crossbow from the wagon. I've stopped using it, and it shoots straighter than most people talk."
  },
+ "ezmerelda/1c9a62878f992a1e": {
+  "chars": 106,
+  "direction": "[wary, hard, measured]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Morgantha's line stays unmarked while your terms around Old Bonegrinder hold and the old hag draws breath."
+ },
  "ezmerelda/1d5951aad77f0ca6": {
   "chars": 124,
   "direction": "[laughing, incredulous]",
@@ -13017,6 +13052,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "So I walked every muddy mile back, because an old man who runs from an inn goes back to his bolt-hole. He's in that tower right now, pretending he can't hear me."
+ },
+ "ezmerelda/25dcb3ff069b0b57": {
+  "chars": 86,
+  "direction": "[dry, grim, a little proud]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Every name in reach is struck, and what's left on the page is breathing by your leave."
  },
  "ezmerelda/25f5c13fb5193318": {
   "chars": 66,
@@ -13074,6 +13116,20 @@
   "recipe": "3a41b7b8c7",
   "text": "My left hand always aches before the mist thickens, though Rudolph used to say I only imagined it."
  },
+ "ezmerelda/2d81e593d4cbf806": {
+  "chars": 88,
+  "direction": "[cold satisfaction, curt, hard]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Two thousand gold in this purse, and a thick black line through Morgantha and her cages."
+ },
+ "ezmerelda/2e954f677dc9f154": {
+  "chars": 108,
+  "direction": "[dry, grimly satisfied, brisk]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The Eye Below is struck. Take the enchanted maul, the best weapon in my wagon, for knocking big things down."
+ },
  "ezmerelda/2f6b2d7e9e7b70e3": {
   "chars": 94,
   "direction": "[dry, brisk]",
@@ -13116,6 +13172,13 @@
   "recipe": "3a41b7b8c7",
   "text": "Where?"
  },
+ "ezmerelda/37d58ce40c908dbf": {
+  "chars": 103,
+  "direction": "[gruff, matter-of-fact, quietly pleased]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "A line through the old wolf's name, and an enchanted battleaxe from the wagon for you, keen as a razor."
+ },
  "ezmerelda/38225d80461779c2": {
   "chars": 140,
   "direction": "[grim, low, foreboding]",
@@ -13136,6 +13199,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Try not to tread on him; he took an hour to track and five seconds to ruin my boots."
+ },
+ "ezmerelda/385bf607e33fb267": {
+  "chars": 94,
+  "direction": "[blunt, fair, gruff]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "If any of your old bargains sours and needs silver after all, bring me the proof and I'll pay."
  },
  "ezmerelda/385c47d369203fed": {
   "chars": 143,
@@ -13228,6 +13298,13 @@
   "recipe": "3a41b7b8c7",
   "text": "Don't mind me. I'm ruining the local ambush before it gets the chance to walk."
  },
+ "ezmerelda/4074773aa63ce0b2": {
+  "chars": 109,
+  "direction": "[measured, hard, weighty]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Khazan's name comes out of my book. The Sun Blade has ridden in my wagon against the dark; the hilt is yours."
+ },
  "ezmerelda/4092885bc5accc66": {
   "chars": 89,
   "direction": "[reflective, wry, satisfied]",
@@ -13242,12 +13319,26 @@
   "recipe": "3a41b7b8c7",
   "text": "Keep to the crown of the road, and don't answer anything that calls your name from the trees."
  },
+ "ezmerelda/44153fb8f6ffff14": {
+  "chars": 82,
+  "direction": "[dry, wry, remembering]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Stop glaring at the ribs you want to crack. Rudolph beat that out of me in a week."
+ },
  "ezmerelda/45588df5ad8d1c63": {
   "chars": 83,
   "direction": "[brisk, wry]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Go carefully. If anything in these hills hums, growls or compliments you, shoot it."
+ },
+ "ezmerelda/469f7310d55d660a": {
+  "chars": 71,
+  "direction": "[dry, wry, offhand]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Cross the walking tree off the hill; twenty-five hundred gold is yours."
  },
  "ezmerelda/46f807bde5a07510": {
   "chars": 110,
@@ -13283,6 +13374,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Ezmerelda d'Avenir. Of the Vistani, when they'll have me. I hunt the things that hunt people. I'm very good at it, as you can tell from all the bits of me that are left."
+ },
+ "ezmerelda/4d3df8d06ffe1be1": {
+  "chars": 144,
+  "direction": "[dry, matter-of-fact, remembering]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Rudolph taught me to count the teeth before I count the coin. The easy names pay gold from my strongbox; the hard ones, good kit from the wagon."
  },
  "ezmerelda/4e1ffff193850cd4": {
   "chars": 64,
@@ -13550,6 +13648,13 @@
   "recipe": "3a41b7b8c7",
   "text": "All the way to Vallaki to see a man in a feathered hat, and the bird had already flown. The innkeepers wouldn't say a word, which means he paid them well."
  },
+ "ezmerelda/752d2403dca0f939": {
+  "chars": 75,
+  "direction": "[brisk, instructing, impatient]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Loosen your thumb, or the first parry will send that steel into the bushes."
+ },
  "ezmerelda/75ca530b83bcee6e": {
   "chars": 125,
   "direction": "[gruff, sincere, reluctant]",
@@ -13570,6 +13675,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "They dug the mountain folk out of their mounds to stack skulls for a walking tree. Even for this valley, that's ugly."
+ },
+ "ezmerelda/796c9707c8ecca2f": {
+  "chars": 76,
+  "direction": "[steady, hard, finality]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "The buckle goes shut on the work you did, and the ink stays dry on the rest."
  },
  "ezmerelda/79a04459c47f8368": {
   "chars": 111,
@@ -13696,6 +13808,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Witches feed you before they hurt you, and anything posing in these fields is watching when you turn your back."
+ },
+ "ezmerelda/97f07880378e75b8": {
+  "chars": 99,
+  "direction": "[blunt, stubborn, unimpressed]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Baba Lysaga stays on the page: broken or bargained with in Berez, she isn't dead enough for my ink."
  },
  "ezmerelda/9803f3e1e122c7a6": {
   "chars": 114,
@@ -13907,6 +14026,13 @@
   "recipe": "3a41b7b8c7",
   "text": "Seven years on that board, bait for his own wagon. I'm glad Iosif walked back to the Tser Pool camp."
  },
+ "ezmerelda/b6dd4ced36c24a30": {
+  "chars": 89,
+  "direction": "[terse, flat, grimly proud]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Seventeen hundred and fifty from the strongbox, and the Seventh Row crossed out for good."
+ },
  "ezmerelda/b77c4e5d9e832898": {
   "chars": 114,
   "direction": "[wry, self-mocking, clipped]",
@@ -13920,6 +14046,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Rudolph. You're wearing feathers."
+ },
+ "ezmerelda/ba9a793ad8010bf5": {
+  "chars": 95,
+  "direction": "[sharp, clipped, dry humour]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Hit the dirt like a sack of turnips, come up like a cat. Never stay down to admire the ceiling."
  },
  "ezmerelda/bab573bc6c579674": {
   "chars": 102,
@@ -13948,6 +14081,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "Did she say anything else? About me?"
+ },
+ "ezmerelda/bdf1350bc273c47c": {
+  "chars": 120,
+  "direction": "[brisk, dry, businesslike]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Scratch Sarkhaza from the mountain, and take the enchanted scale mail from my wagon; it's as good as medium armour gets."
  },
  "ezmerelda/bfe743087d832f03": {
   "chars": 152,
@@ -14054,6 +14194,13 @@
   "recipe": "3a41b7b8c7",
   "text": "You smell like smoke and fresh work. Point to the name you finished and let's settle up."
  },
+ "ezmerelda/cd83a829896a58e4": {
+  "chars": 82,
+  "direction": "[dry, rueful, amused]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "A hunter isn't a judge, though Rudolph would grumble for a week at an untidy page."
+ },
  "ezmerelda/ce08df5edf7c0efe": {
   "chars": 98,
   "direction": "[tight, wry, guarded]",
@@ -14110,12 +14257,26 @@
   "recipe": "3a41b7b8c7",
   "text": "Wintersplinter is out of the ledger. Take the alchemist's fire and some bolts with a keener edge."
  },
+ "ezmerelda/d71f3c60e0374176": {
+  "chars": 116,
+  "direction": "[blunt, practical, approving]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Toader's horn is done. Take the enchanted ring mail from my wagon; it'll turn a blade better than any coat you have."
+ },
  "ezmerelda/d74d3e686a6ef1b0": {
   "chars": 122,
   "direction": "[rueful, bitter, reflective]",
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "I camped on that shore for months, knowing the lock answered to his name and never guessing what the name had made of him."
+ },
+ "ezmerelda/d8d59c0fc3a525bb": {
+  "chars": 86,
+  "direction": "[firm, flat, no argument]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "I won't ink a bargain as a kill, so we close the ledger as it stands or leave it open."
  },
  "ezmerelda/d9575e7830c3796b": {
   "chars": 36,
@@ -14187,6 +14348,13 @@
   "recipe": "3a41b7b8c7",
   "text": "Twelve years of following him, and all that's left is a painted wagon and an inn door."
  },
+ "ezmerelda/e61b09eb113bed37": {
+  "chars": 96,
+  "direction": "[flat, sardonic, unyielding]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Kiril Stoyanovich stays in ink: you left him running the den, and I pay for pelts, not politics."
+ },
  "ezmerelda/e6abbeb081029ab1": {
   "chars": 34,
   "direction": "[wry, amused]",
@@ -14236,6 +14404,13 @@
   "recipe": "3a41b7b8c7",
   "text": "Take these: silver-headed bolts, holy water and a draught that'll stitch a throat shut. You look like you walk into plenty of weather."
  },
+ "ezmerelda/f2287da8781d598c": {
+  "chars": 74,
+  "direction": "[dry, gruff, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "Cross the wagon off, and take this purse of twelve hundred and fifty gold."
+ },
  "ezmerelda/f3680ef16e2120ff": {
   "chars": 176,
   "direction": "[brisk, matter-of-fact, proud]",
@@ -14256,6 +14431,13 @@
   "model": "eleven_v3",
   "recipe": "3a41b7b8c7",
   "text": "And he's left Vallaki already. Of course he has. He never stays where people might start to depend on him. It's his only real flaw, and he has it in bulk."
+ },
+ "ezmerelda/f700e0217172792e": {
+  "chars": 116,
+  "direction": "[wry, dry, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "3a41b7b8c7",
+  "text": "A woodsman's weapon for a hut on a stump: take the enchanted greataxe from the wagon, and I'll blot Baba Lysaga out."
  },
  "ezmerelda/f7bfd5f9ddf64b76": {
   "chars": 93,
@@ -29057,6 +29239,13 @@
   "recipe": "2255a992a9",
   "text": "Ismark warned me there'd be men like you. I thought he meant the castle."
  },
+ "ireena/00ef1a10127f263c": {
+  "chars": 90,
+  "direction": "[tight, afraid, steady]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "If my name is anywhere in his ink, don't read a word of it aloud unless I ask you plainly."
+ },
  "ireena/02ae0ad4254305a4": {
   "chars": 20,
   "direction": "[flat, unimpressed]",
@@ -29085,12 +29274,47 @@
   "recipe": "2255a992a9",
   "text": "I'd rather she didn't."
  },
+ "ireena/04ee759432c7a39f": {
+  "chars": 82,
+  "direction": "[rueful, awkward, quiet]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I'll keep the rosemary in my pocket, though it turns my stomach to say that aloud."
+ },
+ "ireena/051aa13b03443157": {
+  "chars": 65,
+  "direction": "[brisk, eager, determined]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You have half an hour and both your hands. Show me the next part."
+ },
  "ireena/058456fe779c8587": {
   "chars": 56,
   "direction": "[tight, holding back tears]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Don't. Whatever it is. Later, when we're out in the air."
+ },
+ "ireena/05a16c26f93c39c8": {
+  "chars": 115,
+  "direction": "[fierce, determined, grimly satisfied]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Bury that thing at the bottom of your pack. Let's see how well he sleeps, knowing someone else has read his ledger."
+ },
+ "ireena/05f4508a5fefc93f": {
+  "chars": 73,
+  "direction": "[firm, protective, grim]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Don't leave that old woman in her swamp. This valley has monsters enough."
+ },
+ "ireena/05f5cb1130d1ed04": {
+  "chars": 84,
+  "direction": "[crisp, relieved, bitter humour]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Good. The stove can have his courtesies, and I'll save the ash for the scrub bucket."
  },
  "ireena/064fe2a951937b6c": {
   "chars": 83,
@@ -29099,12 +29323,40 @@
   "recipe": "2255a992a9",
   "text": "You must excuse me now. Our visitor likes the room quiet before the words are said."
  },
+ "ireena/06a38db482b62973": {
+  "chars": 83,
+  "direction": "[sad, gentle, aching]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "If I could, I'd carry a full cup back to the churchyard and pour it into the grass."
+ },
+ "ireena/07968dab9aa35c60": {
+  "chars": 101,
+  "direction": "[soft, laughing, aching]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "If I fell asleep against his sleeve, he'd swear his knees had locked, so he wouldn't have to move me."
+ },
  "ireena/0a0dbb296f7c78b1": {
   "chars": 66,
   "direction": "[flat, disappointed]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "You said nothing to him. Maybe that was wise. It felt like losing."
+ },
+ "ireena/0a1000febe4fb4a5": {
+  "chars": 102,
+  "direction": "[defiant, determined, hard]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Find a dull blade or a heavy stick and show me how to hold it. I won't be taken like a sheep in a pen."
+ },
+ "ireena/0b03207f04cd1abb": {
+  "chars": 135,
+  "direction": "[direct, earnest, determined]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Bring me the book he wrote about himself, if you have it, and tell me where you find anything else in this valley that carries my face."
  },
  "ireena/0caf4e9146f0dc67": {
   "chars": 48,
@@ -29120,6 +29372,13 @@
   "recipe": "2255a992a9",
   "text": "I don't know where I come from. Father found me on the road, eight or nine, with no name and no memory. He gave me both. Some nights I dream of a lake, a white dress, and falling. That's all I have."
  },
+ "ireena/0ce01c5b623914dd": {
+  "chars": 85,
+  "direction": "[satisfied, steady, a little hopeful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Both leaders in the werewolf den are dead, and the pack has scattered into the hills."
+ },
  "ireena/0db2379273c24fda": {
   "chars": 60,
   "direction": "[haunted, uneasy]",
@@ -29134,12 +29393,33 @@
   "recipe": "2255a992a9",
   "text": "A priest. Father wanted a priest at the end, and there wasn't one. Come in."
  },
+ "ireena/104d0c1b136b7554": {
+  "chars": 107,
+  "direction": "[tender, humbled, sincere]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I judge people by how they handled his memory that morning, and you made me believe in a god a little more."
+ },
+ "ireena/1093dd8800c61fe3": {
+  "chars": 76,
+  "direction": "[earnest, warm, quiet]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You did a small thing properly when nobody was watching. I'll remember that."
+ },
  "ireena/11702f8c58b1a637": {
   "chars": 106,
   "direction": "[angry, proud]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I heard. The whole town heard. I won't sleep one night in a town that sends its compliments to the castle."
+ },
+ "ireena/11c4f0c4d18a6c64": {
+  "chars": 118,
+  "direction": "[bitter, wry, unsettled]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "It's a strange thing to be told your own nose and chin are standing in a marsh with fresh black roses at their ankles."
  },
  "ireena/12e46ace423a4f1e": {
   "chars": 134,
@@ -29176,6 +29456,20 @@
   "recipe": "2255a992a9",
   "text": "Father walked the house every night touching every board, as if he could hold them on with his hands. I think, for a while, he did."
  },
+ "ireena/14c12fdf0bc135f9": {
+  "chars": 113,
+  "direction": "[watchful, grim, rueful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I watch the dark edge of the trees out of habit now. I've had enough practice to know how it feels to be watched."
+ },
+ "ireena/156f223ba910c778": {
+  "chars": 75,
+  "direction": "[softening, inviting, warm]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Still. Sit down if you have a minute, and tell me what the road looks like."
+ },
  "ireena/16327f712e3d652a": {
   "chars": 119,
   "direction": "[cold, cutting]",
@@ -29190,12 +29484,47 @@
   "recipe": "2255a992a9",
   "text": "You bowed to him. Over my father's grave. I suppose it kept us alive. Don't expect me to like it."
  },
+ "ireena/1804469b4a8804ba": {
+  "chars": 109,
+  "direction": "[longing, vulnerable, fierce]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I can't remember anything before the road Father found me on. I'd take those years back, even if they burned."
+ },
+ "ireena/1968ac3d4944cb96": {
+  "chars": 72,
+  "direction": "[tired, satisfied, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "My arm feels like lead, and I could do that cut in the pitch dark. Good."
+ },
+ "ireena/196b5f23153c718f": {
+  "chars": 67,
+  "direction": "[dry, bitter, weary]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Another came before dawn. Our visitor has thoughts on the festival."
+ },
+ "ireena/1a1972f299d9c641": {
+  "chars": 183,
+  "direction": "[distant, haunted, dreamlike]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Since I looked into the water at Krezk, I've had the pieces of a house I never lived in: a chapel full of white flowers, a high stone wall, and a young man calling me by another name."
+ },
  "ireena/1b845adb43d070ef": {
   "chars": 82,
   "direction": "[relieved, warm]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Holy ground. Father would have liked that. I'll go tonight, before the light goes."
+ },
+ "ireena/1c961757e039b0e8": {
+  "chars": 57,
+  "direction": "[quiet, controlled, hurt]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You carried my father's coffin to the churchyard with me."
  },
  "ireena/1d09076c50d8b8a9": {
   "chars": 72,
@@ -29210,6 +29539,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "He's right. I'm so tired of running. It's only a window."
+ },
+ "ireena/1d9f8f8ca41949ec": {
+  "chars": 117,
+  "direction": "[dazed, haunted, hushed]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "White flowers by the altar, and the stone cold through the soles of her shoes. I have stood in that room in my sleep."
  },
  "ireena/1f104a20aedfa175": {
   "chars": 82,
@@ -29267,12 +29603,33 @@
   "recipe": "2255a992a9",
   "text": "Then don't be long. I'll be at the house, sitting by the window I'm not supposed to sit by."
  },
+ "ireena/22b7b75d800b0543": {
+  "chars": 108,
+  "direction": "[sharp, pointed, weary]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "A man who thinks torches will scare the devil off his porch will keep lighting them until the roof falls in."
+ },
  "ireena/2319c548c52bf79e": {
   "chars": 58,
   "direction": "[firm, then grateful]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "You stood in front of me. Don't do it again. ...Thank you."
+ },
+ "ireena/235353f6939c9225": {
+  "chars": 109,
+  "direction": "[gentle, accepting, grateful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "None of you were priests when we buried Father, and the plain words you said over the dirt suited him better."
+ },
+ "ireena/23937c6164756238": {
+  "chars": 67,
+  "direction": "[warm, hopeful, quietly pleased]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "There's a clear light burning on the western ridge every night now."
  },
  "ireena/2551873f7c03f5c3": {
   "chars": 38,
@@ -29288,12 +29645,40 @@
   "recipe": "2255a992a9",
   "text": "You won't."
  },
+ "ireena/2629cdc3fe70dc2e": {
+  "chars": 102,
+  "direction": "[cold, disgusted, shaken]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He spent years having my face carved into little dolls. Blood or not, I don't know how to look at him."
+ },
+ "ireena/26929d3c21a1f171": {
+  "chars": 93,
+  "direction": "[contemptuous, tight, sharp]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "That brute Izek looks at me in the square as if I were a bolt of cloth he'd already paid for."
+ },
+ "ireena/26b2d7c07c2463c6": {
+  "chars": 89,
+  "direction": "[bitter, tired, frank]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Too many people in this valley look at me and see a woman who was dead before I was born."
+ },
  "ireena/27ad7c9afcbd1e05": {
   "chars": 7,
   "direction": "[furious, shouting]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Coward!"
+ },
+ "ireena/282e275dce679784": {
+  "chars": 116,
+  "direction": "[dry, wry, mildly encouraged]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Father Lucian and Urwin Martikov are running the town now, which should at least improve the sermons and the supper."
  },
  "ireena/28675b7df3d2b3a5": {
   "chars": 49,
@@ -29308,6 +29693,20 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "It was given to her. Then it was given to me. You only ever took it."
+ },
+ "ireena/28d81f010fa8d15a": {
+  "chars": 78,
+  "direction": "[teasing, fond, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I was counting the hours until you walked in smelling of wet wool and trouble."
+ },
+ "ireena/28fcefc49960112a": {
+  "chars": 100,
+  "direction": "[stiff, uncertain, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Izek has walked away from the Baron's service, and I'm supposed to know how to say the word brother."
  },
  "ireena/29eedb46ce9d0ac1": {
   "chars": 19,
@@ -29328,6 +29727,27 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Father. It's me."
+ },
+ "ireena/2adde233cf96e565": {
+  "chars": 85,
+  "direction": "[defiant, bitter, convinced]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I said walls would never keep him out. A town that bows to him is just a larger cage."
+ },
+ "ireena/2afa983e039e33a1": {
+  "chars": 127,
+  "direction": "[dry, bemused, weary]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I found three black feathers in the flour bin this morning, and Urwin counts the sky like a ledger. This house keeps odd hours."
+ },
+ "ireena/2b3ed74b2baa6587": {
+  "chars": 118,
+  "direction": "[brisk, stubborn, playful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "My boots have finally given up fighting my heels. Wake me for the middle watch tonight, and don't try to skip my turn."
  },
  "ireena/2b45c025df2d8ee7": {
   "chars": 84,
@@ -29350,12 +29770,40 @@
   "recipe": "2255a992a9",
   "text": "I am not a coin to be paid over. But I see you have already spent me."
  },
+ "ireena/2e53beb2154b0dde": {
+  "chars": 129,
+  "direction": "[earnest, yearning, resolute]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Take me there when the road allows. If Sergei left anything behind that the devil can't touch, I want to see it with my own eyes."
+ },
+ "ireena/2e856ed9e47441f4": {
+  "chars": 91,
+  "direction": "[grave, protective, tense]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Keep your blades near your bedrolls. I know what it costs when he decides to pay attention."
+ },
+ "ireena/2ee9ae063bc3b5f0": {
+  "chars": 115,
+  "direction": "[firm, frustrated, resigned]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I can't walk that road alone without handing myself to the devil, and I won't pull you off your path for an errand."
+ },
  "ireena/2f935ef7ff2a4db5": {
   "chars": 108,
   "direction": "[haunted, remembering]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "So that's her. I remember a chapel full of white flowers, and a man with a sunburst on his coat. And a wall."
+ },
+ "ireena/3080c77d64e43b8e": {
+  "chars": 104,
+  "direction": "[incredulous, scornful, dry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "An empty black carriage rattling back up the mountain is the finest sight this valley has seen in years."
  },
  "ireena/30c614d5a2d29730": {
   "chars": 78,
@@ -29364,6 +29812,20 @@
   "recipe": "2255a992a9",
   "text": "I know my name. Kolyan Indirovich found me on the road and gave me a good one."
  },
+ "ireena/3120e95e7da20222": {
+  "chars": 88,
+  "direction": "[thoughtful, hopeful, careful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You said the brother spoke of a pool in Krezk where the water turns white under the sun."
+ },
+ "ireena/313707707bc2269f": {
+  "chars": 56,
+  "direction": "[warm, easy, fond]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Go on. I'll have Urwin keep something hot by the hearth."
+ },
  "ireena/3139e93c4e289f38": {
   "chars": 116,
   "direction": "[hard, defiant]",
@@ -29371,12 +29833,26 @@
   "recipe": "2255a992a9",
   "text": "Whatever you are, you've come to the wrong door. My father is dead, my brother is at the tavern, and I have a sword."
  },
+ "ireena/313af205f79a55fc": {
+  "chars": 61,
+  "direction": "[dry, contemptuous, biting]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Most men leave a prayer on a grave, not a receipt for a town."
+ },
  "ireena/31587270b6240f17": {
   "chars": 37,
   "direction": "[cold, defiant]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "And I am not going anywhere with you."
+ },
+ "ireena/32047b89281fbde1": {
+  "chars": 84,
+  "direction": "[cold, defiant, hard]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He keeps what he loses under stone and lace, and I won't be the next body on a slab."
  },
  "ireena/32e9b596a20a2f77": {
   "chars": 51,
@@ -29391,6 +29867,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Your eyes. They have gone so dark. Tell me I am wrong."
+ },
+ "ireena/34594d8645b87e4d": {
+  "chars": 86,
+  "direction": "[tense, bitter, disbelieving]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Izek is alive out there, and I'm supposed to call a stranger with that arm my brother."
  },
  "ireena/34b3325e988f64cc": {
   "chars": 52,
@@ -29427,6 +29910,13 @@
   "recipe": "2255a992a9",
   "text": "Sergei. I promised him. When we're out of here, there's a pool I have to go back to."
  },
+ "ireena/36c49dab616b5e9c": {
+  "chars": 85,
+  "direction": "[cold, conflicted, defiant]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He meant to hand me to the devil like a tithe, and still I can't stomach pitying him."
+ },
  "ireena/37170be994d4edd0": {
   "chars": 88,
   "direction": "[firm, wry]",
@@ -29440,6 +29930,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I'm sorry. I don't remember you. I wish I did."
+ },
+ "ireena/388b9c31d872d6ce": {
+  "chars": 97,
+  "direction": "[earnest, warm, sincere]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You stood through every word with us, and I measure the people around me by how they treated him."
  },
  "ireena/3b2ec7c32399af78": {
   "chars": 64,
@@ -29455,6 +29952,13 @@
   "recipe": "2255a992a9",
   "text": "Father Lucian's teaching me the long prayers. I'm terrible at them. He says the saint doesn't mind. I slept through the night again."
  },
+ "ireena/3bd484172c1fc238": {
+  "chars": 100,
+  "direction": "[reluctant, thoughtful, distaste]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You're right that a magistrate would keep the evidence, though I hate carrying his ink in my pocket."
+ },
  "ireena/3c7d6d92374ff40d": {
   "chars": 119,
   "direction": "[grieving, proud]",
@@ -29462,12 +29966,47 @@
   "recipe": "2255a992a9",
   "text": "His heart gave out at the front door, fighting. He'd want the priest, the words, the earth. He'd want it done properly."
  },
+ "ireena/3cedc903b701f6f6": {
+  "chars": 147,
+  "direction": "[earnest, firm, asking]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "If the devil wrote down his own account of what he wants with my face, or if there's some stone or painting out there that wears it, bring me word."
+ },
+ "ireena/3df979d9a2ab964e": {
+  "chars": 90,
+  "direction": "[tight, honest, guarded]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I found it by my cup this morning. I've read it already, and I won't pretend it's nothing."
+ },
+ "ireena/3e17013b401fba3b": {
+  "chars": 70,
+  "direction": "[wary, firm, protective]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Keep the devil's book strapped shut in your pack when you sit near me."
+ },
  "ireena/3e1c72c6b74aac19": {
   "chars": 21,
   "direction": "[dry, fond, sad]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "That sounds like him."
+ },
+ "ireena/3e34b34f18661399": {
+  "chars": 120,
+  "direction": "[tender, amused, wistful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Then he'd sit on the cold boards for an hour reading the village accounts at the top of his lungs, to drown out the sky."
+ },
+ "ireena/3f7a80ea6c2eda9b": {
+  "chars": 63,
+  "direction": "[hesitant, hopeful, gentle]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You've been through the village, then. How does his grave look?"
  },
  "ireena/3f7cf621033798c1": {
   "chars": 108,
@@ -29482,6 +30021,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Walls didn't keep him out of my father's house. You might do better. I'll come."
+ },
+ "ireena/422e9c8fbf5038c7": {
+  "chars": 91,
+  "direction": "[proud, bitter, steady]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I'm the daughter Father raised, and I had the bad luck to be born with a dead woman's face."
  },
  "ireena/427ad83e9863b972": {
   "chars": 86,
@@ -29518,12 +30064,33 @@
   "recipe": "2255a992a9",
   "text": "I've never been here. I know where the stairs go. Tell me that isn't the worst thing you've heard today."
  },
+ "ireena/4395e11a6defaa03": {
+  "chars": 94,
+  "direction": "[firm, defiant, unsettled]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Tatyana is a dead woman I am not, even if I carry her morning in my head like a borrowed book."
+ },
  "ireena/44a0e8abee81ef62": {
   "chars": 71,
   "direction": "[stunned, relieved, laughing]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "It's done. It's actually done. I'm going to sleep with the window open."
+ },
+ "ireena/45df798b7980ad73": {
+  "chars": 106,
+  "direction": "[cool, steady, unyielding]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I don't want an apology. I only want you to know I measure people by how they treated him, and I remember."
+ },
+ "ireena/46b977398f72a6ec": {
+  "chars": 61,
+  "direction": "[cool, warning, protective]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "A change of teeth is no change at all. Keep the silver close."
  },
  "ireena/46d8543869bdd156": {
   "chars": 65,
@@ -29539,12 +30106,26 @@
   "recipe": "2255a992a9",
   "text": "I slept through the night. The whole night. I'd forgotten that was a thing people did."
  },
+ "ireena/4897caa09f9fa5a8": {
+  "chars": 39,
+  "direction": "[quiet, relieved, grim]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Yes. One less piece of him in the room."
+ },
  "ireena/499bc2973d58f0aa": {
   "chars": 97,
   "direction": "[grieving, tender, steady]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Goodbye, Father. You found me on a road. I'm going back to one. I'll try to be worth the finding."
+ },
+ "ireena/4b4070e2c6343df7": {
+  "chars": 134,
+  "direction": "[wry, wistful, resigned]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Dmitri gave me a morning watch on the wall, between the goat-milking and the cheese press. From up there I can at least see the trees."
  },
  "ireena/4bf24d29620dfb61": {
   "chars": 47,
@@ -29567,12 +30148,54 @@
   "recipe": "2255a992a9",
   "text": "Stop it! Please. Please, he can't breathe!"
  },
+ "ireena/4cf5c7c6d7e02f14": {
+  "chars": 121,
+  "direction": "[teasing, affectionate, dry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I know who snores, who mutters over their boots, and who hides the dry kindling in their pack. You're not subtle company."
+ },
+ "ireena/4d3287d100c41758": {
+  "chars": 82,
+  "direction": "[pained, honest, steadying]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Walking away from that pool hurt properly, the way a set bone hurts when it knits."
+ },
  "ireena/4d37cace9c102f89": {
   "chars": 77,
   "direction": "[brave, broken, resolute]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Then I'll go. Not for him. For you, so you get out. Remember that I chose it."
+ },
+ "ireena/4d832b53883d9ef2": {
+  "chars": 48,
+  "direction": "[low, tight, reluctant]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "It's inside my cuff. Listen to how he writes it."
+ },
+ "ireena/4ed53ae223e3a16e": {
+  "chars": 81,
+  "direction": "[quiet, tender, remembering her father]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I pressed this sprig of rosemary into my father's ledger the night we buried him."
+ },
+ "ireena/4f39a612e0564c97": {
+  "chars": 96,
+  "direction": "[fierce, relieved, grimly pleased]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The old mill on the hill is quiet, and those witches will bake no more children into their pies."
+ },
+ "ireena/4f8cf96e4e0a16e4": {
+  "chars": 126,
+  "direction": "[wistful, thoughtful, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Father Lucian lets me ring the vespers bell when my hands are restless. The rope is heavier than it looks, which is the point."
  },
  "ireena/512451623b7db0ab": {
   "chars": 125,
@@ -29581,6 +30204,13 @@
   "recipe": "2255a992a9",
   "text": "Father used to call the Baron's festivals the bravest thing in Barovia. He meant it as a joke. I think he meant it as a joke."
  },
+ "ireena/52178d65da9715ba": {
+  "chars": 180,
+  "direction": "[quiet, grateful, avoidant]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The town's stopped asking about the pool. Anna sets my place at table without a word, and I've taken the evening watch on the wall, so I'm looking at the road instead of the water."
+ },
  "ireena/52a1f9d833fbae44": {
   "chars": 102,
   "direction": "[uneasy, quick, deflecting]",
@@ -29588,12 +30218,26 @@
   "recipe": "2255a992a9",
   "text": "\"You have come round again.\" What did she mean by that? Don't answer. I don't think I want the answer."
  },
+ "ireena/52b4328c5535c9c5": {
+  "chars": 108,
+  "direction": "[warm, wry, nostalgic]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Father would stomp in with his boots on, curse the draughts, and drop a ledger on the floor beside my knees."
+ },
  "ireena/52e942d250a1a4d2": {
   "chars": 72,
   "direction": "[bitter, cold]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "No words. Fine. Fill it in, then. Quickly, since that's how you like it."
+ },
+ "ireena/53461d08460cb074": {
+  "chars": 73,
+  "direction": "[pleased, thoughtful, surprised]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Better. It pulls less at the wrist when I stop fighting the weight of it."
  },
  "ireena/5391bcc8bab37236": {
   "chars": 85,
@@ -29609,6 +30253,13 @@
   "recipe": "2255a992a9",
   "text": "Father Lucian sent word. His saint is home and his church is holy ground again. He says there's a bed in the vestry with my name on it."
  },
+ "ireena/55e91562bf49baf6": {
+  "chars": 115,
+  "direction": "[fond, embarrassed, remembering]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "When I was small, thunder off the mountain used to drive me under the hall table. I'd never admit I was frightened."
+ },
  "ireena/56235655a5e8bb18": {
   "chars": 102,
   "direction": "[fond, wry]",
@@ -29623,12 +30274,33 @@
   "recipe": "2255a992a9",
   "text": "Has Father Donavich agreed to say the words over him?"
  },
+ "ireena/570ea78cde4c16d6": {
+  "chars": 68,
+  "direction": "[quiet, wistful, a little amused]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "It must be strange, having someone left from before to quarrel with."
+ },
+ "ireena/57187a6ebb0827cf": {
+  "chars": 83,
+  "direction": "[confused, unsettled, softly pained]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "It ought to be a simple relief. I don't know why it feels like a door slammed shut."
+ },
  "ireena/572b479317cd9c8c": {
   "chars": 144,
   "direction": "[sad, bitter, remembering]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "My father bought one of her baskets once, the winter he couldn't sleep. He slept all the next day, smiling. I thought she'd done him a kindness."
+ },
+ "ireena/57396b4b5bf24fb3": {
+  "chars": 129,
+  "direction": "[furious, bitter, contemptuous]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He murdered his brother, drove a girl over a wall, and sits in the dark telling the paper he chose it. What a small, greedy liar."
  },
  "ireena/573b56f5864e79ae": {
   "chars": 120,
@@ -29637,12 +30309,40 @@
   "recipe": "2255a992a9",
   "text": "I'd rather he knew. If he's going to look at me like that, I'd rather he knew why. Tell him, if you can make him listen."
  },
+ "ireena/57b9836d03129546": {
+  "chars": 104,
+  "direction": "[sharp, analytical, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "A scratch that fine above the heart is no wound from a fight; someone drew that mark with a steady hand."
+ },
+ "ireena/5800948673fe46d6": {
+  "chars": 92,
+  "direction": "[tense, practical, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Then keep it somewhere dry, and tie the string tight. I don't want to hear the paper rustle."
+ },
  "ireena/5897095f15f68bdb": {
   "chars": 59,
   "direction": "[uncertain, fragile]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Then it's a story. Stories don't happen to people. Do they?"
+ },
+ "ireena/59159ddd7c41df52": {
+  "chars": 82,
+  "direction": "[flat, knowing, haunted]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The devil is a thing that happens to people, whether they bar the shutters or not."
+ },
+ "ireena/591a4ab8c1782106": {
+  "chars": 95,
+  "direction": "[practical, dry, concerned]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Tell Dmitri at the gate you're leaving, or he'll bar it before you're through. Come back whole."
  },
  "ireena/59830b2b325d091b": {
   "chars": 167,
@@ -29651,12 +30351,26 @@
   "recipe": "2255a992a9",
   "text": "Travelers. Nobody travels here; the mists see to that. If you want to help, find my brother Ismark at the Blood of the Vine. If he vouches for you, I'll open the door."
  },
+ "ireena/5a7bf4c4fe83443a": {
+  "chars": 69,
+  "direction": "[sober, tired, grim]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "One wolf died in the caves, and the other still hunts for the castle."
+ },
  "ireena/5c5c21c6d4f230a6": {
   "chars": 85,
   "direction": "[haunted, trembling, appalled]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "It was the lake from my dream, cold water up to my chin, and I stood here and let it."
+ },
+ "ireena/5c85b217c85b5464": {
+  "chars": 92,
+  "direction": "[grieving, hollow, hurt]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Izek is dead, and the only man who remembered me before Father's door took my name with him."
  },
  "ireena/5cef0db7de23b5c6": {
   "chars": 62,
@@ -29665,12 +30379,33 @@
   "recipe": "2255a992a9",
   "text": "Is it over? Truly? I keep waiting to hear his voice behind me."
  },
+ "ireena/5ef8157b61c878b1": {
+  "chars": 121,
+  "direction": "[lonely, soft, rueful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I sit in Father's chair after the lamps go out and talk to the panelling. The house is quieter when someone speaks to it."
+ },
  "ireena/5f0028229ba13df0": {
   "chars": 74,
   "direction": "[steady, grieving]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Behind the church, beside Mother. The grave is ready. We'll see you there."
+ },
+ "ireena/5fbd4ab8017b2cfe": {
+  "chars": 80,
+  "direction": "[warm, sincere, tired]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Still, it was kindly meant, and there's little enough of that around. Thank you."
+ },
+ "ireena/5fe4c9ff5c1b03bb": {
+  "chars": 131,
+  "direction": "[grieving, wry, quiet]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I've begun sorting Father's ledgers by year and tying them in twine. I haven't decided yet whether it's grief or just housekeeping."
  },
  "ireena/606e7cbed3e8f129": {
   "chars": 110,
@@ -29700,12 +30435,26 @@
   "recipe": "2255a992a9",
   "text": "Wolves, and children, by a lake. I've had this dream. I never liked how it ended."
  },
+ "ireena/63662ec73f467afe": {
+  "chars": 84,
+  "direction": "[distant, dazed, haunted]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "When I sleep deeply, I'm standing high above a dark lake with cold wind in my teeth."
+ },
  "ireena/64838d2dc83d2dad": {
   "chars": 99,
   "direction": "[firm, wry]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Then I'll stay. But you'll come back. I'm not a parcel to be left at the church door and forgotten."
+ },
+ "ireena/648abaf11c6b9ab6": {
+  "chars": 84,
+  "direction": "[weary, flat, quiet]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Izek is dead, and he won't stand in the square staring at me with that arm any more."
  },
  "ireena/65286d6c1412d7a5": {
   "chars": 35,
@@ -29714,12 +30463,68 @@
   "recipe": "2255a992a9",
   "text": "Let's begin. Before the light goes."
  },
+ "ireena/654f763f95a6cfc6": {
+  "chars": 96,
+  "direction": "[amused, tender, remembering]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "It tasted of sour plums and damp cellar oak, and I thought it was the finest thing in the world."
+ },
  "ireena/6568fb7d0724e572": {
   "chars": 132,
   "direction": "[dry, skeptical]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Walls, a gate, and a burgomaster who throws festivals at the dark. I can see why Ismark wanted me here. I can see why it won't work."
+ },
+ "ireena/665b160c59ec48b0": {
+  "chars": 98,
+  "direction": "[teasing, warm, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Give three knocks when you come back to the porch, so Ismark doesn't put a blade through the door."
+ },
+ "ireena/6677a3c7bb798b68": {
+  "chars": 112,
+  "direction": "[heavy, honest, reluctant]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I've no stomach for bargains with monsters, though I won't pretend I could have bought those lives back cleaner."
+ },
+ "ireena/66bfd9aee1906228": {
+  "chars": 84,
+  "direction": "[soft, moved, sad]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I'm glad he was there. Father hated an empty room almost as much as he hated a fuss."
+ },
+ "ireena/67683f44e1383925": {
+  "chars": 70,
+  "direction": "[firm, grave, quietly resolved]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "See that the poor souls he kept in that abbey are given the road home."
+ },
+ "ireena/67b1275370e39ff9": {
+  "chars": 118,
+  "direction": "[wry, deadpan, quietly satisfied]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Our visitor isn't used to setting a table for guests who won't get into his carriage, and he won't forgive the slight."
+ },
+ "ireena/6840243dfb0c5920": {
+  "chars": 136,
+  "direction": "[resolute, thoughtful, steady]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I know the shape of it now, but not the record. I'd rather read the account in his own hand than wait for him to recite it at my window."
+ },
+ "ireena/687bd1524f5a25a5": {
+  "chars": 73,
+  "direction": "[satisfied, grim, relieved]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Baba Lysaga is dead, and the devil has one less nursemaid to dote on him."
  },
  "ireena/69ff9ce8b8c0cf88": {
   "chars": 167,
@@ -29741,6 +30546,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "My father and my brother never said it either. Not once, before the end. I'm glad somebody did."
+ },
+ "ireena/6cf875b2fe799089": {
+  "chars": 83,
+  "direction": "[uneasy, wary, thin]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "There's a smell of old sweet resin about you, like amber kept too long in the dark."
  },
  "ireena/6e96631d0277d23e": {
   "chars": 68,
@@ -29770,6 +30582,13 @@
   "recipe": "2255a992a9",
   "text": "And don't gawk. He took me out of my own window without my sword, and I want it on the record that I noticed."
  },
+ "ireena/7065cf14252b04ac": {
+  "chars": 86,
+  "direction": "[quiet, grim, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Vasilka is gone, and the Abbot sits staring at the stones of his altar without a word."
+ },
  "ireena/7096a387448c0f18": {
   "chars": 110,
   "direction": "[distant, numb, dreamy]",
@@ -29790,6 +30609,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "You knew my father?"
+ },
+ "ireena/7202233bd22eab54": {
+  "chars": 99,
+  "direction": "[flat, doubtful, tired]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Still, an honest priest and an innkeeper make a thin shield when the castle decides to take notice."
  },
  "ireena/72634da58edeb691": {
   "chars": 70,
@@ -29819,6 +30645,20 @@
   "recipe": "2255a992a9",
   "text": "The church still smells of wax from his funeral. I'd like to walk past it without looking. I never manage it."
  },
+ "ireena/752dfb8e6263a587": {
+  "chars": 90,
+  "direction": "[stubborn, proud, calm]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I haven't decided what to do with what I remembered, and I won't be hurried into choosing."
+ },
+ "ireena/75523bd6043c1916": {
+  "chars": 80,
+  "direction": "[awed, quiet, approving]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Even the shadows in the corners pull back an inch when that hilt is in the room."
+ },
  "ireena/75900f7dc9ee162e": {
   "chars": 137,
   "direction": "[wry, fond, firm]",
@@ -29832,6 +30672,34 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Changed your minds? Or just checking the shutters for us?"
+ },
+ "ireena/76366347b736a5b1": {
+  "chars": 153,
+  "direction": "[gentle, sad, stung]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Anna lets me sit by little Ilya's bed while she sleeps, and he asks what the sun's like. The rest of the town watches me like a bell they expect to toll."
+ },
+ "ireena/765af495bf5308f3": {
+  "chars": 137,
+  "direction": "[sardonic, dismissive, cold]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Only that a chair was set for me at his castle table beside yours. The rest was the usual ink and courtesy, and it made very small ashes."
+ },
+ "ireena/796891f7e79bfa33": {
+  "chars": 100,
+  "direction": "[soft, proud, warm]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Father always took an honest sentence over a pretty one, and I judge you kindly for giving him that."
+ },
+ "ireena/7980b06d04be298f": {
+  "chars": 66,
+  "direction": "[dry, self-mocking, disappointed]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I might as well send a herald ahead of the blow. Enough for today."
  },
  "ireena/79b3860ad7ee9b61": {
   "chars": 49,
@@ -29847,12 +30715,26 @@
   "recipe": "2255a992a9",
   "text": "Waiting at a window for him. I know that feeling, and I hate that I know it."
  },
+ "ireena/7a13b3decf0767cd": {
+  "chars": 47,
+  "direction": "[flat, grim, dry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The Abbot is dead, and his needlework with him."
+ },
  "ireena/7a5dd42251ddedd6": {
   "chars": 31,
   "direction": "[firm, defiant]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I've decided. Get away from us."
+ },
+ "ireena/7a6c0b0b62b21f73": {
+  "chars": 77,
+  "direction": "[dry, relieved, thoughtful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "It's a good thing to know that the ground is actually there when you go down."
  },
  "ireena/7bf4c8fc76308b18": {
   "chars": 76,
@@ -29868,6 +30750,13 @@
   "recipe": "2255a992a9",
   "text": "You came back, and you brought the draft with you. Hush now, before you put the candles out."
  },
+ "ireena/7d1cc55ff34fe5d6": {
+  "chars": 36,
+  "direction": "[ready, steady, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Lead on, then. I'm right behind you."
+ },
  "ireena/7d350907b2d75aff": {
   "chars": 21,
   "direction": "[weary, bitter]",
@@ -29875,12 +30764,33 @@
   "recipe": "2255a992a9",
   "text": "Every day of my life."
  },
+ "ireena/7db3652ee5f0ad32": {
+  "chars": 96,
+  "direction": "[wry, fragile, determined]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Every morning I say the name Ireena Kolyana aloud to the washbasin, and so far it still answers."
+ },
+ "ireena/7fa78dec833feb0d": {
+  "chars": 87,
+  "direction": "[honest, tired, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "That makes three lessons. I'm still years behind any bandit on the road, and I know it."
+ },
  "ireena/810cecbe64eb77ca": {
   "chars": 81,
   "direction": "[sad, gentle, firm]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I'm sorry. I loved you. She loved you. I can't be her and still be anyone at all."
+ },
+ "ireena/84a219e4a26a0775": {
+  "chars": 90,
+  "direction": "[weary, unsettled, plain]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "That dream of the dark water hasn't stopped coming, and I'm tired of guessing in the dark."
  },
  "ireena/84c7b13d5e14f525": {
   "chars": 56,
@@ -29917,6 +30827,13 @@
   "recipe": "2255a992a9",
   "text": "Father taught me the sword so I'd never need it. He was a good man and a terrible prophet."
  },
+ "ireena/86be338bf7067cbc": {
+  "chars": 114,
+  "direction": "[quiet, rueful, honest]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The stone keeps the bad dreams out, mostly. It turns out my own head makes plenty of noise when the room is quiet."
+ },
  "ireena/871bab8545eda7d4": {
   "chars": 114,
   "direction": "[warm, amused]",
@@ -29930,6 +30847,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Someone has been in my father's strongbox. If it was you, I'd rather you had asked. He would have given it to you. That was the sort of fool he was."
+ },
+ "ireena/8790cd05e473bf4b": {
+  "chars": 135,
+  "direction": "[low, reassuring, firm]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The Martikovs aren't simple innkeepers, and those birds on the roof aren't simple birds. Don't worry. I know how to keep my mouth shut."
  },
  "ireena/87aa0cb53c40704f": {
   "chars": 29,
@@ -29952,6 +30876,13 @@
   "recipe": "2255a992a9",
   "text": "When this is over, I'd like to spar with whichever of you is best with a blade. I want to know how far behind I am."
  },
+ "ireena/8b56c349e6369819": {
+  "chars": 115,
+  "direction": "[raw, bewildered, accusing]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I'm trying very hard to understand how the same people walked down from that windmill and left the children behind."
+ },
  "ireena/8c411815bda7efcb": {
   "chars": 197,
   "direction": "[fond, grieving, proud]",
@@ -29965,6 +30896,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "First, he dies. The one upstairs. After that I'll find that pool, and I'll decide there. Not in a cellar, with all of you watching."
+ },
+ "ireena/8d0fd9a5f38ba971": {
+  "chars": 91,
+  "direction": "[wry, tired, tentatively hopeful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The pines along the road have watched me my whole life. I hope they're a little less proud."
  },
  "ireena/8d231dfbbf864fdf": {
   "chars": 76,
@@ -29987,6 +30925,41 @@
   "recipe": "2255a992a9",
   "text": "I'm fine. I'm not made of glass. I just wasn't sure, for a moment, that I'm not."
  },
+ "ireena/8eacfad43ae2294f": {
+  "chars": 93,
+  "direction": "[hard, contemptuous, controlled anger]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Baba Lysaga killed Marina to keep the devil's heart tidy, and let him drown a village for it."
+ },
+ "ireena/8edf6777fc310460": {
+  "chars": 73,
+  "direction": "[eager, wry, encouraging]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "My hand itches just looking at the grip. Make sure the next swing counts."
+ },
+ "ireena/8f86eb08e02e9aa4": {
+  "chars": 33,
+  "direction": "[focused, quiet, learning]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Look at the coat, not the target."
+ },
+ "ireena/8f92350780b43504": {
+  "chars": 107,
+  "direction": "[firm, stung, resolute]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "You keep me out of the fighting, and I know why. That doesn't mean I'll stand idle when the door gives way."
+ },
+ "ireena/8ffe5bad5bd03585": {
+  "chars": 129,
+  "direction": "[tender, then bitter, guarded]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Little Ilya follows me along the path, while the rest of the town watches me from their doorways like a bell they expect to toll."
+ },
  "ireena/909d44fb7643aa02": {
   "chars": 115,
   "direction": "[moved, wistful]",
@@ -30000,6 +30973,20 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Izek comes to the church door at dusk. He doesn't come in. He can't, or he won't. He just stands there."
+ },
+ "ireena/917448968ce1aad7": {
+  "chars": 111,
+  "direction": "[bitter, wary, remembering]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "They scratched at Father's shutters every night before he died. I'll believe they're gone after one quiet moon."
+ },
+ "ireena/9281d9474c294969": {
+  "chars": 116,
+  "direction": "[delighted, secretive, warm]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I saw Urwin come down from the eaves on two wings at dawn. It's a great relief to be trusted with a secret for once."
  },
  "ireena/93b8a00104790220": {
   "chars": 105,
@@ -30021,6 +31008,27 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Do not go far. There will be plenty of room in the pews when he is ready."
+ },
+ "ireena/97bb9db4d63d1ced": {
+  "chars": 67,
+  "direction": "[quiet, relieved, cautious]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The pack in the hills won't answer the lord of the castle any more."
+ },
+ "ireena/97e73f71d232ffcf": {
+  "chars": 77,
+  "direction": "[hard, level, final]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I won't wish him ill, and I won't forgive him. The mountain can sort him out."
+ },
+ "ireena/9862c7985480122e": {
+  "chars": 95,
+  "direction": "[relieved, grim, dry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Izek is dead and under the dirt, so there's one less pair of eyes following me down the street."
  },
  "ireena/992e9f91b4e750f4": {
   "chars": 65,
@@ -30050,6 +31058,13 @@
   "recipe": "2255a992a9",
   "text": "I came to watch you die."
  },
+ "ireena/9b9795e288a1d3b1": {
+  "chars": 89,
+  "direction": "[distrustful, dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I've never trusted fortune-tellers, least of all when they deal out my future on a table."
+ },
  "ireena/9c99f1b147d6454d": {
   "chars": 101,
   "direction": "[shaken, confused]",
@@ -30064,6 +31079,27 @@
   "recipe": "2255a992a9",
   "text": "Then you know it's a cage."
  },
+ "ireena/9dc983730e07d2ce": {
+  "chars": 97,
+  "direction": "[guarded, wry, tired]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I don't know whose memory it is, and I'm not asking you to fix it. I just dislike waking up cold."
+ },
+ "ireena/9e0d04e8ab2e1bdc": {
+  "chars": 86,
+  "direction": "[earnest, steady, tender]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Five mothers can bar their doors with every child inside again. That's no small thing."
+ },
+ "ireena/9f36510cbf7de130": {
+  "chars": 132,
+  "direction": "[earnest, steady, asking]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Next time your road takes you through the village, lay it on his grave for me, and tell me how the place is keeping. Say it plainly."
+ },
  "ireena/9f592b40e4c1f51b": {
   "chars": 96,
   "direction": "[fierce, approving]",
@@ -30071,12 +31107,26 @@
   "recipe": "2255a992a9",
   "text": "And you went for him with steel. He laughed, but you did it. I've wanted to do that for a month."
  },
+ "ireena/9f8fb0f314646ef7": {
+  "chars": 107,
+  "direction": "[strained, weary, overwhelmed]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Since I looked into that water, I have two women's lives sitting behind my eyes and only one body for them."
+ },
  "ireena/9fb080b569894928": {
   "chars": 139,
   "direction": "[gentle, sad, earnest]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I don't remember anything before Kolyan's house. Only trees, and being cold, and a boy shouting a name. I always thought the name was mine."
+ },
+ "ireena/a00087b5698ba57e": {
+  "chars": 75,
+  "direction": "[wistful, soft, regretful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I'd have slept better some nights with a piece of the sun hung on my latch."
  },
  "ireena/a1327d06bad2c4fa": {
   "chars": 89,
@@ -30155,12 +31205,33 @@
   "recipe": "2255a992a9",
   "text": "The road to Vallaki. I used to think it went somewhere. Now I think it only goes round."
  },
+ "ireena/a75ea6c0ce0c0968": {
+  "chars": 94,
+  "direction": "[wry, rueful, tired]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "This blade was balanced by a blind smith. We'll try again another day, when my fingers unlock."
+ },
+ "ireena/a7623d523c3437c8": {
+  "chars": 121,
+  "direction": "[urgent, steady, afraid]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "If you ever see me walk toward that window after dark, don't waste time looking for him. Lay hold of me and pull me back."
+ },
  "ireena/a7dd09fa939091cc": {
   "chars": 80,
   "direction": "[tight, angry, brave]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I'm fine. I'll tell you when I'm not. Right now I'd like to go and kill someone."
+ },
+ "ireena/a871d0c0873f9d23": {
+  "chars": 106,
+  "direction": "[warm, smiling, pleased]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Rictavio and Ezmerelda have finally made up after twelve years of each blaming the other for walking away."
  },
  "ireena/a9050b202903e987": {
   "chars": 114,
@@ -30183,12 +31254,26 @@
   "recipe": "2255a992a9",
   "text": "Before Kolyan? Nothing. Trees. Being cold. A boy shouting a name through the trees, over and over. I always thought the name must have been mine."
  },
+ "ireena/abdff56ae96d44d0": {
+  "chars": 113,
+  "direction": "[dreamy, wistful, troubled]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I remember Tatyana's white flowers and Sergei's voice in the water, and how easy it was to let go of my own life."
+ },
  "ireena/ac7c1d0a9767d2ab": {
   "chars": 19,
   "direction": "[stricken, heartbroken]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Doru? Oh, Doru. No."
+ },
+ "ireena/acbc3c27a07f3a06": {
+  "chars": 91,
+  "direction": "[resolute, solemn, proud]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Still, I promised Sergei I'd return to the water once the devil is ash, and I keep my word."
  },
  "ireena/ad43242d4878fc7b": {
   "chars": 116,
@@ -30217,6 +31302,27 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Father used to ride out and cut them down himself. He said a crossroads is no place to be left; the dead get confused about which road leads home."
+ },
+ "ireena/affbfe025769ae0e": {
+  "chars": 87,
+  "direction": "[dry, irritated, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Ash, I told you. You're welcome to poke through the stove with a stick if you doubt me."
+ },
+ "ireena/b0b3db8ef10764d0": {
+  "chars": 96,
+  "direction": "[relieved, strained, tender]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The stolen children are home from the mill, even though the witches still keep their millstones."
+ },
+ "ireena/b11bcf7879cf6238": {
+  "chars": 84,
+  "direction": "[scornful, impatient, tired]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The Baron still sits in his chair, ordering another festival for the dark to ignore."
  },
  "ireena/b25905477d903713": {
   "chars": 71,
@@ -30260,6 +31366,13 @@
   "recipe": "2255a992a9",
   "text": "Ireena Kolyana. This is my father's house. It's still his, until he's in the ground."
  },
+ "ireena/b450bf949bb7e439": {
+  "chars": 77,
+  "direction": "[fond, wry, rueful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Standing in the damp without a proper coat, no doubt, arguing with the crows."
+ },
  "ireena/b4774f5014bf51bb": {
   "chars": 141,
   "direction": "[determined, wry]",
@@ -30267,12 +31380,33 @@
   "recipe": "2255a992a9",
   "text": "Then I'll fetch my sword and my good boots. I'm not made of glass; I'll walk, I'll fight, and I'll take a watch. Don't argue about the watch."
  },
+ "ireena/b480a704b78c7135": {
+  "chars": 48,
+  "direction": "[quiet, stunned, sombre]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "So that is the water at the bottom of the dream."
+ },
  "ireena/b51f769ad86c8f2a": {
   "chars": 44,
   "direction": "[moved, sad]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "That's the first time you've called me that."
+ },
+ "ireena/b5bad7282d8b2c34": {
+  "chars": 73,
+  "direction": "[sardonic, bitter, gladdened]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The devil sets a silver table after his wolves tear up my father's porch."
+ },
+ "ireena/b6514fe82d0c05ea": {
+  "chars": 103,
+  "direction": "[sorrowful, torn, tender]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Sergei has waited centuries by that pool, and Father raised Ireena by the hearth since she was a child."
  },
  "ireena/b706c3c6f4417252": {
   "chars": 118,
@@ -30295,12 +31429,26 @@
   "recipe": "2255a992a9",
   "text": "No."
  },
+ "ireena/b8d30c94ee8c42ec": {
+  "chars": 81,
+  "direction": "[sly, dry, grim satisfaction]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "If nothing else, I'm glad the face has given him several centuries of poor sleep."
+ },
  "ireena/b9ca0453693439fe": {
   "chars": 42,
   "direction": "[defiant, brave]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Then you'll have to go through me as well."
+ },
+ "ireena/ba28fe130949ec98": {
+  "chars": 82,
+  "direction": "[ashamed, guilty, quiet]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I'm glad it isn't me, and ashamed that another girl went up that road in my place."
  },
  "ireena/ba3913b3f2ecd59b": {
   "chars": 60,
@@ -30330,6 +31478,27 @@
   "recipe": "2255a992a9",
   "text": "Father said there was nothing past the crossroads but more Barovia. He was right. It's the same mud. I still want to see it."
  },
+ "ireena/bc014b01500ad291": {
+  "chars": 81,
+  "direction": "[warm, relieved, softly moved]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Five children are back from the caves and under their mothers' roofs below Krezk."
+ },
+ "ireena/bc29bfca9a81c7d8": {
+  "chars": 109,
+  "direction": "[eerie, hollow, shaken]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I'm wearing a white dress I've never owned, and then I step off the stone into the black water before I wake."
+ },
+ "ireena/bc72522623fca146": {
+  "chars": 87,
+  "direction": "[relieved, warm, quietly glad]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The old saint's bones are back in the crypt, and Father Lucian has his sanctuary again."
+ },
  "ireena/bc915309ed3abca0": {
   "chars": 55,
   "direction": "[ashamed, shaken]",
@@ -30343,6 +31512,27 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "So I keep hearing."
+ },
+ "ireena/bd171f2e2b516b6a": {
+  "chars": 128,
+  "direction": "[fond, grateful, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Father Donavich got Father into the earth with all the proper prayers, though Father would have complained about the damp knees."
+ },
+ "ireena/bddd2d01a9263a6b": {
+  "chars": 44,
+  "direction": "[cold, uneasy, direct]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "There's his hand. What would you do with it?"
+ },
+ "ireena/be481f690f6e2a38": {
+  "chars": 86,
+  "direction": "[grave, careful, caring]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Watch the roads out there. The saint's bones only reach as far as the churchyard wall."
  },
  "ireena/bea4262eba46bb06": {
   "chars": 98,
@@ -30365,6 +31555,13 @@
   "recipe": "2255a992a9",
   "text": "Ismark would want me to stay. Father would have. And I'm very tired of sleeping with a sword in the bed."
  },
+ "ireena/c0b3aee234694378": {
+  "chars": 85,
+  "direction": "[scornful, satisfied, bitter]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The druids on the hill spent all that blood on a wooden giant, and now it's kindling."
+ },
  "ireena/c0ce4775e7b8ca1d": {
   "chars": 54,
   "direction": "[tight, holding back tears]",
@@ -30378,6 +31575,41 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Who is Tatyana?"
+ },
+ "ireena/c1be6d5ce437495b": {
+  "chars": 91,
+  "direction": "[wary, tense, guarded]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "After a month of claws against Father's boards, you'll forgive me if I keep the latch down."
+ },
+ "ireena/c23d42c70b9bb6d0": {
+  "chars": 49,
+  "direction": "[quiet, open, patient]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Go on. If there's something on your mind, say it."
+ },
+ "ireena/c2db8117a8845e85": {
+  "chars": 54,
+  "direction": "[quiet, matter-of-fact, wary]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "A third letter came the same night as your invitation."
+ },
+ "ireena/c2e988f1b3db4365": {
+  "chars": 95,
+  "direction": "[moved, grateful, proud]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Your cleric spoke the rites over Father as if a village burgomaster mattered as much as a king."
+ },
+ "ireena/c3f094b20e4f62b5": {
+  "chars": 79,
+  "direction": "[bitter, flat, hurt]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "We put Father in the ground fast, without a prayer, and I went with you anyway."
  },
  "ireena/c4023de052e46bf9": {
   "chars": 104,
@@ -30442,12 +31674,26 @@
   "recipe": "2255a992a9",
   "text": "Get out of here."
  },
+ "ireena/c911a73a424f5967": {
+  "chars": 57,
+  "direction": "[flat, decisive, disgusted]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Into the coals with it, then. It smells of smoke already."
+ },
  "ireena/c91bfbae2238f482": {
   "chars": 105,
   "direction": "[earnest, hopeful]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "My brother sent me to you. He said this church was the one place in the valley the devil can't walk into."
+ },
+ "ireena/c98e92ea5da9b3bf": {
+  "chars": 103,
+  "direction": "[warm, challenging, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Still, I know which end of the blade is which. When we're out of this valley, you owe me a proper bout."
  },
  "ireena/cb2a1d51c6551ac7": {
   "chars": 29,
@@ -30456,12 +31702,33 @@
   "recipe": "2255a992a9",
   "text": "I'm not her. Whoever she was."
  },
+ "ireena/cc6a796cad3fd060": {
+  "chars": 96,
+  "direction": "[gentle, steady, sad]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Nothing pretty keeps in this valley anyway. Father would rather have the truth than a tidy lawn."
+ },
+ "ireena/cd3d73ddcc3cbefe": {
+  "chars": 113,
+  "direction": "[tired, matter-of-fact, companionable]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I dry glasses until midnight, and then I sit with Urwin while he watches the shutters. Neither of us sleeps much."
+ },
  "ireena/ce7487cdfa1deea9": {
   "chars": 109,
   "direction": "[bitter, shaken, quiet]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "He made me beg him for my brother's breath, and I did. I'd do it again, and he knows it. That was the lesson."
+ },
+ "ireena/ce82e4b618e2793c": {
+  "chars": 91,
+  "direction": "[bitter, hard, vengeful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "My only regret is that I wasn't there to strike the flint against their floorboards myself."
  },
  "ireena/ce8cf1676ecda5b1": {
   "chars": 40,
@@ -30498,6 +31765,13 @@
   "recipe": "2255a992a9",
   "text": "I said goodbye to you at the pool. I'm saying it again here, to your bones, so that it's done properly. Father would want it done properly."
  },
+ "ireena/d12227cb9b7f3f2e": {
+  "chars": 159,
+  "direction": "[haunted, ashamed, voice unsteady]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "That's why I hid it from you. Because some nights, when the house is still and the glass is cold, my hand wants to lift the latch and be done with the waiting."
+ },
  "ireena/d123c0d342d914bd": {
   "chars": 25,
   "direction": "[cold, defiant]",
@@ -30511,6 +31785,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "There's no such custom. I lived in that village all my life."
+ },
+ "ireena/d1e82433c63a2047": {
+  "chars": 111,
+  "direction": "[fond, nostalgic, soft]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Every name-day I can remember, Father bought one small cask from the Wizard of Wines and tapped it by the fire."
  },
  "ireena/d204b5e4824f34f4": {
   "chars": 78,
@@ -30540,6 +31821,13 @@
   "recipe": "2255a992a9",
   "text": "Thank you. Then he needs a priest. Father Donavich, at the church on the hill. Ask him to say the words. Then we carry Father over together, before dark."
  },
+ "ireena/d5f31cf061c372dc": {
+  "chars": 128,
+  "direction": "[tired, fond, wary]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Ismark brings stew from the tavern at dusk, and then we check the nails in the shutters and listen to the wolves test the porch."
+ },
  "ireena/d6d7438001334751": {
   "chars": 64,
   "direction": "[grateful, moved]",
@@ -30553,6 +31841,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "You put our dead back where they belong, too. Buried twice. Father always said this village did nothing by halves."
+ },
+ "ireena/d7fda1ba9e0a8d3b": {
+  "chars": 34,
+  "direction": "[wry, dry, teasing]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I hope someone counted the spoons."
  },
  "ireena/d84776560e44fe78": {
   "chars": 89,
@@ -30589,6 +31884,27 @@
   "recipe": "2255a992a9",
   "text": "Ireena. I'm Ireena Kolyana. Kolyan found me in the woods and taught me to hold a sword, and I'd like to find out what I do next."
  },
+ "ireena/dc4ac2b1c2e6c577": {
+  "chars": 98,
+  "direction": "[bleak, disgusted, resigned]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Lady Wachter has the town now, which means the lord of the castle has it without lifting a finger."
+ },
+ "ireena/dc4bdc4fb8bef4fb": {
+  "chars": 81,
+  "direction": "[bitter, angry, sorrowful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "The Abbot stitched poor Vasilka together to give the devil a bride who wasn't me."
+ },
+ "ireena/dd704f31db3034cb": {
+  "chars": 141,
+  "direction": "[uneasy, puzzled, subdued]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I walk past that pool that never freezes every morning on the way to the pens. I never look down into the water, and I couldn't tell you why."
+ },
  "ireena/de56bfbf4b514d0e": {
   "chars": 30,
   "direction": "[vulnerable, earnest]",
@@ -30610,6 +31926,20 @@
   "recipe": "2255a992a9",
   "text": "Wolves, most nights. Dead things on others: neighbors we buried, back to scratch at the boards. And once, him. He doesn't scratch. He knocks, and asks, very politely, to be let in."
  },
+ "ireena/dfd620b79fcf4ca9": {
+  "chars": 63,
+  "direction": "[cutting, dry, steeling herself]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He writes like a bailiff totting up someone else's debt. Go on."
+ },
+ "ireena/e10736673adddf63": {
+  "chars": 141,
+  "direction": "[weary, flat, haunted]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I've stopped counting the nights since the second bite, and I've given up waiting for those two pale, puckered marks under my scarf to close."
+ },
  "ireena/e191de8ec80862f5": {
   "chars": 77,
   "direction": "[furious, cutting, final]",
@@ -30624,12 +31954,33 @@
   "recipe": "2255a992a9",
   "text": "Last night you stood in my father's house, and nobody ran. I've watched a lot of people run. I won't forget it."
  },
+ "ireena/e1ecb958eb97c294": {
+  "chars": 113,
+  "direction": "[firm, teasing, pragmatic]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Keep Madam Eva's painted cards to yourselves, unless one of them tells you plainly where to find a sharper blade."
+ },
+ "ireena/e1f444dc275edabd": {
+  "chars": 108,
+  "direction": "[dry, pointed, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "They say our visitor can't cross that threshold now. I'd very much like to watch him try it on someone else."
+ },
  "ireena/e300d79bfde49a8f": {
   "chars": 24,
   "direction": "[cold, defiant]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Then you'll get nothing."
+ },
+ "ireena/e40379f7275b994e": {
+  "chars": 88,
+  "direction": "[hard, clipped, defiant]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He asked me to the same dinner. I put it straight into the fire before the wax was cold."
  },
  "ireena/e50f506647cbcc47": {
   "chars": 86,
@@ -30659,6 +32010,34 @@
   "recipe": "2255a992a9",
   "text": "Donavich said the words. Father would have corrected his grammar. He'd have been pleased, though. He liked things done properly."
  },
+ "ireena/e786732d0b946e84": {
+  "chars": 112,
+  "direction": "[aching, wistful, lost]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I had twenty years of questions for a brother, and now I don't even know what colour my first mother's hair was."
+ },
+ "ireena/e8868c63a95955ed": {
+  "chars": 70,
+  "direction": "[relieved, dry, curious]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Back with all your limbs. Good. Tell me what you stirred up out there."
+ },
+ "ireena/e8e40bd89c96bb9a": {
+  "chars": 89,
+  "direction": "[rueful, tired, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Even so, I still catch myself sliding the bolt across the door at dusk out of pure habit."
+ },
+ "ireena/e926fb8181523e9a": {
+  "chars": 90,
+  "direction": "[low, warning, wry]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Keep a hand near your hilt when he's near. This valley has enough men claiming me already."
+ },
  "ireena/e93a17293a8d77d8": {
   "chars": 39,
   "direction": "[tense, urgent, low]",
@@ -30666,12 +32045,47 @@
   "recipe": "2255a992a9",
   "text": "Don't talk. Don't wake him. Just do it."
  },
+ "ireena/e9b5ff21165299b6": {
+  "chars": 97,
+  "direction": "[fierce, bitter, self-loathing]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I despise it in myself, and I'd rather lose the hand at the wrist than give him the satisfaction."
+ },
+ "ireena/e9fec7575ee3e429": {
+  "chars": 107,
+  "direction": "[frightened, sober, troubled]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Whatever was waiting in that mountain only came out because someone reached for it. That frightens me more."
+ },
+ "ireena/ea0fb96d4db4511f": {
+  "chars": 100,
+  "direction": "[bitter, hard, grieving]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Marina was wanted by the devil, and Baba Lysaga killed her and let him drown a whole village for it."
+ },
+ "ireena/eacb0895df3efe97": {
+  "chars": 100,
+  "direction": "[afraid, low, steady]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Now that the lord of the castle knows your names, the dark between the trees has changed its weight."
+ },
  "ireena/eb4bfd5443179abc": {
   "chars": 83,
   "direction": "[indignant, cold]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I am standing right here, and I am not a sack of flour to be handed over a counter."
+ },
+ "ireena/ebf79c373752f145": {
+  "chars": 126,
+  "direction": "[cold, disgusted, controlled anger]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "A man who scrubs the moss off a statue and signs his name to the ruin does not want a wife. He wants a monument that breathes."
  },
  "ireena/ec13e4eee1a5901b": {
   "chars": 58,
@@ -30694,6 +32108,13 @@
   "recipe": "2255a992a9",
   "text": "She had my hair. Didn't she. Whoever she was."
  },
+ "ireena/efbe7b1d21b30bfe": {
+  "chars": 119,
+  "direction": "[tight, composed, bitter]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He spent years having my face carved into little dolls while I knew nothing of him. Give me time to look at it plainly."
+ },
  "ireena/f14c24c413137143": {
   "chars": 74,
   "direction": "[brisk, concerned]",
@@ -30708,12 +32129,40 @@
   "recipe": "2255a992a9",
   "text": "I could have told you that for free."
  },
+ "ireena/f1f06b941af335fb": {
+  "chars": 126,
+  "direction": "[haunted, dazed, halting]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "At the pool I remembered a chapel full of white flowers, a high stone wall, and the devil's brother Sergei calling me Tatyana."
+ },
+ "ireena/f26ce1f37e22ce49": {
+  "chars": 78,
+  "direction": "[proud, defiant, steady]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "It reaches all the way to the castle walls. He can't shutter a whole mountain."
+ },
+ "ireena/f2e558249785d14d": {
+  "chars": 90,
+  "direction": "[wry, relieved, a little amused]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Since Father is breathing and walking about again, he has very little use for grave herbs."
+ },
  "ireena/f39271a4a02421e6": {
   "chars": 40,
   "direction": "[uneasy, suspicious]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Why are you all looking at me like that?"
+ },
+ "ireena/f4b30528e8851875": {
+  "chars": 92,
+  "direction": "[warm, earnest, tender]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Hold on to that amulet. It's a rare thing in Barovia to carry a light that actually answers."
  },
  "ireena/f4eb4a29af125655": {
   "chars": 64,
@@ -30722,12 +32171,33 @@
   "recipe": "2255a992a9",
   "text": "Krezk. All that road, and it's a wall with a man in front of it."
  },
+ "ireena/f527fde67649a91e": {
+  "chars": 73,
+  "direction": "[cold, bleak, sorrowful]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Everyone who loves him, or is loved by him, leaves the same kind of ruin."
+ },
  "ireena/f55a8a3e0b127fab": {
   "chars": 103,
   "direction": "[cold, steady, defiant]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I remember a chapel full of white flowers. I remember Sergei. I don't remember loving you. I've looked."
+ },
+ "ireena/f57763605cdd2868": {
+  "chars": 149,
+  "direction": "[amused, proud, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I've been running footwork against the churchyard posts with a broom handle. Father Lucian looks very hard at his prayer book whenever he walks past."
+ },
+ "ireena/f57a9813c90979de": {
+  "chars": 58,
+  "direction": "[defensive, shaken, wary]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "All right. Don't look at me like a clerk catching a thief."
  },
  "ireena/f60f433325f0fbc3": {
   "chars": 155,
@@ -30749,6 +32219,13 @@
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "Fine. Come in. Slowly, and with your hands where I can see them. I've opened this door to worse than you, and I'm still standing."
+ },
+ "ireena/f820c1d95d6fce71": {
+  "chars": 101,
+  "direction": "[tight, ashamed, uncertain]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "I check the latch twice before I lie back down, and I'm never quite sure which of us I'm locking out."
  },
  "ireena/f85499811a1ee145": {
   "chars": 90,
@@ -30778,12 +32255,33 @@
   "recipe": "2255a992a9",
   "text": "Tser Pool first, then. If this Madam Eva reads cards for strangers, she can read a few for me."
  },
+ "ireena/f9bdb739dfa0dd9f": {
+  "chars": 87,
+  "direction": "[dry, incredulous, a little softened]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "So the madman on the mountain was Mordenkainen all along, and now he has his mind back."
+ },
  "ireena/f9c5f4103b42506b": {
   "chars": 70,
   "direction": "[guarded, anxious]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "The women in the village said you could tell me what he wants with me."
+ },
+ "ireena/fb2adca05c6848c7": {
+  "chars": 94,
+  "direction": "[relieved, grave, subdued]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Little Ilya is whole again, and the Abbot has gone up the mountain to answer for what he made."
+ },
+ "ireena/fb44a011a0fbcc55": {
+  "chars": 80,
+  "direction": "[firm, quiet, resolved]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Tatyana went over the wall, and Marina is under the marsh. I am neither of them."
  },
  "ireena/fb82ad34d66f23d9": {
   "chars": 28,
@@ -30792,12 +32290,47 @@
   "recipe": "2255a992a9",
   "text": "I'd sooner walk off a cliff."
  },
+ "ireena/fbd8dc4528c59791": {
+  "chars": 111,
+  "direction": "[dry, wry, incredulous amusement]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Most grandmothers leave a silver spoon or a shawl, not a walking tree stump and a yard full of angry straw men."
+ },
+ "ireena/fd67546c4418c9dc": {
+  "chars": 110,
+  "direction": "[defiant, cold, certain]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "He keeps what he loses - a book in a chest, a stone in the reeds, a girl behind a window. He will not keep me."
+ },
+ "ireena/fd784d5319d08cf9": {
+  "chars": 84,
+  "direction": "[hushed, uneasy, troubled]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Every night I wake in the small hours, and my throat feels pulled toward the window."
+ },
  "ireena/fec5c736bcda575f": {
   "chars": 158,
   "direction": "[haunted, tender, remembering]",
   "model": "eleven_v3",
   "recipe": "2255a992a9",
   "text": "I remember you. I remember a chapel full of white flowers, and being happy for one whole morning. And then the wall. And your brother at the top of the stair."
+ },
+ "ireena/fed200825a53aa4c": {
+  "chars": 85,
+  "direction": "[dry, amused, touched]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "Covered in fresh blossoms, in that churchyard, under that sky? You're terrible liars."
+ },
+ "ireena/ff17903cfc5f14f5": {
+  "chars": 69,
+  "direction": "[wry, rueful, self-aware]",
+  "model": "eleven_v3",
+  "recipe": "2255a992a9",
+  "text": "People usually check the locks when they come near me, not my temper."
  },
  "ireena/ffc80d9892938a00": {
   "chars": 18,
@@ -31033,11 +32566,25 @@
   "recipe": "4624eb3401",
   "text": "He's lying in his coffin at the house, and not one man in this village will help me carry him to the church. They think the devil is watching. They're right. He is."
  },
+ "ismark/5d563ff049e605ed": {
+  "chars": 91,
+  "direction": "[sardonic, weary, fond exasperation]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "Leave it to my sister to send me dry weeds when what I need is a shovel and three more men."
+ },
  "ismark/5dbbf32f8eff2fb5": {
   "chars": 121,
   "model": "eleven_v3",
   "recipe": "4624eb3401",
   "text": "No priest, then. Someone say something. Father would hate a silent funeral; he never let a silence pass without a speech."
+ },
+ "ismark/5f5ed3464f12af51": {
+  "chars": 68,
+  "direction": "[quiet, moved, gruff]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "Put it down by the board. I'm glad to have a piece of her hand here."
  },
  "ismark/602f524707a9c90c": {
   "chars": 105,
@@ -34669,6 +36216,13 @@
   "model": "eleven_v3",
   "recipe": "664c1b288a",
   "text": "My village. They've let the church roof go while I was dead. Two weeks. You can't turn your back."
+ },
+ "kolyan_indirovich/1ca8a5d116da1a06": {
+  "chars": 108,
+  "direction": "[gruff, fond, bossy]",
+  "model": "eleven_v3",
+  "recipe": "664c1b288a",
+  "text": "Stop fussing over my dirt and see that my girl eats a hot meal. She gets cold in the fingers when she frets."
  },
  "kolyan_indirovich/4b085f5c1d9f05df": {
   "chars": 69,
@@ -46281,6 +47835,12 @@
   "recipe": "dd92281f92",
   "text": "Figures in green-dyed sacking step into the road ahead, and the brush behind them steps out too."
  },
+ "narrator/180885a4a76f7cbb": {
+  "chars": 171,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You tell her of the white stone woman on the only dry ground in the marsh: hands folded, face turned toward the castle, moss scrubbed clean, fresh black roses at her feet."
+ },
  "narrator/180901b61463ddbc": {
   "chars": 147,
   "model": "eleven_v4",
@@ -48423,6 +49983,12 @@
   "recipe": "dd92281f92",
   "text": "A rutted track climbs north beside the river. You can hear the falls long before you could ever hope to see them."
  },
+ "narrator/253535618516aeba": {
+  "chars": 177,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the bottom of the bundle, wedged under the heavy spine, two more scrolls are stuck to the frozen cloth. They bear the same hooked letters, and smell faintly of soot and iron."
+ },
  "narrator/253be794875e2e9d": {
   "chars": 64,
   "model": "eleven_v4",
@@ -50468,6 +52034,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The locket is warm inside Tamsin's shirt. It has been warm since the castle gate."
+ },
+ "narrator/32bf503ccf426cad": {
+  "chars": 124,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You leave the herb wedged against the timber and turn back toward the gate. Behind you, black wings shift once on wet stone."
  },
  "narrator/32cb87cbcea6a3bc": {
   "chars": 54,
@@ -53079,6 +54651,12 @@
   "recipe": "dd92281f92",
   "text": "You don't stay to see what the Vistani decide. You hear it, a little later, from the road."
  },
+ "narrator/44c82740350d4c0f": {
+  "chars": 113,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He lifts the leather cover with slow, steady fingers, as though one rough breath might turn the old paper to ash."
+ },
  "narrator/44da959efeac4c1c": {
   "chars": 153,
   "model": "eleven_v4",
@@ -53246,6 +54824,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Two cold weights lift out of two of you, like children climbing down from a cart."
+ },
+ "narrator/45e2cdb6465a977d": {
+  "chars": 298,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You tell her of the stair beneath the plinth and the girl of about nineteen lying asleep on a white stone bier under a lace veil, her red hair braided over one shoulder and no smell of death in the room. You describe the single red scratch above her heart, fine as a thorn's, that has never healed."
  },
  "narrator/45e90ec7cedb0623": {
   "chars": 74,
@@ -54147,6 +55731,12 @@
   "recipe": "dd92281f92",
   "text": "A thick ledger lies open on the table, a pen laid across the page."
  },
+ "narrator/4c1c5c5d38578d44": {
+  "chars": 178,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You shut the cover on the dry rasp of old vellum, the lamp burning low between you after hours of his voice. Somewhere far off, a latch clicks home as softly as a breath let out."
+ },
  "narrator/4c2ef2b0f498af34": {
   "chars": 147,
   "model": "eleven_v4",
@@ -54242,6 +55832,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Heavy carts arrive and light carts leave. The narrow ruts of a handcart come only at night, from the direction of Vallaki."
+ },
+ "narrator/4caca247270ae74a": {
+  "chars": 206,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The last pages tell how she ran from him to the castle wall and fell into the mist rather than be his, how the guards shot him and he did not die, and how he writes at the end that the choice was his alone."
  },
  "narrator/4cb718e19cd7ab3d": {
   "chars": 143,
@@ -55658,6 +57254,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Only clean flagstones now, as if the frost was waiting for a reason to leave."
+ },
+ "narrator/5584bbefbc48723e": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You repeat the word MARINA cut into the plinth and the patient hand beneath it, \"Berez took her. I took Berez.\" Then you tell her whose face the statue wears."
  },
  "narrator/558f60ad156b7366": {
   "chars": 77,
@@ -57159,6 +58761,12 @@
   "recipe": "dd92281f92",
   "text": "He makes a joke about the weather, and then another one, and goes back to his bedroll, and doesn't do a handstand in the morning."
  },
+ "narrator/5e757b52f47eb6f4": {
+  "chars": 112,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She lays a dry sprig of rosemary across your palm. It weighs almost nothing and smells faintly of kitchen smoke."
+ },
  "narrator/5e840f4a76f110f1": {
   "chars": 215,
   "model": "eleven_v4",
@@ -57963,6 +59571,12 @@
   "recipe": "dd92281f92",
   "text": "Something spidery is folded in on itself in the amber, legs over legs, crowned with a ring of small black eyes. Every eye turns to you at once."
  },
+ "narrator/6436f87eeac29ea5": {
+  "chars": 163,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You step aside from five cuts in a row without lifting your guard, following the plain warning in her stare. She lowers the point, breathing hard through her nose."
+ },
  "narrator/6439306a53744914": {
   "chars": 91,
   "model": "eleven_v4",
@@ -57986,6 +59600,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The house is quiet and well-fed. A curtain twitches in an upstairs window, as if to say: come back any time."
+ },
+ "narrator/64537d39560322d9": {
+  "chars": 188,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She holds out a sheet of heavy cream paper, folded neat and broken at the crease where black wax bears a single stamped Z. It was not on the table when the shutters were barred last night."
  },
  "narrator/64693118043f6031": {
   "chars": 87,
@@ -58616,6 +60236,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A swollen, motherly shape fills the clouded amber, ringed with tiny bubbles like a rash. The air near the lid tastes of sickrooms and boiled linen."
+ },
+ "narrator/688b381f75262247": {
+  "chars": 101,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "His dark eyes rest on your hands for a heartbeat too long, reading the new stillness under your skin."
  },
  "narrator/688d7f82a30ae10f": {
   "chars": 88,
@@ -59979,6 +61605,12 @@
   "recipe": "dd92281f92",
   "text": "The stair winds up inside the wall, every step worn into a hollow by four hundred years of boots that only ever went up to look at a dark lamp."
  },
+ "narrator/703b0cbf9c13972c": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Every time you square her shoulders, the heavy point dips back toward the ground and twists in her sweat-damp palm. After half an hour her forearm is trembling."
+ },
  "narrator/703dd62019a30c0f": {
   "chars": 180,
   "model": "eleven_v4",
@@ -60771,6 +62403,12 @@
   "recipe": "dd92281f92",
   "text": "A crib, a mobile of tin birds, and a single candle that should have burned out years ago. Everything a baby needs, except the baby."
  },
+ "narrator/7554c9311606a44b": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You put a blunted blade into her hand. She grips the leather hilt like a poker she means to throw into the grate, knuckles white and shoulders high."
+ },
  "narrator/756fee27f982a8c1": {
   "chars": 135,
   "model": "eleven_v4",
@@ -61094,6 +62732,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You find only a dry heel of salt rind and a rusty tin pan to bang, which looks more likely to annoy a wolf than feed one."
+ },
+ "narrator/780d9b46ed9afda4": {
+  "chars": 162,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "By the fiftieth stroke her heel slips out of line and the flat of the blade slaps harmlessly against your guard. You call a halt before she blisters her palm raw."
  },
  "narrator/7829cd43a87bcb46": {
   "chars": 118,
@@ -62588,6 +64232,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Low vaulted passages smelling of smoke, onions and something under the onions. A kitchen fire is the only warm thing for a hundred feet in any direction."
+ },
+ "narrator/82d256d9975b48be": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The dark earth lies still again, though the air seems to carry the gruff, impatient voice that answered your questions from beneath the sod."
  },
  "narrator/82d355adaa0a93e4": {
   "chars": 174,
@@ -66411,6 +68061,12 @@
   "recipe": "dd92281f92",
   "text": "The fiddle is playing something fast tonight, and somebody is dancing to it: a small girl with black hair, solemn as a judge, on her father's feet."
  },
+ "narrator/9bb47a922f63a0b5": {
+  "chars": 216,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You sweep her boot out from under her again and again, teaching her to tuck her chin, take the shock on her shoulder, and come up with the point already raised. Dust coats her sleeves, but she rises faster each time."
+ },
  "narrator/9bd655dba609971e": {
   "chars": 169,
   "model": "eleven_v4",
@@ -66980,6 +68636,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "An old well-head on the shore, choked with reeds. Something down there is whispering."
+ },
+ "narrator/a005e2e4290fa0f1": {
+  "chars": 202,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You make her cut from the shoulder a hundred times until her hair clings to her temples and the blade whistles along the same line every time. On the last stroke, the blow rings hard against your parry."
  },
  "narrator/a005ed8a0c7e3a0e": {
   "chars": 120,
@@ -69057,6 +70719,12 @@
   "recipe": "dd92281f92",
   "text": "The same ruts as on the shoulder outside, worn into the floor by a handcart going down full and coming back empty."
  },
+ "narrator/ad20014ef126c9bd": {
+  "chars": 177,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She takes her stance without being corrected, the blunted blade steady in her fist. There is time for one more lesson: a single honest strike, or how to survive losing her feet."
+ },
  "narrator/ad25ec4a77d0f85b": {
   "chars": 144,
   "model": "eleven_v4",
@@ -71055,6 +72723,12 @@
   "recipe": "dd92281f92",
   "text": "Under the last stone, wrapped in oilcloth gone stiff with cold, lies a fat spellbook bound in grey leather, and tucked inside its cover two loose scrolls, written fast. The hand is strong and impatient. The capital letters all have a little hook."
  },
+ "narrator/bc1c87b85450a3aa": {
+  "chars": 172,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He bows with an old-fashioned grace that belongs to a century no one living remembers, then turns toward the road home. He looks lighter than the man who sat mending a net."
+ },
  "narrator/bc2a967c43fcf68a": {
   "chars": 106,
   "model": "eleven_v4",
@@ -72182,6 +73856,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You move like someone with all night to spare, and the ravens decide you aren't worth the trouble of a fight."
+ },
+ "narrator/c35df9abb696966b": {
+  "chars": 184,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You tap the flat of your blade against her wrist each time her gaze gives her away, until she learns to watch your chest instead of the spot she means to hit. The last cut lands clean."
  },
  "narrator/c363e2f87110cfd7": {
   "chars": 222,
@@ -73329,6 +75009,12 @@
   "recipe": "dd92281f92",
   "text": "A wardrobe full of coats, and behind it, cold air and a narrow stair."
  },
+ "narrator/cb69bfaef7abc201": {
+  "chars": 172,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Something shutters behind his eyes, quiet and final as the wagon door at his back. He reaches down, takes up the bone needle and the cord, and begins to knot the net again."
+ },
  "narrator/cb6cdd606c63d7f3": {
   "chars": 165,
   "model": "eleven_v4",
@@ -73904,6 +75590,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A study, warm with candles that give no heat, crowded with reading tables and books. At the far end, on a step, a high-backed chair."
+ },
+ "narrator/cef01ede9f3ecb6c": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Cold mist clings to the raw mound, and the smell of turned clay hangs heavy. You set the dry rosemary against the dark wood at the head of the plot."
  },
  "narrator/cef1a91b3506196e": {
   "chars": 130,
@@ -75099,6 +76791,12 @@
   "recipe": "dd92281f92",
   "text": "And the blanket over the tinker's knees hides a chain from his ankle into the boards, grey and glistening, that isn't iron."
  },
+ "narrator/d74accdbe6708c39": {
+  "chars": 124,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The grey needles catch in a splinter and stay put against the wind. Down the path, an iron spade scrapes once against stone."
+ },
  "narrator/d74e00bcdbf4810b": {
   "chars": 146,
   "model": "eleven_v4",
@@ -75470,6 +77168,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "\"My boy. Sergiu. My boy is in the wall. He smells wrong now, cold-wrong, but he's my boy. The old man put him in there with the stinking flowers, and cried. Then the old man died.\""
+ },
+ "narrator/da5f9c4e9e93c4c3": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You set a boot against her heel to widen her stance and press her elbow down until the weight drops into her hips. The blade stops wavering."
  },
  "narrator/da6d58c5e6931bbe": {
   "chars": 71,
@@ -76953,6 +78657,12 @@
   "recipe": "dd92281f92",
   "text": "Steaua is in the pen when you come back, grey as river stone, with Luminita's face pressed into her neck."
  },
+ "narrator/e40ac4b1f9ff8c7a": {
+  "chars": 194,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You lay the heavy leather volume between you and turn to the first page, where the ink is black and level as a ruled ledger. She folds her hands in her lap and tells you not to spare her a word."
+ },
  "narrator/e40f3433eb20927e": {
   "chars": 142,
   "model": "eleven_v4",
@@ -78327,6 +80037,12 @@
   "recipe": "dd92281f92",
   "text": "Anna opens the door with a candle, and sees what's behind you, and the candle goes out."
  },
+ "narrator/ed3fe098b84a3d46": {
+  "chars": 187,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You read for an hour of the warlord who took the valley by the blade, of the quiet years that soured in his mouth, and of the younger brother, Sergei, who had everything the elder lacked."
+ },
  "narrator/ed3fee72670fa00b": {
   "chars": 193,
   "model": "eleven_v4",
@@ -78758,6 +80474,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A dozen little bags of greasy leather hang from the hooks, each tied with a hair ribbon, each faintly warm. Hold one to your ear and, very far away, somebody is crying."
+ },
+ "narrator/efe15e52b73df651": {
+  "chars": 192,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The steady hand does not waver as it names Tatyana, who gave her heart to the younger brother, or the bargain struck in the dark under the mountains, paid in Sergei's blood on the wedding day."
  },
  "narrator/efea7fafeeb87543": {
   "chars": 175,
@@ -79425,6 +81147,12 @@
   "recipe": "dd92281f92",
   "text": "You tell him about the gallows at the crossroads, and the board, and the two words on it. He listens with his hands flat on the rail."
  },
+ "narrator/f4878757709263ed": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He lets the net slide from his lap to the ground, and his hands, for once, do not go after it. The lake wind stirs his coat, smelling of cold water and wet ash."
+ },
  "narrator/f498f4ccb8c931d2": {
   "chars": 114,
   "model": "eleven_v4",
@@ -79574,6 +81302,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Hedda, at the back of the nave, puts a hand flat against a pillar and closes her eyes. For the space of one breath her face changes, as if someone has opened a door onto a warm room."
+ },
+ "narrator/f5567dea3f9693e6": {
+  "chars": 215,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She braces her arm on the way down instead of rolling, jarring her wrist hard against the ground and losing her grip on the hilt. You haul her up and call an end to it while she shakes the numbness from her fingers."
  },
  "narrator/f56259fc5869a486": {
   "chars": 62,
@@ -80055,6 +81789,12 @@
   "recipe": "dd92281f92",
   "text": "You see only a shivering girl in thin grey wool, her knuckles red from cold water and lye."
  },
+ "narrator/f8f1a918e279b281": {
+  "chars": 169,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A second square of cream paper rests across her knee, the black Z cracked in two and carrying a thin, dry smell of woodsmoke. Her thumb sits flat over the folded corner."
+ },
  "narrator/f90c6f3b5638753a": {
   "chars": 125,
   "model": "eleven_v4",
@@ -80493,11 +82233,23 @@
   "recipe": "dd92281f92",
   "text": "The prayer begins. Doru closes his eyes, and for one breath his lips move with it."
  },
+ "narrator/fbbea9e6039fea51": {
+  "chars": 112,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He folds the half-mended net into a neat square and sets it on the stool, though his fingers linger on the cord."
+ },
  "narrator/fbcb41d7016d8458": {
   "chars": 57,
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He says it the way a carpenter says he is making a chair."
+ },
+ "narrator/fbd7e38aeded092b": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You raise a guard and tell her to strike where she sees an opening. Her eyes fix hard on your left shoulder three heartbeats before her arm moves."
  },
  "narrator/fbe3574561fe1125": {
   "chars": 113,
@@ -89117,6 +90869,13 @@
   "recipe": "71f51bdb43",
   "text": "Liriel. Wake up, priestess. Come here and kneel. You know how; you do it every morning."
  },
+ "strahd/242493cda599d6a2": {
+  "chars": 107,
+  "direction": "[low, intimate, coaxing, cruel]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You need only lift the window latch when the house grows quiet, as we both know your hand has wished to do."
+ },
  "strahd/2533a4980ffacb58": {
   "chars": 157,
   "model": "eleven_v3",
@@ -89291,6 +91050,13 @@
   "recipe": "71f51bdb43",
   "text": "I owe you the truth about Marina. I do not often owe anyone. Consider it noted."
  },
+ "strahd/4795e06b0170d984": {
+  "chars": 129,
+  "direction": "[cold, contemptuous, composed]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "They hang their banners and bar their shutters as though a strip of painted cloth has ever kept me from a window I meant to open."
+ },
  "strahd/47b50f535e0f44fa": {
   "chars": 79,
   "model": "eleven_v3",
@@ -89381,6 +91147,27 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "How gallant. She hardly needs you; she has been refusing me on her own for centuries. It has never once saved anyone who stood where you are standing."
+ },
+ "strahd/55209c34b457c0b8": {
+  "chars": 125,
+  "direction": "[tender tone, possessive, gracious]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "My carriage waits upon the road at dusk, Ireena, and your place is laid at my castle table where the candles are already lit."
+ },
+ "strahd/56b918bb396a0b97": {
+  "chars": 105,
+  "direction": "[smooth, pleasant, menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Keep those who would die for you close by the hearth tonight; we will speak again before the week is out."
+ },
+ "strahd/56f77561e276bacf": {
+  "chars": 109,
+  "direction": "[soft, courteous, low menace]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Rest well while the smoke clears, Ireena, and do not let those who would die for you stand too near the door."
  },
  "strahd/576e5a270de8ad8a": {
   "chars": 141,
@@ -90049,6 +91836,13 @@
   "recipe": "71f51bdb43",
   "text": "As my guests wish. I only wanted her to hear the bell. Bells are for funerals, Ireena. Listen to it, and wonder whose is next."
  },
+ "strahd/e18a1a55d0ee8ea9": {
+  "chars": 125,
+  "direction": "[amused, mocking, patient]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "How charming to watch the lanterns strung along the road and hear so many loud voices promising one another the dark is past."
+ },
  "strahd/e404e9707d4c26db": {
   "chars": 7,
   "model": "eleven_v3",
@@ -90118,6 +91912,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Stay. Cook for me, or conjure for me, as you prefer. I will give you a title older than your family and a tower of your own, and every person in this valley will stand when you enter a room. I don't make that offer twice."
+ },
+ "strahd/f06015d2b6547a7d": {
+  "chars": 150,
+  "direction": "[silken, reproachful, quietly menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Ireena. You did not come to the door when I called in the dark, though the night was damp and your father's grave lies cold in the village churchyard."
  },
  "strahd/f38a1cde2a405ec9": {
   "chars": 9,
