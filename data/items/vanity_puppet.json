@@ -1,0 +1,13 @@
+{
+  "id": "vanity_puppet",
+  "name": "A Puppet with No Reflection",
+  "source": {
+    "book": "custom",
+    "note": "One of Blinsky's toys (easter-egg plan R3); ours."
+  },
+  "category": "gear",
+  "weight_lb": 1,
+  "cost_gp": 6,
+  "summary": "A pale wooden puppet with silver-white hair and a red-lined coat, posed before a little toy mirror.",
+  "text": "Gadof Blinsky's work: an elegant pale puppet admiring himself in a thumb-sized looking glass. Turn him how you like; the glass shows only whatever stands behind him. Nobody in Vallaki has ever wanted one."
+}

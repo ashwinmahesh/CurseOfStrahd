@@ -423,6 +423,7 @@ once
 
 ~ examine:toy_shelves
 | Wooden soldiers with hollow eyes. Rag dolls with button smiles. A carved wolf that, when you press its back, opens its mouth and keeps it open.
+| [flag.eggs_puppet_seen and not item:vanity_puppet and not flag.eggs_puppet_given] Hollow-eyed soldiers, button-smiled dolls and the yawning wooden wolf crowd the lower boards. Up top, the pale puppet still preens before his tiny mirror, which shows only the wall behind him.
 
 ~ examine:gallows_puppet
 | A puppet theatre with a little castle at the back and a little village at the front. All the villagers are on strings. So is the castle.
@@ -632,3 +633,21 @@ once
 
 ~ check:religion:saint_blessing:failure
 | The words are right and the moment isn't. The saint, today, is listening to someone else.
+
+# ---------------------------------------------------------------- Small winks (easter-egg plan R3, docs/story/eggs.md)
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r3/); unvoiced.
+
+~ check:perception:top_shelf_look:success
+| High on the top board, behind a tin drum, a pale wooden dandy in a red-lined coat poses before a thumb-sized looking glass. Turn him how you like: the glass gives back only the shop behind his shoulder.
+
+~ check:perception:top_shelf_look:failure
+| Nothing waits on the high board but a skin of old dust, a sagging cobweb and a dented tin drum with no sticks.
+
+~ examine:square_chalk_board
+| Children have chalked the back of an old notice board, a story added to day by day: a masked swordsman driving goblins from a little farm. In the newest corner someone has given him horns and an eyepatch, and drawn a tall lady in red holding his leash.
+~ check:investigation:trunk_strap_papers:success
+| Folded small and pushed under the chest's iron straps, a letter on good paper, read so often the creases have gone soft as cloth.
+
+~ check:investigation:trunk_strap_papers:failure
+| The papers under the straps are wedged tight, and the chest's owner has knotted the buckles in a way that would take an hour to undo honestly.
+

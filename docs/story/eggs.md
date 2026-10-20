@@ -100,4 +100,21 @@ Gemini record and notes: `docs/plans/gemini_eggs/r2/README.md`. Test: `tests/int
 - **The other fellow's guide.** Once his own guidebook is started, Fennimore rants about a rival with one glass eye and
   gives the party the rival's best-selling monster guide, furiously annotated.
 - **A borrowed name.** On a visit after the reading, Madam Eva remarks once on a hero named Tav (`hero_named:tav`).
+## R3: Vallaki
+
+Gemini record and notes: `docs/plans/gemini_eggs/r3/README.md`. Test: `tests/integration/test_eggs_vallaki.gd`. Flags:
+`data/flags/eggs_vallaki.json` and `eggs_puppet_seen` in `data/flags/world_checks.json`. Item: `vanity_puppet`.
+
+- **The puppet with no reflection.** A sharp look along Blinsky's top shelf (`top_shelf_look`, Perception DC 12) finds
+  a pale puppet posed before a toy mirror that shows only the shop; Blinsky sells it from then on (one, 6 gp). Emanoil,
+  shown it, pays twice over and makes up a couplet (`emanoil:puppet`).
+- **The Baron's fifth decree** forbids shoving a neighbour off a roof, into the river or onto a bonfire; the festive
+  clocks still come last and repeat.
+- **Two good dogs**: the big dog in the square and the Vistani camp dog (`dog_pet` in each).
+- **A letter under the straps** of Rictavio's sea chest (`trunk_strap_papers`, Investigation DC 14): an old druid in
+  the west calls its reader "child" and tells him to stop hunting alone. It never names him.
+- **The masked hero in chalk** on the back of a notice board by the square (`square_chalk_board`): the children's hero
+  has lately grown horns and an eyepatch, and a lady in red holds his leash.
+- **The Lady of Loss**: a black tract on the Wachterhaus book club's chairs (`black_tract`), with a teacher's note about a
+  novice who forgets her own name and picks the flowers that open at night.
 

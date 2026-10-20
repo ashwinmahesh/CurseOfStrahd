@@ -82,6 +82,11 @@
       {
         "id": "painters_supplies",
         "qty": 1
+      },
+      {
+        "id": "vanity_puppet",
+        "qty": 1,
+        "if": "flag.eggs_puppet_seen"
       }
     ],
     "magic": [

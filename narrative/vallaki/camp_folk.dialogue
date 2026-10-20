@@ -23,9 +23,17 @@ Mihnea: Keep to the fire, stranger. I watch the road so you don't have to. And s
 
 ~ dog
 Narrator: The camp dog trots after you for a few steps, decides you aren't carrying anything to eat, and goes back to sitting very hopefully beside the pot.
+* [if not flag.eggs_dog_camp] (Pet the dog.) -> dog_pet
 * [if spell:speak_with_animals] Ask the dog about the camp. -> dog_speaks
 * [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the dog about the camp.) -> dog_cast
-* [if spell:speak_with_animals or knows:speak_with_animals] Leave it by the pot. -> END
+* [if spell:speak_with_animals or knows:speak_with_animals or not flag.eggs_dog_camp] Leave it by the pot. -> END
+-> END
+
+# A good dog (easter-egg plan R3, docs/story/eggs.md). Drafted by Gemini through the ai-bridge and edited
+# (docs/plans/gemini_eggs/r3/); unvoiced.
+~ dog_pet
+set eggs_dog_camp
+Narrator: The camp dog accepts your scratching with a brief, businesslike wag, though its eyes never once leave the ladle resting on the rim of the pot.
 -> END
 
 ~ dog_cast

@@ -252,7 +252,22 @@
       ],
       "kind": "examine",
       "label": "Rictavio's sea chest",
-      "model": "trunk"
+      "model": "trunk",
+      "checks": [
+        {
+          "id": "trunk_strap_papers",
+          "skill": "investigation",
+          "dc": 14,
+          "label": "Look at the papers under the straps",
+          "success": {
+            "codex": {
+              "id": "letter_under_the_straps",
+              "title": "A letter under the straps",
+              "text": "Child,\nIf you think a painted wagon and a loud coat will fool the dark, your wits have gone the way of your knees. Stop chasing monsters alone through every wet ditch you can find. Your letters smell of tallow and salt pork: eat something green before your last teeth mutiny, and write back, so I know which fog swallowed you.\nAs for me, I am still not dead, despite everyone's dedicated efforts.\n[a little harp and a crescent moon]"
+            }
+          }
+        }
+      ]
     },
     {
       "id": "rictavio_wagon_outside",

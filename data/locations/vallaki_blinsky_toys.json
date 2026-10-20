@@ -89,7 +89,18 @@
       ],
       "kind": "examine",
       "label": "Shelves of toys",
-      "model": "shelves"
+      "model": "shelves",
+      "checks": [
+        {
+          "id": "top_shelf_look",
+          "skill": "perception",
+          "dc": 12,
+          "label": "Look along the top shelf",
+          "success": {
+            "flag": "eggs_puppet_seen"
+          }
+        }
+      ]
     },
     {
       "id": "gallows_puppet",

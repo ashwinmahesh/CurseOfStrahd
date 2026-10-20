@@ -167,9 +167,17 @@ Gheorghe: Every morning I rake it smooth. Every afternoon the carts churn it up.
 
 ~ dog
 Narrator: The big dog sniffs your boots for a long moment, decides you are not food and not trouble, and lies down across the square's best patch of sun.
+* [if not flag.eggs_dog_vallaki] (Pet the dog.) -> dog_pet
 * [if spell:speak_with_animals] Ask the dog what goes on in town at night. -> dog_speaks
 * [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the dog what goes on in town at night.) -> dog_cast
-* [if spell:speak_with_animals or knows:speak_with_animals] Leave it its sun. -> END
+* [if spell:speak_with_animals or knows:speak_with_animals or not flag.eggs_dog_vallaki] Leave it its sun. -> END
+-> END
+
+# A good dog (easter-egg plan R3, docs/story/eggs.md). Drafted by Gemini through the ai-bridge and edited
+# (docs/plans/gemini_eggs/r3/); unvoiced.
+~ dog_pet
+set eggs_dog_vallaki
+Narrator: Your hand finds the matted spot behind his collar, and the big dog leans his whole weight against your shin with a long, whistling sigh. It is the only honest sound in the square.
 -> END
 
 ~ dog_cast

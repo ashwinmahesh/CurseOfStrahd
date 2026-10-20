@@ -220,7 +220,8 @@ Baron [sad]: The council lets me keep the sash. Lucian insisted. He's kind, Luci
 Baron: Lydia wants to grow turnips. Victor wants nothing to do with either of us, which is the same as before. And I... I thought I might go to a festival. Somebody else's. Just to see what it's like, not being in charge of the cheering.
 -> END
 
-# A new decree each time (NPC plan batch 3): five, then he repeats the last with feeling.
+# A new decree each time (NPC plan batch 3): six, then he repeats the last with feeling. The fifth is a wink (easter-egg
+# plan R3, drafted by Gemini through the ai-bridge and edited, docs/plans/gemini_eggs/r3/; unvoiced).
 ~ decree
 set baron_decrees += 1
 if flag.baron_decrees == 1
@@ -235,6 +236,9 @@ Baron: If wolves must be mentioned at all, let them be spoken of in a spirit of 
 elif flag.baron_decrees == 4
 Baron [smile]: By municipal proclamation, the sky over Vallaki shall henceforth be considered a bright and cheering blue!
 Baron: Anyone who disagrees with this observation is welcome to take the matter up with the sky from the stocks.
+elif flag.baron_decrees == 5
+Baron [smile]: Hear ye! No citizen shall shove a neighbour off a roof, into the river or onto a festival bonfire, however festive the spirit of the push!
+Baron: We shall keep both feet on the cobbles, cheerfully, until further notice!
 else
 Baron [smile]: Citizens, rejoice! All clocks and watches within the walls are to be set immediately to 'festive'.
 Baron: The town clock in the square has already complied, and I expect no less from the rest of you!

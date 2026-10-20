@@ -28,6 +28,7 @@ Emanoil [sad]: Ah. No, of course not. Your boots have road mud on them, not the 
 * Let us help you write your letter to the castle. -> letter
 * Let us tell you what the castle is really like. -> truth
 * [if flag.emanoil_lonely or flag.emanoil_truth_told] Where does the candle come in? -> candle
+* [if item:vanity_puppet and not flag.eggs_puppet_given] (Show him the pale puppet from Blinsky's.) -> puppet
 * Goodbye. -> END
 
 ~ poems
@@ -99,4 +100,19 @@ Emanoil: 'Strangers came down the misty road, / And paused before my grim abode.
 Emanoil: 'They did not laugh, they did not jeer, / And left one small warm candle here.'
 Narrator: You tell him, quite honestly, that it is the finest thing he has ever written.
 Emanoil [smile]: Do you think so? 'Road' and 'abode' came to me while I was washing my teacup.
+if item:vanity_puppet and not flag.eggs_puppet_given
+* (Show him the pale puppet from Blinsky's.) -> puppet
+* Goodbye. -> END
+endif
+-> END
+
+# A wink (easter-egg plan R3, docs/story/eggs.md). Drafted by Gemini through the ai-bridge and edited
+# (docs/plans/gemini_eggs/r3/); unvoiced.
+~ puppet
+set eggs_puppet_given
+take vanity_puppet
+Emanoil [smile]: Look at the curl of that lip, the tragic cut of the coat! He is the very image of the cursed nobility.
+Emanoil: Here, take twice what the toymaker asked. I insist, even if I must live on turnip broth till Tuesday.
+gold +12
+Emanoil [smile]: "O pale little gentleman, carved out of pine, / The glass keeps its secrets, and you shall keep mine!"
 -> END

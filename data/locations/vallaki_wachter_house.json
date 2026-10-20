@@ -180,6 +180,18 @@
       "model": "chairs"
     },
     {
+      "id": "black_tract",
+      "cell": [
+        13,
+        4
+      ],
+      "kind": "book",
+      "label": "A slim black book on a chair",
+      "model": "book",
+      "codex": "black_tract",
+      "text": "A tract to a dark sister-goddess of loss, bound in black and unsigned. \"Memory is a splinter the bright sister leaves in the flesh; only the dark sister draws it out. Come into the unlit room and lay your griefs upon her cold palm, for the night keeps what it takes, and in the mercy of forgetting no wound can ache twice.\"\nIn the margin, in a teacher's hand: \"The dark-haired novice keeps forgetting her own name, and will not stop picking the white flowers that open only at night. We have had to take her shears away twice.\""
+    },
+    {
       "id": "tea_service",
       "cell": [
         21,

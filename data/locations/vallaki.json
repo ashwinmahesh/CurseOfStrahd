@@ -800,6 +800,16 @@
       "facing": "north"
     },
     {
+      "id": "square_chalk_board",
+      "cell": [
+        24,
+        18
+      ],
+      "kind": "examine",
+      "label": "A notice board the children have chalked over",
+      "model": "notice_board"
+    },
+    {
       "id": "main_street_lamp_1",
       "cell": [
         10,

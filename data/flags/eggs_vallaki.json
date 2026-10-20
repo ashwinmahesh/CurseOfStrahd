@@ -1,0 +1,20 @@
+{
+  "region": "eggs_vallaki",
+  "flags": [
+    {
+      "id": "eggs_puppet_given",
+      "type": "bool",
+      "summary": "The party gave Emanoil the pale puppet from Blinsky's top shelf (vallaki/emanoil:puppet)."
+    },
+    {
+      "id": "eggs_dog_vallaki",
+      "type": "bool",
+      "summary": "The party petted the big dog in Vallaki's square (vallaki/townsfolk:dog_pet). One of the five good-dog marks the hidden Good Dogs, All achievement reads."
+    },
+    {
+      "id": "eggs_dog_camp",
+      "type": "bool",
+      "summary": "The party petted the Vistani camp dog outside Vallaki (vallaki/camp_folk:dog_pet). One of the five good-dog marks the hidden Good Dogs, All achievement reads."
+    }
+  ]
+}
