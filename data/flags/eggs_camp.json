@@ -1,0 +1,35 @@
+{
+  "region": "eggs_camp",
+  "flags": [
+    {
+      "id": "eggs_song_1",
+      "type": "string",
+      "summary": "Wren's song at camp (camp/wren:song_1): the first new line the party picked, hope, grim or silly."
+    },
+    {
+      "id": "eggs_song_2",
+      "type": "string",
+      "summary": "Wren's song at camp (camp/wren:song_2): the second new line the party picked, hope, grim or silly."
+    },
+    {
+      "id": "eggs_song_3",
+      "type": "string",
+      "summary": "Wren's song at camp (camp/wren:song_3): the third new line the party picked, hope, grim or silly."
+    },
+    {
+      "id": "eggs_song_sung",
+      "type": "bool",
+      "summary": "Wren sang the horned girl's song at camp with the verse the party finished (camp/wren:song_sing). Earns the hidden Encore achievement; the Blue Water Inn's night line reads it."
+    },
+    {
+      "id": "eggs_eye_checked",
+      "type": "bool",
+      "summary": "Someone looked under Ratatouille's (or Silvain's) eyelid at camp and found a marsh leech (camp/ratatoille:eye_found, camp/silvain:eye_found). Part three of three of the hidden The Man Who Fell from the Sky achievement."
+    },
+    {
+      "id": "eggs_quillon_rivals",
+      "type": "bool",
+      "summary": "Mister Quillon told the party about his rival in the crimson waistcoat (camp/kip:quillon_rivals)."
+    }
+  ]
+}

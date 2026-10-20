@@ -21,6 +21,8 @@
 
 ~ rest:long:vallaki_blue_water_inn
 | You sleep under the Blue Water Inn's roof, in a bed with a quilt on it. Downstairs, someone plays the same sad song until dawn.
+# Once Wren's song is finished (easter-egg plan R6a; Gemini draft, edited; unvoiced).
+| [once and flag.eggs_song_sung] Downstairs, a squinting fiddler saws through Wren's tune a half-step flat, and every wet cloak in the taproom thumps a mug and roars out the last line together.
 
 ~ rest:long:krezk
 | You sleep inside Krezk's walls, behind a gate that was shut against you not long ago. The guards on the wall don't look out all night. They look in.
@@ -80,6 +82,8 @@
 
 ~ dream:amber_temple
 | You dream of a voice in amber, warm and reasonable, offering you exactly what you want. In the dream you say yes. You wake not sure you didn't.
+# Once a dark gift is taken (easter-egg plan R6a: the visitor with a borrowed face; Gemini draft, edited; unvoiced).
+| [once and flag.dark_gifts_taken >= 1] You stand on the deck of a ship that isn't there, above a sea of dry mist, and a stranger wearing the face you most miss lays a warm hand over the amber cold in your chest. They promise the new hunger in you will sleep like a hound, if only you'll let it off the chain when they ask.
 | You dream of a library where every book is about you, and the last page of each one is torn out.
 
 ~ dream:argynvostholt

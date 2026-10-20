@@ -327,3 +327,100 @@ approve wren_featherfoot +3: You told me to have a joke ready anyway
 ~ devoted_end
 inspire name:wren_featherfoot: knew who he is with the teacher gone
 -> END
+
+# --- A wink (easter-egg plan R6a, docs/story/eggs.md): the song a travelling bard could never finish -------------------
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6a/); every line here is unvoiced. The lyrics are ours.
+
+~ talk_song
+if name:wren_featherfoot and visited:vallaki and not flag.eggs_song_sung
+-> song
+endif
+-> END
+
+~ song
+interject name:wren_featherfoot: Met a girl with curling horns on a river road once, lugging a lute half her size and a song she couldn't finish.
+interject name:wren_featherfoot: I've hummed the half she had ever since. Help me patch a last verse onto it, yeah? Three lines. I'll allow it if they're terrible.
+-> song_1
+
+~ song_1
+* (Hopeful.) "We walk the mist until the morning light," -> song_1_hope
+* (Grim.) "We march like ghosts into the starving night," -> song_1_grim
+* (Silly.) "We tripped on roots and gave the owls a fright," -> song_1_silly
+* (Not tonight, Wren.) -> END
+
+~ song_1_hope
+set eggs_song_1 = "hope"
+-> song_2
+
+~ song_1_grim
+set eggs_song_1 = "grim"
+-> song_2
+
+~ song_1_silly
+set eggs_song_1 = "silly"
+-> song_2
+
+~ song_2
+* (Hopeful.) "With faithful lanterns burning warm and bright," -> song_2_hope
+* (Grim.) "Where every shadow sharpens for a fight," -> song_2_grim
+* (Silly.) "While arguing whose boots are laced too tight," -> song_2_silly
+
+~ song_2_hope
+set eggs_song_2 = "hope"
+-> song_3
+
+~ song_2_grim
+set eggs_song_2 = "grim"
+-> song_3
+
+~ song_2_silly
+set eggs_song_2 = "silly"
+-> song_3
+
+~ song_3
+* (Hopeful.) "And side by side we keep the road in sight." -> song_3_hope
+* (Grim.) "And only fools and friends outlast the blight." -> song_3_grim
+* (Silly.) "And trade the gloom for supper and a bite." -> song_3_silly
+
+~ song_3_hope
+set eggs_song_3 = "hope"
+-> song_sing
+
+~ song_3_grim
+set eggs_song_3 = "grim"
+-> song_sing
+
+~ song_3_silly
+set eggs_song_3 = "silly"
+-> song_sing
+
+~ song_sing
+Narrator: Wren taps a heel against a blackened log and sings it through, the old half and then the new.
+if flag.eggs_song_1 == "hope"
+interject name:wren_featherfoot: We walk the mist until the morning light,
+elif flag.eggs_song_1 == "grim"
+interject name:wren_featherfoot: We march like ghosts into the starving night,
+elif flag.eggs_song_1 == "silly"
+interject name:wren_featherfoot: We tripped on roots and gave the owls a fright,
+endif
+if flag.eggs_song_2 == "hope"
+interject name:wren_featherfoot: With faithful lanterns burning warm and bright,
+elif flag.eggs_song_2 == "grim"
+interject name:wren_featherfoot: Where every shadow sharpens for a fight,
+elif flag.eggs_song_2 == "silly"
+interject name:wren_featherfoot: While arguing whose boots are laced too tight,
+endif
+if flag.eggs_song_3 == "hope"
+interject name:wren_featherfoot: And side by side we keep the road in sight.
+elif flag.eggs_song_3 == "grim"
+interject name:wren_featherfoot: And only fools and friends outlast the blight.
+elif flag.eggs_song_3 == "silly"
+interject name:wren_featherfoot: And trade the gloom for supper and a bite.
+endif
+Narrator: For three breaths even the pines stop dripping. Then the whole camp cheers at once.
+interject name:wren_featherfoot: Easy. Told you we'd make a proper tune of it.
+interject name:wren_featherfoot: Wherever that horned girl got to, I hope somebody helped her finish hers too.
+set eggs_song_sung
+approve wren_featherfoot +2: You helped me finish the horned girl's song
+inspire party: finished Wren's song at the fire
+-> END

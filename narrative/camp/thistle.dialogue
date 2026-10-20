@@ -281,3 +281,38 @@ interject name:thistle: When I'm home and you're wherever, I'll look up and ther
 approve thistle +3: You let me name a star for us
 inspire name:thistle: named a star for her pack
 -> END
+
+# --- A wink (easter-egg plan R6a, docs/story/eggs.md): Thistle is fonder of Lavinia's bear than she lets on ------------
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6a/); every line here is unvoiced.
+
+~ talk_bujor
+if name:thistle and quest.the_dancing_bear == done
+-> bujor
+endif
+-> END
+
+~ bujor
+interject name:thistle: You still awake? My head's stuck on that dancing bear of Lavinia's. Bujor.
+if flag.bujor_home
+interject name:thistle: Big fellow like that, smells right, steps neat to the fiddle, and never once yanks his chain. If he ever gets tired of Lavinia's wagon, he can share my fire.
+else
+interject name:thistle: Warm, broad in the shoulder, smells right, and smart enough to trade a stage for the deep woods with that cub. If he ever wants company that doesn't hold a chain, he's mine.
+endif
+interject name:thistle: Bark and bones, don't look at me like that. Keep your mouth shut round the others, hear?
+* Should I buy you a tambourine? -> bujor_tease
+* Any bear with sense would be lucky to have you, Thistle. -> bujor_lucky
+* Not a word to anyone. I swear it. -> bujor_promise
+
+~ bujor_tease
+interject name:thistle: Bark and bones, shut your trap! Take a pine cone to the ear and see how you dance.
+-> END
+
+~ bujor_lucky
+interject name:thistle: ...Hmph. Well. I know where the good berries grow, anyhow.
+approve thistle +1: You said any bear with sense would be lucky to have me
+-> END
+
+~ bujor_promise
+interject name:thistle: Swear it proper, then: thumb to the bark and eye on the fire. Grandda says a camp oath holds till the ashes go cold.
+approve thistle +1: You swore a camp oath to keep my secret about the bear
+-> END

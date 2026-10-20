@@ -143,3 +143,25 @@ Gemini record and the plan-versus-game notes: `docs/plans/gemini_eggs/r5/README.
 - **Engine touch.** `item:spell_scroll_level_1` and `take spell_scroll_level_1` mean any Spell Scroll of that level
   (`StoryState.is_scroll_of`): scrolls are always carried as a particular spell, so the generic id never matched.
 
+## R6a: companions at camp, on the road and in dreams
+
+Gemini record and the plan-versus-game notes: `docs/plans/gemini_eggs/r6a/README.md`. Test:
+`tests/integration/test_eggs_camp.gd`. Flags: `data/flags/eggs_camp.json` (`eggs_song_1` to `eggs_song_3`, strings
+holding `hope`, `grim` or `silly`; `eggs_song_sung`; `eggs_eye_checked`; `eggs_quillon_rivals`). Achievement:
+`data/achievements/r6a.json` (Encore).
+
+- **Thistle and the bear** (`camp/thistle:talk_bujor`, once The Dancing Bear is done): she has been thinking about
+  Bujor more than is usual and asks the party not to tell. Two of the three answers earn her approval +1.
+- **Wren's unfinished song** (`camp/wren:talk_song`, any camp once the party has been to Vallaki): three lines picked
+  from hopeful, grim or silly each, sung at the fire. Approval wren +2, Heroic Inspiration for the party, Encore. The
+  next night at the Blue Water Inn (`rest:long:vallaki_blue_water_inn` in `nights.dialogue`, a `[once]` variant) the
+  room joins in on the last line. The lyrics are ours.
+- **Quillon's colleague in red** (`camp/kip:quillon_rivals`, one more question at his first call): a rival who sings his
+  contracts.
+- **Something behind the eye** (`camp/ratatoille:talk_eye`, or `silvain:talk_eye` when Ratatouille isn't along, after
+  the reedy inlet or the marsh track): Medicine DC 10 finds a marsh leech under the lid. Sets `eggs_eye_checked`, part
+  three of the sky-man's three; Ratatouille's comfort answer earns approval +1.
+- **Two banters** in `banter/party_six.dialogue`: Ilse and Wren, and Godrick and Liriel, about a thrown chair (once
+  `eggs_threw_furniture`), and Godrick telling Thistle of a horned woman whose heart ran too hot.
+- **The visitor with a borrowed face**: a `[once]` variant of `dream:amber_temple` once a dark gift is taken. No joke.
+

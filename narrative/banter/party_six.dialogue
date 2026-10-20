@@ -245,3 +245,32 @@ interject name:ratatoille: The Third Circle approves. The Third Circle wrote to 
 interject name:liriel_dawnsong: He did. He showed me the letter. It was very formal.
 endif
 -> END
+
+# --- Winks (easter-egg plan R6a, docs/story/eggs.md): a thrown chair, and a friend whose heart ran too hot --------------
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6a/); every line here is unvoiced.
+
+~ ilse_wren_chair
+if name:ilse_varga and name:wren_featherfoot and flag.eggs_threw_furniture
+interject name:ilse_varga: Throwing the furniture is not standard infantry doctrine.
+interject name:wren_featherfoot: Easy. The stool had lovely form in the air.
+interject name:ilse_varga: One stool. One throw. One foe down. ...Noted.
+interject name:wren_featherfoot: See? I'll allow it.
+endif
+-> END
+
+~ godrick_liriel_chair
+if name:godrick_pendlebrook and name:liriel_dawnsong and flag.eggs_threw_furniture
+interject name:godrick_pendlebrook: Sir Pellam always said a true defender uses whatever stands at hand. Even the dining room.
+interject name:liriel_dawnsong: Morning's grace upon its splinters. I think He is laughing at us both.
+interject name:godrick_pendlebrook: Right then. If we find a matching table, the shadows haven't a chance.
+endif
+-> END
+
+~ godrick_thistle_heart
+if name:godrick_pendlebrook and name:thistle
+interject name:godrick_pendlebrook: Best arm-wrestler I ever met, before this mist, was a horned woman with a laugh like a forge. Her heart ran so hot I had to wear an iron gauntlet to take her hand.
+interject name:godrick_pendlebrook: She beat me fair, then cried into her ale, because she couldn't hug anyone without burning them. I've still got the scorched gauntlet.
+interject name:thistle: Bark and bones! When we're out of this valley you take me straight to her. I'll win, and then I'll hug her anyway. Blisters and all.
+interject name:godrick_pendlebrook: Fear not. Between the two of us we could weather a furnace.
+endif
+-> END

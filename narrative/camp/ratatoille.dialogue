@@ -287,3 +287,52 @@ approve ratatoille +3: You promised we'd make the bread together, after
 ~ devoted_end
 inspire name:ratatoille: gave away his family's bread
 -> END
+
+# --- A wink (easter-egg plan R6a, docs/story/eggs.md): something behind the eye. Part three of the man who fell from the
+# sky (the Vistani sisters' tale, then Van Richten's jar). Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6a/); every line here is unvoiced.
+
+~ talk_eye
+if name:ratatoille and (visited:berez_marsh_track or visited:lake_inlet) and not flag.eggs_eye_checked
+-> eye
+endif
+-> END
+
+~ eye
+interject name:ratatoille: Everyone stay very still. Technically there is a guest behind my left eye, and it was not invited.
+if visited:van_richtens_tower_interior
+interject name:ratatoille: I have read the label on that jar marked DO NOT, from the madman who swore a squid-hulled ship fell out of the clouds, and the symptoms are identical!
+else
+interject name:ratatoille: I have read of things that swim up into a man's eye out of black water, and the symptoms are identical!
+endif
+interject name:ratatoille: Step one: do not panic. Step two: somebody look under my lid before I begin to sprout.
+-> eye_menu
+
+~ eye_menu
+* [Medicine DC 10] (Look under the lid.) -> eye_found | eye_miss
+* [if flag.fennimore_met] We could ask that travel writer. He says he once saw one taken out with a hairpin. -> eye_hairpin
+* (Leave it for now.) -> END
+
+~ eye_hairpin
+interject name:ratatoille: Non, non, non. If anyone comes near my eye with a hairpin I will reduce their eyebrows to cinders. That man writes tavern fables for people who eat unseasoned stew.
+-> eye_menu
+
+~ eye_miss
+Narrator: You reach for his cheek and he jerks back so sharply his heel scatters the fire's ash. The shadow under his lid stays where it is.
+interject name:ratatoille: Non, non, non! You are looking at an eye, not trussing a pheasant. Hold the light steady and try again.
+-> eye_menu
+
+~ eye_found
+set eggs_eye_checked
+Narrator: You draw down the trembling lid and pinch out a fat, bog-black marsh leech. It comes free with a tiny wet pop and curls on your knuckle, sluggish and entirely ordinary.
+interject name:ratatoille: ...A leech. Technically, I knew it was a common marsh leech the entire time. I was testing the party's bedside manner.
+* Shall we keep it for the stewpot? -> eye_tease
+* Anyone would have thought the worst after that marsh. Sit, and breathe. -> eye_comfort
+
+~ eye_tease
+interject name:ratatoille: Laugh all you like, barbarian. You will not be smiling when a bog-beast takes up lodging in your ear.
+-> END
+
+~ eye_comfort
+interject name:ratatoille: ...Thank you. It is a foul country, and when the mist gets into one's head even a small shadow looks very large. Come, I still have two warm biscuits in my tin.
+approve ratatoille +1: You looked at my eye and didn't laugh, much
+-> END

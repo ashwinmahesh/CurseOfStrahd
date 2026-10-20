@@ -86,3 +86,51 @@ if not (quest.aurels_last_chapter >= still_reading)
 quest aurels_last_chapter still_reading
 endif
 -> END
+
+# --- A wink (easter-egg plan R6a, docs/story/eggs.md): something behind the eye. Part three of the man who fell from the
+# sky (the Vistani sisters' tale, then Van Richten's jar). Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6a/); every line here is unvoiced.
+
+~ talk_eye
+if name:silvain_aster and not name:ratatoille and (visited:berez_marsh_track or visited:lake_inlet) and not flag.eggs_eye_checked
+-> eye
+endif
+-> END
+
+~ eye
+interject name:silvain_aster: I must ask for a steady hand and a lantern. There appears to be a foreign organism migrating behind my lower left eyelid.
+if visited:van_richtens_tower_interior
+interject name:silvain_aster: I have read the monster hunter's label on that jar marked DO NOT, taken from a witness to a ship shaped like a squid, and the pressure is troublingly consistent.
+else
+interject name:silvain_aster: The literature on things that swim up out of black water into a traveller's eye is short, and none of it is cheerful.
+endif
+interject name:silvain_aster: Horrible, of course. I should like someone to look while I am still capable of taking notes.
+-> eye_menu
+
+~ eye_menu
+* [Medicine DC 10] (Look under the lid.) -> eye_found | eye_miss
+* [if flag.fennimore_met] We could ask that travel writer. He says he once saw one taken out with a hairpin. -> eye_hairpin
+* (Leave it for now.) -> END
+
+~ eye_hairpin
+interject name:silvain_aster: I have read that gentleman's natural histories. Roughly four-fifths of his surgical anecdotes end with the patient missing an eye.
+-> eye_menu
+
+~ eye_miss
+Narrator: You reach for the lid and the eye snaps shut like a clam. Whatever is tucked in the corner stays there.
+interject name:silvain_aster: Blinking is an involuntary reflex when approached by a knuckle. Perhaps again, with better light and slightly less enthusiasm.
+-> eye_menu
+
+~ eye_found
+set eggs_eye_checked
+Narrator: You draw down the lid and pinch out a fat, bog-black marsh leech. It comes free with a tiny wet pop and curls on your knuckle, sluggish and entirely ordinary.
+interject name:silvain_aster: A simple marsh leech, then. I shall revise my notes from 'imminent metamorphosis' to 'mild local nuisance'.
+* Shall we keep it for the stewpot? -> eye_tease
+* Anyone would have thought the worst after that marsh. Sit, and breathe. -> eye_comfort
+
+~ eye_tease
+interject name:silvain_aster: Very droll. I assure you the culinary value of a Barovian marsh leech is negligible.
+-> END
+
+~ eye_comfort
+interject name:silvain_aster: That is generously put, and more charitable than my nerves deserve tonight. This valley has a talent for making the worst reading seem the likeliest.
+-> END

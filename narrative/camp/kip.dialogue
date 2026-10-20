@@ -116,6 +116,18 @@ Mister Quillon: Quite so. I travel on a pass. The lord of this land is very part
 Mister Quillon: Our agreement runs to the end of the final harvest. I merely mention it. And the way out I so generously offered, a signature from the lord of this land, remains on the table. I do hope you're making progress. Truly. I hate a default. The paperwork.
 * Leave him alone. -> quillon_leave
 * What happens if he can't pay? -> quillon_terms
+* [if not flag.eggs_quillon_rivals] Are there others in your line of work? -> quillon_rivals
+* (Say nothing.) -> quillon_go
+
+# A wink (easter-egg plan R6a, docs/story/eggs.md): a rival who sings his contracts. Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6a/); every line here is unvoiced.
+~ quillon_rivals
+set eggs_quillon_rivals
+Mister Quillon: There are practitioners of every temperament. I confess a distaste for a certain colleague in a crimson waistcoat who insists on setting his clauses to music.
+Mister Quillon: He keeps a great house stuffed with his completed considerations, and sings the forfeiture terms at the supper table, as if conveyancing were light opera.
+Mister Quillon: Very theatrical. A sound instrument needs only clean ink and a quiet room.
+interject name:kip_smudgewick: Right you are, sir. No obligation to make a song and dance of it. Mum always said never sign with a fellow who brings his own fiddle to the reading.
+* Leave him alone. -> quillon_leave
+* What happens if he can't pay? -> quillon_terms
 * (Say nothing.) -> quillon_go
 
 ~ quillon_leave

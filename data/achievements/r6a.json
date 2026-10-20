@@ -1,0 +1,13 @@
+{
+  "id": "r6a",
+  "summary": "Package R6a of the easter-egg plan: a hidden achievement at camp. Earned by a when condition.",
+  "achievements": [
+    {
+      "id": "encore",
+      "name": "Encore",
+      "text": "Help Wren finish an unfinished song at the fire.",
+      "hidden": true,
+      "when": "flag.eggs_song_sung"
+    }
+  ]
+}
