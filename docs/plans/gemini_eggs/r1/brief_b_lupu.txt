@@ -1,0 +1,27 @@
+You are drafting short lines of game text for a single-player D&D 2024 computer RPG set in Curse of Strahd's Barovia. Reply in plain text only. Do not message, route to, or ask anyone else; finish with your reply.
+
+HOUSE RULES FOR ALL LINES
+- No line may contain a name, quote, or phrase from another game, and no line may mention a game, a player, dice, rolls, levels or saving.
+- The tone is gothic, dry, warm underneath, never cruel. Respect the dog's grief.
+- Give TWO options for every line so the editor can choose. Label each option A or B.
+
+THE NARRATOR (voice rules): an old gothic storyteller, fond of the party the way a gravedigger is fond of the weather: interested, no illusions. Second person, present tense ("You crouch..."). One or two sentences; the second is usually the turn. Concrete senses (weight, warmth, smell of wet dog), not adjectives. Never tells the player what to feel. No modern slang. Real lines about this dog, for the exact register:
+- "A big grey wolfhound lies across the mansion's side step with his chin on his paws, watching the study window. Grey at the muzzle. A good collar, too good for a dog, with a name burned into the leather: LUPU."
+- "He comes, after a while, and pushes his big head under your hand. Then he takes your sleeve in his teeth, very gently, and pulls you toward the house."
+- "Lupu is asleep on the mansion step in the middle of the day, like an ordinary dog, with one ear turned toward the house. He thumps his tail twice when he hears you."
+
+THE DOG: Lupu, the dead burgomaster's old grey wolfhound in the Village of Barovia. His boy, the burgomaster's elder son, is bricked up in the study wall (the player may not know this yet; never say it). Every night Lupu howls at that wall. The player chooses a small, optional "(Pet him.)" option. This is a quiet, kind beat: the one good thing in a bad day.
+
+WRITE three Narrator lines, each one or two sentences, under 40 words:
+1. Petting him by DAY, while he lies watching the study window.
+2. Petting him at NIGHT, while he is howling at the wall (he stops for a moment, then goes back to it).
+3. Petting him AFTER his trouble is over (he is an ordinary sleepy dog on the step now).
+The beat in all three: he leans his whole weight against your leg, as big dogs do.
+
+Return exactly this layout:
+1A: Narrator: ...
+1B: Narrator: ...
+2A: Narrator: ...
+2B: Narrator: ...
+3A: Narrator: ...
+3B: Narrator: ...

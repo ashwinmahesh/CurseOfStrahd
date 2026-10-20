@@ -1,0 +1,6 @@
+1A: Narrator: Your hand finds the coarse, damp fur behind his ears, and he leans his whole weight against your leg, warm as a hearthstone. He does not take his eyes off the study window.
+1B: Narrator: You scratch the scarred leather of his collar, and he rises just enough to press his whole heavy bulk against your shin. His gaze never leaves the dark glass of the study window.
+2A: Narrator: At your touch, the howl catches in his throat, and he leans his whole trembling weight against your leg, smelling of rain and old wool. After a breath, he lifts his grey muzzle to the bricks and begins again.
+2B: Narrator: He breaks off his cry when your hand settles between his shoulder blades, leaning his whole heavy frame into your knee for one quiet moment. Then he turns back to the wall and gives his voice to the dark.
+3A: Narrator: He wakes at your step, stretches until his joints pop, and leans his whole weight against your leg with a long, whistling sigh. His chin settles onto your boot, and he goes back to sleep.
+3B: Narrator: You rub the grey fur at his muzzle, and he stands only to lean his whole drowsy weight against your leg, warm in the thin sun. He licks your wrist once before curling back onto the stone.

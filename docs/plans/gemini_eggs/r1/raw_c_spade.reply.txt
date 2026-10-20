@@ -1,0 +1,8 @@
+1A: Beside the mound, a square of black earth has been stamped flat by careful boots long ago, and the moss refuses to cross its edges. Your fingernails will do nothing against soil packed that tight.
+1B: A neat square of earth sits beside the charcoal mound, tamped down hard and left bare by the creeping moss. Whatever was put to bed under that crust will only answer to good iron.
+2A: Two feet down, the iron blade rings dull against a rusted tin box tucked under a pine root. Inside lie a handful of tarnished coins and a square of paper, folded by steady thumbs.
+2B: The spade bites through the black soil and strikes hollow tin, turning up a small box crusted with charcoal dust. Within sit a few old coins and a note folded small against the damp.
+3A: Pine roots catch the blade and dry needles slide back into the black dust as fast as {name} can heave it out.
+3B: The ground here is all knotted pine root and stubborn charcoal, and the pine needles pour back in before {name} can clear a span.
+4A: Good health to you, friend, and to your back. A lord will tax your silver and a neighbour will borrow it until Doomsday, so I put mine to bed under the pines. Take these few pieces for your trouble, since you know how to use an honest tool. The rest of my purse sleeps where the reeds hide the lake from the road, though I keep the best of it for last. — A man who trusts his spade
+4B: Well met, fellow labourer! Never give your coin to a clerk with clean cuffs when the earth keeps accounts for nothing and never bolts by night. Here is a starter to grease your elbow. If you have the stomach for more dirty boots, look next where the reeds hide the lake from the road; I have tucked the best of it away for the very last hole. — A man who trusts his spade

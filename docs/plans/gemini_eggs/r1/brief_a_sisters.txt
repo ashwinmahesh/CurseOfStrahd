@@ -1,0 +1,35 @@
+You are drafting short lines of game text for a single-player D&D 2024 computer RPG set in Curse of Strahd's Barovia. Reply in plain text only. Do not message, route to, or ask anyone else; finish with your reply.
+
+HOUSE RULES FOR ALL LINES
+- ALLUDE, NEVER QUOTE. This game winks at another famous fantasy game in small ways, but no line may contain a name, quote, or phrase from another game, and no line may mention a game, a player, dice, rolls, levels or saving. Everything happens inside the world.
+- Do not use these words at all: tadpole, illithid, mind flayer, nautiloid, squid-ship.
+- The tone is gothic, dry and quietly funny, never cruel.
+- Give TWO options for every line so the editor can choose. Label each option A or B.
+- Format every spoken line as: Speaker [mood]: Text   (mood optional; one of neutral, smile, angry, afraid, sad, sly). One or two sentences a line.
+
+THE SPEAKERS: three Vistani women at the corner table of the Blood of the Vine, the tavern in the Village of Barovia. They speak as a trio.
+- Alenka (eldest, leader): honeyed and theatrical, speaks for the three. Real lines: "Sit, strangers. New faces in Barovia! That happens about as often as sunshine. Buy us a cup and tell us everything." / "Vistani. Our wagons go where they like; the mists open for us."
+- Mirabel (middle): mocking, quick, laughs at everyone, including herself. Real lines: "Or don't. We'll guess. Our guesses are always better than the truth." / "Ismark the Lesser. His father was loud, and brave, and dead. Ismark is quiet, and brave, and not dead yet. Give him time." / "Or to sell tickets."
+- Sorvia (youngest): blurts true things, then gets elbowed. Real lines: "Your boots have walked farther than boots should, in this valley. Sorry. I notice things." / "She's nice. She mended my horse's bridle once and wouldn't take a copper. I hope... nothing. More wine?"
+Shared: "our people", "the mists", "the cards". Never modern slang.
+
+THE SCENE: the party asks the sisters, "Seen any other strangers come through?" The mists of Barovia sometimes swallow travellers from other lands. The sisters tell, laughing, about a man the mists brought last spring: he came stumbling out of a field, singed, swearing that a great flying ship, shaped like a squid and as big as a church, had fallen out of the sky with him aboard; and he swore a worm had crawled into his head through his eye and was whispering to him. Mirabel says it was a stye. Sorvia felt sorry for him and gave him a bread roll. He walked off east toward Vallaki and they never saw him again. The man is NEVER named. Light, gossipy, funny; it is just a tavern story.
+
+WRITE (a short exchange, 4 to 6 lines in all, in this order of beats):
+1. Alenka begins the story (the field, the singed stranger, the flying ship like a squid). One or two sentences.
+2. Mirabel adds the worm in the eye, mocking. One or two sentences.
+3. Sorvia's soft truth (she gave him bread; or she noticed something odd about his eye).
+4. Mirabel or Alenka: it was a stye.
+5. Alenka closes: he walked east; the mists bring all sorts.
+
+Return exactly this layout:
+1A: Alenka ...: ...
+1B: Alenka ...: ...
+2A: Mirabel ...: ...
+2B: Mirabel ...: ...
+3A: Sorvia ...: ...
+3B: Sorvia ...: ...
+4A: ...
+4B: ...
+5A: Alenka ...: ...
+5B: Alenka ...: ...
