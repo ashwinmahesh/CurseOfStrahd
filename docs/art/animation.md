@@ -169,6 +169,10 @@ Some sheets stay as the owner chose them, whatever clips exist (`KEEP`): Godrick
 glow, and Liriel's cast is her drawn one, with its effect (owner 2026-10-20: "I like Liriel's old casting (with the
 effect)"; "Godrick's previous casting animation with the effect").
 
+The casters' casts (owner 2026-10-20: "putting power into it, as if they are channeling magic") ask for a braced,
+bent-legged stance, the body gathering, then thrown forward, with the robes and coat flowing (`MOVES`'
+`cast_gather` and `cast_release`), motions only. Ratatouille's were made on Veo Fast (`MODEL_FOR`, his choice).
+
 The tool is `tools/art/veo_anims.py` (`make veo-anims [ONLY=<id>] [KINDS=…] [GENERATE=1]
 [REDO="cast_se …"]`). The sheets are still sprite sheets: the game plays frames as before, and nothing decodes
 video at run time.
@@ -184,8 +188,8 @@ video at run time.
   frame Veo turned heroes seen from behind round to face the camera, or left them in another pose.
 - The first frame of an attack or cast is drawn at 0.8 scale, so a swing stays inside the 720-wide clip, and the
   frames are scaled back up.
-- A cast starts and ends on the standing frame, because the drawn cast's first frame holds a glowing orb and the clips
-  are motions only. An attack starts on the drawn attack's ready pose.
+- A cast and a flinch start and end on the standing frame, because the drawn cast's first frame holds a glowing orb and
+  the drawn flinch's is already a crouch (`source_of`). An attack starts on the drawn attack's ready pose.
 - Calls go through the Gemini ledger (`make art-spend`).
 - Clips, their first frames and prompts (`clips.json`) are kept in `art/generated/veo/<id>/` (LFS, `.gdignore`).
 

@@ -50,6 +50,9 @@ MODEL = "veo-3.1-lite-generate-preview"
 # "do the rest of the swings in Veo Lite, along with all the other videos"). MODEL_OF names a kind to make on another model.
 FAST = "veo-3.1-fast-generate-preview"
 MODEL_OF = {}
+# One-off choices of the owner: (hero, kind) made on Veo Fast ($0.80 a clip) (2026-10-20: "Let's use Veo Fast for
+# Ratatouille's spellcasting").
+MODEL_FOR = {("ratatoille", "cast"): FAST}
 # Sheets the owner keeps as they are, whatever clips there are (owner 2026-10-20: Godrick's and Liriel's casts with their
 # effects, his the first Veo one, hers the drawn one).
 KEEP = {("godrick_pendlebrook", "cast"), ("liriel_dawnsong", "cast")}
@@ -133,8 +136,8 @@ def sheet_frame(hero, kind, d, index=0):
 ONE_SHOTS = ("attack", "cast", "hurt")
 
 
-def model_of(kind):
-    return MODEL_OF.get(kind, MODEL)
+def model_of(kind, hero=""):
+    return MODEL_FOR.get((hero, kind), MODEL_OF.get(kind, MODEL))
 
 
 def seconds_of(kind):
@@ -148,8 +151,9 @@ def size_of(kind):
 
 def source_of(kind):
     """The sheet animation a clip starts (and, for 8-second clips, ends) on. A cast starts from standing: the drawn
-    cast's first frame holds a glowing orb, and the clips are motions only."""
-    return "idle" if kind == "cast" else kind
+    cast's first frame holds a glowing orb, and the clips are motions only. A flinch starts from standing too: the drawn
+    flinch's first frame is already a crouch."""
+    return "idle" if kind in ("cast", "hurt") else kind
 
 
 def scale_of(kind):
@@ -246,6 +250,20 @@ MOVES = {
 # Heroes whose attack is a weapon swing: the prompt asks for weight. Every hero's attack now gets the fighting-game
 # prompt (owner 2026-10-20: "there's no movement ... capes, bodies, expressions"), made on Lite.
 SWINGS = {"godrick_pendlebrook", "liriel_dawnsong"}
+# The casters' own casts (owner 2026-10-20: "putting power into it, as if they are channeling magic"; effects are the
+# engine's): legs bending into a braced stance, the body gathering, then thrown forward.
+MOVES["ratatoille"].update(
+    cast_gather="planting his feet wide, knees bending into a low braced stance, the wooden staff raised high in his "
+                "right hand and his left hand drawn in toward his chest as if gathering a great power, his robes and "
+                "apron billowing, his face intense",
+    cast_release="the left arm thrust out toward the enemy with the palm open, the staff swept forward, the whole body "
+                 "lunging into it, the robes whipping after him")
+MOVES["kip_smudgewick"].update(
+    cast_gather="planting his feet wide, knees bending into a low braced stance, both hands drawn in to his chest "
+                "with the palms facing each other as if holding in a great power, his body coiling, his coat and tail "
+                "swinging back, his face intense",
+    cast_release="both hands thrust out toward the enemy, the whole body lunging forward onto the front foot, his coat "
+                 "and tail whipping after him")
 CAST_MOVES = ("one hand raised before the chest with the palm open, the other arm drawn back, eyes intent",
               "the hand thrust forward with the palm out, leaning forward")
 
@@ -334,7 +352,7 @@ def generate_one(hero, kind, d, key):
     body = {"instances": [inst], "parameters": {"aspectRatio": "9:16", "resolution": "720p",
                                                 "durationSeconds": seconds_of(kind), "personGeneration": "allow_adult"}}
     SIZE = size_of(kind)
-    model = model_of(kind)
+    model = model_of(kind, hero)
 
     def call(url, data=None):
         req = urllib.request.Request(url, data=json.dumps(data).encode() if data else None,
@@ -389,7 +407,7 @@ def generate(heroes, kinds, dirs, redo):
         return
     # An 8-second clip costs two 4-second ones; the preflight counts it so.
     unit = gb.price(MODEL, f"720p-{SECONDS}s")
-    units = round(sum(gb.price(model_of(k), size_of(k)) for _h, k, _d in todo) / unit)
+    units = round(sum(gb.price(model_of(k, h), size_of(k)) for h, k, _d in todo) / unit)
     gb.preflight(units, f"720p-{SECONDS}s", f"Veo clips for {', '.join(sorted({h for h, _, _ in todo}))}", MODEL)
     key = gb.api_key()
     for h, k, d in todo:

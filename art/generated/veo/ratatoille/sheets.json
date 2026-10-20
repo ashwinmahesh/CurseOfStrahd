@@ -213,5 +213,173 @@
   },
   "feet_moved": [],
   "framing_ok": true
+ },
+ "cast_s": {
+  "start": 0,
+  "peak": 24,
+  "end": 109,
+  "end_vs_first": 0.66,
+  "picks": [
+   0,
+   6,
+   12,
+   18,
+   24,
+   36,
+   48,
+   60,
+   73,
+   85,
+   97,
+   109
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 0.993,
+   "feet": -2,
+   "x": 0,
+   "vs_sheet": 0.997
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "cast_se": {
+  "start": 0,
+  "peak": 79,
+  "end": 149,
+  "end_vs_first": 5.22,
+  "picks": [
+   0,
+   20,
+   40,
+   59,
+   79,
+   89,
+   99,
+   109,
+   119,
+   129,
+   139,
+   149
+  ],
+  "clipped": [
+   79,
+   99
+  ],
+  "shadow": [
+   20,
+   40,
+   59
+  ],
+  "framing": {
+   "height": 0.994,
+   "feet": -2,
+   "x": -1,
+   "vs_sheet": 0.997
+  },
+  "feet_moved": [
+   20,
+   40,
+   59,
+   79,
+   89,
+   99,
+   119,
+   129
+  ],
+  "framing_ok": false
+ },
+ "cast_e": {
+  "start": 0,
+  "peak": 70,
+  "end": 133,
+  "end_vs_first": 0.89,
+  "picks": [
+   0,
+   18,
+   35,
+   52,
+   70,
+   79,
+   88,
+   97,
+   106,
+   115,
+   124,
+   133
+  ],
+  "clipped": [
+   18
+  ],
+  "shadow": [],
+  "framing": {
+   "height": 0.996,
+   "feet": -2,
+   "x": 0,
+   "vs_sheet": 1.0
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "cast_ne": {
+  "start": 8,
+  "peak": 29,
+  "end": 134,
+  "end_vs_first": 2.11,
+  "picks": [
+   8,
+   13,
+   18,
+   24,
+   29,
+   44,
+   59,
+   74,
+   89,
+   104,
+   119,
+   134
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 0.994,
+   "feet": -2,
+   "x": 0,
+   "vs_sheet": 0.999
+  },
+  "feet_moved": [],
+  "framing_ok": true
+ },
+ "cast_n": {
+  "start": 0,
+  "peak": 23,
+  "end": 120,
+  "end_vs_first": 2.16,
+  "picks": [
+   0,
+   6,
+   12,
+   17,
+   23,
+   37,
+   51,
+   65,
+   78,
+   92,
+   106,
+   120
+  ],
+  "clipped": [],
+  "shadow": [],
+  "framing": {
+   "height": 0.996,
+   "feet": -2,
+   "x": -1,
+   "vs_sheet": 0.999
+  },
+  "feet_moved": [],
+  "framing_ok": true
  }
 }

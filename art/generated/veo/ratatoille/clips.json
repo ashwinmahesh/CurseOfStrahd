@@ -63,5 +63,70 @@
   "scale": 1.0,
   "last_frame": false,
   "screen": "green"
+ },
+ "cast_s": {
+  "model": "veo-3.1-fast-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He makes a commanding gesture, always facing exactly the way he faces in the image: first planting his feet wide, knees bending into a low braced stance, the wooden staff raised high in his right hand and his left hand drawn in toward his chest as if gathering a great power, his robes and apron billowing, his face intense; then the left arm thrust out toward the enemy with the palm open, the staff swept forward, the whole body lunging into it, the robes whipping after him; then he returns to the pose in the image and holds still. It takes about one second and his feet stay planted. Nothing magical appears: nothing new comes into his hands and nothing glows, sparks or bursts. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T14:19:16-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true,
+  "screen": "green"
+ },
+ "cast_se": {
+  "model": "veo-3.1-fast-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He makes a commanding gesture, always facing exactly the way he faces in the image: first planting his feet wide, knees bending into a low braced stance, the wooden staff raised high in his right hand and his left hand drawn in toward his chest as if gathering a great power, his robes and apron billowing, his face intense; then the left arm thrust out toward the enemy with the palm open, the staff swept forward, the whole body lunging into it, the robes whipping after him; then he returns to the pose in the image and holds still. It takes about one second and his feet stay planted. Nothing magical appears: nothing new comes into his hands and nothing glows, sparks or bursts. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T14:19:34-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true,
+  "screen": "green"
+ },
+ "cast_e": {
+  "model": "veo-3.1-fast-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He makes a commanding gesture, always facing exactly the way he faces in the image: first planting his feet wide, knees bending into a low braced stance, the wooden staff raised high in his right hand and his left hand drawn in toward his chest as if gathering a great power, his robes and apron billowing, his face intense; then the left arm thrust out toward the enemy with the palm open, the staff swept forward, the whole body lunging into it, the robes whipping after him; then he returns to the pose in the image and holds still. It takes about one second and his feet stay planted. Nothing magical appears: nothing new comes into his hands and nothing glows, sparks or bursts. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T14:19:59-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true,
+  "screen": "green"
+ },
+ "cast_ne": {
+  "model": "veo-3.1-fast-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He makes a commanding gesture, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first planting his feet wide, knees bending into a low braced stance, the wooden staff raised high in his right hand and his left hand drawn in toward his chest as if gathering a great power, his robes and apron billowing, his face intense; then the left arm thrust out toward the enemy with the palm open, the staff swept forward, the whole body lunging into it, the robes whipping after him; then he returns to the pose in the image and holds still. It takes about one second and his feet stay planted. Nothing magical appears: nothing new comes into his hands and nothing glows, sparks or bursts. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T14:20:26-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true,
+  "screen": "green"
+ },
+ "cast_n": {
+  "model": "veo-3.1-fast-generate-preview",
+  "seconds": 8,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He makes a commanding gesture, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first planting his feet wide, knees bending into a low braced stance, the wooden staff raised high in his right hand and his left hand drawn in toward his chest as if gathering a great power, his robes and apron billowing, his face intense; then the left arm thrust out toward the enemy with the palm open, the staff swept forward, the whole body lunging into it, the robes whipping after him; then he returns to the pose in the image and holds still. It takes about one second and his feet stay planted. Nothing magical appears: nothing new comes into his hands and nothing glows, sparks or bursts. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T14:20:52-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 0.8,
+  "last_frame": true,
+  "screen": "green"
  }
 }
