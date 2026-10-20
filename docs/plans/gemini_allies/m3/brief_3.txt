@@ -1,0 +1,7 @@
+One tiny extra for the same scene, same rules and format (plain text, a node under `~ name`, `Speaker: Text`, ASCII only, no em-dash, no placeholders). Finish without sending messages to anyone else.
+
+Ezmerelda's plan at the castle gates (the scene you wrote with the node `plan`: the Narrator line about wind through the drawbridge chains and her brass spyglass) can also play when the party is carried in by the vampire lord's black carriage, so they stand in the castle's front courtyard, under the keep's high carved doors and tall windows, and never see the drawbridge. I need that second opening, so the Narrator's line fits there. Keep it one or two sentences, concrete, present tense, second person or plain scene description; she lowers or snaps shut her brass spyglass after looking up at the keep's windows; no names.
+
+Node: `plan_keep`: Narrator x1.
+
+Then nothing else; the Ezmerelda lines that follow are already written.

@@ -502,10 +502,35 @@ endif
 
 ~ again_menu
 * Say the reading again. -> reread
+* [if guest:ezmerelda and not flag.eva_card_for_ezmerelda] Ezmerelda is with us. Will you read for her? -> ezmerelda_card
 * [if attitude.madam_eva == friendly and option:respec] Read for one of us alone: a different road. -> personal
 * Tell us about yourself. -> herself
 * Your people and the castle: what are you to him? -> vistani_and_castle
 * Goodbye. -> END
+
+# One card for the hunter who travels with the party (Story Allies Presence Plan, package M3): Eva has been dealing her into other
+# people's games since she was six, and has been telling her to eat since then. Not one of the five of the reading; nothing is
+# foretold. Drafted by Gemini (docs/plans/gemini_allies/m3/), edited; unvoiced.
+~ ezmerelda_card
+set eva_card_for_ezmerelda
+Narrator: Madam Eva stops shuffling and looks toward the tent's door, where Ezmerelda stands just as she did when she was six.
+Madam Eva [sly]: Come out of the draft, child, and let the rest of them look at the tapestries for a minute. You have grown taller, and no wiser.
+Madam Eva: This one at the bottom has been waiting for you since before you bought that coat. Turn it over.
+Narrator: The painted pasteboard shows an empty wooden chair beside a cold hearth, with a shuttered lantern resting on the floorboards.
+Madam Eva [sad]: The man on the hill is not the only thing that starves in the dark, child. Eat something before you go; one sausage a week is an insult to my camp.
+Ezmerelda: You always did cheat from the bottom of the deck, Madam Eva, and my coat is finer than anything in this tent.
+* Ask Madam Eva what the card means. -> ezmerelda_card_a
+* Tell Ezmerelda she heard the old woman: eat something. -> ezmerelda_card_b
+
+~ ezmerelda_card_a
+Madam Eva [sly]: The cards do not mean. The cards are patient, and they wait.
+Madam Eva: That will do. Take her out of my tent before she tracks mud on the rugs.
+-> again_menu
+
+~ ezmerelda_card_b
+Ezmerelda [smile]: Wonderful. Now I have a whole chorus of mothers following me down the road. Next you will all be checking my boots for holes.
+Ezmerelda: I will take half a loaf from Stanimir's cart before we go. It is rude to hunt on an empty stomach.
+-> again_menu
 
 ~ reread
 Madam Eva: Once more, then, and slowly.

@@ -1,0 +1,31 @@
+Two more short scenes and two lines for the same game, same rules and format as before (plain text only, nodes under `~ name`, one line per row as `Speaker [mood]: Text`, party option rows as `* option text -> node_name`, ASCII only, no em-dash, 1-2 sentences a line, nothing over about 28 words, no placeholders). Finish without sending messages to anyone else.
+
+## Scene A: Madam Eva reads one card for Ezmerelda
+
+Ezmerelda d'Avenir (the Vistana monster hunter, travelling with the party) is with them at Madam Eva's tent at Tser Pool. Eva is the old seer of the Vistani there; she reads the Tarokka for the party (that has been done) and dealt Ezmerelda "into other people's games" when Ezmerelda was six. Eva is very old, blunt, deadpan, fond of an audience, never wrong. She calls women "child", the party "you"; she never names the vampire lord ("him", "the man on the hill"). Pet phrases: "Sit." "Listen." "The cards are patient." "Turn it over." "That will do." Moods: [sly], [sad] (Eva); the Ezmerelda moods as before. Earlier, Ezmerelda told the party to tell Eva she ate a whole sausage last week (and that it was the only thing she ate): Eva has been telling her to eat since Ezmerelda was a girl. Eva reads ONE card for her alone, not one of the five of the reading: a single card from the bottom of the deck, shown but not named as a Tarokka card (do not name any card or suit; describe only the picture). It is private: Eva sends the party to the far side of the tent, or does not look at them.
+
+Nodes: `ezmerelda_card`: Narrator x1 (Eva stops shuffling and looks at Ezmerelda, who stands in the tent's door as she did at six), Madam Eva x2 (she greets her, then deals one card from the bottom), Narrator x1 (the picture on the card, concrete, ambiguous: for example a lantern, a chair, and no one in it), Madam Eva x1 (what it means in her flat way: not a prophecy, a warning, and then: eat something), Ezmerelda x1 (her answer, dry). Then two party option rows: one asks Eva what the card means, one tells Ezmerelda to eat something. Replies `ezmerelda_card_a` (Eva, x2: the cards do not mean, they wait; she says nothing more) and `ezmerelda_card_b` (Ezmerelda x2, joking, and then a quiet real line). The scene ends after the reply.
+
+## Scene B: Ezmerelda's plan at the castle gates
+
+The party stands at the foot of Castle Ravenloft's drawbridge with Ezmerelda. She has her spyglass up. She had said "paper plans die on the drawbridge", so this is her plan at the drawbridge: short, hunter's rules. It must NOT give puzzle answers or say where anything is. The rules: you find the thing that lives here by day, when it is slowest; you mind the rest of its coffin, which means you do not open it until you are ready to finish what comes next; nobody wanders off, ever; and if she says "run", they run. Humour from her (a showman at the foot of a haunted house).
+
+Nodes: `plan`: Narrator x1 (the drawbridge, the chains, her spyglass), Ezmerelda x4 (the rules, one or two sentences each), then two party option rows: one agrees to the plan, one asks what happens when the plan fails. Replies `plan_a` (Ezmerelda x1-2) and `plan_b` (Ezmerelda x2: "I improvise, loudly" in her own words, with a real undertone). The scene ends after the reply.
+
+## Scene C: two road lines inside the castle's catacombs
+
+Spoken aloud by Ezmerelda on entering the castle's catacombs (the burial vaults below the castle) once she has made her plan. One line each, under 28 words:
+- quest_plan_catacombs: entering the catacombs: the dead keep better hours than the living; everyone stays close; nobody opens anything she has not looked at first.
+- quest_plan_tombs: entering the tombs below: she hates tombs; they always have one more door than anyone's map says.
+
+That is about 20 lines and 4 option rows.
+
+## Voice reminders
+
+EZMERELDA: quick, sardonic, practical; hunter's rules as jokes, then means it; calls Van Richten "Rudolph". NARRATOR: old gothic storyteller, second person or plain scene description, present tense, one or two sentences, concrete senses, never cruel, no game terms. MADAM EVA: short sentences, present tense, flat statements; "The cards say" or simply fact; blunt; patient and rude; kind in a way she refuses to be caught at.
+
+Eva's existing lines, so you hear her (do NOT repeat them): "There you are. I turned up a card for you three nights ago, and it has been tapping its foot ever since. Sit." / "The cards are free. The one who turns them is not." / "The cards don't change. Only the people carrying them." / "Go. Stanimir will feed you if you let him. And when you meet the devil on the road, as you will, be polite."
+
+## Canon limits
+
+Do not name Strahd; do not name any Tarokka card or suit; no new names, numbers, places or history; no puzzle answers, no directions inside the castle, no promises. No dice or skill checks. Ezmerelda's missing leg and her teacher Rudolph may be mentioned; Rudolph's tower may not.

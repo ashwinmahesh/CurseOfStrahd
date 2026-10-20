@@ -1,0 +1,81 @@
+~ leg_alive
+Narrator: Firelight catches the steel of Ezmerelda's brace as she draws the leather straps tight. Her hands are steady, and her silence has an edge to it.
+Ezmerelda: So Kiril is still out in those hills, running errands for the castle. I kept a silver bolt with his mark on it, and now it has to wait.
+Ezmerelda [weary]: A good hunter does not chase the same wolf twice in the dark. I know the rule, even when I hate it.
+* Would you have wanted to finish him yourself? -> leg_a
+* What do you remember of that night? -> leg_b
+
+~ leg_done
+Narrator: Ezmerelda sits by the embers with her booted leg stretched out toward the warmth. She taps a knuckle against the oak and steel, listening to the dull ring.
+Ezmerelda: Kiril is dead in the hills, and I thought this thing would feel lighter tonight. Maybe it does, a little, or maybe I am only tired.
+Ezmerelda [sly]: You never get the leg back when the wolf goes down. Nobody puts that in the songs.
+* Would you have wanted to finish him yourself? -> leg_a
+* What do you remember of that night? -> leg_b
+
+~ leg_a
+Ezmerelda: Every time I buckled this brace on in the dark, I pictured it. Silver first, questions never, right between those yellow eyes.
+Ezmerelda [smile]: Still, a wolf is only a wolf, and I have bigger teeth to pull in this valley. I will live without the applause.
+
+~ leg_b
+Ezmerelda: Wet pine needles above Lake Zarovich, and the sound of him laughing before I saw his coat. I was too quick with my blade and too slow with my feet.
+Ezmerelda: I crawled into the scrub while the pack fought over my boot. You learn a lot about yourself when you have to tie your own tourniquet.
+
+~ rudolph
+Narrator: Ezmerelda turns a silvered bolt between her fingers, watching the sparks rise into the trees. When she speaks, her voice is half fondness and half old irritation.
+Ezmerelda: Rudolph keyed the ward on that lake tower to my name alone, just to keep me off his doorstep. He thinks everyone he teaches ends up dead, and he is half right.
+Ezmerelda [smile]: Then he paints a wagon, calls himself Rictavio, and expects me not to know his handwriting. For a clever old man, he hides like a boy under a blanket.
+* He is lucky to have a student who follows him through wards. -> rudolph_a
+* Have you ever tried leaving him first? -> rudolph_b
+
+~ rudolph_a
+Ezmerelda [sly]: Lucky is not the word he uses when I kick his door in. He gives me the long lecture on patience, and I check whether he has eaten anything besides dried fish.
+Ezmerelda: Someone has to keep him from dying nobly in a cellar where nobody will find the body. He taught me too well to expect manners now.
+
+~ rudolph_b
+Ezmerelda: Twice, and both times I found his tracks on the same road a week later. Stopping's the one thing I'm bad at.
+Ezmerelda [sad]: If I leave him alone in this country, the count will make a lesson of him. I would rather have him angry at me than gone.
+
+~ wagons
+Narrator: Smoke from the campfire drifts across Ezmerelda's dark coat while she shuffles a worn deck of cards one-handed. The firelight makes a small stage of the clearing.
+Ezmerelda: Down at Tser Pool, my people looked right through me like I was mist off the river. I grew up in a show wagon, so I know a bad audience when I see one.
+Ezmerelda [smile]: I still have the wrists for the patter, even if I traded the tambourine for a crossbow. They never liked how loud the steel leg clicks on the floorboards.
+* Show me a trick before the fire dies. -> wagons_a
+* Would you ever go back to the wagons? -> wagons_b
+
+~ wagons_a
+Ezmerelda [sly]: Watch the queen, keep your eyes off my sleeve, and say something a vampire wouldn't say. There, that should have been the ace, unless my thumb is getting honest.
+Ezmerelda [smile]: Do not tell Madam Eva I fumbled a pass by the fire. She would take back my fortune and deal me a worse one.
+
+~ wagons_b
+Ezmerelda: A hunter brings bad weather with her, and wagons have thin walls. Even if they made room by the kettle, I would spend all night watching the road.
+Ezmerelda [weary]: No, I picked my trade when I walked out, and the road only goes one way. It is still nice to smell the horses from across the water.
+
+~ fear
+Narrator: The woods beyond the fire are very still, and Ezmerelda has her spyglass shut in her lap. She looks at the dark between the trunks instead of the flames.
+Ezmerelda: People hear my name and think I walk into crypts because nothing touches me. I figured out a while back that I am nowhere near as brave as my reputation.
+Ezmerelda [afraid]: Fear is just the sense that tells you where the teeth are. They call it bravery because I keep walking after my knees go cold.
+* That is all bravery ever is. -> fear_a
+* I am afraid of this place too. -> fear_b
+
+~ fear_a
+Ezmerelda [smile]: Put that in a book and Rudolph will cross it out for sounding too grand. He says a hunter who cannot be frightened is only bait with boots on.
+Ezmerelda: Still, I will take the compliment while the fire is warm. Come morning we can go back to pretending we are made of iron.
+
+~ fear_b
+Ezmerelda: Good, because I do not travel with fools who cannot smell a trap. Keep that fear where you can reach it, and do not let it drive.
+Ezmerelda [smile]: If your hands shake on the latch, stand behind my right side. The oak half does not know how to tremble.
+
+~ castle_eve
+Narrator: Above the trees, the black towers of Castle Ravenloft stand against the clouds, and the fire burns low between you. Ezmerelda checks her rapier in its scabbard and lets it click home.
+Ezmerelda: Tomorrow I take the doors first, since I already have one leg that cannot bleed for him. If the thing in the castle keeps me, make sure Rudolph puts me in his next book.
+Ezmerelda [smile]: Tell him to spell d'Avenir with the apostrophe, and do not let him make me a cautionary tale. I want the ending to say I went in with my eyes open.
+* We will write that entry together when we walk out. -> castle_eve_a
+* You will not need an entry tomorrow. -> castle_eve_b
+
+~ castle_eve_a
+Ezmerelda [sly]: You had better let me hold the pen, or he will turn my whole life into three rules about cellar stairs. I want at least one line about how good I was with a blade.
+Ezmerelda: Get some sleep while the fire holds. I would hate to be late to my own last chapter.
+
+~ castle_eve_b
+Ezmerelda [smile]: Careful, that sounds like a boast, and this valley listens for those. Knock on my leg for luck if you have to.
+Ezmerelda: Save a bolt for the dark and stay where I can see your shadow. We will settle the spelling when the sun comes back.

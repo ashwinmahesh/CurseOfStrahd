@@ -1,0 +1,33 @@
+# Ezmerelda's plan at the castle (Story Allies Presence Plan, package M3; data/locations/castle_ravenloft_gates.json, docs/story/ezmerelda_camp.md,
+# docs/voice/ezmerelda.md). While she travels with the party, the first time they come near the drawbridge's chains (plan) or the keep's
+# carved crest in the front courtyard, where the black carriage sets them down (plan_keep), she stops and gives them her rules for
+# the count's house: a prop's `call` (approach 6), once. It answers her own line in her hub (allies/ezmerelda:view_c: "Paper plans die
+# on the drawbridge"). It gives no puzzle answers and says where nothing is. It sets ezmerelda_castle_plan, which unlocks her two
+# lines on entering the catacombs and the tombs (narrative/banter/guest_ezmerelda.dialogue). Nothing rolls. The drafts are Gemini's
+# (docs/plans/gemini_allies/m3/), edited; every line is unvoiced.
+
+~ plan
+Narrator: Wind groans through the rusted chains of the drawbridge while Ezmerelda snaps her brass spyglass shut at the edge of the chasm.
+-> rules
+
+~ plan_keep
+Narrator: Mist coils across the flagstones of the courtyard, rising toward the high carved doors of the keep. Ezmerelda lowers her brass spyglass from the dark, towering windows above and snaps it shut against her palm.
+-> rules
+
+~ rules
+set ezmerelda_castle_plan
+Ezmerelda: Paper plans die on the drawbridge, so here is the whole lecture before we knock. First, we look for the master of the house by daylight, when he is slowest and least fond of company.
+Ezmerelda: Second, if we find where he sleeps, nobody touches the lid until we are all in the room with our irons out. You do not wake a host until you are ready to finish the conversation.
+Ezmerelda [smile]: Third, nobody wanders off to admire the portraits, ever. This house has bad manners and worse floors.
+Ezmerelda [angry]: Fourth, if I tell you to run, you do not ask where my pride went. You just beat me to the door, brace and all.
+* We have the rules. Lead on. -> rules_a
+* What happens when the plan falls apart? -> rules_b
+
+~ rules_a
+Ezmerelda [smile]: Good, because the tuition goes up once we cross the planks. Keep your light low and your boots quiet.
+-> END
+
+~ rules_b
+Ezmerelda [sly]: Then I improvise, very loudly, with whatever burns best. Rudolph always said my second plans were harder on the furniture.
+Ezmerelda: Just stay within reach of my voice if the dark gets thick. I did not bring you this far to lose you in the hall.
+-> END

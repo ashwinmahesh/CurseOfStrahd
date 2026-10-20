@@ -1,0 +1,39 @@
+~ ezmerelda_card
+Narrator [neutral]: Madam Eva stops shuffling and looks toward the tent's door, where Ezmerelda stands just as she did when she was six.
+Madam Eva [sly]: Come out of the draft, child, and let the rest of them look at the tapestries for a minute. You have grown taller, and no wiser.
+Madam Eva [neutral]: This one at the bottom has been waiting for you since before you bought that coat. Turn it over.
+Narrator [neutral]: The painted pasteboard shows an empty wooden chair beside a cold hearth, with a shuttered lantern resting on the floorboards.
+Madam Eva [sad]: The man on the hill is not the only thing that starves in the dark, child, so do not leave your chair empty too long. And eat something before you go; a single sausage in a week is an insult to my camp.
+Ezmerelda [wry]: You always did cheat from the bottom of the deck, Grandmother, and my coat is finer than anything in this tent.
+* Ask Madam Eva what the card means. -> ezmerelda_card_a
+* Tell Ezmerelda she heard the old woman: eat something. -> ezmerelda_card_b
+
+~ ezmerelda_card_a
+Madam Eva [sly]: The cards do not mean, you. The cards are patient, and they wait.
+Madam Eva [neutral]: That will do. Take her out of my tent before she tracks mud on the rugs.
+
+~ ezmerelda_card_b
+Ezmerelda [amused]: Magnificent, now I have a whole chorus of grandmothers following me up the mountain. Next you will all be checking my boots for holes.
+Ezmerelda [serious]: I will take half a loaf from the wagon before we cross the river. It is rude to hunt on an empty stomach.
+
+~ plan
+Narrator [neutral]: Wind groans through the rusted iron chains of the drawbridge while Ezmerelda snaps her brass spyglass shut at the chasm's edge.
+Ezmerelda [wry]: Paper plans die on the drawbridge, so here is the whole lecture before we knock. First, we look for the master of the house by daylight, when he is slowest and least fond of company.
+Ezmerelda [serious]: Second, if we find where he sleeps, nobody touches the lid until we are all standing in the room with our irons out. You do not wake a host until you are ready to finish the conversation.
+Ezmerelda [amused]: Third, nobody wanders off to admire the portraits, ever. This house has bad manners and worse floors.
+Ezmerelda [fierce]: Fourth, if I tell you to run, you do not ask where my pride went. You just beat me to the door, wooden leg and all.
+* We have the rules. Lead on. -> plan_a
+* What happens when the plan falls apart? -> plan_b
+
+~ plan_a
+Ezmerelda [amused]: Good, because the tuition goes up once we cross the planks. Keep your light low and your boots quiet.
+
+~ plan_b
+Ezmerelda [amused]: Then I improvise, very loudly, with whatever burns best. Rudolph always said my second plans were harder on the furniture.
+Ezmerelda [serious]: Just stay within reach of my lantern if the dark gets thick. I did not bring you up this rock to lose you in the hall.
+
+~ quest_plan_catacombs
+Ezmerelda [serious]: The dead keep better hours than the living down here, so stay close and do not open anything I have not looked at first.
+
+~ quest_plan_tombs
+Ezmerelda [wry]: I hate tombs; they always have one more door than anyone's map says, and the tenants never lock up from the outside.

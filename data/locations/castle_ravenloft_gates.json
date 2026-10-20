@@ -310,7 +310,10 @@
       ],
       "kind": "examine",
       "label": "The drawbridge",
-      "model": "bridge"
+      "model": "bridge",
+      "call": "allies/ezmerelda_castle:plan",
+      "approach": 6,
+      "call_when": "guest:ezmerelda and not flag.ezmerelda_castle_plan"
     },
     {
       "id": "crg_drawbridge_rail",
@@ -401,6 +404,9 @@
       "kind": "examine",
       "label": "A carved crest over the doors",
       "model": "crest",
+      "call": "allies/ezmerelda_castle:plan_keep",
+      "approach": 6,
+      "call_when": "guest:ezmerelda and not flag.ezmerelda_castle_plan",
       "checks": [
         {
           "id": "keep_crest",

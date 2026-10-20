@@ -265,6 +265,16 @@
       "id": "hub_slots",
       "type": "int",
       "summary": "Working flag: how many hub topics have been picked so far in this visit (at most three). Recomputed whenever her hub menu opens; not story state."
+    },
+    {
+      "id": "ezmerelda_castle_plan",
+      "type": "bool",
+      "summary": "Ezmerelda has told the party her plan for the castle (allies/ezmerelda_castle:plan at the drawbridge, or plan_keep in the front courtyard, a prop's call on approach while she travels with them). It unlocks her two lines on entering the catacombs and the tombs (narrative/banter/guest_ezmerelda.dialogue). Story Allies Presence Plan, package M3; no story reads it."
+    },
+    {
+      "id": "eva_card_for_ezmerelda",
+      "type": "bool",
+      "summary": "Madam Eva has read one card for Ezmerelda alone, with Ezmerelda travelling with the party (svalich_road/madam_eva:ezmerelda_card, offered in the menu of a later visit). Story Allies Presence Plan, package M3; no story reads it."
     }
   ]
 }

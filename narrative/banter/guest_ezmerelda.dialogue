@@ -80,3 +80,15 @@ if guest:ezmerelda
 interject guest:ezmerelda: Eva dealt me into other people's games when I was six. I've stopped minding. I only wish she'd tell me the rules.
 endif
 -> END
+
+~ quest_plan_catacombs
+if guest:ezmerelda and flag.ezmerelda_castle_plan and at:castle_ravenloft_catacombs
+interject guest:ezmerelda: The dead keep better hours than the living down here, so stay close and do not open anything I have not looked at first.
+endif
+-> END
+
+~ quest_plan_tombs
+if guest:ezmerelda and flag.ezmerelda_castle_plan and at:castle_ravenloft_catacombs_tombs
+interject guest:ezmerelda: I hate tombs. They always have one more door than anyone's map says, and never the one you wanted.
+endif
+-> END
