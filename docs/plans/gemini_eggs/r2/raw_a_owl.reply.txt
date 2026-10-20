@@ -1,0 +1,10 @@
+1A: Narrator: On the pine rail of the stage sits a barn owl, its head tied up in a scrap of bear fur with two stitched felt ears. Below its claws, a child’s chalk has warned the camp: OWLBEAR. DO NOT FEED.
+1B: Narrator: A barn owl roosts on the stage rail beside a chalked board that reads: OWLBEAR. DO NOT FEED. Someone has tied a hood of coarse bear pelt over its crown, leaving two felt ears crooked in the firelight.
+2A: Narrator: {name} slips the knotted string over the owl's beak and lifts the fur cap free. It rouses its flattened crown feathers and fixes {name} with a long, unblinking stare of cold relief.
+2B: Narrator: Under {name}’s steady fingers, the bear-fur hood slides off the white head. The bird shakes its rumpled neck and studies {name} through one amber eye, as if weighing an insult.
+3A: Narrator: The owl clacks its beak twice and sinks its neck into the fur hood, determined to keep its ears.
+3B: Narrator: With a sharp clack of its bill, the bird hunches deeper into the bear pelt and dares your fingers to come nearer.
+4A: Narrator: "I am the silent wing in the pines, not the heavy walker," the owl tells you. "The grass-mice are not fooled by these dead ears. Still, the small loud ones bring me fat scraps, and the night wind cannot bite through the fur."
+4B: Narrator: "The small ones call me the big claw-beast, though any field mouse knows my shadow," the owl says. "It is a foolish skin. Yet the small ones have gentle hands, and my head stays warm in the mist."
+5A: Narrator: The great matted hound leans his ribs against your knee, thumping his tail in the mud for anyone who offers a hand. His wet nose never leaves the wind coming off the stew pot.
+5B: Narrator: You scratch behind a burr-tangled ear, and the camp’s common thief licks your wrist with grease-warmed gratitude. He loves your hand well enough, provided it does not stand between him and the unattended cauldron.
