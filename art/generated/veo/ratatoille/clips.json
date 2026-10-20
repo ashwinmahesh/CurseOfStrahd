@@ -1,0 +1,67 @@
+{
+ "walk_se": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He walks in place as if on a treadmill, always facing exactly the way he faces in the image: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He holds his tall gnarled wooden staff upright in his right hand. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:25:39-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_s": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He walks in place as if on a treadmill, always facing exactly the way he faces in the image: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He holds his tall gnarled wooden staff upright in his right hand. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:25:46-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_e": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He walks in place as if on a treadmill, always facing exactly the way he faces in the image: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He holds his tall gnarled wooden staff upright in his right hand. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:26:23-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_ne": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He walks in place as if on a treadmill, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He holds his tall gnarled wooden staff upright in his right hand. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:26:30-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_n": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of an elf wizard and cook, from the image. He walks in place as if on a treadmill, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He holds his tall gnarled wooden staff upright in his right hand. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:27:07-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ }
+}
