@@ -336,6 +336,46 @@ func test_ruins_have_broken_walls() -> void:
 
 # --- Indoor rubble, water and webs (Natural Maps Plan I4) ------------------------------------------------------------
 
+## The Death House's lower dungeon has a band of rubble squares in its flagged floor. In Modern each of them, and the
+## floor round them, carries a patch of N2's blend (a child of the floor box, so it hides with it), and Classic keeps the
+## squares as they were.
+func test_indoor_rubble_blends_into_the_floor() -> void:
+	Look.set_style("modern", false)
+	var v := await _view("death_house_dungeon_2")
+	var board := v.board
+	var diff := 0
+	var bare: Array[Vector2i] = []
+	var beside := 0
+	for z in board.grid.depth:
+		for x in board.grid.width:
+			var c := Vector2i(x, z)
+			var box := board.floor_box(c)
+			if box == null:
+				continue
+			var patched := false
+			for ch: Node in box.get_children():
+				if ch.has_meta("floor_patch"):
+					patched = true
+					assert_true(ch.position.y > 0.0 and ch.position.y - (box.mesh as BoxMesh).size.y / 2.0 < 0.02, "the patch lies on the floor's top")
+			if board.grid.has_flag(c, CombatGrid.DIFFICULT):
+				diff += 1
+				if not patched:
+					bare.append(c)
+			elif patched:
+				beside += 1
+	assert_true(diff > 40, "the dungeon has its rubble squares (%d)" % diff)
+	assert_eq(bare, [] as Array[Vector2i], "every rubble square is patched")
+	assert_true(beside > 10, "the floor round them is patched too, so the edge can wander (%d squares)" % beside)
+	v.queue_free()
+	view = null
+	Look.set_style("classic", false)
+	var c2 := await _view("death_house_dungeon_2")
+	var any := false
+	for n: Node in c2.board.find_children("FloorPatch", "MeshInstance3D", true, false):
+		any = true
+	assert_false(any, "Classic has no patches")
+
+
 ## Rubble clumps indoors keep out of the walls: a clump's narrowest half-width never reaches into a wall square.
 func test_indoor_clumps_keep_out_of_walls() -> void:
 	Look.set_style("modern", false)

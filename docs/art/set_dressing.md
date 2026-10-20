@@ -404,13 +404,22 @@ only (Classic keeps what it had); the rules grid never sees any of it.
 `Drystone.enabled`, `StandingStone.enabled` and `GroundCover.enabled` switch them off for tests and timing runs that
 compare with the old pieces. tests/integration/test_natural_small_things.gd.
 
-## Indoor rubble and webs across the floor (the vault's Natural Maps Plan, I4)
+## Indoor rubble, water and webs that blend (the vault's Natural Maps Plan, I4)
 
-Every `~` square of an interior or a dungeon carried one piece of dressing, so a run of rubble or a hall of webs was a
-cube or a web in each square. In the Modern look:
+Every `~` square of an interior or a dungeon carried a material of its own and one piece of dressing, so a run of rubble, a
+flooded passage or a hall of webs was a rectangle of square tiles with a cube or a web in each. In the Modern look two
+things change, on every board whose floors are boxes (interiors, dungeons, an outdoor dungeon map, a board with no place;
+N2's skin draws the rest):
 
+- **A patch that blends** (`FloorPatch`, laid by `ArenaBoard._build` once the floors are built). The run's squares and the
+  squares round it are covered by one thin flat patch, a child of each square's floor box (so a stairwell or a secret room
+  that hides the floor hides the patch), drawn with N2's blend (`Look.blend_ground`): the difficult surface and the
+  room's own floor (the three most used round the run) melt into each other at the run's edge, which the shader breaks up
+  with noise and lets spill up to half a square into the floor beside it; a difficult square's middle 60% is always its
+  own surface. The difficult surface is the place look's `difficult`, else the theme's (a dungeon's mud), else packed
+  earth. The floor boxes under it and beyond it are untouched, so the room's tiles are kept.
 - **Clumps across squares** (`GroundCover`, as outdoors): rubble heaps and webs scattered by noise over the run instead of
   one on each square. Walls here are built, so a clump keeps out of them; rubble (a heap, `GroundCover.HEAPS`) is turned any
   way and not stretched long, and a sprite stays under a token's height.
 
-tests/integration/test_natural_small_things.gd.
+`FloorPatch.enabled` switches the patch off for tests and timing runs; tests/integration/test_natural_small_things.gd.

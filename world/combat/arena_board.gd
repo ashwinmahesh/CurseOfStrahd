@@ -245,6 +245,7 @@ func _build() -> void:
 			om.material_override = _cliff_material()
 			add_child(om)
 	_flights(dais)
+	FloorPatch.lay(self)   # rubble, water and webs blend into the room's floor (Natural Maps I4)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
 	if not wall_styles.is_empty():
