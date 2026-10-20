@@ -1,0 +1,18 @@
+You are drafting short lines of game text for a single-player D&D 2024 computer RPG set in Curse of Strahd's Barovia. Reply in plain text only. Do not message, route to, or ask anyone else; finish with your reply.
+
+HOUSE RULES FOR ALL LINES
+- ALLUDE, NEVER QUOTE. This game winks at another famous fantasy game in small ways, but no line may contain a name, quote, or catchphrase from another game, and no line may mention a game, a player, dice, rolls, levels or saving. Everything happens inside the world.
+- The tone is gothic, dry and quietly funny, never cruel. The joke is in what is there.
+- Give TWO options for every line so the editor can choose. Label each option A or B.
+- Spoken lines are formatted: Speaker [mood]: Text   (mood optional: neutral, smile, angry, afraid, sad, sly, weary). One or two sentences a line.
+
+THE NARRATOR (voice rules): an old gothic storyteller, fond of the party the way a gravedigger is fond of the weather: interested, no illusions. Second person, present tense ("You crouch..."), or the acting hero as {name}. One or two sentences; the second is usually the turn. Concrete senses, not adjectives. Never tells the player what to feel. No modern slang. When an animal speaks through the Speak with Animals spell, the Narrator reports it in quotes, in plain animal pictures (a dog says "the digger-man", "the box-maker").
+
+
+THE PLACE: Blinsky Toys in Vallaki, a shop of sad, unsettling toys. The existing line for the shelves: "Wooden soldiers with hollow eyes. Rag dolls with button smiles. A carved wolf that, when you press its back, opens its mouth and keeps it open." Once the party has spotted it, the shelves' line should also mention the pale wooden puppet with silver-white hair on the top board, posed before a little toy mirror that shows only the shop behind it, still unsold.
+
+WRITE: one NARRATOR line for the shelves, once the puppet has been spotted: the toys, and the pale puppet up top still admiring himself in a mirror that won't show him. One or two sentences, under 40 words.
+
+Return exactly this layout:
+1A: Narrator: ...
+1B: Narrator: ...

@@ -1,0 +1,21 @@
+You are drafting short lines of game text for a single-player D&D 2024 computer RPG set in Curse of Strahd's Barovia. Reply in plain text only. Do not message, route to, or ask anyone else; finish with your reply.
+
+HOUSE RULES FOR ALL LINES
+- ALLUDE, NEVER QUOTE. This game winks at another famous fantasy game in small ways, but no line may contain a name, quote, or catchphrase from another game, and no line may mention a game, a player, dice, rolls, levels or saving. Everything happens inside the world.
+- The tone is gothic, dry and quietly funny, never cruel. The joke is in what is there.
+- Give TWO options for every line so the editor can choose. Label each option A or B.
+- Spoken lines are formatted: Speaker [mood]: Text   (mood optional: neutral, smile, angry, afraid, sad, sly, weary). One or two sentences a line.
+
+THE NARRATOR (voice rules): an old gothic storyteller, fond of the party the way a gravedigger is fond of the weather: interested, no illusions. Second person, present tense ("You crouch..."), or the acting hero as {name}. One or two sentences; the second is usually the turn. Concrete senses, not adjectives. Never tells the player what to feel. No modern slang. When an animal speaks through the Speak with Animals spell, the Narrator reports it in quotes, in plain animal pictures (a dog says "the digger-man", "the box-maker").
+
+These two are journal texts the player reads (not spoken). Plain prose in the writer's own voice, no names of real or other-game people or places.
+
+1. A LETTER found stuffed under the straps of an old iron-bound sea chest belonging to a travelling showman in Vallaki (he is secretly an aged, famous monster hunter in disguise; the letter must never name him, never name his true identity, and never use the words "hunter" with his name). The letter is from an old half-elf druid far to the west who has known him for decades. She signs only with a little drawn harp and crescent moon. She calls him "child" though he must be past sixty; she is tart, fond and bossy; she tells him to stop chasing monsters alone, to eat something green, and to write back, and mentions that she is still not dead herself despite everyone's efforts. 60 to 90 words. End with the signature described in brackets: [a little harp and a crescent moon].
+
+2. A TRACT: a slim black book left on a chair in Lady Wachter's house, where a secret cult of the vampire lord meets at night as a "book club". The book is a tract to a dark sister-goddess of loss and forgetting (never named): the comfort of forgetting, the night that keeps what it takes. Grim and beautiful, no joke. Then, in the margin in a teacher's hand, a short note about a novice who "kept forgetting her own name, and would not stop picking the white flowers that open only at night; we had to take her shears away twice". 70 to 100 words in all: the tract's passage, then "In the margin:" and the note.
+
+Return exactly this layout:
+1A: ...
+1B: ...
+2A: ...
+2B: ...

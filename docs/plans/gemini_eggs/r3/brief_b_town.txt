@@ -1,0 +1,32 @@
+You are drafting short lines of game text for a single-player D&D 2024 computer RPG set in Curse of Strahd's Barovia. Reply in plain text only. Do not message, route to, or ask anyone else; finish with your reply.
+
+HOUSE RULES FOR ALL LINES
+- ALLUDE, NEVER QUOTE. This game winks at another famous fantasy game in small ways, but no line may contain a name, quote, or catchphrase from another game, and no line may mention a game, a player, dice, rolls, levels or saving. Everything happens inside the world.
+- The tone is gothic, dry and quietly funny, never cruel. The joke is in what is there.
+- Give TWO options for every line so the editor can choose. Label each option A or B.
+- Spoken lines are formatted: Speaker [mood]: Text   (mood optional: neutral, smile, angry, afraid, sad, sly, weary). One or two sentences a line.
+
+THE NARRATOR (voice rules): an old gothic storyteller, fond of the party the way a gravedigger is fond of the weather: interested, no illusions. Second person, present tense ("You crouch..."), or the acting hero as {name}. One or two sentences; the second is usually the turn. Concrete senses, not adjectives. Never tells the player what to feel. No modern slang. When an animal speaks through the Speak with Animals spell, the Narrator reports it in quotes, in plain animal pictures (a dog says "the digger-man", "the box-maker").
+
+THE BARON: Baron Vargas Vallakovich, the burgomaster of Vallaki, who forces his town to be happy with festivals and decrees. Exclamations, proclamations and lists; speaks to three people as if to a full square; reassures himself mid-sentence; pet phrases "All will be well!" "Cheerfully!" Real decrees (each is two lines, festive menace):
+- "Hear ye! By order of the Burgomaster, no citizen shall be seen to wipe their eyes in the public square." / "Should the morning wind cause your eyes to water, you are required by law to laugh about it openly!"
+- "Notice to all households! From this hour forth, every dog in Vallaki shall wear a yellow festival ribbon." / "A dog without a ribbon is a dog with an opinion, and we have no room for either in a happy town!"
+
+WRITE:
+1. THE BARON's new decree: no citizen shall shove a fellow citizen off any height, into the river, or into a festival bonfire, however festive the intent. Two lines in his pattern. Format: Baron [smile]: ...
+
+2. NARRATOR, petting the big dog who lies in Vallaki's town square in the one patch of sun. In this town everyone must smile by law; the dog has clearly not been told he's a good dog in a long time. One or two sentences, under 40 words. Real line about him: "The big dog sniffs your boots for a long moment, decides you are not food and not trouble, and lies down across the square's best patch of sun."
+
+3. NARRATOR, petting the Vistani camp dog outside Vallaki's walls, who sits hopefully beside the stew pot. One or two sentences, under 35 words. Real line: "The camp dog trots after you for a few steps, decides you aren't carrying anything to eat, and goes back to sitting very hopefully beside the pot."
+
+4. NARRATOR, examining children's chalk drawings on the cobbles of Vallaki's square. A children's game, drawn over many days: a masked hero with a sword saving a farm from goblins. In the newest drawings someone has given the hero little horns and an eyepatch, and drawn a tall lady in red holding him on a leash. Two sentences, about 45 words. Wry and a little sad; the children of this town draw what they hear about.
+
+Return exactly this layout:
+1A: Baron [smile]: ... | Baron: ...
+1B: Baron [smile]: ... | Baron: ...
+2A: Narrator: ...
+2B: Narrator: ...
+3A: Narrator: ...
+3B: Narrator: ...
+4A: Narrator: ...
+4B: Narrator: ...

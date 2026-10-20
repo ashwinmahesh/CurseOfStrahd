@@ -1,0 +1,27 @@
+You are drafting short lines of game text for a single-player D&D 2024 computer RPG set in Curse of Strahd's Barovia. Reply in plain text only. Do not message, route to, or ask anyone else; finish with your reply.
+
+HOUSE RULES FOR ALL LINES
+- ALLUDE, NEVER QUOTE. This game winks at another famous fantasy game in small ways, but no line may contain a name, quote, or catchphrase from another game, and no line may mention a game, a player, dice, rolls, levels or saving. Everything happens inside the world.
+- The tone is gothic, dry and quietly funny, never cruel. The joke is in what is there.
+- Give TWO options for every line so the editor can choose. Label each option A or B.
+- Spoken lines are formatted: Speaker [mood]: Text   (mood optional: neutral, smile, angry, afraid, sad, sly, weary). One or two sentences a line.
+
+THE NARRATOR (voice rules): an old gothic storyteller, fond of the party the way a gravedigger is fond of the weather: interested, no illusions. Second person, present tense ("You crouch..."), or the acting hero as {name}. One or two sentences; the second is usually the turn. Concrete senses, not adjectives. Never tells the player what to feel. No modern slang. When an animal speaks through the Speak with Animals spell, the Narrator reports it in quotes, in plain animal pictures (a dog says "the digger-man", "the box-maker").
+
+THE PLACE: Blinsky Toys in the town of Vallaki: a toymaker's shop of sad, unsettling toys (wooden soldiers with hollow eyes, a carved wolf whose mouth opens and stays open, a music box whose dancer turns to face you). Real Narrator lines here: "Wooden soldiers with hollow eyes. Rag dolls with button smiles. A carved wolf that, when you press its back, opens its mouth and keeps it open." / "Wooden heads waiting for faces, in rows. Blinsky carves the mouths last, he'd tell you, so the toys can't complain about the rest."
+On the very top shelf, out of the way, is a puppet the party can spot with a sharp eye: a pale, elegant puppet with silver-white hair and a fine red-lined coat, posed before a little toy mirror; whichever way you turn the puppet, the mirror shows only the shop behind it. Blinsky made it and nobody has ever bought it.
+
+THE CLERK: Emanoil, a young Vallaki clerk who dresses in black he can't afford, writes long bad rhyming poems to the vampire lord's castle, sleeps in a coffin, and longs to be "chosen" and bitten; secretly afraid of the dark. Real lines: "Good day to you, strangers, or perhaps not good day, if the light offends your eyes." / "I am Emanoil: a clerk by necessity, a poet by calling, and a humble seeker of the night." / His verse: "O Lord of Gloom, within thy lofty tomb, / Deliver me from Vallaki and its cheerful doom." / "Do you think so? 'Road' and 'abode' came to me while I was washing my teacup."
+
+WRITE:
+1. NARRATOR, the look along the top shelf SUCCEEDS (the puppet and its mirror). Two sentences, about 40 words. The turn: the mirror shows only the shop.
+2. NARRATOR, the look FAILS (dust, a cobweb, a tin drum). One sentence, under 25 words.
+3. EMANOIL, shown the puppet (the party gives it to him): three short lines of overjoyed dialogue, the last one a two-line rhyming couplet he makes up on the spot about the puppet with no reflection (bad, earnest verse, the kind he writes). He insists on paying for it twice over. Format each: Emanoil [mood]: ...
+
+Return exactly this layout:
+1A: Narrator: ...
+1B: Narrator: ...
+2A: Narrator: ...
+2B: Narrator: ...
+3A: Emanoil ...: ... | Emanoil ...: ... | Emanoil ...: ...
+3B: Emanoil ...: ... | Emanoil ...: ... | Emanoil ...: ...
