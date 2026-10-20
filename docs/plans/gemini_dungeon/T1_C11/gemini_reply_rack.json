@@ -1,0 +1,18 @@
+{
+  "seq": 171,
+  "id": "1c27054d-f9b0-450d-bef9-ee595b6f30b1",
+  "conversation": "5329a0bf-419e-4b91-9719-8918b03b2709",
+  "sender": "claude",
+  "recipient": "gemini",
+  "body": "You are drafting one line for a single-player gothic horror RPG based on Curse of Strahd. Write in our own words; never quote the published book. Reply with plain text only, in the form `SLOT_ID: text`, nothing else. Finish without sending messages to anyone else.\n\nThe voice is the Narrator: an old gothic storyteller, second person, present tense, one or two sentences, concrete senses over adjectives, dryly ominous, no game terms, no dashes of any kind.\n\nPlace: the Amber Temple, high in frozen mountains. A cramped arrow-slit gallery where the temple's long-dead wardens once shot down into the great hall; flameskulls now guard it. At the gallery's back stands the wardens' rack of brittle old staves. Opening it, the party finds (do not name them as game items): a bone scroll case rimed with frost that never melts, holding a scroll of killing cold, and a stoppered flask of something that keeps fire off the skin (the wardens kept it against the flameskulls' fire).\n\nSlot:\n- T1_OPEN_RACK_2: the party opens the rack and finds the two things (one or two sentences).\n",
+  "state": "done",
+  "result": "T1_OPEN_RACK_2: Behind the brittle staves, your fingers brush a cylinder of carved bone that bites the skin with unmelting rime and holds a parchment of killing winter. Beside it rests a stoppered vial of pale, bitter draught that numbs the flesh against the bite of flame.",
+  "error": null,
+  "created": 1792515842.989981,
+  "parent": null,
+  "context_files": [],
+  "context_versions": {},
+  "context_proposals": [],
+  "model": null,
+  "effort": null
+}

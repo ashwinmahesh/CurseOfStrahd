@@ -315,6 +315,16 @@
       "id": "amber_road_expedition_found",
       "type": "bool",
       "summary": "The party found the frozen expedition on the ice stair (event, once)."
+    },
+    {
+      "id": "statue_ambush_fought",
+      "type": "bool",
+      "summary": "The party came through the shape in the dark's ambush in the great hall (encounter statue_ambush): the three flameskulls behind the west wall's arrow slits are destroyed. Vosk mentions the hall's welcome when they meet."
+    },
+    {
+      "id": "statue_shape_withdrew",
+      "type": "bool",
+      "summary": "The shape in the dark at the faceless god's head (Vosk, unseen) left the ambush unharmed and pleased (the encounter's withdraw)."
     }
   ]
 }

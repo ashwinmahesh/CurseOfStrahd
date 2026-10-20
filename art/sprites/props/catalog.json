@@ -172,6 +172,8 @@
     },
     "standing_stones": "standing_stones",
     "ritual_offerings": "offering_circle",
+    "west_slit_n": null,
+    "west_slit_s": null,
     "sarc_khirad": {
       "art": "amber_case",
       "case": "vestige",
@@ -6087,6 +6089,19 @@
     ]
   },
   "low_cover_rooms": [
+    [
+      [
+        "arrow slit"
+      ],
+      {
+        "single": [
+          "wall_low"
+        ],
+        "run": [
+          "wall_low"
+        ]
+      }
+    ],
     [
       [
         "sanctum"

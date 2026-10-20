@@ -28,11 +28,11 @@
       "#.=.=.=...#..#.............#..#........#",
       "#.........#...................#........#",
       "#.........#...................#..=...=.#",
-      "###########...................##########",
-      "##############............##############",
-      "##############............##############",
-      "##############............##############",
-      "##############............##############",
+      "#####.#####...................##########",
+      "#####.########............##############",
+      "##...........=............##############",
+      "##...........#............##############",
+      "##...........=............##############",
       "##############............##############",
       "###################..###################"
     ],
@@ -40,6 +40,34 @@
     "light": "dark"
   },
   "areas": [
+    {
+      "id": "west_arrow_slit_n",
+      "name": "An arrow slit",
+      "cells": [
+        [
+          13,
+          24
+        ],
+        [
+          13,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "west_arrow_slit_s",
+      "name": "An arrow slit",
+      "cells": [
+        [
+          13,
+          26
+        ],
+        [
+          13,
+          26
+        ]
+      ]
+    },
     {
       "id": "south_gallery",
       "name": "The south gallery",
@@ -120,6 +148,23 @@
       ],
       "furnish": "wardens_cells",
       "floor": "church/frosted_flags"
+    },
+    {
+      "id": "arrow_slit_gallery",
+      "name": "The arrow-slit gallery",
+      "cells": [
+        [
+          2,
+          24
+        ],
+        [
+          12,
+          26
+        ]
+      ],
+      "light": "dark",
+      "floor": "church/frosted_flags",
+      "walls": "amber/glazed_wall"
     }
   ],
   "spawns": {
@@ -430,6 +475,46 @@
       "kind": "decor",
       "label": "A pilgrim's candles",
       "model": "candle_cluster"
+    },
+    {
+      "id": "west_slit_n",
+      "cell": [
+        13,
+        24
+      ],
+      "kind": "examine",
+      "label": "An arrow slit",
+      "say": "examine:arrow_slit"
+    },
+    {
+      "id": "west_slit_s",
+      "cell": [
+        13,
+        26
+      ],
+      "kind": "examine",
+      "label": "An arrow slit",
+      "say": "examine:arrow_slit"
+    },
+    {
+      "id": "gallery_scorch_n",
+      "cell": [
+        12,
+        24
+      ],
+      "kind": "decor",
+      "label": "Scorch marks",
+      "model": "scorch"
+    },
+    {
+      "id": "gallery_scorch_s",
+      "cell": [
+        12,
+        26
+      ],
+      "kind": "decor",
+      "label": "Scorch marks",
+      "model": "scorch"
     }
   ],
   "containers": [
@@ -517,6 +602,26 @@
         },
         {
           "id": "magnifying_glass",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "wardens_stave_rack",
+      "cell": [
+        2,
+        25
+      ],
+      "label": "A rack of the wardens' staves",
+      "model": "weapon_rack",
+      "items": [
+        {
+          "id": "spell_scroll__cone_of_cold",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_resistance_fire",
           "qty": 1
         }
       ],
@@ -756,6 +861,17 @@
       "kind": "lamp",
       "bright_ft": 10,
       "dim_ft": 30,
+      "color": "frost",
+      "visual": true
+    },
+    {
+      "cell": [
+        7,
+        25
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
       "color": "frost",
       "visual": true
     }
@@ -1218,6 +1334,102 @@
         "id": "patrinas_wail",
         "stage": "destroyed"
       }
+    },
+    {
+      "id": "statue_ambush",
+      "trigger": "enter_area:amber_great_hall",
+      "text": "The dark at the god's head shifts, and two tall pointed ears lift against the stone. Green fire spits from the west wall.",
+      "surprise": "party",
+      "flag": "statue_ambush_fought",
+      "withdraw": {
+        "who": "arcanaloth",
+        "after_rounds": 2,
+        "at_hp_below": 120,
+        "flag": "statue_shape_withdrew",
+        "say": "Quite satisfactory. Every clause of your survival is in order. Do come and find me.",
+        "speaker": "vosk"
+      },
+      "when": "not flag.statue_ambush_fought and not flag.vosk_met and not flag.vosk_fate and not flag.vosk_destroyed and level >= 10",
+      "monsters": [
+        {
+          "monster": "arcanaloth",
+          "cell": [
+            19,
+            7
+          ],
+          "name": "The shape in the dark",
+          "art": "shadow"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            11,
+            24
+          ]
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            11,
+            26
+          ]
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            7,
+            25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "statue_ambush",
+      "trigger": "enter_area:amber_great_hall",
+      "text": "The dark at the god's head shifts, and two tall pointed ears lift against the stone. Green fire spits from the west wall.",
+      "surprise": "party",
+      "flag": "statue_ambush_fought",
+      "withdraw": {
+        "who": "arcanaloth",
+        "after_rounds": 1,
+        "at_hp_below": 120,
+        "flag": "statue_shape_withdrew",
+        "say": "Quite satisfactory. Every clause of your survival is in order. Do come and find me.",
+        "speaker": "vosk"
+      },
+      "when": "not flag.statue_ambush_fought and not flag.vosk_met and not flag.vosk_fate and not flag.vosk_destroyed",
+      "monsters": [
+        {
+          "monster": "arcanaloth",
+          "cell": [
+            19,
+            7
+          ],
+          "name": "The shape in the dark",
+          "art": "shadow"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            11,
+            24
+          ]
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            11,
+            26
+          ]
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            7,
+            25
+          ]
+        }
+      ]
     }
   ],
   "narration": {

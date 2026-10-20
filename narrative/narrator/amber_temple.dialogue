@@ -88,6 +88,17 @@ cooldown 30
 | A long corridor of cells, each just big enough for a cot and a prayer. The wardens lived here, a few steps from what they guarded. It must have been very hard to sleep.
 once
 
+~ enter:arrow_slit_gallery
+| A cramped stone gallery, smelling of old ash and mountain cold. Two narrow arrow slits, ringed with fresh scorch marks, look out into the great hall's dark.
+| [flag.statue_ambush_fought] The firing gallery holds only frost now, and the smell of burnt bone.
+cooldown 30
+
+~ examine:arrow_slit
+| Through the sooty slit the whole hall lies open before you, from the faceless hood to the flagstones where you stood a moment ago. It is an uncomfortably clean line.
+
+~ open:wardens_stave_rack
+| Behind the brittle staves your fingers find a case of carved bone, rimed with frost that never melts, with a parchment of killing winter inside. Beside it stands a stoppered vial of something bitter that numbs the skin against flame.
+
 ~ examine:faceless_statue
 | The sculptor finished the robe down to the stitching, and the hands down to the knuckles, and then left the face perfectly smooth. Whether that was a choice or a refusal, the stone isn't saying.
 | [treasure_at:amber_temple_faceless_god] At the statue's feet, among the offerings, something catches your light and holds it a moment longer than the rest.

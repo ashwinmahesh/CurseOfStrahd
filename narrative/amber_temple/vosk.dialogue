@@ -11,6 +11,9 @@ quest the_amber_temple broker_met
 endif
 Narrator: At a table stacked with books sits a stooped, pleasant-faced man in a scholar's gown, spectacles low on his nose, a cup of something steaming at his elbow. Nothing else in this library is warm.
 Vosk [smile]: Oh! Company. Forgive me, I've been reading so long I'd forgotten other people were real. Vosk. Master Vosk, if you're formal. A scholar, like yourselves. Well. Like some of you.
+if flag.statue_shape_withdrew
+Vosk [smile]: Ah, you came through the great hall. I do hope the wardens' little reception didn't singe your cloaks; one must be sure a client can weather the preliminaries.
+endif
 -> menu
 
 ~ menu

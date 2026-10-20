@@ -50,7 +50,7 @@ Five maps (data/locations/). Themes: `dungeon` for the temple (the doors map is 
 | Map | Areas (enter: triggers) | What happens |
 |---|---|---|
 | `amber_temple_entrance` (32 x 26) | `snow_ledge`, `ice_stair`, `vestibule`, `west_guardroom`, `east_guardroom` | Arrival from the pass (spawn `from_pass`, exit `down_to_the_pass` → travel). The two colossi: one split (prop), one the Sentinel (NPC, approach). The great doors, the frozen traveller just inside (**Tarokka spot**: `pilgrims_pack`), two guardrooms (the frozen watch, wights, east). A snow cornice over the drop (trap). No rest. |
-| `amber_temple_faceless_god` (40 x 29) | `south_gallery`, `great_hall`, `ring_of_amber`, `hall_of_echoes`, `wardens_cells` | The colossal statue with no face and the offerings at its feet (**Tarokka spot**: `statue_offerings`; a gaze trap on the step before it). East: the ring of amber, six sarcophagi and the hollow-eyed seekers (fight). West: the hall of echoes, Patrina (approach). North: the wardens' cells (loot, a frost vent), the library passage and the stair down. Risky rest. |
+| `amber_temple_faceless_god` (40 x 29) | `south_gallery`, `great_hall`, `ring_of_amber`, `hall_of_echoes`, `wardens_cells`, `arrow_slit_gallery` | The colossal statue with no face and the offerings at its feet (**Tarokka spot**: `statue_offerings`; a gaze trap on the step before it). The first step into the great hall springs the ambush under the faceless god (§4.7). West of the south gallery, behind two arrow slits, the wardens' firing gallery (reached from the hall of echoes; the rack holds a Cone of Cold scroll and a fire resistance potion). East: the ring of amber, six sarcophagi and the hollow-eyed seekers (fight). West: the hall of echoes, Patrina (approach). North: the wardens' cells (loot, a frost vent), the library passage and the stair down. Risky rest. |
 | `amber_temple_library` (30 x 20) | `library_stacks`, `reading_room`, `restricted_stacks`, `exethanter_study` | Vosk reading in the stacks (approach, once). The reading room's books: the wardens' charter, the visitors' ledger (Strahd and Exethanter), a treatise on amber. The barred alcove (iron gate, DC 18) and its chained case (the wardens' flameskulls). Exethanter's study: his wall of notes (Investigation 15), the jar labelled NOT THE PHYLACTERY (search DC 13). Risky rest. |
 | `amber_temple_vault` (40 x 30) | `vault_stair`, `hall_of_vestiges`, `treasure_vault`, `sanctum` | Black ice on the stair (trap). The hall of vestiges: ten sarcophagi, a warding glyph line (trap), an empty plinth, a dead sarcophagus. The honey-glow doors (prop `honey_door_seal`) and their guardian; the vault of offerings (**Tarokka spot**: `gift_heap`; falling amber trap). The sanctum: the hollow sarcophagus, the copper pact ledger, Vosk (approach), later Exethanter (approach). No rest. |
 | `amber_temple_road` (30 x 16) | `switchbacks` | The battlefield for the climb's random fights and events (data/random_encounters/amber_temple_road.json). |
@@ -186,6 +186,20 @@ directly, after the fight when Exethanter comes down to sweep (approach 8, `vaul
 sarcophagus prop. Then Exethanter offers the wardens' last rite: **seal the temple** (`amber_temple_sealed`: every
 sarcophagus goes dark for good; gifts already given stay) or leave it open.
 
+### 4.7 The ambush under the faceless god (Dungeon Expansion Plan T1)
+
+The book's deadliest welcome (X4, X5a, X17; Elven Tower's chapter 13 guide): an arcanaloth hides in magical darkness at the
+God of Secrets statue while three flameskulls fire from arrow slits in the upper west hall. Ours: the first time the party
+steps into the great hall (`enter_area:amber_great_hall`, encounter `statue_ambush`, before Vosk is met or dealt with), the
+dark at the god's head shifts, two tall pointed ears lift against the stone, and green fire spits from the west wall: the
+party is surprised. "The shape in the dark" is an arcanaloth in the shadow's sprite (Vosk, unseen, so the scholar in the
+library keeps his secret until Exethanter's notes or an Insight check); it fights a round (two at level 10) and withdraws in Vosk's voice
+("Do come and find me": `statue_shape_withdrew`). The three flameskulls start in the arrow-slit gallery, cut into the solid
+wall west of the south gallery (rows 24 to 26), behind two slits that are low walls (half cover; flyers cross them), and
+reached on foot from the hall of echoes (5, 22). Its rack holds a scroll of Cone of Cold and a potion of fire resistance (the book's X17 find, a Staff of Frost, is already the Tsolenka Pass's). In the library
+Vosk mentions the hall's welcome when he greets the party, without owning it. Tuned to 5 wins in 8 (docs/story/
+fight_tuning_dungeon_t1.md). The Look Plan owns how the statue looks; this owns the fight and the gallery round it.
+
 ## 5. Choices and their consequences
 
 | Choice | Where | Options | Immediate | Downstream |
@@ -220,6 +234,7 @@ share an id; the first whose `when` holds is the fight. Guests (Kasimir, Ireena)
 | `sentinel_wakes` | doors | dialogue (strike it; failed ward) | amber golem + 2 gargoyles (6800, Low+) | amber golem (5900, Low+ at 9) | golem at 130 HP |
 | `sentinel_stops_you` | doors | enter `snow_ledge` carrying a gift, Sentinel not stilled | amber golem (5900) | same | same |
 | `frozen_watch` | doors | enter `east_guardroom` | 4 wights (2800) | 3 wights (2100) | same |
+| `statue_ambush` | great hall | enter `amber_great_hall` (first time, before Vosk) | the shape in the dark (an arcanaloth, leaves after round 2) + 3 flameskulls, party surprised (4 of 8) | the shape (leaves after round 1) + 3 flameskulls (5 of 8 at 9) | same |
 | `hollow_eyed` | great hall | enter `ring_of_amber` | 5 nothics + 3 wraiths (7650, Low+) | 4 nothics + 3 wraiths (7200, Low+ at 9, Moderate at 8) | 4 nothics + wraith (3600) |
 | `patrina_wails` | great hall | dialogue | Patrina (banshee, 110 HP) + 4 specters (1900; her Wail is the danger) | same | same |
 | `library_wardens` | library | open `restricted_case` | 4 flameskulls (4400) | 3 flameskulls (3300) | same |
@@ -293,7 +308,8 @@ Fixed Curse of Strahd items: none placed as story items here beyond the Tarokka 
 already exist). **For the DMG-items thread** (containers that should receive the chapter's magic): `watch_chest`
 (doors, east guardroom, locked 15), `warden_cell_locker` (great hall, locked 14), `restricted_case` (library, guarded by
 the flameskulls: the place for spell scrolls of levels 3 to 6 and a wizard's item; it holds Circle of Death and Harm, both very rare), `gift_heap` and `offering_urns`
-(vault of offerings: the richest hoard, an offering from every century), `statue_offerings`. **Item needs**: spell
+(vault of offerings: the richest hoard, an offering from every century), `statue_offerings`. The arrow-slit gallery's
+`wardens_stave_rack` holds a spell scroll of Cone of Cold and a potion of fire resistance (Dungeon Expansion Plan T1; the book's X17 Staff of Frost is placed at the Tsolenka Pass, and each lasting item turns up once). **Item needs**: spell
 scrolls above level 1 (only `spell_scroll_cantrip` and `_level_1` exist; the restricted case and the wardens' locker
 hold level 1 scrolls as stand-ins), gems and art objects as items (gold stands in), and the copper pact ledger as a
 codex entry (it is a prop conversation today).
