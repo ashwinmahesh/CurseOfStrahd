@@ -43,6 +43,12 @@
       "ends": ""
     },
     {
+      "id": "unspoken",
+      "journal": "We told Luminita the road behind us was empty and kept the crossroads gallows to ourselves. She is still waiting for Nicu to ride back from Vallaki.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "told",
       "journal": "We told Nicu's people what became of him at the crossroads. They will remember who brought the news.",
       "objectives": [],

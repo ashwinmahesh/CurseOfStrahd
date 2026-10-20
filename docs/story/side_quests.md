@@ -294,6 +294,14 @@ party can still go: Called by Name at the lake camp, The Dancing Bear at the bar
 pen, and The Hanged Man at the Crossroads with Arrigal, who takes Nicu's news (`the_hanged_vistana` `told` from `buried`
 or `risen`, only after the brawl; no potion, no Luminita). None of them sets a main flag.
 
+**Lost to time or a wrong choice (Failure Plan, T1 round two, 2026-10-20; Ashwin 2026-10-19: clocks yes, no failed roll ends
+a quest).** Called by Name runs out three days after Big Tobar asks (`answered`), The Dancing Bear a day after the party
+first backs away from the trapped cub (`torn`), The Grey Mare's `mourned` is a failure now, and the Hanged Man ends at
+`unspoken` if the party tells Luminita the road was empty (offered once the gallows were seen, and marked as ending the
+quest; final: neither she nor Stanimir can be told afterwards, and she moves her bedroll into the wagon by the ditch to
+watch the road). The first three are below. Stanimir's Fire stays unfailable: its only way to lose is the camp's vote, a
+roll.
+
 ### The Grey Mare (`the_grey_mare`, narrative/svalich_road/grey_mare.dialogue)
 
 The black carriage that drives itself stopped by Radu's pen and left a purse; tonight Radu walked his grey mare,
@@ -323,6 +331,9 @@ bolts home and the carriage comes early; failed or left alone, she is black by m
   pen (prop `tser_pen_empty`) closes the quest: a saved Steaua is found grey and alone with the castle's purse still on the
   gatepost (`home`, 120 gp, no rod and no approval from Radu); a mare lost leaves an empty place at the end of the pen and
   closes it as `empty_pen`, a failure.
+- **Mourned is a failure (T1, 2026-10-20).** A mare the castle kept (`mourned`) ends the quest as a failure: Radu still
+  pays the castle's 120 gp, but the bride-price rod stays tied to the gatepost with her black ribbon. The rod comes only
+  with a saved Steaua. In Experience mode the quest pays no XP then.
 
 ### Called by Name (`called_by_name`, narrative/svalich_road/called_by_name.dialogue; batch 2)
 
@@ -350,6 +361,10 @@ decides whether someone is lured toward the edge, which starts the fight with th
   out of the gorge (`nelu_found`) waits at the Vistani camp by the lake outside Vallaki's west gate (`tser_nelu` there,
   `called_by_name:nelu_away`) and the quest closes as `no_fire`, a failure: Nelu is alive, with no money and no quiver from
   his father and no way home. The `nelu_found` hint names both camps.
+- **Three days (T1, 2026-10-20).** Tobar's ask stamps `nelu_asked_at`, and he names the time: three days on that ledge
+  already, he won't last three more. The journal warns while it runs; three days later, at `asked` or `voices`, Nelu has
+  answered (`answered`, a failure, by a `closes` rule). Afterwards the falls call for "Da" in Nelu's voice at night (no
+  wisps' fight), and Tobar grieves at his wheels. Getting the boy off the ledge (`nelu_found`) stops the clock.
 
 ### The Dancing Bear (`the_dancing_bear`, narrative/svalich_road/the_dancing_bear.dialogue; batch 7, level 3)
 
@@ -371,6 +386,11 @@ young. **Escalation:** opening the trap makes the cub scream, and the blights co
   the den offers only the den (`choose`), and letting them go closes the quest as `no_stage`, a failure: no fan and no
   60 gp. A bear already led or let go (`found`) and a camp that turns afterwards is closed at the bare plank stage (prop
   `tser_stage_empty`).
+- **A day (T1, 2026-10-20).** Backing away from the clearing at `asked` stamps `bear_backed_away` (the first time only)
+  with a Narrator line: the brush is already creeping toward the cub. A day later, if the trap still isn't open, the
+  blights have them both (`torn`, a failure): Bujor is gone from the clearing, the trap prop shows him dead in the fern
+  and the jaws empty, and Lavinia, who knows what silence sounds like, dances alone. Opening the trap (`defended`) stops
+  the clock.
 
 ### The Spiders' Gully (`the_spiders_gully`, narrative/svalich_road/the_spiders_gully.dialogue; batch 9, level 3)
 

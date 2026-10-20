@@ -9,6 +9,11 @@
 # --- Lavinia on the plank stage (svalich_road/tser_camp:lavinia jumps here) ---
 
 ~ lavinia
+if quest.the_dancing_bear == torn
+Lavinia [sad]: You don't have to say it. The woods up the hill have been quiet since daybreak, and I know what silence sounds like.
+Lavinia: I hung his broken chain on the post by the steps. Tonight I dance alone, and the boards can creak for the both of us.
+-> END
+endif
 if quest.the_dancing_bear == done
 if flag.bujor_home
 Lavinia [smile]: Clap or don't, the steps are the same. (Bujor turns beside her, slow and heavy, and under the planks a small bear is trying the same turn and falling over.)
@@ -110,7 +115,15 @@ Narrator: At its feet, in the leaves, a bear cub no bigger than a dog has its ba
 * [Animal Handling DC 13] (Talk him down, slow and low.) -> calmed | not_calmed
 * [if spell:speak_with_animals] (Tell him you've come to help.) -> den_speaks
 * [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and tell him you've come to help.) -> den_cast
-* (Back away for now.) -> END
+* (Back away for now.) -> backed_away
+
+# Walking away from the crying starts a day's clock (data/quests/the_dancing_bear.json closes: torn; Failure Plan T1).
+~ backed_away
+if not flag.bear_backed_away
+set bear_backed_away = now
+endif
+Narrator: As you step back down the deer path, the wet needles rustle, and knotted shapes in the underbrush begin creeping toward the cub's thin crying.
+-> END
 
 ~ whistle
 Narrator: Bujor's ears come up. He drops onto all fours and, after a moment, turns three slow circles in the leaves, the way he does on the plank stage. Then he sits down beside the cub and looks at you, as if to say: there, now you know me.
@@ -192,6 +205,12 @@ endif
 # --- The iron trap (prop cub_trap) ---
 
 ~ trap_prop
+if quest.the_dancing_bear == torn
+Narrator: Bujor lies still in the crushed, blackened fern, snapped thorns tangled deep in his heavy coat.
+Narrator: His broken chain trails into the mud beside him, cold and slick with rain.
+Narrator: Beyond his outstretched paw, the hunter's iron jaws lie pried open and empty, with a tuft of dark fur caught on the teeth.
+-> END
+endif
 if quest.the_dancing_bear == defended or quest.the_dancing_bear == found or quest.the_dancing_bear == done
 Narrator: The trap lies open in the leaves where you left it, its jaws wet. The mark on the spring plate is an M with a notch through it.
 set bear_trap_marked

@@ -78,8 +78,9 @@ elif flag.radu_bargain_known
 Radu: And still no Nicu on the road. The castle's promises keep about as well as its horses.
 endif
 Radu: Now. She was sold, so she isn't mine. And she was bought, so she isn't the castle's. Whose is she?
-* She's yours, Radu. Never sell her again. -> to_radu
-* Luminita's. She loves her best. -> to_luminita
+# Both go on to the reward, which mourns only a mare the castle kept (never this one): the tag stays unmarked here.
+* [ends:the_grey_mare if not flag.mare_saved] She's yours, Radu. Never sell her again. -> to_radu
+* [ends:the_grey_mare if not flag.mare_saved] Luminita's. She loves her best. -> to_luminita
 
 ~ to_radu
 set mare_owner = "radu"
@@ -112,10 +113,17 @@ quest the_grey_mare home
 else
 quest the_grey_mare mourned
 endif
+# A mourned mare is a failure (Ashwin, 2026-10-19): Radu pays the castle's gold over, but her bride price stays on the gate.
+if flag.mare_saved
 Radu: Take the castle's gold. All of it. I don't want it in the camp.
 gold +120
 Radu: And this. A trader from over the mountains paid it for her, years ago, before I knew I'd never sell her. A bride price, he called it. It turns curses back, or so he swore. Better it goes with you.
 give rod_of_the_pact_keeper_plus_1
+else
+Radu: The castle's gold is yours, every dirty coin of it, as promised.
+gold +120
+Radu [sad]: The old rod stays tied to the gatepost with her black ribbon. It was Steaua's bride price, and it's the last thing of hers I have.
+endif
 -> END
 
 ~ radu_after

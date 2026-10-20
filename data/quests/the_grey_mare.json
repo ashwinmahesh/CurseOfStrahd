@@ -69,7 +69,7 @@
       "id": "mourned",
       "journal": "We told Radu what the castle made of his mare. He tied a black ribbon to the pen gate and would not say anything else.",
       "objectives": [],
-      "ends": "success"
+      "ends": "failure"
     },
     {
       "id": "empty_pen",

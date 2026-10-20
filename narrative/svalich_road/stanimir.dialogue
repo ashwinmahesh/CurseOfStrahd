@@ -42,7 +42,7 @@ endif
 -> menu
 
 ~ menu
-* [if (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down) and not flag.nicu_kin_told] We found a young Vistana hanged at the crossroads. -> nicu_news
+* [if (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down) and not flag.nicu_kin_told and quest.the_hanged_vistana != unspoken] We found a young Vistana hanged at the crossroads. -> nicu_news
 * [if not flag.stanimir_wine_shared] Share a cup of your wine. -> wine
 * Show us what you have to trade. -> trade
 * Tell us about Madam Eva. -> about_eva

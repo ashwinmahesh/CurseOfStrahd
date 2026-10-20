@@ -34,6 +34,12 @@
       "ends": ""
     },
     {
+      "id": "torn",
+      "journal": "We left Bujor in the clearing with the trapped cub and the creeping brush. When the woods went quiet, neither bear came down the path.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "done",
       "journal": "Lavinia has her answer about Bujor, and we have her grandmother's fan, the one she danced for a prince with.",
       "objectives": [],
@@ -44,6 +50,14 @@
       "journal": "The Tser Pool camp turned on us before we could tell Lavinia about her bear. Bujor and the cub are in the woods, the plank stage is bare, and there is nobody left to dance his part or to give us her grandmother's fan.",
       "objectives": [],
       "ends": "failure"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "torn",
+      "from": ["asked"],
+      "when": "days_since.bear_backed_away >= 1",
+      "warn": "The things in the trees are closing in on Bujor and the cub."
     }
   ]
 }

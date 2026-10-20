@@ -1,0 +1,21 @@
+A1: Big Tobar: He's been three days on that wet stone without a crust of bread. Give it three more, and the cold or his mother's voice will finish what the hunger started.
+A2: We left Tser Falls to the dark for too long. By the time we looked into the gorge, Nelu had already answered the voices below.
+A3: Nelu is starving on the gorge ledge; the voices call every night.
+A4: Big Tobar: He used to hold the iron tire while I drove the spokes home, steady as an oak. Now I set two wedges where his hands ought to be, and the wheel still wobbles.
+Big Tobar: A man can mend a split rim or a cracked axle before the kettle boils. There isn't a tool in my chest for this.
+A5: Narrator: Pale lights drift through the mist beneath the falls, murmuring in stolen voices that echo off the wet rock.
+Narrator: A new lantern-glow hangs lower than the rest, calling out for its Da in a thin, shivering boy's voice.
+B1: Narrator: As you step back down the deer path, the wet needles rustle and knotted shapes in the underbrush begin creeping toward the cub's high, thin crying.
+B2: We left Bujor in the clearing with the trapped cub and the creeping brush. When the woods went quiet, neither bear came down the path.
+B3: The things in the trees are closing in on Bujor before dawn.
+B4: Narrator: Bujor lies still in the crushed, blackened fern, snapped thorns tangled deep in his heavy coat.
+Narrator: His broken iron chain trails into the mud beside him, cold and slick with rain.
+Narrator: Beyond his outstretched paw, the hunter's iron jaws lie pried open and empty, with only a tuft of dark fur caught on the teeth.
+B5: Lavinia: You don't have to say it; the woods up the hill have been quiet since daybreak, and I know what silence sounds like.
+Lavinia: I took his brass collar off the post by the steps this morning. Tonight I dance alone, and the boards can creak for the both of us.
+C1: Radu: The castle's gold is yours, every dirty coin of it, as promised. The old rod stays tied to the gatepost with her black ribbon—it was Steaua's bride price, and I'm not trading away the last thing that belonged to her.
+D1: (Tell her you passed no one on the road from the crossroads.)
+D2: Narrator: She goes back to drawing the stiff brush down the roan's flank, though her eyes lift toward the empty bend in the Old Svalich Road as the dusk settles.
+D3: We told Luminita the road behind us was empty and kept the gallows at the crossroads to ourselves. She is still waiting for Nicu to ride back from Vallaki.
+D4: Luminita: Still no sign of him on the road, which only means he's haggling some poor Vallaki stablemaster down to his boots.
+Luminita: I moved my bedroll into the front wagon by the ditch—not for him, mind you, just so I can be the first to tell him how late he is.

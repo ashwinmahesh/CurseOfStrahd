@@ -2,6 +2,16 @@
   "region": "side_quests",
   "flags": [
     {
+      "id": "nelu_asked_at",
+      "type": "int",
+      "summary": "When Big Tobar asked the party to go to the falls (set = now, Called by Name): three days on, Nelu answers the voices (closes: answered)."
+    },
+    {
+      "id": "bear_backed_away",
+      "type": "int",
+      "summary": "When the party first backed away from Bujor and the trapped cub at the old den (set = now, The Dancing Bear): a day on, the blights have them (closes: torn)."
+    },
+    {
       "id": "teodor_rumor",
       "type": "bool",
       "summary": "Vasile and Petre told the party that Widow Ileana leaves her shutter open a crack every night (The Polite Caller)."

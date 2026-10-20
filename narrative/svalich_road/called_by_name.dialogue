@@ -6,6 +6,10 @@
 
 ~ asks
 quest called_by_name asked
+# Three days from now Nelu answers the voices (data/quests/called_by_name.json closes: answered; Failure Plan T1).
+if not flag.nelu_asked_at
+set nelu_asked_at = now
+endif
 Big Tobar: You heard. Zora counts everything, even the things you'd rather she didn't.
 Big Tobar: Three nights ago my boy Nelu was sitting up by the fire, and he stood up and said: that's Mama. And he walked off toward the falls track. His mother's been in the ground six years.
 Big Tobar [sad]: I went after him. Halfway to the falls I heard him. "Da. Da, I'm down here. Da, come down." Out of the gorge, out of the dark. I'd have gone over the edge after him if Petru hadn't sat on me.
@@ -24,6 +28,7 @@ Narrator: A big man holding a spoke so tightly it's bending.
 
 ~ agree
 Big Tobar: Whatever calls you, don't answer it. Whoever it sounds like. Especially then. I said that to strangers on the road for twenty years, and I never once thought to say it to my own son.
+Big Tobar [sad]: Three days he's been down there without a crust of bread. Give it three more and the cold, or his mother's voice, will finish what the hunger started.
 -> END
 
 # --- Tobar afterwards (tser_camp:tobar jumps here) ---
@@ -31,6 +36,11 @@ Big Tobar: Whatever calls you, don't answer it. Whoever it sounds like. Especial
 ~ tobar
 if flag.nelu_home
 -> tobar_after
+endif
+if quest.called_by_name == answered
+Big Tobar [sad]: He used to hold the iron tire while I drove the spokes home, steady as an oak. Now I set two wedges where his hands ought to be, and the wheel still wobbles.
+Big Tobar: A man can mend a split rim or a cracked axle before the kettle boils. There isn't a tool in my chest for this.
+-> END
 endif
 if flag.nelu_saved
 -> tobar_return
@@ -77,6 +87,15 @@ Nelu: When the mist comes up from the water tonight, I am going to sing every so
 # --- At the falls after dark (prop gorge_voices) ---
 
 ~ falls
+if quest.called_by_name == answered
+if night
+Narrator: Pale lights drift through the mist beneath the falls, murmuring in stolen voices that echo off the wet rock.
+Narrator: A new glow hangs lower than the rest, calling for its Da in a thin, shivering boy's voice.
+else
+Narrator: Below, the falls thunder into cold spray. Partway down the slick gorge wall, a narrow shelf of black stone sits washed clean and empty.
+endif
+-> END
+endif
 if flag.wisps_beaten
 -> ledge
 endif

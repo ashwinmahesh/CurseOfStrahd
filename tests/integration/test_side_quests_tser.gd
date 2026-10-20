@@ -121,7 +121,9 @@ func test_waiting_without_a_cure_finishes_her_and_she_fights_for_the_carriage() 
 	var back := _play(st, "svalich_road/tser_camp:radu")
 	assert_eq(st.quest_stage("the_grey_mare"), "mourned")
 	assert_true(_text(back).contains("black ribbon"))
-	assert_true(st.party_has_item("rod_of_the_pact_keeper_plus_1"), "the reward doesn't depend on the horse living")
+	# A mourned mare is a failure (Side Quest Failure Plan T1, Ashwin 2026-10-19): Radu keeps her bride price on the gate.
+	assert_eq(st.quest_ending("the_grey_mare"), "failure")
+	assert_false(st.party_has_item("rod_of_the_pact_keeper_plus_1"), "the bride price stays with Radu")
 
 
 func test_the_escort_is_high_for_its_level() -> void:

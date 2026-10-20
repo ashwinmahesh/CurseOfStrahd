@@ -7,6 +7,11 @@
 if flag.nicu_kin_told
 -> after_news
 endif
+if quest.the_hanged_vistana == unspoken
+Luminita: Still no sign of him on the road, which only means he's haggling some poor Vallaki stablemaster down to his boots.
+Luminita: I moved my bedroll into the front wagon by the ditch. Not for him, mind you. Just so I can be the first to tell him how late he is.
+-> menu
+endif
 if flag.luminita_met
 -> again
 endif
@@ -24,7 +29,8 @@ Luminita: Still no rider on the road? No. You'd have said.
 -> menu
 
 ~ menu
-* [if (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down)] We found a Vistana at the crossroads. Hanged. -> tell
+* [if (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down) and quest.the_hanged_vistana != unspoken] We found a Vistana at the crossroads. Hanged. -> tell
+* [if (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down) and quest.the_hanged_vistana != unspoken] [ends:the_hanged_vistana] (Tell her you passed no one on the road from the crossroads.) -> lie
 * [if not (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down)] We passed no one. -> none
 * Who is he? -> who
 * [Animal Handling DC 12] Help her with the horse. -> horse_ok | horse_fail
@@ -32,6 +38,13 @@ Luminita: Still no rider on the road? No. You'd have said.
 
 ~ none
 Luminita: Then he's still in Vallaki, drinking the money. Good. I hope he drinks all of it and comes home with a headache.
+-> END
+
+# The lie (Failure Plan T1): the party saw the gallows and keeps it from her. Final: nobody here tells her after.
+~ lie
+quest the_hanged_vistana unspoken
+Luminita: Then he's still in Vallaki, drinking the money. Good. I hope he drinks all of it and comes home with a headache.
+Narrator: She goes back to drawing the brush down the grey gelding's flank, but her eyes keep going to the empty bend in the road.
 -> END
 
 ~ who

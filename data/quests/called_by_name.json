@@ -43,6 +43,12 @@
       "ends": ""
     },
     {
+      "id": "answered",
+      "journal": "We left Tser Falls to the dark too long. By the time we came, Nelu had answered the voices below.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "home",
       "journal": "Nelu is home. Big Tobar dropped a wheel on his own foot and didn't notice. Nelu sits with his back to the falls now, and sings over anything that calls.",
       "objectives": [],
@@ -53,6 +59,14 @@
       "journal": "The Tser Pool camp has turned on us, and Big Tobar's fire is out. Nelu is alive, but we could not bring him home: he is with the Vistani by the lake outside Vallaki, and nobody will tell him why the road to the pool is shut.",
       "objectives": [],
       "ends": "failure"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "answered",
+      "from": ["asked", "voices"],
+      "when": "days_since.nelu_asked_at >= 3",
+      "warn": "Three days without bread, and the voices call him every night."
     }
   ]
 }
