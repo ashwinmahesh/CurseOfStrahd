@@ -1,0 +1,187 @@
+# The Rooms of Weeping's west wing (Dungeon Expansion Plan C6; the book's K32, K34, K35, K36, K44, K45, K46, from Veeder's
+# survey of the 2016 text): the count's dining hall with its four-hundred-year wedding feast and the harp that calls the
+# first Pidlwick's ghost (K36), the Hall of Heroes, whose statues answer questions and are not always right (K45), and the
+# coffin-shaped wardrobe of the servants' upper rooms, with its dancing dress and the ladder behind the mirror (K34).
+# Lines drafted by Gemini through the ai-bridge (docs/plans/gemini_dungeon/C6/), trimmed. Every conversation can be walked
+# away from.
+
+# ------------------------------------------------------------------------------------------ The count's dining hall
+
+~ groom
+Narrator: A tiny porcelain groom lies face down in the dust beside the table, one painted arm chipped from the fall. Someone settled the question of the marriage before the first slice was cut.
+* (Take the groom.) -> groom_take
+* Leave him where he fell. -> END
+
+~ groom_take
+set court_groom_taken
+Narrator: You pocket the cold porcelain groom, and leave the little bride on the cake more alone than before.
+-> END
+
+~ harp
+if flag.court_pidlwick_ghost_met
+Narrator: The harp's strings still hum faintly, as if somebody had only just stopped playing.
+-> END
+endif
+Narrator: In the corner stands a tall gilded harp, its strings gleaming clean through the room's thick coat of dust.
+* [Performance DC 15] Play the harp. -> ghost | harp_fail
+* [Religion DC 14] Speak the old blessing for the dead over its strings. -> ghost | harp_fail
+* Leave it be. -> END
+
+~ harp_fail
+Narrator: A sour chord rattles off the stone and dies, answered only by the hum of the offended strings.
+-> END
+
+~ ghost
+set court_pidlwick_ghost_met
+Narrator: The last clear note hangs in the cold air until a small, see-through man in motley steps neatly out of nothing beside the strings. Even dead, he waits half a beat for the applause.
+Narrator: He touches his bells, which make no sound at all. "Pidlwick, at your service. I tuned that harp for the wedding supper, though the soup went cold before my second song."
+-> ghost_menu
+
+~ ghost_menu
+* What happened at the feast? -> ghost_feast
+* How did you die? -> ghost_died
+* We've met your clockwork double. -> ghost_double
+* Thank you, Pidlwick. -> ghost_bye
+
+~ ghost_feast
+Narrator: His pale eyes drift to the ruined cake and the empty chairs. "The young brother smiled at his bride, the count watched her from the doorway, and by the time the wine was poured there was blood on the hem of her gown."
+-> ghost_menu
+
+~ ghost_died
+Narrator: He glances up through the ceiling with a professional shrug. "I took a tumble down the high tower stair not long after, though I could have sworn I had help with the first step."
+-> ghost_menu
+
+~ ghost_double
+Narrator: A thin, sad smile crosses his see-through face. "The toymaker built a little brass me to make the children laugh, and it broke its tiny iron heart when they preferred the one who could breathe."
+Narrator: He leans closer, his voice a brittle whisper. "If you meet my ticking shadow on the stair, mind your manners and never laugh at him. He keeps a ledger of every chuckle, and pays them back in the dark."
+-> ghost_menu
+
+~ ghost_bye
+Narrator: He sweeps off his cap in a low, practised bow as the candlelight begins to shine through his chest. "That is all the cheer I have left in me, good guests. Pray excuse the fool before the encore."
+-> END
+
+# ------------------------------------------------------------------------------------------ The Hall of Heroes
+
+~ statues
+if not flag.court_heroes_seen
+set court_heroes_seen
+Narrator: Lightning splits the clouds overhead, and in that white instant every blank stone face is twisted into mortal terror.
+endif
+if flag.court_heroes_asked >= 7
+Narrator: No breath stirs inside the marble ranks any more: only wet stone, and the steady drum of the rain.
+-> END
+endif
+-> statue_menu
+
+~ statue_menu
+* [if not flag.court_heroes_q1] Where does the count sleep by day? -> q1
+* [if not flag.court_heroes_q2] What is the heart in the high tower? -> q2
+* [if not flag.court_heroes_q3] Who is the woman in the portrait in the study? -> q3
+* [if not flag.court_heroes_q4] Where is his treasure? -> q4
+* [if not flag.court_heroes_q5] Who lies in the old tombs below? -> q5
+* [if not flag.court_heroes_q6] What happened to the castle's guards? -> q6
+* [if not flag.court_heroes_q7] Can he be destroyed? -> q7
+* (Step back from the statues.) -> END
+
+~ q1
+set court_heroes_q1
+set court_heroes_asked += 1
+Narrator: A cold draught sighs up from a cracked pedestal, and a voice like grinding millstones answers from inside the wet marble.
+if flag.court_heroes_asked == 3 or flag.court_heroes_asked == 7
+Narrator: Rainwater runs like tears down a motionless jaw. "He lies beneath the chapel altar by day, profaning the very stone where our house once knelt."
+else
+Narrator: The stone visor does not lift. "Deep beneath us in the catacombs, at the foot of a black stair, the last of our house sleeps away the light in his coffin."
+endif
+-> statues
+
+~ q2
+set court_heroes_q2
+set court_heroes_asked += 1
+Narrator: A cold draught sighs up from a cracked pedestal, and a voice like grinding millstones answers from inside the wet marble.
+if flag.court_heroes_asked == 3 or flag.court_heroes_asked == 7
+Narrator: The marble lips stay sealed, yet the voice rings cold in the storm. "That crystal heart is a snare of the dark powers. Any living hand that strikes it stops its own heart instead."
+else
+Narrator: A deep groan rises from an armoured breastplate. "A great heart of crystal beats at the crown of the high tower and takes his wounds for him. Shatter it, and our cursed son bleeds like any mortal man."
+endif
+-> statues
+
+~ q3
+set court_heroes_q3
+set court_heroes_asked += 1
+Narrator: A cold draught sighs up from a cracked pedestal, and a voice like grinding millstones answers from inside the wet marble.
+if flag.court_heroes_asked == 3 or flag.court_heroes_asked == 7
+Narrator: A sorrowful sigh echoes from a hollow chest. "You look upon Queen Ravenovia, our mother, whose likeness he keeps so he may never forget the house he ruined."
+else
+Narrator: A stone helm bows a fraction of an inch. "She was Tatyana, our young Sergei's bride, whom his brother coveted unto murder, and who went over the castle walls on her wedding night."
+endif
+-> statues
+
+~ q4
+set court_heroes_q4
+set court_heroes_asked += 1
+Narrator: A cold draught sighs up from a cracked pedestal, and a voice like grinding millstones answers from inside the wet marble.
+if flag.court_heroes_asked == 3 or flag.court_heroes_asked == 7
+Narrator: Thunder rolls overhead, and the marble warrior answers in a low, unyielding murmur. "He hides his gold high under the roof beams among the ravens, where no thief on two legs may reach it."
+else
+Narrator: A statue stares fixedly into the rain, and a dry voice scrapes from its throat. "Behind the hearth in his study lies a vault within a vault, where he hoards the cold gold of a dead line."
+endif
+-> statues
+
+~ q5
+set court_heroes_q5
+set court_heroes_asked += 1
+Narrator: A cold draught sighs up from a cracked pedestal, and a voice like grinding millstones answers from inside the wet marble.
+if flag.court_heroes_asked == 3 or flag.court_heroes_asked == 7
+Narrator: The blank eyes stay blank, but the voice trembles with old pride. "None but his sworn knights lie in those vaults, faithful unto death, waiting for a horn that will never sound."
+else
+Narrator: The wet stone grows colder still. "King Barov and Queen Ravenovia rest in the deep tombs, and beside them lies gentle Sergei, slain by his own brother's hand."
+endif
+-> statues
+
+~ q6
+set court_heroes_q6
+set court_heroes_asked += 1
+Narrator: A cold draught sighs up from a cracked pedestal, and a voice like grinding millstones answers from inside the wet marble.
+if flag.court_heroes_asked == 3 or flag.court_heroes_asked == 7
+Narrator: A marble chin stays high. "They stand even now by the outer gates under an enchantment of slumber, waiting to wake and end our family's shame."
+else
+Narrator: A bitter rattle comes from behind a stone gorget. "When our guards turned their blades on him that red night of the wedding, he butchered them to the last man in their own hall."
+endif
+-> statues
+
+~ q7
+set court_heroes_q7
+set court_heroes_asked += 1
+Narrator: A cold draught sighs up from a cracked pedestal, and a voice like grinding millstones answers from inside the wet marble.
+if flag.court_heroes_asked == 3 or flag.court_heroes_asked == 7
+Narrator: A hollow, hopeless note sounds in a wet marble chest. "No blade nor prayer can end him. He has become the land itself, and the soil does not die."
+else
+Narrator: The voice drops low, heavy with grief and with hope for the line's end. "Drive wood through his heart while he lies in his coffin, or bring the true light of the sun upon him, and our house will have peace."
+endif
+-> statues
+
+# ------------------------------------------------------------------------------------------ The servants' upper rooms
+
+~ wardrobe
+Narrator: Painted sprites and sharp-toothed fey caper across the black wood of the narrow, six-sided cabinet. It is either a wardrobe for someone very thin, or a coffin for someone who means to dress for dinner.
+* [if not flag.court_dress_stilled] Open it. -> dress
+* Leave it shut. -> END
+
+~ dress
+Narrator: The black doors swing wide, and a yellowed silk gown sweeps out on its own to waltz across the splintered floor. It turns and dips to music only it can hear, keeping time with the wind in the rafters.
+* (Touch the dancing dress.) -> dress_touch
+* (Leave it dancing.) -> dress_leave
+
+~ dress_touch
+set court_dress_stilled
+Narrator: The moment your fingers brush the yellowed silk, the gown collapses into a heap of cold, empty cloth.
+-> END
+
+~ dress_leave
+Narrator: You leave the gown turning gracefully in the dusty dark. It seems to be having a much better evening than anyone else in the castle.
+-> END
+
+~ ladder
+set court_servants_ladder_found
+Narrator: Behind the shifted mirror gapes a narrow shaft, where iron rungs go down into the cold, echoing dark of the high tower's stair.
+-> END

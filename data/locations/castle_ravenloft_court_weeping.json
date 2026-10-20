@@ -209,6 +209,14 @@
     "from_gas": [
       19,
       20
+    ],
+    "from_west_wing": [
+      1,
+      10
+    ],
+    "from_parapets": [
+      6,
+      1
     ]
   },
   "exits": [
@@ -221,6 +229,26 @@
       "to": "castle_ravenloft_court",
       "spawn": "from_weeping",
       "label": "Stairs down to the Court of the Count"
+    },
+    {
+      "id": "court_weeping_to_wing",
+      "cell": [
+        0,
+        10
+      ],
+      "to": "castle_ravenloft_court_west_wing",
+      "spawn": "from_weeping",
+      "label": "West, to the rest of the wing"
+    },
+    {
+      "id": "court_bedroom_window",
+      "cell": [
+        6,
+        0
+      ],
+      "to": "castle_ravenloft_parapets",
+      "spawn": "from_bedroom",
+      "label": "The window out onto the parapets"
     }
   ],
   "doors": [

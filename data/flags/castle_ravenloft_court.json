@@ -145,6 +145,81 @@
       "id": "court_way_spiders_cleared",
       "type": "bool",
       "summary": "The giant spiders the belfry's bell called were destroyed (court_way_spiders)."
+    },
+    {
+      "id": "court_vermin_cleared",
+      "type": "bool",
+      "summary": "The rats packed into the shapes of guards in the west wing's alcoves are destroyed (court_vermin), and the steel door to the count's dining hall stands unguarded."
+    },
+    {
+      "id": "court_parapets_cleared",
+      "type": "bool",
+      "summary": "Strahd's armour on the parapets is broken (court_parapet_watch)."
+    },
+    {
+      "id": "court_groom_taken",
+      "type": "bool",
+      "summary": "Someone pocketed the porcelain groom from the floor of the count's dining hall. The next time the party walks in, the wedding cake has burst open and the window is broken outward."
+    },
+    {
+      "id": "court_pidlwick_ghost_met",
+      "type": "bool",
+      "summary": "The harp in the count's dining hall was played well enough, or the dead blessed over it, and the first Pidlwick's ghost came to talk."
+    },
+    {
+      "id": "court_heroes_seen",
+      "type": "bool",
+      "summary": "The party has seen the Hall of Heroes' statues by lightning."
+    },
+    {
+      "id": "court_heroes_asked",
+      "type": "int",
+      "summary": "How many questions the statues in the Hall of Heroes have answered (seven in all; the third and the seventh are false)."
+    },
+    {
+      "id": "court_dress_stilled",
+      "type": "bool",
+      "summary": "Someone touched the dancing dress from the coffin-shaped wardrobe in the servants' upper rooms, and it dropped, empty."
+    },
+    {
+      "id": "court_servants_ladder_found",
+      "type": "bool",
+      "summary": "The ladder behind the mirror in the servants' upper rooms, down into the high tower's stair, is found (both its ends open)."
+    },
+    {
+      "id": "court_heroes_q1",
+      "type": "bool",
+      "summary": "The Hall of Heroes' statues have answered question 1."
+    },
+    {
+      "id": "court_heroes_q2",
+      "type": "bool",
+      "summary": "The Hall of Heroes' statues have answered question 2."
+    },
+    {
+      "id": "court_heroes_q3",
+      "type": "bool",
+      "summary": "The Hall of Heroes' statues have answered question 3."
+    },
+    {
+      "id": "court_heroes_q4",
+      "type": "bool",
+      "summary": "The Hall of Heroes' statues have answered question 4."
+    },
+    {
+      "id": "court_heroes_q5",
+      "type": "bool",
+      "summary": "The Hall of Heroes' statues have answered question 5."
+    },
+    {
+      "id": "court_heroes_q6",
+      "type": "bool",
+      "summary": "The Hall of Heroes' statues have answered question 6."
+    },
+    {
+      "id": "court_heroes_q7",
+      "type": "bool",
+      "summary": "The Hall of Heroes' statues have answered question 7."
     }
   ]
 }

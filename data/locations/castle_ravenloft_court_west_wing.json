@@ -1,0 +1,793 @@
+{
+  "id": "castle_ravenloft_court_west_wing",
+  "name": "Castle Ravenloft, the West Wing",
+  "region": "castle_ravenloft",
+  "summary": "The Rooms of Weeping's west wing: a passage where two guards stand in alcoves before a steel door, the count's own dining hall with a wedding feast four centuries old, a closet of capes, the Hall of Heroes open to the storm, the maids' hall of eight lace beds, and the servants' rooms under the eaves, where a ladder runs down into the high tower.",
+  "text": "Silver plates and crystal goblets under four centuries of grey dust.",
+  "map": {
+    "rows": [
+      "########################################",
+      "####################...#...............#",
+      "####################...#...............#",
+      "####################...................#",
+      "####################...#...............#",
+      "####################...#...............#",
+      "####################...#...............#",
+      "########################...............#",
+      "#####################################.##",
+      "##.....................#.############.##",
+      "##.....................#...............#",
+      "##.....................................#",
+      "##.....................#...............#",
+      "##....=============....#.###########.###",
+      "##.....................#############.###",
+      "##.....................#...............#",
+      "##.....................#...............#",
+      "##.....................#...............#",
+      "########################...............#",
+      "##.....................#...............#",
+      "##.....................................#",
+      "##.....................#...............#",
+      "##.....................#...............#",
+      "########################################"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "court_hall_of_heroes",
+      "name": "The Hall of Heroes",
+      "cells": [
+        [
+          24,
+          1
+        ],
+        [
+          38,
+          7
+        ]
+      ],
+      "light": "dim",
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar",
+      "furnish": false
+    },
+    {
+      "id": "court_capes_closet",
+      "name": "The closet of capes",
+      "cells": [
+        [
+          20,
+          1
+        ],
+        [
+          22,
+          6
+        ]
+      ],
+      "furnish": false
+    },
+    {
+      "id": "court_count_dining",
+      "name": "The count's dining hall",
+      "cells": [
+        [
+          2,
+          9
+        ],
+        [
+          22,
+          17
+        ]
+      ],
+      "floor": "castle/black_marble",
+      "walls": "castle/red_damask"
+    },
+    {
+      "id": "court_vermin_passage",
+      "name": "The guardians' passage",
+      "cells": [
+        [
+          24,
+          9
+        ],
+        [
+          38,
+          13
+        ]
+      ],
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar",
+      "furnish": false
+    },
+    {
+      "id": "court_vermin_door",
+      "name": "Before the steel door",
+      "cells": [
+        [
+          24,
+          10
+        ],
+        [
+          27,
+          12
+        ]
+      ],
+      "furnish": false
+    },
+    {
+      "id": "court_maids_hall",
+      "name": "The maids' hall",
+      "cells": [
+        [
+          24,
+          15
+        ],
+        [
+          38,
+          22
+        ]
+      ],
+      "furnish": false
+    },
+    {
+      "id": "court_servants_upper",
+      "name": "The servants' upper rooms",
+      "cells": [
+        [
+          2,
+          19
+        ],
+        [
+          22,
+          22
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      38,
+      11
+    ],
+    "from_weeping": [
+      38,
+      11
+    ],
+    "from_parapets": [
+      38,
+      4
+    ],
+    "from_spires": [
+      3,
+      20
+    ]
+  },
+  "exits": [
+    {
+      "id": "court_wing_to_weeping",
+      "cell": [
+        39,
+        11
+      ],
+      "to": "castle_ravenloft_court_weeping",
+      "spawn": "from_west_wing",
+      "label": "Back to the hall of weeping"
+    },
+    {
+      "id": "court_wing_to_parapets",
+      "cell": [
+        39,
+        4
+      ],
+      "to": "castle_ravenloft_parapets",
+      "spawn": "from_heroes",
+      "label": "Out onto the parapets"
+    },
+    {
+      "id": "court_wing_ladder_down",
+      "cell": [
+        1,
+        20
+      ],
+      "to": "castle_ravenloft_spires",
+      "spawn": "from_servants",
+      "label": "The ladder down into the high tower",
+      "when": "flag.court_servants_ladder_found",
+      "locked_text": "Only a tall mirror on the end wall."
+    }
+  ],
+  "doors": [
+    {
+      "id": "court_steel_door",
+      "cell": [
+        23,
+        11
+      ],
+      "label": "a steel door engraved with a king on horseback"
+    },
+    {
+      "id": "court_capes_door",
+      "cell": [
+        23,
+        3
+      ],
+      "label": "the closet door"
+    },
+    {
+      "id": "court_servants_door",
+      "cell": [
+        23,
+        20
+      ],
+      "label": "a narrow door to the servants' rooms"
+    }
+  ],
+  "props": [
+    {
+      "id": "court_hero_statue_1",
+      "cell": [
+        24,
+        1
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_2",
+      "cell": [
+        27,
+        1
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_3",
+      "cell": [
+        30,
+        1
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_4",
+      "cell": [
+        33,
+        1
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_5",
+      "cell": [
+        36,
+        1
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_6",
+      "cell": [
+        24,
+        7
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_7",
+      "cell": [
+        27,
+        7
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_8",
+      "cell": [
+        30,
+        7
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_9",
+      "cell": [
+        33,
+        7
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_hero_statue_10",
+      "cell": [
+        38,
+        7
+      ],
+      "kind": "examine",
+      "label": "A statue of an armoured hero",
+      "model": "statue_knight",
+      "dialogue": "castle_ravenloft/court_west_wing:statues"
+    },
+    {
+      "id": "court_vermin_guard_n",
+      "cell": [
+        24,
+        9
+      ],
+      "kind": "examine",
+      "label": "A guard in an alcove",
+      "model": "armor_stand",
+      "say": "examine:court_vermin_guard",
+      "when": "not flag.court_vermin_cleared"
+    },
+    {
+      "id": "court_vermin_guard_s",
+      "cell": [
+        24,
+        13
+      ],
+      "kind": "examine",
+      "label": "A guard in an alcove",
+      "model": "armor_stand",
+      "say": "examine:court_vermin_guard",
+      "when": "not flag.court_vermin_cleared"
+    },
+    {
+      "id": "court_steel_door_relief",
+      "cell": [
+        25,
+        9
+      ],
+      "kind": "examine",
+      "label": "A steel door's engraving: a king on horseback",
+      "model": "relief"
+    },
+    {
+      "id": "court_wedding_cake",
+      "cell": [
+        12,
+        13
+      ],
+      "kind": "examine",
+      "label": "A wedding cake",
+      "model": "table_meal"
+    },
+    {
+      "id": "court_groom_figurine",
+      "cell": [
+        13,
+        15
+      ],
+      "kind": "examine",
+      "label": "A small porcelain groom",
+      "model": "doll",
+      "dialogue": "castle_ravenloft/court_west_wing:groom",
+      "when": "not flag.court_groom_taken"
+    },
+    {
+      "id": "court_wedding_harp",
+      "cell": [
+        3,
+        10
+      ],
+      "kind": "examine",
+      "label": "A gilded harp",
+      "model": "harp",
+      "dialogue": "castle_ravenloft/court_west_wing:harp"
+    },
+    {
+      "id": "court_wedding_lute",
+      "cell": [
+        5,
+        10
+      ],
+      "kind": "examine",
+      "label": "A lute on a chair",
+      "model": "lute"
+    },
+    {
+      "id": "court_dining_window",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "decor",
+      "label": "A tall window",
+      "model": "window_tall"
+    },
+    {
+      "id": "court_capes",
+      "cell": [
+        21,
+        1
+      ],
+      "kind": "decor",
+      "label": "Black capes on iron hooks",
+      "model": "cloak_pegs"
+    },
+    {
+      "id": "court_maids_mirror",
+      "cell": [
+        38,
+        16
+      ],
+      "kind": "examine",
+      "label": "A small mirror turned to the wall",
+      "model": "mirror"
+    },
+    {
+      "id": "court_servants_wardrobe",
+      "cell": [
+        20,
+        19
+      ],
+      "kind": "examine",
+      "label": "A coffin-shaped wardrobe",
+      "model": "wardrobe",
+      "dialogue": "castle_ravenloft/court_west_wing:wardrobe"
+    },
+    {
+      "id": "court_servants_mirror",
+      "cell": [
+        2,
+        21
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "A tall mirror on the end wall",
+      "model": "mirror_full",
+      "dialogue": "castle_ravenloft/court_west_wing:ladder"
+    },
+    {
+      "id": "court_maids_bed_1",
+      "cell": [
+        25,
+        16
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_maids_bed_2",
+      "cell": [
+        28,
+        16
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_maids_bed_3",
+      "cell": [
+        31,
+        16
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_maids_bed_4",
+      "cell": [
+        34,
+        16
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_maids_bed_5",
+      "cell": [
+        25,
+        21
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_maids_bed_6",
+      "cell": [
+        28,
+        21
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_maids_bed_7",
+      "cell": [
+        31,
+        21
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_maids_bed_8",
+      "cell": [
+        34,
+        21
+      ],
+      "kind": "decor",
+      "label": "A canopied bed hung with yellowed lace",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_servants_frame_1",
+      "cell": [
+        4,
+        21
+      ],
+      "kind": "decor",
+      "label": "A broken bedframe",
+      "model": "broken_boards"
+    },
+    {
+      "id": "court_servants_frame_2",
+      "cell": [
+        9,
+        22
+      ],
+      "kind": "decor",
+      "label": "A broken bedframe",
+      "model": "broken_boards"
+    },
+    {
+      "id": "court_servants_frame_3",
+      "cell": [
+        15,
+        20
+      ],
+      "kind": "decor",
+      "label": "A broken bedframe",
+      "model": "broken_boards"
+    }
+  ],
+  "containers": [
+    {
+      "id": "court_capes_chest",
+      "cell": [
+        20,
+        6
+      ],
+      "label": "A chest of formal clothes",
+      "model": "chest",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 2
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "court_maids_chest",
+      "cell": [
+        38,
+        21
+      ],
+      "label": "A maid's chest",
+      "model": "chest",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 4
+        }
+      ],
+      "gold": 6
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        12,
+        11
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 20,
+      "color": "candle"
+    },
+    {
+      "cell": [
+        31,
+        4
+      ],
+      "kind": "lamp",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "moonlight",
+      "visual": true
+    },
+    {
+      "cell": [
+        31,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "candle"
+    }
+  ],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "court_vermin",
+      "trigger": "enter_area:court_vermin_door",
+      "text": "The guards spill apart into a boiling tide of rats that surges across the stones toward your boots.",
+      "when": "not flag.court_vermin_cleared",
+      "surprise": "",
+      "flag": "court_vermin_cleared",
+      "monsters": [
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            24,
+            9
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            24,
+            13
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            27,
+            10
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            30,
+            12
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            33,
+            10
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            36,
+            11
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            27,
+            12
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            30,
+            10
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            33,
+            12
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            36,
+            12
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            36,
+            10
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            32,
+            11
+          ],
+          "states": [
+            "boiling_tide"
+          ],
+          "hp": 200
+        }
+      ]
+    }
+  ],
+  "treasure_spots": {},
+  "rest": "risky"
+}

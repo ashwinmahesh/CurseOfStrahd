@@ -394,3 +394,51 @@ once
 
 ~ check:dex:hearth_smother:failure
 | You swing your cloak at the grate, fanning the embers into a hungry roar that sears your hands. The fire burns on, unbothered.
+
+
+# ---------------------------------------------------------------- The west wing (Dungeon Expansion Plan C6; lines drafted by
+# Gemini through the ai-bridge, docs/plans/gemini_dungeon/C6/, trimmed)
+
+~ enter:court_vermin_passage
+| Two silent figures stand in shadowy alcoves either side of a heavy steel door, smelling faintly of wet fur and old straw.
+once
+
+~ examine:court_vermin_guard
+| Looking closer, you can hear its coat rustling from the inside.
+
+~ examine:court_steel_door_relief
+| Cold steel bears a crowned horseman riding above jagged peaks among a pack of wolves. The wolves look hungry, and the king looks worse.
+
+~ enter:court_count_dining
+| Silver plates and crystal goblets sit under four centuries of grey dust around a tall, sagging wedding cake. The feast was never touched, though the host has clearly been waiting.
+| [flag.court_groom_taken] The wedding cake has burst open from the inside, and stale crumbs lie scattered across the dusty linen. Across the hall, the tall window hangs shattered outward into the storm.
+cooldown 2
+
+~ examine:court_wedding_cake
+| Green mould furs the leaning tiers of sugar, where a porcelain bride stands alone at the top. She has kept her poise remarkably well for a woman stood up four hundred years ago.
+
+~ examine:court_wedding_lute
+| A lute rests on a velvet chair, its strings snapped and curled like dead spiders.
+
+~ enter:court_capes_closet
+| Twenty-eight black capes hang in neat rows on iron hooks, proof that even a monster of the night likes a choice of evening wear.
+once
+
+~ enter:court_hall_of_heroes
+| Rain drives through the fallen roof onto ten tall statues of armoured ancestors whose faces are worn smooth and blank. Puddles gather at their pedestals, black and shivering in the wind.
+cooldown 30
+
+~ enter:court_maids_hall
+| Eight four-poster beds hung with yellowed lace stand in spotless rows, smelling faintly of lavender and old linen. Not a speck of dust settles on them, though a small mirror in the corner has been turned carefully to the wall.
+once
+
+~ examine:court_maids_mirror
+| You turn the little looking-glass round, and its tarnished silver shows the eight lace beds and your own face behind them. Whoever tidies this room so faithfully prefers not to be reminded of what the glass leaves out.
+
+~ enter:court_servants_upper
+| Broken bedframes and rotting mattresses clutter a freezing attic under the eaves. Against the far wall stands a tall black wardrobe built uncomfortably close to the shape of a coffin.
+once
+
+~ enter:castle_ravenloft_parapets
+| Freezing rain lashes the narrow stone walkway high above the gulf of mist, where suits of dark plate pace with a hollow, rhythmic clank. No eyes gleam behind their visors, yet they keep a very tidy watch.
+cooldown 30

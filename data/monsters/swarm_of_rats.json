@@ -73,6 +73,22 @@
       "implemented": "engine"
     }
   ],
+  "states": {
+    "boiling_tide": {
+      "id": "boiling_tide",
+      "name": "Boiling Tide",
+      "action": "passive",
+      "summary": "A hundred rats to every guard, all biting at once: +5 to its attack rolls.",
+      "text": "The swarm is packed rat on rat, hundreds of them, and so many bite at once that something always lands: it adds 5 to its attack rolls. (The guardians of the Rooms of Weeping's west wing, Dungeon Expansion Plan C6.)",
+      "modifiers": [
+        {
+          "stat": "attack",
+          "value": 5
+        }
+      ],
+      "implemented": "engine"
+    }
+  },
   "actions": [
     {
       "id": "bites",

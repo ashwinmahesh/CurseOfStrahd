@@ -144,6 +144,10 @@
     "from_rooms": [
       24,
       18
+    ],
+    "from_servants": [
+      1,
+      6
     ]
   },
   "exits": [
@@ -186,6 +190,18 @@
       "to": "castle_ravenloft_spires_rooms",
       "spawn": "from_high_tower",
       "label": "The door to the tower rooms"
+    },
+    {
+      "id": "spires_servants_ladder",
+      "cell": [
+        0,
+        6
+      ],
+      "to": "castle_ravenloft_court_west_wing",
+      "spawn": "from_spires",
+      "label": "A ladder up behind a panel",
+      "when": "flag.court_servants_ladder_found",
+      "locked_text": "Only panelled wall."
     }
   ],
   "doors": [
