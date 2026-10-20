@@ -1,0 +1,22 @@
+T1-OPEN-1A: Thistle [weary]: Can't sleep with the mist pressing on my neck. Keep thinking on Lavinia's big brown bear back at Tser Pool.
+T1-OPEN-1B: Thistle [neutral]: You still awake? My head's stuck on that dancing bear of Lavinia's, big Bujor.
+T1-OPEN-2-HOME-A: Thistle [smile]: Big fellow like that, smells right, steps neat to the fiddle, and never once yanks his chain even with the cub at his heel. If he ever gets tired of Lavinia's wagon, he can share my fire.
+T1-OPEN-2-WOODS-A: Thistle [smile]: Big fellow like that, smells of dry pine, dances better than the town folk, and took that cub straight into the trees. If I cross his tracks out there, I won't mind walking slow.
+T1-OPEN-2-HOME-B: Thistle [sly]: Warm as a hayrick, knows his steps on the boards, and went right back to Lavinia with the little one tucked in safe. Grandda says a creature who keeps his temper on a chain is rarer than gold.
+T1-OPEN-2-WOODS-B: Thistle [sly]: Warm, broad-shouldered, smells right, and smart enough to trade a stage for the deep woods with that cub. If he ever wants company that doesn't hold a chain, he's mine.
+T1-OPEN-3A: Thistle [angry]: Stop grinning like a fox in a hen-coop. You breathe a word of this to Wren and I'll put burrs in your bedroll.
+T1-OPEN-3B: Thistle [afraid]: Bark and bones, don't look at me like that. Keep your mouth shut around the others, hear?
+T1-TEASE: A: > Should I buy you a tambourine and a velvet vest? | Thistle [smile]: Bark and bones, shut your trap! Take a pine cone to the ear and see how you dance. || B: > At least he wouldn't complain about sleeping on the roof. | Thistle [smile]: Ha! Take that pine cone and choke on it, you loud-mouthed crow.
+T1-LUCKY: A: > Any bear with sense would be lucky to have you, Thistle. | Thistle [smile]: ...Hmph. Well, I know where the good berries grow, anyhow. || B: > He could look all over these woods and not do better. | Thistle [neutral]: ...You're just talking so I'll take first watch. Still, wouldn't mind sharing a salmon with him.
+T1-PROMISE: A: > My lips are sealed, I promise. | Thistle [sly]: Words are wind; spit on a dry stone and swear by your boots like Grandda taught me. Break it and the crows get your Supper. || B: > Not a word to anyone, I swear it. | Thistle [neutral]: Swear it proper then, thumb to the bark and eye on the fire. Grandda says a camp oath holds till the ashes go cold.
+T2-ASK-A: Wren [smile]: Met a girl with curling horns on a river-road once, lugging a lute half her size and a song she couldn't finish. Help me patch a last verse onto it before the damp gets in my throat, yeah?
+T2-ASK-B: Wren [weary]: Old Master Sorrel said unfinished tunes draw moths, and I've been humming a half-made ballad from a horned girl I knew far from here. Give me three lines for the end of it—I'll allow it if they're terrible.
+L1: hopeful: We walk the mist until the morning light, | grim: We march like ghosts into the starving night, | silly: We tripped on roots and gave the owls a fright,
+L2: hopeful: With faithful lanterns burning warm and bright, | grim: Where every shadow sharpens for a fight, | silly: While arguing whose boots are laced too tight,
+L3: hopeful: And side by side we keep the road in sight. | grim: And only fools and friends survive the blight. | silly: And trade the gloom for supper and a bite.
+T2-SING-A: Narrator: {name} listens as Wren taps a heel against a blackened log and lets the last note rise with the woodsmoke. For three breaths even the pines stop dripping, and then the camp breaks into rough applause.
+T2-SING-B: Narrator: You watch the firelight catch the brass pegs of the lute while Wren's clear voice settles over the wet grass. The quiet holds until a log splits in the embers, and then everyone around the fire cheers at once.
+T2-AFTER-A: Wren [smile]: Easy—told you we'd make a proper tune of it! | Wren [sad]: Wherever that horned girl got to, I hope somebody helped her finish hers too.
+T2-AFTER-B: Wren [sly]: Watch this, we'll be famous from here to the nearest ditch. | Wren [weary]: Still, wherever she is down the road, I hope someone finished the song for her too.
+INN-A: Narrator: Downstairs, a squinting fiddler saws through Wren's tune a half-step flat, yet every wet cloak in the taproom thumps a mug and roars out the final line together.
+INN-B: Narrator: Below the floorboards, a tavern lute mangles Wren's melody until the whole smoky room rises to bellow the last line into the rafters.
