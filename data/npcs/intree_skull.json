@@ -1,0 +1,19 @@
+{
+  "id": "intree_skull",
+  "name": "The Skull of Intree Sik-Valoo",
+  "title": "Scholar of Strange Tongues",
+  "summary": "A magic skull on a shelf in the Lesser Vaults, the head of a scholar from a far country. It answers every question truly and quietly, and is faintly embarrassed by its neighbour.",
+  "portrait": "flameskull",
+  "sprite": "flameskull",
+  "attitude": "indifferent",
+  "monster": "flameskull",
+  "guest": false,
+  "tags": [
+    "undead",
+    "castle_ravenloft",
+    "catacombs"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

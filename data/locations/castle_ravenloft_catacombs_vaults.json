@@ -1,0 +1,1465 @@
+{
+  "id": "castle_ravenloft_catacombs_vaults",
+  "name": "Castle Ravenloft, the Lesser Vaults",
+  "region": "castle_ravenloft",
+  "summary": "An older range of crypts under the catacombs, where the house buried the people it did not honour: servants, guildsmen, saints nobody visited, a warlord with his captains, a bride in webs. A stair leads up to the catacombs' lower gallery, and one crypt hides a niche that opens on the count's own tomb.",
+  "text": "The stair ends in a long low passage of older stone with crypts on both sides. Some of the gates are polished. Some have been very carefully locked from the inside.",
+  "map": {
+    "rows": [
+      "####################################################",
+      "#########################..............#############",
+      "#########################..............#############",
+      "#########################..............#############",
+      "##.......################..............#############",
+      "##.......################..............#############",
+      "##.......##.....##.....##..............#############",
+      "##.......##.....##.....##..............#############",
+      "##.......##.....##.....##..............#############",
+      "##.......##.....##.....##..............#############",
+      "##.......##.....##.....##..............#############",
+      "#####.#######.######.##########.####################",
+      "##................................................##",
+      "#.................................................##",
+      "##................................................##",
+      "######.##########.########.##########.#########.####",
+      "##..........##........##......##...........##.....##",
+      "##..........##........##......##...........##.....##",
+      "##..........##........##......##..~~...~~..##.....##",
+      "##..........##........##......##...~....~..#.......#",
+      "##..........##........##......##...........##.....##",
+      "##..........##........##......##.~~...~~...##.....##",
+      "##..........##........##########..~....~...#########",
+      "##..........####################.........~.#########",
+      "##..........####################.~..~~...~.#########",
+      "################################...........#########",
+      "####################################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "vaults_passage",
+      "name": "The long passage",
+      "cells": [
+        [
+          2,
+          12
+        ],
+        [
+          49,
+          14
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_markovia",
+      "name": "Saint Markovia's crypt",
+      "cells": [
+        [
+          2,
+          4
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall",
+      "light": "dim",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_stefan",
+      "name": "Stefan Gregorovich's crypt",
+      "cells": [
+        [
+          11,
+          6
+        ],
+        [
+          15,
+          10
+        ]
+      ],
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_intree",
+      "name": "Intree Sik-Valoo's crypt",
+      "cells": [
+        [
+          18,
+          6
+        ],
+        [
+          22,
+          10
+        ]
+      ],
+      "floor": "dungeon/earth_braced",
+      "walls": "dungeon/stone_wall",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_stahbal",
+      "name": "The warlord's crypt",
+      "cells": [
+        [
+          25,
+          1
+        ],
+        [
+          38,
+          10
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_jarnwald",
+      "name": "The Trickster's crypt",
+      "cells": [
+        [
+          2,
+          16
+        ],
+        [
+          11,
+          24
+        ]
+      ],
+      "floor": "dungeon/drowned_flags",
+      "walls": "dungeon/slimed_brick",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_sasha",
+      "name": "The bride's crypt",
+      "cells": [
+        [
+          14,
+          16
+        ],
+        [
+          21,
+          22
+        ]
+      ],
+      "floor": "church/rich_flags",
+      "walls": "castle/red_damask",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_patrina",
+      "name": "The empty bride's crypt",
+      "cells": [
+        [
+          24,
+          16
+        ],
+        [
+          29,
+          21
+        ]
+      ],
+      "floor": "church/rich_flags",
+      "walls": "dungeon/stone_wall",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_spiders",
+      "name": "The webbed crypt",
+      "cells": [
+        [
+          32,
+          16
+        ],
+        [
+          42,
+          25
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/slimed_brick",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_finderway",
+      "name": "Saint Finderway's crypt",
+      "cells": [
+        [
+          45,
+          16
+        ],
+        [
+          49,
+          21
+        ]
+      ],
+      "floor": "church/frosted_flags",
+      "walls": "castle/black_marble",
+      "light": "dark",
+      "furnish": false
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      13
+    ],
+    "from_catacombs": [
+      3,
+      13
+    ],
+    "from_strahd_alcove": [
+      49,
+      19
+    ]
+  },
+  "exits": [
+    {
+      "id": "vaults_stairs_up",
+      "cell": [
+        1,
+        13
+      ],
+      "to": "castle_ravenloft_catacombs",
+      "spawn": "from_vaults",
+      "label": "Stairs up to the lower gallery"
+    },
+    {
+      "id": "vaults_finderway_portal",
+      "cell": [
+        50,
+        19
+      ],
+      "to": "castle_ravenloft_catacombs_strahd",
+      "spawn": "from_finderway",
+      "label": "The humming niche"
+    }
+  ],
+  "doors": [
+    {
+      "id": "cat_markovia_gate",
+      "cell": [
+        5,
+        11
+      ],
+      "label": "an iron crypt gate, its latch freshly oiled"
+    },
+    {
+      "id": "cat_stefan_gate",
+      "cell": [
+        13,
+        11
+      ],
+      "label": "an iron crypt gate, Stefan Gregorovich's"
+    },
+    {
+      "id": "cat_intree_gate",
+      "cell": [
+        20,
+        11
+      ],
+      "label": "an iron crypt gate, Intree Sik-Valoo's"
+    },
+    {
+      "id": "cat_stahbal_gate",
+      "cell": [
+        31,
+        11
+      ],
+      "label": "a tall iron crypt gate, the warlord's"
+    },
+    {
+      "id": "cat_jarnwald_gate",
+      "cell": [
+        6,
+        15
+      ],
+      "label": "an iron crypt gate with small letters on its lintel"
+    },
+    {
+      "id": "cat_sasha_gate",
+      "cell": [
+        17,
+        15
+      ],
+      "label": "an iron crypt gate wound with grey web"
+    },
+    {
+      "id": "cat_patrina_gate",
+      "cell": [
+        26,
+        15
+      ],
+      "label": "an iron crypt gate, Patrina Velikovna's"
+    },
+    {
+      "id": "cat_spiders_gate",
+      "cell": [
+        37,
+        15
+      ],
+      "label": "an iron crypt gate behind a curtain of web"
+    },
+    {
+      "id": "cat_finderway_gate",
+      "cell": [
+        47,
+        15
+      ],
+      "label": "an iron crypt gate, Saint Finderway's"
+    }
+  ],
+  "props": [
+    {
+      "id": "cat_markovia_epitaph",
+      "cell": [
+        3,
+        4
+      ],
+      "kind": "examine",
+      "label": "A plaque over her gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_markovia_sarcophagus",
+      "cell": [
+        5,
+        4
+      ],
+      "kind": "decor",
+      "label": "Saint Markovia's sarcophagus",
+      "model": "crypt"
+    },
+    {
+      "id": "cat_markovia_bone",
+      "cell": [
+        6,
+        4
+      ],
+      "kind": "examine",
+      "label": "A thighbone in linen",
+      "model": "bones",
+      "dialogue": "castle_ravenloft/catacombs_crypts:markovia_bone"
+    },
+    {
+      "id": "cat_markovia_statue",
+      "cell": [
+        8,
+        5
+      ],
+      "kind": "decor",
+      "label": "A worn statue of the saint",
+      "model": "statue_saint"
+    },
+    {
+      "id": "cat_stefan_epitaph",
+      "cell": [
+        11,
+        6
+      ],
+      "kind": "examine",
+      "label": "A plaque over his gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_stefan_skull",
+      "cell": [
+        13,
+        6
+      ],
+      "kind": "examine",
+      "label": "A skull on a shelf",
+      "model": "statue_head",
+      "dialogue": "castle_ravenloft/catacombs_skulls:stefan"
+    },
+    {
+      "id": "cat_intree_epitaph",
+      "cell": [
+        18,
+        6
+      ],
+      "kind": "examine",
+      "label": "A plaque over his gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_intree_skull",
+      "cell": [
+        20,
+        6
+      ],
+      "kind": "examine",
+      "label": "A skull on a shelf",
+      "model": "statue_head",
+      "dialogue": "castle_ravenloft/catacombs_skulls:intree"
+    },
+    {
+      "id": "cat_stahbal_epitaph",
+      "cell": [
+        31,
+        1
+      ],
+      "kind": "examine",
+      "label": "A lintel stone",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_stahbal_shaft",
+      "cell": [
+        31,
+        5
+      ],
+      "kind": "examine",
+      "label": "A round shaft",
+      "model": "well_stone"
+    },
+    {
+      "id": "cat_stahbal_coffin_1",
+      "cell": [
+        25,
+        2
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_2",
+      "cell": [
+        25,
+        4
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_3",
+      "cell": [
+        25,
+        6
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_4",
+      "cell": [
+        25,
+        8
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_5",
+      "cell": [
+        38,
+        2
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_6",
+      "cell": [
+        38,
+        4
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_7",
+      "cell": [
+        38,
+        6
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_8",
+      "cell": [
+        38,
+        8
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_9",
+      "cell": [
+        27,
+        1
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_10",
+      "cell": [
+        29,
+        1
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_11",
+      "cell": [
+        33,
+        1
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_stahbal_coffin_12",
+      "cell": [
+        35,
+        1
+      ],
+      "kind": "decor",
+      "label": "An upright coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_jarnwald_epitaph",
+      "cell": [
+        5,
+        16
+      ],
+      "kind": "examine",
+      "label": "Small letters on the lintel",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_jarnwald_remains",
+      "cell": [
+        6,
+        24
+      ],
+      "kind": "decor",
+      "label": "A trickster's bones",
+      "model": "bones"
+    },
+    {
+      "id": "cat_sasha_epitaph",
+      "cell": [
+        15,
+        16
+      ],
+      "kind": "examine",
+      "label": "A plaque over her gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_sasha_bier",
+      "cell": [
+        17,
+        16
+      ],
+      "kind": "examine",
+      "label": "A bride in webs",
+      "model": "bier",
+      "dialogue": "castle_ravenloft/catacombs_sasha:bier"
+    },
+    {
+      "id": "cat_sasha_webs_1",
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_sasha_webs_2",
+      "cell": [
+        21,
+        17
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_sasha_webs_3",
+      "cell": [
+        14,
+        20
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_sasha_webs_4",
+      "cell": [
+        21,
+        20
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_sasha_webs_5",
+      "cell": [
+        19,
+        16
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_patrina_epitaph",
+      "cell": [
+        24,
+        16
+      ],
+      "kind": "examine",
+      "label": "A plaque over her gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_patrina_bier",
+      "cell": [
+        26,
+        17
+      ],
+      "kind": "examine",
+      "label": "An empty bier",
+      "model": "bier"
+    },
+    {
+      "id": "cat_spiders_webs_1",
+      "cell": [
+        32,
+        16
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_spiders_webs_2",
+      "cell": [
+        42,
+        16
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_spiders_webs_3",
+      "cell": [
+        32,
+        25
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_spiders_webs_4",
+      "cell": [
+        42,
+        25
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_spiders_webs_5",
+      "cell": [
+        33,
+        16
+      ],
+      "kind": "decor",
+      "label": "Thick grey web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "cat_finderway_epitaph",
+      "cell": [
+        45,
+        16
+      ],
+      "kind": "examine",
+      "label": "A plain lintel",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_finderway_dust_niche",
+      "cell": [
+        44,
+        19
+      ],
+      "kind": "examine",
+      "label": "Two stone niches",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "cat_khazan_door",
+      "cell": [
+        42,
+        12
+      ],
+      "kind": "examine",
+      "label": "A sealed crypt door",
+      "model": "crypt_gate"
+    }
+  ],
+  "containers": [
+    {
+      "id": "cat_patrina_coins",
+      "cell": [
+        28,
+        20
+      ],
+      "label": "A scatter of old coins",
+      "model": "gold_spill",
+      "items": [],
+      "gold": 250
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        5,
+        6
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        13,
+        8
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        20,
+        8
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        27,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        35,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        6,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        17,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        26,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        37,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        47,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        10,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        22,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        34,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        46,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "traps": [
+    {
+      "id": "cat_markovia_darts",
+      "cells": [
+        [
+          4,
+          4
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "label": "a dart plate before the sarcophagus",
+      "detect_dc": 15,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d6",
+      "damage_type": "poison",
+      "condition": "poisoned",
+      "text": "A flagstone gives by a hair's breadth, and narrow iron darts hiss out of the mortar on either side. Even a saint's floor was laid by the lord's masons."
+    },
+    {
+      "id": "cat_jarnwald_pit",
+      "cells": [
+        [
+          4,
+          18
+        ],
+        [
+          5,
+          18
+        ],
+        [
+          6,
+          18
+        ],
+        [
+          7,
+          18
+        ],
+        [
+          8,
+          18
+        ],
+        [
+          9,
+          18
+        ],
+        [
+          4,
+          19
+        ],
+        [
+          5,
+          19
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          7,
+          19
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          4,
+          20
+        ],
+        [
+          5,
+          20
+        ],
+        [
+          6,
+          20
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          8,
+          20
+        ],
+        [
+          9,
+          20
+        ],
+        [
+          4,
+          21
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          7,
+          21
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          9,
+          21
+        ]
+      ],
+      "label": "a painted illusion of a floor",
+      "pit_ft": 10,
+      "detect_dc": 16,
+      "disarm_dc": 16,
+      "save": {
+        "ability": "dex",
+        "dc": 14
+      },
+      "damage": "2d10",
+      "damage_type": "bludgeoning",
+      "flag": "cat_jarnwald_fell",
+      "text": "Your boot goes straight through the painted grey flagstones as though they were smoke. The real floor is a dark pit ten feet lower."
+    }
+  ],
+  "encounters": [
+    {
+      "id": "cat_stahbal",
+      "trigger": "enter_area:cat_crypt_stahbal",
+      "surprise": "",
+      "text": "Wood groans against dry wood as the lids shift all at once. Gaunt hands take the rims from within, and old iron scrapes the stone as the general's captains rise to form ranks.",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            34,
+            4
+          ],
+          "hp": 144
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            25,
+            10
+          ],
+          "hp": 144
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            25,
+            1
+          ],
+          "hp": 144
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            38,
+            10
+          ],
+          "hp": 144
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            29,
+            5
+          ],
+          "hp": 144
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            38,
+            1
+          ],
+          "hp": 144
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            30,
+            1
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            5
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            38,
+            5
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            35,
+            7
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            34,
+            1
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            27,
+            3
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            27,
+            7
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            32,
+            2
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            31,
+            4
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            36,
+            2
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            37,
+            8
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_sasha",
+      "trigger": "dialogue",
+      "surprise": "",
+      "flag": "cat_sasha_slain",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            21
+          ],
+          "name": "Sasha Ivliskova",
+          "hp": 86
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            22
+          ],
+          "name": "A bridesmaid in webs",
+          "hp": 86
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            16
+          ],
+          "name": "A bridesmaid in webs",
+          "hp": 86
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            21
+          ],
+          "name": "A bridesmaid in webs",
+          "hp": 86
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            19
+          ],
+          "name": "A bridesmaid in webs",
+          "hp": 86
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            15,
+            21
+          ],
+          "name": "A bridesmaid in webs",
+          "hp": 86
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            22
+          ],
+          "name": "A bridesmaid in webs",
+          "hp": 86
+        }
+      ]
+    },
+    {
+      "id": "cat_spiders",
+      "trigger": "enter_area:cat_crypt_spiders",
+      "surprise": "",
+      "text": "The name over the arch is gone under a curtain of thick grey web that sways as the gate opens. High in the dark, heavy bodies unhook their legs from the ceiling and drop.",
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            36,
+            22
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            41,
+            20
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            32,
+            17
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            32,
+            21
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            33,
+            24
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            40,
+            23
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            39,
+            21
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            36,
+            25
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            34,
+            20
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            42,
+            22
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            41,
+            25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_jarnwald_ghouls",
+      "trigger": "flag:cat_jarnwald_fell",
+      "surprise": "",
+      "text": "In the dark beyond the pit, pale shapes stop gnawing on what the last guest left them and turn their wet faces toward the light.",
+      "monsters": [
+        {
+          "monster": "ghoul",
+          "cell": [
+            9,
+            22
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            2,
+            23
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            11,
+            16
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            22
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            11,
+            24
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            7,
+            24
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            20
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            7,
+            21
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            11,
+            18
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            4,
+            24
+          ],
+          "hp": 79
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            9,
+            24
+          ],
+          "hp": 98
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            3,
+            21
+          ],
+          "hp": 98
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            23
+          ],
+          "hp": 98
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_catacombs_vaults"
+  },
+  "rest": "risky"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "jeweled_electrum_spork",
+  "name": "Jeweled Electrum Spork",
+  "source": {
+    "book": "custom",
+    "note": "Crypt 28 (Bascal Ofenheiss) in the book; ours: a chef's tool of electrum set with small garnets."
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 250,
+  "treasure": {
+    "random": false
+  },
+  "summary": "A spoon with a fork's ambitions, in electrum and garnets. A curio worth 250 gp.",
+  "text": "A spoon that is also a fork, cast in electrum and set with seven small garnets. It is absurd, and it is solid, and someone will pay for it."
+}

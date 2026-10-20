@@ -26,7 +26,7 @@ makes one.
 
 ## 2. Maps (data/locations/)
 
-Three maps, all `dungeon` theme, dark. Area, prop, container, door and trap ids carry the prefix `cat_` (Narrator keys
+Four maps (the fourth, the Lesser Vaults, is §14), all `dungeon` theme, dark. Area, prop, container, door and trap ids carry the prefix `cat_` (Narrator keys
 are global), except the three tomb areas, which are named by their room ids so that the final battles' trigger
 areas are literally the rooms.
 
@@ -44,10 +44,11 @@ areas are literally the rooms.
 | `cat_stairs_to_larders` (catacombs) | (40, 1) | `castle_ravenloft_larders` | `from_catacombs` |
 | `cat_down_to_tombs` (catacombs) | (5, 29) | `castle_ravenloft_catacombs_tombs` | `from_catacombs` |
 | `cat_black_stair_down` (catacombs) | (18, 15) | `castle_ravenloft_catacombs_strahd` | `from_catacombs` |
+| `cat_stairs_to_vaults` (catacombs) | (31, 29) | `castle_ravenloft_catacombs_vaults` | `from_catacombs` (§14) |
 | `cat_tombs_up` (tombs) | (16, 1) | `castle_ravenloft_catacombs` | `from_tombs` |
 | `cat_black_stair_up` (Strahd's tomb) | (11, 1) | `castle_ravenloft_catacombs` | `from_strahd` |
 
-Spawns on the entry map: `default` and `from_gates` (3, 3), `from_larders` (40, 3), `from_tombs` (5, 27),
+Spawns on the entry map: `from_vaults` (31, 28) (§14), `default` and `from_gates` (3, 3), `from_larders` (40, 3), `from_tombs` (5, 27),
 `from_strahd` (18, 14). The gates part's `crypt_stairs_down` arrives at `from_gates`; the larders part's way down
 should arrive at `from_larders`.
 
@@ -173,6 +174,11 @@ No new NPCs. Speakers: `sergei_von_zarovich` (existing; seen only in still water
 | `cat_sleepers_slain`, `cat_gargoyles_slain`, `cat_guardians_stilled` | bool | encounters | Narrator |
 | `cat_mad_dog_blade_known` | bool | the trap (found or sprung) | Narrator |
 | `cat_sergei_rites_said` | bool | Sergei's tomb | Narrator |
+| `cat_markovia_bone_lifted` | bool | the Lesser Vaults' Saint Markovia scene (`castle_ravenloft/catacombs_crypts:lift`) | the same scene (it plays once) |
+| `cat_eisglaze_mold_burnt` | bool | the Baron's mold scene (`catacombs_crypts:burn`, needs a torch, oil or alchemist's fire) | his trap's `when`, the scene |
+| `cat_klutz_freed` | bool | Sir Klutz's sword scene (`catacombs_crypts:pull`) | the same scene |
+| `cat_jarnwald_fell` | bool | the illusory floor's trap (`cat_jarnwald_pit`) | the ghouls' encounter trigger (`flag:`) |
+| `cat_sasha_slain` | bool | the `cat_sasha` encounter | Sasha's bier scene |
 
 Read from other parts: `vladimir_pact`, `vladimir_pact_broken` (also set here), `vladimir_last_words_known`,
 `order_fate` (Argynvostholt); `ireena_pool_vision`, `ireena_pool_choice` (Krezk). Quest moved: `strahds_lair destroyed`.
@@ -245,3 +251,98 @@ unless a step says otherwise. Prefer: "Take what lies in his hands", "Drive the 
   `strahd_destroyed`, `strahds_lair == destroyed`, and the ending screen (`end_game`). By day without
   `strahd_in_coffin`: `use((11, 12))` → "Drive the stake into his heart while he sleeps" → `cat_daylight_waking`;
   after the win, `use((11, 12))` again → the stake.
+
+## 14. The crypts that hold something (Dungeon Expansion Plan C1, 2026-10-18)
+
+Package C1 of the plan ("Dungeon Expansion Plan - 2026-10-18.md" in the project's files) adds the book's crypts that hold
+something. Source: R. C. Veeder's area-by-area survey of the 2016 text, "K84: a diachronic survey of Ravenloft's catacombs"
+(rcveeder.net, 2021; checked 2026-10-18): the occupant, the one-line contents and which crypts are empty come from it, and
+everything past that line (the coins, the plaques, the menus) is ours and labelled so. The dialogue and narration were
+drafted by Gemini through the ai-bridge (docs/story/gemini_drafts/castle_crypts/, with each brief and raw reply).
+
+**Rule 2 held (extend, never redraw).** No square, spawn, exit, prop, container, door or fight start that existed moved
+(tests/integration/test_catacomb_crypts.gd pins them). The plan expected "about fourteen solid wall blocks" to become
+crypts; the catacombs' entry map has none (all sixteen crypt rooms are open interiors behind gates, and eight of them held
+only a decor crypt). So:
+
+- **Seven crypts went into seven of those empty rooms**, additive only: new props, containers, traps, finds, a plaque
+  with the epitaph, a name on the gate's label, an area with its own floor and walls (below).
+- **The other nine crypts and Khazan's door went to a new map**, `castle_ravenloft_catacombs_vaults` (the Lesser Vaults,
+  52 x 27, mood `ravenloft_vaults`: older, rougher stone, grey backdrop). One wall cell of the lower gallery's south wall
+  became its stair (`cat_stairs_to_vaults` (31, 29) down, `vaults_stairs_up` (1, 13) up, spawns `from_catacombs` (3, 13) and
+  `from_vaults` (31, 28)).
+- **Crypt 32's niche opens on Strahd's tomb**: three wall cells at the tomb's north-west corner became a niche
+  (`cat_finderway_back` (3, 4), spawn `from_finderway` (3, 5), area `cat_finderway_alcove`), open to the tomb's floor at
+  (3, 7); the Vaults' `vaults_finderway_portal` (50, 19) leads to it, spawn `from_strahd_alcove` (49, 19) back.
+
+### The seven crypts in place (the catacombs map)
+
+| Book crypt | Room, gate | What it holds |
+|---|---|---|
+| 11, Tasha Petrovna | `cat_crypt_tasha`, (11, 6) to (14, 10), gate (10, 8) | the sun painted on the vault (`cat_tasha_sun`, a `sunlight` light: a vampire in its radius burns as in sunlight, in a fight) and her silver holy symbol (a find, `holy_symbol_amulet`) |
+| 12, King Troisky | `cat_crypt_troisky`, (16, 6) to (19, 10), gate (20, 8) | a three-faced helm; the sunk step before his slab is a gas plate (`cat_troisky_gas`: Con 16, 5d10 poison, poisoned) guarding a coffer of 120 gp |
+| 22, Sir Erick Vonderbucks | `cat_crypt_erick`, (11, 20) to (14, 24), gate (10, 22) | a corpse dipped in gold; 180 gp flaked off it (a container) |
+| 28, Bascal Ofenheiss | `cat_crypt_bascal`, (24, 6) to (27, 10), gate (23, 8) | the bell on a cord (`cat_bascal_fire`: Dex 16, 6d6 fire) over the jeweled electrum spork (`jeweled_electrum_spork`, a 250 gp curio) |
+| 29, Baron Eisglaze Drüf | `cat_crypt_eisglaze`, (29, 6) to (32, 10), gate (33, 8) | brown mold (`cat_eisglaze_cold`: Con 15, 5d8 cold, only until `cat_eisglaze_mold_burnt`; a torch, oil or alchemist's fire burns it in the `eisglaze_mold` conversation) over his sword, a **Giant Slayer longsword** (rare, DMG 2024; search, Investigation 12) |
+| 33, Sir Klutz Tripalotsky | `cat_crypt_klutz`, (24, 20) to (27, 24), gate (23, 22) | the skeleton with the sword: pull it and his ghost (`sir_klutz`, a `ghost` stat block) offers to fight one battle as a guest, leaving when that fight ends |
+| 31 (no name, only wealth) | `cat_crypt_31`, (29, 20) to (32, 24), gate (33, 22) | a painted false floor over a spiked pit (`cat_c31_pit`: pit 10 ft, Dex 15, 2d10 piercing) in front of the noble's crypt that was already there |
+
+### The Lesser Vaults (the new map)
+
+A long passage (y 12 to 14) with crypts off both sides. Every crypt keeps its own floor, walls and light.
+
+| Book crypt | Room, gate | What it holds |
+|---|---|---|
+| 6, Saint Markovia | `cat_crypt_markovia`, (2, 4) to (8, 10), gate (5, 11) | her sarcophagus behind a dart plate (`cat_markovia_darts`: Dex 15, 4d6 poison, poisoned); her thighbone on the lid, which when lifted shows her ghost for a few words (`catacombs_crypts:lift`). **Stand-in:** the bone is not an item here yet; lane I1 (castle-artifacts) adds `saint_markovias_thighbone` and whichever lane lands second adds `give saint_markovias_thighbone` in the `lift` node (a TODO in `catacombs_crypts.dialogue`) |
+| 25, Stefan Gregorovich | `cat_crypt_stefan`, (11, 6) to (15, 10), gate (13, 11) | a skull that answers every question and is always wrong (`catacombs_skulls:stefan`) |
+| 26, Intree Sik-Valoo | `cat_crypt_intree`, (18, 6) to (22, 10), gate (20, 11) | a skull that answers truly (`catacombs_skulls:intree`): where Strahd sleeps, how he is ended, what Saint Finderway's niche does |
+| 14, Stahbal Indi-Bhak | `cat_crypt_stahbal`, (25, 1) to (38, 10), gate (31, 11) | a round shaft and twelve upright coffins; the captains rise (`cat_stahbal`) |
+| 15, Khazan | a sealed door, `cat_khazan_door` (42, 12) | his name and nothing behind it (he lies under his own tower now): one Narrator line |
+| 35, Sir Jarnwald | `cat_crypt_jarnwald`, (2, 16) to (11, 24), gate (6, 15) | an illusory floor over a pit (`cat_jarnwald_pit`, 24 squares, Dex 14, 2d10 bludgeoning, sets `cat_jarnwald_fell`) of ghouls (`cat_jarnwald_ghouls`, on that flag) |
+| 20, Sasha Ivliskova | `cat_crypt_sasha`, (14, 16) to (21, 22), gate (17, 15) | a bride in webs on her bier: speak to her and she wakes, asks if her love has come, and attacks (`catacombs_sasha:bier`, `cat_sasha`); easing the lid shut after hearing her out ends without a fight |
+| 21, Patrina Velikovna | `cat_crypt_patrina`, (24, 16) to (29, 21), gate (26, 15) | her bier is empty (her ghost is at the Amber Temple); 250 gp of old coins |
+| 27 (no occupant) | `cat_crypt_spiders`, (32, 16) to (42, 25), gate (37, 15) | webs (difficult terrain) and the spiders (`cat_spiders`) |
+| 32, Saint Finderway | `cat_crypt_finderway`, (45, 16) to (49, 21), gate (47, 15) | two niches; the dusty one is a wall piece, the humming one an exit to Strahd's tomb |
+
+### The four fights (non-boss: 5 in 8 for the sharp party on Balanced, tests hold 4 to 6, seeds 1-8, level 10)
+
+| Fight | Where | Foes | Wins | Note |
+|---|---|---|---|---|
+| `cat_stahbal` | crypt 14, Stahbal Indi-Bhak's hall (entering it) | 6 wights (144 HP), 12 skeletons | 5 | the captains rise from the coffins along the walls; 12.5 rounds, 2.5 heroes down a fight |
+| `cat_sasha` | crypt 20, the bride's crypt (a conversation, then `combat cat_sasha`) | 7 vampire spawn (86 HP; Sasha Ivliskova and six bridesmaids in webs) | 5 | woken by speaking to her; sets `cat_sasha_slain`; 5.8 rounds, 1.9 down |
+| `cat_spiders` | crypt 27, the webbed crypt (entering it) | 7 giant spiders (80 HP), 4 wraiths | 5 | the wraiths are the nest's older prey, up out of the webs. Spiders alone only reached 5 in 8 as 12 spiders at 285 HP, a 20-round slog with two stalled fights; 7.6 rounds, 1.4 down |
+| `cat_jarnwald_ghouls` | crypt 35, the Trickster's crypt (the `cat_jarnwald_fell` flag, set by the illusory floor) | 10 ghouls (79 HP), 3 ghasts (98 HP) | 5 | measured with the pit already sprung (as in play: a sprung trap is not armed in the fight); 4.9 rounds, 1.9 down |
+
+Held by tests/integration/test_scaled_fights_castle_rooms.gd, spread by tests/unit/test_fight_spread.gd. The measured
+lines are in docs/story/fight_tuning_castle.md.
+
+### Loot (for the loot audit lane)
+
+Coin and item placements, scaled to the hoard rules (small purses, like the rest of the catacombs): Troisky's coffer 120 gp,
+Erick's gold 180 gp, Patrina's coins 250 gp, the jeweled electrum spork (250 gp, a curio nobody else carries), Tasha's
+silver holy symbol (a plain `holy_symbol_amulet`), and one magic find: a **Giant Slayer longsword** (rare, DMG 2024, no attunement) under the mold in crypt 29.
+The plan said the Luck Blade there; it is legendary (legendary is for the four villains, and test_found_items caps a hidden
+find at very rare) and Dmitri Krezkov already sells one. Two swaps were tried and dropped: a Flame Tongue (Argynvostholt's armory
+already holds one, `armory_flame_tongue`, and "each lasting item once" allows no second: docs/story/magic_item_audit.md,
+tests/unit/test_loot_distinct.gd on the item-audit branch) and Tramontane armor (a very rare find, but test_found_items
+wants finds from the 2024 DMG and Tramontane armor is "AU"). Giant Slayer is DMG 2024, placed nowhere else (checked by hand
+against the item-audit branch's placements, template ids included), and is a combat item for the party's sword arms. The
+band is rare, not the very rare the plan wanted, because no very rare DMG weapon is left unplaced. If the loot audit wants
+another item, it is one id in `cat_eisglaze_sword`.
+
+### Small code (hook files)
+
+- `LocationFights._light_the_fight` (world/exploration/location_fights.gd): a location light with `sunlight: true` is true
+  sunlight in a fight (Tasha's painted sun). Schema: `lights[].sunlight`.
+- `StoryState.release_one_fight_guests` (story/story_state.gd), asked by `LocationFights._end_encounter` after
+  `see_to_fallen_guests`: an NPC with `leaves_after_fight: true` (Sir Klutz) leaves the party when the next fight ends.
+  Schema: npc `leaves_after_fight`. Test: tests/unit/test_one_fight_guests.gd.
+
+### Files
+
+Maps: data/locations/castle_ravenloft_catacombs.json, castle_ravenloft_catacombs_strahd.json, castle_ravenloft_catacombs_vaults.json.
+Dialogue: narrative/narrator/castle_ravenloft_catacombs.dialogue, narrative/castle_ravenloft/{catacombs_crypts, catacombs_skulls,
+catacombs_sasha}.dialogue. Data: data/flags/castle_ravenloft_catacombs.json, data/npcs/{stefan_skull, intree_skull,
+sasha_ivliskova, sir_klutz}.json, data/items/jeweled_electrum_spork.json, art/atmosphere/moods.json (`ravenloft_vaults`),
+art/audio.json. Tests: tests/integration/test_catacomb_crypts.gd, tests/unit/test_one_fight_guests.gd and four tests added to
+test_scaled_fights_castle_rooms.gd.

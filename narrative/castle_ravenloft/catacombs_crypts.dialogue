@@ -1,0 +1,67 @@
+# Small scenes in the catacombs' named crypts (Dungeon Expansion Plan C1; docs/regions/castle_ravenloft_catacombs.md §14).
+# Lines drafted by Gemini through the ai-bridge, trimmed by hand (docs/story/gemini_drafts/castle_crypts/).
+
+# Saint Markovia's thighbone (prop cat_markovia_bone, crypt 6 in the Lesser Vaults). The darts guard it.
+# TODO(I1): lane I1 (castle-artifacts, e952cd10a) adds the item `saint_markovias_thighbone`, a Mace of Disruption that
+# crumbles if it hit a vampire, and leaves it for this crypt. It is not on this branch's base, so the bone is only seen, not
+# carried, until both lanes are on main: then add `give saint_markovias_thighbone` after `set cat_markovia_bone_lifted` in
+# the `lift` node below (whichever lane lands second does it).
+
+~ markovia_bone
+narrate examine:cat_markovia_bone
+if flag.cat_markovia_bone_lifted
+-> END
+endif
+* Lift the thighbone from the lid. -> lift
+* Leave the relic where it lies. -> END
+
+~ lift
+set cat_markovia_bone_lifted
+Narrator: As you lift the linen from the stone, the air grows cold. A pale woman in a worn apron stands beside you, her hands folded and still.
+Narrator: "You have come a long way through the dark, children, and my rest was long. Take what remains of me where it is needed, and let it mend what this castle has torn."
+-> END
+
+# The Baron's brown mold (prop cat_eisglaze_mold, crypt 29). Fire clears it, and the cold trap with it.
+~ eisglaze_mold
+narrate examine:cat_eisglaze_mold
+if flag.cat_eisglaze_mold_burnt
+-> END
+endif
+* [if item:torch or item:oil or item:alchemists_fire] Hold fire to the slab and burn the mold away. -> burn
+* Step back and leave the mold be. -> END
+
+~ burn
+set cat_eisglaze_mold_burnt
+Narrator: The brown velvet curls and blackens without a sound as your flame touches it. All at once, the bitter chill lets go of your lungs.
+-> END
+
+# Sir Klutz Tripalotsky (prop cat_klutz_sword, crypt 33). Pull the sword and his ghost offers to fight one battle at
+# the party's side (a guest who leaves once that fight ends: data/npcs/sir_klutz.json `leaves_after_fight`).
+~ klutz_sword
+narrate examine:cat_klutz_sword
+if flag.cat_klutz_freed
+-> END
+endif
+* Draw the longsword free from the dented breastplate. -> pull
+* Leave the blade wedged where it is. -> END
+
+~ pull
+set cat_klutz_freed
+Narrator: A tall ghost in bright mail steps out of the stone, bows with great dignity, and catches his left spur squarely on the threshold.
+sir_klutz: My earnest thanks for the iron, friends, and my apologies in advance if I tread upon your cloaks. I have one good battle left in me, if you will have me.
+* Come with us. We would be glad of your sword. -> join
+* Your wars are done, sir. Rest now. -> rest
+* We should put the sword back where it was. -> sword_back
+
+~ join
+sir_klutz: Splendid! Lead on, and pray stand a pace to my right, as my scabbard has a wicked habit of swinging when I turn.
+join sir_klutz
+-> END
+
+~ rest
+sir_klutz: Ah. Quite right, of course; a wise captain keeps his ranks tidy. I shall just lie back down here and try not to rattle.
+-> END
+
+~ sword_back
+sir_klutz: Oh, do not mind on my account. It went in between the fourth and fifth ribs when my heel met the stair, and truthfully, I had grown used to the draught.
+-> rest

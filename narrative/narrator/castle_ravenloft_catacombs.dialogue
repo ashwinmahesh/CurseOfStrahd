@@ -279,3 +279,147 @@ once
 
 ~ scene:strahd_mist_coffin
 | Far below, under every stair, grey mist finds a stone coffin and pours itself in, and the lid slides shut. The castle goes quiet, like a house whose master has gone to bed.
+
+# ---------------------------------------------------------------- The crypts that hold something (Dungeon Expansion Plan C1)
+# Epitaphs, finds and traps for the catacombs' named crypts and the Lesser Vaults. Drafted by Gemini through the
+# ai-bridge, trimmed and canon-checked (docs/story/gemini_drafts/castle_crypts/). Unvoiced until the voice thread runs.
+
+~ enter:castle_ravenloft_catacombs_vaults
+| The ceiling drops and the stone turns older, rougher, cut before the masons learned pride. Here the house laid those it needed, feared, or simply did not know where else to put.
+cooldown 30
+
+~ examine:cat_tasha_epitaph
+| The lintel reads: TASHA PETROVNA, WHO STAYED. Someone has polished the iron gate long after the rest of the hallway went to rust.
+once
+
+~ examine:cat_tasha_sun
+| A gold sun painted on the vault still gives off a real, quiet warmth. No dead thing that walks could bear to stand beneath it.
+once
+
+~ examine:cat_troisky_epitaph
+| Deep letters over the bars read: KING TROISKY THE THREE-FACED, WHO WATCHED THREE WAYS AND DIED IN BED.
+once
+
+~ examine:cat_troisky_helm
+| A bronze helm with three carved faces rests on the dead king's breast, all three mouths ajar. The step before the slab sits a finger lower than the floor around it.
+once
+
+~ examine:cat_erick_epitaph
+| Gilt letters above the gate announce: SIR ERICK VONDERBUCKS, PAID IN FULL. Even the full stop has been leafed in gold.
+once
+
+~ examine:cat_mw4_crypt
+| They dipped him in gold before they laid him down, eyelids, fingernails and all. It must have taken three men to carry him.
+once
+
+~ examine:cat_bascal_epitaph
+| Carved in a neat kitchen hand: BASCAL OFENHEISS, CHEF DELUXE, WHO FED THIS HOUSE. The stone still smells faintly of lard and smoke.
+once
+
+~ examine:cat_bascal_bell
+| A little silver bell hangs on a chain beside the coffin, engraved: DO NOT RING FOR SERVICE. A cord from its clapper runs low across the floor.
+once
+
+~ examine:cat_eisglaze_epitaph
+| Cut into frost-split stone: BARON EISGLAZE DRÜF, COLD IN LIFE, COLDER AFTER.
+once
+
+~ examine:cat_c31_epitaph
+| No name is cut above the arch, only: WE KNEW HOW TO KEEP IT. Beyond the bars, someone has painted gold coins all over the damp plaster.
+once
+
+~ examine:cat_klutz_epitaph
+| Over the gate, cut with reluctant honesty: SIR KLUTZ TRIPALOTSKY, HE FELL ON HIS OWN SWORD. It does not sound like he meant to.
+once
+
+~ examine:cat_markovia_epitaph
+| Above the gate: SAINT MARKOVIA, WHO MENDED WHAT WAS TORN. The iron latch has been oiled more recently than the rest, though not by anyone who prayed.
+once
+
+~ examine:cat_stefan_epitaph
+| The inscription reads: STEFAN GREGOROVICH, COUNSELLOR TO KING BAROV, WHOSE WORD ENDED ARGUMENTS. Inside, on a narrow shelf, a clean skull faces the grate as if waiting to be asked.
+once
+
+~ examine:cat_intree_epitaph
+| Carved in careful letters: INTREE SIK-VALOO, SCHOLAR OF STRANGE TONGUES. The house put his body in the wall and his head on the shelf, where it could still be useful.
+once
+
+~ examine:cat_stahbal_epitaph
+| The lintel reads: STAHBAL INDI-BHAK, A GREAT GENERAL FROM A DISTANT LAND. He brought fifteen captains into the valley, and the valley kept the set.
+once
+
+~ examine:cat_stahbal_shaft
+| In the middle of the floor a round well drops straight down out of sight. Upright coffins line the walls like guards at attention, every lid shut and waiting for an order.
+once
+
+~ examine:cat_jarnwald_epitaph
+| High on the lintel, in tiny letters that draw you two steps past the threshold to read them: SIR JARNWALD THE TRICKSTER, LOOK DOWN.
+once
+
+~ examine:cat_sasha_epitaph
+| Cut cleanly over the bars: SASHA IVLISKOVA, WIFE. No dates are given, as if the marriage only began when the gate was locked.
+once
+
+~ examine:cat_patrina_epitaph
+| The stone over the arch reads: PATRINA VELIKOVNA, BRIDE. The carver left room for a second name, and never came back with the chisel.
+once
+
+~ examine:cat_patrina_bier
+| The stone bed is bare, its grey dust smooth from edge to edge save for a few tarnished coins in the corners. Whoever was promised this room found somewhere else to walk.
+once
+
+~ examine:cat_finderway_epitaph
+| Over the gate of Saint Finderway, patron of lost travellers, the stone says only: PASS NOT THESE PORTALS. For a guide of the lost, his advice is very short.
+once
+
+~ examine:cat_finderway_dust_niche
+| Two stone niches face each other across the narrow floor. One is thick with undisturbed dust. In the other the air hums against your teeth, and bootmarks end at the wall.
+once
+
+~ examine:cat_khazan_door
+| Only one word is cut into the slab: KHAZAN. Behind the seam the air smells of nothing at all, as though the room were emptied when its tenant took a tower of his own.
+once
+
+~ examine:cat_eisglaze_mold
+| Thick brown mold furs the slab, drinking every drop of warmth from the air until your breath hangs white. Only a good fire would burn it off.
+once
+
+~ examine:cat_klutz_sword
+| A longsword runs through the skeleton's breastplate, in at the front and out at the back. His boot heels are still hooked together.
+once
+
+~ examine:cat_markovia_bone
+| On the stone lid rests a single long thighbone in faded linen, yellow as old tallow. Whatever mercy was left in her has settled into the marrow, so take it with clean hands.
+once
+
+~ examine:cat_sasha_bier
+| Grey web binds a bride to the bier, a tarnished ring on her finger and dried stems crumbling between her hands. Beneath the silk, her eyelids give a single, dry twitch.
+once
+
+~ enter:cat_finderway_alcove
+| You step into the humming niche and the stone tilts under your heel. Between one breath and the next, the crypt is gone and another tomb closes round you.
+once
+
+~ trap:cat_troisky_gas:triggered
+| The step sinks under your boot. Green gas hisses from all three mouths of the helm, thick and sweet.
+cooldown 0
+
+~ trap:cat_bascal_fire:triggered
+| The bell gives one bright chime, and a sheet of fire roars out from under the lid to fill the vault.
+cooldown 0
+
+~ trap:cat_eisglaze_cold:triggered
+| The air snaps shut around you as the mold drinks the heat straight out of your skin. Your fingers go numb on the hilt.
+cooldown 0
+
+~ trap:cat_c31_pit:triggered
+| The painted flagstones tip under your weight and drop away. Iron spikes wait at the bottom of the dark.
+cooldown 0
+
+~ trap:cat_markovia_darts:triggered
+| A flagstone gives by a hair's breadth, and narrow iron darts hiss out of the mortar on either side. Even a saint's floor was laid by the lord's masons.
+cooldown 0
+
+~ trap:cat_jarnwald_pit:triggered
+| Your boot goes straight through the painted grey flagstones as though they were smoke. The real floor is a dark pit ten feet lower.
+cooldown 0

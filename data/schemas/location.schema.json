@@ -534,6 +534,10 @@
           "visual": {
             "type": "boolean",
             "description": "Only painted: the light is in the picture (LocationBuilder) but gives a fight no light zone, so the fights tuned on the place's old lamps see what they did. The Amber Temple's mood and amber glows."
+          },
+          "sunlight": {
+            "type": "boolean",
+            "description": "Its light is true sunlight in a fight (a sun painted on a vault, Tasha Petrovna's crypt): Sunlight Hypersensitivity and Sensitivity bite in its radius."
           }
         }
       }

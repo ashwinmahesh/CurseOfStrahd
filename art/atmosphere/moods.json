@@ -80,7 +80,8 @@
     "castle_ravenloft_brazier_room": "ravenloft_brazier",
     "tsolenka_pass_guard_tower_upper": "frozen_lookout",
     "tsolenka_pass_guard_tower_roof": "tsolenka_roof",
-    "mount_baratok": "baratok_heights"
+    "mount_baratok": "baratok_heights",
+    "castle_ravenloft_catacombs_vaults": "ravenloft_vaults"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -4113,6 +4114,25 @@
             "key_energy": 0.85,
             "mist": "moonlight",
             "mist_strength": 0.3
+          }
+        }
+      }
+    },
+    "ravenloft_vaults": {
+      "like": "crypt",
+      "tone": {
+        "shade": "stone_deep"
+      },
+      "times": {
+        "any": {
+          "ambient": "bone_dark",
+          "ambient_energy": 0.85,
+          "mist": "pewter",
+          "mist_strength": 0.4,
+          "grade": {
+            "shadows": "stone_deep",
+            "lights": "candle",
+            "amount": 0.3
           }
         }
       }

@@ -1,0 +1,57 @@
+# The two talking skulls of the Lesser Vaults (Dungeon Expansion Plan C1): Stefan Gregorovich's always answers wrong,
+# Intree Sik-Valoo's always answers true (docs/story/talking_creatures.md, the book's crypts 25 and 26). The same three
+# questions go to both; no check, so no question is ever spent.
+
+~ stefan
+narrate examine:cat_stefan_skull
+stefan_skull: Stand straight when you address the royal council. I am Stefan Gregorovich, first adviser to King Barov, and you have my leave to ask whatever small question troubles you.
+-> stefan_menu
+
+~ stefan_menu
+* Where does Count Strahd sleep? -> stefan_sleep
+* How is the count ended for good? -> stefan_end
+* What do the alcoves in Saint Finderway's crypt do? -> stefan_alcoves
+* We will leave you to your thoughts. -> stefan_bye
+
+~ stefan_sleep
+stefan_skull: In the high bell tower, naturally, suspended in a hammock of woven silver thread where the morning sun may warm his boots.
+-> stefan_menu
+
+~ stefan_end
+stefan_skull: Present him with a bowl of salted plum broth and three polite knocks upon his shield. No gentleman of the blood can withstand proper courtly notice.
+-> stefan_menu
+
+~ stefan_alcoves
+stefan_skull: They are airing cupboards for the castle linen. Step into the left one if you wish your cloak pressed and lightly scented with lavender.
+-> stefan_menu
+
+~ stefan_bye
+stefan_skull: Do not trouble yourselves with formal thanks. Mention my counsel to the chamberlain as you go, and mind your posture on the stairs.
+-> END
+
+~ intree
+narrate examine:cat_intree_skull
+intree_skull: You have come a long way to ask questions of bone. Ask, and I will answer truly, which cannot be said for poor Stefan Gregorovich in the next crypt.
+-> intree_menu
+
+~ intree_menu
+* Where does the count sleep? -> intree_sleep
+* How can the count be ended for good? -> intree_end
+* What do the alcoves in Saint Finderway's crypt do? -> intree_alcoves
+* Thank you. We will let you rest. -> intree_bye
+
+~ intree_sleep
+intree_skull: By day he lies in a plain wooden coffin in his tomb at the foot of the black stair, beneath the hall of names.
+-> intree_menu
+
+~ intree_end
+intree_skull: Beat him once so he flees as mist to his coffin. Finish him there with a wooden stake, the Sunsword's sunlight, or the Holy Symbol of Ravenkind.
+-> intree_menu
+
+~ intree_alcoves
+intree_skull: One carries you in an instant to the alcoves inside the count's own tomb, and the other brings you back. Step only if you mean to meet him.
+-> intree_menu
+
+~ intree_bye
+intree_skull: Go carefully. The stone here remembers footsteps longer than it remembers names.
+-> END

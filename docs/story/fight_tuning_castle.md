@@ -70,3 +70,40 @@ measured (wins over seeds 1-8): the courtyard's side gate from the overlook 8 an
 data), the east turret's back door 8 and 7 (as at the old data), and Berez's field (docs/story/fight_tuning.md): from the
 vault 5 and 4 at levels 7 and 8 hold but level 9 is 8 (6 at the old data, where the road was 7: the level 9 version's third
 more Hit Points bring the road to 6), and from the hut 2, 2 and 3 (2, 2 and 6 at the old data).
+
+## The Lesser Vaults' four fights (Dungeon Expansion Plan C1, 2026-10-18)
+
+New fights, each tuned from nothing (they had no old version): seeds 1-8, the four pregens on the sharp autopilot at level 10,
+5 wins, each held by `tests/integration/test_scaled_fights_castle_rooms.gd` (4 to 6), foes spread by
+`tests/unit/test_fight_spread.gd` (each room is big enough that no Fireball catches more than the rule allows, so none is in
+CRAMPED). The ladders tried are below the table (wins out of 8 over seeds 1-8).
+
+| Fight | Where | Version | Level | Foes | Wins | Note |
+|---|---|---|---|---|---|---|
+| `cat_stahbal` | catacombs_vaults | L10v0 | 10 | 6 wights (144 HP), 12 skeletons | 5 | the captains rise from the coffins along the walls; 12.5 rounds, 2.5 heroes down a fight |
+| `cat_sasha` | catacombs_vaults | L10v0 | 10 | 7 vampire spawn (86 HP; Sasha Ivliskova and six bridesmaids in webs) | 5 | woken by speaking to her; sets `cat_sasha_slain`; 5.8 rounds, 1.9 down |
+| `cat_spiders` | catacombs_vaults | L10v0 | 10 | 7 giant spiders (80 HP), 4 wraiths | 5 | the wraiths are the nest's older prey, up out of the webs. Spiders alone only reached 5 in 8 as 12 spiders at 285 HP, a 20-round slog with two stalled fights; 7.6 rounds, 1.4 down |
+| `cat_jarnwald_ghouls` | catacombs_vaults | L10v0 | 10 | 10 ghouls (79 HP), 3 ghasts (98 HP) | 5 | measured with the pit already sprung (as in play: a sprung trap is not armed in the fight); 4.9 rounds, 1.9 down |
+
+The ladders (a scratch harness played each line-up over seeds 1-8; the final line-ups were then confirmed by the real series
+tests). Skeletons are unnamed; wights, spawn, ghouls and wraiths too, except Sasha's seven.
+
+- `cat_stahbal` (wights, skeletons): 4+12 8; 6+12 8; 6+12 at 110 HP 7; 6+12 at 125 HP 4; **6+12 at 140 HP 5**; 7+11 7; 7+10 6;
+  8+10 4; 10+8 3.
+- `cat_sasha` (vampire spawn): 3 8; 5 8; 5 at 130 HP 7; 7 5; 8 3; with names (Sasha and bridesmaids) **7 5**, 6 8.
+- `cat_spiders`: giant spiders alone win too easily (6 at 60 HP, 8 and 10 at 80 HP: 8 of 8, nobody down) and only reach 5 in 8 by
+  inflating them (10 at 200 HP 8; 12 at 260 HP 6; 12 at 285 HP 5 in 14 rounds or, with the foes spread so no Fireball
+  catches ten of them, 3 with two timeouts in 20): a slog. With wraiths for the nest's older prey: 6 spiders at 100 HP + 3
+  wraiths 7; 8 at 80 + 4 6; 6 at 100 + 5 3; **7 at 90 + 4 wraiths 5**.
+- `cat_jarnwald_ghouls` (ghouls, ghasts): 8+2, 12+3, 14+4 at their own HP 8; 10 ghouls at 80 + 3 ghasts at 100 HP 7; 11 at 80 +
+  3 at 100 6; 11 at 85 + 3 at 105 4; 12 at 85 + 3 at 105 4; 12 at 80 + 3 at 100 3; 14 at 100 + 4 at 120 2; **10 at 90 + 3 at
+  110 HP 5**.
+
+**Re-measured on 2026-10-20, on origin/main 26221e1ca.** The engine had moved since the first tuning (spread strikes, foes
+sharing squares, AI and dangerous ground, free aim and more): the same line-ups won 6, 4, 3 and 4 in 8 (the spiders below
+the band). Only Hit Points moved, the squares stayed: the real series tests now give **5, 5, 5 and 5**. A scratch harness
+tried, over seeds 1-8: wights at 150 HP 3, 160 HP 3, 170 HP 1, 148 HP 4, 146 HP 4, **144 HP 5**, 142 HP 6; Sasha's seven spawn at
+88 HP 4, **86 HP 5**, 85 HP 7, 84 HP 7, 80 HP 6, 75 HP 7; the spiders at 85 HP 6, **80 HP 5**, 70 HP 5; the ghouls and ghasts at
+85 and 105 HP 4, 82 and 102 HP 4, 80 and 100 HP 4, 80 and 98 HP 4, 78 and 100 HP 6, 78 and 98 HP 6, 75 and 95 HP 6, 70 and 90 HP 7,
+**79 and 98 HP 5**, 79 and 99 HP 5.
+

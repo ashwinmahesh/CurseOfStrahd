@@ -684,7 +684,8 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 			continue   # only painted: a mood or a glow, no light to see by
 		var o := FieldObject.new(FieldObject.Kind.ZONE, "", str(li.get("kind", "light")))
 		o.cell = LocationView._cell(li["cell"])
-		o.rules = {"light": {"bright": int(li.get("bright_ft", 10)), "dim": int(li.get("dim_ft", 10))}}
+		o.rules = {"light": {"bright": int(li.get("bright_ft", 10)), "dim": int(li.get("dim_ft", 10)),
+			"sunlight": bool(li.get("sunlight", false))}}
 		e.spells.zones.objects.append(o)
 	if view.lantern != null and view.lantern.visible and not view.members.is_empty():
 		var lo := FieldObject.new(FieldObject.Kind.ZONE, "", "lantern")
@@ -809,6 +810,12 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		view.place_guests()
 		for who in carried:
 			view.toast.emit("%s is badly hurt and goes home to heal. You can ask them along again where you met." % who)
+	# A guest who came for one fight only has had it (StoryState.release_one_fight_guests: Sir Klutz's ghost).
+	var released := view.st.release_one_fight_guests()
+	if not released.is_empty():
+		view.place_guests()
+		for who in released:
+			view.toast.emit("%s fades from the party: the one battle they stayed for is over." % who)
 	# What the fight hands back to the story, whatever the outcome (ADR 0014): Misty Escape's flag, a withdrawal's
 	# flag, Strahd destroyed and his quest's stage.
 	for f: String in e.legendary.story_flags:

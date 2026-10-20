@@ -1,0 +1,31 @@
+# Sasha Ivliskova, the bride in webs (prop cat_sasha_bier, crypt 20 in the Lesser Vaults). Speaking to her wakes her; the
+# only way to stop it is not to speak. She asks if her love has come, and whatever the answer, she is hungry.
+
+~ bier
+narrate examine:cat_sasha_bier
+if flag.cat_sasha_slain
+-> END
+endif
+* Lean close to the shroud and speak her name. -> wake
+* Step back from the bier and leave her be. -> END
+
+~ wake
+sasha_ivliskova: Is that your lantern at the gate, my heart? Have you come down at last to fetch me home?
+-> menu
+
+~ menu
+* Who is it you are waiting for? -> who
+* No one is coming for you. -> no
+* Ease the stone lid back into place. -> leave
+
+~ who
+sasha_ivliskova: My husband, Ivan Ivliskovich. His greyhounds took the winter riband three years running, and he promised we should have a house by the river when the snow melted.
+-> menu
+
+~ no
+sasha_ivliskova: You lie with a warm throat. If Ivan is not behind you, then you have only brought me supper.
+combat cat_sasha
+
+~ leave
+Narrator: You lower the stone into its groove and the grey webs settle back across her face. From the dark beneath comes a small breath of relief, and one dry sob.
+-> END

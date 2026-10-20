@@ -1,0 +1,17 @@
+TASHA_EPITAPH: The lintel reads: TASHA PETROVNA, WHO STAYED. Someone has polished the iron gate long after the rest of the hallway went to rust.
+TASHA_SUN: A gold sun painted on the vault still gives off a real, quiet warmth. No dead thing that walks could bear to stand beneath it.
+TROISKY_EPITAPH: Deep letters over the bars read: KING TROISKY THE THREE-FACED, WHO WATCHED THREE WAYS AND DIED IN BED.
+TROISKY_HELM: A bronze helm with three carved faces sits on the dead king's breast, all three mouths ajar. A thin wire runs from the chin-strap into the stone.
+TROISKY_GAS: The step sinks under your boot. Green gas hisses from all three mouths of the helm, thick and sweet.
+ERICK_EPITAPH: Gilt letters above the gate announce: SIR ERICK VONDERBUCKS, PAID IN FULL. Even the full stop has been leafed in gold.
+ERICK_GOLD: They dipped him in gold before they laid him down, eyelids, fingernails and all. It must have taken three men to carry him.
+BASCAL_EPITAPH: Carved in a neat kitchen hand: BASCAL OFENHEISS, CHEF DELUXE, WHO FED THIS HOUSE. The stone still smells faintly of lard and smoke.
+BASCAL_BELL: A little silver bell hangs on a chain beside the coffin, engraved: DO NOT RING FOR SERVICE. The clapper is blackened with old soot.
+BASCAL_FIRE: The bell gives one bright chime, and a sheet of fire roars out from under the lid to fill the vault.
+EISGLAZE_EPITAPH: Cut into frost-split stone: BARON EISGLAZE DRÜF, COLD IN LIFE, COLDER AFTER.
+EISGLAZE_MOLD: Thick brown mold furs the slab, drinking every drop of warmth from the air until your breath hangs white. Only a good fire would burn it off.
+EISGLAZE_COLD: The air snaps shut around you as the mold drinks the heat straight out of your skin. Your fingers go numb on the hilt.
+CRYPT31_EPITAPH: No name is cut above the arch, only: WE KNEW HOW TO KEEP IT. Beyond the bars, someone has painted gold coins all over the damp plaster.
+CRYPT31_PIT: The painted flagstones tip under your weight and drop away. Iron spikes wait at the bottom of the dark.
+KLUTZ_EPITAPH: Over the gate, cut with reluctant honesty: SIR KLUTZ TRIPALOTSKY, HE FELL ON HIS OWN SWORD. It does not sound like he meant to.
+KLUTZ_SWORD: His broadsword stands straight up through the breastplate, hilt to the floor and point through the spine. His boot-heels are still hooked together.

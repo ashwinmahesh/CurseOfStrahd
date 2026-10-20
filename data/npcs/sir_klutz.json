@@ -1,0 +1,20 @@
+{
+  "id": "sir_klutz",
+  "name": "Sir Klutz Tripalotsky",
+  "title": "Knight Errant, Deceased",
+  "summary": "The ghost of a knight who tripped and fell on his own sword. Freed, he offers to fight one battle at the party's side, and apologises in advance for the cloaks.",
+  "portrait": "ghost",
+  "sprite": "ghost",
+  "attitude": "friendly",
+  "monster": "ghost",
+  "guest": true,
+  "tags": [
+    "undead",
+    "castle_ravenloft",
+    "catacombs"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false,
+  "leaves_after_fight": true
+}

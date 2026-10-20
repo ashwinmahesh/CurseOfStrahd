@@ -229,3 +229,26 @@ func test_roost_swarm_v0_at_level_10() -> void:
 ## roost_swarm_roused, castle_ravenloft_spires_roost variant 0 at level 10.
 func test_roost_swarm_roused_v0_at_level_10() -> void:
 	await _held("castle_ravenloft_spires_roost", 12, 10, "roost_swarm_roused", [Vector2i(7, 3), Vector2i(6, 3), Vector2i(5, 3), Vector2i(4, 3)], 4, 7, [])
+
+
+## cat_stahbal, castle_ravenloft_catacombs_vaults variant 0 at level 10 (Stahbal Indi-Bhak's captains).
+func test_cat_stahbal_v0_at_level_10() -> void:
+	await _held("castle_ravenloft_catacombs_vaults", 12, 10, "cat_stahbal", [Vector2i(31, 10), Vector2i(30, 10), Vector2i(32, 10), Vector2i(31, 9)], 4, 6, [])
+
+
+## cat_sasha, castle_ravenloft_catacombs_vaults variant 0 at level 10 (the bride in webs, woken by a conversation).
+func test_cat_sasha_v0_at_level_10() -> void:
+	await _held("castle_ravenloft_catacombs_vaults", 12, 10, "cat_sasha", [Vector2i(17, 17), Vector2i(16, 17), Vector2i(18, 17), Vector2i(17, 18)], 4, 6, [])
+
+
+## cat_spiders, castle_ravenloft_catacombs_vaults variant 0 at level 10 (the webbed crypt).
+func test_cat_spiders_v0_at_level_10() -> void:
+	await _held("castle_ravenloft_catacombs_vaults", 12, 10, "cat_spiders", [Vector2i(37, 16), Vector2i(36, 16), Vector2i(38, 16), Vector2i(37, 17)], 4, 6, [])
+
+
+## cat_jarnwald_ghouls, castle_ravenloft_catacombs_vaults variant 0 at level 10 (after the illusory floor is sprung).
+func test_cat_jarnwald_ghouls_v0_at_level_10() -> void:
+	prepare = func(st: StoryState) -> void:
+		(st.loc_state("castle_ravenloft_catacombs_vaults")["traps"] as Dictionary)["cat_jarnwald_pit"] = "triggered"
+		st.set_flag("cat_jarnwald_fell")
+	await _held("castle_ravenloft_catacombs_vaults", 12, 10, "cat_jarnwald_ghouls", [Vector2i(6, 17), Vector2i(5, 17), Vector2i(7, 17), Vector2i(6, 16)], 4, 6, [])

@@ -1,0 +1,19 @@
+{
+  "id": "stefan_skull",
+  "name": "The Skull of Stefan Gregorovich",
+  "title": "Counsellor to King Barov",
+  "summary": "A magic skull on a shelf in the Lesser Vaults, the head of King Barov's old counsellor. It answers every question at once, in the voice of a man who was never contradicted, and every answer is wrong.",
+  "portrait": "flameskull",
+  "sprite": "flameskull",
+  "attitude": "indifferent",
+  "monster": "flameskull",
+  "guest": false,
+  "tags": [
+    "undead",
+    "castle_ravenloft",
+    "catacombs"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

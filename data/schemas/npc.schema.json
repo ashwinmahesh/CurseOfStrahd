@@ -58,6 +58,10 @@
       "type": "boolean",
       "description": "false: this guest keeps out of every fight (Ireena, Ashwin 2026-10-18). She takes no turn, no foe can target her and no area spell of either side catches her, because she is not in the encounter at all; her figure stays on the board as a bystander whose square blocks, stepped aside if the fight starts on it. Needs guest: true. Without it guests fight under the player's control (docs/contracts/campaign.md)."
     },
+    "leaves_after_fight": {
+      "type": "boolean",
+      "description": "A guest who stays for one fight only: StoryState.release_one_fight_guests sends them away when the next fight ends (Sir Klutz's ghost)."
+    },
     "tags": {
       "type": "array",
       "items": {

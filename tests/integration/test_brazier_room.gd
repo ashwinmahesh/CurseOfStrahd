@@ -218,6 +218,7 @@ func test_the_dungeon_and_the_catacombs_only_gained_squares() -> void:
 		var want := CATACOMBS_ROWS[i]
 		if i == 29:
 			want = want.substr(0, 38) + "." + want.substr(39)   # the tunnel's mouth in the lower gallery's south wall
+			want = want.substr(0, 31) + "." + want.substr(32)   # and the Lesser Vaults' stair beside it (plan C1)
 		assert_eq(str(c[i]), want, "row %d of the catacombs is as it was" % i)
 
 

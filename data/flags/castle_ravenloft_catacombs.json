@@ -79,6 +79,31 @@
       "id": "cat_mad_dog_blade_known",
       "type": "bool",
       "summary": "The scything blade in the Mad Dog's crypt was spotted or sprung."
+    },
+    {
+      "id": "cat_markovia_bone_lifted",
+      "type": "bool",
+      "summary": "The party lifted Saint Markovia's thighbone from her sarcophagus (castle_ravenloft/catacombs_crypts:lift); the dart trap before it is its own."
+    },
+    {
+      "id": "cat_eisglaze_mold_burnt",
+      "type": "bool",
+      "summary": "The party burnt the brown mold off Baron Eisglaze Drüf's slab (castle_ravenloft/catacombs_crypts:burn); his cold trap is then spent."
+    },
+    {
+      "id": "cat_klutz_freed",
+      "type": "bool",
+      "summary": "The party pulled the sword out of Sir Klutz Tripalotsky's breastplate and freed his ghost (castle_ravenloft/catacombs_crypts:pull)."
+    },
+    {
+      "id": "cat_jarnwald_fell",
+      "type": "bool",
+      "summary": "Sir Jarnwald's illusory floor was sprung (trap cat_jarnwald_pit): the ghouls in the pit wake (encounter cat_jarnwald_ghouls)."
+    },
+    {
+      "id": "cat_sasha_slain",
+      "type": "bool",
+      "summary": "Sasha Ivliskova was destroyed (encounter cat_sasha); her bier is only a bier after that."
     }
   ]
 }

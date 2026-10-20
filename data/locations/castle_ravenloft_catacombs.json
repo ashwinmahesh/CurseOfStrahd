@@ -35,7 +35,7 @@
       "#........................................~.#",
       "#..............~...........................#",
       "#..........................................#",
-      "#####.################################.#####",
+      "#####.#########################.######.#####",
       "############################################"
     ],
     "theme": "dungeon",
@@ -203,6 +203,132 @@
           18
         ]
       ]
+    },
+    {
+      "id": "cat_crypt_tasha",
+      "name": "Tasha Petrovna's crypt",
+      "cells": [
+        [
+          11,
+          6
+        ],
+        [
+          14,
+          10
+        ]
+      ],
+      "floor": "castle/ashlar",
+      "walls": "castle/ashlar",
+      "light": "dim",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_troisky",
+      "name": "King Troisky's crypt",
+      "cells": [
+        [
+          16,
+          6
+        ],
+        [
+          19,
+          10
+        ]
+      ],
+      "floor": "castle/black_marble",
+      "walls": "dungeon/stone_wall",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_erick",
+      "name": "Sir Erick's crypt",
+      "cells": [
+        [
+          11,
+          20
+        ],
+        [
+          14,
+          24
+        ]
+      ],
+      "floor": "castle/red_damask",
+      "walls": "castle/ashlar",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_bascal",
+      "name": "The chef's crypt",
+      "cells": [
+        [
+          24,
+          6
+        ],
+        [
+          27,
+          10
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_eisglaze",
+      "name": "The Baron's crypt",
+      "cells": [
+        [
+          29,
+          6
+        ],
+        [
+          32,
+          10
+        ]
+      ],
+      "floor": "church/frosted_flags",
+      "walls": "dungeon/slimed_brick",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_klutz",
+      "name": "Sir Klutz's crypt",
+      "cells": [
+        [
+          24,
+          20
+        ],
+        [
+          27,
+          24
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/stone_wall",
+      "light": "dark",
+      "furnish": false
+    },
+    {
+      "id": "cat_crypt_31",
+      "name": "The crypt with no name",
+      "cells": [
+        [
+          29,
+          20
+        ],
+        [
+          32,
+          24
+        ]
+      ],
+      "floor": "castle/ashlar",
+      "walls": "castle/red_damask",
+      "light": "dark",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -229,6 +355,10 @@
     "from_tunnel": [
       38,
       27
+    ],
+    "from_vaults": [
+      31,
+      28
     ]
   },
   "exits": [
@@ -281,6 +411,16 @@
       "to": "castle_ravenloft_brazier_room",
       "spawn": "from_catacombs",
       "label": "Stairs down to the tunnel through the Pillarstone"
+    },
+    {
+      "id": "cat_stairs_to_vaults",
+      "cell": [
+        31,
+        29
+      ],
+      "to": "castle_ravenloft_catacombs_vaults",
+      "spawn": "from_catacombs",
+      "label": "Stairs down to the lesser vaults"
     }
   ],
   "doors": [
@@ -315,7 +455,7 @@
         10,
         8
       ],
-      "label": "an iron crypt gate"
+      "label": "an iron crypt gate, Tasha Petrovna's"
     },
     {
       "id": "cat_mw2_gate",
@@ -323,7 +463,7 @@
         20,
         8
       ],
-      "label": "an iron crypt gate"
+      "label": "an iron crypt gate, King Troisky's"
     },
     {
       "id": "cat_stewards_gate",
@@ -339,7 +479,7 @@
         10,
         22
       ],
-      "label": "an iron crypt gate"
+      "label": "an iron crypt gate gilded along its top bar, Sir Erick's"
     },
     {
       "id": "cat_ossuary_secret",
@@ -356,7 +496,7 @@
         23,
         8
       ],
-      "label": "an iron crypt gate"
+      "label": "an iron crypt gate smeared with old soot, Bascal Ofenheiss's"
     },
     {
       "id": "cat_me2_gate",
@@ -364,7 +504,7 @@
         33,
         8
       ],
-      "label": "an iron crypt gate"
+      "label": "an iron crypt gate furred with frost, the Baron's"
     },
     {
       "id": "cat_me4_gate",
@@ -372,7 +512,7 @@
         23,
         22
       ],
-      "label": "an iron crypt gate"
+      "label": "an iron crypt gate, Sir Klutz's"
     },
     {
       "id": "cat_me5_gate",
@@ -380,7 +520,7 @@
         33,
         22
       ],
-      "label": "an iron crypt gate"
+      "label": "an iron crypt gate with no name over it"
     },
     {
       "id": "cat_champion_gate",
@@ -569,8 +709,8 @@
         12,
         22
       ],
-      "kind": "decor",
-      "label": "Crypt",
+      "kind": "examine",
+      "label": "Sir Erick's gilded sarcophagus",
       "model": "crypt_small"
     },
     {
@@ -633,7 +773,7 @@
         8
       ],
       "kind": "decor",
-      "label": "Crypt",
+      "label": "The chef's sarcophagus",
       "model": "crypt_small"
     },
     {
@@ -643,7 +783,7 @@
         8
       ],
       "kind": "decor",
-      "label": "Crypt",
+      "label": "The Baron's slab",
       "model": "crypt_small"
     },
     {
@@ -663,7 +803,7 @@
         22
       ],
       "kind": "decor",
-      "label": "Crypt",
+      "label": "Sir Klutz's bier",
       "model": "crypt_small"
     },
     {
@@ -832,6 +972,154 @@
       "label": "A crypt with no name",
       "model": "crypt_small",
       "dialogue": "castle_ravenloft/the_unnamed_crypt:crypt"
+    },
+    {
+      "id": "cat_tasha_epitaph",
+      "cell": [
+        11,
+        6
+      ],
+      "kind": "examine",
+      "label": "A plaque over her gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_tasha_sun",
+      "cell": [
+        13,
+        6
+      ],
+      "kind": "examine",
+      "label": "A sun painted on the vault",
+      "model": "sunburst"
+    },
+    {
+      "id": "cat_tasha_symbol",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "search",
+      "label": "a silver holy symbol under her folded hands",
+      "model": "satchel",
+      "search_dc": 13,
+      "skill": "investigation",
+      "item": "holy_symbol_amulet"
+    },
+    {
+      "id": "cat_troisky_epitaph",
+      "cell": [
+        16,
+        6
+      ],
+      "kind": "examine",
+      "label": "A plaque over his gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_troisky_helm",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "examine",
+      "label": "A three-faced helm",
+      "model": "statue_head"
+    },
+    {
+      "id": "cat_erick_epitaph",
+      "cell": [
+        11,
+        20
+      ],
+      "kind": "examine",
+      "label": "A plaque over his gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_bascal_epitaph",
+      "cell": [
+        24,
+        6
+      ],
+      "kind": "examine",
+      "label": "A plaque over his gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_bascal_bell",
+      "cell": [
+        26,
+        7
+      ],
+      "kind": "examine",
+      "label": "A small silver bell on a chain",
+      "model": "incense_burner"
+    },
+    {
+      "id": "cat_eisglaze_epitaph",
+      "cell": [
+        29,
+        6
+      ],
+      "kind": "examine",
+      "label": "A plaque over his gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_eisglaze_mold",
+      "cell": [
+        31,
+        6
+      ],
+      "kind": "examine",
+      "label": "Brown mold",
+      "model": "cobwebs",
+      "dialogue": "castle_ravenloft/catacombs_crypts:eisglaze_mold"
+    },
+    {
+      "id": "cat_eisglaze_sword",
+      "cell": [
+        30,
+        7
+      ],
+      "kind": "search",
+      "label": "a longsword under the mold",
+      "model": "scattered_notes",
+      "search_dc": 12,
+      "skill": "investigation",
+      "item": "giant_slayer__longsword"
+    },
+    {
+      "id": "cat_klutz_epitaph",
+      "cell": [
+        24,
+        20
+      ],
+      "kind": "examine",
+      "label": "A plaque over his gate",
+      "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_klutz_sword",
+      "cell": [
+        26,
+        21
+      ],
+      "kind": "examine",
+      "label": "A knight with a sword through his breastplate",
+      "model": "bones",
+      "dialogue": "castle_ravenloft/catacombs_crypts:klutz_sword"
+    },
+    {
+      "id": "cat_c31_epitaph",
+      "cell": [
+        29,
+        20
+      ],
+      "kind": "examine",
+      "label": "A boast over the arch",
+      "model": "bronze_plaque"
     }
   ],
   "containers": [
@@ -936,6 +1224,44 @@
         }
       ],
       "gold": 20
+    },
+    {
+      "id": "cat_troisky_coffer",
+      "cell": [
+        18,
+        9
+      ],
+      "label": "A coffer at the king's feet",
+      "model": "chest_iron",
+      "items": [],
+      "gold": 120
+    },
+    {
+      "id": "cat_erick_gold",
+      "cell": [
+        13,
+        22
+      ],
+      "label": "Gold flaked from the knight",
+      "model": "gold_heap",
+      "items": [],
+      "gold": 180
+    },
+    {
+      "id": "cat_bascal_spork",
+      "cell": [
+        26,
+        6
+      ],
+      "label": "The chef's last tool",
+      "model": "toy_chest",
+      "items": [
+        {
+          "id": "jeweled_electrum_spork",
+          "qty": 1
+        }
+      ],
+      "gold": 0
     }
   ],
   "lights": [
@@ -965,6 +1291,16 @@
       "kind": "candle",
       "bright_ft": 0,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "window",
+      "bright_ft": 10,
+      "dim_ft": 15,
+      "sunlight": true
     }
   ],
   "traps": [
@@ -1010,6 +1346,161 @@
       "damage": "4d8",
       "damage_type": "lightning",
       "text": "The sigil under your foot wakes with a crack, and blue light jumps up your legs."
+    },
+    {
+      "id": "cat_troisky_gas",
+      "cells": [
+        [
+          17,
+          8
+        ],
+        [
+          19,
+          8
+        ],
+        [
+          17,
+          9
+        ],
+        [
+          19,
+          9
+        ],
+        [
+          17,
+          10
+        ],
+        [
+          18,
+          10
+        ],
+        [
+          19,
+          10
+        ]
+      ],
+      "label": "a loose step before the king's feet",
+      "detect_dc": 15,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "con",
+        "dc": 16
+      },
+      "damage": "5d10",
+      "damage_type": "poison",
+      "condition": "poisoned",
+      "text": "The step sinks under your boot. Green gas hisses from all three mouths of the helm, thick and sweet."
+    },
+    {
+      "id": "cat_bascal_fire",
+      "cells": [
+        [
+          25,
+          6
+        ],
+        [
+          27,
+          6
+        ],
+        [
+          25,
+          7
+        ],
+        [
+          27,
+          7
+        ],
+        [
+          25,
+          8
+        ],
+        [
+          27,
+          8
+        ]
+      ],
+      "label": "a cord strung to the bell",
+      "detect_dc": 14,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 16
+      },
+      "damage": "6d6",
+      "damage_type": "fire",
+      "text": "The bell gives one bright chime, and a sheet of fire roars out from under the lid to fill the vault."
+    },
+    {
+      "id": "cat_eisglaze_cold",
+      "cells": [
+        [
+          29,
+          6
+        ],
+        [
+          30,
+          6
+        ],
+        [
+          29,
+          7
+        ],
+        [
+          31,
+          7
+        ],
+        [
+          29,
+          8
+        ],
+        [
+          31,
+          8
+        ]
+      ],
+      "label": "a patch of brown mold",
+      "detect_dc": 13,
+      "disarm_dc": 18,
+      "when": "not flag.cat_eisglaze_mold_burnt",
+      "save": {
+        "ability": "con",
+        "dc": 15
+      },
+      "damage": "5d8",
+      "damage_type": "cold",
+      "text": "The air snaps shut around you as the mold drinks the heat straight out of your skin. Your fingers go numb on the hilt."
+    },
+    {
+      "id": "cat_c31_pit",
+      "cells": [
+        [
+          30,
+          21
+        ],
+        [
+          31,
+          21
+        ],
+        [
+          32,
+          21
+        ],
+        [
+          31,
+          22
+        ]
+      ],
+      "label": "a painted false floor",
+      "pit_ft": 10,
+      "detect_dc": 16,
+      "disarm_dc": 16,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "2d10",
+      "damage_type": "piercing",
+      "text": "The painted flagstones tip under your weight and drop away. Iron spikes wait at the bottom of the dark."
     }
   ],
   "encounters": [

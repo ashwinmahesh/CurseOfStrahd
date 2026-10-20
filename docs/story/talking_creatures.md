@@ -98,3 +98,16 @@ what passed it last night. The conversation casts the spell with a 3rd-level slo
 | The hags' garden | Old Bonegrinder's hill, while Bella is there | Offalia picked a basket for the baking; Bella flew home on a broom and hid it in the rafters | Reveals `rafters_broom` (Broom of Flying) |
 
 Tests: tests/integration/test_speak_with_plants.gd.
+
+## The skulls of the Lesser Vaults (Dungeon Expansion Plan C1)
+
+Castle Ravenloft's Lesser Vaults (castle_ravenloft_catacombs_vaults, docs/regions/castle_ravenloft_catacombs.md §14) hold
+the book's two talking skulls, crypts 25 and 26. They are magic, not Speak with Dead, so anyone can ask, and no check
+guards a question.
+
+| Who | Where | What they know |
+|---|---|---|
+| The skull of Stefan Gregorovich | his crypt, a shelf | everything, and all of it wrong: the same three questions (where the count sleeps, how he is ended, what Saint Finderway's niche does) get confident falsehoods |
+| The skull of Intree Sik-Valoo | the next crypt along | the same three, truly: the count's coffin under the hall of names at the foot of the black stair; beat him once, then the stake, the Sunsword's sunlight or the Holy Symbol of Ravenkind; and that the niche in Saint Finderway's crypt opens on the count's own tomb |
+
+Lines: narrative/castle_ravenloft/catacombs_skulls.dialogue. Tests: tests/integration/test_catacomb_crypts.gd (`test_the_skulls`).

@@ -868,6 +868,17 @@ func see_to_fallen_guests() -> Array[String]:
 	return home
 
 
+## After a fight: the guests who came for that one fight only (their NPC's `leaves_after_fight`: Sir Klutz's ghost in
+## the catacombs' crypt 33) leave the party. Returns their names.
+func release_one_fight_guests() -> Array[String]:
+	var gone: Array[String] = []
+	for i in range(guest_ids.size() - 1, -1, -1):
+		if bool(Compendium.shared().get_entry("npcs", guest_ids[i]).get("leaves_after_fight", false)):
+			gone.push_front(guests[i].name)
+			remove_guest(guest_ids[i])
+	return gone
+
+
 func _guests_to_dict() -> Array:
 	var out: Array = []
 	for i in guest_ids.size():

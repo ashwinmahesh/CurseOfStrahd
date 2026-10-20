@@ -1,0 +1,11 @@
+MARKOVIA_OPT_LIFT: Lift the bone and its faded linen from the stone.
+MARKOVIA_OPT_LEAVE: Leave the relic untouched upon the lid.
+MARKOVIA_LIFT: As you lift the linen from the stone, the air grows cold. A pale woman in a worn apron stands beside you, her hands folded and still.
+MARKOVIA_WORDS: You have come a long way through the dark, children, and my rest is done. Carry what remains of me into the upper rooms, and strike the master down when he reaches for your throats.
+EISGLAZE_OPT_BURN: Hold fire to the slab and burn the mold away.
+EISGLAZE_BURN: The brown velvet curls and blackens without a sound as your flame touches it. All at once, the bitter chill lets go of your lungs.
+KLUTZ_OPT_PULL: Draw the longsword free from the dented breastplate.
+KLUTZ_OPT_LEAVE: Leave the blade wedged where it is.
+SASHA_BIER: Grey web binds a bride to the bier, a tarnished ring on her finger and dried stems crumbling between her hands. Beneath the silk, her eyelids give a single, dry twitch.
+SASHA_OPT_SPEAK: Lean close to the shroud and speak her name.
+SASHA_OPT_PASS: Step back from the bier and leave her be.

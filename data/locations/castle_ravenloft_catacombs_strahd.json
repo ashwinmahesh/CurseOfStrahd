@@ -10,9 +10,9 @@
       "###########.###########",
       "########.......########",
       "########.......########",
-      "########.......########",
-      "########.......########",
-      "##########...##########",
+      "###.####.......########",
+      "###.####.......########",
+      "###.######...##########",
       "##...................##",
       "##...................##",
       "##..#.............#..##",
@@ -61,6 +61,20 @@
       ],
       "floor": "dungeon/stone_floor",
       "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "cat_finderway_alcove",
+      "name": "A niche behind the tomb's wall",
+      "cells": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          6
+        ]
+      ]
     }
   ],
   "spawns": {
@@ -71,6 +85,10 @@
     "from_catacombs": [
       11,
       3
+    ],
+    "from_finderway": [
+      3,
+      5
     ]
   },
   "exits": [
@@ -83,6 +101,16 @@
       "to": "castle_ravenloft_catacombs",
       "spawn": "from_strahd",
       "label": "The black stair up"
+    },
+    {
+      "id": "cat_finderway_back",
+      "cell": [
+        3,
+        4
+      ],
+      "to": "castle_ravenloft_catacombs_vaults",
+      "spawn": "from_strahd_alcove",
+      "label": "The humming niche"
     }
   ],
   "props": [

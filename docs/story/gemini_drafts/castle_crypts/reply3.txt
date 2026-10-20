@@ -1,0 +1,33 @@
+STEFAN_GREET: Stand straight when you address the royal council. I am Stefan Gregorovich, first adviser to King Barov, and you have my leave to ask whatever small question troubles you.
+STEFAN_OPT_SLEEP: Where does Count Strahd sleep?
+STEFAN_SLEEP: In the high bell tower, naturally, suspended in a hammock of woven silver thread where the morning sun may warm his boots.
+STEFAN_OPT_END: How is the count ended for good?
+STEFAN_END: Present him with a bowl of salted plum broth and three polite knocks upon his shield. No gentleman of the blood can withstand proper courtly notice.
+STEFAN_OPT_ALCOVES: What do the alcoves in Saint Finderway's crypt do?
+STEFAN_ALCOVES: They are airing cupboards for the castle linen. Step into the left one if you wish your cloak pressed and lightly scented with lavender.
+STEFAN_OPT_LEAVE: We will leave you to your thoughts.
+STEFAN_BYE: Do not trouble yourselves with formal thanks. Mention my counsel to the chamberlain as you go, and mind your posture on the stairs.
+INTREE_GREET: You have come a long way to ask questions of bone. Ask, and I will answer truly, which cannot be said for poor Stefan Gregorovich two doors down.
+INTREE_OPT_SLEEP: Where does the count sleep?
+INTREE_SLEEP: By day he lies in a plain wooden coffin in his tomb at the foot of the black stair, beneath the hall of names.
+INTREE_OPT_END: How can the count be ended for good?
+INTREE_END: Beat him once so he flees as mist to his coffin. Finish him there with a wooden stake, the Sunsword's sunlight, or the Holy Symbol of Ravenkind.
+INTREE_OPT_ALCOVES: What do the alcoves in Saint Finderway's crypt do?
+INTREE_ALCOVES: One carries you in an instant to the alcoves inside the count's own tomb, and the other brings you back. Step only if you mean to meet him.
+INTREE_OPT_LEAVE: Thank you. We will let you rest.
+INTREE_BYE: Go carefully. The stone here remembers footsteps longer than it remembers names.
+SASHA_WAKE: Is that your lantern at the gate, my heart? Have you come down at last to fetch me home?
+SASHA_OPT_WHO: Who is it you are waiting for?
+SASHA_WHO: My husband, Ivan Ivliskovich. His greyhounds took the winter riband three years running, and he promised we should have a house by the river when the snow melted.
+SASHA_OPT_NO: No one is coming for you.
+SASHA_NO: You lie with a warm throat. If Ivan is not behind you, then you have only brought me supper.
+SASHA_OPT_LEAVE: Ease the stone lid back into place.
+SASHA_LEAVE: You lower the stone into its groove and the grey webs settle back across her face. From the dark beneath comes a small breath of relief, and one dry sob.
+KLUTZ_APPEARS: A tall ghost in bright mail steps out of the stone, bows with great dignity, and catches his left spur squarely on the threshold.
+KLUTZ_OFFER: My earnest thanks for the iron, friends, and my apologies in advance if I tread upon your cloaks. I have one good battle left in me, if you will have me.
+KLUTZ_OPT_JOIN: Come with us. We would be glad of your sword.
+KLUTZ_JOIN: Splendid! Lead on, and pray stand a pace to my right, as my scabbard has a wicked habit of swinging when I turn.
+KLUTZ_OPT_REST: Your wars are done, sir. Rest now.
+KLUTZ_REST: Ah. Quite right, of course; a wise captain keeps his ranks tidy. I shall just lie back down here and try not to rattle.
+KLUTZ_OPT_SWORD: We should put the sword back where it was.
+KLUTZ_SWORD: Oh, do not mind on my account. It went in between the fourth and fifth ribs when my heel met the stair, and truthfully, I had grown used to the draught.

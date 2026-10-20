@@ -1,0 +1,20 @@
+VAULTS_ENTER: The ceiling drops and the stone turns older, rougher, cut before the masons learned pride. Here the house laid those it needed, feared, or simply did not know where else to put.
+MARKOVIA_EPITAPH: Above the gate: SAINT MARKOVIA, WHO MENDED WHAT WAS TORN. The iron latch has been oiled more recently than the rest, though not by anyone who prayed.
+MARKOVIA_DARTS: A flagstone gives by a hair's breadth, and narrow iron needles hiss from the mortar on either side. Even the saint's floor was built by the lord of the castle.
+MARKOVIA_BONE: On the stone lid rests a single long thighbone in faded linen, yellow as old tallow. Whatever mercy was left in her has settled into the marrow; take it only with clean hands.
+KHAZAN_DOOR: Only one word is cut into the slab: KHAZAN. Behind the seam the air smells of nothing at all, as though the room were emptied when its tenant took a tower of his own.
+STAHBAL_EPITAPH: The lintel reads: STAHBAL INDI-BHAK, A GREAT GENERAL FROM A DISTANT LAND. He brought fifteen captains into the valley, and the valley kept the set.
+STAHBAL_SHAFT: In the middle of the floor a round well drops straight down out of sight. Upright coffins line the walls like guards at attention, fifteen shut lids waiting for an order.
+STAHBAL_WIGHTS: Wood groans against dry wood as fifteen lids shift at once. Gaunt hands take the rims from within, and old Campaign iron scrapes the stone as the general's men form ranks.
+SASHA_EPITAPH: Cut cleanly over the bars: SASHA IVLISKOVA, WIFE. No dates are given, as if the marriage only began when the gate was locked.
+PATRINA_EPITAPH: The stone over the arch reads: PATRINA VELIKOVNA, BRIDE. The carver left room for a second name, and never came back with the chisel.
+PATRINA_BIER: The stone bed is bare, its grey dust smooth from edge to edge save for a few tarnished coins in the corners. Whoever was promised this room found somewhere else to walk.
+STEFAN_EPITAPH: The inscription reads: STEFAN GREGOROVICH, COUNSELLOR TO KING BAROV, WHOSE WORD ENDED ARGUMENTS. Inside, on a narrow shelf, a clean skull faces the grate as if waiting to be asked.
+INTREE_EPITAPH: Carved in careful letters: INTREE SIK-VALOO, SCHOLAR OF STRANGE TONGUES. The house took his body for the vault and left his head on the shelf, where it could still be useful.
+SPIDERS_ENTER: The name over the arch is gone under a curtain of thick grey web that sways as the gate opens. High in the dark, heavy bodies unhook their legs from the ceiling and drop.
+FINDERWAY_EPITAPH: Over the gate of Saint Finderway, patron of lost travellers, the stone says only: PASS NOT THESE PORTALS. For a guide of the lost, his advice is very short.
+FINDERWAY_ALCOVES: Two stone niches face each other across the narrow floor. One is thick with undisturbed dust; in the other the air hums against your teeth, and bootmarks end at the wall.
+FINDERWAY_GO: You step into the humming niche and the stone tilts under your heel. Between one breath and the next, the crypt is gone and another tomb closes round you.
+JARNWALD_EPITAPH: High on the lintel, in tiny letters that draw you two steps past the threshold to read them: SIR JARNWALD THE TRICKSTER, LOOK DOWN.
+JARNWALD_FLOOR: Your boot goes straight through the painted grey flagstones as though they were smoke. The real floor is a dark pit ten feet lower.
+JARNWALD_GHOULS: Down in the mire at the bottom of the shaft, pale shapes stop gnawing on the last guest and turn their wet faces toward the light.
