@@ -31,3 +31,17 @@ once
 
 ~ examine:hollow_tracks
 | Spilled oats on the path, and in the soft ground beside them, the print of a paw as wide as your hand.
+
+# ---------------------------------------------------------------- A pedlar's hole (easter-egg plan R1, docs/story/eggs.md)
+# The first of three holes a long-dead pedlar dug across the valley; the next two are at the lake's reedy inlet and on
+# the Berez marsh track. Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r1/); unvoiced.
+
+~ examine:hollow_stamped_earth
+| [flag.eggs_spade_first] A square of turned earth by the old mound, and the hole you dug in it, already filling with needles.
+| Beside the far mound, a square of black earth has been stamped flat by careful boots, long ago, and the moss won't cross its edges. Whatever was put to bed under that crust will only answer to iron.
+
+~ check:athletics:hollow_dig:success
+| Two feet down, the spade rings dull on a rusted tin box tucked under a pine root. Inside lie a few tarnished coins and a square of paper, folded by steady thumbs.
+
+~ check:athletics:hollow_dig:failure
+| The ground here is all knotted root and stubborn charcoal, and the needles pour back in before {name} can clear a span.

@@ -1,0 +1,15 @@
+{
+  "region": "eggs_village",
+  "flags": [
+    {
+      "id": "eggs_sky_man_heard",
+      "type": "bool",
+      "summary": "The Vistani women at the Blood of the Vine told the party about the man the mists dropped out of the sky (village_of_barovia/vistani:strangers). Part one of three of the hidden The Man Who Fell from the Sky achievement."
+    },
+    {
+      "id": "eggs_dog_lupu",
+      "type": "bool",
+      "summary": "The party petted Lupu, the burgomaster's wolfhound (village_of_barovia/the_burgomasters_hound:pet). One of the five good-dog marks the hidden Good Dogs, All achievement reads."
+    }
+  ]
+}

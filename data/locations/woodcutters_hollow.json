@@ -177,6 +177,35 @@
       "model": "ash_heap"
     },
     {
+      "id": "hollow_stamped_earth",
+      "cell": [
+        18,
+        12
+      ],
+      "kind": "examine",
+      "label": "Earth stamped flat by the old mound",
+      "model": "soot_patch",
+      "checks": [
+        {
+          "id": "hollow_dig",
+          "skill": "athletics",
+          "dc": 8,
+          "label": "Dig here",
+          "when": "item:shovel",
+          "minutes": 30,
+          "success": {
+            "gold": 15,
+            "flag": "eggs_spade_first",
+            "codex": {
+              "id": "pedlar_note_hollow",
+              "title": "A pedlar's note, buried",
+              "text": "Good health to you, friend, and to your back.\nA lord will tax your silver and a neighbour will borrow it till doomsday, so I put mine to bed under the pines. Take these few pieces for your trouble, since you know an honest tool when you see one.\nThe rest of my purse sleeps where the reeds hide the lake from the road, and I keep the best of it for last.\nA man who trusts his spade"
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": "hollow_woodpile",
       "cell": [
         16,

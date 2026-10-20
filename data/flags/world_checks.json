@@ -25,6 +25,11 @@
       "id": "eggs_cheese_stair_found",
       "type": "bool",
       "summary": "Someone lifted a goat cheese at Krezk (lift_a_cheese) and found the stair of cheeses behind the board. Read by Watchman Lazar's wall_watch line."
+    },
+    {
+      "id": "eggs_spade_first",
+      "type": "bool",
+      "summary": "Someone dug up the pedlar's first tin in the Charcoal-Burners' Hollow (hollow_dig, needs a shovel). The first of the three the hidden Patient Spade achievement counts."
     }
   ]
 }

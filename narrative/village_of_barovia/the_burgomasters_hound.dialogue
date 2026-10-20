@@ -20,6 +20,8 @@ Bildrath: Ismark says it's grief. I've sold rope to grieving men. They don't how
 ~ lupu
 if quest.the_burgomasters_hound == done or quest.the_burgomasters_hound == sealed
 Narrator: Lupu is asleep on the mansion step in the middle of the day, like an ordinary dog, with one ear turned toward the house. He thumps his tail twice when he hears you.
+* [if not flag.eggs_dog_lupu] (Pet him.) -> pet
+* (Let him sleep.) -> END
 -> END
 endif
 if not quest.the_burgomasters_hound
@@ -34,7 +36,21 @@ endif
 * [if flag.lupu_friend] (Follow where he's looking.) -> follow
 * [if spell:speak_with_animals and not flag.sergiu_known] Ask him why he watches the house. -> lupu_speaks
 * [if not spell:speak_with_animals and not flag.sergiu_known] [knows:speak_with_animals] (Cast Speak with Animals, and ask him why he watches the house.) -> lupu_cast
+* [if not flag.eggs_dog_lupu] (Pet him.) -> pet
 * (Leave him be.) -> END
+
+# A good dog (easter-egg plan R1): one of the five the hidden Good Dogs, All achievement counts. Drafted by Gemini
+# through the ai-bridge and edited (docs/plans/gemini_eggs/r1/); unvoiced.
+~ pet
+set eggs_dog_lupu
+if quest.the_burgomasters_hound == done or quest.the_burgomasters_hound == sealed
+Narrator: He wakes at your step, stretches until his joints pop, and leans his whole weight against your leg with a long, whistling sigh. Then his chin settles on your boot, and he goes back to sleep.
+elif night
+Narrator: At your touch the howl catches in his throat, and he leans his whole trembling weight against your leg, smelling of rain and old wool. After a breath he lifts his grey muzzle to the bricks and begins again.
+else
+Narrator: Your hand finds the coarse fur behind his ears, and he leans his whole weight against your leg, warm as a hearthstone. He doesn't take his eyes off the study window.
+endif
+-> END
 
 ~ lupu_cast
 cast speak_with_animals

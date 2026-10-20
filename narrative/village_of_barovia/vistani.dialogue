@@ -25,6 +25,7 @@ Sorvia: Your boots have walked farther than boots should, in this valley. Sorry.
 * What would you call us, then? -> nicknames
 * [Insight DC 14] Watch how they watch you. -> insight_ok | insight_fail
 * Read my palm. -> palm
+* [if flag.madam_eva_rumor and not flag.eggs_sky_man_heard] Seen any other strangers come through? -> strangers
 * [if flag.vistani_wine_bought and not flag.vistani_deck_tried] [Performance DC 13] Earn the next round: give them a song. -> perform_ok | perform_fail
 * Goodbye. -> END
 
@@ -40,6 +41,18 @@ give deck_of_illusions
 set vistani_deck_tried
 Narrator: The song falls flat somewhere around the chorus. Arik stops polishing a glass to watch it die.
 Alenka: Brave. Very brave. Sit down before you hurt someone.
+-> menu
+
+# A wink (easter-egg plan R1, docs/story/eggs.md): the man the mists dropped out of the sky. Part one of three: Van
+# Richten's jar and a leech at camp come later. Drafted by Gemini through the ai-bridge and edited
+# (docs/plans/gemini_eggs/r1/); unvoiced.
+~ strangers
+set eggs_sky_man_heard
+Alenka [smile]: Last spring a man came stumbling out of a turnip field with his eyebrows singed off. He swore a flying ship shaped like a great squid, big as a church, had fallen out of the sky with him aboard.
+Mirabel [sly]: And that a little worm had crawled in through his eye to live behind his forehead and whisper to him. A strange tenant, and paying no rent at all.
+Sorvia [sad]: I gave him a crust of bread. His eye did twitch when he thanked me, as if something in there was looking back.
+Mirabel [smile]: It was a stye, little sister. A man will invent a whole fleet of flying sea-monsters before he admits to rubbing his eyes with dirty fingers.
+Alenka: He walked off east toward Vallaki, still arguing with his own skull, and we never saw him again. The mists bring all sorts.
 -> menu
 
 ~ who

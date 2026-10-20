@@ -68,3 +68,20 @@ keeps only the log's last 40 lines, as for every stat):
 read them in dialogue (the camp's banter about a thrown chair, the castle gargoyle that has heard of pushers). The
 registry marks them `"set_by": "engine"`: `make validate` and the story-reach walk then count a flag set by the game, and
 refuse a dialogue that tries to set one. No save version changes: flags and run stats are free-form already.
+
+## R1: the Village of Barovia and the road in
+
+Gemini record and the plan-versus-game notes: `docs/plans/gemini_eggs/r1/README.md`. Test:
+`tests/integration/test_eggs_village.gd`. Flags: `data/flags/eggs_village.json` (`eggs_sky_man_heard`, `eggs_dog_lupu`)
+and `eggs_spade_first` in `data/flags/world_checks.json`.
+
+- **The man who fell from the sky, part 1 of 3.** The Vistani sisters at the Blood of the Vine (`vistani:strangers`, once
+  they have said who they are) laugh about a man the mists dropped in a field last spring, who swore a flying ship like
+  a great squid had fallen with him aboard and a worm had gone in through his eye. Mirabel says it was a stye. Parts 2
+  and 3 are Van Richten's jar (R5) and a leech at camp (R6a); the hidden achievement that reads all three is R7's.
+- **Lupu**, the burgomaster's hound, can be petted by day, at night (he stops howling for a breath) and once his trouble
+  is over (`the_burgomasters_hound:pet`). One of the five dogs the hidden Good Dogs, All counts (R7 writes it).
+- **The patient spade, hole 1 of 3.** Earth stamped flat beside the far charcoal mound in the Charcoal-Burners' Hollow
+  (`hollow_stamped_earth`); with a shovel in the party, `hollow_dig` (Athletics DC 8) turns up a dead pedlar's tin, 15
+  gp and his note, which points on to the lake's reedy inlet. Holes 2 and 3 are R5's, and so is Patient Spade.
+
