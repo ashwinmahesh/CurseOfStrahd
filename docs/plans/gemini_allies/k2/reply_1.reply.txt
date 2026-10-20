@@ -1,0 +1,56 @@
+~ gates_road
+Narrator: Kasimir stops at the chasm's edge where the road breaks off, looking past the heavy iron chains toward the black towers above.
+Kasimir: Her prints in the mud went straight across the planks and through the front doors.
+Kasimir [weary]: She did not pause at the threshold. I did not expect her to.
+Kasimir: I have come as far as the gate, and the gate is far enough. I will wait for her on this side of the ditch.
+* We will tell her you are here. -> gates_road_a
+* You could come in with us. -> gates_road_b
+
+~ gates_road_a
+Kasimir: Thank you. She knows the road down, if she cares to take it.
+Kasimir: If she is too busy with the master of the house to listen, do not say my name twice.
+
+~ gates_road_b
+Kasimir: Look at me. I have a tired heart and one winter left inside my ribs.
+Kasimir [sad]: If I walk into that hall, I will stand at the back of the room again and watch. I would rather sit in the rain.
+
+~ dinner_bargain
+Strahd [smile]: Welcome to my table, Master Velikov. Your sister arrived some hours ahead of your carriage, though she had the longer walk.
+Strahd [sly]: A clever guest knows when to come home. She is resting upstairs now, and after three centuries in the dark, she has earned it.
+Kasimir: You are courteous to keep a chair for me, my lord, after so long.
+Kasimir: By your leave, I have no appetite tonight. I will take the air by your gate until my sister has time for her brother.
+
+~ farewell_tail
+Narrator: He folds his fishing net into a neat square, walks back to a flat stone beside the road below the drawbridge, and sits without looking back.
+Kasimir [weary]: Bring her out with you, if she will still walk through an open door. I will be here counting the mornings.
+
+~ gates
+Kasimir: You are still whole. That is more than most manage under that roof.
+Kasimir: Do not mind me. I am only sitting by the ditch with a half-mended net, keeping tally of the sky.
+* How long do you have left? -> gates_count
+* Is there anything we should tell her? -> gates_message
+* Do you still have scrolls to sell? -> gates_scrolls
+
+~ gates_count
+Kasimir: A single year, less the days we spent walking down from the mountain. I tie a knot in the cord each time the fog pales.
+Kasimir [weary]: It was a fair price at the Amber Temple, and I would pay it again tomorrow.
+Kasimir: Still, a man grows tired of his own arithmetic. I will be glad when my hands have nothing left to measure.
+
+~ gates_message
+Kasimir: For three hundred years I rehearsed speeches by the Vistani fires. Now that she breathes above my head, none of them seem worth the breath.
+Kasimir [sad]: Tell her the stones in my hands were heavy,even when I dropped them. Tell her I am sorry I was slow.
+Kasimir: Do not carry any token from me. She never liked old debts.
+
+~ gates_scrolls
+Kasimir: I still write by lantern light when the wind off the chasm keeps me awake. Old habits outlive the men who made them.
+Kasimir [sly]: Your coin is welcome. Even a poor guest needs boots for the road home.
+
+~ dinner_peace
+Strahd [smile]: Three hundred years at my gates, Master Velikov, and you finally take a chair at my board with a quiet mind. Grief suited you better.
+Kasimir: I did not come up the hill for the soup, my lord.
+
+~ coffin_asleep_kasimir
+Kasimir: My people crossed the pass as your guests and stayed to tend your graves. You look very small in the dark, my lord.
+
+~ coffin_resting_kasimir
+Kasimir: Your hospitality has worn thin after three centuries, my lord, and the last of your tenants are going home.

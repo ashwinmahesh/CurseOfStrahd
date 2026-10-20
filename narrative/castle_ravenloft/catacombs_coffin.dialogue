@@ -47,6 +47,9 @@ Narrator: He is here. He lies in the coffin with his hands folded on his chest, 
 if guest:ireena
 interject guest:ireena: Don't talk. Don't wake him. Just do it.
 endif
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: My people crossed the pass as your guests and stayed as your tenants. You look very small in the dark, my lord.
+endif
 interject tag:blunt: He's asleep. We won't get a better chance than this.
 interject class:wizard: Unless he isn't asleep. Unless he's lying still to see what we'll do.
 if guest:ezmerelda
@@ -83,6 +86,9 @@ if flag.cat_coffin_hallowed
 Narrator: The earth you blessed smokes under him. He came home to a bed that burns and lay down in it anyway, because there was nowhere else to go.
 endif
 Strahd: Well. Here we are. I confess I had imagined this room with more candles.
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: Your hospitality has worn thin after three centuries, my lord, and your tenants are almost gone.
+endif
 if guest:ireena
 Strahd: Ireena. You came all the way down. You always did come, in the end.
 interject guest:ireena: Not for you. Never once for you.

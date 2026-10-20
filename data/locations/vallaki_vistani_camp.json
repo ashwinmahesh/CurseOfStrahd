@@ -611,7 +611,7 @@
         18
       ],
       "dialogue": "vallaki/kasimir:start",
-      "when": "not guest:kasimir_velikov"
+      "when": "not guest:kasimir_velikov and not flag.kasimir_at_gates"
     },
     {
       "npc": "bluto",

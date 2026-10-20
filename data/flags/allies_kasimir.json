@@ -95,6 +95,11 @@
       "id": "kasimir_show_broker",
       "type": "bool",
       "summary": "Hub scratch: the broker topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    },
+    {
+      "id": "kasimir_at_gates",
+      "type": "bool",
+      "summary": "Kasimir, who made the bargain at the Amber Temple, came to Castle Ravenloft's gates with the party and would go no further: he left the party and sits on a stone by the road below the drawbridge, counting his last year (allies/kasimir_castle:farewell_tail, from the chasm's edge or from the dinner). He stands there (castle_ravenloft_gates) and not at the Vistani camp. Story Allies Presence Plan, package K2; no story reads it."
     }
   ]
 }

@@ -85,6 +85,20 @@ else
 Strahd: And a merchant, with ink on his soul. I can smell it from here.
 endif
 endif
+if guest:kasimir_velikov and flag.kasimir_bargain == "made"
+Strahd [smile]: Welcome to my table, Master Velikov. Your sister arrived ahead of you.
+Strahd [sly]: A clever guest knows when to come home. She is resting upstairs now, and after three centuries in the dark, she has earned it.
+Kasimir: You are courteous to keep a chair for me, my lord, after so long.
+Kasimir: By your leave, I have no appetite tonight. I will take the air by your gate until my sister has time for her brother.
+# He leaves the party here as he would at the chasm's edge (allies/kasimir_castle:farewell_tail says the same words).
+set kasimir_at_gates
+leave kasimir_velikov
+Narrator: He folds his net into a neat square, walks back to a flat stone beside the road below the drawbridge, and sits without looking back.
+Kasimir [weary]: Bring her out with you, if she will still walk through an open door. I will be here counting the mornings.
+elif guest:kasimir_velikov and (flag.kasimir_at_peace or flag.patrina_fate == "rest")
+Strahd [smile]: Three hundred years in my valley, Master Velikov, and you finally take a chair at my board with a quiet mind. Grief suited you better.
+Kasimir: I did not come up the hill for the soup, my lord.
+endif
 Narrator: Places are laid for each of you. The silver is real, the food is hot, and nobody carries it in.
 -> table
 

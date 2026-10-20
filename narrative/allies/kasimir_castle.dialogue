@@ -1,0 +1,66 @@
+# Kasimir Velikov at Castle Ravenloft (Story Allies Presence Plan, package K2; data/locations/castle_ravenloft_gates.json, docs/story/kasimir_castle.md,
+# docs/voice/kasimir_velikov.md). If he made the bargain at the Amber Temple (kasimir_bargain == "made": every year he had left but one,
+# and Patrina walked ahead of him toward the castle) and walks to its gates with the party, he stops and will not go in: from the
+# road, the chasm's edge calls `gates_road` the moment the party arrives (a prop's call, once); from the black carriage, Strahd greets him
+# at the dinner (narrative/castle_ravenloft/gates_dinner.dialogue) and he takes the air by the gate. Either way he leaves the party
+# (`farewell_tail`, kasimir_at_gates) and sits on a stone by the road below the drawbridge, counting his last year, where the party can
+# find him: `gates`, a small hub (how long he has, anything to tell her, scrolls). The camp's Kasimir is gone once he has gone.
+# Nothing rolls and no story flag moves; kasimir_at_gates is a side flag (data/flags/allies_kasimir.json). The drafts are Gemini's
+# (docs/plans/gemini_allies/k2/), edited; every line is unvoiced.
+
+~ gates_road
+Narrator: Kasimir stops at the chasm's edge where the road breaks off, looking past the heavy iron chains toward the black towers above.
+Kasimir: Her prints in the mud went straight across the planks and through the front doors.
+Kasimir [weary]: She did not pause at the threshold. I did not expect her to.
+Kasimir: I have come as far as the gate, and the gate is far enough. I will wait for her on this side of the ditch.
+* We will tell her you are here. -> gates_road_a
+* You could come in with us. -> gates_road_b
+
+~ gates_road_a
+Kasimir: Thank you. She knows the road down, if she cares to take it.
+Kasimir: If she is too busy with the master of the house to listen, do not say my name twice.
+-> farewell_tail
+
+~ gates_road_b
+Kasimir: Look at me. I have a tired heart and one winter left inside my ribs.
+Kasimir [sad]: If I walk into that hall, I will stand at the back of the room again and watch. I would rather sit in the rain.
+-> farewell_tail
+
+# Both ways in: he leaves the party and sits by the road below the drawbridge. (The dinner says the same words in gates_dinner:start.)
+~ farewell_tail
+set kasimir_at_gates
+leave kasimir_velikov
+Narrator: He folds his net into a neat square, walks back to a flat stone beside the road below the drawbridge, and sits without looking back.
+Kasimir [weary]: Bring her out with you, if she will still walk through an open door. I will be here counting the mornings.
+-> END
+
+# --- The hub by the road (an NPC of castle_ravenloft_gates while kasimir_at_gates and he is not with the party) -----------------
+
+~ gates
+Kasimir: You are still whole. That is more than most manage under that roof.
+Kasimir: Do not mind me. I am only sitting by the ditch with a half-mended net, keeping tally of the sky.
+-> gates_menu
+
+~ gates_menu
+* How long do you have left? -> gates_count
+* Is there anything we should tell her? -> gates_message
+* Do you still have scrolls to sell? -> gates_scrolls
+* Keep your count. -> END
+
+~ gates_count
+Kasimir: A single year, less the days we spent walking down from the mountain. I tie a knot in the cord each time the fog pales.
+Kasimir [weary]: It was a fair price at the Amber Temple, and I would pay it again tomorrow.
+Kasimir: Still, a man grows tired of his own arithmetic. I will be glad when my hands have nothing left to measure.
+-> gates_menu
+
+~ gates_message
+Kasimir: For three hundred years I rehearsed speeches by the Vistani fires. Now that she breathes above my head, none of them seem worth the breath.
+Kasimir [sad]: Tell her my hands were empty, and that I know now which was heavier. Tell her I am sorry I was slow.
+Kasimir: Do not carry any token from me. She never liked old debts.
+-> gates_menu
+
+~ gates_scrolls
+Kasimir: I still write by lantern light when the wind off the chasm keeps me awake. Old habits outlive the men who made them.
+Kasimir [sly]: Your coin is welcome. Even a poor guest needs boots for the road home.
+shop
+-> gates_menu

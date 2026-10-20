@@ -1,0 +1,45 @@
+I need drafted dialogue for Kasimir at Castle Ravenloft after the bargain at the Amber Temple. The party is a group of adventurers the player controls.
+
+# Part A: Kasimir and the castle (bargain made)
+
+## The farewell (two openings, one tail)
+
+Kasimir made the bargain: he gave every year he had left but one so his sister Patrina would live, and she walked toward the castle ahead of him. The party reaches Castle Ravenloft with him in tow. He stops and says he will wait outside, where she can find him, and will not sit at the count's table. He leaves the party.
+
+~ gates_road: the party arrives at the castle's road end and the chasm's edge below the drawbridge (the road, the chasm, the iron chains above). Narrator x1 (he stops at the chasm's edge and looks up at the black towers), Kasimir x3 (she went in by the front door; she did not wait; he will wait here; no speech), then two party option rows: "We will tell her you are here." / "You could come in with us." Replies `gates_road_a` (Kasimir x2) and `gates_road_b` (Kasimir x2: he is quiet, and says why he will not).
+~ dinner_bargain: the same, but the party has been carried to the castle's front courtyard by the count's black carriage and is at his dinner table. Strahd x2 (he greets the guest he knows, Master Velikov; his sister arrived before him; a host's courtesy; she is resting and "has earned it"; one of the lines must carry the idea of "a clever guest who has come home"), Kasimir x2 (flat, courteous; he will not sit at that table; he will wait at the gate; no theatrics).
+~ farewell_tail: shared by both. Narrator x1 (he folds the net into a square and walks to a stone by the road below the drawbridge and sits; he does not look back), Kasimir x1 (one parting line to the party; soft; he asks them to bring her out if they can, and says he will be counting).
+
+## The hub at the gate (an NPC sitting by the road below the drawbridge, counting the days)
+
+~ gates: Kasimir x2 (when the party finds him there: a dry greeting; he is counting; he sits with a half-mended net).
+~ gates_count: the party asks how long he has left. Kasimir x3 (one year, less each day; he counts on the net's knots; he would not take the bargain back; he would like to stop counting).
+~ gates_message: the party asks if there is anything they should tell her. Kasimir x3 (he thinks; the only thing is the one he has been unable to say for three centuries; he gives it in his own words, short; he does not ask them to carry anything).
+~ gates_scrolls: the party asks for scrolls; he still writes them at night. Kasimir x2 (a dry line; gold buys passage, he has a long way to go) (the game opens his shop after this).
+
+## The dusk elf at the dinner when he has made his peace (he travels with the party; his sister was laid to rest in peace)
+
+~ dinner_peace: Strahd x1 (a host: the dusk elf has not sat at his table in three hundred years, and comes with a clear conscience, which is unusual), Kasimir x1 (he did not come for the soup).
+
+## Over the coffin (the party stands over the vampire's coffin; one interject line each, under 28 words)
+
+~ coffin_asleep_kasimir: Kasimir looks at the sleeping count in the coffin. His people were his guests. One line, soft, cold.
+~ coffin_resting_kasimir: the count lies beaten and speaks. Kasimir answers him as a guest answers a poor host. One line.
+
+That is about 36 lines.
+
+## The game and the format
+
+This is dialogue for a single-player D&D Curse of Strahd game. Plain text only (no JSON, no markdown tables), nodes under `~ name`, one line per row as `Speaker [mood]: Text`, party option rows as `* option text -> node_name` (the player's character speaks, first person, short, under 14 words, no skill checks), ASCII only (straight quotes and apostrophes, no accents or fancy dashes, no em-dash: use a comma or a full stop), 1-2 sentences a line, nothing over about 28 words, no placeholders like {name}. Moods allowed: [smile], [angry], [afraid], [sad], [sly], [weary]; most lines carry none. Reply with the nodes below only, in the order given, no commentary. Finish without sending messages to anyone else.
+
+## Who they are
+
+KASIMIR VELIKOV: one of the last dusk elves in the valley, grave, soft-spoken, formal, with long patience and a self-mockery so dry it reads as sorrow; he never hurries. His people came to the valley as the vampire lord Strahd's guests and stayed as his tenants. His sister Patrina went up to the castle of her own will to learn what its lord knew; their own people stoned her for it, and Kasimir stood at the back with empty hands and did nothing, for three hundred years. He has lodged with the Vistani, mending a net he never casts. He believed a sealed temple of amber in the northern mountains could bring her back. Pet turns: "I am poor company. I have been poor company for a very long time." "The songs were written before the ending. They usually are." He never names Strahd ("the lord of the castle", "the count", "him").
+Where the story stands for the nodes below (the node says which): either he made the bargain at the temple (he gave every year he had left but one and Patrina was restored, and she walked barefoot through the snow toward the castle and did not wait for him; he counts his last year), or Patrina was laid to rest at peace (and he made his peace).
+Some of his existing lines, so you hear him (do NOT repeat them): "Patrina walked up these stairs of her own will. I stood at the back the day they stoned her for it. I am done standing at the back." / "Every morning I wake and count. The number is smaller. I would not take the bargain back. I would like to stop counting." / "She didn't wait. Of course she didn't wait. She never once waited for me." / "Then I will be brave once, and late. Take it." / "I think of her less as a wound now, and more as a name. It is a strange relief. I do not trust it yet." / "One year. It is strange, how much longer a year feels when you can count it." / "My people came over this pass as the count's guests. They are still his guests. It is the longest visit in the history of the world."
+STRAHD: courteous, patient, amused host; never raises his voice; never threatens in these lines; a host's courtesy that is also a knife.
+NARRATOR: old gothic storyteller, second person or plain scene description, present tense, one or two sentences, concrete senses, never cruel.
+
+## Canon limits
+
+No new named characters. Real names you may use: Kasimir, Patrina (his sister), Strahd only as a speaker label, Castle Ravenloft, the Amber Temple, Vallaki and the Vistani camp, Madam Eva. Do not name Strahd in a line. Do not invent other names, numbers, places or history. Do not show or describe Patrina alive on stage (she is "upstairs", "in the castle"). No quest hints, no directions, no promises. No dice or skill checks.

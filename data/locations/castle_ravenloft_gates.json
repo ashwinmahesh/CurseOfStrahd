@@ -333,7 +333,10 @@
       ],
       "kind": "examine",
       "label": "The edge of the chasm",
-      "model": "boulder"
+      "model": "boulder",
+      "call": "allies/kasimir_castle:gates_road",
+      "approach": 6,
+      "call_when": "guest:kasimir_velikov and flag.kasimir_bargain == \"made\" and not flag.kasimir_at_gates"
     },
     {
       "id": "crg_dead_pine_1",
@@ -1062,6 +1065,15 @@
       ],
       "pause": 4,
       "steps_aside": true
+    },
+    {
+      "npc": "kasimir_velikov",
+      "cell": [
+        16,
+        30
+      ],
+      "dialogue": "allies/kasimir_castle:gates",
+      "when": "flag.kasimir_at_gates and not guest:kasimir_velikov"
     }
   ]
 }

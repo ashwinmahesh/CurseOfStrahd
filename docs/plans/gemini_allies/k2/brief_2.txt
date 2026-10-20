@@ -1,0 +1,27 @@
+I need drafted dialogue for three short camp scenes with Kasimir Velikov. The party is a group of adventurers the player controls.
+
+# Part B: three camp talks
+
+When the party makes camp and rests for the night, Kasimir (travelling with the party as an ally) sometimes asks for a word by the fire: a short scene, played once. Each scene's shape: a node named for the scene: Narrator x1 (the fire and what he is doing, one or two sentences), then Kasimir x2 (his opening), then two party option rows (the player's character speaks, first person, short, under 14 words); then two reply nodes, named `<scene>_a` and `<scene>_b`, each Kasimir x2 or x1. The scene ends after the reply (do not write `-> END`).
+
+1. castle_eve: the night before the party goes to Castle Ravenloft. Whatever happened to his sister, she is in or under that castle. He talks about the day they stoned her (the stones, the hands, the quiet after; he stood at the back) in one precise, unhurried image, and says what he would like to say to the count's face and knows he will not. Options: "You do not have to say anything to him." / "Then say it to us."
+2. counting: he made the bargain at the temple (every year but one), and Patrina walked ahead of him. This is how he spends the nights now: counting what is left on the net's knots; what a year weighs now that he can count it; the strange freedom in it. No self-pity. Options: "Do you regret it?" / "What will you do with the year?"
+3. peace: he made his peace with his sister's spirit at the temple (she was laid to rest, or he said what he owed her). A different night: he sleeps; the net lies unmended; he does not trust the quiet yet. Options: "Is it strange, being at peace?" / "What will you do after?"
+
+Do not repeat his existing lines. About 22 lines.
+
+## The game and the format
+
+This is dialogue for a single-player D&D Curse of Strahd game. Plain text only (no JSON, no markdown tables), nodes under `~ name`, one line per row as `Speaker [mood]: Text`, party option rows as `* option text -> node_name` (the player's character speaks, first person, short, under 14 words, no skill checks), ASCII only (straight quotes and apostrophes, no accents or fancy dashes, no em-dash: use a comma or a full stop), 1-2 sentences a line, nothing over about 28 words, no placeholders like {name}. Moods allowed: [smile], [angry], [afraid], [sad], [sly], [weary]; most lines carry none. Reply with the nodes below only, in the order given, no commentary. Finish without sending messages to anyone else.
+
+## Who they are
+
+KASIMIR VELIKOV: one of the last dusk elves in the valley, grave, soft-spoken, formal, with long patience and a self-mockery so dry it reads as sorrow; he never hurries. His people came to the valley as the vampire lord Strahd's guests and stayed as his tenants. His sister Patrina went up to the castle of her own will to learn what its lord knew; their own people stoned her for it, and Kasimir stood at the back with empty hands and did nothing, for three hundred years. He has lodged with the Vistani, mending a net he never casts. He believed a sealed temple of amber in the northern mountains could bring her back. Pet turns: "I am poor company. I have been poor company for a very long time." "The songs were written before the ending. They usually are." He never names Strahd ("the lord of the castle", "the count", "him").
+Where the story stands for the nodes below (the node says which): either he made the bargain at the temple (he gave every year he had left but one and Patrina was restored, and she walked barefoot through the snow toward the castle and did not wait for him; he counts his last year), or Patrina was laid to rest at peace (and he made his peace).
+Some of his existing lines, so you hear him (do NOT repeat them): "Patrina walked up these stairs of her own will. I stood at the back the day they stoned her for it. I am done standing at the back." / "Every morning I wake and count. The number is smaller. I would not take the bargain back. I would like to stop counting." / "She didn't wait. Of course she didn't wait. She never once waited for me." / "Then I will be brave once, and late. Take it." / "I think of her less as a wound now, and more as a name. It is a strange relief. I do not trust it yet." / "One year. It is strange, how much longer a year feels when you can count it." / "My people came over this pass as the count's guests. They are still his guests. It is the longest visit in the history of the world."
+STRAHD: courteous, patient, amused host; never raises his voice; never threatens in these lines; a host's courtesy that is also a knife.
+NARRATOR: old gothic storyteller, second person or plain scene description, present tense, one or two sentences, concrete senses, never cruel.
+
+## Canon limits
+
+No new named characters. Real names you may use: Kasimir, Patrina (his sister), Strahd only as a speaker label, Castle Ravenloft, the Amber Temple, Vallaki and the Vistani camp, Madam Eva. Do not name Strahd in a line. Do not invent other names, numbers, places or history. Do not show or describe Patrina alive on stage (she is "upstairs", "in the castle"). No quest hints, no directions, no promises. No dice or skill checks.

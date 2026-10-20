@@ -1,0 +1,73 @@
+# Kasimir Velikov's camp talks (Story Allies Presence Plan, package K2; story/camp_talk.gd, docs/story/camp.md "Guests ask too",
+# docs/story/kasimir_castle.md, docs/voice/kasimir_velikov.md). He travels with the party as a guest (the Tarokka's Seer, or because
+# the party asked him along to the temple), and after a Long Rest he sometimes asks for a word by the fire. Each talk plays once and the
+# file offers the first one whose condition holds, so the later part of the story comes first: the night before the castle, his last year
+# counted on a net's knots (the bargain), and the quiet after his sister was laid to rest. Nothing rolls and nothing changes: no flag is
+# set. The drafts are Gemini's (docs/plans/gemini_allies/k2/), edited; every line is unvoiced.
+
+~ talk_castle_eve
+if guest:kasimir_velikov and level >= 9 and not visited:castle_ravenloft_gates
+-> castle_eve
+endif
+-> END
+
+~ castle_eve
+Narrator: The campfire burns down to red ash in the dark below Castle Ravenloft. Kasimir sits with his empty hands open to the heat.
+Kasimir: The day my people stoned Patrina, they wiped the gray dust from their palms afterward in complete silence. I stood at the back, and my hands were the only clean ones in the clearing.
+Kasimir [weary]: I have rehearsed a speech for the count's face about the debt he owes our house. When the doors open tomorrow, I know I will not say a word of it.
+* You do not have to say anything to him. -> castle_eve_a
+* Then say it to us. -> castle_eve_b
+
+~ castle_eve_a
+Kasimir: No, words are only another way to stand at the back and wait. He has listened to men speak for centuries, and it has never once spoiled his evening.
+Kasimir: Better to bring a steady hand into his house than another speech.
+-> END
+
+~ castle_eve_b
+Kasimir [sad]: I would tell him that he took a scholar who wanted his books and left us a grave we had to dig ourselves. Look how small it sounds in the open air.
+Kasimir: I am glad I said it here, by your fire, instead of at his table.
+-> END
+
+~ talk_counting
+if guest:kasimir_velikov and flag.kasimir_bargain == "made"
+-> counting
+endif
+-> END
+
+~ counting
+Narrator: Firelight catches the hemp cord draped across Kasimir's knees. He moves his thumb from knot to knot, unhurried and precise.
+Kasimir: At the Amber Temple I traded away all but a year of my life for Patrina's breath, and she walked ahead into the snow without looking back. Now I tie a knot in this old net for each night that remains.
+Kasimir: A year has an astonishing weight when you can hold the whole of it in two hands. There is a strange freedom in knowing the exact measure of the rope.
+* Do you regret it? -> counting_a
+* What will you do with the year? -> counting_b
+
+~ counting_a
+Kasimir: Regret is a luxury for men who still have centuries to waste by a Vistani wagon. My sister is out of the dark, and the price was only the time I had failed to use.
+Kasimir [smile]: I am a poor merchant, perhaps, but I am satisfied with the trade.
+-> END
+
+~ counting_b
+Kasimir: First, find my sister, and learn what she has made of her second life. After that I may cast this net into a real river, just to see if it holds water.
+-> END
+
+~ talk_peace
+if guest:kasimir_velikov and (flag.kasimir_at_peace or flag.patrina_fate == "rest")
+-> peace
+endif
+-> END
+
+~ peace
+Narrator: The old net lies folded and unmended beside Kasimir's pack as the embers settle. He sits with his cloak drawn up, watching the sparks rise into the pines.
+Kasimir: For the first time since the stones fell on Patrina, I slept through the night without waking to her voice. We said what was owed at the Amber Temple, and she is finally still.
+Kasimir [weary]: The silence in my head is very wide, and I do not quite trust the quiet yet. A man who carries a stone for an age walks crookedly when he sets it down.
+* Is it strange, being at peace? -> peace_a
+* What will you do after? -> peace_b
+
+~ peace_a
+Kasimir: It feels like stepping out of the Vistani tents into snow that has fallen all night. Everything is clean, and none of the old landmarks are where I left them.
+-> END
+
+~ peace_b
+Kasimir: Finish our business with the lord of the castle, if the morning lets us. Then I think I will leave this net by the water and learn what my hands are for when they are not mending.
+Kasimir [smile]: I am a little late to begin a life, I know, but I have never been a hurried man.
+-> END
