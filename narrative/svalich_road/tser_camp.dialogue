@@ -162,9 +162,17 @@ Nelu: I sing now, when anything calls from the trees. Badly, on purpose. Things 
 
 ~ dog
 Narrator: The camp dog noses at your pack, finds nothing worth stealing, and wanders back to the fire to wait for Dorina to drop something.
+* [if not flag.eggs_dog_tser] (Pet the dog.) -> dog_pet
 * [if spell:speak_with_animals] Ask the dog what's new in the camp. -> dog_speaks
 * [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the dog what's new in the camp.) -> dog_cast
-* [if spell:speak_with_animals or knows:speak_with_animals] Let it get back to the pot. -> END
+* [if spell:speak_with_animals or knows:speak_with_animals or not flag.eggs_dog_tser] Let it get back to the pot. -> END
+-> END
+
+# A good dog (easter-egg plan R2, docs/story/eggs.md). Drafted by Gemini through the ai-bridge and edited
+# (docs/plans/gemini_eggs/r2/); unvoiced.
+~ dog_pet
+set eggs_dog_tser
+Narrator: You scratch behind a burr-tangled ear, and the camp's common thief licks your wrist with grease-warm gratitude. It loves your hand well enough, as long as the hand isn't between it and the pot.
 -> END
 
 ~ dog_cast
@@ -213,3 +221,45 @@ Petru: A blade nobody can sharpen? No. There is only iron nobody has been patien
 Petru: Give me a stone, a bucket of tallow, and an hour without anyone talking to me.
 Narrator: Petru looks for a long moment at the sword at your hip, then raises his dark eyes to your face.
 -> petru
+
+# --- The owl on the stage rail -------------------------------------------------------------------------------------
+# A wink (easter-egg plan R2, docs/story/eggs.md). Drafted by Gemini through the ai-bridge and edited
+# (docs/plans/gemini_eggs/r2/); unvoiced.
+~ owl
+if flag.eggs_owl_uncapped
+Narrator: The barn owl sits bareheaded on the stage rail now, the little bear-fur cap hung on a nail beside the chalked sign. It ignores you magnificently.
+else
+Narrator: On the pine rail of the stage sits a barn owl, its head tied up in a scrap of bear fur with two stitched felt ears. Below it, in a child's chalk: OWLBEAR. DO NOT FEED.
+endif
+-> owl_menu
+
+~ owl_menu
+* [if not flag.eggs_owl_uncapped] [Animal Handling DC 12] (Ease the cap off.) -> owl_cap | owl_keeps
+* [if spell:speak_with_animals and not flag.eggs_owl_heard] Ask the owl how it likes being a bear. -> owl_speaks
+* [if not spell:speak_with_animals and not flag.eggs_owl_heard] [knows:speak_with_animals] (Cast Speak with Animals, and ask the owl how it likes being a bear.) -> owl_cast
+* (Leave it be.) -> END
+
+~ owl_cap
+set eggs_owl_uncapped
+Narrator: The cap slides off the white head. The owl shakes out its flattened crown and studies you through one amber eye, as if weighing an insult.
+approve thistle +1 wren_featherfoot +1: You took the bear cap off the owl at Tser Pool
+-> owl_menu
+
+~ owl_keeps
+Narrator: With a sharp clack of its bill, the owl hunches deeper into the bear fur and dares your fingers to come nearer.
+-> owl_menu
+
+~ owl_cast
+cast speak_with_animals
+if check.last
+-> owl_speaks
+endif
+-> owl_menu
+
+# Speak with Animals (2024 PHB): an owl knows it is an owl.
+~ owl_speaks
+set eggs_owl_heard
+Narrator: "The small ones call me the big claw-beast, though any field mouse knows my shadow," the owl says. "The mice were never fooled by the dead ears."
+Narrator: "Still, the small ones have gentle hands and bring me fat scraps, and the night wind can't bite through fur."
+-> owl_menu
+

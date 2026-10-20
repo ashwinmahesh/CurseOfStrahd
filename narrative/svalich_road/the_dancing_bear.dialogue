@@ -57,10 +57,19 @@ quest the_dancing_bear done
 if flag.bujor_home
 Narrator: Bujor is already on the stage when you come into the camp, and under the planks a bear cub is asleep with its bad leg bound in a rag. Lavinia has both arms round Bujor's neck and won't let go.
 Lavinia: You brought me two. Two! I'll teach the little one the slow steps first. Then the turns. Then I'll teach her to break chains, apparently.
+# A wink (easter-egg plan R2): a druid a little too fond of the bear. Gemini draft, edited (docs/plans/gemini_eggs/r2/).
+interject class:druid: If the planks can bear two of us, I could put on the pelt and take the second turn beside him. He has a very fine shoulder for a waltz.
+if class:druid
+Lavinia [smile]: Hold your pelt, friend. I'm still his first partner on these planks. Bring honey, and he might let you cut in.
+endif
 approve wren_featherfoot +2 ratatoille +1 godrick_pendlebrook +1: You brought Lavinia's bear home, and the cub with him
 else
 Narrator: Lavinia listens to the end without a word, turning the broken chain over in her hands.
 Lavinia: He went into the den with it. (She laughs and cries at once.) Then he was always a better dancer than me. He knew when the dance was over.
+interject class:druid: Come the first frost, I might borrow four paws and call on him in the den. A bear ought to have company that understands the winter.
+if class:druid
+Lavinia: Give the old fool a cuff behind the ear from me if you do. And mind your manners at the door; it's his roof now, not mine.
+endif
 approve thistle +3 liriel_dawnsong +1 wren_featherfoot +1: You let Lavinia's bear go back to the woods with the cub
 endif
 Lavinia: Here. My grandmother's fan. She danced for a prince with it, the night before he died, and she said it was the best thing she ever did with her hands. It throws a wind, if you snap it right.

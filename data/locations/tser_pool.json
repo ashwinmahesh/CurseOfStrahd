@@ -1100,6 +1100,16 @@
       "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
     },
     {
+      "npc": "tser_owl",
+      "cell": [
+        31,
+        15
+      ],
+      "dialogue": "svalich_road/tser_camp:owl",
+      "facing": "south",
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
+    },
+    {
       "npc": "tser_nelu",
       "cell": [
         37,

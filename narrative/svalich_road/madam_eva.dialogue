@@ -498,6 +498,13 @@ Madam Eva [sad]: You again. The camp is empty because of you, and the cards stil
 else
 Madam Eva [sly]: Back again. The cards haven't changed their minds. I might have.
 endif
+# A wink (easter-egg plan R2): a name worn thin by a great many travellers before. Gemini draft, edited
+# (docs/plans/gemini_eggs/r2/); unvoiced.
+if hero_named:tav and not flag.eggs_eva_name
+set eggs_eva_name
+Madam Eva [sly]: That short name one of you carries is worn so thin by old hands I can nearly see the fire through it.
+Madam Eva: The mists don't mind what you are called. That will do.
+endif
 -> again_menu
 
 ~ again_menu

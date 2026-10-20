@@ -1,0 +1,35 @@
+{
+  "region": "eggs_svalich",
+  "flags": [
+    {
+      "id": "eggs_dog_tser",
+      "type": "bool",
+      "summary": "The party petted the Tser Pool camp dog (svalich_road/tser_camp:dog_pet). One of the five good-dog marks the hidden Good Dogs, All achievement reads."
+    },
+    {
+      "id": "eggs_owl_uncapped",
+      "type": "bool",
+      "summary": "Someone eased the bear-fur cap off the barn owl on the Tser Pool stage rail (svalich_road/tser_camp:owl_cap)."
+    },
+    {
+      "id": "eggs_owl_heard",
+      "type": "bool",
+      "summary": "The party asked the Tser Pool owl, through Speak with Animals, how it likes being a bear (tser_camp:owl_speaks)."
+    },
+    {
+      "id": "eggs_fennimore_pocket",
+      "type": "bool",
+      "summary": "Fennimore showed the party the research assistant in his breast pocket (svalich_road/fennimore:pocket)."
+    },
+    {
+      "id": "eggs_rival_guide_given",
+      "type": "bool",
+      "summary": "Fennimore gave the party his annotated copy of his rival's monster guide (svalich_road/fennimore:rival)."
+    },
+    {
+      "id": "eggs_eva_name",
+      "type": "bool",
+      "summary": "Madam Eva remarked, once, on a custom hero named Tav (svalich_road/madam_eva:again)."
+    }
+  ]
+}

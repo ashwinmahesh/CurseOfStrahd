@@ -1,0 +1,19 @@
+{
+  "id": "tser_owl",
+  "name": "A Barn Owl",
+  "title": "In a Bearskin Cap",
+  "summary": "A barn owl the Tser Pool camp's children have dressed in a little cap of bear fur with two felt ears, and labelled OWLBEAR in chalk. It puts up with it, mostly.",
+  "portrait": "owl",
+  "sprite": "owl",
+  "attitude": "indifferent",
+  "monster": "owl",
+  "guest": false,
+  "tags": [
+    "animal",
+    "beast",
+    "tser_pool"
+  ],
+  "region": "svalich_road",
+  "pronouns": "it/its",
+  "pockets": false
+}

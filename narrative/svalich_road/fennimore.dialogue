@@ -31,6 +31,8 @@ Fennimore: Tell me, have you by any chance come up from the Vistani camp at Tser
 * [ends:radus_unsellable_horse if flag.dinte_led and (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)] [if quest.radus_unsellable_horse == offered] There is a horse for sale at the Tser Pool camp. -> svalich_road/radus_horse:fennimore_horse
 * [ends:radus_unsellable_horse] [if quest.radus_unsellable_horse == buyer_found and (flag.tser_pool_brawl_won or flag.vistani_turned_hostile)] Radu's camp has turned on us, so there is no one left to pay his fifteen gold. -> svalich_road/radus_horse:camp_unpaid
 * [if quest.dumitrus_visitor == asked] A boy at Krezk's gate would like a visitor. -> krezk/dumitrus_visitor:fennimore_ask
+* [if not flag.eggs_fennimore_pocket] What's moving in your coat? -> pocket
+* [if quest.fennimores_guide and not flag.eggs_rival_guide_given] Have you any rivals in the guidebook trade? -> rival
 * Goodbye. -> END
 
 ~ book
@@ -108,3 +110,37 @@ Fennimore: You will understand that I cannot pay ten gold pieces for a question 
 Fennimore: Let me strike a star from the Tser Pool entry and write "presently closed to inquiries" beneath it.
 Fennimore [sad]: It is a pity, all the same: a sixty-year broth deserves better than a guess from the road.
 -> menu
+
+# --- Two winks (easter-egg plan R2, docs/story/eggs.md): his research assistant, and his rival ----------------------
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r2/); unvoiced.
+
+~ pocket
+set eggs_fennimore_pocket
+Fennimore [smile]: My research assistant, who has lived in my left breast pocket since the fog closed behind me. Or possibly since the Tuesday after.
+Fennimore: He samples the tavern bread before I risk my teeth. If he refuses a crust, I deduct two stars on principle.
+* [if spell:speak_with_animals] Ask the assistant what he makes of the valley. -> pocket_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the assistant what he makes of the valley.) -> pocket_cast
+* (Leave the assistant to his work.) -> menu
+
+~ pocket_cast
+cast speak_with_animals
+if check.last
+-> pocket_speaks
+endif
+-> menu
+
+# Speak with Animals (2024 PHB): a hamster with a very high opinion of itself.
+~ pocket_speaks
+Narrator: The scrap of fur plants both paws on the pocket seam and bares two yellow teeth. "In my true den above the sky-roof I am taller than the tall-trees, and the wolves run under my belly like beetles. This smallness is a brief inconvenience."
+Narrator: "Meanwhile, tell your pack: the wet shiny parts in the face. Those first. Always those first."
+interject name:wren_featherfoot: Easy. Pocket-sized terror wants us to start with the peepers. I'll allow it.
+-> menu
+
+~ rival
+set eggs_rival_guide_given
+Fennimore [angry]: There is one. A charlatan with one glass eye and no shame whatsoever, whose monster book outsells mine ten to one on the strength of pure invention.
+Fennimore [weary]: He has never stood in the same county as half the beasts he describes. On page forty-two he claims the owlbear is affectionate if scratched behind the beak.
+Fennimore [sad]: Take my copy, please, before I wear the margins through with pencil.
+give rival_monster_guide
+-> menu
+

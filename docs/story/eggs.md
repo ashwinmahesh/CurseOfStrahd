@@ -84,4 +84,20 @@ and `eggs_spade_first` in `data/flags/world_checks.json`.
 - **The patient spade, hole 1 of 3.** Earth stamped flat beside the far charcoal mound in the Charcoal-Burners' Hollow
   (`hollow_stamped_earth`); with a shovel in the party, `hollow_dig` (Athletics DC 8) turns up a dead pedlar's tin, 15
   gp and his note, which points on to the lake's reedy inlet. Holes 2 and 3 are R5's, and so is Patient Spade.
+## R2: Tser Pool and the Svalich road
+
+Gemini record and notes: `docs/plans/gemini_eggs/r2/README.md`. Test: `tests/integration/test_eggs_svalich.gd`. Flags:
+`data/flags/eggs_svalich.json`. Item: `rival_monster_guide`. NPC: `tser_owl`.
+
+- **The Tser Pool dog** (`tser_camp:dog_pet`), one of the five good dogs.
+- **The owlbear at Tser Pool.** The camp's children have put a barn owl on the stage rail in a bear-fur cap, under a
+  chalk sign: OWLBEAR. DO NOT FEED. Animal Handling DC 12 eases the cap off (Thistle and Wren approve); with Speak with
+  Animals it says what it thinks of being a bear.
+- **Bujor's admirer.** A druid at the end of The Dancing Bear offers to dance the bear's part, or to visit him in the
+  den in a bear's shape, and Lavinia answers.
+- **Fennimore's research assistant** lives in his breast pocket and, with Speak with Animals, insists it is enormous
+  where it comes from and has one piece of battle advice, about faces.
+- **The other fellow's guide.** Once his own guidebook is started, Fennimore rants about a rival with one glass eye and
+  gives the party the rival's best-selling monster guide, furiously annotated.
+- **A borrowed name.** On a visit after the reading, Madam Eva remarks once on a hero named Tav (`hero_named:tav`).
 

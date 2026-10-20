@@ -1,0 +1,13 @@
+{
+  "id": "rival_monster_guide",
+  "name": "A Gentleman's Compendium of Amiable Beasts",
+  "source": {
+    "book": "custom",
+    "note": "Fennimore's copy of his rival's monster guide (easter-egg plan R2); ours."
+  },
+  "category": "gear",
+  "weight_lb": 2,
+  "cost_gp": 2,
+  "summary": "A best-selling guide to monsters by an author with one glass eye, annotated throughout in a furious pencil.",
+  "text": "The owlbear page calls the creature affectionate if scratched behind the beak. In the margin, in pencil: \"Affectionate?! It tore the boots off a mule in three seconds. Zero stars. A.F.\" Further on, beside the swamp hags: \"Pure hearsay, no field measurements, prose like warm suet. How is this in a fourth printing? A.F.\""
+}
