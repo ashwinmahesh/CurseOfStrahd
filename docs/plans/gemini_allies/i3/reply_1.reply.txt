@@ -1,0 +1,68 @@
+~ courier_vallaki
+Narrator: A carter's boy flags you down along the muddy ruts from Vallaki, wiping rain from his chin. He presses a folded square of stiff paper into your hand.
+
+~ courier_krezk
+Narrator: A grey-cloaked pilgrim coming down the steep track from Krezk stops beside you without a word. From inside his sleeve, he draws a small letter sealed in tallow.
+
+~ courier_mansion
+Narrator: A village child in a coat three sizes too large waits by the roadside milestone. She holds out a neat, folded note that smells faintly of old cedar.
+
+~ letter_festival
+Ireena: The carters cannot stop talking about the festival in Vallaki, though half of them change the story at every milepost. I assume your boots were somewhere near the ash.
+Ireena [weary]: I have mended every cuff I own twice over waiting for a proper account of it.
+
+~ festival_baron
+Ireena: They say the Baron still sits in his chair, and the townsfolk are smiling again at the point of a pike.
+
+~ festival_wachter
+Ireena [angry]: Word reaches me that the bunting is down and Lady Wachter keeps the town now, quite openly, for the devil.
+
+~ festival_neither
+Ireena: Travellers say no lord rules by decree there now, and only Father Lucian and Urwin Martikov keep the peace.
+
+~ letter_abbot
+Ireena: The pilgrims say bats circle the high wall every night now, thick as chimney smoke against the clouds. Strange to hear that none of them ever drop inside.
+Ireena [afraid]: I do not like mysteries that keep regular hours, and I like them less when they belong to our visitor.
+Ireena: The shutters here are well kept, and I have quite run out of excuses to check the latches.
+
+~ letter_den
+Ireena: Drovers on the road are swearing that the business at the werewolf den in the hills is finally settled. Nobody seems to know the whole truth of it, which tells me you were involved.
+Ireena: You might have sent word yourself instead of letting me hear it over a turnip cart.
+
+~ den_emil
+Ireena: They say the pack has a new leader who keeps his teeth to the high timber and leaves the farms alone.
+
+~ den_kiril
+Ireena [weary]: Word is the old pack leader still runs the ridges and hunts at the castle's pleasure.
+
+~ den_none
+Ireena: The shepherds claim both pack leaders are dead in the dirt and the rest have scattered into the mist.
+
+~ letter_beacon
+Ireena: Every peddler on the road has seen the white light burning above Argynvostholt. They say the mountain wind batters the ridge all night and the flame never wavers.
+Ireena [smile]: It is a fine thing to hear of a light in this valley that the devil cannot blow out.
+Ireena: Come and tell me who lit it before the gossips ruin the story.
+
+~ letter_wine
+Ireena: The carts are rolling down from the Wizard of Wines again, and a driver left a single cask by the door with no note. Father bought one from that hill every year for my name day.
+Ireena [sad]: Father would want it done properly, and I refuse to drink good vintage alone with the panelling.
+Ireena: Bring yourselves back before I am forced to share it with people who do not know its worth.
+
+~ letter_dinner
+Ireena [angry]: A Vistani girl told me you sat at the devil's own table and ate off his silver. I am not made of glass, so you need not spare me the details.
+Ireena: I only want to know whether any of you had the sense to count the spoons before you left.
+Ireena: You owe me the whole story, told plainly, at a table that does not belong to him.
+
+~ after_keep
+Narrator: You refold the stiff paper along its sharp creases and tuck it dry inside your pack.
+
+~ after_tell
+Narrator: You tell the messenger you will come as soon as the road allows, and with a quiet nod, the figure turns back into the mist.
+
+~ cold_two
+Ireena [angry]: Two letters I sent down that road, and not so much as a scrap of charcoal by way of a reply. I was beginning to think you had forgotten how to read my hand.
+Ireena [weary]: Sit down and take your cloaks off before you drip all over the floorboards.
+
+~ cold_three
+Ireena [angry]: Three letters. I was starting to write the fourth to your graves.
+Ireena [sad]: Say it plainly if you mean to vanish again, because I am tired of listening for boots at the gate.

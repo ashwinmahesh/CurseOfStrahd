@@ -1,0 +1,24 @@
+~ strahd_silence_intro
+Narrator: Hooves splash through the ruts behind you, and a rider in bright scarves tosses a folded page into your hands without slowing. The seal is heavy black wax, stamped with a single sharp Z.
+
+~ strahd_silence
+Strahd: You are poor correspondents, my friends, though I suppose the road leaves little time for those who wait. She asks after you still, though rather less than she did.
+Strahd [sad]: A friend's silence is an easy thing to carry on a journey. It weighs a great deal more in a quiet room.
+
+~ strahd_silence_inn
+Strahd [smile]: The innkeeper's house has so many windows, and he is forever watching the sky for birds, yet none of them have brought her a single word from you.
+
+~ strahd_silence_church
+Strahd [smile]: I cannot cross the threshold where the old bell hangs, of course, so I must listen from the street as she prays for friends who do not write.
+
+~ strahd_silence_krezk
+Strahd: Even behind that high wall and its stubborn gate, beside a pool that refuses to freeze, the winter of your neglect reaches her quite easily.
+
+~ strahd_silence_mansion
+Strahd [smile]: She sits behind her father's shutters now, and I remember the porch well, though I am far too polite to knock until I am asked.
+
+~ strahd_silence_burn
+Narrator: You feed the heavy parchment to the flame, watching the edges curl into grey ash. The black wax does not melt so much as uncoil, dripping into the dirt like a dark, slow vein.
+
+~ strahd_silence_keep
+Narrator: You fold the stiff paper away inside your coat. Against your fingers, the black wax and its sunken Z hold the faint, lingering heat of a living hand.

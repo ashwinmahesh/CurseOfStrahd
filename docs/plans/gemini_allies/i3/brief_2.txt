@@ -1,0 +1,30 @@
+One more small group for the same game, same rules and format as before (plain text only, nodes under `~ name`, one line per row as `Speaker [mood]: Text`, ASCII only, 1-2 sentences a line, nothing over about 28 words, no placeholders). Finish without sending messages to anyone else.
+
+## The situation
+
+Ireena has written to the party three times and had no answer; she shelters somewhere and they have not visited. Strahd, the vampire lord of the valley, hears of everything. A rider in Vistani colours finds the party on the road and hands over a letter sealed in black wax with one letter pressed in it, a Z. He writes the way he always writes to the party: courteous, amused, patient, never a threat; he is a host who has learned something and is delighted to share it. He never names Ireena's fears. He does not say he will hurt anyone. His cruelty is that he is kind about it, and that he knows exactly which window and which wall.
+
+Strahd's earlier letters (do NOT repeat these): "My dear guests. Forgive a host for writing when he might call. My nights are spoken for, and my days are not my own." / "You have put Ireena behind a wall and a door. I have always admired walls. They tell me exactly where to look." / "You have left Ireena with a priest and his saint. How touching. Saints are so rarely at home." / "Go where you like. Every road is mine, and every door you knock on opens on a house that pays me rent."
+
+## Nodes to write
+
+strahd_silence_intro: Narrator x1: the rider, the black wax, the Z (one or two sentences; it must not repeat the first letter's wording "A rider in Vistani colours reins in beside you, holds out a letter sealed in black wax, and is gone back up the road before anyone can ask who sent it."; find a different way in).
+strahd_silence: Strahd x2: the common body of the letter. It must contain the thought "She asks after you. Less than she did." in some form, and the idea that the silence of a friend costs the one who stays behind far more than it costs the one who left.
+Then ONE line for where she is, Strahd x1 each:
+- strahd_silence_inn: she is at the Blue Water Inn in Vallaki (he knows the innkeeper counts the sky for birds; do not reveal the innkeeper's secret; just a courteous remark about a house with many windows).
+- strahd_silence_church: she is at St. Andral's church in Vallaki (the bell, holy ground; he cannot come in; he is amused by it).
+- strahd_silence_krezk: she is behind Krezk's wall (the wall, the gate, the pool that never freezes, which he finds amusing; do not mention the pool's meaning).
+- strahd_silence_mansion: she is at her father's mansion in the village of Barovia (the shutters, the porch, the way he was once asked, very politely, to be let in).
+strahd_silence_burn: Narrator x1: the party burns the letter; the wax runs like something alive (the first letter used almost exactly that, so say it differently).
+strahd_silence_keep: Narrator x1: the party keeps the letter; the Z in the wax is warm to the touch.
+
+That is 10 lines.
+
+## Voice reminders
+
+STRAHD: courteous, patient, amused, formal; never raises his voice; speaks as a host and landlord; slow sentences with a turn at the end. Moods allowed: [smile], [sad]; most lines carry none.
+NARRATOR: old gothic storyteller, second person, present tense, one or two sentences, the second a turn; concrete senses; never cruel; no game terms.
+
+## Canon limits
+
+Do not name Ireena's secret (that some nights she wants the window open) or anything of Tatyana or Sergei. Do not name any other character except the innkeeper's house, the church and the priest in the most general terms. Do not invent history, numbers, places or names. He does not threaten; he regrets, in a way that is worse. No quest information or hints of where to go.

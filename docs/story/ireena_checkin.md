@@ -44,7 +44,8 @@ touched; the hub jumps to them.
    goodbye option and `bye` falls through to `END`.
 
 I2 to I5 add their options at the marked line in `menu_show` (her asks, the Strahd letters as a topic) and their counters
-in `checkin` (`ireena_letters_unanswered` is reset there by I3).
+in `checkin` (`ireena_letters_unanswered` is reset there by I3, which also opens the check-in cold when two or three
+letters went unanswered: docs/story/ireena_letters.md).
 
 ## Rules it keeps
 

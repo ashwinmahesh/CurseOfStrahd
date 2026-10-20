@@ -9,7 +9,7 @@
     {
       "id": "ireena_trust",
       "type": "int",
-      "summary": "How far Ireena trusts the party, a side counter that starts at 0. I1 adds 1 the first time the party checks in on her at each place (the inn, St. Andral's, Krezk, the mansion, the road). I2 adds 1 for the sprig laid and told, each sword lesson that lands, the pool-and-statue story told (What He Wants With Me) and the third letter's secret. Only her own new lines, the finale and the epilogues may read it; it never moves a story flag."
+      "summary": "How far Ireena trusts the party, a side counter that starts at 0. I1 adds 1 the first time the party checks in on her at each place (the inn, St. Andral's, Krezk, the mansion, the road). I2 adds 1 for the sprig laid and told, each sword lesson that lands, the pool-and-statue story told (What He Wants With Me) and the third letter's secret; I3 takes 1 away once, when Strahd writes to the party about three of her letters left unanswered. Only her own new lines, the finale and the epilogues may read it; it never moves a story flag."
     },
     {
       "id": "ireena_news_now",
@@ -310,6 +310,56 @@
       "id": "ireena_secret_shared",
       "type": "bool",
       "summary": "The party saw through Ireena over the third letter (Insight) and she told them her secret: some nights she wants to lift the latch. She asked them to stop her. Adds 1 to ireena_trust; the finale and her epilogues read it."
+    },
+    {
+      "id": "ireena_letters_sent",
+      "type": "int",
+      "summary": "How many letters Ireena has sent the party by courier while she sheltered elsewhere (data/visits/ireena.json, narrative/allies/ireena_letters:letter), at most six. No story reads it (Story Allies Presence Plan, package I3)."
+    },
+    {
+      "id": "ireena_letters_unanswered",
+      "type": "int",
+      "summary": "How many of Ireena's letters have gone without a visit: each letter adds one, and any check-in with her (narrative/allies/ireena:checkin) sets it back to 0. Letters stop coming at three; at two or more her next check-in opens cold, and at three Strahd writes to the party about her. Never moves a story flag."
+    },
+    {
+      "id": "ireena_cold_now",
+      "type": "int",
+      "summary": "How cold Ireena opens this check-in: 0, or the number of unanswered letters (2 or 3) the check-in found. Set at the start of every check-in (narrative/allies/ireena:checkin) before the count is cleared; no story reads it."
+    },
+    {
+      "id": "ireena_sent_festival",
+      "type": "bool",
+      "summary": "Ireena's letter about the festival's end in Vallaki has been delivered (allies/ireena_letters:letter_festival)."
+    },
+    {
+      "id": "ireena_sent_abbot",
+      "type": "bool",
+      "summary": "Ireena's letter about the bats circling Krezk's wall has been delivered (allies/ireena_letters:letter_abbot)."
+    },
+    {
+      "id": "ireena_sent_den",
+      "type": "bool",
+      "summary": "Ireena's letter about the werewolf den's end has been delivered (allies/ireena_letters:letter_den)."
+    },
+    {
+      "id": "ireena_sent_wine",
+      "type": "bool",
+      "summary": "Ireena's letter about the winery's wine flowing again has been delivered (allies/ireena_letters:letter_wine)."
+    },
+    {
+      "id": "ireena_sent_beacon",
+      "type": "bool",
+      "summary": "Ireena's letter about the light on Argynvostholt's ridge has been delivered (allies/ireena_letters:letter_beacon)."
+    },
+    {
+      "id": "ireena_sent_dinner",
+      "type": "bool",
+      "summary": "Ireena's letter about the party's dinner at the castle has been delivered (allies/ireena_letters:letter_dinner)."
+    },
+    {
+      "id": "ireena_strahd_wrote_silence",
+      "type": "bool",
+      "summary": "Strahd wrote to the party about three of Ireena's letters left unanswered (allies/ireena_letters:strahd_silence_intro, the second visit of data/visits/ireena.json). Once; it lowers Ireena's trust by one."
     }
   ]
 }

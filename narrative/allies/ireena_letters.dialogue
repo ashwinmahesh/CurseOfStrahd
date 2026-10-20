@@ -1,0 +1,185 @@
+# Ireena Kolyana's letters (Story Allies Presence Plan, package I3; data/visits/ireena.json, docs/story/ireena_letters.md,
+# docs/voice/ireena.md). While she shelters somewhere and the party is somewhere else, a courier finds the party outdoors with
+# a letter in her hand after something big she would hear of: the festival's end, the Abbot's bats, the werewolf den, the
+# winery's wine, the light at Argynvostholt, the dinner at the castle. It is words only: the party answers by visiting her.
+# Each letter adds one to ireena_letters_unanswered; any check-in (allies/ireena:checkin) sets it back to 0 and, when two or
+# three had gone unanswered, opens with `cold`. At three Strahd writes to the party about her (`strahd_silence_intro`, the
+# second visit; her trust falls by one). The drafts are Gemini's (docs/plans/gemini_allies/i3/), edited; every line is unvoiced.
+#
+# The letters read right whether she saw the event or only heard of it from carters and pilgrims, give no quest information
+# and never plead. Only side flags (data/flags/allies_ireena.json) are set here; story flags are read.
+
+~ letter
+set ireena_letters_sent += 1
+set ireena_letters_unanswered += 1
+-> courier
+
+# --- Who brings it, by where she is ----------------------------------------------------------------------------------------
+
+~ courier
+if flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals"
+-> courier_vallaki
+elif flag.ireena_in_krezk
+-> courier_krezk
+endif
+-> courier_mansion
+
+~ courier_vallaki
+Narrator: A carter's boy flags you down on the road from Vallaki, wiping his nose on his sleeve. He presses a folded square of stiff paper into your hand.
+-> pick
+
+~ courier_krezk
+Narrator: A grey-cloaked pilgrim coming down the steep track from Krezk stops beside you without a word. From inside his sleeve he draws a small letter sealed in tallow.
+-> pick
+
+~ courier_mansion
+Narrator: A village child in a coat three sizes too large waits by the roadside. She holds out a neat, folded note that smells faintly of old cedar.
+-> pick
+
+# --- Which letter: the first in the order of the story whose event has happened and has not been written about -------------
+
+~ pick
+if flag.festival_over and not flag.ireena_sent_festival
+-> letter_festival
+endif
+if flag.abbot_told_strahd and not flag.ireena_sent_abbot
+-> letter_abbot
+endif
+if flag.wolf_pack_leader and not flag.ireena_sent_den
+-> letter_den
+endif
+if flag.winery_wine_flows and not flag.ireena_sent_wine
+-> letter_wine
+endif
+if flag.argynvost_beacon_lit and not flag.ireena_sent_beacon
+-> letter_beacon
+endif
+-> letter_dinner
+
+~ letter_festival
+set ireena_sent_festival
+Ireena: The carters cannot stop talking about the festival in Vallaki, though half of them change the story at every milepost. I assume your boots were somewhere near the ash.
+Ireena [weary]: I have mended every cuff I own twice over, waiting for a proper account of it.
+if flag.vallaki_backed == "baron"
+Ireena: They say the Baron still sits in his chair, and the townsfolk are smiling again at the point of a pike.
+elif flag.vallaki_backed == "wachter"
+Ireena [angry]: Word is the bunting is down and Lady Wachter keeps the town now, quite openly, for the devil.
+else
+Ireena: Travellers say no lord rules by decree there now, and only Father Lucian and Urwin Martikov keep the peace.
+endif
+-> after
+
+~ letter_abbot
+set ireena_sent_abbot
+Ireena: The pilgrims say bats circle the high wall every night now, thick as chimney smoke. Strange, that none of them ever drop inside.
+Ireena [afraid]: I do not like mysteries that keep regular hours, and I like them less when they belong to our visitor.
+Ireena: My latches are all well kept, and I have run out of excuses to check them.
+-> after
+
+~ letter_den
+set ireena_sent_den
+Ireena: Drovers on the road swear the business at the werewolf den in the hills is finally settled. Nobody seems to know the whole truth of it, which tells me you were involved.
+Ireena: You might have sent word yourselves, instead of letting me hear it over a turnip cart.
+if flag.wolf_pack_leader == "emil"
+Ireena: They say the pack has a new leader who keeps his teeth to the high timber and leaves the farms alone.
+elif flag.wolf_pack_leader == "kiril"
+Ireena [weary]: Word is the old pack leader still runs the ridges and hunts at the castle's pleasure.
+else
+Ireena: The shepherds claim both pack leaders are dead in the dirt and the rest have scattered into the mist.
+endif
+-> after
+
+~ letter_wine
+set ireena_sent_wine
+Ireena: The carts are rolling down from the Wizard of Wines again, and a driver left a single cask by the door with no note. Father bought one from that hill every year for my name day.
+Ireena [sad]: Father would want it done properly, and I refuse to drink good vintage alone with the panelling.
+Ireena: Bring yourselves back before I am forced to share it with people who do not know its worth.
+-> after
+
+~ letter_beacon
+set ireena_sent_beacon
+Ireena: Every peddler on the road has seen the white light burning above Argynvostholt. They say the wind batters that ridge all night and the flame never wavers.
+Ireena [smile]: It is a fine thing to hear of a light in this valley that the devil cannot blow out.
+Ireena: Tell me who lit it before the gossips ruin the story.
+-> after
+
+~ letter_dinner
+set ireena_sent_dinner
+Ireena [angry]: A Vistani girl told me you sat at the devil's own table and ate off his silver. I am not made of glass, so you need not spare me the details.
+Ireena: I only want to know whether any of you had the sense to eat nothing and keep one hand free.
+Ireena: You owe me the whole story, told plainly, at a table that does not belong to him.
+-> after
+
+# --- What the party does with it: both end the scene ------------------------------------------------------------------------
+
+~ after
+* Keep it safe. -> keep
+* Tell the messenger we will come as soon as the road allows. -> tell
+
+~ keep
+Narrator: You refold the stiff paper along its sharp creases and tuck it dry inside your pack.
+-> END
+
+~ tell
+Narrator: You tell the messenger you will come as soon as the road allows, and with a quiet nod, the figure turns away and is gone.
+-> END
+
+# --- In person, after letters went unanswered: the check-in's greeting (allies/ireena:greet) ----------------------------------
+
+~ cold
+if flag.ireena_cold_now >= 3
+Ireena [angry]: Three letters. I was starting to write the fourth to your graves.
+Ireena [sad]: Say it plainly if you mean to vanish again, because I am tired of listening for boots at the gate.
+else
+Ireena [angry]: Two letters I sent down that road, and not a scrap of charcoal in reply.
+Ireena [weary]: Sit down. You are dripping on everything I own.
+endif
+-> allies/ireena:life
+
+# --- Three letters unanswered: Strahd writes (the second visit of data/visits/ireena.json) ----------------------------------
+
+~ strahd_silence_intro
+set ireena_strahd_wrote_silence
+set ireena_trust -= 1
+Narrator: Hooves close behind you, and a rider in bright scarves leans from the saddle and drops a folded page into your hands without slowing. The seal is black wax, pressed deep with a single Z.
+-> strahd_silence
+
+~ strahd_silence
+Strahd: You are poor correspondents, my friends. She asks after you still, though rather less than she did.
+Strahd [sad]: A friend's silence is an easy thing to carry on a journey. It weighs a great deal more in a quiet room.
+if flag.ireena_sanctuary == "st_andrals"
+-> strahd_silence_church
+elif flag.ireena_sanctuary == "inn"
+-> strahd_silence_inn
+elif flag.ireena_in_krezk
+-> strahd_silence_krezk
+endif
+-> strahd_silence_mansion
+
+~ strahd_silence_inn
+Strahd [smile]: The Blue Water Inn has so many windows, and she keeps every one of them shut. Not one has opened for a word from you.
+-> strahd_silence_choice
+
+~ strahd_silence_church
+Strahd [smile]: I cannot cross that threshold, of course, so I listen from the street while she prays for friends who do not write.
+-> strahd_silence_choice
+
+~ strahd_silence_krezk
+Strahd: Even behind that high wall and its stubborn gate, beside a pool that refuses to freeze, the winter of your neglect reaches her easily.
+-> strahd_silence_choice
+
+~ strahd_silence_mansion
+Strahd [smile]: She sits behind her father's shutters, and I remember the porch well, though I am far too polite to knock until I am asked.
+-> strahd_silence_choice
+
+~ strahd_silence_choice
+* Burn it. -> strahd_silence_burn
+* Keep it. -> strahd_silence_keep
+
+~ strahd_silence_burn
+Narrator: You feed the stiff page to the flame and watch the edges curl to grey ash. The black wax does not melt so much as uncoil, and drips into the dirt like a dark, slow vein.
+-> END
+
+~ strahd_silence_keep
+Narrator: You fold the page away inside your coat. Against your fingers, the black wax and its sunken Z hold a cold that does not leave your skin.
+-> END

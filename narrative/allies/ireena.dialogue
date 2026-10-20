@@ -16,12 +16,23 @@
 set ireena_checkins += 1
 set ireena_news_now = 0
 set ireena_lesson_tried = false
+# Package I3 (allies/ireena_letters): letters left unanswered make her open cold; any check-in clears the count.
+set ireena_cold_now = 0
+if flag.ireena_letters_unanswered >= 3
+set ireena_cold_now = 3
+elif flag.ireena_letters_unanswered == 2
+set ireena_cold_now = 2
+endif
+set ireena_letters_unanswered = 0
 if not guest:ireena
 -> greet
 endif
 -> life
 
 ~ greet
+if flag.ireena_cold_now > 0
+-> allies/ireena_letters:cold
+endif
 if flag.ireena_checkins == 1
 Ireena: People usually check the locks when they come near me, not my temper.
 Ireena [smile]: Still. Sit down if you have a minute, and tell me what the road looks like.
