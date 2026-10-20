@@ -18,6 +18,9 @@
 | [name:ratatoille] You make camp. Ratatouille has the pot on before the fire has properly caught, and is already disappointed in it.
 
 ~ camp:night
+# Once a playthrough (easter-egg plan R6b, docs/story/eggs.md): a companion very close to a sleeper's throat. Gemini draft,
+# edited (docs/plans/gemini_eggs/r6b/); unvoiced.
+| [once and level >= 4] You wake in the small hours to find one of your company crouched very close over another sleeper's throat. They swear, softly, that they were only checking for a fever.
 | You sleep in turns by the fire. Every watch hears something circle the camp, and every watch decides it was the wind.
 | The fire burns low and the woods creak and settle round you. Nothing comes. Somehow that's the part that keeps you awake.
 | [weather == fog] The fog comes right into camp in the night and sits by the embers like a guest. By morning everything you own is damp.

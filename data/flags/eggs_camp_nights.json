@@ -1,0 +1,15 @@
+{
+  "region": "eggs_camp_nights",
+  "flags": [
+    {
+      "id": "eggs_ilse_compliment",
+      "type": "bool",
+      "summary": "Ilse paid the party the highest compliment she knows, worth killing later (camp/ilse:warrior)."
+    },
+    {
+      "id": "eggs_party_held",
+      "type": "bool",
+      "summary": "Godrick threw a party at the camp fire with the Martikovs' cask (camp/godrick:party)."
+    }
+  ]
+}

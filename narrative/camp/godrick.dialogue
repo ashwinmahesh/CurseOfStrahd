@@ -372,3 +372,32 @@ approve godrick_pendlebrook +3: You asked whether there'd be soup at the manor
 interject name:godrick_pendlebrook: Whatever's up at that castle, I'm not afraid of it. I never was, much; I'm not clever enough. But now I've got a better reason. I've got you lot to walk back down with.
 inspire name:godrick_pendlebrook: knew what he was fighting for
 -> END
+
+# --- A wink (easter-egg plan R6b, docs/story/eggs.md): a party at the fire once the winery's wine flows again -----------
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6b/); every line here is unvoiced.
+
+~ talk_party
+if name:godrick_pendlebrook and flag.winery_wine_flows and not flag.eggs_party_held
+-> party
+endif
+-> END
+
+~ party
+set eggs_party_held
+interject name:godrick_pendlebrook: Right then! The vineyard folk sent a whole oak cask after us, and my back is tired of carrying it.
+interject name:godrick_pendlebrook: Bring your cups to the fire, friends. Sir Pellam always said a heavy cask makes for light hearts.
+Narrator: Somebody dances the length of a mossy log with a tin mug balanced on their head, somebody else pins a fourth challenger's wrist into the mud, and by the coals a skillet of wild garlic sizzles with no recipe in sight.
+interject name:thistle: Bark and bones! To teeth that hold, and wine that bites back!
+interject name:wren_featherfoot: To the gracious landlord of this gloomy little valley. Shame we're drinking his cellar dry without him.
+interject name:ratatoille: Voilà, a vintage that does not taste of wet cellar! To our palates, mes amis. May they survive the province.
+interject name:liriel_dawnsong: Morning's grace on this cup, and on every weary mile we've walked together.
+interject name:kip_smudgewick: To free samples, deep pockets, and waking up with all our own blood. No obligation.
+interject name:hedda_ironvow: Drink it while it's red and warm, lambs. Saves me stitching you up for the shivers come dawn.
+interject name:ilse_varga: Count off. Every cup full, every throat whole. Drink.
+interject name:silvain_aster: Oak, crushed plum and a faint note of existential dread. To continued empirical survival.
+interject name:tamsin_tealeaf: To the kind folk who grew the grapes, and the kinder folk who forgot to padlock the wagon!
+interject name:godrick_pendlebrook: To the finest company a heavy shield ever stood beside! May our boots stay dry and our cask never find its bottom.
+Narrator: The embers sink to grey ash and a drowsy head slips against Godrick's shoulder. The big man sits like a boundary stone until morning, his cup gone cold in his fist, rather than move.
+approve godrick_pendlebrook +1 thistle +1 wren_featherfoot +1 ratatoille +1 liriel_dawnsong +1 kip_smudgewick +1: You drank the Martikovs' cask with us at the fire
+inspire party: a night at the fire with the Martikovs' wine
+-> END

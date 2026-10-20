@@ -96,3 +96,28 @@ Narrator: She takes out her knife and cuts a small mark into the stock of her sw
 endif
 interject name:ilse_varga: One. Thirty-nine to go. As you were.
 -> END
+
+# --- A wink (easter-egg plan R6b, docs/story/eggs.md): the highest compliment Ilse knows ---------------------------------
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r6b/); every line here is unvoiced.
+
+~ talk_warrior
+if name:ilse_varga and level >= 4 and not flag.eggs_ilse_compliment
+-> warrior
+endif
+-> END
+
+~ warrior
+set eggs_ilse_compliment
+interject name:ilse_varga: Served beside a yellow-skinned woman once. Her people ride red dragons.
+interject name:ilse_varga: She sorted the whole world into two lists. Prey, and worth killing later.
+interject name:ilse_varga: You lot are worth killing later. Stay that way.
+* You're worth killing later too, Ilse. -> warrior_back
+* What happened to her? -> warrior_what
+
+~ warrior_back
+interject name:ilse_varga: Noted. Try it before breakfast and I'll break your wrist.
+-> END
+
+~ warrior_what
+interject name:ilse_varga: Rode her red dragon off into a sky full of strange ships and didn't come back. I still owe her three silver and a whetstone.
+-> END

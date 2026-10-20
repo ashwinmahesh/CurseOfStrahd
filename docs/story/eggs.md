@@ -165,3 +165,19 @@ holding `hope`, `grim` or `silly`; `eggs_song_sung`; `eggs_eye_checked`; `eggs_q
   `eggs_threw_furniture`), and Godrick telling Thistle of a horned woman whose heart ran too hot.
 - **The visitor with a borrowed face**: a `[once]` variant of `dream:amber_temple` once a dark gift is taken. No joke.
 
+## R6b: camp nights and the party
+
+Gemini record and the plan-versus-game notes: `docs/plans/gemini_eggs/r6b/README.md`. Test:
+`tests/integration/test_eggs_camp_nights.gd`. Flags: `data/flags/eggs_camp_nights.json` (`eggs_ilse_compliment`,
+`eggs_party_held`).
+
+- **Worth killing later** (`camp/ilse:talk_warrior`, from level 4): Ilse pays the party the highest compliment she
+  knows, borrowed from a dragon-riding warrior she once served beside who sorted everyone into prey and worth killing
+  later. A laugh; there is no approval for Ilse (a hero, not one of the six).
+- **A cask for the camp** (`camp/godrick:talk_party`, once `winery_wine_flows`): the Martikovs' thanks arrive as a
+  cask and Godrick calls a party. Every hero and companion at the fire gives a toast, the six companions earn approval
+  +1 and the party Heroic Inspiration; it ends with someone asleep against Godrick. It starts no romance.
+- **Checking for a pulse** (`camp:night` in `narrator/camp.dialogue`, a `[once and level >= 4]` variant): you wake in
+  the small hours to find one of your company very close over another sleeper's throat, swearing they were checking
+  for a fever. It names no one.
+
