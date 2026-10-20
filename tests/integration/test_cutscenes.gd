@@ -53,7 +53,10 @@ Narrator: The sun comes up.
 ## The conversations that play one picture by the owner's own word, an exception to the two-scene rule below (owner,
 ## 2026-10-18, about the mirror in Escher's suite: "We only need 1 scene here, just escher in his chair and the mirror
 ## behind him with no reflection"). The test below also fails if one of them stops being a one-picture conversation.
-const ONE_PICTURE: Array[String] = ["res://narrative/castle_ravenloft/spires_escher.dialogue"]
+## Minor cutscenes, one short story beat (owner, 2026-10-20: "We can remove that rule for minor cutscenes" and "Like we can
+## have an exception here"). Izek's takes is the first: an ally's moment, one picture, so it's exempt from the two-scene rule.
+const ONE_PICTURE: Array[String] = ["res://narrative/castle_ravenloft/spires_escher.dialogue",
+	"res://narrative/allies/izek_takes.dialogue"]
 
 ## A picture the game already has, so the tests need no art of their own.
 const TAKE := {"image": "strahd_watcher", "when": "guest:ireena"}
