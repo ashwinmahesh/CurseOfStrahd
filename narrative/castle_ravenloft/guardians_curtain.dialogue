@@ -1,0 +1,21 @@
+# The guardians' curtain before the royal tomb (Dungeon Expansion Plan C11; the book's K87, from Veeder's survey of the
+# 2016 text: two bronze knights with spears on a landing of the stair down to the tomb, a curtain of blue light between
+# them that only the lawful good may pass going down; others find themselves back at the top of the stair; it does nothing
+# to those coming up). The game tracks no alignment, so the curtain judges the dark gifts: a party carrying one is turned
+# back. Its ward is the door cat_curtain_ward (when: no dark gift, or the party came up through it). Lines drafted by
+# Gemini through the ai-bridge (docs/plans/gemini_dungeon/C11/), trimmed.
+
+~ above
+if flag.dark_gifts_taken
+Narrator: The pale light closes round you like a sudden frost and swallows the sound of your steps. A heartbeat later you are standing at the top of the stair, facing down it, with no memory of turning back.
+move castle_ravenloft_catacombs_tombs:from_catacombs
+else
+set cat_curtain_passed_down
+Narrator: The blue light washes over you like cold spring water and asks nothing. Neither bronze spear stirs as you step through.
+endif
+-> END
+
+~ below
+set cat_curtain_from_below
+Narrator: You pass up through the blue curtain without a flicker; the old ward only cares what goes down into the dark.
+-> END

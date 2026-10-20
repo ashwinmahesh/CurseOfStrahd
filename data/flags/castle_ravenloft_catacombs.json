@@ -71,11 +71,6 @@
       "summary": "The gargoyles that watch the champion's tomb are broken (cat_gargoyle_watch)."
     },
     {
-      "id": "cat_guardians_stilled",
-      "type": "bool",
-      "summary": "The animated guardians of the hall before the royal tomb are destroyed (cat_guardians)."
-    },
-    {
       "id": "cat_mad_dog_blade_known",
       "type": "bool",
       "summary": "The scything blade in the Mad Dog's crypt was spotted or sprung."
@@ -104,6 +99,16 @@
       "id": "cat_sasha_slain",
       "type": "bool",
       "summary": "Sasha Ivliskova was destroyed (encounter cat_sasha); her bier is only a bier after that."
+    },
+    {
+      "id": "cat_curtain_passed_down",
+      "type": "bool",
+      "summary": "The party walked down through the guardians' curtain before the royal tomb with no dark gift among them (castle_ravenloft/guardians_curtain:above): it asked nothing of them. Its call from below stays quiet."
+    },
+    {
+      "id": "cat_curtain_from_below",
+      "type": "bool",
+      "summary": "The party came up through the guardians' curtain from the royal tomb (in by the overlook's window): the curtain only judges those going down, so its ward stands open to them from then on."
     }
   ]
 }

@@ -92,9 +92,14 @@ once
 cooldown 20
 
 ~ enter:cat_guardians_hall
-| A long hall lined with stone knights on plinths, swords grounded, visors down, facing each other across the aisle.
-| [flag.cat_guardians_stilled] Three of the plinths are empty now, and their knights lie in the aisle in pieces that were never stone.
+| Halfway down the stair hall, two bronze knights stand with their spears grounded. Between them hangs a curtain of pale blue light, humming low and steady.
 cooldown 20
+
+~ examine:cat_bronze_knight
+| Verdigris gathers in the seams of the bronze helm, but the spear's edge is still bright. The blind metal eyes seem fixed not on your face, but on what you carry.
+
+~ examine:cat_light_curtain
+| The light hangs as still as moonlight through deep water, unstirred by your breath. It gives off no warmth at all.
 
 ~ enter:castle_ravenloft_tomb_of_barov_and_ravenovia
 | A broad vault, and in the middle of it a dais with two sarcophagi side by side: a king and a queen, carved holding hands across the gap between them.

@@ -25,7 +25,6 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 | `cat_gargoyle_watch` | catacombs | L10v0 | 10 | 6 gargoyle | 16 gargoyle (110 HP) | 6 |
 | `cat_sleepers` | catacombs | L10v0 | 10 | 3 vampire spawn | 10 vampire spawn | 4 |
 | `cat_sleepers` | catacombs | L10v1 | 10 | 2 vampire spawn | 10 vampire spawn | 4 |
-| `cat_guardians` | catacombs_tombs | L10v0 | 10 | strahds animated armor, 2 helmed horror | 2 strahds animated armor, 4 helmed horror | 5 |
 | `court_accountant_rug` | court | L10v0 | 10 | rug of smothering, 3 crawling claw | rug of smothering (120 HP), 3 crawling claw (4 HP), 4 strahds animated armor (120 HP) | 6 |
 | `court_post_watch` | court | L10v0 | 10 | strahds animated armor, 3 helmed horror | strahds animated armor (120 HP), 4 helmed horror (102 HP) | 5 |
 | `crg_courtyard_gargoyles` | gates | L10v0 | 10 | 6 gargoyle | 16 gargoyle (64 HP) | 5 |

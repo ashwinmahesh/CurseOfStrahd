@@ -72,7 +72,7 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 			title = str(spec.get("label", "the door" if str(thing["kind"]) == "door" else "the chest")).capitalize()
 			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside" + LocationCrime.owned_note(spec)
 			if str(thing["kind"]) == "door" and not StoryConditions.check(str(spec.get("when", "")), view.st):
-				out.append({"id": "open", "label": verb, "enabled": false, "why": "It won't budge"})
+				out.append({"id": "open", "label": verb, "enabled": false, "why": str(spec.get("locked_text", "It won't budge"))})
 			elif view._locked(spec):
 				var ways := LocationLocks.actions_to_unlock(view, spec)
 				out.append_array(ways)

@@ -42,7 +42,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   (Athletics, `lock_dc` + 2) or Knock; `secret_dc` hides the door until it's found. `when` is a condition the door
   needs before it opens at all (a portcullis a story flag raises; until then it won't budge), and `unlocked_when` one
   that takes its lock off (the church undercroft's bar once Father Donavich lifts it; until then it can be picked or
-  forced). `flag` is set when the door opens.
+  forced). `flag` is set when the door opens. `locked_text` is what the Narrator says, and the menu's reason, when the
+  door won't open because its `when` doesn't hold (default "It won't budge"). `leaf: "none"` draws no leaf and no
+  frame: a ward whose look is a prop on its square (the guardians' curtain of light); it still blocks and opens as a door.
 - **Spawns:** `default` is where a plain arrival lands, and where an exit that names no `spawn` and a dialogue's
   `move <location>` go; an exit's `spawn` and `move <location>:<spawn>` (docs/contracts/dialogue.md) name another, on
   this map or a different one (`make validate` checks both). A load puts the party back on its saved squares; any that

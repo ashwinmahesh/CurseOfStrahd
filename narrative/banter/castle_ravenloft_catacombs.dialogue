@@ -46,9 +46,3 @@ interject name:godrick_pendlebrook: Right. Stairs. Coffin. Stake. In that order,
 endif
 -> END
 
-~ banter_guardians
-if flag.cat_guardians_stilled and at:castle_ravenloft_catacombs_tombs
-interject tag:veteran: Six statues, and three of them were empty armour that walked. I'll be checking every statue in this castle twice now.
-interject class:wizard: Three of those statues were simply statues. I checked. Twice.
-endif
--> END

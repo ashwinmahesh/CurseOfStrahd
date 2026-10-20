@@ -19,7 +19,7 @@
       "##.........###.....#########",
       "##############.....#########",
       "##############.....#########",
-      "##############.....#########",
+      "################.###########",
       "##############.....#########",
       "##############.....#########",
       "##############.....#########",
@@ -150,6 +150,17 @@
         19
       ],
       "label": "tall carved doors"
+    },
+    {
+      "id": "cat_curtain_ward",
+      "cell": [
+        16,
+        13
+      ],
+      "label": "the curtain of blue light",
+      "leaf": "none",
+      "when": "not flag.dark_gifts_taken or flag.cat_curtain_from_below",
+      "locked_text": "The cold light closes where you touch it, and will not let you down."
     }
   ],
   "props": [
@@ -216,66 +227,6 @@
       "model": "candelabra"
     },
     {
-      "id": "cat_guardian_statue_1",
-      "cell": [
-        14,
-        9
-      ],
-      "kind": "decor",
-      "label": "A stone knight",
-      "model": "statue_knight"
-    },
-    {
-      "id": "cat_guardian_statue_2",
-      "cell": [
-        18,
-        9
-      ],
-      "kind": "decor",
-      "label": "A stone knight",
-      "model": "statue_knight"
-    },
-    {
-      "id": "cat_guardian_statue_3",
-      "cell": [
-        14,
-        13
-      ],
-      "kind": "decor",
-      "label": "A stone knight",
-      "model": "statue_knight"
-    },
-    {
-      "id": "cat_guardian_statue_4",
-      "cell": [
-        18,
-        13
-      ],
-      "kind": "decor",
-      "label": "A stone knight",
-      "model": "statue_knight"
-    },
-    {
-      "id": "cat_guardian_statue_5",
-      "cell": [
-        14,
-        17
-      ],
-      "kind": "decor",
-      "label": "A stone knight",
-      "model": "statue_knight"
-    },
-    {
-      "id": "cat_guardian_statue_6",
-      "cell": [
-        18,
-        17
-      ],
-      "kind": "decor",
-      "label": "A stone knight",
-      "model": "statue_knight"
-    },
-    {
       "id": "cat_barov_sarcophagus",
       "cell": [
         14,
@@ -339,6 +290,64 @@
       "kind": "decor",
       "label": "A faded royal banner",
       "model": "tapestry"
+    },
+    {
+      "id": "cat_bronze_knight_w",
+      "cell": [
+        15,
+        13
+      ],
+      "kind": "examine",
+      "label": "A bronze knight with a spear",
+      "model": "statue_young_strahd",
+      "say": "examine:cat_bronze_knight"
+    },
+    {
+      "id": "cat_bronze_knight_e",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "examine",
+      "label": "A bronze knight with a spear",
+      "model": "statue_young_strahd",
+      "say": "examine:cat_bronze_knight"
+    },
+    {
+      "id": "cat_light_curtain",
+      "cell": [
+        16,
+        13
+      ],
+      "kind": "decor",
+      "label": "A curtain of blue light",
+      "model": "light_curtain"
+    },
+    {
+      "id": "cat_curtain_above",
+      "cell": [
+        16,
+        12
+      ],
+      "kind": "decor",
+      "label": "",
+      "model": "light_curtain_call",
+      "call": "castle_ravenloft/guardians_curtain:above",
+      "approach": 1,
+      "call_when": "not flag.cat_curtain_from_below"
+    },
+    {
+      "id": "cat_curtain_below",
+      "cell": [
+        16,
+        14
+      ],
+      "kind": "decor",
+      "label": "",
+      "model": "light_curtain_call",
+      "call": "castle_ravenloft/guardians_curtain:below",
+      "approach": 1,
+      "call_when": "not flag.cat_curtain_passed_down"
     }
   ],
   "containers": [
@@ -395,6 +404,17 @@
       "kind": "candle",
       "bright_ft": 5,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        16,
+        13
+      ],
+      "kind": "lamp",
+      "bright_ft": 5,
+      "dim_ft": 20,
+      "color": "moon_blue",
+      "visual": true
     }
   ],
   "encounters": [
@@ -582,57 +602,6 @@
           "cell": [
             7,
             5
-          ]
-        }
-      ]
-    },
-    {
-      "id": "cat_guardians",
-      "trigger": "enter_area:cat_guardians_hall",
-      "surprise": "",
-      "flag": "cat_guardians_stilled",
-      "text": "Some of the stone knights were never stone. They step off their plinths into the aisle, visors turning together.",
-      "monsters": [
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            16,
-            14
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            14,
-            10
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            18,
-            18
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            16,
-            1
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            19,
-            6
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            13,
-            6
           ]
         }
       ]

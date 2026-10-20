@@ -131,6 +131,9 @@ static func _place(board: ArenaBoard, spec: Dictionary, is_container: bool) -> N
 		if Look.modern():
 			return CastleModel.place(board, root, cell)
 		art = str(look.get("classic", "table"))
+	if art == "light_curtain":
+		# A curtain of cold light across a passage (LightCurtain): drawn in code in either finish, there's no picture.
+		return LightCurtain.place(board, root, cell, spec)
 	if art == "sentinel_dais":
 		# The low dais the Amber Sentinel stands on (AmberColossus), in the Modern finish; Classic keeps the bare snow.
 		return AmberColossus.dais(board, root, cell, spec, str(look.get("case", "")) == "cracked") if Look.modern() else root
@@ -292,6 +295,15 @@ static func door_look(spec: Dictionary) -> Dictionary:
 ## the returned node (hidden when the door is open). A secret door nobody has found looks like the wall around it
 ## until reveal_door. Returns null if there's no door art, so the caller can fall back.
 static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
+	if str(spec.get("leaf", "")) == "none":
+		# A ward with no leaf (the guardians' curtain: its light is a prop on the same square): it blocks and opens
+		# like any door, with nothing drawn and no frame.
+		var ward := Node3D.new()
+		ward.name = "Door_" + str(spec.get("id", ""))
+		ward.set_meta("door", true)
+		board.door_cells[Vector2i(int((spec["cell"] as Array)[0]), int((spec["cell"] as Array)[1]))] = true
+		board.add_child(ward)
+		return ward
 	var look := door_look(spec)
 	var art := str(look.get("art", ""))
 	if not has_art(art):

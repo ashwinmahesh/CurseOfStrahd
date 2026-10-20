@@ -40,7 +40,7 @@ static func _locked(view: LocationView, spec: Dictionary) -> bool:
 static func _use_door(view: LocationView, door: Dictionary, method: String = "auto") -> void:
 	if not StoryConditions.check(str(door.get("when", "")), view.st):
 		Audio.sfx("locked")
-		view.narration.emit("It won't budge.")
+		view.narration.emit(str(door.get("locked_text", "It won't budge.")))
 		return
 	if method == "force" and _locked(view, door):
 		with_guidance(view, door, func(extra: Array) -> void: _open_door(view, door, method, extra))

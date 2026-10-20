@@ -45,11 +45,6 @@ func test_cat_sleepers_v1_at_level_10() -> void:
 	await _held("castle_ravenloft_catacombs", 12, 10, "cat_sleepers", [Vector2i(37, 16), Vector2i(38, 16), Vector2i(37, 17), Vector2i(37, 15)], 2, 6, [])
 
 
-## cat_guardians, castle_ravenloft_catacombs_tombs variant 0 at level 10.
-func test_cat_guardians_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_catacombs_tombs", 12, 10, "cat_guardians", [Vector2i(16, 8), Vector2i(16, 7), Vector2i(16, 6), Vector2i(16, 5)], 4, 7, [])
-
-
 ## court_accountant_rug, castle_ravenloft_court variant 0 at level 10.
 func test_court_accountant_rug_v0_at_level_10() -> void:
 	await _held("castle_ravenloft_court", 12, 10, "court_accountant_rug", [Vector2i(4, 17), Vector2i(5, 17), Vector2i(3, 17), Vector2i(4, 18)], 4, 6, [])

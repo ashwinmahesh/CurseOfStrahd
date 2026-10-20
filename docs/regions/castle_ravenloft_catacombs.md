@@ -33,7 +33,7 @@ areas are literally the rooms.
 | Map | Book | Size | Areas | What is there |
 |---|---|---|---|---|
 | `castle_ravenloft_catacombs` (entry) | K84 | 44 x 31 | `cat_upper_gallery`, `cat_lower_gallery`, `cat_mad_dog_crypt`, `cat_jester_crypt`, `cat_conjurer_crypt`, `cat_stewards_crypt`, `cat_hidden_ossuary`, `cat_hall_of_names`, `cat_beucephalus_crypt`, `cat_gargoyle_tomb`, `cat_sleepers_crypt` | Two galleries joined by three aisles of crypts behind iron crypt gates (fifteen doors, one chained shut, one secret). The hall of names in the middle, with a statue of the lord and the black stair down to his tomb. The Mad Dog's crypt (trap), the conjurer's crypt (glyph, the wand and the sealed reliquary), the jester's crypt, the champion's tomb and its gargoyles, the sleepers' crypt (vampire spawn), the forgotten ossuary behind a secret door (DC 16), the black horse Beucephalus's stall-crypt (the horseman's room). |
-| `castle_ravenloft_catacombs_tombs` | K85, K87, K88 | 28 x 27 | `cat_tombs_vestibule`, `castle_ravenloft_sergeis_tomb`, `cat_guardians_hall`, `castle_ravenloft_tomb_of_barov_and_ravenovia` | A vestibule at the foot of the stair; Sergei's white tomb with his sarcophagus and a basin of still water (K85); the guardians' hall, six stone knights, three of them not stone (K87); the royal vault, King Barov and Queen Ravenovia side by side on a dais (K88). |
+| `castle_ravenloft_catacombs_tombs` | K85, K87, K88 | 28 x 27 | `cat_tombs_vestibule`, `castle_ravenloft_sergeis_tomb`, `cat_guardians_hall`, `castle_ravenloft_tomb_of_barov_and_ravenovia` | A vestibule at the foot of the stair; Sergei's white tomb with his sarcophagus and a basin of still water (K85); the guardians' landing, two bronze knights with spears and a curtain of blue light between them that turns back anyone going down with a dark gift (K87, Dungeon Expansion Plan C11); the royal vault, King Barov and Queen Ravenovia side by side on a dais (K88). |
 | `castle_ravenloft_catacombs_strahd` | K86 | 23 x 21 | `cat_black_stair`, `castle_ravenloft_strahds_tomb` | The foot of the black stair; the tomb: a stepped dais, the plain coffin on trestles, a statue of the young lord in armour, green braziers, an iron chest at the dais foot. |
 
 ### Ways in and out (the seams; overview table)
@@ -93,7 +93,6 @@ revenant 1,800; nightmare 700; gargoyle 450; dire wolf 200; specter 200; swarm o
 | `cat_sleepers` | catacombs, enter `cat_sleepers_crypt` | night: 3 vampire spawn; day: 2, surprised in their coffins | 5,400 / 3,600 | optional; `cat_sleepers_slain` |
 | `cat_gargoyle_watch` | catacombs, enter `cat_gargoyle_tomb` | 6 gargoyles | 2,700 | guards a treasure place; `cat_gargoyles_slain` |
 | `cat_sergei_final` | tombs, enter `castle_ravenloft_sergeis_tomb` | Strahd (350 HP), 3 dire wolves, 2 swarms of bats, 3 of his spawn | 19,100 above High | `final_battle: castle_ravenloft_sergeis_tomb`, `lair` |
-| `cat_guardians` | tombs, enter `cat_guardians_hall` | Strahd's animated armor, 2 helmed horrors | 4,500 | on the way to the royal tomb; `cat_guardians_stilled` |
 | `cat_royal_final` | tombs, enter `castle_ravenloft_tomb_of_barov_and_ravenovia` | Strahd (400 HP), 3 specters, 2 of his spawn | 17,200 above High | `final_battle: castle_ravenloft_tomb_of_barov_and_ravenovia`, `lair` |
 | `cat_darklord_final` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` | Strahd (350 HP), 2 vampire spawn | 16,600 above High | `final_battle: castle_ravenloft_strahds_tomb`, `lair`; sets `cat_keepers_defeated` (the spawn are the keepers) |
 | `cat_tomb_keepers` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` while `not flag.cat_keepers_defeated` | 2 vampire spawn, 3 swarms of bats | 3,750 | the short fight at the tomb while he rests (or is out); `cat_keepers_defeated` |
@@ -171,7 +170,8 @@ No new NPCs. Speakers: `sergei_von_zarovich` (existing; seen only in still water
 | `cat_last_words_heard` | bool | coffin | coffin (the option shows once) |
 | `cat_vladimir_stood_aside` | bool | coffin (Vladimir moved) | coffin |
 | `cat_oathbreakers_beaten` | bool | `cat_oathbreakers` | coffin `the_end` |
-| `cat_sleepers_slain`, `cat_gargoyles_slain`, `cat_guardians_stilled` | bool | encounters | Narrator |
+| `cat_sleepers_slain`, `cat_gargoyles_slain` | bool | encounters | Narrator |
+| `cat_curtain_passed_down`, `cat_curtain_from_below` | bool | the guardians' curtain (`guardians_curtain:above`, `:below`) | the curtain's calls; `cat_curtain_from_below` opens its ward |
 | `cat_mad_dog_blade_known` | bool | the trap (found or sprung) | Narrator |
 | `cat_sergei_rites_said` | bool | Sergei's tomb | Narrator |
 | `cat_markovia_bone_lifted` | bool | the Lesser Vaults' Saint Markovia scene (`castle_ravenloft/catacombs_crypts:lift`) | the same scene (it plays once) |
@@ -243,7 +243,7 @@ unless a step says otherwise. Prefer: "Take what lies in his hands", "Drive the 
   `cat_horseman_final`.
 - **Sergei's tomb:** `go_to("castle_ravenloft_catacombs_tombs")` (exit (5, 29)), `walk_to((6, 6))` (the final battle
   if `broken_one` or `innocent`), `use((6, 4))` → "Take what lies in his hands".
-- **Royal tomb:** in the tombs map, `walk_to((16, 18))` (the guardians' hall: `cat_guardians`), then
+- **Royal tomb:** in the tombs map, `walk_to((16, 18))` (through the guardians' curtain: with no dark gift it asks nothing and its ward opens), then
   `walk_to((16, 20))` (the final battle if `ghost` or `raven`), `use((18, 22))`.
 - **Strahd's tomb:** from the catacombs `go_to("castle_ravenloft_catacombs_strahd")` (the black stair (18, 15)),
   `walk_to((11, 9))` (the darklord battle if `darklord`, else `cat_tomb_keepers`), `use((11, 16))` for the treasure.
@@ -362,3 +362,17 @@ test_phase6_exit's walk to Strahd's tomb now goes through the larders; tests/int
 bricking, the route and the chinks. Six new Narrator lines (two `locked_text`, two chink looks, two mist variants), drafted by
 Gemini (docs/story/gemini_drafts/castle_crypts/brief6.txt and reply6).
 
+## 15. The guardians' curtain (Dungeon Expansion Plan C11)
+
+The book's K87 (Veeder's survey of the 2016 text): on a landing of the stair down to the royal tomb, two bronze knights
+with spears and a curtain of blue light between them that only the lawful good pass going down; the rest find themselves
+back at the top of the stair, and it does nothing to those coming up. It replaces our guardians' fight (`cat_guardians`,
+removed with its test entry and its flag `cat_guardians_stilled`). The game tracks no alignment, so the curtain judges the
+dark gifts (`dark_gifts_taken`, the plan's default): the passage square (16, 13) is a ward, the door `cat_curtain_ward`
+with `leaf: none` (nothing drawn: its look is the code-drawn `light_curtain` prop, LightCurtain in
+world/look/light_curtain.gd), whose `when` holds with no gift, or once the party has come up through it from the tomb
+(the overlook's window route, C7). Two one-time calls speak as the leader nears it: from above
+(`guardians_curtain:above`: no gift, it asks nothing, `cat_curtain_passed_down`; a gift, the party is moved back to the
+top of the stair, `from_catacombs`) and from below (`guardians_curtain:below`, `cat_curtain_from_below`). A party turned
+back that tries the ward again hears its `locked_text`. The book's Small creature squeezing behind a statue isn't built
+(the party moves as one). tests/integration/test_guardians_curtain.gd.
