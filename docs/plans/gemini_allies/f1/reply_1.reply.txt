@@ -1,0 +1,58 @@
+~ ireena_answers
+Narrator: She steps clear of your line, her boots ringing once against the cold stone at the foot of the stair.
+Ireena: My name is Ireena Kolyana, and I am the burgomaster's daughter. The woman you are looking for is dead.
+Ireena [angry]: I am not a price to be paid on your stairs, and I will never be your bride.
+Ireena: I will walk out of these doors on my own feet, or I will not leave this hall at all.
+Strahd [smile]: You have your father's stubbornness, and a fierce little voice. Yet you wear a face that knows this house better than you do.
+Strahd: Keep the name Kolyan gave you for another hour, Tatyana. The stone here remembers who you are, even when you refuse to.
+
+~ ireena_answers_letter
+Ireena: I kept your last letter in my coat, though never because I meant to come to you. I have stopped reading it.
+Strahd [weary]: You kept the paper close against the damp, and in this house that is answer enough.
+
+~ sergei_knows
+Ireena [sad]: You are the brother from his book. I knew your story before I ever saw my old dreams in this water.
+
+~ stake_steady
+Narrator: Her hands settle firm and level on the wooden shaft, steady from cold mornings of patient sword practice.
+
+~ stake_knows
+Ireena: I know her name from your own pages, and it is not mine.
+
+~ coffin_asleep_ezmerelda
+Ezmerelda [sly]: He looks almost polite with his mouth shut. Nobody touches the lid until every hand is set, that is the rule.
+
+~ coffin_asleep_izek
+Izek: He looks smaller in a box. Do it before he wakes.
+
+~ coffin_resting_ezmerelda
+Ezmerelda: Still talking from the bottom of a box. Rudolph would tell me to write this down, if it were worth the ink.
+
+~ coffin_resting_izek
+Izek: Stay behind my arm, Ireena. He is done reaching for you.
+
+~ dinner_ezmerelda
+Strahd [smile]: Welcome to my table, Ezmerelda, though Rudolph would never have approved. I trust the stairs did not trouble that brace on your leg.
+Ezmerelda [sly]: The stairs were fine, and I only came to see if the soup was as cold as the silver.
+
+~ dinner_izek
+Strahd: I have missed you at the Baron's side, Izek. So this is the brother who found his way to my gates.
+Izek: She sits where she likes. I stand behind her chair.
+
+~ ireena_p
+Narrator: With the devil gone, Ireena trusted those who stood by her. On the morning the castle fell, she gave his last letter to the fire.
+
+~ ireena_q
+Narrator: With the devil gone, she never set the blade aside. She spars with her brother Ismark before breakfast and wins about half the bouts.
+
+~ ireena_r
+Narrator: With the devil gone, she kept both names for her own. She is Ireena in the daylight, and answers to the other when Izek speaks it.
+
+~ ireena_s
+Narrator: The devil endured, though Ireena trusted the hands that guarded her. She kept his last letter folded in her coat, and keeps it still.
+
+~ ireena_t
+Narrator: The devil endured, and she never forgot the mornings of practice. She sleeps with a naked sword beside her bed, always within reach.
+
+~ ireena_u
+Narrator: The devil endured, so she kept both names close. The second is a secret she holds in silence against the dark.

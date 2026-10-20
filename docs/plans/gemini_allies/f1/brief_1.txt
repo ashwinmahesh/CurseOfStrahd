@@ -1,0 +1,39 @@
+I need drafted dialogue for a few finale lines in a single-player D&D Curse of Strahd game. Plain text only (no JSON, no markdown tables), nodes under `~ name`, one line per row as `Speaker [mood]: Text`, party option rows as `* option text -> node_name`, ASCII only (straight quotes and apostrophes, no accents or fancy dashes, no em-dash: use a comma or a full stop), 1-2 sentences a line, nothing over about 28 words, no placeholders like {name}. Moods allowed: [smile], [angry], [afraid], [sad], [sly], [weary]; most lines carry none. Reply with the nodes below only, in the order given, no commentary. Finish without sending messages to anyone else.
+
+## The game so far
+
+The party has travelled with several allies and now stands in Castle Ravenloft, the home of the vampire lord Strahd (never named by Ireena or by the Narrator in these lines; he is "him", "the devil", "our visitor" for Ireena). Three allies matter here.
+
+IREENA KOLYANA: a proud, red-haired young woman, the dead burgomaster Kolyan's adopted daughter, found on a road as a girl with no memory, twice bitten by the vampire. She wears the face of Tatyana, the woman Strahd has loved and lost across centuries; she has learned this from his own book and from a statue, so she knows whose face she wears, and she has said "No" to being her. She has kept a letter he wrote her (a secret: some nights she did not want the window shut). The party has stood watch with her and trained her with a sword over several mornings; she does not fight in this game, so the last time her hands matter is the final stake. She is direct and proud, short sentences, dry humour with an edge; she never says his name; pet phrases "I'm not made of glass." "Say it plainly." "Father would want it done properly."
+EZMERELDA D'AVENIR: a Vistana monster hunter, quick, sardonic, practical; hunter's rules as jokes. Pet phrases: "Say something a vampire wouldn't say." "Silver first, questions never." She grew up in show wagons; trained by Rudolph van Richten ("Rudolph").
+IZEK STRAZNI: Ireena's lost brother, a big scarred man with a scaled, fiery right arm; flat, short, imperatives; never more than two sentences unless about her; never says Strahd's name ("him", "the rider", "the castle").
+NARRATOR: old gothic storyteller, second person or plain scene description, present tense, one or two sentences, concrete senses, never cruel.
+STRAHD: courteous, patient, amused; formal host; never raises his voice; no threats; speaks of Ireena as "Tatyana" only to provoke.
+
+Existing lines (do NOT repeat): Strahd at the parley: "My guests. You came. I did wonder whether you would, and I am so rarely made to wonder." / "Here is my price. I will name it once." / "Leave Ireena with me, freely, and walk out of my house with your lives." Ireena at the parley: "I came to watch you die." At the coffin: Strahd: "Tatyana." Ireena: "No." / Ireena's "Not for you. Never once for you." Ezmerelda: "Silver first, questions never, and nobody wanders off." Izek: "I'm good at waiting."
+
+## Nodes
+
+~ ireena_answers: at Strahd's parley, before the final battle. Strahd has named his price (leave Ireena with him). The party lets Ireena answer for herself. Narrator x1 (she steps out of the party's line to the foot of the stair), Ireena x3 (she answers him as herself, by her real name Ireena Kolyana, the burgomaster's daughter; not Tatyana; she is not a price and not a bride; she will walk out on her own feet or not at all; no pleading, no speech about love), Strahd x2 (courteous; a little amused; his answer has a crack in it; he says nothing about the woods).
+~ ireena_answers_letter: ONE extra beat (Ireena x1, Strahd x1) played in the same scene only if she kept his last letter: she tells him she kept it, not because she wanted to come, and that she has stopped reading it. Strahd answers with one line.
+
+~ sergei_knows: Ireena kneels at the basin at the foot of Sergei's tomb (Sergei is Strahd's dead brother, whose face she has dreamed for years). She has already read about him in the vampire's book, so she knows whose face is in the water. ONE line for Ireena (replacing "You're the brother. The one on the lid. I've dreamed your face for years and never known whose it was."): she knew him from the book before she saw the face; keep it short.
+
+~ stake_steady: Ireena has been given the stake to end the vampire (he lies in his coffin, beaten). Narrator x1 (her hands are steady on the shaft, the way hands are after several mornings of someone's patience at sword practice; no names).
+~ stake_knows: Ireena x1, replacing the bare "No." she says after he says "Tatyana.": she knows exactly whose name he is using, and refuses it, in a few words.
+
+~ coffin_asleep_ezmerelda: Ezmerelda, in the castle's catacombs, looking at him asleep in his coffin by day (the party is about to drive a stake): interject x1 (hunter's rule; the lid is not touched until all are ready; a joke, then the rule).
+~ coffin_asleep_izek: Izek x1 (looking at the sleeping vampire; short; he does not name him).
+~ coffin_resting_ezmerelda: Ezmerelda x1 (he lies beaten in his coffin and speaks; she is unimpressed; Rudolph would want this written down).
+~ coffin_resting_izek: Izek x1 (he stands between the coffin and Ireena; quiet, flat).
+
+~ dinner_ezmerelda: at the vampire's dinner table at the castle gates (he is a courteous host). Strahd x1 greets Ezmerelda (he knows Rudolph van Richten, her teacher, and the brace on her leg), then Ezmerelda interject x1 (a showman's deadpan about the soup or the silver).
+~ dinner_izek: Strahd x1 greets Izek (he has not seen him at the Baron's side for some time; "the brother"; polite), then Izek interject x1 (he stays standing behind Ireena's chair; flat).
+
+## Epilogue slides (Narrator, our words, two sentences at most, under 40 words each; shown at the end of the story)
+
+Six, named: ireena_p (the vampire is destroyed; Ireena trusted the party; she kept his last letter, and burned it on the morning the castle fell), ireena_q (destroyed; she kept up the sword lessons: she spars with her brother Ismark before breakfast and wins about half), ireena_r (destroyed; she kept both names: Ireena in daylight, and the other when her brother says it), ireena_s (the vampire is NOT destroyed; Ireena trusted the party and kept the letter; she keeps it still), ireena_t (not destroyed; she kept up the sword lessons: a sword by the bed, always), ireena_u (not destroyed; she kept both names; the second is a secret she holds against the dark).
+
+## Canon limits
+
+Do not name Strahd (except in a Strahd speaker label). Real names you may use: Ireena, Ismark, Kolyan, Izek, Ezmerelda, Rudolph, Tatyana (only in his mouth), Sergei (only in the basin line, as "the brother"), Blinsky. Do not invent other names, numbers, places or history. No quest hints. Nobody cries. No dice or skill checks.

@@ -98,7 +98,11 @@ Narrator: In the still water, beside her reflection, there is a second face: a y
 Sergei von Zarovich: Tatyana.
 Ireena [afraid]: No. My name is Ireena.
 Sergei von Zarovich: Not this time. I know. Forgive me. I only ever had the one name for you.
+if flag.ireena_knows_tatyana
+Ireena [sad]: You are the brother from his book. I knew your face before the water showed it to me.
+else
 Ireena: You're the brother. The one on the lid. I've dreamed your face for years and never known whose it was.
+endif
 Sergei von Zarovich: There is a pool at the top of the valley where the sun stays in the water. I can say more there. Here I am mostly bones.
 if flag.eva_recognized_ireena
 interject tag:curious: Madam Eva said she'd come round again. I thought it was the sort of thing fortune-tellers say.

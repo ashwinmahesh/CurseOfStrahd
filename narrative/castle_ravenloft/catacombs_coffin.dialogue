@@ -49,6 +49,12 @@ interject guest:ireena: Don't talk. Don't wake him. Just do it.
 endif
 interject tag:blunt: He's asleep. We won't get a better chance than this.
 interject class:wizard: Unless he isn't asleep. Unless he's lying still to see what we'll do.
+if guest:ezmerelda
+interject guest:ezmerelda: He looks almost polite with his mouth shut. Nobody touches the stake until every hand is set. That is the rule.
+endif
+if guest:izek
+interject guest:izek: He looks smaller in a box. Do it before he wakes.
+endif
 * Drive the stake into his heart while he sleeps. -> wake
 * [if item:sunsword] Draw the Sunsword over him. -> wake_sun
 * Back away and let him sleep. -> END
@@ -80,6 +86,12 @@ Strahd: Well. Here we are. I confess I had imagined this room with more candles.
 if guest:ireena
 Strahd: Ireena. You came all the way down. You always did come, in the end.
 interject guest:ireena: Not for you. Never once for you.
+endif
+if guest:ezmerelda
+interject guest:ezmerelda: Still talking from the bottom of a box. Rudolph would tell me to write this down, if it were worth the ink.
+endif
+if guest:izek and guest:ireena
+interject guest:izek: Stay behind my arm, Ireena. He is done reaching for you.
 endif
 -> resting_menu
 
@@ -114,8 +126,15 @@ set cat_staked_by = "ireena"
 Ireena: Give it here.
 cutscene ireena_stake
 Narrator: She takes the stake in both hands and kneels on the edge of the coffin.
+if flag.ireena_lessons >= 2
+Narrator: Her hands settle firm and level on the wooden shaft, steady from cold mornings of patient sword practice.
+endif
 Strahd: Tatyana.
+if flag.ireena_knows_tatyana
+Ireena: I know her name from your own pages, and it is not mine.
+else
 Ireena: No.
+endif
 Narrator: She doesn't say anything else. She doesn't need to.
 approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +2 liriel_dawnsong +1: You gave Ireena the stake
 -> the_end

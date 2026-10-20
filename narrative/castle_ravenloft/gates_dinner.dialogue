@@ -30,6 +30,14 @@ Strahd: As you wish. The chair will wait. It is good at waiting. So am I.
 elif flag.ireena_held_by_strahd
 Strahd: Ireena is resting upstairs. She will not join us tonight. It has been a long week for her.
 endif
+if guest:ezmerelda
+Strahd [smile]: Welcome to my table, Ezmerelda, though Rudolph would never have approved. I trust the stairs did not trouble that brace on your leg.
+Ezmerelda [sly]: The stairs were fine, and I only came to see if the soup was as cold as the silver.
+endif
+if guest:izek and guest:ireena
+Strahd: I have missed you at the Baron's side, Izek. So this is the brother who found his way to my gates.
+Izek: She sits where she likes. I stand behind her chair.
+endif
 if item:sunsword
 Sunsword: You expect me to sit dark at my master's murderer's table while he plays the host with stolen silver.
 Sunsword: One word from you, bearer, only one, and I will turn his whole banquet hall to noon.

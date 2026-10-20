@@ -47,10 +47,27 @@ Strahd: Or kneel, and serve me, and live a very long time. Or refuse, and we wil
 
 ~ parley_menu
 * We came to end you. -> fight
+* [if guest:ireena and flag.ireena_knows_tatyana and flag.ireena_trust >= 3 and not flag.ireena_answered_strahd] Let Ireena answer him. -> ireena_answers
 * [if guest:ireena or flag.ireena_held_by_strahd] Take her, then. Let us go. -> give_ireena
 * We yield. -> yield
 * [if flag.strahd_seen_trapped] You can't leave this valley either, can you? -> trapped
 * [Insight DC 18] Look for the fear behind the courtesy. -> fear_seen | fear_missed
+
+# She answers him as herself (Story Allies Presence Plan, package F1): she has read his book and been to the pool, and she trusts the
+# party. It decides nothing: strahd_parley is still the party's to answer, and this comes back to the menu. Once.
+~ ireena_answers
+set ireena_answered_strahd
+Narrator: She steps clear of your line, her boots ringing once against the cold stone at the foot of the stair.
+Ireena: My name is Ireena Kolyana, and I am the burgomaster's daughter. The woman you are looking for is dead.
+Ireena [angry]: I am not a price to be paid on your stairs, and I will never be your bride.
+Ireena: I will walk out of these doors on my own feet, or I will not leave this hall at all.
+Strahd [smile]: You have the stubbornness of the man who raised you, and a fierce little voice. Yet you wear a face that knows this house better than you do.
+Strahd: Keep the name Kolyan gave you a little longer, Tatyana. The stone here remembers who you are, even when you refuse to.
+if flag.ireena_kept_letter
+Ireena: I kept your last letter in my coat, though never because I meant to come to you. I have stopped reading it.
+Strahd: You kept the paper close against the damp, and in this house that is answer enough.
+endif
+-> parley_menu
 
 ~ trapped
 Strahd: The valley and I have an understanding. I keep it, and it keeps me. You would find the arrangement suits you less.

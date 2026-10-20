@@ -360,6 +360,11 @@
       "id": "ireena_strahd_wrote_silence",
       "type": "bool",
       "summary": "Strahd wrote to the party about three of Ireena's letters left unanswered (allies/ireena_letters:strahd_silence_intro, the second visit of data/visits/ireena.json). Once; it lowers Ireena's trust by one."
+    },
+    {
+      "id": "ireena_answered_strahd",
+      "type": "bool",
+      "summary": "Ireena answered Strahd as herself at his parley (strahd/final:ireena_answers), offered once she knows whose face she wears (ireena_knows_tatyana), trusts the party (ireena_trust >= 3) and travels with them. It decides nothing: the party still answers his price. Story Allies Presence Plan, package F1."
     }
   ]
 }

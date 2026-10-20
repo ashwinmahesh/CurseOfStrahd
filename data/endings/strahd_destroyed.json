@@ -24,6 +24,20 @@
       "topic": "ireena",
       "title": "Ireena Kolyana",
       "portrait": "ireena",
+      "when": "guest:ireena and flag.ireena_trust >= 4 and flag.ireena_kept_letter",
+      "text": "With the devil gone, Ireena trusted those who stood by her. On the morning the castle fell, she gave his last letter to the fire."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "guest:ireena and flag.ireena_lessons >= 3",
+      "text": "With the devil gone, she never set the blade aside. She spars with her brother Ismark before breakfast and wins about half the bouts."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
       "when": "guest:ireena and flag.ireena_pool_choice == stayed",
       "text": "At the pool, Ireena chose her own life. Now she gets to live it, and she never once looks up at the castle."
     },

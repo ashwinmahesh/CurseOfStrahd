@@ -46,6 +46,20 @@
       "topic": "ireena",
       "title": "Ireena Kolyana",
       "portrait": "ireena",
+      "when": "not guest:ireena and not flag.ireena_in_krezk and flag.ireena_trust >= 4 and flag.ireena_kept_letter",
+      "text": "The devil endured, though Ireena trusted the hands that guarded her. She kept his last letter folded in her coat, and keeps it still."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "not guest:ireena and not flag.ireena_in_krezk and flag.ireena_lessons >= 3",
+      "text": "The devil endured, and she never forgot the mornings of practice. She sleeps with a naked sword beside her bed, always within reach."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
       "when": "",
       "text": "Ireena hides, and runs, and hides again. The valley is very small, and the one hunting her is very patient."
     },
