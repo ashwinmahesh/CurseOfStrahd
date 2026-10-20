@@ -78,6 +78,16 @@ Failed pill. The engine's part:
   stuck states the stuck-quest lanes fixed in play close in older saves on load (`old_saves`): Escher's Petition at
   `refused` (Escher fought or turned hostile at Asked or Held), Exethanter's Notes at `lost` (his phylactery smashed, the
   library's shelf included) and The Hunter's Tower at `with_her` (Ezmerelda travelling at Inside, Van Richten not home).
+- **No quest left stuck (package F3).** `tools/data/quest_strands.py`, run by `make validate`, looks at every open stage of
+  a side quest (not a main quest, not a companion's) and its ways on: the conversations that move it to a later stage or
+  an ending (a line whose `if` asks for a later stage first doesn't count), the fights whose win does, and the places that
+  open those conversations (an NPC's, a prop's, a container's, a door's, an encounter's `dialogue`; camp talks and banter
+  are always there). It reports a stage when one flag value set elsewhere in the story (not where the quest itself moves
+  on, and never cleared again) closes every way on at once, and no `closes` rule covers the stage: what the Tser Pool camp
+  turning did to Called by Name, The Dancing Bear, The Grey Mare, Radu's horse and Fennimore's Guide, Tudorel's household
+  to Florin's Grandson, and Exethanter's end to his notes (all found again on the main before their fixes). It reads only
+  `when`s and flags, so a stuck state made of items or a merchant's stock (The Sun-Cake's eggs) is still a test's job. Its
+  ALLOWED list names the stages a human has looked at, with why they can't stick.
 
 ## Into the Mists (level 1)
 

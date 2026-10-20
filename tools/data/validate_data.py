@@ -16,6 +16,7 @@ import dialogue_lint  # noqa: E402
 import fail_routes  # noqa: E402
 import magic_prices  # noqa: E402
 import option_ends  # noqa: E402
+import quest_strands  # noqa: E402
 import story_reach  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1372,6 +1373,10 @@ def main():
         errors.extend(fail_routes.findings(ROOT))
         # An option that closes a quest wears [ends:<quest>], and only such an option does (tools/data/option_ends.py).
         errors.extend(option_ends.findings(ROOT))
+        # A side quest isn't left stuck: no open stage whose every way on goes when one flag the story sets elsewhere is set
+        # (the Tser Pool camp turning, an NPC killed), unless a `closes` rule covers it (tools/data/quest_strands.py, F3).
+        errors.extend(quest_strands.selftest())
+        errors.extend(quest_strands.findings(ROOT))
     # Magic item prices follow Sane Magical Prices (data/treasure/magic_prices.json, tools/data/magic_prices.py).
     errors.extend(magic_prices.findings())
     for e in errors:
