@@ -216,20 +216,35 @@ MOVES = {
                   "and weight sinking back, holding for a moment at the top",
         "strike": "the weapon brought down hard in one heavy blow to waist height in front of her, her whole body "
                   "dropping into it and the front knee bending with the impact, then a short, heavy follow-through"},
+    "wren_featherfoot": {
+        "attack": "flying punch",
+        "windup": "sinking into a deep crouch, coiled low on the balls of his feet, the right fist pulled back beside his "
+                  "ribs, the left open hand forward for balance, his clothes pulled back by the motion",
+        "strike": "springing forward off both legs into a long, low lunge, the right fist driven out at full arm's "
+                  "length, the back leg straight and the heel lifted, his clothes snapping after him"},
     "thistle": {
-        "strike": "the arrow loosed, the bowstring snapping forward, her drawing hand flung back past her ear"},
+        "attack": "longbow shot",
+        "windup": "dropping into a wide, braced crouch, the longbow raised and drawn to her cheek with an arrow nocked, "
+                  "her torso twisting with the draw, her cloak and hair swinging back",
+        "strike": "the arrow loosed, the bowstring snapping forward, her drawing hand flung back past her ear, her body "
+                  "rocking back onto the rear leg with the release, the cloak whipping out"},
     "ratatoille": {
-        "windup": "the wooden staff raised high in the right hand, the left hand pulled back beside the hip with the "
-                  "fingers curled, torso leaning back",
+        "attack": "forceful spell attack, shown only as the motion of casting",
+        "windup": "planting his feet wide, knees bending into a low braced stance, the wooden staff raised high in the "
+                  "right hand and the left hand pulled back beside the hip with the fingers curled, torso leaning back "
+                  "as if drawing in power, his robes and apron billowing",
         "strike": "the left arm thrust straight out toward the enemy at shoulder height with the palm open, the staff "
-                  "swept forward too, robes and apron swinging"},
+                  "swept forward too, the whole body lunging into it, robes and apron whipping after him"},
     "kip_smudgewick": {
-        "windup": "both hands pulled back beside his right hip with the palms facing each other, knees bent, leaning "
-                  "back",
-        "strike": "both hands thrust straight out toward the enemy at chest height, leaning forward onto the front "
-                  "foot, the straw hat tilted back"},
+        "attack": "forceful eldritch blast, shown only as the motion of casting",
+        "windup": "planting his feet wide, knees bending into a low braced stance, both hands pulled back beside his right "
+                  "hip with the palms facing each other as if holding in a great power, his body coiling, his tail and "
+                  "coat swinging back",
+        "strike": "both hands thrust straight out toward the enemy at chest height, the whole body lunging forward onto "
+                  "the front foot, the straw hat tilted back, his coat and tail whipping after him"},
 }
-# Heroes whose attack is a weapon swing: the prompt asks for weight.
+# Heroes whose attack is a weapon swing: the prompt asks for weight. Every hero's attack now gets the fighting-game
+# prompt (owner 2026-10-20: "there's no movement ... capes, bodies, expressions"), made on Lite.
 SWINGS = {"godrick_pendlebrook", "liriel_dawnsong"}
 CAST_MOVES = ("one hand raised before the chest with the palm open, the other arm drawn back, eyes intent",
               "the hand thrust forward with the palm out, leaning forward")
@@ -256,8 +271,10 @@ def prompt(hero, kind, d="s"):
     no_fx = (f" Only {his} body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, "
              f"magic, energy, beams, impact flashes, motion trails or swooshes.")
     if kind == "walk":
-        body = (f"{He} walks in place as if on a treadmill, {facing}: a steady, natural walk cycle with the arms "
-                f"swinging and {his} clothes and hair moving. {gear}{He} never moves forward or sideways.")
+        body = (f"{He} walks in place as if on a treadmill, {facing}: a lively, full-bodied walk cycle in the style of a "
+                f"high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms "
+                f"swinging, the shoulders and head moving, {his} cape, clothes and hair flowing and swaying with every "
+                f"step, a living expression. {gear}{He} never moves forward or sideways.")
     elif kind == "idle":
         body = (f"{He} stands still in a relaxed, ready stance, {facing}, breathing gently, {his} weight shifting "
                 f"slightly; {his} hair and clothes stir in a light breeze. {gear}{He} does not walk, speak or move "
@@ -272,6 +289,13 @@ def prompt(hero, kind, d="s"):
                 f"end of the blow, then {he} straightens back into the pose in the image while the cape swings and "
                 f"settles. {his.capitalize()} cape, hair and clothes never stop moving; nothing is stiff. The front "
                 f"foot may step forward and back, but {he} ends exactly where {he} began." + no_fx)
+    elif kind == "attack" and hero in MOVES:
+        body = (f"A big, powerful {spec.get('attack', 'attack')}, animated like a high-end 2D fighting game with full, "
+                f"exaggerated key poses, {facing}. Anticipation: {spec.get('windup', '')}; {his} face is fierce and "
+                f"focused. Then {he} explodes into the move: {spec.get('strike', '')}. A short, heavy follow-through, a "
+                f"beat held at the end of it, then {he} straightens back into the pose in the image while {his} clothes "
+                f"and hair swing and settle. {his.capitalize()} clothes and hair never stop moving; nothing is stiff. "
+                f"{He} ends exactly where {he} began." + no_fx)
     elif kind == "attack":
         body = (f"One powerful {spec.get('attack', 'attack')}, {facing}: first the wind-up, "
                 f"{spec.get('windup', '')}; then the strike, {spec.get('strike', '')}; then {he} returns to the pose in "
