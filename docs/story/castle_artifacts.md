@@ -28,11 +28,11 @@ is left out and the pages are given here only as 5e.tools prints them.
   attuned bearer also has Augury once a dawn (read between fights, `FieldItems` `icon_augury`, `Oracles.cast`), Cure
   Wounds once a dawn (a spell recipe, `living_only` and the new `skip_types: ["fiend"]`), and a `turn_dc` +2 on Turn
   Undead (`CombatFeatures._turn_dc`, also the hotbar's label).
-- **Saint Markovia's Thighbone** (`saint_markovias_thighbone.json`, built on a mace). The Mace of Disruption's rules
+- **Saint Markovia's Thighbone** (`saint_markovias_thighbone.json`, a weapon of its own with a mace's numbers, as the Sunsword is a sword of its own). The Mace of Disruption's rules
   (`disruption`), plus `crumbles_on_vampire`: a hit on a vampire, a vampire spawn or Strahd marks the bone
   (`ItemPowers.relic_hit`, even when the hit kills), and when the fight ends (`CombatItems.fight_over`, called from
   `EncounterTurns._check_over`) it is gone from the pack.
-- **Gulthias Staff** (`gulthias_staff.json`, built on a quarterstaff). Vampiric Strike is a toggle that arms the next
+- **Gulthias Staff** (`gulthias_staff.json`, a weapon of its own with a quarterstaff's numbers). Vampiric Strike is a toggle that arms the next
   melee hit (as the Staff of Striking arms its charges): the hit spends the charge, heals the damage dealt, and the
   wielder makes a DC 12 Wisdom save or has 1d10 minutes of Disadvantage on ability checks and Wisdom saves. Blight
   Bane keeps lesser blights from attacking or casting at the attuned bearer until the bearer attacks one
@@ -56,12 +56,12 @@ is left out and the pages are given here only as 5e.tools prints them.
 
 ## Prices
 
-`data/treasure/magic_prices.json` (Sane Magical Prices, `make magic-prices`, held in each rarity's band since
-2026-10-17): the thighbone priced like a Mace of Disruption (8,000 gp, inside the rare band), the staff like a Staff of
-Healing (13,000 gp in the guide, held to the rare band's top: 12,500 gp), the Icon at the guide's median for a legendary
-item (24,000 gp in the guide, raised to the legendary band's bottom: 90,000 gp). All three are also in `excluded` as
-"story" items, like the Sunsword and the Holy Symbol of Ravenkind, so no merchant stocks them, and the price is what a
-buyer who takes a relic off the party would pay. The loot-and-prices lane may want to set these differently.
+Unsellable story items, like the Sunsword (Ashwin, 2026-10-20: "stay unsellable story items like the Sunsword"): each
+has `cost_gp` 0 and `quest_locked`, so the inventory won't sell, drop or stash it and no merchant buys it; each is in
+`data/treasure/magic_prices.json`'s `excluded` as "story", so no merchant stocks it, and none has a price in the table.
+(The first build priced them from Sane Magical Prices, 8,000 gp for the thighbone like a Mace of Disruption, 12,500 for
+the staff like a Staff of Healing held to the rare band's top, 90,000 for the Icon at the legendary band's bottom; a
+merchant who buys magic items would have paid half of that for the Icon. That went when Ashwin answered.)
 
 ## Art
 

@@ -7,7 +7,8 @@
   },
   "category": "wondrous",
   "weight_lb": 10,
-  "cost_gp": 90000,
+  "cost_gp": 0,
+  "quest_locked": true,
   "magic": {
     "rarity": "legendary",
     "attunement": "by a creature of good alignment"

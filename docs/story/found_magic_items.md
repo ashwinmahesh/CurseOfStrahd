@@ -402,8 +402,8 @@ leaves a smaller purse and one find.
 
 ## The book's artifacts (Dungeon Expansion Plan I1, docs/story/castle_artifacts.md)
 
-Three Curse of Strahd relics, each placed once. They are story items, so no merchant sells them (data/treasure/
-magic_prices.json `excluded`).
+Three Curse of Strahd relics, each placed once. They are unsellable story items like the Sunsword (`quest_locked`, no price; data/treasure/magic_prices.json
+`excluded`), so no merchant sells or buys them.
 
 | | Where | Item | How |
 |---|---|---|---|

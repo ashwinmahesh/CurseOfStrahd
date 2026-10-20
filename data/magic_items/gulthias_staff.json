@@ -5,9 +5,10 @@
     "book": "CoS",
     "note": "A Curse of Strahd relic (the 2016 book), in our own words. Numbers checked against two sources that give the book's text, dnd5e.wikidot.com (Gulthias Staff) and 5e.tools (CoS, Gulthias Staff): a rare staff, attunement; made from a Gulthias tree branch; animals within 30 ft are uneasy; 10 charges, regaining 1d6 + 4 at dusk; broken or burned it screams out to 300 ft and every blight that hears it dies; Vampiric Strike works as a quarterstaff, 1 charge on a hit heals the damage dealt, and each charge spent calls for a DC 12 Wisdom save or short-term madness; Blight Bane makes blights and other evil plants leave an attuned bearer alone unless harmed; 4 lb. Our calls (docs/rules/deviations.md): the scream spares a boss-grade blight, so Yester Hill's climax stands; the hit's charge is armed first, as the Staff of Striking's is; short-term madness is a flat 1d10 minutes of Disadvantage on ability checks and Wisdom saves, since the game has no madness tables. Rules text is in our own words; the flavour lines were drafted by Gemini through the ai-bridge (docs/story/castle_artifacts.md keeps the brief and the raw reply)."
   },
-  "category": "staff",
-  "weight_lb": 0,
-  "cost_gp": 12500,
+  "category": "weapon",
+  "weight_lb": 4,
+  "cost_gp": 0,
+  "quest_locked": true,
   "magic": {
     "rarity": "rare",
     "attunement": true,
@@ -21,13 +22,15 @@
   "treasure": {
     "random": false
   },
-  "template": {
-    "on": "weapon",
-    "items": [
-      "quarterstaff"
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d6",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "versatile"
     ],
-    "name": "Gulthias Staff",
-    "default": "quarterstaff"
+    "versatile": "1d8",
+    "mastery": "topple"
   },
   "weapon_rules": {
     "special": [

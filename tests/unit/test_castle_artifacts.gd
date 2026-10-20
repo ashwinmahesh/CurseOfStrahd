@@ -4,8 +4,8 @@ extends TestCase
 ## puts them, and their prices.
 
 const ICON := "icon_of_ravenloft"
-const THIGHBONE := "saint_markovias_thighbone__mace"
-const STAFF := "gulthias_staff__quarterstaff"
+const THIGHBONE := "saint_markovias_thighbone"
+const STAFF := "gulthias_staff"
 
 
 func _comp() -> Compendium:
@@ -55,12 +55,25 @@ func test_the_three_items_are_book_items_checked_twice() -> void:
 	assert_eq(str(MagicItems.charges(staff)["when"]), "dusk")
 
 
-func test_the_three_are_priced_by_the_table_and_never_sold() -> void:
+func test_the_three_are_unsellable_story_items_like_the_sunsword() -> void:
 	var t: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/treasure/magic_prices.json"))
-	for id: String in [ICON, "saint_markovias_thighbone", "gulthias_staff"]:
-		assert_true((t["items"] as Dictionary).has(id), "%s is priced" % id)
+	var st := StoryState.new()
+	for id: String in [ICON, THIGHBONE, STAFF]:
+		var d := _comp().item_data(id)
 		assert_eq(str((t["excluded"] as Dictionary).get(id, "")), "story", "%s is a story item, off the shelves" % id)
-		assert_true(float(_comp().item_data(id)["cost_gp"]) > 0.0, "%s has a price to sell it at" % id)
+		assert_false((t["items"] as Dictionary).has(id), "%s has no price in the table, as the Sunsword has none" % id)
+		assert_eq(float(d["cost_gp"]), 0.0, "%s is worth no coin" % id)
+		assert_true(bool(d.get("quest_locked", false)), "%s can't be sold, dropped or stashed" % id)
+	# No merchant who buys magic items takes one off the party.
+	var buyers := 0
+	for npc: Dictionary in _comp().all("npcs"):
+		var nid := str(npc["id"])
+		if not Trade.buys_magic(st, nid):
+			continue
+		buyers += 1
+		for id: String in [ICON, THIGHBONE, STAFF]:
+			assert_eq(st.shop_offer(nid, id), -1.0, "%s doesn't buy %s" % [nid, id])
+	assert_true(buyers > 5, "merchants who buy magic items were checked: %d" % buyers)
 
 
 # --- Saint Markovia's Thighbone ----------------------------------------------------------------------------

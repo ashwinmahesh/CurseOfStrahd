@@ -6,8 +6,9 @@
     "note": "A Curse of Strahd relic (the 2016 book), in our own words. Numbers checked against two sources that give the book's text, dnd5e.wikidot.com (Saint Markovia's Thighbone) and 5e.tools (CoS, Saint Markovia's Thighbone): a rare mace, attunement, the properties of a Mace of Disruption, crumbling to dust once a battle ends in which it hit a vampire or a vampire spawn; 4 lb. The Mace of Disruption's numbers are the game's own (DMG2024: 2d6 Radiant, 25 Hit Points, Wisdom DC 15, 20 ft of Bright Light and 20 ft of Dim Light), and 5e.tools lists the same for the thighbone. The Radiant light and the crumbling are in combat/item_specials.gd (`disruption`, `crumbles_on_vampire`). Rules text is in our own words; the flavour lines were drafted by Gemini through the ai-bridge (docs/story/castle_artifacts.md keeps the brief and the raw reply)."
   },
   "category": "weapon",
-  "weight_lb": 0,
-  "cost_gp": 8000,
+  "weight_lb": 4,
+  "cost_gp": 0,
+  "quest_locked": true,
   "magic": {
     "rarity": "rare",
     "attunement": true
@@ -16,13 +17,12 @@
   "treasure": {
     "random": false
   },
-  "template": {
-    "on": "weapon",
-    "items": [
-      "mace"
-    ],
-    "name": "Saint Markovia's Thighbone",
-    "default": "mace"
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d6",
+    "damage_type": "bludgeoning",
+    "properties": [],
+    "mastery": "sap"
   },
   "light": {
     "bright": 20,
