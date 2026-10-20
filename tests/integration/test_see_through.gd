@@ -350,3 +350,78 @@ func test_the_view_gives_it_the_rest_of_the_party_exploring_only() -> void:
 	v.in_combat = false
 	v.queue_free()
 	await _frames(1)
+
+
+# --- A piece that goes while it fades --------------------------------------------------------------------------
+# A piece freed while it was fading, or between the look that took it and the step that eases it (a place rebuilding its
+# rock, a place unloading), is let go: casting the freed object to a piece raised "Trying to cast a freed object" on every
+# step (the cave rock's fade brought it to every run that unloads a view).
+
+func test_a_piece_freed_mid_fade_is_let_go_quietly() -> void:
+	var s := _scene()
+	var root := s[0] as Node3D
+	var see := s[1] as SeeThrough
+	var wall := _wall(root, Vector3(0, 0, 3))
+	var other := _wall(root, Vector3(0, 0, 3.8))
+	see.look(Vector3.ZERO, Vector3(0, 6, 8))
+	see.step(0.1)
+	assert_true(wall.transparency > 0.0 and other.transparency > 0.0, "both on their way")
+	wall.free()
+	see.step(0.1)
+	assert_eq(see._fading.size(), 1, "only the one still there is kept")
+	see.step(1.0)
+	assert_true(is_equal_approx(other.transparency, SeeThrough.FADED), "and it goes on fading")
+	root.queue_free()
+
+
+func test_a_piece_freed_between_the_look_and_the_step_is_not_taken() -> void:
+	var s := _scene()
+	var root := s[0] as Node3D
+	var see := s[1] as SeeThrough
+	var wall := _wall(root, Vector3(0, 0, 3))
+	see.look(Vector3.ZERO, Vector3(0, 6, 8))
+	assert_true(not see._goal.is_empty(), "it was taken")
+	wall.free()
+	see.step(0.1)
+	assert_true(see._fading.is_empty(), "and not kept once it was freed")
+	root.queue_free()
+
+
+func test_closing_the_view_with_a_freed_piece_in_it() -> void:
+	var s := _scene()
+	var root := s[0] as Node3D
+	var see := s[1] as SeeThrough
+	var wall := _wall(root, Vector3(0, 0, 3))
+	var other := _wall(root, Vector3(0, 0, 3.8))
+	see.look(Vector3.ZERO, Vector3(0, 6, 8))
+	see.step(1.0)
+	wall.free()
+	root.remove_child(see)
+	assert_eq(other.transparency, 0.0, "what is left is whole again")
+	see.free()
+	root.queue_free()
+
+
+## A whole view going while pieces of it fade leaves no error.
+func test_a_view_unloading_mid_fade_leaves_no_errors() -> void:
+	var v := _view("tsolenka_pass_guard_tower")
+	await _frames(2)
+	var see := v.get_node_or_null("SeeThrough") as SeeThrough
+	assert_true(see != null)
+	var piece: GeometryInstance3D = null
+	for n in get_tree().get_nodes_in_group(SeeThrough.GROUP):
+		if v.is_ancestor_of(n) and n is MeshInstance3D and (n as MeshInstance3D).mesh != null:
+			piece = n as GeometryInstance3D
+			break
+	assert_true(piece != null, "a wall to fade")
+	if piece == null:
+		v.queue_free()
+		return
+	var box := piece.global_transform * piece.get_aabb()
+	var feet := Vector3(box.get_center().x, box.position.y, box.get_center().z)
+	see.look(feet, feet + Vector3(0, 4, 6))
+	see.step(0.2)
+	assert_true(SeeThrough.faded(piece) > 0.0, "it is fading")
+	v.queue_free()
+	await _frames(3)
+	assert_true(not is_instance_valid(v), "the view is gone")

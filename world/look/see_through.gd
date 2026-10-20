@@ -79,7 +79,7 @@ func focus() -> Variant:
 func update(delta: float) -> void:
 	_since += delta
 	var at: Variant = focus()
-	if at is Vector3 and is_inside_tree() and rig.camera != null and rig.camera.is_inside_tree():
+	if at is Vector3 and is_inside_tree() and is_instance_valid(rig.camera) and rig.camera.is_inside_tree():
 		var eye := rig.camera.global_position
 		var count := get_tree().get_node_count_in_group(GROUP)
 		var moved := not eye.is_equal_approx(_seen_from) or not (at as Vector3).is_equal_approx(_seen_at) or count != _seen_count
@@ -178,15 +178,18 @@ static func _triangles(g: GeometryInstance3D) -> TriangleMesh:
 ## Eases every piece toward its goal: FADED while it is in the way, nothing once it is not; a piece that is whole again
 ## is let go.
 func step(delta: float) -> void:
-	for id: int in _goal:
-		if not _fading.has(id):
+	for id: int in _goal.keys():
+		if not is_instance_valid(_goal[id]):
+			_goal.erase(id)   # freed since the look (a place rebuilding its rock or unloading)
+		elif not _fading.has(id):
 			_fading[id] = [_goal[id], 0.0]
 	for id: int in _fading.keys():
 		var e := _fading[id] as Array
-		var g := e[0] as GeometryInstance3D
-		if not is_instance_valid(g):
+		# Asked of the Variant: casting a freed object to its class is an error of its own ("Trying to cast a freed object").
+		if not is_instance_valid(e[0]):
 			_fading.erase(id)
 			continue
+		var g := e[0] as GeometryInstance3D
 		var to := FADED if _goal.has(id) else 0.0
 		var a := move_toward(float(e[1]), to, delta * SPEED)
 		e[1] = a
@@ -198,9 +201,9 @@ func step(delta: float) -> void:
 ## Every piece back to solid.
 func clear() -> void:
 	for id: int in _fading:
-		var g := (_fading[id] as Array)[0] as GeometryInstance3D
-		if is_instance_valid(g):
-			set_fade(g, 0.0)
+		var piece: Variant = (_fading[id] as Array)[0]
+		if is_instance_valid(piece):
+			set_fade(piece as GeometryInstance3D, 0.0)
 	_fading.clear()
 	_goal = {}
 	_seen_count = -1
