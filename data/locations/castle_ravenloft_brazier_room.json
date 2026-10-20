@@ -193,7 +193,7 @@
       ],
       "kind": "examine",
       "label": "the hourglass",
-      "model": "glass_ring",
+      "model": "hourglass",
       "dialogue": "castle_ravenloft/larders_brazier:hourglass"
     },
     {

@@ -6293,6 +6293,17 @@
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a vrock, a hulking demon shaped like a hunched vulture-headed man: a bald, long-necked vulture's head with a hooked beak and red-rimmed eyes, mottled grey-brown scaly skin with ragged tufts of dark feathers at its shoulders, long wiry muscular arms ending in huge curved talons, bird-like taloned feet, and large ragged dark-feathered wings folded at its back. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "iron_golem",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/iron_golem_turnaround.png",
+      "sprites": "art/sprites/iron_golem/walk.tres",
+      "portrait": "art/portraits/iron_golem.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an iron golem, a huge hulking knight-shaped construct of riveted black iron plates, a closed great helm with a narrow slit glowing dull orange, one arm ending in a long heavy flat iron blade and the other a thick fist, a round furnace grille glowing faintly in its chest, thick pillar legs, no clothes, soot-black rust at the joints. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
     }
   ],
   "image_provider": "gemini"

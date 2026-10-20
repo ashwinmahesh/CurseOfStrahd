@@ -1001,5 +1001,9 @@
   "vrock": {"who": "a vrock, a vulture-headed demon",
     "attack": "talon rake",
     "windup": "rearing back with both taloned hands raised high above its head, wings half spread, beak open",
-    "strike": "lunging forward with both taloned hands raking down at the enemy, wings flared wide"}
+    "strike": "lunging forward with both taloned hands raking down at the enemy, wings flared wide"},
+  "iron_golem": {"who": "an iron golem",
+    "attack": "iron blade chop",
+    "windup": "the huge flat iron blade in its right hand raised high over its head, leaning back",
+    "strike": "the iron blade chopped down and across at the enemy, the whole body lurching forward"}
 }

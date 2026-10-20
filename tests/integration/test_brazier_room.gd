@@ -295,8 +295,11 @@ func test_the_wax_image_has_one_hit_point_and_the_knight_is_a_golem_with_the_pla
 	for t: Variant in block["traits"]:
 		absorbs = absorbs or str((t as Dictionary).get("absorb", "")) == "fire"
 	assert_true(absorbs)
-	assert_eq(str(block["art"]), "helmed_horror", "a stand-in until the golem's own sprite is paid for")
-	assert_true(ResourceLoader.exists("res://art/portraits/helmed_horror.png"), "so its portrait is the helmed horror's")
+	assert_false(block.has("art"), "it wears its own sprite now, not another creature's")
+	assert_true(ResourceLoader.exists("res://art/sprites/iron_golem/walk.tres"), "its walk sheet")
+	assert_true(ResourceLoader.exists("res://art/sprites/iron_golem/attack.tres"), "its attack sheet")
+	assert_true(ResourceLoader.exists("res://art/portraits/iron_golem.png"), "and its own portrait")
+	assert_eq(CombatToken.height_for("iron_golem"), 2.6, "drawn 2.6 high (a Large figure of about 12 ft)")
 
 
 # --- The stones -------------------------------------------------------------------------------------------------------

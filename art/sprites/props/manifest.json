@@ -6110,6 +6110,17 @@
       "mount": "wall",
       "source": "art/generated/props/sheet_amber_props_b.png",
       "slot": 3
+    },
+    "hourglass": {
+      "file": "art/sprites/props/hourglass.png",
+      "width_px": 252,
+      "height_px": 364,
+      "world_height": 1.4,
+      "world_width": 0.97,
+      "pixel_size": 0.003911,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_hourglass.png"
     }
   }
 }

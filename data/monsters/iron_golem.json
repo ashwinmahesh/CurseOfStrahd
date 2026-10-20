@@ -10,8 +10,6 @@
   "size": "large",
   "type": "construct",
   "alignment": "unaligned",
-  "art": "helmed_horror",
-  "art_height": 2.6,
   "ac": 20,
   "initiative": 9,
   "hp": {
