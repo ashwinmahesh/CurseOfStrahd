@@ -21,7 +21,10 @@
       "field": true,
       "combat": false,
       "custom": "read_tome",
-      "text": "A few hours with the book: its story goes into the codex, and Strahd knows it has been read."
+      "params": {
+        "dialogue": "strahd/tome:read"
+      },
+      "text": "A few hours with the book: its story goes into the codex, and Strahd knows it has been read. Every reading plays it over the book's pictures, in Strahd's own words."
     }
   ],
   "codex": {

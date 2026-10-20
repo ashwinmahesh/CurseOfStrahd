@@ -36,8 +36,19 @@ scenes and 24 captions (data `more`) on sepia memory pictures: `tome_conqueror` 
 be loved for himself), `tome_brothers` (Sergei, Tatyana, the watching), `tome_refused` (he offers his hand and his medals;
 she refuses him kindly, her eyes on Sergei), `tome_wedding` (the climb to the Amber Temple, the terms, the wedding day),
 `tome_wall` (her fall, the arrows, waking changed) and `tome_again` (her rebirths, the ledger, the torn last entry). The
-captions were drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/), and stay
-unvoiced. Escher's first meeting shows the tall mirror behind him with the same armchair
+captions were drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/).
+**Since 2026-10-20** (owner: "a mix of Strahd's voice and the narrator, mostly Strahd's with the narrator filling in
+information that he didn't write", "highlight part of his jealousy for his brother comes from the fact that he is now
+older and had to work for everything while his younger brother is getting the love he always wanted", "I should be able
+to re-trigger that cutscene every time I read the tome") the reading is a conversation, `strahd/tome:read`
+(`narrative/strahd/tome.dialogue`), over the same six pictures with `cutscene <id>` beats: fifteen new Strahd lines in
+his own first-person words, ten of the first script's Narrator lines kept word for word (they were already voiced) for
+what he didn't write, and one new closing Narrator line. It plays every time the Tome is read (the power's params
+`dialogue`, `FieldItems` returns it, the inventory asks `GameRoot.play_item_conversation`). The pictures' music moved from
+`place_scenes` to `scenes`. The Strahd lines and the closing line are unvoiced until the voice thread does them; the other
+fourteen first-script captions are no longer played (their keys stay in `narrative/narrator/treasures.dialogue` so the
+clips keep a line); the drafts and what was edited are in docs/story/drafts/tome-strahd-voice/. Escher's first meeting
+shows the tall mirror behind him with the same armchair
 empty (`escher_mirror`, `castle_ravenloft/spires_escher ~ first`), one picture by the owner's word the same day: the
 one conversation that plays a single picture (test_cutscenes `ONE_PICTURE`).
 
@@ -57,10 +68,12 @@ one conversation that plays a single picture (test_cutscenes `ONE_PICTURE`).
   Tarokka treasure is found: in a conversation (`tarokka give`) its picture comes before the notice, and among a
   chest's or a fight's spoils it shows before the loot window opens.
 - `trigger` can also be `read:<magic item>`: the item's reading plays it (`FieldItems.use` returns `cutscene`, the
-  inventory asks `GameRoot.play_item_cutscene`; the first reading of the Tome of Strahd). Its first caption is the
-  Narrator's line for that key, and what the reading said is narrated when it closes.
+  inventory asks `GameRoot.play_item_cutscene`). Its first caption is the Narrator's line for that key, and what the
+  reading said is narrated when it closes. No cutscene uses it now: the Tome of Strahd's reading was the one, and is a
+  conversation since 2026-10-20 (a power's params `dialogue`, `GameRoot.play_item_conversation`; the reach check in
+  tools/data/story_reach.py walks it).
 - `more`: further Narrator keys whose lines read one after another over the same picture, a click each (the trigger's
-  line or `caption` first, then these: the Tome's scenes read three to five captions each).
+  line or `caption` first, then these).
 - `once`: the picture shows only the first time its trigger fires (`_cutscene/<id>` in the story's flags). Every
   `enter:` and `find:` trigger has it.
 - `then`, `caption`: the scene after this one (owner rule, 2026-10-14: every cutscene is at least two scenes). `then`
@@ -113,8 +126,9 @@ own mood in `art/audio.json` `scenes` (cutscene id: mood). It plays from the pic
 over whoever speaks after, and the place's own music comes back when the conversation ends (`DialogueUI.scene_shown`,
 `GameRoot._scene_music`). A fight the conversation starts brings its own. The owner's music audit (2026-10-17,
 `docs/assets/music_audit.md`) picked them, from recordings already in the game. Place cutscenes (`enter:`, `examine:`)
-keep the place's music, except the ones `art/audio.json` `place_scenes` names (the Tome of Strahd's scenes play
-`sorrow` until the cutscene closes, and the place's own music comes back: `GameRoot._cutscene_music`).
+keep the place's music, except the ones `art/audio.json` `place_scenes` names (none now: the Tome of Strahd's pictures
+played `sorrow` there until 2026-10-20, when its reading became a conversation and they moved to `scenes`; the place's own
+music comes back when a place cutscene closes: `GameRoot._cutscene_music`).
 
 ## Code
 - `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`, and
@@ -376,13 +390,13 @@ Both play in `castle_ravenloft/chapel_ireena` (the party small and hooded, from 
 | thirst_passes | Where the Thirst Goes | `endings/new_darklord` (a later beat, ~ start) | 1 |
 | three_brides | Three Brides | `castle_ravenloft/court_brides` | 1 |
 | tinker_freed | Seven Years at the Front of That Thing | `svalich_road/the_tinkers_wagon` (a later beat, ~ freed) | 1 |
-| tome_again | Generation After Generation | the scene after `tome_wall` (`then`) | 1 |
-| tome_brothers | The Brother and the Girl | the scene after `tome_conqueror` (`then`) | 1 |
-| tome_conqueror | The Conqueror | `read:tome_of_strahd` | 1 |
+| tome_again | Generation After Generation | `strahd/tome` ~ read (the sixth picture) | 1 |
+| tome_brothers | The Brother and the Girl | `strahd/tome` ~ read (the second picture) | 1 |
+| tome_conqueror | The Conqueror | `strahd/tome` ~ read (the first picture; reading the Tome, every time) | 1 |
 | tome_page | The First Page | the scene after `treasure_tome` (`then`) | 1 |
-| tome_refused | What He Offered | the scene after `tome_brothers` (`then`) | 1 |
-| tome_wall | The Castle Wall | the scene after `tome_wedding` (`then`) | 1 |
-| tome_wedding | The Wedding Day | the scene after `tome_refused` (`then`) | 1 |
+| tome_refused | What He Offered | `strahd/tome` ~ read (the third picture) | 1 |
+| tome_wall | The Castle Wall | `strahd/tome` ~ read (the fifth picture) | 1 |
+| tome_wedding | The Wedding Day | `strahd/tome` ~ read (the fourth picture) | 1 |
 | tower_lamp | Someone Waiting Up | the scene after `vr_tower` (`then`) | 1 |
 | treasure_sword | The Sunsword | `find:sunsword` | 1 |
 | treasure_symbol | The Holy Symbol of Ravenkind | `find:holy_symbol_of_ravenkind` | 1 |

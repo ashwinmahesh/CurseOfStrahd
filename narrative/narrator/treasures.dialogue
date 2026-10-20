@@ -10,11 +10,13 @@
 ~ scene:tome_page
 | The first page is in a hand you know from his letters. The candle beside you leans toward it, as if it, too, wanted to be read.
 
-# The Tome of Strahd, read through (docs/ui/cutscenes.md `read:<item>`): six scenes, 24 captions, played the first time the
-# Tome is read. Drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/; first script
-# 2026-10-18, the fuller second one the same night after the owner asked for more of his motives, Tatyana and her rebirths).
+# The Tome of Strahd's first script (docs/story/drafts/two-cutscenes/; first draft 2026-10-18, the fuller second one the same
+# night after the owner asked for more of his motives, Tatyana and her rebirths): six scenes, 24 Narrator captions, played
+# the first time the Tome was read. Since 2026-10-20 the reading is a conversation (narrative/strahd/tome.dialogue, every
+# time it is read): Strahd tells most of it in his own words, and ten of the lines below stay in it word for word. The
+# other keys here are no longer played; they stay so that each voiced clip (audio/voice/narrator) keeps its line.
 # The Amber Temple vault keeps the line that he bargained to stop growing older than her: the Tome must not say it first.
-# Nothing here names Ireena. All of it is unvoiced.
+# Nothing here names Ireena.
 
 ~ read:tome_of_strahd
 | By candlelight you read the steady script of a prince who took this valley four hundred years ago, the elder son of the warrior King Barov and Queen Ravenovia. He calls himself "a prince of the western wars" without pride or regret. He writes like a man tallying the winter stores of a fortress.

@@ -1759,14 +1759,13 @@
     "church_vigil": "sacred",
     "arabelle_shore": "camp",
     "amber_pact": "somber",
-    "pact_two_books": "somber"
-  },
-  "place_scenes": {
+    "pact_two_books": "somber",
     "tome_conqueror": "sorrow",
     "tome_brothers": "sorrow",
+    "tome_refused": "sorrow",
     "tome_wedding": "sorrow",
     "tome_wall": "sorrow",
-    "tome_refused": "sorrow",
     "tome_again": "sorrow"
-  }
+  },
+  "place_scenes": {}
 }

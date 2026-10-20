@@ -1407,6 +1407,26 @@ func play_item_cutscene(key: String, after: String = "") -> bool:
 	return true
 
 
+## A conversation an item's reading plays (`dialogue` in the power's result: the Tome of Strahd, each time it is read):
+## the inventory gives way to it, and `after` is what the HUD says when it ends. False, and nothing shown, when it can't
+## start (another conversation is open, or the node is missing).
+func play_item_conversation(ref: String, after: String = "") -> bool:
+	if dialogue != null:
+		return false
+	close_screen()
+	start_dialogue(ref, "")
+	if dialogue == null:
+		return false
+	if after != "":
+		# A beat after the world wakes: its clock may narrate the weather, and the reading's own words should be the
+		# ones left up (as for play_item_cutscene).
+		dialogue.ended.connect(func(_combat: String) -> void:
+			await get_tree().create_timer(0.4, true, false, true).timeout
+			if is_instance_valid(hud):
+				hud.narrate(after))
+	return true
+
+
 ## A place cutscene's picture with its own music (art/audio.json "place_scenes", as a conversation's "scenes": _scene_music)
 ## plays until the cutscene closes; play_cutscene brings the place's own back.
 func _cutscene_music(cutscene_id: String) -> void:

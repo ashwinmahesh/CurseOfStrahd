@@ -1,7 +1,7 @@
 {
   "id": "tome_conqueror",
   "title": "The Conqueror",
-  "summary": "The Tome of Strahd, first pictures of the book: young, living Strahd alone on a ridge at dawn above the valley his army has just taken, his back to the cheering soldiers. Plays the first time the Tome is read.",
+  "summary": "The Tome of Strahd, first pictures of the book: young, living Strahd alone on a ridge at dawn above the valley his army has just taken, his back to the cheering soldiers. The first of the six pictures the Tome's reading plays under its conversation (narrative/strahd/tome.dialogue), every time it is read.",
   "images": [
     {
       "image": "tome_conqueror",
@@ -11,13 +11,5 @@
   "focus": [
     0.5,
     0.5
-  ],
-  "trigger": "read:tome_of_strahd",
-  "once": true,
-  "more": [
-    "scene:tome_conqueror_2",
-    "scene:tome_conqueror_3",
-    "scene:tome_conqueror_4"
-  ],
-  "then": "tome_brothers"
+  ]
 }

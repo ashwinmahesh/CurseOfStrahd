@@ -1,3 +1,5 @@
+> **2026-10-20:** the Tome's captions below are the first script. The reading is now a conversation in Strahd's own voice with ten of these Narrator lines kept: see docs/story/drafts/tome-strahd-voice/.
+
 # Two cutscenes: Gemini drafts (owner rule, 2026-10-18)
 
 The Tome of Strahd's captions (narrative/narrator/treasures.dialogue, keys `read:tome_of_strahd` and `scene:tome_*`):

@@ -294,6 +294,7 @@ class Story:
             self._locations()
             self._travel()
             self._events()
+            self._readings()
             self._closures()
             if not self.changed:
                 return self
@@ -478,6 +479,14 @@ class Story:
             for e in tb.get("entries", []):
                 if e.get("dialogue") and self.possible(e.get("when", "")):
                     self.walk_ref(e["dialogue"], f"a random encounter on a {tid} road")
+
+    def _readings(self):
+        """An item whose reading plays a conversation (a power's params `dialogue`: the Tome of Strahd) once the party can
+        have the item."""
+        for iid, item in _table(self.root, "magic_items").items():
+            if ("item", iid) in self.facts:
+                for pw in item.get("powers", []):
+                    self.walk_ref((pw.get("params") or {}).get("dialogue"), f"reading {iid}")
 
     def _events(self):
         for sid, sc in self.schedule.items():

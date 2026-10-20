@@ -11,11 +11,5 @@
   "focus": [
     0.5,
     0.5
-  ],
-  "caption": "scene:tome_wall",
-  "more": [
-    "scene:tome_wall_2",
-    "scene:tome_wall_3"
-  ],
-  "then": "tome_again"
+  ]
 }
