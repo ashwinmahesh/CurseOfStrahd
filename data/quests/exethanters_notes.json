@@ -26,5 +26,13 @@
       "objectives": [],
       "ends": "failure"
     }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "from": ["asked"],
+      "when": "flag.exethanter_phylactery == \"smashed\"",
+      "old_saves": true
+    }
   ]
 }

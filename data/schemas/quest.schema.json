@@ -66,6 +66,10 @@
             "type": "string",
             "description": "The journal's amber line while the quest stands at a stage the rule applies to."
           },
+          "warn_when": {
+            "type": "string",
+            "description": "A condition the warning also waits for (the danger has shown itself), else it shows at once."
+          },
           "old_saves": {
             "type": "boolean",
             "description": "Also run when a save loads, for a stuck state an earlier version let a party reach (journal only, no notice). Clocks and departures never run on load."

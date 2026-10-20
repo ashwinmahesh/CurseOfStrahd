@@ -971,6 +971,10 @@ def story_checks(data, errors, need):
             for qid in dialogue_lint.conditions_quest_days(expr):
                 if qid not in data["quests"]:
                     errors.append(f"{where}: quest_days.{qid}: no such quest")
+            # `fallen:<hero>` and `gifted:<hero>` name a hero by pregen id (story/story_conditions.gd).
+            for kind, hero in dialogue_lint.conditions_heroes(expr):
+                if hero not in data["pregens"]:
+                    errors.append(f"{where}: {kind}:{hero}: no such hero (a pregen id)")
 
     # A hidden achievement's `when` reads flags like any condition (data/achievements, core/achievements.gd).
     for pid, ach in sorted(data.get("achievements", {}).items()):
@@ -1306,6 +1310,11 @@ def story_checks(data, errors, need):
             for problem in dialogue_lint.condition_problems(rule.get("when", "")):
                 errors.append(f"{w}: when: {problem}")
             cond(rule.get("when", ""), f"data/quests/{qid}.json")
+            if "warn_when" in rule and not rule.get("warn"):
+                errors.append(f"{w}: warn_when without a warn")
+            for problem in dialogue_lint.condition_problems(rule.get("warn_when", "")):
+                errors.append(f"{w}: warn_when: {problem}")
+            cond(rule.get("warn_when", ""), f"data/quests/{qid}.json")
     for fid, wh in sorted(flags_read.items()):
         if fid not in flags:
             errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")

@@ -9,6 +9,8 @@ extends RefCounted
 ## `tarokka.drawn`, `tarokka.sword == swords_3`, `tarokka.ally.npc == ezmerelda` (ADR 0010), `tarokka.enemy.roam`,
 ## `final_room:<room>` (the room Strahd waits in: the enemy card's, or the roam pick for `mists`, ADR 0014), `guest:ireena`,
 ## `treasure_at:<place>` (a treasure the reading put there, not yet found) and `gift:<dark gift>` (ADR 0011),
+## `gifted:liriel_dawnsong` (that hero, by pregen id, has taken a dark gift), `fallen:thistle` (that hero is lost for good:
+## StoryState.fallen, the altar beneath Death House or the Deck of Many Things),
 ## `approval.thistle >= close` (a companion's approval tier, or a score; story/approval.gd),
 ## `attention >= marked` (Strahd's attention, a number or a tier; story/strahd_presence.gd), `weather == fog` (where
 ## the party is; story/weather.gd), `indoors` (the party's map is under a roof or a dungeon: CampSite.setting; a night's
@@ -209,6 +211,18 @@ func _term() -> bool:
 	if t.begins_with("gift:"):
 		for ch in st.party:
 			if ch.dark_gifts().has(t.substr(5)):
+				return true
+		return false
+	if t.begins_with("gifted:"):
+		# A hero who has taken a dark gift, by pregen id (a custom hero never answers for one: member_matches).
+		for ch in st.party:
+			if StoryState.member_matches(ch, "name:" + t.substr(7)) and not ch.dark_gifts().is_empty():
+				return true
+		return false
+	if t.begins_with("fallen:"):
+		# A hero lost for good (StoryState.lose_member), by pregen id: their personal quest can't be finished.
+		for f: Dictionary in st.fallen:
+			if str(f.get("id", "")) == t.substr(7):
 				return true
 		return false
 	if t.begins_with("spell:"):

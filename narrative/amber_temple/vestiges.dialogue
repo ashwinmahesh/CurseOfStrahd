@@ -21,6 +21,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_zantras: Do not walk past the stage, my darlings, when the whole hall was built for your entrance. Step into the light and let me see your faces.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ fekre_call
@@ -29,6 +34,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_fekre: Hush now, sweetling, I can hear you shivering all the way through the glass. Let me wrap you up where the frost can never reach your bones.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ taar_haak_call
@@ -37,6 +47,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_taar_haak: BLOOD ON YOUR BOOTS, WE SMELL IT! WE TAKE THE TALL ONE. No, the broad one hits harder. Step up, step up, show us your teeth!
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ shami_amourae_call
@@ -45,6 +60,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_shami_amourae: You carry such heavy iron on your shoulders, darling, and nobody has thanked you once. Lay your head against the glass and breathe with me.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ yog_call
@@ -53,6 +73,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_yog: Stone cracks. Flesh tears. Still you... walk. Come. Stand. Learn how a mountain... holds.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ drizlash_call
@@ -61,6 +86,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_drizlash: I see, I see, I see your shadows creeping across the frost. You never look up at the ceiling, do you, never look inside the walls?
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ khirad_call
@@ -69,6 +99,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_khirad: Forgive me, I wept for your names long before your mothers bore you. The dead stars already know which of you will step closer.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ norganas_call
@@ -77,6 +112,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_norganas: You carry a memory that aches, right behind your eyes... Come closer, and I will rub it clean before you even recall... what was it?
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ savnok_call
@@ -85,6 +125,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_savnok: ...Your tongue is loose, and your friends are listening... Press your ear to the lid, and tell no one what rattles inside you...
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ seriach_call
@@ -93,6 +138,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_seriach: Easy, boys, easy, let the two-legged meat catch its breath first. You walk like hunters, yet you smell like the stag at the end of the run.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ sykane_call
@@ -101,6 +151,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_sykane: Please, your breath steams so sweetly, and my belly has been hollow for an age. Stand near the glass and let me drink your warmth.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ tarakamedes_call
@@ -109,6 +164,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_tarakamedes: Every step you take only carries your bones a little nearer to the dirt. Come look upon the dragon who waits at the bottom of all things.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ tenebrous_call
@@ -117,6 +177,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_tenebrous: Shh, put out that dreadful light before it blinds us both. Your eyes are aching from the glare, so come rest them in the dark.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ yrrga_call
@@ -125,6 +190,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_yrrga: Poor little things, walking through a slaughterhouse with your eyelids stitched together. Look into my pupil, if you dare see what is actually holding your hand.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ zhudun_call
@@ -133,6 +203,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_zhudun: How small your lanterns are, guttering in the wind like dying sparks. Gather round my glass, you freezing things, and remember what a sky looked like.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 ~ dahlver_nar_call
@@ -141,6 +216,11 @@ set amber_calls_begun
 Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
 endif
 vestige_dahlver_nar: Teeth, teeth, teeth, such lovely straight teeth you brought us today. Open your mouths, open your mouths, open your mouths and let us hear them click.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 -> END
 
 # ================================================================================================ The ring of amber

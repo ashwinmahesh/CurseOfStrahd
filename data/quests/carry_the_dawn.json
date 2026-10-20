@@ -59,10 +59,36 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "Liriel Dawnsong is gone from us, and she will not sing the dawn into Castle Ravenloft's chapel. The valley's morning is no closer than when we came.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
+      "id": "dawn_lost",
+      "journal": "Liriel took what the amber offered, and the dawn she was carrying for Castle Ravenloft's chapel went out there in the cold.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "the_dawn",
       "journal": "At the defiled altar of Castle Ravenloft, Liriel sang the morning hymn the way the novices sing the sun up, and for the length of the hymn real dawn came through the chapel windows, gold on the dust. It went out when she stopped. It came, though. It came.",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:liriel_dawnsong",
+      "old_saves": true
+    },
+    {
+      "stage": "dawn_lost",
+      "when": "gifted:liriel_dawnsong",
+      "warn": "The things in the amber would gladly sell Liriel a darker fire.",
+      "warn_when": "visited:amber_temple_entrance",
+      "old_saves": true
     }
   ]
 }

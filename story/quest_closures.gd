@@ -8,6 +8,7 @@ extends RefCounted
 ##   from       the open stages the rule applies to (default: every open stage of the quest).
 ##   leave      a region id: the rule fires only as the party leaves that region, with `when` holding.
 ##   warn       the journal's amber line while the quest stands at a stage the rule applies to (QuestLog `warn`).
+##   warn_when  a condition the warning also waits for (the danger shows itself: the temple's first voice), else always.
 ##   old_saves  also run when a save loads, for a stuck state an earlier version let a party reach (journal only, no
 ##              notice). Clocks never run on load: an old save has no honest start time.
 ## sweep() is called wherever the story can have moved: after a conversation or a fight, when the clock moves, on
@@ -74,11 +75,30 @@ static func region_left(from_id: String, region: String) -> String:
 	return from_region if from_region != region else ""
 
 
-## The journal's warning for an open quest: the first `warn` among the rules that apply at its stage, or "".
+## The journal's warning for an open quest: the first `warn` among the rules that apply at its stage (and whose
+## `warn_when` holds), or "".
 static func warning(st: StoryState, quest_id: String) -> String:
 	if st.quest_stage(quest_id) == "" or st.quest_ended(quest_id):
 		return ""
 	for rule: Dictionary in rules(quest_id):
-		if str(rule.get("warn", "")) != "" and applies(rule, st.quest_stage(quest_id)):
+		if str(rule.get("warn", "")) != "" and applies(rule, st.quest_stage(quest_id)) \
+				and StoryConditions.check(str(rule.get("warn_when", "")), st):
 			return Tarokka.fill(str(rule["warn"]), st)
 	return ""
+
+
+## The open quests that picking `ch` would close: those with a rule, at their stage, that names the hero with `term`
+## (`gifted` for a dark gift, `fallen` for the altar's sacrifice), for the picker to mark (F4's broken seal). Names, in
+## the journal's words.
+static func closed_by_pick(st: StoryState, ch: Character, term: String) -> Array[String]:
+	var out: Array[String] = []
+	var re := RegEx.create_from_string("\\b%s:([a-z][a-z0-9_]*)" % term)
+	for quest_id: String in st.quests.keys():
+		if st.quest_stage(quest_id) == "" or st.quest_ended(quest_id):
+			continue
+		for rule: Dictionary in rules(quest_id):
+			var m := re.search(str(rule.get("when", "")))
+			if m != null and applies(rule, st.quest_stage(quest_id)) and StoryState.member_matches(ch, "name:" + m.get_string(1)):
+				out.append(Compendium.shared().display_name("quests", quest_id))
+				break
+	return out

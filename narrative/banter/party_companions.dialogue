@@ -48,14 +48,14 @@ endif
 -> END
 
 ~ banter_warmth
-if quest.cold_prayers >= warmth
+if quest.cold_prayers >= warmth and name:hedda_ironvow
 interject name:tamsin_tealeaf: Hedda's humming. I didn't know Hedda hummed. Hedda, you're humming.
 interject name:hedda_ironvow: Mm. I'm allowed. It's a hymn. Mostly.
 endif
 -> END
 
 ~ banter_aurel_alive
-if quest.aurels_last_chapter >= still_reading
+if quest.aurels_last_chapter >= still_reading and name:silvain_aster
 interject name:ilse_varga: The scholar. Your friend. We get him out. That's the plan, start to finish.
 interject name:silvain_aster: That is the shortest plan I have ever heard, and I find I have nothing to add. Thank you, Ilse.
 endif

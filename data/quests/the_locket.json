@@ -50,6 +50,12 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "We lost Tamsin Tealeaf before he learned who the woman in the silver locket is. Her face stays shut inside it, and she will not call his name again.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "given_to_sergei",
       "journal": "At the Pool of the White Sun, Tamsin gave the locket back to the one who gave it first. Sergei's hand closed round it under the water, and the dreams stopped. Whatever Strahd meant the locket to do, it is out of his reach now, and the thief kept nothing for himself.",
       "objectives": [],
@@ -81,6 +87,13 @@
       "journal": "In the devil's own hall, with the devil watching, Tamsin dropped the locket into the fire. Strahd said nothing at all. It is the only time anyone has seen him with nothing to say.",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:tamsin_tealeaf",
+      "old_saves": true
     }
   ]
 }

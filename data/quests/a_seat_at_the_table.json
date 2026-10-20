@@ -50,10 +50,23 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "Ratatouille is gone, and he will never stand up at our fire and call himself a wizard. The supper he meant to cook for us stays uncooked.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "his_own_table",
       "journal": "Ratatouille cooked for his friends at the fire, a proper supper out of almost nothing, and when they'd eaten he stood up and announced himself: 'Ratatouille. Cook. And wizard. In that order.' Then he sat down and went pink. Everyone sat with him.",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:ratatoille",
+      "old_saves": true
     }
   ]
 }

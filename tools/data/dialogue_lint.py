@@ -84,7 +84,7 @@ def conditions_flags(expr):
 # a warning and false at run time, so a condition in new data (a quest's `closes`) is checked against them.
 CONDITION_WORDS = {"true", "false", "night", "day", "indoors", "hour", "attention", "weather", "gold", "level", "check.last"}
 CONDITION_DOTTED = {"flag", "quest", "quest_days", "days_since", "attitude", "approval", "tarokka"}
-CONDITION_COLONED = {"final_room", "guest", "treasure_at", "gift", "spell", "at", "region", "option", "visited", "leader", "item",
+CONDITION_COLONED = {"final_room", "guest", "treasure_at", "gift", "gifted", "fallen", "spell", "at", "region", "option", "visited", "leader", "item",
                      "class", "species", "background", "tag", "name", "knows"}
 RE_CONDITION_TOKEN = re.compile(r'\(|\)|==|!=|>=|<=|=|>|<|"[^"]*"|[^\s()=!<>]+')
 CONDITION_OPS = {"==", "!=", ">=", "<=", "=", ">", "<"}
@@ -149,6 +149,14 @@ def condition_problems(expr):
         if i < len(toks):
             problems.append(f"'{toks[i]}' is left over (an unmatched ')' or a missing and/or)")
     return problems
+
+
+RE_HERO_REF = re.compile(rf"\b(fallen|gifted):({ID})")
+
+
+def conditions_heroes(expr):
+    """[(kind, hero id)] for each `fallen:<hero>` and `gifted:<hero>` term."""
+    return RE_HERO_REF.findall(expr or "")
 
 
 def conditions_quest_days(expr):

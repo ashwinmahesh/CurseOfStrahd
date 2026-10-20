@@ -23,6 +23,11 @@ rewritten for the six, so in an old save they speak only in their own quest scen
   so when the hero takes a pregen's place that pregen's quest never starts and nothing of it shows.
 - **Stages only move forward.** Every `quest` statement outside the opening is guarded by
   `if not (quest.<id> >= <stage>)`, so finding things out of order never rolls the journal back.
+- **Lost with the hero** (Side Quest Failure Plan F2). Every quest here has a `lost` failure ending, placed after the open
+  stages and before every other ending, so `quest.<id> >= <a success>` never reads a lost hero as a finished one. A
+  `closes` rule (`fallen:<pregen id>`) sets it when the hero is lost for good (the altar beneath Death House, the Deck of
+  Many Things), in play or as an older save loads; a hero dead and waiting to be raised keeps the quest. A check of an
+  open stage without the hero's `name:` beside it must rule `lost` out (the Van Richten's Tower travel place does).
 - **Camp talks.** After a Long Rest a companion may ask for a word (`story/camp_talk.gd`, `narrative/camp/<who>.dialogue`).
   A talk is a node whose first statement is `if <condition>`; it's offered once the condition holds and plays once.
   In the wild the party makes camp and walks up to whoever wants a word, the companions waiting at camp included
@@ -70,7 +75,8 @@ of her own heaven, sewing the devil a bride.
 | `the_fall` | The Abbot reveals the bride | abbot:bride |
 | (choice) | "Do you still remember the sun?" (`liriel_asked_abbot`) opens a way to his repentance at the unveiling | abbot menu, companions/dawn:sun, :unveil |
 | `faith_kept` | After the Abbot's story ends, any ending | camp/liriel:talk_faith |
-| `the_dawn` | She sings real dawn into Castle Ravenloft's chapel (prop `crg_chapel_dawn_step_liriel`) | dawn:chapel |
+| `dawn_lost` (failure) | She takes a dark gift herself, at the Amber Temple (`gifted:liriel_dawnsong`; Ashwin, 2026-10-19). She says so at the first vestige's voice (`liriel_amber_warned`), the journal warns once the temple has been seen, and the gift picker marks her name. The altar step then waits only for `faith_kept` | closes rule; vestiges `*_call`, vosk:offer |
+| `the_dawn` | She sings real dawn into Castle Ravenloft's chapel (prop `crg_chapel_dawn_step_liriel`, at `faith_kept`) | dawn:chapel |
 
 Madam Eva: truth "she's afraid of the dark"; question "will dawn come?"
 

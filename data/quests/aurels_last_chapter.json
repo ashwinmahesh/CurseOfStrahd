@@ -60,10 +60,23 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "We went on without Silvain Aster. He will never find Aurel Mirescu, and whatever Aurel walked into the mists to read stays unread.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "the_last_page",
       "journal": "Silvain found Aurel by the fire in the devil's study, behind the window that never goes dark, and closed the book for him. However the chapter ended, Aurel did not finish it alone. Silvain finally gave him back his good pen. They intend to argue about who owed whom for a very long time.",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:silvain_aster",
+      "old_saves": true
     }
   ]
 }

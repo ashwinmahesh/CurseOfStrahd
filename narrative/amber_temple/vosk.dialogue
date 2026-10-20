@@ -125,6 +125,11 @@ Narrator: It's empty amber. It's the emptiest thing you have ever seen, and you 
 ~ offer
 Vosk: This. The Thirst lives in your prince, but its amber still fits. Lay one of you down in it for a moment, and the Thirst will know them too. A second vessel. A rival. An heir. Call it what you like.
 Vosk: Think of it: as strong as he is, as hard to kill, never growing old. The one thing in this valley he couldn't simply take. And I'd have my fee, and we'd all be happy.
+if name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= lost) and not flag.liriel_amber_warned
+# Carry the Dawn ends if she takes a dark gift (dawn_lost); she says so the first time a vestige speaks, once.
+set liriel_amber_warned
+interject name:liriel_dawnsong: Be still, and promise them nothing. A light I bought from this amber would not be the dawn I was sent to carry.
+endif
 interject guest:kasimir_velikov: My sister asked for far less than this, once. Look what it made of her.
 * We'll take nothing from you. -> refuse
 * [if flag.vosk_named] Ashkarreth. We know your name. -> named

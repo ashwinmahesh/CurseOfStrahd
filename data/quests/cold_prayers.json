@@ -59,10 +59,23 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "We lost Hedda Ironvow, and she will never carry the silver raven's sun into the devil's chapel. Her dream of a dying sun ends here with us.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "dawn",
       "journal": "Hedda carried the raven's sun into the devil's house, and in his own chapel, for the space of a prayer, dawn arrived. It was warm. She knew it would be.",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:hedda_ironvow",
+      "old_saves": true
     }
   ]
 }

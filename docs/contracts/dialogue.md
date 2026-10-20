@@ -175,7 +175,8 @@ a dungeon; a night's line written for sleeping behind walls carries it, so a cam
 switch), and `interject guest:ireena: Text` for a story ally travelling with the party,
 `approval.thistle >= close` (a companion's approval tier, compared by rank, so `<= strained` is Strained or worse;
 or a number), `attention >= marked` (Strahd's attention: a number or a tier from data/strahd/attention.json, F9),
-`gold >= 25` (the party's purse), `level >= 3`
+`gifted:liriel_dawnsong` (that hero, by pregen id, has taken a dark gift), `fallen:thistle` (that hero is lost for good: the
+altar beneath Death House or the Deck of Many Things), `gold >= 25` (the party's purse), `level >= 3`
 (the lowest character level in the party), `leader:name:thistle` (the one speaking for the party matches the selector
 after `leader:`; `name:thistle and not leader:name:thistle` is Thistle when she isn't the one speaking),
 `hero_named:vesper` (any party member is called that, whoever is speaking: it reads the name a player typed for a custom

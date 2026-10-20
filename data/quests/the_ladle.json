@@ -42,6 +42,12 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "We lost Godrick Pendlebrook still carrying Sir Aldric's sword, and he will never be knighted properly. A soup ladle on a deathbed is the only knighthood he will have.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "unknighted",
       "journal": "We lit the beacon at the top of Argynvostholt, and the Order of the Silver Dragon laid down its swords and went home. Sir Godfrey Gwilym went with them before he could knight Godrick, so Sir Aldric's sword stays in its cloth, and the ladle is the only accolade Godrick has.",
       "objectives": [],
@@ -53,6 +59,13 @@
       "journal": "In the dragon's house, by the light of whatever the Order had left, Sir Godfrey Gwilym knighted Godrick Pendlebrook with Sir Aldric's sword. He asked who had knighted him first. 'Sir Pellam. With a ladle.' Sir Godfrey laughed until his armour rang. 'Then you were already a knight, lad. I'm only the witness.'",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:godrick_pendlebrook",
+      "old_saves": true
     }
   ]
 }

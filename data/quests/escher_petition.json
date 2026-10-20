@@ -41,5 +41,13 @@
       "objectives": [],
       "ends": "failure"
     }
+  ],
+  "closes": [
+    {
+      "stage": "refused",
+      "from": ["asked", "held"],
+      "when": "flag.escher_fight_won or attitude.escher == hostile",
+      "old_saves": true
+    }
   ]
 }

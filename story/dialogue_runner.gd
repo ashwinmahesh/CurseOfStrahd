@@ -398,13 +398,20 @@ func _pick_beat() -> Dictionary:
 		names.append(ch.name)
 	var text := "Choose who it will be. They will not come back." if _pick_purpose == "sacrifice" \
 		else "Whose fate will the cards read anew? (They return to level 1 and are built again; they keep their belongings.)"
+	# A pick that closes someone's quest wears F4's broken seal on that name: a dark gift on Liriel ends Carry the Dawn,
+	# and whoever the altar takes leaves their own quest unfinished.
+	var term := {"dark_gift": "gifted", "sacrifice": "fallen"}.get(_pick_purpose, "") as String
+	var ends: Array = []
+	for ch in _living():
+		ends.append(QuestClosures.closed_by_pick(st, ch, term) if term != "" else [] as Array[String])
 	if _pick_purpose == "dark_gift":
 		var g := Compendium.shared().get_entry("dark_gifts", _gift)
 		text = "Who accepts %s? %s It can never be given back." % [g.get("name", _gift), g.get("summary", "")]
 		names.append("No one")
 	else:
 		names.append(BACK_OUT[_pick_purpose])   # every picker has a way back (owner, 2026-10-08)
-	return {"kind": "pick_member", "text": text, "members": names, "purpose": _pick_purpose}
+	ends.append([] as Array[String])
+	return {"kind": "pick_member", "text": text, "members": names, "purpose": _pick_purpose, "ends": ends}
 
 
 ## Answers a `pick_member` beat: the `i`th living party member is the one (sacrificed, rebuilt or given the gift).

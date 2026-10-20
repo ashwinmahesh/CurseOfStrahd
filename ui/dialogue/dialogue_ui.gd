@@ -428,8 +428,10 @@ func _show(beat: Dictionary) -> void:
 			_name.text = "Narrator"
 			_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("vampire_red").to_html(false), _esc(str(beat["text"]))]
 			var picks: Array = []
-			for n: Variant in beat["members"]:
-				picks.append({"text": str(n), "label": "", "check": {}, "enabled": true, "member": true})
+			var ends := beat.get("ends", []) as Array
+			for k in (beat["members"] as Array).size():
+				picks.append({"text": str(beat["members"][k]), "label": "", "check": {}, "enabled": true, "member": true,
+					"ends": ends[k] if k < ends.size() else []})
 			_show_options(picks)
 	_continue_row.visible = _waiting_continue
 

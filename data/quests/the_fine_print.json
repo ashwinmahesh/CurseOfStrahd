@@ -41,6 +41,12 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "Kip Smudgewick is gone, and he will never bring the lord's signature back to Mister Quillon. Every word of the fine print still binds him, wherever he is.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "free",
       "journal": "Kip called Mister Quillon to the fire and handed him Strahd's signature, and Mister Quillon read his own contract three times and went a colour Kip says he'll treasure. The contract burned in his hand. Kip's apricots are going brown. He has never been so happy to see fruit spoil.",
       "objectives": [],
@@ -51,6 +57,13 @@
       "journal": "Strahd offered to buy Kip's contract from the devil, and Kip let him. Mister Quillon will trouble him no longer. Strahd will, whenever he likes.",
       "objectives": [],
       "ends": "failure"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:kip_smudgewick",
+      "old_saves": true
     }
   ]
 }

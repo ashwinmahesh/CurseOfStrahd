@@ -68,10 +68,23 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "We lost Ilse Varga before she could count off Kestrel Company, and nobody will call that roll to the end in the castle now. The last names stay unmarked.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "count_off",
       "journal": "Kestrel Company is counted off. Every name Ilse could find has a number now, and the captain who signed for them answered for it. She stood in the castle and called the roll to the end, and for the first time in a year, nobody was missing.",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:ilse_varga",
+      "old_saves": true
     }
   ]
 }

@@ -41,6 +41,12 @@
       "ends": ""
     },
     {
+      "id": "lost",
+      "journal": "Thistle is gone, and she will not follow Fen Burley's old blazes any farther into the fog. Whatever mark Fen left in the deep woods, nobody will read it for her now.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
       "id": "fen_cured",
       "journal": "The curse came out of Fen Burley like a splinter, and left an old man sitting in the straw, crying and laughing and patting Thistle's face to be sure of it. He'll wait for her in Krezk, where they have walls she can climb.",
       "objectives": [],
@@ -57,6 +63,13 @@
       "journal": "Fen asked Thistle to do it before the moon came, and she did, quickly, the way he taught her. She buried him under a rowan with a crow feather in the bark. She didn't speak for the rest of the day.",
       "objectives": [],
       "ends": "success"
+    }
+  ],
+  "closes": [
+    {
+      "stage": "lost",
+      "when": "fallen:thistle",
+      "old_saves": true
     }
   ]
 }

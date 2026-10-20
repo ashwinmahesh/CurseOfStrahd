@@ -58,5 +58,13 @@
       "objectives": [],
       "ends": "success"
     }
+  ],
+  "closes": [
+    {
+      "stage": "with_her",
+      "from": ["inside"],
+      "when": "guest:ezmerelda and not flag.rictavio_gone",
+      "old_saves": true
+    }
   ]
 }

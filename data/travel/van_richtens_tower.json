@@ -52,7 +52,7 @@
         0.42
       ],
       "region": "lake_zarovich",
-      "when": "visited:vallaki and (quest.the_ravens_ransom or quest.fens_trail >= the_blazes)",
+      "when": "visited:vallaki and (quest.the_ravens_ransom or (quest.fens_trail >= the_blazes and quest.fens_trail != lost))",
       "summary": "A trappers' trail through the pines on the hills above Lake Zarovich, where the hunters set their snares."
     },
     {

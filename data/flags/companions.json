@@ -27,6 +27,11 @@
       "summary": "Liriel asked the Abbot whether he still remembers the sun; opens her way to his repentance at the unveiling."
     },
     {
+      "id": "liriel_amber_warned",
+      "type": "bool",
+      "summary": "Liriel told the party, at the first amber voice she heard, that she will take nothing from the vestiges (amber_temple/vestiges calls, vosk:offer); a dark gift on her ends Carry the Dawn (dawn_lost)."
+    },
+    {
       "id": "liriel_dawn_prayed",
       "type": "bool",
       "summary": "Liriel sang the dawn into Castle Ravenloft's chapel (companions/dawn:chapel_hymn)."

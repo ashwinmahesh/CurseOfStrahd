@@ -68,6 +68,16 @@ Failed pill. The engine's part:
   test_side_quest_reach.gd count a closure as the thing that sets its stage; and `fail_routes.py` now also refuses a failed
   roll of any skill that sets a side quest's failure ending before the next menu (a failed roll costs something but never
   ends a quest). The few that exist sit in its ALLOWED list until the package that reshapes them lands.
+- **Heroes, gifts and older saves (package F2).** Two condition terms name a hero by pregen id: `fallen:thistle` (lost
+  for good: the altar beneath Death House or the Deck of Many Things; dead and waiting for a raise isn't lost) and
+  `gifted:liriel_dawnsong` (has taken a dark gift). Every companion's personal quest has a `lost` failure, just before its
+  other endings, closed by `fallen:<hero>` (docs/story/personal_quests.md), and Carry the Dawn closes at `dawn_lost` when
+  Liriel herself takes a gift. A rule's `warn_when` holds its journal warning back until the danger has shown itself
+  (Liriel's waits for `visited:amber_temple_entrance`). The member pickers wear F4's broken seal too: the dark gift's on a
+  hero whose quest a gift would close, the altar's on whoever has a quest open (`QuestClosures.closed_by_pick`). Three
+  stuck states the stuck-quest lanes fixed in play close in older saves on load (`old_saves`): Escher's Petition at
+  `refused` (Escher fought or turned hostile at Asked or Held), Exethanter's Notes at `lost` (his phylactery smashed, the
+  library's shelf included) and The Hunter's Tower at `with_her` (Ezmerelda travelling at Inside, Van Richten not home).
 
 ## Into the Mists (level 1)
 

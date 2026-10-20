@@ -262,7 +262,7 @@
       "kind": "examine",
       "label": "The altar step",
       "model": "dais",
-      "when": "name:liriel_dawnsong and quest.carry_the_dawn >= faith_kept and not flag.liriel_dawn_prayed",
+      "when": "name:liriel_dawnsong and quest.carry_the_dawn == faith_kept and not flag.liriel_dawn_prayed",
       "dialogue": "companions/dawn:chapel"
     },
     {
