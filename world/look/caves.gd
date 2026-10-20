@@ -20,7 +20,7 @@ extends RefCounted
 ##     the place suits it (look `cave_puddles`), puddles.
 ## A place look's `built_areas` name areas that stay built (Ghakis's keepers' post): a wall that faces only those, and a
 ## free-standing stack of shelves, are still InteriorWalls'. Each rock square gets its own piece of the surface (the patch
-## over it, so it opens round the party like any wall (SeeThrough), a prop can take its square, and a hidden area hides
+## over it, so it fades where it hides the party like any wall (SeeThrough), a prop can take its square, and a hidden area hides
 ## it); nothing here touches the rules grid.
 
 ## Grid points per square: the surface's quads are a third of a square across.
@@ -41,6 +41,8 @@ const SWELL := 0.1
 ## The longest tangent (squares) a corner between long walls is rounded with.
 const ROUND := 2.0
 const FAR := 1.0e6
+## Squares across a chunk of the plain rock far from any cave (three squares are under SeeThrough.LARGE).
+const FAR_CHUNK := 3
 const AMOUNTS := {
 	"full": {"round": 1.0, "wander": 1.0, "bays": 1.0, "lean": 1.0, "talus": 1.0, "decor": 1.0, "face": 0.13},
 	"hewn": {"round": 1.0, "wander": 1.0, "bays": 1.0, "lean": 0.6, "talus": 0.7, "decor": 0.5, "face": 0.2},
@@ -912,15 +914,20 @@ func _skirts(c: Vector2i, verts: PackedVector3Array, norms: PackedVector3Array, 
 			_out(verts, norms, a, b_low, a_low, mid - outward)
 
 
-## The rock far from any cave: one plain top over all of it (not a node a square, which cost a tenth more to build than
-## the blocks it replaces). `stays` keeps a prop that takes one of those squares from putting the rest away.
+## The rock far from any cave: a plain top, in chunks of FAR_CHUNK squares each way (not a node a square, which cost a tenth
+## more to build than the blocks it replaces, nor one piece for the whole map, which the fade (SeeThrough) would take whole
+## whenever a line of sight crossed any of it: a chunk narrower than SeeThrough.LARGE fades where its box is crossed).
+## `stays` keeps a prop that takes one of those squares from putting the rest away.
 func _far_rock() -> void:
-	var verts := PackedVector3Array()
-	var norms := PackedVector3Array()
+	var chunk_verts: Dictionary = {}   # chunk -> PackedVector3Array (an array is a value: it is put back after it is added to)
+	var chunk_norms: Dictionary = {}
 	for z in _d:
 		for x in _w:
 			if _flat[z * _w + x] == 0:
 				continue
+			var key := Vector2i(x / FAR_CHUNK, z / FAR_CHUNK)
+			var verts: PackedVector3Array = chunk_verts.get(key, PackedVector3Array())
+			var norms: PackedVector3Array = chunk_norms.get(key, PackedVector3Array())
 			var k00 := z * RES * _vw + x * RES
 			var k10 := k00 + RES
 			var k01 := k00 + RES * _vw
@@ -931,13 +938,14 @@ func _far_rock() -> void:
 					norms.append(_nrm[k])
 			if x == 0 or z == 0 or x == _w - 1 or z == _d - 1:
 				_skirts(Vector2i(x, z), verts, norms, Vector3.ZERO)
-	if verts.is_empty():
-		return
-	var far := _mesh_of("CaveRockFar", verts, norms, _mat_top)
-	far.set_meta("stays", true)
-	far.set_meta("cave", true)
-	board.add_child(far)
-	SeeThrough.mark(far)
+			chunk_verts[key] = verts
+			chunk_norms[key] = norms
+	for key: Vector2i in chunk_verts:
+		var far := _mesh_of("CaveRockFar", chunk_verts[key] as PackedVector3Array, chunk_norms[key] as PackedVector3Array, _mat_top)
+		far.set_meta("stays", true)
+		far.set_meta("cave", true)
+		board.add_child(far)
+		SeeThrough.mark(far)
 
 
 ## One triangle of the surface, from three grid points, in `origin`'s frame.

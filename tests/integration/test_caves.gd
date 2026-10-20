@@ -174,9 +174,9 @@ func test_what_is_built_stays_built() -> void:
 		assert_true(float((Caves.AMOUNTS["hewn"] as Dictionary)[key]) <= float((Caves.AMOUNTS["full"] as Dictionary)[key]), "hewn is the lighter amount of %s" % key)
 
 
-## Rock opens round the party where it hides it, like every wall (SeeThrough), and the floor gets its loose stones,
+## Rock fades where it hides the party, like every wall (SeeThrough), and the floor gets its loose stones,
 ## puddles in the den only.
-func test_rock_opens_and_the_floor_has_things() -> void:
+func test_rock_fades_and_the_floor_has_things() -> void:
 	Look.set_style("modern", false)
 	var v := await _view(DEN)
 	var unmarked := 0
@@ -186,8 +186,8 @@ func test_rock_opens_and_the_floor_has_things() -> void:
 			unmarked += 1
 		if n.name == "CaveRockFar":
 			far = true
-	assert_eq(unmarked, 0, "every piece of rock opens round the party")
-	assert_true(far, "the rock far from any cave is one top")
+	assert_eq(unmarked, 0, "every piece of rock fades where it hides the party")
+	assert_true(far, "the rock far from any cave is a top, in chunks narrower than the fade's LARGE")
 	var decor := v.board.get_node_or_null("CaveDecor")
 	assert_true(decor != null and decor.has_node("Stones") and decor.has_node("Puddles"), "stones and puddles on the den's floor")
 	assert_true(decor != null and bool(decor.get_meta("stays", false)), "kept when a prop takes a square")
@@ -197,6 +197,29 @@ func test_rock_opens_and_the_floor_has_things() -> void:
 	var lair := await _view(LAIR)
 	var lair_decor := lair.board.get_node_or_null("CaveDecor")
 	assert_true(lair_decor != null and lair_decor.has_node("Stones") and not lair_decor.has_node("Puddles"), "stones, but no puddles, on the lair's")
+
+
+## A figure behind the rock fades the squares of it that are in the way, not the cave: every piece in the way is narrower
+## than SeeThrough's LARGE (so its box, not its triangles, decides), and only a handful of them.
+func test_a_figure_behind_rock_fades_a_few_pieces() -> void:
+	Look.set_style("modern", false)
+	var v := await _view(DEN)
+	var st := v.get_node("SeeThrough") as SeeThrough
+	var feet := v.board.cell_center(Vector2i(10, 10))
+	var eye := feet + Vector3(-5.0, 9.0, -9.0)   # over the great cave's north wall, looking down at the party
+	var in_the_way := st.in_the_way(feet, eye)
+	var rock := 0
+	var wide := 0
+	for id: int in in_the_way:
+		var g := in_the_way[id] as GeometryInstance3D
+		if g.has_meta("cave"):
+			rock += 1
+			var box := g.global_transform * g.get_aabb()
+			if maxf(box.size.x, box.size.z) > SeeThrough.LARGE:
+				wide += 1
+	assert_true(rock >= 1, "the rock between the camera and the party fades (%d pieces)" % rock)
+	assert_true(rock <= 14, "a handful of pieces, not the cave (%d)" % rock)
+	assert_eq(wide, 0, "none of them is wider than the fade's LARGE")
 
 
 ## A door in a gap in a cave's rock brings its own frame (InteriorWalls frames only the walls it builds), and Classic

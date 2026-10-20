@@ -5,7 +5,7 @@ extends Node3D
 ##   make capture SCENE=res://tools/capture/caves_capture.tscn NAME=caves/after FRAMES=10
 ## Environment: CV_LOCS=a,b (default the four caves), CV_VIEWS=whole,top,spots (default all three), CV_HOUR=12,
 ## CV_OFF=1 (the cave look off, for before shots and build times), CV_WHOLE / CV_TOPD (the camera's distance for the whole
-## and straight-down shots, instead of the map's size), CV_WINDOW=1 (keep the see-through window), CV_LIGHT=1 (a strong lamp from above, so the
+## and straight-down shots, instead of the map's size), CV_FADE=1 (keep the fade of the rock in the way), CV_LIGHT=1 (a strong lamp from above, so the
 ## contour and the rock's shape can be read in a map that is meant to be dark), CV_TIME=n (no shots: build each place n times and
 ## print the times, the first, which warms the caches, apart),
 ## CV_AT=x,z,dist,steps,pitch;... (extra shots, each at that square: dist in squares, steps = quarter turns, pitch = degrees
@@ -183,11 +183,10 @@ func _build(loc_id: String, hour: int) -> void:
 		sun.rotation_degrees = Vector3(-62, 35, 0)
 		sun.shadow_enabled = true
 		add_child(sun)
-	# No window cut round the party in the walls (SeeThrough), which in a QA shot of the whole map would sit in its middle
-	# (CV_WINDOW=1 keeps it).
-	if OS.get_environment("CV_WINDOW") == "" and view.has_node("SeeThrough"):
+	# The rock that stands between the camera and the point it looks at fades (SeeThrough), which in a QA shot of the whole
+	# map would take the walls in front of the middle: the fade is taken out unless CV_FADE=1.
+	if OS.get_environment("CV_FADE") == "" and view.has_node("SeeThrough"):
 		view.get_node("SeeThrough").free()
-		SeeThrough.shut()
 	# No screens over the rock.
 	for layer: Node in get_tree().root.find_children("*", "CanvasLayer", true, false):
 		(layer as CanvasLayer).visible = false

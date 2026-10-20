@@ -445,7 +445,7 @@ visit like GroundRelief's arrays (the newest eight places).
   that leans over the cave toward its top, a ragged lip, a dark top (the cave rock's `CUT_FACE` colour, as every
   interior's wall top), and at its foot a slope of rubble that runs up to half a square out over the floor, with loose
   stones and, in the bays the walls swell into, stalagmites. The rock far from any cave (more than two squares) is one
-  plain top (`CaveRockFar`). Everything opens round the party like any wall (SeeThrough). Bays get a floor box of the
+  plain top, in chunks three squares across (`CaveRockFar`, narrower than SeeThrough's `LARGE`, so a chunk fades where a line of sight crosses its box, not the whole map's). Everything fades where it hides the party like any wall (SeeThrough). Bays get a floor box of the
   room's own floor; the floor carries loose stones, and puddles where the look says `cave_puddles` (the den).
 - **What stays straight.** A wall square with something on it (a prop, a door's gap, an exit; anything in
   `ArenaBoard.occupied` on a wall) keeps a straight, plumb stretch of wall about two squares long, so what hangs on it
