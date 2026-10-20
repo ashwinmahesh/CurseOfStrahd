@@ -1,0 +1,105 @@
+~ woods
+Narrator: Past the lake, under the dark pines, Izek kneels in the needles and digs with his bare claws. Thin smoke curls from the black scales into the damp air.
+Izek: Speak or move on. I didn't walk out here for company.
+Izek: It was under these trees. The earth keeps things if you go deep enough.
+* What are you digging for? -> woods_digging
+* Ireena asked after you. -> woods_ireena
+* Emil saw that night. Those were castle wolves, and a rider in black. -> tell_rider
+* I will leave you to it. -> END
+
+~ woods_again
+Izek: The dirt isn't finished with me yet. Say what you want.
+* What are you digging for? -> woods_digging
+* Ireena asked after you. -> woods_ireena
+* Emil saw that night. Those were castle wolves, and a rider in black. -> tell_rider
+* I will leave you to it. -> END
+
+~ woods_digging
+Izek: Where it happened. Whatever the wolves left behind in the roots.
+Izek [sad]: I turned up a bone button an hour ago. I put it back under the soil where it belongs.
+* Ireena asked after you. -> woods_ireena
+* Emil saw that night. Those were castle wolves, and a rider in black. -> tell_rider
+* I will leave you to it. -> END
+
+~ woods_ireena
+Izek [sad]: She asked after me. Tell her I don't need looking after.
+Izek: Tomorrow I will go down to Barovia and stand where the old man who raised her is buried. I owe him that much.
+
+~ tell_rider
+Narrator: Red fire jumps between his scaled knuckles, and the pine needles hiss around his wrist. He stares at the treeline without blinking.
+Izek [angry]: Not the pack, then. The castle.
+Izek [angry]: He sat in the trees and watched a boy bleed in the snow.
+Izek: Good. Now I know where to look when the time comes.
+
+~ grave
+Narrator: In the muddy churchyard of Barovia, Izek stands with his hat in his human hand. He holds his scaled arm wide of the headstone so its heat will not scorch the grass.
+Izek: Kolyan, was it. The man who put a roof over her and fed her while I was rotting in Vallaki.
+Izek [sad]: Tell me one thing. Did he suffer at the end, or did he go quiet?
+* Go and sit by Ireena's door. Keep watch over her. -> guard_set
+* Ireena is with us. Walk with us. -> join_with_her
+* I will leave you by the stone. -> END
+
+~ grave_ismark
+Narrator: Ismark and Izek measure each other across the fresh earth of the grave, two broad-shouldered men in the mist. Neither speaks until both sit on the low stone wall.
+Ismark [weary]: They call me the Lesser in the tavern, and looking at you, I cannot even claim to be the bigger brother. Keep your hands clean around her, Izek, and we will have no quarrel.
+Izek: You kept her alive when I wasn't there. That is enough for me.
+
+~ grave_again
+Izek: The old man's stone is quiet. State your business.
+* Go and sit by Ireena's door. Keep watch over her. -> guard_set
+* Ireena is with us. Walk with us. -> join_with_her
+* I will leave you by the stone. -> END
+
+~ guard_set
+Izek: Give me the door. I will sit outside it until the planks rot.
+Izek [angry]: Nobody goes through me. Not that fat fool's watchmen, and nothing out of the night.
+Izek: I'm good at waiting. Tell her she doesn't have to look at me unless she wants to.
+Narrator: He sets his hat on his head and turns toward the road without another word. The mist closes behind his broad back.
+
+~ join_with_her
+Izek: Then I walk a step behind her. Keep your eyes on the road and I will watch her back.
+Izek: Don't expect talk from me. I am there for the steel and the fire.
+
+~ guard
+Narrator: Outside her door in the Blue Water Inn, Izek sits on a tilted chair with his scaled arm tucked beneath his ordinary one.
+Narrator: He stands on the wet stone step in the porch of St. Andral's, refusing to cross the threshold even though the old church bars no one.
+Narrator: At the foot of the house behind Krezk's wall, he stands like a boundary post while the yard goats stare at his smoking hand.
+Narrator: On the porch of the burgomaster's mansion in Barovia, he sits with his back against the barred shutters and his boots in the damp leaves.
+Izek: The door is shut. Keep your voice down.
+* How is she doing? -> guard_report
+* Where did that arm come from? -> talk_arm
+* What will you do with the dolls in your room? -> talk_dolls
+* What will you do about the castle? -> talk_castle
+* Keep your watch. -> END
+
+~ guard_report
+Izek [sad]: She sleeps now. I heard her turn twice on the straw before she settled.
+Izek: Nothing has come near the step. You didn't put me here to make small talk.
+
+~ with_her
+Izek: She walks, I walk. Stay out of my reach and we will get along fine.
+
+~ talk
+Izek: Keep moving. My eyes are on the trees, not on you.
+* Where did that arm come from? -> talk_arm
+* What will you do with the dolls in your room? -> talk_dolls
+* What will you do about the castle? -> talk_castle
+* Carry on. -> END
+
+~ talk_arm
+Izek: I woke up in the blood with it when I was nine. If it belonged to something else first, that thing hasn't come to ask for it back.
+Izek: It wakes up before I do in the dark. The claws twitch when the mist gets thick.
+Izek: I throw an old wool blanket over it before I shut my eyes. It smells of singed mutton by morning.
+
+~ talk_dolls
+Izek: The chest stays locked in my room in Vallaki. Let the fat fool's men break the hinges if they dare.
+Izek [sad]: I kept the first one Blinsky made wrapped in oilcloth inside my coat. A man keeps what kept him from going mad.
+Izek: When the nights were long, I used to sit by the chest and tell them nothing worth repeating. Drop it.
+
+~ talk_castle
+Izek [angry]: When we go up that rock, I will take this hand and burn the thing that has been walking through her sleep.
+Izek: That is all there is to say about the castle.
+Izek: Do not ask me about him again. Save your breath for the climb.
+
+~ ireena_hint
+Ireena [afraid]: A carter on the north road swears Izek is up on the lake trail past the hills, alone with a spade, digging where he lost me as if a sister were a turnip to be pulled from the mud.

@@ -331,6 +331,9 @@ Ireena [sad]: It ought to be a simple relief. I don't know why it feels like a d
 else
 Ireena [weary]: Izek has walked away from the Baron's service, and I'm supposed to know how to say the word brother.
 Ireena: He spent years having my face carved into little dolls while I knew nothing of him. Give me time to look at it plainly.
+if flag.izek_told_truth and not flag.izek_woods_met
+Ireena [afraid]: A carter swears Izek is on the lake trail past the hills, alone with a spade, digging where he lost me. As if a sister were a turnip.
+endif
 endif
 endif
 -> n_festival

@@ -56,6 +56,48 @@
       "text": "Ismark goes home and takes up his father's chain of office. Nobody calls him the Lesser any more, and he never has to ask them to stop."
     },
     {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_guards_ireena and flag.ireena_birth_name_kept == both",
+      "text": "In the sunlight after the castle falls, she remains Ireena by day, with Izek on guard beside her. When they are alone, he says Viorela, and she answers."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_guards_ireena",
+      "text": "When the mist lifted from Barovia, Izek walked beside his sister into the sun and never asked her for a memory. He sits by her door still, a quiet guard with a warm right hand."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_told_truth and not flag.izek_dead",
+      "text": "Izek left Vallaki behind and built a cabin near the woods past Lake Zarovich, where he lives alone. When Ireena passes the road below, he watches from the trees and lets her go in peace."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_spurned and not flag.izek_dead",
+      "text": "Sunlight returns to Vallaki, though the Baron refuses his captain the only reward he asked for. Izek obeys and waits, sitting quiet over his chest of carved dolls."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_dead and flag.izek_sister_truth",
+      "text": "Izek lies dead in Vallaki. Ireena walks out of the valley into the sun knowing she had a brother, and carries that."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_dead",
+      "text": "Izek Strazni went into the earth with his monstrous arm and his secret unbroken. Ireena walked out of the valley into the sunlight and never knew she had another brother."
+    },
+    {
       "topic": "death_house",
       "title": "The House on the Corner",
       "portrait": "rose",

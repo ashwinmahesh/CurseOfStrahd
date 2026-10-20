@@ -1552,6 +1552,16 @@
       ],
       "dialogue": "village_of_barovia/townsfolk:goat_gate",
       "facing": "west"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        33,
+        6
+      ],
+      "dialogue": "allies/izek:grave",
+      "approach": 5,
+      "when": "not flag.izek_dead and flag.izek_told_truth and not guest:izek and not flag.izek_guards_ireena and flag.izek_woods_met and days_since.izek_woods_met >= 1"
     }
   ],
   "encounters": [

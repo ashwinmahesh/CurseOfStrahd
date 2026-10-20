@@ -6,7 +6,7 @@ const PARTY: Array[String] = ["liriel_dawnsong", "godrick_pendlebrook", "wren_fe
 const KINDS: Array[String] = ["quest_", "place_", "fight_", "idle_"]
 ## Everyone a scene can bring along with `join` except Lupu, a dog who joins for one fight.
 const GUESTS: Array[String] = ["adrian_martikov", "arabelle", "davian_martikov", "emil_toranescu", "ezmerelda",
-	"gertruda", "ilinca_vrana", "ireena", "ismark", "kasimir_velikov", "kolyan_indirovich", "mordenkainen",
+	"gertruda", "ilinca_vrana", "ireena", "ismark", "izek", "kasimir_velikov", "kolyan_indirovich", "mordenkainen",
 	"parriwimple", "pidlwick_ii", "rictavio", "sir_godfrey_gwilym", "teodor", "victor_vallakovich"]
 
 

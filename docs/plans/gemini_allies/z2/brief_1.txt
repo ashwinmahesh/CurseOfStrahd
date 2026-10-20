@@ -1,0 +1,51 @@
+I need drafted dialogue for a group of scenes about Izek Strazni after he has been told that Ireena is his sister. Reply with the nodes below only, in the order given, no commentary.
+
+# Part A: Izek, alone and with the party
+
+The "party" is a group of adventurers the player controls.
+
+## Where Izek is, stage by stage
+
+1. THE WOODS. Izek has left Vallaki and gone alone to the hill trail above Lake Zarovich, to the wood where the wolves took his sister. By day, under the pines, he is digging with his bare scaled hand where it happened. The party finds him there.
+2. THE GRAVE. A day later he is in the churchyard of the village of Barovia, standing at the grave of the burgomaster Kolyan, the man who raised Ireena.
+3. THE DOOR. If the party asks him, he goes to sit outside the door of the place where Ireena is sheltering (a church, an inn, a house behind Krezk's wall, or her father's mansion) and does not sleep. He is her guard. 
+4. THE ROAD. When Ireena travels with the party again, he walks with them, a pace behind, and the party can talk to him by clicking him.
+
+## Nodes
+
+~ woods: first meeting. Narrator x1 (the clearing past the lake, him on his knees digging, the arm smoking), Izek x2 (he does not look up; flat; he asks what they want; he is looking for the place; he does not say her name).
+~ woods_again: Izek x1 (a later visit; he is still digging; he does not stop).
+~ woods_digging: Izek x2 (the party asks what he is digging for: he is looking for where it happened, for anything the wolves left; he found a button and put it back).
+~ woods_ireena: Izek x2 (the party says Ireena asks after him; he goes quiet, almost gentle; he says he will be where the man who raised her is buried, tomorrow, because he owes that man a visit).
+~ tell_rider: the party tells him what Emil, a werewolf who was there that night, said: a boy screaming, a girl with red hair, and a rider in black at the treeline, and wolves that were not the pack's but the castle's, big and silent. Narrator x1 (his arm flares, smoke at his knuckles), Izek x3 (not the wolves, then; he does not say the name; "the castle"; he will remember it; short and cold).
+~ grave: first meeting. Narrator x1 (the churchyard, his hat in his ordinary hand, the arm held away from the stones so it does not scorch the grass), Izek x2 (he came to stand where the man who fed her is buried; short; he does not know the man's name well; he asks whether he suffered). 
+~ grave_ismark: Narrator x1 (Ismark, Ireena's adoptive brother, is with the party and the two big men look at each other across the grave and then sit on the same low wall), Ismark x1 (an awkward, earnest line; he is a big, decent man who is "the Lesser"), Izek x1 (flat, a grudging line).
+~ grave_again: Izek x1 (a later visit, he stays; the grave).
+~ guard_set: the party asks him to go and guard Ireena at her door. Izek x3 (he will sit at her door; nobody comes in, not the Baron's men, not anyone; he is good at waiting), Narrator x1 (he gets up and walks off toward where she is).
+~ join_with_her: the party says Ireena is with them: "Walk with us." Izek x2 (then he walks behind her; he will not speak unless he has to).
+~ guard: the party finds him at his post. Narrator x4, one for each place, each ONE sentence: guard_inn (he sits on a chair tilted against the wall outside the room in the Blue Water Inn, the scaled arm folded under the ordinary one), guard_church (he stands in the porch of St. Andral's, on the step, not inside; the old church rejects nothing, he just does not go in), guard_krezk (he stands at the foot of the house behind Krezk's wall, the goats watching him), guard_mansion (he sits on the porch of the burgomaster's mansion in the village with the shutters barred behind him). Then Izek x1 (a flat opening line for any place).
+~ guard_report: the party asks how she is. Izek x2 (she sleeps; he hears her turn; nothing has come; he is not asked to speak more).
+~ with_her: Izek x1 (one line when Ireena rejoins the party and he falls in behind her: "Where she goes, I go." in his words).
+~ talk: Izek x1 (a flat greeting when the party clicks him on the road).
+~ talk_arm: the party asks about the arm. Izek x3 (he does not know whose it is; it wakes before he does; he keeps it covered when he sleeps).
+~ talk_dolls: the party asks what he will do with the dolls. Izek x3 (he does not know; he carries the first one; the rest stay in the chest in Vallaki; he does not say he talks to them; he almost says it).
+~ talk_castle: the party asks about the castle. Izek x3 (offered once he knows about the rider: he will break the thing that has been in her dreams; he will not say more; he asks the party not to ask him again).
+~ ireena_hint: ONE line for Ireena to say in her own check-in: a carter swears Izek has been seen on the lake trail past the hills, alone with a spade, digging. She says it dryly, a little afraid, and that this is where he lost her. Ireena x1.
+
+Count: about 45 lines. Moods only where a node suits one.
+
+## The game and the format
+
+This is dialogue for a single-player D&D Curse of Strahd game. Plain text only (no JSON, no markdown tables), nodes under `~ name`, one line per row as `Speaker [mood]: Text`, party option rows as `* option text -> node_name` (the player's character speaks, first person, short, under 14 words, no skill checks), ASCII only (straight quotes and apostrophes, no accents or fancy dashes, no em-dash: use a comma or a full stop), 1-2 sentences a line, nothing over about 28 words, no placeholders like {name}. Moods allowed: [smile], [angry], [afraid], [sad], [sly], [weary]; most lines carry none. Finish without sending messages to anyone else.
+
+## Who they are
+
+IZEK STRAZNI: a big, scarred man who was the Baron of Vallaki's enforcer. His right arm is not his own: scaled red-black to the shoulder, clawed, hot to the touch, able to burst into flame. When he was nine, wolves came out of the trees by the lake and took his little sister and his arm; he woke with this one. He has dreamed of a red-haired woman every night since and paid the toymaker Blinsky to carve her face into dolls, a chest of them at the foot of his bed. The party has now told him that the woman is Ireena Kolyana, his lost sister (found wandering on a road as a girl, no memory, raised by the burgomaster Kolyan of Barovia). He believed it. He walked out of the Baron's service ("I won't break any more heads for that fat fool in the sash. I'm done."). He talks to the dolls at night (his secret; he does not say so). How he talks: short, flat, imperatives and threats; never more than two sentences unless about her; about her he goes quiet and almost gentle, which is worse; calls the Baron "my lord" and later "that fat fool". Pet phrases: "Stand back from the Baron." "Not here." "I'm good at waiting." He never says Strahd's name: "him", "the rider", "the castle". He is not funny; the humour is around him. Moods: [angry], [sad] or none.
+Some of his existing lines, so you hear him (do NOT repeat them): "You're in my room." / "Good. I've wanted to since the gate." / "She's real. I dream her every night. Her face, her hair." / "I've seen you. Every night since I was nine years old. I didn't know your name. Now I do." / "My sister. My sister had red hair." / "I won't touch her. I won't let anyone touch her." / "I remember enough for both of us." / "I'm good at waiting. A man with one room and a long memory doesn't have to hurry."
+
+IREENA KOLYANA: a proud, red-haired young woman, the dead burgomaster Kolyan's adopted daughter, found on a road as a girl with no memory of where she came from, twice bitten by the vampire lord Strahd. Direct and proud; short sentences; dry humour with an edge; grim joke before anyone can pity her; never says Strahd's name ("him", "the devil", "our visitor"). She does not remember Izek; she said "I don't remember you. I wish I did." She does not fight in this game: something in the valley goes round her like water round a stone. Pet phrases (at most once per scene): "I'm not made of glass." "Say it plainly." "Father would want it done properly."
+NARRATOR: old gothic storyteller, second person or plain scene description, present tense, one or two sentences, the second a turn; concrete senses; never cruel; no game terms.
+
+## Canon limits for everything
+
+No new named characters. Real names you may use: Izek, Ireena, Ismark (her brother by adoption, a big, earnest man), Kolyan (their father), Blinsky (the toymaker), Baron Vargas (the Baron), Lake Zarovich, Vallaki, Barovia, Krezk, the Blue Water Inn, St. Andral's church, Father Lucian, Urwin (the innkeeper), Emil (a werewolf who saw the night). Do not name Strahd. Do not invent other names, numbers, places or history; do not describe the sister's name or past except where a node says so. The "Viorela" name appears ONLY in the node that says so. No quest hints, no directions, no promises of rewards. No dice or skill checks.

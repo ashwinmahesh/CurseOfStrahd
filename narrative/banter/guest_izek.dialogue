@@ -1,0 +1,58 @@
+# Izek Strazni travelling with the party (docs/voice/izek.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: place_ on entering an area, fight_ after a won fight, idle_ now
+# and then on the road. Each plays once per playthrough, only while Izek is with the party. Story Allies Presence Plan, package Z2;
+# drafted by Gemini (docs/plans/gemini_allies/z2/), edited; every line here is unvoiced for now.
+
+~ place_vallaki
+if guest:izek and region:vallaki
+interject guest:izek: Keep walking past the square. That fat fool can hang his own lanterns.
+endif
+-> END
+
+~ place_village
+if guest:izek and at:village_of_barovia
+interject guest:izek: That is the churchyard where Kolyan lies. He kept her safe when I could not.
+endif
+-> END
+
+~ place_lake
+if guest:izek and at:lake_zarovich_trail
+interject guest:izek: Keep to the trees above Lake Zarovich. I have no use for that water.
+endif
+-> END
+
+~ place_castle
+if guest:izek and region:castle_ravenloft
+interject guest:izek: The rider's house is cold. Stay behind my right shoulder.
+endif
+-> END
+
+~ fight_arm
+if guest:izek
+interject guest:izek: Don't look at the arm. The fire goes down when the work is done.
+endif
+-> END
+
+~ fight_ireena
+if guest:izek and guest:ireena
+interject guest:izek: Leave the blood on my coat. Is she all right? Look at her first.
+endif
+-> END
+
+~ idle_doll
+if guest:izek and not flag.izek_sister_1
+interject guest:izek: Blinsky used good wood for the face. I keep one in my coat so the rain doesn't spoil it.
+endif
+-> END
+
+~ idle_wait
+if guest:izek
+interject guest:izek: Nine years old to now is a long sit by a door. Another mile is nothing.
+endif
+-> END
+
+~ idle_dark
+if guest:izek
+interject guest:izek: Too quiet in these pines. Something is listening back.
+endif
+-> END

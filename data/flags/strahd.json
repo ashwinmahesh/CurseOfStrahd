@@ -39,7 +39,7 @@
     {
       "id": "strahd_window",
       "type": "string",
-      "summary": "How the party met Strahd's move against Ireena where she sheltered (strahd/ireena): symbol, faith, ward, woke, fight (the visit's fight), taken (she went to him), church (he called from the gate of St. Andral's and holy ground held)."
+      "summary": "How the party met Strahd's move against Ireena where she sheltered (strahd/ireena): symbol, faith, ward, woke, fight (the visit's fight), taken (she went to him), church (he called from the gate of St. Andral's and holy ground held), izek (Izek, guarding her, put himself in the window: Story Allies Presence Plan, package Z2). Every reader treats an unknown value like symbol or faith: a window that was met and held."
     },
     {
       "id": "strahd_window_pull",

@@ -57,6 +57,48 @@
       "text": "Ismark keeps his father's chair and his father's fear of the castle. He does what a burgomaster can, which in Barovia is not much."
     },
     {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_guards_ireena and flag.ireena_birth_name_kept == both",
+      "text": "Under the mist that never lifts, Izek guards her door while she remains Ireena in daylight. In the quiet between them, he says Viorela, and she answers."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_guards_ireena",
+      "text": "No roof in the valley is safe for long while the castle stands above the mist. Whenever the night grows cold, Izek sits awake across Ireena's threshold with his scaled arm burning like a coal."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_told_truth and not flag.izek_dead",
+      "text": "Alone in a cabin near the woods past Lake Zarovich, Izek keeps his axe by the door and sleeps little. On windless nights he hears the castle's black carriage rolling down the road toward the villages."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_spurned and not flag.izek_dead",
+      "text": "Night holds the valley, and the Baron refuses his captain the reward he asked for. Izek obeys and waits in the dark, keeping his chest of carved dolls."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_dead and flag.izek_sister_truth",
+      "text": "Izek lies dead in Vallaki. Ireena hides and runs through the long night, carrying a brother she was told of too late."
+    },
+    {
+      "topic": "izek",
+      "title": "Izek Strazni",
+      "portrait": "izek",
+      "when": "flag.izek_dead",
+      "text": "Izek Strazni died in the fog with a chest of red-haired dolls left behind in his room. The devil still rules the valley, and Ireena never knew the brother who dreamed her face."
+    },
+    {
       "topic": "death_house",
       "title": "The House on the Corner",
       "portrait": "rose",

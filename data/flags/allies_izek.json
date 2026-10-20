@@ -25,6 +25,51 @@
       "id": "izek_room_met",
       "type": "bool",
       "summary": "The party has found Ireena in Izek's room (narrative/allies/izek_takes), by night with Izek there or by day without him. It picks the first sight over the shorter return."
+    },
+    {
+      "id": "izek_rider_heard",
+      "type": "bool",
+      "summary": "The party heard Emil's account of the night Izek lost his sister: a boy screaming, a girl with red hair, a rider in black at the treeline, and wolves that were the castle's, not the pack's (werewolf_den/emil:lake_night). It lets the party tell Izek (allies/izek:tell_rider). Story Allies Presence Plan, package Z2; no story reads it."
+    },
+    {
+      "id": "izek_knows_rider",
+      "type": "bool",
+      "summary": "The party told Izek what Emil saw (allies/izek:tell_rider): the wolves were the castle's and a rider in black stood at the treeline. It opens his talk about the castle; no story reads it."
+    },
+    {
+      "id": "izek_woods_met",
+      "type": "int",
+      "summary": "The game minute the party first found Izek digging in the woods past Lake Zarovich (allies/izek:woods), once he had been told the truth. He stays there a day, then stands at Kolyan's grave in the village of Barovia (days_since.izek_woods_met)."
+    },
+    {
+      "id": "izek_grave_met",
+      "type": "bool",
+      "summary": "The party has met Izek at Kolyan's grave in the village of Barovia (allies/izek:grave). It picks his first words from his later ones."
+    },
+    {
+      "id": "izek_guards_ireena",
+      "type": "bool",
+      "summary": "Izek sits guard at Ireena's door wherever she shelters (the Blue Water Inn, St. Andral's, the Krezkovs' house, her father's mansion), or follows her once she travels with the party: the party asked him to at the grave (allies/izek:guard_set) or walked with her (join_with_her). Only while he lives and has been told the truth; Strahd's window scene has a way for him to take the window."
+    },
+    {
+      "id": "izek_sister_1",
+      "type": "bool",
+      "summary": "Izek gave Ireena the first doll Blinsky carved (allies/izek:sister_1), at her door, at Kolyan's grave or by the camp fire. The first of three scenes between the two; the camp talks (narrative/camp/izek.dialogue) play the same scenes when both travel with the party."
+    },
+    {
+      "id": "izek_sister_2",
+      "type": "bool",
+      "summary": "Ireena asked Izek what their parents were like, and he had very little to give (allies/izek:sister_2). The second of three scenes between the two."
+    },
+    {
+      "id": "izek_sister_3",
+      "type": "bool",
+      "summary": "Izek told Ireena the name he shouted through the trees, Viorela (allies/izek:sister_3), and she chose which name is hers (ireena_birth_name_kept). The third scene between the two."
+    },
+    {
+      "id": "ireena_birth_name_kept",
+      "type": "string",
+      "summary": "Which name Ireena kept after Izek told her the one he shouted through the trees: ireena (Ireena only) or both (Ireena by day, the other when it is her brother who says it). Set by allies/izek:sister_3_a and sister_3_b; the finale and her epilogue may read it."
     }
   ]
 }

@@ -53,6 +53,9 @@ join ismark
 set ismark_guards_ireena = false
 Ismark: Where she goes, I go. Don't make me say anything sentimental about it.
 endif
+if flag.izek_guards_ireena and not guest:izek
+-> allies/izek:with_her
+endif
 -> END
 
 ~ remember

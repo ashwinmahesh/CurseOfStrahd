@@ -45,8 +45,8 @@ moves: `ireena_letters_sent`, `ireena_letters_unanswered`, `ireena_cold_now`, `i
 - `data/visits/ireena.json`: the two visits; the file's `when` clauses are the conditions above.
 - `narrative/allies/ireena.dialogue`: `checkin` copies the count into `ireena_cold_now` (2 or 3) before clearing it, and
   `greet` jumps to `allies/ireena_letters:cold` when it is set. No code.
-- Z1 (Izek takes her to his room) adds `izek_holds_ireena`; while she is held there no letter should say she is at the inn.
-  Package Z2, which builds on both, adds `not flag.izek_holds_ireena` to the letter visit's `when` once Z1 has landed.
+- Z1 (Izek takes her to his room) adds `izek_holds_ireena`; while she is held there no letter says she is at the inn. Package Z2
+  added Z1's held clause to both visits' `when` (`not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth)`).
 
 ## Tests
 

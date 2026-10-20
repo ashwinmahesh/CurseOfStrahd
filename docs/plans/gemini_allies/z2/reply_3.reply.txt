@@ -1,0 +1,64 @@
+~ window_izek_inn
+Narrator: Izek stands wide awake in the doorway of Ireena's room at the Blue Water Inn, his scaled arm glowing red like a forge coal. The heat of it smells of ash and hot iron.
+
+~ window_izek_krezk
+Narrator: At the top of the stairs behind Krezk's wall, the shutters hang open to the night. Izek stands wide awake in the doorway, his scaled arm lit red like a forge coal.
+
+~ izek_window
+Narrator: Izek walks past you without a word and plants himself in the open casement between Ireena and the dark. Fire licks up the black scales of his shoulder.
+Izek: Not her. Go back to the castle.
+Izek [angry]: You want through this window, you burn first.
+Strahd [smile]: The brother. How very warm you keep her threshold.
+Strahd: Step easy, my friend, for I have no quarrel with kin tonight. The dark will keep until the fire goes out.
+Narrator: He steps back into the empty air and is gone between one breath and the next. The frost melts from the sill, and the cold goes out of the room.
+
+~ place_vallaki
+Izek: Keep walking past the square. That fat fool can hang his own lanterns.
+
+~ place_village
+Izek: That is the churchyard where Kolyan lies. He kept her safe when I could not.
+
+~ place_lake
+Izek: Keep to the trees above Lake Zarovich. I have no use for that water.
+
+~ place_castle
+Izek: The rider's house is cold. Stay behind my right shoulder.
+
+~ fight_arm
+Izek: Don't look at the arm. The fire goes down when the work is done.
+
+~ fight_ireena
+Izek: Leave my coat, it's only blood. Look to Ireena first and see if she is hurt.
+
+~ idle_doll
+Izek: Blinsky used good wood for the face. I keep one in my coat so the rain doesn't spoil it.
+
+~ idle_wait
+Izek: Nine years old to now is a long sit by a door. Another mile is nothing.
+
+~ idle_dark
+Izek: Too quiet in these pines. Something is listening back.
+
+~ izek_a
+Narrator: When the mist lifted from Barovia, Izek walked beside his sister into the sun and never asked her for a memory. He sits by her door still, a quiet dog with a warm right hand.
+
+~ izek_b
+Narrator: Izek left Vallaki behind and built a cabin near the woods past Lake Zarovich, where he lives alone. When Ireena passes the road below, he watches from the trees and lets her go in peace.
+
+~ izek_c
+Narrator: Spurned by Baron Vargas and denied the reward he asked for, Izek walked out of the town gates alone. Even with the valley free, he waits in a rented room with a chest of carved dolls.
+
+~ izek_d
+Narrator: Izek Strazni went into the earth with his monstrous arm and his secret unbroken. Ireena walked out of the valley into the sunlight and never knew she had another brother.
+
+~ izek_e
+Narrator: No roof in the valley is safe for long while the castle stands above the mist. Whenever the night grows cold, Izek sits awake across Ireena's threshold with his scaled arm burning like a coal.
+
+~ izek_f
+Narrator: Alone in a cabin near the woods past Lake Zarovich, Izek keeps his axe by the door and sleeps little. On windless nights he hears the castle's black carriage rolling down the road toward the villages.
+
+~ izek_g
+Narrator: Baron Vargas refused him the girl he had dreamed of since he was nine, and the night never ended. In a dark room in Vallaki, Izek sits over his chest of Blinsky dolls and waits.
+
+~ izek_h
+Narrator: Izek Strazni died in the fog with a chest of red-haired dolls left behind in his room. The devil still rules the valley, and Ireena never knew the brother who dreamed her face.

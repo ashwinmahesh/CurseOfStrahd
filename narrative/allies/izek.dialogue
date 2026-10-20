@@ -1,0 +1,274 @@
+# Izek Strazni after the truth (Story Allies Presence Plan, package Z2; data/npcs/izek.json, docs/story/izek_brother.md,
+# docs/voice/izek.md). Once Izek has been told Ireena is his sister (izek_told_truth) he leaves the Baron and is somewhere the party
+# can find him, stage by stage: digging in the woods past Lake Zarovich where he lost her (`woods`, an NPC of the hill trail for the day
+# after the party first finds him), then at Kolyan's grave in the village of Barovia (`grave`), then, if the party asks, sitting at
+# Ireena's door wherever she shelters (`guard`: the Blue Water Inn, St. Andral's, the Krezkovs' house, her father's mansion) and,
+# when she travels with the party again, falling in behind her (`with_her`, `join_with_her`: a guest who answers to a click, `talk`).
+# Three scenes between the two of them (`sister_1`, `sister_2`, `sister_3`: the first doll, their parents, the name he shouted) play
+# at her door, at the grave or by the camp fire (narrative/camp/izek.dialogue). What Emil saw that night (werewolf_den/emil:lake_night
+# sets izek_rider_heard) can be told to him (`tell_rider`).
+#
+# Nothing rolls. Only side flags (data/flags/allies_izek.json) and Ireena's trust move; no story flag does. The drafts are Gemini's
+# (docs/plans/gemini_allies/z2/), edited; every line is unvoiced.
+
+# --- The woods past the lake (an NPC of lake_zarovich_trail, approach 6, for the day after the first meeting) ------------------
+
+~ woods
+if flag.izek_woods_met
+-> woods_again
+endif
+set izek_woods_met = now
+Narrator: Past the lake, under the dark pines, Izek kneels in the needles and digs with his bare claws. Thin smoke curls from the black scales into the damp air.
+Izek: Speak or move on. I didn't walk out here for company.
+Izek: It was under these trees. The earth keeps things if you go deep enough.
+-> woods_menu
+
+~ woods_again
+Izek: The dirt isn't finished with me yet. Say what you want.
+-> woods_menu
+
+~ woods_menu
+* What are you digging for? -> woods_digging
+* Ireena asked after you. -> woods_ireena
+* [if flag.izek_rider_heard and not flag.izek_knows_rider] Emil saw that night. Castle wolves, and a rider in black. -> tell_rider
+* I will leave you to it. -> END
+
+~ woods_digging
+Izek: Where it happened. Whatever the wolves left behind in the roots.
+Izek [sad]: I turned up a bone button an hour ago. I put it back under the soil where it belongs.
+-> woods_menu
+
+~ woods_ireena
+Izek [sad]: She asked after me. Tell her I don't need looking after.
+Izek: Tomorrow I will go down to Barovia and stand where the old man who raised her is buried. I owe him that much.
+-> woods_menu
+
+# --- What Emil saw (from the woods, the grave, a guard's post or the road) -----------------------------------------------------
+
+~ tell_rider
+set izek_knows_rider
+Narrator: Red fire jumps between his scaled knuckles, and the pine needles hiss around his wrist. He stares at the treeline without blinking.
+Izek [angry]: Not the pack, then. The castle.
+Izek [angry]: He sat in the trees and watched a boy bleed.
+Izek: Good. Now I know where to look when the time comes.
+-> back
+
+# Back to whichever menu the party came from.
+~ back
+if at:lake_zarovich_trail
+-> woods_menu
+elif guest:izek
+-> talk_menu
+elif at:village_of_barovia
+-> grave_menu
+endif
+-> guard_menu
+
+# --- Kolyan's grave in the village of Barovia (an NPC of village_of_barovia, approach 5, from the day after the first meeting) ------
+
+~ grave
+if flag.izek_grave_met
+-> grave_again
+endif
+set izek_grave_met
+Narrator: In the muddy churchyard of Barovia, Izek stands with his hat in his human hand. He holds his scaled arm wide of the headstone so its heat will not scorch the grass.
+Izek: Kolyan, was it. The man who put a roof over her and fed her while I was breaking heads in Vallaki.
+Izek [sad]: Tell me one thing. Did he suffer at the end, or did he go quiet?
+if guest:ismark
+-> grave_ismark
+endif
+-> grave_menu
+
+~ grave_ismark
+Narrator: Ismark and Izek measure each other across the fresh earth of the grave, two broad-shouldered men in the mist. Neither speaks until both sit on the low stone wall.
+Ismark [weary]: They call me Ismark the Lesser at the tavern. Looking at you, I believe it. Keep your hands gentle around her and we'll have no quarrel.
+Izek: You kept her alive when I wasn't there. That is enough for me.
+-> grave_menu
+
+~ grave_again
+Izek: The old man's stone is quiet. State your business.
+-> grave_menu
+
+~ grave_menu
+* [if guest:ireena and not flag.izek_sister_1] Ireena is here. Let her speak to him. -> sister_1
+* [if flag.izek_rider_heard and not flag.izek_knows_rider] Emil saw that night. Castle wolves, and a rider in black. -> tell_rider
+* [if not guest:ireena and not flag.izek_guards_ireena and not flag.ireena_held_by_strahd and (flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals" or flag.ireena_in_krezk or flag.ireena_escort == "declined")] Go and sit by Ireena's door. Keep watch over her. -> guard_set
+* [if guest:ireena and not flag.izek_guards_ireena] Ireena is with us. Walk with us. -> join_with_her
+* I will leave you by the stone. -> END
+
+~ guard_set
+set izek_guards_ireena
+Izek: Give me the door. I will sit outside it until the planks rot.
+Izek [angry]: Nobody goes through me. Not that fat fool's watchmen, and nothing out of the night.
+Izek: I'm good at waiting. Tell her she doesn't have to look at me unless she wants to.
+Narrator: He sets his hat on his head and turns toward the road without another word. The mist closes behind his broad back.
+-> END
+
+~ join_with_her
+set izek_guards_ireena
+join izek
+Izek: Then I walk a step behind her. Keep your eyes on the road and I will watch her back.
+Izek: Don't expect talk from me. I am there for the steel and the fire.
+-> END
+
+# --- Her door (an NPC of each place she shelters, while he guards her and she is not with the party) -----------------------------
+
+~ guard
+if flag.ireena_sanctuary == "st_andrals"
+-> guard_church
+elif flag.ireena_sanctuary == "inn"
+-> guard_inn
+elif flag.ireena_in_krezk
+-> guard_krezk
+endif
+-> guard_mansion
+
+~ guard_inn
+Narrator: Outside her door in the Blue Water Inn, Izek sits on a tilted chair with his scaled arm tucked beneath his ordinary one.
+-> guard_open
+
+~ guard_church
+Narrator: In St. Andral's he stands against the nave wall by the door, his scaled arm folded away from the saint's bones, and does not go further in.
+-> guard_open
+
+~ guard_krezk
+Narrator: At the foot of the house behind Krezk's wall, he stands like a boundary post while the yard goats stare at his smoking hand.
+-> guard_open
+
+~ guard_mansion
+Narrator: In the burgomaster's mansion in Barovia he sits with his back against the barred shutters and his boots on the old rug.
+-> guard_open
+
+~ guard_open
+Izek: The door is shut. Keep your voice down.
+-> guard_menu
+
+~ guard_menu
+* [if flag.izek_guards_ireena and not guest:ireena and not flag.izek_sister_3] Is there something you two haven't said? -> sister_next
+* How is she doing? -> guard_report
+* [if flag.izek_rider_heard and not flag.izek_knows_rider] Emil saw that night. Castle wolves, and a rider in black. -> tell_rider
+* Where did that arm come from? -> talk_arm
+* What will you do with the dolls in your room? -> talk_dolls
+* [if flag.izek_knows_rider] What will you do about the castle? -> talk_castle
+* Keep your watch. -> END
+
+~ guard_report
+Izek [sad]: She sleeps now. I heard her turn twice before she settled.
+Izek: Nothing has come near the step. You didn't put me here to make small talk.
+-> guard_menu
+
+# --- On the road: he falls in behind her; a click opens `talk` (data/npcs/izek.json guest_talk) --------------------------------
+
+~ with_her
+join izek
+Izek: She walks, I walk. Stay out of my reach and we will get along fine.
+-> END
+
+~ talk
+Izek: Keep moving. My eyes are on the trees, not on you.
+-> talk_menu
+
+~ talk_menu
+* [if guest:ireena and not flag.izek_sister_3] Is there something you two haven't said? -> sister_next
+* [if flag.izek_rider_heard and not flag.izek_knows_rider] Emil saw that night. Castle wolves, and a rider in black. -> tell_rider
+* Where did that arm come from? -> talk_arm
+* What will you do with the dolls in your room? -> talk_dolls
+* [if flag.izek_knows_rider] What will you do about the castle? -> talk_castle
+* Carry on. -> END
+
+~ talk_arm
+Izek: I woke up in the blood with it when I was nine. If it belonged to something else first, that thing hasn't come to ask for it back.
+Izek: It wakes up before I do in the dark. The claws twitch when the mist gets thick.
+Izek: I throw an old wool blanket over it before I shut my eyes. It smells of singed mutton by morning.
+-> back
+
+~ talk_dolls
+Izek: The chest stays locked in my room in Vallaki. Let the fat fool's men break the hinges if they dare.
+if flag.izek_sister_1
+Izek: The first one Blinsky made kept me from going mad. Now she has it, and my coat is lighter.
+else
+Izek [sad]: I kept the first one Blinsky made wrapped in oilcloth inside my coat. A man keeps what kept him from going mad.
+endif
+Izek: When the nights were long, I used to sit by the chest and tell them nothing worth repeating. Drop it.
+-> back
+
+~ talk_castle
+Izek [angry]: When we go up that rock, I will take this hand and burn the thing that has been walking through her sleep.
+Izek: That is all there is to say about the castle.
+Izek: Do not ask me about him again. Save your breath for the climb.
+-> back
+
+# --- The three scenes between them (at her door, at the grave, by the camp fire; each once, in order) -----------------------------
+
+~ sister_next
+if not flag.izek_sister_1
+-> sister_1
+elif not flag.izek_sister_2
+-> sister_2
+endif
+-> sister_3
+
+~ sister_1
+set izek_sister_1
+set ireena_trust += 1
+Narrator: Izek reaches inside his heavy coat with his good hand and draws out a small wooden figure, its hair painted a fierce, clumsy red. He holds it toward Ireena without looking up, as if offering an iron weight.
+Izek: Blinsky made this one first, before he knew how to carve a chin. I told him the hair had to catch the light.
+Ireena: She has the scowl of a Vallaki turnip, and far too much paint on her forehead.
+Izek [sad]: He only had my word to go by. Take it, if you want.
+Ireena: I did not say I was giving it back. The wood is still warm from your coat.
+* (Say nothing. Let them have this.) -> sister_1_a
+* I think she would like to keep it, Izek. -> sister_1_b
+
+~ sister_1_a
+Ireena [smile]: Keep your hands at your sides, Izek. I can hold a piece of pine without dropping it.
+Izek: You held the rest of them in my head, every night. You can hold that one in your pocket.
+-> END
+
+~ sister_1_b
+Izek: It's yours. Every one in that chest was carved for you.
+Ireena: One is quite enough to carry on the road. Though she looks sturdy enough to survive a drop.
+-> END
+
+~ sister_2
+set izek_sister_2
+set ireena_trust += 1
+Narrator: The fire pops in the damp air, throwing red light across the scales of Izek's arm. Ireena watches the smoke rise and speaks into the quiet between them.
+Ireena: Say it plainly, if there is anything left to say. What were our mother and father like?
+Izek: There was a low hearth that smoked when the wind came off Lake Zarovich. A woman's voice called us in at dusk, and a man's big hands.
+Ireena [weary]: No names, then. Not even the shape of their faces.
+Izek [sad]: The trees took the rest when I was nine. That is all I kept.
+* What little he remembers is enough to begin, Ireena. -> sister_2_a
+* What were you doing out in those woods, Izek? -> sister_2_b
+
+~ sister_2_a
+Ireena: A smoking hearth and a voice at dark is more than I had this morning. Kolyan gave me a roof, and now you give me a chimney.
+Izek: It was warm inside. I know that much.
+-> END
+
+~ sister_2_b
+Izek: Looking for dry sticks before the rain came down. I walked too far ahead of her, and then the wolves were between us.
+Ireena: You were nine years old, Izek. A boy is not an army, even if you look like one now.
+-> END
+
+~ sister_3
+set izek_sister_3
+set ireena_trust += 1
+Narrator: The wind presses against the shutters and goes still. Izek looks down at his scarred knuckles, speaking so low the fire nearly drowns him out.
+Izek [sad]: I shouted a name through the trees until my throat bled. It was Viorela.
+Ireena: Viorela. It sounds like a name from another country, belonging to a girl who knew how to hide in the dark.
+Izek: It belonged to you. I did not say it to the Baron, or to Blinsky, or to a living soul after that night.
+Ireena [weary]: She died by the lake, I think, or stayed behind in the pines. The girl Kolyan found on the road only knew how to be Ireena.
+* It is your name to keep or to leave, Ireena. -> sister_3_a
+* You can carry both names if you choose. -> sister_3_b
+
+~ sister_3_a
+set ireena_birth_name_kept = "ireena"
+Ireena: Call me Ireena, as Father and Ismark did. Still, I am glad you did not let the wolves have the old one.
+Izek: Ireena, then. I can learn to say that.
+-> END
+
+~ sister_3_b
+set ireena_birth_name_kept = "both"
+Ireena [smile]: Ireena will do for the road and the daylight. If you use the other when it is only us, I will answer to it.
+Izek: I will keep it for the quiet. I am good at waiting.
+-> END

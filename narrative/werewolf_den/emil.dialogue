@@ -43,6 +43,7 @@ Emil: I know it. That's why I'm the one in chains.
 ~ lake_night
 Emil: Not mine. I wasn't leader then. But I was in those woods that night, and so were wolves that weren't ours: the castle's, big and silent.
 Emil: There was a boy screaming and a girl with red hair, and a rider in black at the treeline. We ran. I've been ashamed of running for twenty years.
+set izek_rider_heard
 if guest:ireena
 Narrator: Ireena has gone very still. Her hand has found her own sleeve and is gripping it hard.
 Ireena: A rider at the treeline. I don't remember that. I don't. Why does it feel like I do?

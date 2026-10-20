@@ -14,6 +14,9 @@ Narrator: In Ireena's room the candles are out. She stands at the open window in
 if flag.ismark_guards_ireena
 Narrator: Ismark sits slumped by the door with his sword across his knees, deeply and unnaturally asleep.
 endif
+if flag.izek_guards_ireena
+-> window_izek_inn
+endif
 -> window
 
 # ---------------------------------------------------------------- At the Krezkovs' house (Krezk)
@@ -26,9 +29,21 @@ Narrator: Inside, Ireena holds out her hand at the window, as if to someone help
 if flag.ismark_in_krezk
 Narrator: Ismark lies across the doorway, breathing slow and deep, his spear beside him. Nothing wakes him.
 endif
+if flag.izek_guards_ireena
+-> window_izek_krezk
+endif
 -> window
 
 # ---------------------------------------------------------------- The window
+
+# Izek, her brother, sits guard at her door: his arm burns him awake when the cold is near (Story Allies Presence Plan, package Z2).
+~ window_izek_inn
+Narrator: Izek stands wide awake in the doorway of Ireena's room at the Blue Water Inn, his scaled arm glowing red like a forge coal. The heat of it smells of ash and hot iron.
+-> window
+
+~ window_izek_krezk
+Narrator: Izek stands wide awake in the doorway of the upper room, his scaled arm lit red like a forge coal.
+-> window
 
 ~ window
 Strahd: Ah. My guests. You are just in time to say goodbye.
@@ -37,12 +52,23 @@ Ireena: He's right. I'm so tired of running. It's only a window.
 
 ~ window_menu
 * [if item:holy_symbol_of_ravenkind] Raise the Holy Symbol of Ravenkind. -> symbol
+* [if flag.izek_guards_ireena] Let Izek take the window. -> izek_window
 * [Cleric] Stand in the window and call on your god. -> faith
 * [Paladin] Stand in the window and call on your oath. -> faith
 * [Religion DC 15] Speak a warding prayer over the sill. -> ward | ward_failed
 * [Persuasion DC 15] Ireena. Remember who you are. -> woke | woke_failed
 * Go for him. -> fight
 * Let her go. -> taken
+
+~ izek_window
+set strahd_window = "izek"
+Narrator: Izek walks past you without a word and plants himself in the open casement between Ireena and the dark. Fire licks up the black scales of his shoulder.
+Izek: Not her. Go back to the castle.
+Izek [angry]: You want through this window, you burn first.
+Strahd [smile]: The brother. How very warm you keep her threshold.
+Strahd: Step easy, my friend, for I have no quarrel with kin tonight. The dark will keep until the fire goes out.
+Narrator: He steps back into the empty air and is gone between one breath and the next. The cold goes out of the room.
+-> saved
 
 ~ symbol
 set strahd_window = "symbol"

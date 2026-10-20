@@ -1,0 +1,50 @@
+~ sister_1
+Narrator: Izek reaches inside his heavy coat with his good hand and draws out a small wooden figure, its hair painted a fierce, clumsy red. He holds it toward Ireena without looking up, as if offering an iron weight.
+Izek: Blinsky made this one first, before he knew how to carve a chin. I told him the hair had to catch the light.
+Ireena: She has the scowl of a Vallaki turnip, and far too much paint on her forehead.
+Izek [sad]: He only had my word to go by. Take it, if you want.
+Ireena: I did not say I was giving it back. The wood is still warm from your coat.
+* (Say nothing. Let them have this.) -> sister_1_a
+* I think she would like to keep it, Izek. -> sister_1_b
+
+~ sister_1_a
+Ireena [smile]: Keep your hands at your sides, Izek. I can hold a piece of pine without dropping it.
+Izek: You held the rest of them in my head. You can hold that one in your pocket.
+
+~ sister_1_b
+Izek: It is hers. Every one of them in that chest was carved for her.
+Ireena: One is quite enough to carry on the road. Though she looks sturdy enough to survive a drop.
+
+~ sister_2
+Narrator: The fire pops in the damp air, throwing red light across the scales of Izek's ruined arm. Ireena watches the smoke rise and speaks into the quiet between them.
+Ireena: Say it plainly, if there is anything left to say. What were our mother and father like?
+Izek: There was a low hearth that smoked when the wind came off Lake Zarovich. A woman's voice called us in at dusk, and large hands mended the nets.
+Ireena [weary]: No names, then. Not even the shape of their faces.
+Izek [sad]: The trees took the rest when I was nine. That is all I kept.
+* What little he remembers is enough to begin, Ireena. -> sister_2_a
+* What were you doing out in those woods, Izek? -> sister_2_b
+
+~ sister_2_a
+Ireena: A smoking hearth and a voice at dark is more than I had this morning. Kolyan gave me a roof, and now you give me a chimney.
+Izek: It was warm inside. I know that much.
+
+~ sister_2_b
+Izek: Looking for dry pine before the rain came down. I walked too far ahead of her, and then the wolves were between us.
+Ireena: You were nine years old, Izek. A boy is not an army, even if you look like one now.
+
+~ sister_3
+Narrator: The wind presses against the shutters and goes still. Izek looks down at his scarred knuckles, speaking so low the fire nearly drowns him out.
+Izek [sad]: I shouted a name through the trees until my throat bled. It was Viorela.
+Ireena: Viorela. It sounds like a name from another country, belonging to a girl who knew how to hide in the dark.
+Izek: It belonged to you. I did not say it to the Baron, or to Blinsky, or to a living soul after that night.
+Ireena [weary]: She died by the lake, I think, or stayed behind in the pines. The girl Kolyan found on the road only knew how to be Ireena.
+* It is your name to keep or to leave, Ireena. -> sister_3_a
+* You can carry both names if you choose. -> sister_3_b
+
+~ sister_3_a
+Ireena: Call me Ireena, as Father and Ismark did. Still, I am glad you did not let the wolves have the old one.
+Izek: Ireena, then. I can learn to say that.
+
+~ sister_3_b
+Ireena [smile]: Ireena will do for the road and the daylight. If you use the other when we are alone by the fire, I will answer to it.
+Izek: I will keep it for the quiet. I am good at waiting.

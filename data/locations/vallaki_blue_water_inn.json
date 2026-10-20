@@ -820,6 +820,15 @@
       "approach": 8,
       "facing": "east",
       "when": "flag.ezmerelda_left_tower and not guest:ezmerelda and ((not flag.van_richten_reunited and not flag.ezmerelda_back_at_camp and not flag.rictavio_gone and not guest:rictavio and (flag.vallaki_backed != \"wachter\" or tarokka.ally.npc == rictavio)) or (flag.ezmerelda_reunited_in_vallaki and not flag.rictavio_gone))"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        14,
+        8
+      ],
+      "dialogue": "allies/izek:guard",
+      "when": "not flag.izek_dead and flag.izek_told_truth and not guest:izek and flag.izek_guards_ireena and not guest:ireena and not flag.ireena_held_by_strahd and flag.ireena_sanctuary == \"inn\""
     }
   ],
   "narration": {

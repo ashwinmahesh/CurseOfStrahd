@@ -470,6 +470,15 @@
       "dialogue": "vallaki/cat_in_the_window:church",
       "facing": "east",
       "when": "flag.stella_at_church"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        4,
+        8
+      ],
+      "dialogue": "allies/izek:guard",
+      "when": "not flag.izek_dead and flag.izek_told_truth and not guest:izek and flag.izek_guards_ireena and not guest:ireena and not flag.ireena_held_by_strahd and flag.ireena_sanctuary == \"st_andrals\""
     }
   ],
   "encounters": [

@@ -1,6 +1,6 @@
 {
   "id": "ireena",
-  "summary": "Ireena's letters (Story Allies Presence Plan, package I3). While she shelters (the Blue Water Inn, St. Andral's, the Krezkovs' house, or her father's mansion after the party declined to take her) and the party is somewhere else, a courier finds the party outdoors with a letter in her hand after the big things she would hear of: the festival's end, the Abbot's bats over Krezk's wall, the werewolf den's end, the winery's wine, the beacon at Argynvostholt, the dinner at the castle. One visit, up to six times and at least two days apart; which letter plays is read from the flags in narrative/allies/ireena_letters:letter. Each letter adds one to ireena_letters_unanswered and any check-in (narrative/allies/ireena:checkin) sets it back to 0. Letters stop at three unanswered; at three Strahd writes to the party about her (the second visit, once, and her trust falls by one). Words only; the party answers them by visiting. Lines: narrative/allies/ireena_letters.dialogue; the design: docs/story/ireena_letters.md.",
+  "summary": "Ireena's letters (Story Allies Presence Plan, package I3). While she shelters (the Blue Water Inn, St. Andral's, the Krezkovs' house, or her father's mansion after the party declined to take her) and the party is somewhere else, a courier finds the party outdoors with a letter in her hand after the big things she would hear of: the festival's end, the Abbot's bats over Krezk's wall, the werewolf den's end, the winery's wine, the beacon at Argynvostholt, the dinner at the castle. One visit, up to six times and at least two days apart; which letter plays is read from the flags in narrative/allies/ireena_letters:letter. Each letter adds one to ireena_letters_unanswered and any check-in (narrative/allies/ireena:checkin) sets it back to 0. Letters stop at three unanswered; at three Strahd writes to the party about her (the second visit, once, and her trust falls by one). No letter comes while Izek holds her in his room (Z1: izek_holds_ireena). Words only; the party answers them by visiting. Lines: narrative/allies/ireena_letters.dialogue; the design: docs/story/ireena_letters.md.",
   "visits": [
     {
       "id": "ireena_letter",
@@ -12,7 +12,7 @@
         ],
         "outdoors": true
       },
-      "when": "flag.ireena_met and not guest:ireena and not flag.ireena_held_by_strahd and (((flag.ireena_sanctuary == \"inn\" or flag.ireena_sanctuary == \"st_andrals\") and not region:vallaki) or (flag.ireena_in_krezk and not region:krezk) or (flag.ireena_escort == \"declined\" and not region:village_of_barovia)) and flag.ireena_letters_unanswered < 3 and ((flag.festival_over and not flag.ireena_sent_festival) or (flag.abbot_told_strahd and not flag.ireena_sent_abbot) or (flag.wolf_pack_leader and not flag.ireena_sent_den) or (flag.winery_wine_flows and not flag.ireena_sent_wine) or (flag.argynvost_beacon_lit and not flag.ireena_sent_beacon) or (flag.strahd_invitation == \"accepted\" and not flag.ireena_sent_dinner))",
+      "when": "flag.ireena_met and not guest:ireena and not flag.ireena_held_by_strahd and not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth) and (((flag.ireena_sanctuary == \"inn\" or flag.ireena_sanctuary == \"st_andrals\") and not region:vallaki) or (flag.ireena_in_krezk and not region:krezk) or (flag.ireena_escort == \"declined\" and not region:village_of_barovia)) and flag.ireena_letters_unanswered < 3 and ((flag.festival_over and not flag.ireena_sent_festival) or (flag.abbot_told_strahd and not flag.ireena_sent_abbot) or (flag.wolf_pack_leader and not flag.ireena_sent_den) or (flag.winery_wine_flows and not flag.ireena_sent_wine) or (flag.argynvost_beacon_lit and not flag.ireena_sent_beacon) or (flag.strahd_invitation == \"accepted\" and not flag.ireena_sent_dinner))",
       "max": 6,
       "cooldown_hours": 48,
       "dialogue": "allies/ireena_letters:letter"
@@ -27,7 +27,7 @@
         ],
         "outdoors": true
       },
-      "when": "flag.strahd_watcher_seen and flag.ireena_met and not guest:ireena and not flag.ireena_held_by_strahd and (((flag.ireena_sanctuary == \"inn\" or flag.ireena_sanctuary == \"st_andrals\") and not region:vallaki) or (flag.ireena_in_krezk and not region:krezk) or (flag.ireena_escort == \"declined\" and not region:village_of_barovia)) and flag.ireena_letters_unanswered >= 3 and not flag.ireena_strahd_wrote_silence",
+      "when": "flag.strahd_watcher_seen and flag.ireena_met and not guest:ireena and not flag.ireena_held_by_strahd and not (flag.izek_holds_ireena and not flag.izek_dead and not flag.izek_told_truth) and (((flag.ireena_sanctuary == \"inn\" or flag.ireena_sanctuary == \"st_andrals\") and not region:vallaki) or (flag.ireena_in_krezk and not region:krezk) or (flag.ireena_escort == \"declined\" and not region:village_of_barovia)) and flag.ireena_letters_unanswered >= 3 and not flag.ireena_strahd_wrote_silence",
       "once": true,
       "dialogue": "allies/ireena_letters:strahd_silence_intro"
     }

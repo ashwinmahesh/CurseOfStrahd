@@ -1,0 +1,14 @@
+~ talk_dolls_given
+Izek: The first one Blinsky made kept me from going mad. Now she has it, and my coat is lighter.
+
+~ izek_c
+Narrator: Sunlight returns to Vallaki, though the Baron refuses his captain the only reward he asked for. Izek obeys and waits, sitting quiet over his chest of carved dolls.
+
+~ izek_g
+Narrator: Night holds the valley, and the Baron refuses his captain the reward he asked for. Izek obeys and waits in the dark, keeping his chest of carved dolls.
+
+~ izek_d2
+Narrator: Izek lies dead in Vallaki, his name given back to the sister he lost. Ireena walks out of the valley into the sun, knowing she had a brother.
+
+~ izek_h2
+Narrator: Izek lies dead in Vallaki, his name given back to the sister he lost. Ireena hides and runs through the long night, carrying the memory of a brother.

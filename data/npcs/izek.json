@@ -8,7 +8,18 @@
   "attitude": "indifferent",
   "voice": "docs/voice/izek.md",
   "monster": "izek_strazni",
-  "guest": false,
+  "guest": true,
+  "guest_build": {
+    "monster": "izek_strazni",
+    "note": "His own stat block as the Baron's enforcer (a CR 5 brute with a fiendish arm). He joins the party only as Ireena's brother, once he knows the truth: he guards her door wherever she shelters and falls in behind her when she travels with the party (allies/izek:join_with_her, with_her). A foe's extra boss damage does not apply to him, only foes count as bosses."
+  },
+  "guest_talk": "allies/izek:talk",
+  "guest_stays": [
+    {
+      "when": "guest:ireena",
+      "why": "Izek won't leave his sister."
+    }
+  ],
   "tags": [
     "barovian",
     "enforcer",

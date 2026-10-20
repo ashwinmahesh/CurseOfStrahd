@@ -1,0 +1,23 @@
+# Izek Strazni's camp talks (Story Allies Presence Plan, package Z2; story/camp_talk.gd, docs/story/camp.md "Guests ask too",
+# docs/story/izek_brother.md). When Izek and Ireena both travel with the party, a Long Rest at camp can bring the three scenes between
+# the two of them, one a night, in order: the first doll, their parents, the name he shouted through the trees
+# (narrative/allies/izek.dialogue: sister_1, sister_2, sister_3, the same scenes the hub offers at her door). Each plays once; the
+# later scene's condition waits for the one before it. Izek asks (his name is written first, as the camp reads it).
+
+~ talk_sister_3
+if guest:izek and guest:ireena and flag.izek_sister_2 and not flag.izek_sister_3
+-> allies/izek:sister_3
+endif
+-> END
+
+~ talk_sister_2
+if guest:izek and guest:ireena and flag.izek_sister_1 and not flag.izek_sister_2
+-> allies/izek:sister_2
+endif
+-> END
+
+~ talk_sister_1
+if guest:izek and guest:ireena and not flag.izek_sister_1
+-> allies/izek:sister_1
+endif
+-> END

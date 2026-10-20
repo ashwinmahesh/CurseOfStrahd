@@ -253,6 +253,10 @@ quest escort_ireena accepted
 attitude ireena friendly
 Ireena: Then I'll fetch my sword and my good boots. I'm not made of glass; I'll walk, I'll fight, and I'll take a watch. Don't argue about the watch.
 Ismark: I'm coming too. Don't argue either. It's the only family business I have left.
+if flag.izek_guards_ireena and not guest:izek
+join izek
+Izek: She walks, I walk. Stay out of my reach and we will get along fine.
+endif
 approve godrick_pendlebrook +4 liriel_dawnsong +2 wren_featherfoot +2 thistle +1 kip_smudgewick +1 ratatoille +1: You took Ireena out of the village, away from him
 * Glad to have you, Ismark. -> ismark_joins
 * Someone should stay and keep the house standing. -> ismark_stays
