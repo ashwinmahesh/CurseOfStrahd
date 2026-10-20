@@ -1,0 +1,111 @@
+~ kept_back
+Narrator: The firelight catches the clean, unknicked edge of Ireena's half-drawn blade. Her hands on the scabbard do not shake, though her jaw is set hard.
+Ireena: Every thing we meet parts around me like river water around a post. You bleed for every mile, and I am kept clean on the bank.
+Ireena [angry]: I'm not made of glass. Give me twenty minutes with a practice blade before the sun comes up.
+* Set a mark in the dirt. We start at first light. -> kept_back_a
+* Whatever spares you in the fighting keeps you alive. Let it. -> kept_back_b
+
+~ kept_back_a
+Ireena [smile]: Good. Do not pull your wrist on the parry, either.
+Ireena: If the valley will not let them strike me, it can at least watch me learn where the ribs are.
+
+~ kept_back_b
+Ireena: Alive and preserved in salt are two different things.
+Ireena [weary]: Rest your shoulder. I will clean my own steel, even if it only ever cuts the fog.
+
+~ burial
+Narrator: Ireena sits straight-backed by the embers, brushing dried churchyard clay from the hem of her cloak. She folds the wool into neat, sharp corners across her knees.
+Ireena: The ditch beside my mother's stone took three hours to dig, and my lamp oil nearly failed before the earth went back in. Father would want it done properly.
+Ireena: Tell me if you remember the exact words spoken over the soil. Someone besides Ismark and me should keep the record straight.
+* We remember. Your father was laid to rest with every proper word. -> burial_a
+* The prayer is gone from my head, only that you never looked away. -> burial_b
+
+~ burial_a
+Ireena: Thank you. The village church has lost enough of its register to the damp and the dark.
+Ireena [sad]: If a house falls, the people who knew the master ought to remember how the door was shut.
+
+~ burial_b
+Ireena: Looking away would not have made the spades move any faster.
+Ireena: Hold on to that much, then. He had witnesses who stood in the mud until the last sod was flat.
+
+~ window
+Narrator: The logs settle with a soft hiss, and Ireena pulls her boots closer to the ash. Her fingers rest lightly over the high collar of her scarf.
+Ireena: Do not look at me while I sleep as though I might rise and walk into the trees. Keep a watch near my bedroll, and wake me if my eyes open.
+Ireena [afraid]: When our visitor stood at the casement, my own feet went toward the latch before you caught my arm. That is the part I cannot stomach.
+* I will take the watch before yours and keep you by the fire. -> window_a
+* We will watch the dark, but I cannot promise to hold you every time. -> window_b
+
+~ window_a
+Ireena: Throw a pine knot on my boots if I so much as stir.
+Ireena [weary]: A bruise on the shin is a small price for waking up in my own mind.
+
+~ window_b
+Ireena: Say it plainly. That is fairer than an oath you might die trying to keep.
+Ireena: Tie the tent cord with a loud knot, then. Give me the chance to trip over my own rescue.
+
+~ izek
+Narrator: Sparks drift toward the black pines while Ireena turns a peeled hazel twig between her thumbs. She watches the bark curl in the heat without blinking.
+Ireena: They found me on a road as a small girl with no name in my mouth, and Kolyan gave me a roof and a brother. Now Vallaki gives me another one, built like an ox and carving my face into little dolls.
+Ireena: What does a sister owe a man she cannot remember, who kept her likeness in a toy chest?
+* You owe him nothing. Blood without memory is only a story he told himself. -> izek_a
+* He looked for you his whole life, in the only ragged way he knew. -> izek_b
+
+~ izek_a
+Ireena: A man with an arm like a hearth-iron does not take well to being called a story.
+Ireena: Still, Ismark earned the word by sitting up with me through winter fevers. The Baron's man will have to wait for his account.
+
+~ izek_b
+Ireena [sad]: It is a terrible thing to be missed so hard by someone so crooked.
+Ireena: If we pass through Vallaki again, I will speak to him in the daylight. Not as kin yet, just two people from the same woods.
+
+~ pool_promised
+Narrator: The sleeves of Ireena's coat are still stiff from the cold spring water of Krezk. She holds her palms to the blaze, though her eyes stay on the dark beyond the fire-ring.
+Ireena: The man in the water called me by another name, and his hand felt warmer than the sun on the stones. I told him I would not step into a reflection while the devil still keeps a roof in this valley.
+Ireena: Once that house on the crag is ash, I have given my word to go back to the water and hear him out.
+* What did he look like to you, down there in the clear water? -> pool_a
+* Your life belongs to you, whether it stays on the road or goes back. -> pool_b
+
+~ pool_stayed
+Narrator: The sleeves of Ireena's coat are still stiff from the cold spring water of Krezk. She warms her hands at the coals, rubbing the damp from her wrists with brisk, practical strokes.
+Ireena: The man in the water had a gentle face, and he knew a girl who wore my eyes before I did. I told him that girl is dead, and I have a brother in Barovia and work left on dry land.
+Ireena: It felt strange to shut a door in the water, when every other door in this valley is forced open.
+* What did he look like to you, down there in the clear water? -> pool_a
+* Your life belongs to you, whether it stays on the road or goes back. -> pool_b
+
+~ pool_a
+Ireena: Like someone painted on chapel glass who never had to winter in the mud.
+Ireena [weary]: He looked kind, and very tired of waiting. I have had enough of men waiting for me across the years.
+
+~ pool_b
+Ireena [smile]: That is a novel notion in this country. Take care you do not say it too loud.
+Ireena: For tonight, the name Father gave me is the only one answering roll at this fire.
+
+~ amber
+Narrator: Ireena sits to windward of the smoke, her cloak drawn tight across her mouth and nose. She eyes the company down the length of the burning log like a magistrate weighing a bad witness.
+Ireena [angry]: You brought the mountain down in your clothes. It smells like sweet pine resin kept in a closed vault for a thousand years.
+Ireena: The devil takes by force when the mist rises, and I hate him for it. What stayed in the Amber Temple waited until you held out your own hands.
+* You were not in the cold. Do not judge the price we paid. -> amber_a
+* We took what we needed to win. It will be worth the stain. -> amber_b
+
+~ amber_a
+Ireena: I know the look of a lean winter bargain when it sits at my fire.
+Ireena [sad]: Keep your blanket on the far side of the ashes tonight. I have enough old teeth in my life without yours.
+
+~ amber_b
+Ireena [angry]: That is how every lord in a high tower talks before the mortar dries.
+Ireena: Use what you bought, then, and pray it comes off with soap when the work is done.
+
+~ castle_eve
+Narrator: Above the tree line, the black spires of Castle Ravenloft cut the clouds like broken teeth. By the small camp flame, Ireena braids her red hair back so nothing hangs loose near her throat.
+Ireena: I have never crossed that drawbridge waking, yet I know the third step on the south turret stair has a cracked riser. Before we go up the road tomorrow, we will settle our accounts like sensible people.
+Ireena: If he takes me behind those walls, you are not to spend your lives buying back one body. And if I do not come down the hill, tell Ismark the house is his and not to drink alone.
+* Ifthose doors close on you, we break them down or die trying. -> castle_eve_a
+* Your brother will get your word, and we will finish what we came for. -> castle_eve_b
+
+~ castle_eve_a
+Ireena: You are stubborn, and terrible at arithmetic.
+Ireena [smile]: Keep your shield up on that third stair, then. I would hate to watch you trip after a speech like that.
+
+~ castle_eve_b
+Ireena: Good. That is a clean bargain, with no waste in it.
+Ireena: Sleep while the wood holds out. Tomorrow we see whether his house is as large as my bad dreams make it.

@@ -2,7 +2,8 @@
 # LocationFights says combat:keeps_back:<npc>:first once, as the first fight begins with her along, and
 # combat:keeps_back:<npc> in later fights (it holds off for a while between them), a beat after the fight's own opening
 # line. Combat lines are one sentence under 15 words; the first may run to two. Drafted by Gemini through the ai-bridge
-# (docs/plans/gemini_allies/E3/: brief, raw reply, what was changed), edited for length and canon. Unvoiced for now.
+# (docs/plans/gemini_allies/E3/: brief, raw reply, what was changed), edited for length and canon. Unvoiced for now. The last
+# four of her lines are package I4's (docs/plans/gemini_allies/i4/): what she does from the back of a fight.
 
 ~ combat:keeps_back:ireena:first
 | Ireena steps back, blade sheathed. What comes for you goes round her like water round a stone, as if it had been told whose she is.
@@ -14,4 +15,8 @@ once
 | Ireena folds her arms over her cloak, watching every blow she cannot answer.
 | Not one blade angles toward Ireena where she waits.
 | Ireena measures the distance between your back and the dark with level eyes.
+| Ireena's sharp warning cuts through the clash of steel to guard your blind side.
+| Ireena calls out across the din, and a blade turns just in time.
+| Ireena weighs a road-stone in her palm, then lets it drop.
+| Ireena holds the lantern high, casting steady light across the ground where you fight.
 cooldown 20

@@ -1,0 +1,195 @@
+# Ireena Kolyana's camp talks (Story Allies Presence Plan, package I4; story/camp_talk.gd, docs/story/camp.md "Guests ask too",
+# docs/story/ireena_camp.md, docs/voice/ireena.md). She travels with the party as a guest who does not fight (her NPC says
+# guest_fights false: the valley goes round her), and after a Long Rest she sometimes asks for a word by the fire. Each talk
+# plays once and the file offers the first one whose condition holds, so the later part of the story comes first: the night
+# before the castle, the Amber Temple's gift, the Pool of the White Sun, Izek's truth, Strahd at her window, the burial, and
+# last, the one she has wanted to ask since the first fights she watched from behind the line.
+#
+# Nothing rolls and nobody is judged: every talk ends after one reply. The only thing that moves is ireena_trust (a side
+# flag, data/flags/allies_ireena.json) when the party takes her seriously. The drafts are Gemini's (docs/plans/gemini_allies/i4/),
+# edited; every line is unvoiced.
+
+~ talk_castle_eve
+if guest:ireena and level >= 9 and not visited:castle_ravenloft_gates
+-> castle_eve
+endif
+-> END
+
+~ castle_eve
+Narrator: Above the tree line the black spires of Castle Ravenloft cut the clouds like broken teeth. By the small camp flame, Ireena braids her red hair back so nothing hangs loose near her throat.
+Ireena: I have never crossed that drawbridge, yet I know where the stairs go. Before we go up tomorrow, let us settle our accounts like sensible people.
+Ireena: If he takes me behind those walls, you are not to spend your lives buying back one body. And if I do not come down the hill, tell Ismark the house is his, and not to drink alone.
+* If those doors close on you, we break them down or die trying. -> castle_eve_a
+* Your brother will get your word, and we will finish what we came for. -> castle_eve_b
+
+~ castle_eve_a
+set ireena_trust += 1
+Ireena: You are stubborn, and terrible at arithmetic.
+Ireena [smile]: Then keep your guard up on the stairs. I would hate to watch you trip after a speech like that.
+-> END
+
+~ castle_eve_b
+set ireena_trust += 1
+Ireena: Good. That is a clean bargain, with no waste in it.
+Ireena: Sleep while the wood holds out. Tomorrow we see whether his house is as large as my bad dreams make it.
+-> END
+
+~ talk_amber
+if guest:ireena and flag.dark_gifts_taken >= 1
+-> amber
+endif
+-> END
+
+~ amber
+Narrator: Ireena sits to windward of the smoke, her cloak drawn across her mouth and nose. She eyes the company down the length of the burning log like a magistrate weighing a bad witness.
+Ireena [angry]: You brought the mountain down in your clothes. It smells like sweet pine resin, kept in a closed vault for a thousand years.
+Ireena: The devil takes by force when the mist rises, and I hate him for it. What stayed in that temple waited until you held out your own hands.
+* You were not in the cold. Do not judge the price we paid. -> amber_a
+* We took what we needed to win. It will be worth the stain. -> amber_b
+
+~ amber_a
+Ireena: I know the look of a hard bargain when it sits at my fire.
+Ireena [sad]: Keep your blanket on the far side of the ashes tonight. I have enough old teeth in my life without yours.
+-> END
+
+~ amber_b
+Ireena [angry]: That is how every lord in a high tower talks before the mortar dries.
+Ireena: Use what you bought, then, and pray it washes off when the work is done.
+-> END
+
+~ talk_pool
+if guest:ireena and flag.ireena_pool_choice
+if flag.ireena_pool_choice == "promised"
+-> pool_promised
+endif
+-> pool_stayed
+endif
+-> END
+
+~ pool_promised
+Narrator: The sleeves of Ireena's coat are still stiff from the cold water of Krezk. She holds her palms to the blaze, though her eyes stay on the dark beyond the fire-ring.
+Ireena: The man in the water knew me by another name. I told him I would not step into a reflection while the devil still keeps a roof in this valley.
+Ireena: Once that house on the crag is ash, I have given my word to go back to the water and hear him out.
+* What did he look like to you, down there in the clear water? -> pool_a
+* Your life belongs to you, whether it stays on the road or goes back. -> pool_b
+
+~ pool_stayed
+Narrator: The sleeves of Ireena's coat are still stiff from the cold water of Krezk. She warms her hands at the coals, rubbing the damp from her wrists with brisk, practical strokes.
+Ireena: The man in the water had a gentle face, and he knew a girl who wore my eyes before I did. I told him that girl is gone, and that I have a brother and work left on dry land.
+Ireena: It felt strange to shut a door in the water, when every other door in this valley is forced open.
+* What did he look like to you, down there in the clear water? -> pool_a
+* Your life belongs to you, whether it stays on the road or goes back. -> pool_b
+
+~ pool_a
+set ireena_trust += 1
+Ireena: Like someone painted on chapel glass who never had to winter in the mud.
+Ireena [weary]: He looked kind, and very tired of waiting. I have had enough of men waiting for me.
+-> END
+
+~ pool_b
+set ireena_trust += 1
+Ireena [smile]: That is a novel notion in this country. Take care you do not say it too loud.
+Ireena: For tonight, the name Father gave me is the only one answering roll at this fire.
+-> END
+
+~ talk_izek
+if guest:ireena and flag.izek_told_truth
+-> izek
+endif
+-> END
+
+~ izek
+Narrator: Sparks drift toward the black pines while Ireena turns a peeled hazel twig between her thumbs. She watches the bark curl in the heat without blinking.
+Ireena: They found me on a road as a small girl with no name in my mouth, and Kolyan gave me a roof and a brother. Now Vallaki has given me another, built like an ox, who had my face carved into little dolls.
+Ireena: What does a sister owe a man she cannot remember, who kept her likeness in a chest?
+* You owe him nothing. Blood without memory is only a story he told himself. -> izek_a
+* He looked for you his whole life, in the only ragged way he knew. -> izek_b
+
+~ izek_a
+Ireena: A man with an arm like a hearth-iron does not take well to being called a story.
+Ireena: Still, Ismark earned the word by staying. He will have to wait for his account.
+-> END
+
+~ izek_b
+set ireena_trust += 1
+Ireena [sad]: It is a terrible thing to be missed so hard by someone so crooked.
+Ireena: If I meet him again, I will speak to him in daylight. Not as kin yet, only as someone from the same woods.
+-> END
+
+~ talk_window
+if guest:ireena and flag.strahd_window and flag.strahd_window != "church"
+-> window
+endif
+-> END
+
+~ window
+Narrator: The logs settle with a soft hiss, and Ireena pulls her boots closer to the ash. Her fingers rest lightly over the high collar of her scarf.
+Ireena: Do not look at me while I sleep as though I might rise and walk into the trees. Keep a watch near my bedroll, and wake me if my eyes open.
+Ireena [afraid]: When our visitor stood at the casement, my own feet went toward the latch. That is the part I cannot stomach.
+* I will take the watch before yours and keep you by the fire. -> window_a
+* We will watch the dark, but I cannot promise to hold you every time. -> window_b
+
+~ window_a
+set ireena_trust += 1
+Ireena: Throw a pine knot on my boots if I so much as stir.
+Ireena [weary]: A bruise on the shin is a small price for waking up in my own mind.
+-> END
+
+~ window_b
+set ireena_trust += 1
+Ireena: Say it plainly. That is fairer than an oath you might die trying to keep.
+Ireena: Then tie a bell to the door, or a loud knot. Give me the chance to trip over my own rescue.
+-> END
+
+~ talk_burial
+if guest:ireena and flag.burgomaster_buried
+-> burial
+endif
+-> END
+
+~ burial
+Narrator: Ireena sits straight-backed by the embers, brushing dried churchyard clay from the hem of her cloak. She folds the wool into neat, sharp corners across her knees.
+Ireena: The grave beside my mother's stone was dug by lamplight, and the oil nearly failed before the earth went back in. Father would want it done properly.
+if flag.burial_method == "hasty"
+Ireena: Tell me if you remember how he went into the ground, with no words and no prayer. Someone besides Ismark and me should keep the record straight.
+else
+Ireena: Tell me if you remember the words spoken over the soil. Someone besides Ismark and me should keep the record straight.
+endif
+* We remember it, as well as anyone could. He was not forgotten. -> burial_a
+* I have lost the prayer, but I remember that you never looked away. -> burial_b
+
+~ burial_a
+set ireena_trust += 1
+Ireena: Thank you. The village has lost enough of its record to the damp and the dark.
+Ireena [sad]: If a house falls, the people who knew the master ought to remember how the door was shut.
+-> END
+
+~ burial_b
+set ireena_trust += 1
+Ireena: Looking away would not have helped the spades.
+Ireena: Hold on to that much, then. He had witnesses who stood in the mud until the last sod was flat.
+-> END
+
+~ talk_kept_back
+if guest:ireena and level >= 4
+-> kept_back
+endif
+-> END
+
+~ kept_back
+Narrator: The firelight catches the clean, unnicked edge of Ireena's half-drawn blade. Her hands on the scabbard do not shake, though her jaw is set hard.
+Ireena: Everything we meet parts around me like river water around a post. You bleed for every mile, and I am kept clean on the bank.
+Ireena [angry]: I'm not made of glass. Give me twenty minutes with a practice blade before the sun comes up.
+* Set a mark in the dirt. We start at first light. -> kept_back_a
+* Whatever spares you in the fighting keeps you alive. Let it. -> kept_back_b
+
+~ kept_back_a
+set ireena_trust += 1
+Ireena [smile]: Good. And do not go easy on me.
+Ireena: If the valley will not let them strike me, it can at least watch me learn where the ribs are.
+-> END
+
+~ kept_back_b
+Ireena: Alive and preserved in salt are two different things.
+Ireena [weary]: Rest your shoulder. I will clean my own steel, even if it only ever cuts the fog.
+-> END

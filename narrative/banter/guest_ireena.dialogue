@@ -59,13 +59,25 @@ endif
 
 ~ fight_glass
 if guest:ireena
-interject guest:ireena: I'm not made of glass. I'm made of whatever's left when the glass breaks, and it held.
+interject guest:ireena: I'm not made of glass. I would rather take the blow myself than stand behind you and watch it fall.
 endif
 -> END
 
 ~ fight_father
 if guest:ireena
-interject guest:ireena: Father taught me the sword so I'd never need it. He was a good man and a terrible prophet.
+interject guest:ireena: Father taught me the sword so I'd never need it. Now the whole valley has decided I'm not allowed to use it.
+endif
+-> END
+
+~ fight_count
+if guest:ireena
+interject guest:ireena: I counted every blow from back here, and who took it. If I can't draw steel, I can at least keep the ledger.
+endif
+-> END
+
+~ fight_carry
+if guest:ireena
+interject guest:ireena: Give me a wound to bind, a pack to carry, or a corner to watch. Anything but standing idle while you bleed.
 endif
 -> END
 

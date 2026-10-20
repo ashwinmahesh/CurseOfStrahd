@@ -1,0 +1,23 @@
+~ fight_glass
+Ireena [defiant]: I'm not made of glass. I would rather take the blow myself than stand behind you and watch it fall.
+
+~ fight_father
+Ireena [bitter]: Father taught me the sword so I'd never need it. Now the whole valley has decided I'm not allowed to use it.
+
+~ fight_count
+Ireena [dry]: Seven blows given, three taken on the left flank. If I can't draw steel, I can at least keep the ledger.
+
+~ fight_carry
+Ireena [tense]: Give me a wound to bind, a pack to carry, or a corner to watch. Anything but standing idle while you bleed.
+
+~ keeps_back_warning
+Narrator [tense]: Ireena's sharp warning cuts through the clash of steel to guard your blind side.
+
+~ keeps_back_name
+Narrator [urgent]: Ireena calls out across the din, and a blade turns just in time.
+
+~ keeps_back_stone
+Narrator [somber]: Ireena weighs a heavy road-stone in her palm before letting it drop back to the dirt.
+
+~ keeps_back_lamp
+Narrator [steady]: Ireena holds the lantern high, casting steady light across the ground where you fight.
