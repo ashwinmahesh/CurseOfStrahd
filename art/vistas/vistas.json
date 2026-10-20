@@ -56,7 +56,8 @@
     "ghakis_quarry": [0.322, 0.142],
     "castle_ravenloft_gates": [0.695, 0.73],
     "castle_ravenloft_overlook": [0.695, 0.73],
-    "castle_ravenloft_spires_roofs": [0.695, 0.73]
+    "castle_ravenloft_spires_roofs": [0.695, 0.73],
+    "castle_ravenloft_parapets": [0.695, 0.73]
   },
   "castle": {
     "at": [0.695, 0.73],

@@ -602,6 +602,7 @@
     "iron_spike": "lorc/nails@iron",
     "jar": "delapouite/covered-jar@clay",
     "javelin": "lorc/thrown-spear@wood",
+    "jeweled_electrum_spork": "lorc/spoon@gold",
     "jewelers_tools": "lorc/cut-diamond@glass",
     "jug": "delapouite/jug@clay",
     "key": "lorc/skeleton-key@gold",
