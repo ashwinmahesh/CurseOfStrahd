@@ -392,5 +392,20 @@ func test_the_staff_is_a_druids_loot_in_the_winery_once_the_hall_is_won() -> voi
 	assert_eq(_placed("gulthias_staff"), 1, "the staff turns up once")
 
 
-func test_the_thighbone_waits_in_data_for_crypt_six() -> void:
-	assert_true(_placed("saint_markovias_thighbone") <= 1, "never twice (crypt 6 puts it in when the catacombs lane lands)")
+func test_the_thighbone_is_lifted_from_saint_markovias_lid_in_crypt_six() -> void:
+	assert_eq(_placed(THIGHBONE), 0, "no container holds it: the saint's bone is lifted from her sarcophagus's lid")
+	var lines := FileAccess.get_file_as_string("res://narrative/castle_ravenloft/catacombs_crypts.dialogue").split("\n")
+	var gives := 0
+	var after_lift := false
+	var lifted_first := false
+	for line: String in lines:
+		var l := line.strip_edges()
+		if l == "~ lift":
+			after_lift = true
+		elif l.begins_with("~ "):
+			after_lift = false
+		if l == "give %s" % THIGHBONE:
+			gives += 1
+			lifted_first = after_lift
+	assert_eq(gives, 1, "the crypts' dialogue gives it once")
+	assert_true(lifted_first, "in the lift scene")

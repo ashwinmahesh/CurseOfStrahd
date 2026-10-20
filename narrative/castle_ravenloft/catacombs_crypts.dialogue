@@ -2,10 +2,8 @@
 # Lines drafted by Gemini through the ai-bridge, trimmed by hand (docs/story/gemini_drafts/castle_crypts/).
 
 # Saint Markovia's thighbone (prop cat_markovia_bone, crypt 6 in the Lesser Vaults). The darts guard it.
-# TODO(I1): lane I1 (castle-artifacts, e952cd10a) adds the item `saint_markovias_thighbone`, a Mace of Disruption that
-# crumbles if it hit a vampire, and leaves it for this crypt. It is not on this branch's base, so the bone is only seen, not
-# carried, until both lanes are on main: then add `give saint_markovias_thighbone` after `set cat_markovia_bone_lifted` in
-# the `lift` node below (whichever lane lands second does it).
+# The thighbone is the item `saint_markovias_thighbone` (castle-artifacts, Dungeon Expansion Plan I1, docs/story/castle_artifacts.md):
+# lifting it from the lid gives it to the party, once.
 
 ~ markovia_bone
 narrate examine:cat_markovia_bone
@@ -17,6 +15,7 @@ endif
 
 ~ lift
 set cat_markovia_bone_lifted
+give saint_markovias_thighbone
 Narrator: As you lift the linen from the stone, the air grows cold. A pale woman in a worn apron stands beside you, her hands folded and still.
 Narrator: "You have come a long way through the dark, children, and my rest was long. Take what remains of me where it is needed, and let it mend what this castle has torn."
 -> END

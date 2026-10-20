@@ -49,10 +49,10 @@ is left out and the pages are given here only as 5e.tools prints them.
   (cell 20, 4), shown once `flag.winery_hall_cleared` (the druids' fight is won). It is one container, not loot on the
   hall fight's four variants, because the fight has four conditional line-ups and "each lasting item once" counts a
   repeat in each.
-- **The Thighbone** is in the data and **not placed yet**. The plan puts it in crypt 6 (St. Markovia's), a container
-  of the catacombs lane (C1, `castle-crypts`). Whichever of the two lands second adds
-  `{"id": "saint_markovias_thighbone", "qty": 1}` to that crypt's container; `tests/unit/test_castle_artifacts.gd`
-  only checks it is placed at most once.
+- **The Thighbone** is lifted from the lid of Saint Markovia's sarcophagus in crypt 6 of the Lesser Vaults (the catacombs
+  lane, C1): the prop `cat_markovia_bone`, behind the dart plate, and the `lift` node of
+  `narrative/castle_ravenloft/catacombs_crypts.dialogue` gives `saint_markovias_thighbone` once (a dialogue `give`, so it
+  counts as its one placement in test_loot_distinct). It needs the crypts branches first.
 
 ## Prices
 

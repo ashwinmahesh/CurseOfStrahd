@@ -135,6 +135,17 @@ func test_sasha() -> void:
 	assert_false(after.any(func(b: Dictionary) -> bool: return str(b["kind"]) == "options"), "once she is gone the bier is only a bier: no menu")
 
 
+## How many of `item` the party carries between them.
+func _carried(st: StoryState, item: String) -> int:
+	var n := 0
+	for ch: Character in st.party:
+		n += int(ch.entry_of(item).get("qty", 0))
+	for e: Dictionary in st.stash:
+		if str(e.get("id", "")) == item:
+			n += int(e.get("qty", 0))
+	return n
+
+
 ## Saint Markovia's thighbone is lifted once, and the ghost speaks.
 func test_markovia_bone() -> void:
 	var st := SideQuestPlay.party(SIX, 10, "castle_ravenloft_catacombs_vaults", 12)
@@ -142,8 +153,10 @@ func test_markovia_bone() -> void:
 	assert_eq(SideQuestPlay.missing(lift), "")
 	assert_true(st.get_flag("cat_markovia_bone_lifted"), "the bone is up")
 	assert_true(SideQuestPlay.text(lift).contains("mend what this castle has torn"), "her few words")
+	assert_eq(_carried(st, "saint_markovias_thighbone"), 1, "the party carries her thighbone (the item of Dungeon Expansion Plan I1)")
 	var again := SideQuestPlay.play(st, "castle_ravenloft/catacombs_crypts:markovia_bone")
 	assert_false(SideQuestPlay.text(again).contains("mend what this castle"), "she does not speak twice")
+	assert_eq(_carried(st, "saint_markovias_thighbone"), 1, "and it is given once")
 
 
 ## Fire clears the Baron's mold, and with it his cold trap; no torch, no option, but the room can always be left.

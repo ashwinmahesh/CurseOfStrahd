@@ -409,4 +409,4 @@ Three Curse of Strahd relics, each placed once. They are unsellable story items 
 |---|---|---|---|
 | ✅ | Castle Ravenloft, the chapel's dais beside the altar | Icon of Ravenloft (legendary) | Container `crg_chapel_icon`, not the altar (the Tarokka spot keeps its treasure) |
 | ✅ | The Wizard of Wines, the fermenting hall | Gulthias Staff (rare) | Container `druid_satchel`: the lead druid's satchel, left behind once the hall fight is won (`flag.winery_hall_cleared`) |
-| ○ | Castle Ravenloft, the catacombs, crypt 6 (St. Markovia) | Saint Markovia's Thighbone (rare) | In the data; the container goes in with the catacombs lane (C1, `castle-crypts`), whichever of the two lands second |
+| ✅ | Castle Ravenloft, the Lesser Vaults, crypt 6 (St. Markovia) | Saint Markovia's Thighbone (rare) | Lifted from the lid of her sarcophagus past the dart plate: `give` in the `lift` node of `catacombs_crypts.dialogue` (prop `cat_markovia_bone`, once) |

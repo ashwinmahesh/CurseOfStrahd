@@ -294,7 +294,7 @@ A long passage (y 12 to 14) with crypts off both sides. Every crypt keeps its ow
 
 | Book crypt | Room, gate | What it holds |
 |---|---|---|
-| 6, Saint Markovia | `cat_crypt_markovia`, (2, 4) to (8, 10), gate (5, 11) | her sarcophagus behind a dart plate (`cat_markovia_darts`: Dex 15, 4d6 poison, poisoned); her thighbone on the lid, which when lifted shows her ghost for a few words (`catacombs_crypts:lift`). **Stand-in:** the bone is not an item here yet; lane I1 (castle-artifacts) adds `saint_markovias_thighbone` and whichever lane lands second adds `give saint_markovias_thighbone` in the `lift` node (a TODO in `catacombs_crypts.dialogue`) |
+| 6, Saint Markovia | `cat_crypt_markovia`, (2, 4) to (8, 10), gate (5, 11) | her sarcophagus behind a dart plate (`cat_markovia_darts`: Dex 15, 4d6 poison, poisoned); her thighbone on the lid, which when lifted shows her ghost for a few words (`catacombs_crypts:lift`). lifting it gives the party the item `saint_markovias_thighbone` (`give` in the `lift` node; Dungeon Expansion Plan I1, docs/story/castle_artifacts.md) |
 | 25, Stefan Gregorovich | `cat_crypt_stefan`, (11, 6) to (15, 10), gate (13, 11) | a skull that answers every question and is always wrong (`catacombs_skulls:stefan`) |
 | 26, Intree Sik-Valoo | `cat_crypt_intree`, (18, 6) to (22, 10), gate (20, 11) | a skull that answers truly (`catacombs_skulls:intree`): where Strahd sleeps, how he is ended, what Saint Finderway's niche does |
 | 14, Stahbal Indi-Bhak | `cat_crypt_stahbal`, (25, 1) to (38, 10), gate (31, 11) | a round shaft and twelve upright coffins; the captains rise (`cat_stahbal`) |
