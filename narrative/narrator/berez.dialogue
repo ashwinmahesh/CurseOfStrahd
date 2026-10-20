@@ -236,6 +236,10 @@ once
 
 ~ examine:baratok_cold_hearth
 | A hearth that has never had a fire in it. Frost grows on the firedogs like moss.
+# Two winks (easter-egg plan R5): a saucer for something with wings, and the fire the hungry orb lit. Gemini drafts,
+# edited (docs/plans/gemini_eggs/r5/); unvoiced.
+| On the frozen hearthstone sits a saucer of fresh cream, not yet skinned with ice. Up here, whatever comes to lap it must arrive on wings.
+| [flag.eggs_orb_fed] A clean yellow fire burns in the hearth that never had one, and nobody feeds it. The saucer of cream beside it has gone warm.
 
 ~ examine:baratok_bed
 | A bed of wolf furs. The wolves, you notice, died of cold.
@@ -687,3 +691,22 @@ cooldown 0
 
 ~ examine:tarn_cairn
 | A cairn on the crag above the tarn, built tall enough to be seen from the passes. Mountain folk raise one wherever someone went through the ice and wasn't found.
+
+# ---------------------------------------------------------------- The hungry orb and the last hole (easter-egg plan R5)
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r5/); unvoiced.
+
+~ check:investigation:lift_furs:success
+| Deep in the stiff pelts your knuckles bump a rag bundle the size of a fist, warm against the cold, with a slow violet pulse behind cracked glass. Something is chalked on the rag.
+
+~ check:investigation:lift_furs:failure
+| You turn over three stiff wolf pelts and find only frost, shed hairs and the smell of old snow.
+
+~ examine:marsh_spade_slab
+| [flag.eggs_spade_third] The slab at the marsh edge, tipped back now, and nothing under it but black water.
+| Where the old road slips under the black water, one tilted kerb-stone has the outline of a spade scratched into it. The mud beneath its lip is thick as lard, and has kept its shape.
+
+~ check:athletics:marsh_dig:success
+| You pry the heavy mud from under the stone and haul up a lard-tin, heavy with coin, lying on the worn iron head of an old spade. A last note sits on top of the silver.
+
+~ check:athletics:marsh_dig:failure
+| {name} turns up only bottomless black silt and a bubble of marsh gas that smells of boiled cabbage and the witch's ditch.

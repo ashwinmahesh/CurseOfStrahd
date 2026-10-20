@@ -112,6 +112,14 @@ once
 | Among the jars and bottles, one flask has no label. The oil inside is grey, and your hand looks faintly see-through behind the glass.
 once
 
+# The jar marked DO NOT (easter-egg plan R5, docs/story/eggs.md): part two of the man who fell from the sky. Drafted by
+# Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r5/); unvoiced.
+~ check:arcana:jar_do_not:success
+| In the yellowed spirit hangs a finger-length of grey flesh with four pale feelers at one end. As {name} leans close, it turns slowly in the jar to face {name}'s eye.
+
+~ check:arcana:jar_do_not:failure
+| The spirit in the jar is clouded thick as tallow, though a grey shape inside shifts, or settles, as your shadow crosses the glass.
+
 # ---------------------------------------------------------------- Lane 28 (2026-10-08): the tarn's shore.
 
 ~ examine:vrt_hobbled_horse

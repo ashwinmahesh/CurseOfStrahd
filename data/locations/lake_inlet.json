@@ -398,6 +398,40 @@
       ],
       "kind": "decor",
       "model": "reeds"
+    },
+    {
+      "id": "inlet_hummock",
+      "cell": [
+        5,
+        13
+      ],
+      "kind": "examine",
+      "label": "A hummock ringed with half-sunk stones",
+      "model": "rubble",
+      "checks": [
+        {
+          "id": "inlet_dig",
+          "skill": "athletics",
+          "dc": 10,
+          "label": "Dig here",
+          "when": "item:shovel",
+          "minutes": 30,
+          "success": {
+            "gold": 40,
+            "flag": "eggs_spade_second",
+            "items": [
+              {
+                "id": "potion_of_healing_greater"
+              }
+            ],
+            "codex": {
+              "id": "pedlar_note_inlet",
+              "title": "A pedlar's second note",
+              "text": "You have a good eye for dry ground in a wet country, friend. Drink the little bottle if the lake-chill has got into your knees, and pocket the coin before the crows count it.\nThe fattest part of my life's work waits where the old road drowns in the marsh, under the noses of things too proud to look at the mud.\nA man who trusts his spade"
+            }
+          }
+        }
+      ]
     }
   ],
   "narration": {

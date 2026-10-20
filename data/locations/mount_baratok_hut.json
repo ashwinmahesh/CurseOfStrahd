@@ -132,7 +132,35 @@
       ],
       "kind": "examine",
       "label": "A bed of furs",
-      "model": "bed"
+      "model": "bed",
+      "checks": [
+        {
+          "id": "lift_furs",
+          "skill": "investigation",
+          "dc": 15,
+          "label": "Lift the furs",
+          "success": {
+            "flag": "eggs_orb_found",
+            "codex": {
+              "id": "chalk_on_a_rag",
+              "title": "Chalk on a rag",
+              "text": "Chalked on the rag a cracked glass orb is wrapped in, in a hurried, forceful hand:\nNOT MINE. A student's. Keep it fed. Keep it away from your chest."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "baratok_orb",
+      "cell": [
+        3,
+        2
+      ],
+      "kind": "examine",
+      "label": "A cracked glass orb in a chalked rag",
+      "model": "glass_vessels",
+      "when": "flag.eggs_orb_found",
+      "dialogue": "mount_baratok/hungry_orb:orb"
     },
     {
       "id": "chess_owl",

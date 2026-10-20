@@ -156,3 +156,17 @@ cooldown 0
 
 ~ examine:inlet_campfire
 | A fisher's fire burned down to embers on the shore, a fish still on the spit and blackened through. They left before supper and didn't take it with them.
+
+# ---------------------------------------------------------------- A pedlar's hole (easter-egg plan R5, docs/story/eggs.md)
+# The second of a dead pedlar's three holes (the first is in the Charcoal-Burners' Hollow, the last on the Berez marsh
+# track). Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r5/); unvoiced.
+
+~ examine:inlet_hummock
+| [flag.eggs_spade_second] The hummock in the reeds, and the hole you dug in it, already brimming with lake water.
+| Beyond the screen of rattling sedge, a mound of dry earth sits above the lake mud inside a collar of mossy stones. Someone packed this turf down with the flat of a spade, and a spade would lift it again.
+
+~ check:athletics:inlet_dig:success
+| The blade grates on buried tin, and you lever up a rusted box smelling of tallow and lake-damp. Inside: silver, a stoppered vial of red physic, and a folded note kept dry in oiled linen.
+
+~ check:athletics:inlet_dig:failure
+| Lake water wells up through the peat faster than {name} can fling the mud aside, and the pit turns to cold grey soup.

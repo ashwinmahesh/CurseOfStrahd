@@ -164,7 +164,7 @@ inspire name:thistle: spoke her mind
 ## Conditions
 
 `flag.<id>` (truthy), `not flag.<id>`, `flag.<id> == 3` / `!= >= <= > <`, `class:cleric`, `species:elf`,
-`background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it), `quest.<id> == stage_id`,
+`background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it; `item:spell_scroll_level_1` and `item:spell_scroll_cantrip` mean any Spell Scroll of that level, since a scroll is always carried as a particular spell, and `take spell_scroll_level_1` takes one), `quest.<id> == stage_id`,
 `quest_days.<id> >= 3` (whole days since the quest last moved to its current stage; false before the quest begins),
 `days_since.<flag> >= 2` (whole days since the flag was stamped with `set <flag> = now`; false while it hasn't been),
 `attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `day`, `indoors` (the party's map is under a roof or

@@ -302,6 +302,21 @@
               "jars_oil"
             ]
           }
+        },
+        {
+          "id": "jar_do_not",
+          "skill": "arcana",
+          "dc": 13,
+          "label": "Look at the jar marked DO NOT",
+          "when": "not flag.eggs_jar_seen",
+          "success": {
+            "flag": "eggs_jar_seen",
+            "codex": {
+              "id": "jar_marked_do_not",
+              "title": "The jar marked DO NOT",
+              "text": "On the back of the jar, in a small precise hand:\nTaken with silver forceps from behind the left eye of a shipwrecked sailor, far from here, who swore a vessel shaped like a squid had fallen burning out of the sky with him aboard. Kept five winters in strong spirit, the specimen is not dead. It turns in the jar to face whoever looks at it.\nDO NOT OPEN."
+            }
+          }
         }
       ]
     },

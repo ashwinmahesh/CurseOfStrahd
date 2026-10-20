@@ -273,6 +273,9 @@ static func member_matches(ch: Character, selector: String) -> bool:
 		"item":
 			if ch.carries(value):
 				return true
+			for e: Dictionary in ch.inventory:
+				if is_scroll_of(str(e["id"]), value) and int(e["qty"]) > 0:
+					return true
 		"knows":
 			# A spell the character can cast now (prepared, always prepared, or granted, by a feature or by a potion still
 			# working): a story beat that needs one.
@@ -284,9 +287,19 @@ func party_has_item(item_id: String) -> bool:
 	if find_member("item:" + item_id) != null:
 		return true
 	for e in stash:
-		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+		if (str(e["id"]) == item_id or is_scroll_of(str(e["id"]), item_id)) and int(e["qty"]) > 0:
 			return true
 	return false
+
+
+## Whether `item_id` is a Spell Scroll of the level the generic scroll `generic_id` names ("item:spell_scroll_level_1" in
+## a condition, or `take spell_scroll_level_1`, asks for any such scroll). A scroll is always carried as a particular
+## spell ("spell_scroll__shield"), never as the generic id a reward names (MagicItems.GENERIC_SCROLLS).
+static func is_scroll_of(item_id: String, generic_id: String) -> bool:
+	if not MagicItems.GENERIC_SCROLLS.has(generic_id) or item_id == generic_id:
+		return false
+	var spell := Character.scroll_spell_of(Compendium.shared().item_data(item_id))
+	return spell != "" and int(Compendium.shared().spell_data(spell).get("level", -1)) == int(MagicItems.GENERIC_SCROLLS[generic_id])
 
 
 ## The party came by an item outside a loot window or a shop (gain_item): `who` is the character who has it, "" for the
@@ -362,7 +375,7 @@ func take_item(item_id: String, qty: int) -> int:
 		for e: Dictionary in ch.inventory.duplicate():
 			if left <= 0:
 				break
-			if str(e["id"]) == item_id and int(e["qty"]) > 0:
+			if (str(e["id"]) == item_id or is_scroll_of(str(e["id"]), item_id)) and int(e["qty"]) > 0:
 				var n := mini(left, int(e["qty"]))
 				e["qty"] = int(e["qty"]) - n
 				left -= n
@@ -371,7 +384,7 @@ func take_item(item_id: String, qty: int) -> int:
 	for e: Dictionary in stash.duplicate():
 		if left <= 0:
 			break
-		if str(e["id"]) == item_id:
+		if str(e["id"]) == item_id or is_scroll_of(str(e["id"]), item_id):
 			var n2 := mini(left, int(e["qty"]))
 			e["qty"] = int(e["qty"]) - n2
 			left -= n2

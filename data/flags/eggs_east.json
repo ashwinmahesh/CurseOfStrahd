@@ -1,0 +1,15 @@
+{
+  "region": "eggs_east",
+  "flags": [
+    {
+      "id": "eggs_orb_fed",
+      "type": "bool",
+      "summary": "The party fed the hungry orb in the Mad Mage's hut a spell scroll (mount_baratok/hungry_orb:feed); the hearth burns from then on."
+    },
+    {
+      "id": "eggs_orb_asked",
+      "type": "bool",
+      "summary": "The restored Mordenkainen told the party whose the hungry orb is, and who left it (mount_baratok/mordenkainen:orb_owner)."
+    }
+  ]
+}

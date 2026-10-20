@@ -177,6 +177,7 @@ Mordenkainen: You again. Good. I've been rebuilding my spells from the bottom up
 * [if level >= 8 and not quest.the_forgotten_storm] The lightning that lands on the glass every evening. What is it? -> mount_baratok/the_forgotten_storm:restored
 * [if not flag.tsolenka_watchword_known] The gate in the Tsolenka Pass is held by dead men. -> watchword
 * What waits at the Amber Temple? -> temple
+* [if flag.eggs_orb_found and not flag.eggs_orb_asked] The cracked glass orb in your furs. Whose is it? -> orb_owner
 * Heard anything interesting? -> mount_baratok/the_mages_lost_pages:news
 * [name:ratatoille] [if quest.a_seat_at_the_table >= a_winery and not flag.ratatoille_master_asked] Ask to become his apprentice. -> companions/table:apprentice
 * [if guest:mordenkainen] Nothing. Let's go. -> END
@@ -230,3 +231,12 @@ Mordenkainen: Take nothing that's offered. Anything they give you, they keep a h
 ~ bye
 Mordenkainen: Go on. And stay out of jars.
 -> END
+
+# A wink (easter-egg plan R5, docs/story/eggs.md): whose the hungry orb is, and who left it here. Drafted by Gemini through
+# the ai-bridge and edited (docs/plans/gemini_eggs/r5/); unvoiced.
+~ orb_owner
+set eggs_orb_asked
+Mordenkainen [weary]: A young wizard's, from a harbour city down the coast. Too clever by half, and far too fond of high company.
+Mordenkainen: He had a ruinous habit of keeping the things he couldn't digest tucked right behind his breastbone.
+Mordenkainen [angry]: His teacher, an old beard with a pipe and no respect for anyone's privacy, left it by my fire like a stray cat and vanished before I could throw it back.
+-> restored_menu

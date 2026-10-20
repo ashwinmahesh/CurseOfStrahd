@@ -1,0 +1,20 @@
+# The hungry orb under the Mad Mage's furs (easter-egg plan R5, docs/story/eggs.md): a cracked glass orb that drinks
+# magic, left in the hut by someone else's student. Feeding it a spell scroll lights the hearth that never had a fire.
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_eggs/r5/); every line here is unvoiced.
+
+~ orb
+if flag.eggs_orb_fed
+Narrator: The cracked orb lies quiet in its chalked rag, warm as a nesting hen. In the hearth, the fire it lit is still burning.
+-> END
+endif
+Narrator: The cracked glass orb rests in its chalked rag, warm as a nesting hen and humming against your fingers. Behind the cracks, a knot of violet light turns over and waits.
+* [if item:spell_scroll_level_1] (Feed it a first-level spell scroll.) -> feed
+* (Wrap it up again.) -> END
+
+~ feed
+set eggs_orb_fed
+take spell_scroll_level_1
+Narrator: The scroll touches the glass and its ink drains out like water into sand, leaving the page blank and cold. From the orb comes a low, contented purr.
+Narrator: Across the room the frost on the firedogs snaps, and a clean yellow flame catches in the empty hearth.
+inspire party: fed the hungry orb
+-> END

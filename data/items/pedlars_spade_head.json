@@ -1,0 +1,13 @@
+{
+  "id": "pedlars_spade_head",
+  "name": "A Pedlar's Spade-Head",
+  "source": {
+    "book": "custom",
+    "note": "The last of a dead pedlar's three buried tins (easter-egg plan R5); ours."
+  },
+  "category": "gear",
+  "weight_lb": 3,
+  "cost_gp": 25,
+  "summary": "The iron blade of an old spade, no haft, worn paper-thin by forty winters of honest digging.",
+  "text": "A spade's iron head with the haft long gone, its edge honed thin and bright by years of earth. Its owner buried his savings in three holes across the valley and trusted nothing else. It wants a good ash handle."
+}

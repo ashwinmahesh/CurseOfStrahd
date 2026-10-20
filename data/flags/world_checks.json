@@ -35,6 +35,26 @@
       "id": "eggs_puppet_seen",
       "type": "bool",
       "summary": "Someone looked along Blinsky's top shelf (top_shelf_look) and saw the pale puppet with no reflection; Blinsky sells it from then on."
+    },
+    {
+      "id": "eggs_spade_second",
+      "type": "bool",
+      "summary": "Someone dug up the pedlar's second tin at Lake Zarovich's reedy inlet (inlet_dig, needs a shovel). The second of the three the hidden Patient Spade achievement counts."
+    },
+    {
+      "id": "eggs_spade_third",
+      "type": "bool",
+      "summary": "Someone dug up the pedlar's last tin on the Berez marsh track (marsh_dig, needs a shovel). The third of the three the hidden Patient Spade achievement counts."
+    },
+    {
+      "id": "eggs_orb_found",
+      "type": "bool",
+      "summary": "Someone lifted the furs on the Mad Mage's bed (lift_furs) and found the hungry orb; it shows by the bed from then on."
+    },
+    {
+      "id": "eggs_jar_seen",
+      "type": "bool",
+      "summary": "Someone looked closely at Van Richten's jar marked DO NOT (jar_do_not). Part two of three of the hidden The Man Who Fell from the Sky achievement."
     }
   ]
 }

@@ -264,6 +264,40 @@
       "label": "A drowned tree standing out of the marsh",
       "model": "dead_tree",
       "stand_ft": 10
+    },
+    {
+      "id": "marsh_spade_slab",
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "examine",
+      "label": "A slab of old road-stone, scratched with a spade",
+      "model": "rocks",
+      "checks": [
+        {
+          "id": "marsh_dig",
+          "skill": "athletics",
+          "dc": 12,
+          "label": "Dig here",
+          "when": "item:shovel",
+          "minutes": 30,
+          "success": {
+            "gold": 60,
+            "flag": "eggs_spade_third",
+            "items": [
+              {
+                "id": "pedlars_spade_head"
+              }
+            ],
+            "codex": {
+              "id": "pedlar_note_marsh",
+              "title": "A pedlar's last note",
+              "text": "Well, friend, you have come to the bottom of my holes and the end of my thrifty years. My knees tell me the rain before it falls now, and I shan't be coming back down this track to check on my tin.\nKeep the coin, and take the old iron with it: it fed me forty winters and never asked for interest. Put a good ash handle to it and dig your own quiet places.\nFare you well.\nA man who trusts his spade"
+            }
+          }
+        }
+      ]
     }
   ]
 }

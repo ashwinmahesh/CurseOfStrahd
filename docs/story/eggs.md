@@ -117,4 +117,29 @@ Gemini record and notes: `docs/plans/gemini_eggs/r3/README.md`. Test: `tests/int
   has lately grown horns and an eyepatch, and a lady in red holds his leash.
 - **The Lady of Loss**: a black tract on the Wachterhaus book club's chairs (`black_tract`), with a teacher's note about a
   novice who forgets her own name and picks the flowers that open at night.
+## R5: the lake, Van Richten's Tower, Berez and Mount Baratok
+
+Gemini record and the plan-versus-game notes: `docs/plans/gemini_eggs/r5/README.md`. Test:
+`tests/integration/test_eggs_east.gd`. Flags: `data/flags/eggs_east.json` (`eggs_orb_fed`, `eggs_orb_asked`) and
+`eggs_spade_second`, `eggs_spade_third`, `eggs_orb_found`, `eggs_jar_seen` in `data/flags/world_checks.json`. Item:
+`pedlars_spade_head`.
+
+- **The patient spade, holes 2 and 3.** The hummock ringed with stones at the reedy inlet (`inlet_hummock`, `inlet_dig`,
+  Athletics DC 10) holds the pedlar's second tin: 40 gp, a Potion of Greater Healing and a note that points on to where
+  the old road drowns in the marsh. The tilted slab on the Berez marsh track (`marsh_spade_slab`, `marsh_dig`, DC 12)
+  holds the last: 60 gp, his spade-head (gear, 25 gp) and his farewell. Both need a shovel in the party. Patient Spade
+  (hidden, once all three holes are dug) is R7's: hole 1 is R1's flag, and a package may not name a flag that hasn't landed.
+- **The jar marked DO NOT, part 2 of 3.** Van Richten's label (`jar_do_not`, Arcana DC 13, on the tower's jars): a small
+  grey thing with feelers, taken from the eye of a sailor who swore a ship like a squid fell out of the sky. It turns to
+  face whoever looks. Sets `eggs_jar_seen`; the achievement that reads all three parts is R7's.
+- **The hungry orb.** Lifting the furs on the Mad Mage's bed (`lift_furs`, Investigation DC 15) finds a cracked glass orb
+  in a chalked rag (`eggs_orb_found`); it shows by the bed from then on (`baratok_orb`, `hungry_orb:orb`). Fed a
+  first-level spell scroll it purrs, the party gains Heroic Inspiration and the hearth that never had a fire lights
+  (`eggs_orb_fed`). It eats once.
+- **A saucer on the sill**: a variant among the cold hearth's own lines (`examine:baratok_cold_hearth`); once the orb is
+  fed the hearth burns and the Narrator says so.
+- **The meddler with the pipe**: the restored Mordenkainen, asked whose the orb is (`mordenkainen:orb_owner`, once it is
+  found), says it was a young wizard's and that his teacher left it by the fire uninvited.
+- **Engine touch.** `item:spell_scroll_level_1` and `take spell_scroll_level_1` mean any Spell Scroll of that level
+  (`StoryState.is_scroll_of`): scrolls are always carried as a particular spell, so the generic id never matched.
 
