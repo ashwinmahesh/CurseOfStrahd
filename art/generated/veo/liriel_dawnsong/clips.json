@@ -117,10 +117,10 @@
   "screen": "green"
  },
  "attack_s": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. One fast, powerful spell attack, always facing exactly the way she faces in the image: first the wind-up, the gold sunburst holy symbol raised high in her right hand, a small gathering glow of warm golden light around it, her other hand at her heart, robes swirling; then the strike, the holy symbol thrust out toward the enemy at shoulder height with a burst of golden light leaving it, leaning forward onto the front foot; then she returns to the pose in the image and holds still. The whole attack takes about one second and her feet stay planted. Any magical light stays small and close to her hands, well inside the picture: no big bursts, beams or flashes reaching its edges. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:13:27-04:00",
+  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. A big, powerful heavy overhead swing with the weapon in her right hand, animated like a high-end 2D fighting game with full, exaggerated key poses, always facing exactly the way she faces in the image. Anticipation: she sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; her cape and hair swing back with the motion; her face is fierce, teeth gritted. Then she explodes into the blow: she drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after her, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then she straightens back into the pose in the image while the cape swings and settles. Her cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but she ends exactly where she began. Only her body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:17:12-04:00",
   "centre": [
    360,
    776
@@ -130,10 +130,10 @@
   "screen": "green"
  },
  "attack_se": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. One fast, powerful spell attack, always facing exactly the way she faces in the image: first the wind-up, the gold sunburst holy symbol raised high in her right hand, a small gathering glow of warm golden light around it, her other hand at her heart, robes swirling; then the strike, the holy symbol thrust out toward the enemy at shoulder height with a burst of golden light leaving it, leaning forward onto the front foot; then she returns to the pose in the image and holds still. The whole attack takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:03:16-04:00",
+  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. A big, powerful heavy overhead swing with the weapon in her right hand, animated like a high-end 2D fighting game with full, exaggerated key poses, always facing exactly the way she faces in the image. Anticipation: she sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; her cape and hair swing back with the motion; her face is fierce, teeth gritted. Then she explodes into the blow: she drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after her, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then she straightens back into the pose in the image while the cape swings and settles. Her cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but she ends exactly where she began. Only her body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:17:06-04:00",
   "centre": [
    360,
    776
@@ -143,10 +143,10 @@
   "screen": "green"
  },
  "attack_e": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. One fast, powerful spell attack, always facing exactly the way she faces in the image: first the wind-up, the gold sunburst holy symbol raised high in her right hand, a small gathering glow of warm golden light around it, her other hand at her heart, robes swirling; then the strike, the holy symbol thrust out toward the enemy at shoulder height with a burst of golden light leaving it, leaning forward onto the front foot; then she returns to the pose in the image and holds still. The whole attack takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:03:34-04:00",
+  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. A big, powerful heavy overhead swing with the weapon in her right hand, animated like a high-end 2D fighting game with full, exaggerated key poses, always facing exactly the way she faces in the image. Anticipation: she sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; her cape and hair swing back with the motion; her face is fierce, teeth gritted. Then she explodes into the blow: she drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after her, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then she straightens back into the pose in the image while the cape swings and settles. Her cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but she ends exactly where she began. Only her body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:17:59-04:00",
   "centre": [
    360,
    776
@@ -156,10 +156,10 @@
   "screen": "green"
  },
  "attack_ne": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. One fast, powerful spell attack, seen from behind the whole time (we only ever see her back; she never turns toward the viewer): first the wind-up, the gold sunburst holy symbol raised high in her right hand, a small gathering glow of warm golden light around it, her other hand at her heart, robes swirling; then the strike, the holy symbol thrust out toward the enemy at shoulder height with a burst of golden light leaving it, leaning forward onto the front foot; then she returns to the pose in the image and holds still. The whole attack takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:03:51-04:00",
+  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. A big, powerful heavy overhead swing with the weapon in her right hand, animated like a high-end 2D fighting game with full, exaggerated key poses, seen from behind the whole time (we only ever see her back; she never turns toward the viewer). Anticipation: she sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; her cape and hair swing back with the motion; her face is fierce, teeth gritted. Then she explodes into the blow: she drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after her, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then she straightens back into the pose in the image while the cape swings and settles. Her cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but she ends exactly where she began. Only her body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:18:04-04:00",
   "centre": [
    360,
    776
@@ -169,75 +169,10 @@
   "screen": "green"
  },
  "attack_n": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. One fast, powerful spell attack, seen from behind the whole time (we only ever see her back; she never turns toward the viewer): first the wind-up, the gold sunburst holy symbol raised high in her right hand, a small gathering glow of warm golden light around it, her other hand at her heart, robes swirling; then the strike, the holy symbol thrust out toward the enemy at shoulder height with a burst of golden light leaving it, leaning forward onto the front foot; then she returns to the pose in the image and holds still. The whole attack takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:04:18-04:00",
-  "centre": [
-   360,
-   776
-  ],
-  "scale": 0.8,
-  "last_frame": true,
-  "screen": "green"
- },
- "cast_s": {
-  "model": "veo-3.1-lite-generate-preview",
-  "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. She casts a spell, always facing exactly the way she faces in the image: first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then she returns to the pose in the image and holds still. The whole spell takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:04:26-04:00",
-  "centre": [
-   360,
-   776
-  ],
-  "scale": 0.8,
-  "last_frame": true,
-  "screen": "green"
- },
- "cast_se": {
-  "model": "veo-3.1-lite-generate-preview",
-  "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. She casts a spell, always facing exactly the way she faces in the image: first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then she returns to the pose in the image and holds still. The whole spell takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:04:53-04:00",
-  "centre": [
-   360,
-   776
-  ],
-  "scale": 0.8,
-  "last_frame": true,
-  "screen": "green"
- },
- "cast_e": {
-  "model": "veo-3.1-lite-generate-preview",
-  "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. She casts a spell, always facing exactly the way she faces in the image: first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then she returns to the pose in the image and holds still. The whole spell takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:05:03-04:00",
-  "centre": [
-   360,
-   776
-  ],
-  "scale": 0.8,
-  "last_frame": true,
-  "screen": "green"
- },
- "cast_ne": {
-  "model": "veo-3.1-lite-generate-preview",
-  "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. She casts a spell, seen from behind the whole time (we only ever see her back; she never turns toward the viewer): first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then she returns to the pose in the image and holds still. The whole spell takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:05:28-04:00",
-  "centre": [
-   360,
-   776
-  ],
-  "scale": 0.8,
-  "last_frame": true,
-  "screen": "green"
- },
- "cast_n": {
-  "model": "veo-3.1-lite-generate-preview",
-  "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. She casts a spell, seen from behind the whole time (we only ever see her back; she never turns toward the viewer): first gathering it, one hand raised before the chest with a small glowing light gathering in the palm, the other arm drawn back, eyes intent; then releasing it, the hand thrust forward with a small burst of light leaving it, leaning forward; then she returns to the pose in the image and holds still. The whole spell takes about one second and her feet stay planted. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T15:05:38-04:00",
+  "prompt": "Hand-painted 2D game character animation of an elf cleric of the dawn, from the image. A big, powerful heavy overhead swing with the weapon in her right hand, animated like a high-end 2D fighting game with full, exaggerated key poses, seen from behind the whole time (we only ever see her back; she never turns toward the viewer). Anticipation: she sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; her cape and hair swing back with the motion; her face is fierce, teeth gritted. Then she explodes into the blow: she drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after her, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then she straightens back into the pose in the image while the cape swings and settles. Her cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but she ends exactly where she began. Only her body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:19:01-04:00",
   "centre": [
    360,
    776

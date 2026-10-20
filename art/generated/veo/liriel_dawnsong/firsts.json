@@ -55,28 +55,48 @@
   "scale": 0.8,
   "height": 645
  },
- "cast_s": {
-  "scale": 0.8,
-  "height": 682
- },
- "cast_se": {
-  "scale": 0.8,
-  "height": 680
- },
- "cast_e": {
-  "scale": 0.8,
-  "height": 677
- },
- "cast_ne": {
-  "scale": 0.8,
-  "height": 661
- },
- "cast_n": {
-  "scale": 0.8,
-  "height": 652
- },
  "idle_e": {
   "scale": 1.0,
   "height": 676
+ },
+ "cast_s": {
+  "scale": 0.8,
+  "height": 679
+ },
+ "cast_se": {
+  "scale": 0.8,
+  "height": 684
+ },
+ "cast_e": {
+  "scale": 0.8,
+  "height": 675
+ },
+ "cast_ne": {
+  "scale": 0.8,
+  "height": 677
+ },
+ "cast_n": {
+  "scale": 0.8,
+  "height": 674
+ },
+ "hurt_s": {
+  "scale": 0.8,
+  "height": 652
+ },
+ "hurt_se": {
+  "scale": 0.8,
+  "height": 630
+ },
+ "hurt_e": {
+  "scale": 0.8,
+  "height": 672
+ },
+ "hurt_ne": {
+  "scale": 0.8,
+  "height": 632
+ },
+ "hurt_n": {
+  "scale": 0.8,
+  "height": 668
  }
 }

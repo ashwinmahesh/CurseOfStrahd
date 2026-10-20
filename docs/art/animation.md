@@ -152,8 +152,24 @@ for a kind are in, that kind stays on its drawn frames. Their fall, lying down, 
 The clips show the motions only (owner 2026-10-19: "no effects when spellcasting or making an attack, just the
 motions; the effects come from our game engine"). The tool's `MOVES` gives each hero's wind-up and strike in words
 without the glows and bursts that `animations.json` describes for the drawn strips, and every one-shot prompt rules out
-glow, light, sparks, beams and motion trails. Godrick's attack is a heavy overhead chop (owner 2026-10-19: "make it
-look like a heavier attack"): 18 frames with the blow on frame 11 (`ATTACK_TIMING`). The tool is `tools/art/veo_anims.py` (`make veo-anims [ONLY=<id>] [KINDS=…] [GENERATE=1]
+glow, light, sparks, beams and motion trails. Every attack is timed to feel heavy (owner 2026-10-20: "make weapon
+swings feel heavier"): 18 frames, the wind-up eased so it gathers slowly and the blow comes fast (`WINDUP_EASE`), and
+the blow on frame 11, held for two frames (`IMPACT_HOLD`). Godrick and Liriel (`SWINGS`) swing a weapon overhead in
+their clips (owner 2026-10-19: "make it look like a heavier attack").
+
+Godrick's and Liriel's attacks were made on Veo 3.1 Fast ($0.80 a clip); every other clip is made on Lite (owner
+2026-10-20: "do the rest of the swings in Veo Lite, along with all the other videos"; `MODEL_OF` names a kind for another
+model). The owner turned down the first Lite swings on 2026-10-20 ("there's no movement ... their capes, their bodies,
+their expressions"; "their legs bending, squatting"), so a swing's prompt asks for full fighting-game key poses: a deep crouch, a lunge into the blow, the cape flaring and whipping after
+it, a fierce face. Fast draws white swoosh arcs round the blade in some frames even when asked not to; the owner liked
+the result with them. Liriel swings a longsword in every direction (owner 2026-10-20): Gemini redrew the weapon in her e,
+ne and n first frames (`edits/`), fitted back onto the frames by her lower body.
+
+Some sheets stay as the owner chose them, whatever clips exist (`KEEP`): Godrick's cast is his first Veo one, with its
+glow, and Liriel's cast is her drawn one, with its effect (owner 2026-10-20: "I like Liriel's old casting (with the
+effect)"; "Godrick's previous casting animation with the effect").
+
+The tool is `tools/art/veo_anims.py` (`make veo-anims [ONLY=<id>] [KINDS=…] [GENERATE=1]
 [REDO="cast_se …"]`). The sheets are still sprite sheets: the game plays frames as before, and nothing decodes
 video at run time.
 
@@ -163,10 +179,13 @@ video at run time.
   figure keeps its size and ground line.
 - The screen is green, except for Kip and Thistle, who wear green and stand on cyan. No hero has a cyan hue.
 - Walks and idles are 4-second clips ($0.20 each).
-- Attacks and casts are 8-second clips that end on their first frame (Veo's `lastFrame`, $0.40 each). Without that
+- Attacks, casts and flinches are 8-second clips that end on their first frame (Veo's `lastFrame`; $0.40 each on Lite,
+  $0.80 on Fast). Without that
   frame Veo turned heroes seen from behind round to face the camera, or left them in another pose.
 - The first frame of an attack or cast is drawn at 0.8 scale, so a swing stays inside the 720-wide clip, and the
   frames are scaled back up.
+- A cast starts and ends on the standing frame, because the drawn cast's first frame holds a glowing orb and the clips
+  are motions only. An attack starts on the drawn attack's ready pose.
 - Calls go through the Gemini ledger (`make art-spend`).
 - Clips, their first frames and prompts (`clips.json`) are kept in `art/generated/veo/<id>/` (LFS, `.gdignore`).
 
@@ -184,7 +203,7 @@ video at run time.
 |---|---|---|
 | Walk | 24 (the cleanest two-step loop, starting on the lowest head, a foot coming down) | 24 fps |
 | Idle | 9 to 18 (a 1.5 to 3 second loop whose last third of a second is faded into its start, since an idle drifts and seldom comes back on its own) | 6 fps |
-| Attack | 16, the fastest motion (the blow) landing on frame 7 (`hit_frames`) | 16 fps |
+| Attack | 18, the fastest motion (the blow) landing on frame 11 (`hit_frames`), held two frames | 16 fps |
 | Cast | 12, the release landing on frame 4 | 16 fps |
 | Hurt | 8, the flinch landing on frame 2 (4-second clips; the sheet's die_ and down_ stay drawn) | 16 fps |
 

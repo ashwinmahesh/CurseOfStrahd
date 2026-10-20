@@ -47,29 +47,9 @@
   "scale": 0.8,
   "height": 663
  },
- "cast_se": {
-  "scale": 0.8,
-  "height": 674
- },
  "attack_n": {
   "scale": 0.8,
   "height": 673
- },
- "cast_s": {
-  "scale": 0.8,
-  "height": 689
- },
- "cast_e": {
-  "scale": 0.8,
-  "height": 689
- },
- "cast_ne": {
-  "scale": 0.8,
-  "height": 681
- },
- "cast_n": {
-  "scale": 0.8,
-  "height": 691
  },
  "attack_se": {
   "scale": 1.0,
@@ -78,5 +58,45 @@
  "attack_e": {
   "scale": 1.0,
   "height": 666
+ },
+ "cast_s": {
+  "scale": 0.8,
+  "height": 679
+ },
+ "cast_se": {
+  "scale": 0.8,
+  "height": 683
+ },
+ "cast_e": {
+  "scale": 0.8,
+  "height": 674
+ },
+ "cast_ne": {
+  "scale": 0.8,
+  "height": 673
+ },
+ "cast_n": {
+  "scale": 0.8,
+  "height": 671
+ },
+ "hurt_s": {
+  "scale": 0.8,
+  "height": 638
+ },
+ "hurt_se": {
+  "scale": 0.8,
+  "height": 667
+ },
+ "hurt_e": {
+  "scale": 0.8,
+  "height": 646
+ },
+ "hurt_ne": {
+  "scale": 0.8,
+  "height": 655
+ },
+ "hurt_n": {
+  "scale": 0.8,
+  "height": 728
  }
 }

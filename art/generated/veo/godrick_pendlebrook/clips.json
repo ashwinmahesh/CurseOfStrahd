@@ -30,16 +30,17 @@
   ]
  },
  "attack_s": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, always facing exactly the way he faces in the image: first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T14:46:46-04:00",
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. A big, powerful heavy overhead chop with his longsword, animated like a high-end 2D fighting game with full, exaggerated key poses, always facing exactly the way he faces in the image. Anticipation: he sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; his cape and hair swing back with the motion; his face is fierce, teeth gritted. Then he explodes into the blow: he drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after him, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then he straightens back into the pose in the image while the cape swings and settles. His cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but he ends exactly where he began. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:15:10-04:00",
   "centre": [
    360,
    776
   ],
   "scale": 0.8,
-  "last_frame": true
+  "last_frame": true,
+  "screen": "green"
  },
  "idle_se": {
   "model": "veo-3.1-lite-generate-preview",
@@ -112,16 +113,17 @@
   ]
  },
  "attack_ne": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T14:42:18-04:00",
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. A big, powerful heavy overhead chop with his longsword, animated like a high-end 2D fighting game with full, exaggerated key poses, seen from behind the whole time (we only ever see his back; he never turns toward the viewer). Anticipation: he sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; his cape and hair swing back with the motion; his face is fierce, teeth gritted. Then he explodes into the blow: he drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after him, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then he straightens back into the pose in the image while the cape swings and settles. His cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but he ends exactly where he began. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:16:02-04:00",
   "centre": [
    360,
    776
   ],
   "scale": 0.8,
-  "last_frame": true
+  "last_frame": true,
+  "screen": "green"
  },
  "cast_se": {
   "model": "veo-3.1-lite-generate-preview",
@@ -136,16 +138,17 @@
   "last_frame": true
  },
  "attack_n": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T14:42:58-04:00",
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. A big, powerful heavy overhead chop with his longsword, animated like a high-end 2D fighting game with full, exaggerated key poses, seen from behind the whole time (we only ever see his back; he never turns toward the viewer). Anticipation: he sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; his cape and hair swing back with the motion; his face is fierce, teeth gritted. Then he explodes into the blow: he drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after him, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then he straightens back into the pose in the image while the cape swings and settles. His cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but he ends exactly where he began. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:16:16-04:00",
   "centre": [
    360,
    776
   ],
   "scale": 0.8,
-  "last_frame": true
+  "last_frame": true,
+  "screen": "green"
  },
  "cast_s": {
   "model": "veo-3.1-lite-generate-preview",
@@ -196,29 +199,29 @@
   "last_frame": true
  },
  "attack_se": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, always facing exactly the way he faces in the image: first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T14:41:43-04:00",
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. A big, powerful heavy overhead chop with his longsword, animated like a high-end 2D fighting game with full, exaggerated key poses, always facing exactly the way he faces in the image. Anticipation: he sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; his cape and hair swing back with the motion; his face is fierce, teeth gritted. Then he explodes into the blow: he drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after him, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then he straightens back into the pose in the image while the cape swings and settles. His cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but he ends exactly where he began. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T11:46:14-04:00",
   "centre": [
    360,
    776
   ],
   "scale": 1.0,
   "last_frame": true,
-  "note": "first frame made at full size before one-shots were drawn at 0.8"
+  "screen": "green"
  },
  "attack_e": {
-  "model": "veo-3.1-lite-generate-preview",
+  "model": "veo-3.1-fast-generate-preview",
   "seconds": 8,
-  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. One fast, powerful longsword swing behind a shield, always facing exactly the way he faces in the image: first the wind-up, the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back; then the strike, the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow; then he returns to the pose in the image and holds still. The whole attack takes about one second and his feet stay planted. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
-  "made": "2026-10-19T14:42:15-04:00",
+  "prompt": "Hand-painted 2D game character animation of a huge goliath paladin, from the image. A big, powerful heavy overhead chop with his longsword, animated like a high-end 2D fighting game with full, exaggerated key poses, always facing exactly the way he faces in the image. Anticipation: he sinks into a deep crouch, knees bent wide, the torso twisting away, the weapon drawn far back and up; his cape and hair swing back with the motion; his face is fierce, teeth gritted. Then he explodes into the blow: he drives off the back leg into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape flaring out and whipping after him, hair flying. A short, heavy follow-through, a beat held at the end of the blow, then he straightens back into the pose in the image while the cape swings and settles. His cape, hair and clothes never stop moving; nothing is stiff. The front foot may step forward and back, but he ends exactly where he began. Only his body, clothes and gear move: no visual effects of any kind, no glow, light, sparks, flames, magic, energy, beams, impact flashes, motion trails or swooshes. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T12:15:14-04:00",
   "centre": [
    360,
    776
   ],
   "scale": 1.0,
   "last_frame": true,
-  "note": "first frame made at full size before one-shots were drawn at 0.8"
+  "screen": "green"
  }
 }

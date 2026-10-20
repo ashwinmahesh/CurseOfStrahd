@@ -44,6 +44,15 @@ KINDS = ["walk", "idle", "attack", "cast", "hurt"]
 DIRS = ["s", "se", "e", "ne", "n"]          # the drawn directions; the sheets show nw, w and sw as mirror images
 SHE = {"liriel_dawnsong", "thistle"}
 MODEL = "veo-3.1-lite-generate-preview"
+# Godrick's and Liriel's swings were made on Veo Fast ($0.80 an 8-second clip, its own 50 requests a day) when the owner
+# turned down the stiff Lite swings (2026-10-20: "there's no movement ... their capes, their bodies, their expressions").
+# The fix was mostly the prompt (the fighting-game swing below), and the owner wants every other clip on Lite (2026-10-20:
+# "do the rest of the swings in Veo Lite, along with all the other videos"). MODEL_OF names a kind to make on another model.
+FAST = "veo-3.1-fast-generate-preview"
+MODEL_OF = {}
+# Sheets the owner keeps as they are, whatever clips there are (owner 2026-10-20: Godrick's and Liriel's casts with their
+# effects, his the first Veo one, hers the drawn one).
+KEEP = {("godrick_pendlebrook", "cast"), ("liriel_dawnsong", "cast")}
 SECONDS = 4
 # Attacks and casts are 8-second clips that end on their first frame (Veo's lastFrame): without it Veo often turned a
 # hero seen from behind round to face the camera, or left him in another pose than he started from.
@@ -69,11 +78,15 @@ WALK_FRAMES, WALK_FPS = 24, 24.0            # one cycle (two steps) a second at 
 IDLE_FPS = 6.0
 IDLE_LOOP = (36, 72)                        # 1.5 to 3 s of the clip: 9 to 18 frames
 SEAM = 8                                    # clip frames an idle loop's end is faded into its start over
-ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS = 16, 7, 16.0
+# Every swing feels heavy (owner 2026-10-19/20: "make weapon swings feel heavier"): a longer wind-up eased so it
+# gathers slowly and the blow comes fast (WINDUP_EASE), the impact frame held (IMPACT_HOLD frames), then the recovery.
+ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS = 18, 11, 16.0
+WINDUP_EASE = 1.6
+IMPACT_HOLD = 2.0
 CAST_FRAMES, CAST_HIT, CAST_FPS = 12, 4, 16.0
 HURT_FRAMES, HURT_PEAK, HURT_FPS = 8, 2, 16.0     # a flinch and back (the hurt sheet's die_ and down_ stay drawn)
-# A hero whose blow should feel heavier: (frames, hit frame, fps), a longer wind-up before the same quick strike.
-ATTACK_TIMING = {"godrick_pendlebrook": (18, 11, 16.0)}
+# A hero whose attack needs other timing: (frames, hit frame, fps).
+ATTACK_TIMING = {}
 PAD = 12                                    # border kept round each trimmed frame (the shader's outline)
 CLIPS_LOCK = threading.Lock()
 
@@ -117,16 +130,30 @@ def sheet_frame(hero, kind, d, index=0):
     return cell
 
 
+ONE_SHOTS = ("attack", "cast", "hurt")
+
+
+def model_of(kind):
+    return MODEL_OF.get(kind, MODEL)
+
+
 def seconds_of(kind):
-    return ONE_SHOT_SECONDS if kind in ("attack", "cast") else SECONDS     # a flinch is short: 4 s, no lastFrame
+    # The flinch too: 4-second flinches without a last frame had Godrick draw his sword, turn round and throw sparks.
+    return ONE_SHOT_SECONDS if kind in ONE_SHOTS else SECONDS
 
 
 def size_of(kind):
     return f"720p-{seconds_of(kind)}s"
 
 
+def source_of(kind):
+    """The sheet animation a clip starts (and, for 8-second clips, ends) on. A cast starts from standing: the drawn
+    cast's first frame holds a glowing orb, and the clips are motions only."""
+    return "idle" if kind == "cast" else kind
+
+
 def scale_of(kind):
-    return ONE_SHOT_SCALE if kind in ("attack", "cast") else 1.0
+    return ONE_SHOT_SCALE if kind in ONE_SHOTS else 1.0
 
 
 def screen_of(hero):
@@ -137,7 +164,7 @@ def first_frame(hero, kind, d):
     """The clip's first frame: the sheet's frame on the hero's flat screen colour, its cell centred on CENTRE."""
     path = OUT / hero / f"{kind}_{d}_first.png"
     if not path.exists():
-        cell = sheet_frame(hero, kind, d)
+        cell = sheet_frame(hero, source_of(kind), d)
         s = scale_of(kind)
         if s != 1.0:
             cell = cell.resize((round(cell.width * s), round(cell.height * s)), Image.LANCZOS)
@@ -150,7 +177,7 @@ def first_frame(hero, kind, d):
         with CLIPS_LOCK:
             log = OUT / hero / "firsts.json"
             firsts = json.loads(log.read_text()) if log.exists() else {}
-            bb = sheet_frame(hero, kind, d).getchannel("A").getbbox()
+            bb = sheet_frame(hero, source_of(kind), d).getchannel("A").getbbox()
             firsts[f"{kind}_{d}"] = {"scale": s, "height": bb[3] - bb[1]}
             log.write_text(json.dumps(firsts, indent=1) + "\n")
     return path
@@ -183,9 +210,12 @@ MOVES = {
                   "dropping into the blow and the front knee bending with the impact, then a short, heavy "
                   "follow-through"},
     "liriel_dawnsong": {
-        "windup": "the gold sunburst holy symbol raised high in her right hand, her other hand at her heart, robes "
-                  "swirling",
-        "strike": "the holy symbol thrust out toward the enemy at shoulder height, leaning forward onto the front foot"},
+        # Her drawn attack holds a weapon and shield, and the attack plays for her weapon attacks (spells use the cast).
+        "attack": "heavy overhead swing with the weapon in her right hand",
+        "windup": "the weapon heaved up high over her right shoulder, the shield pulled tight to her side, knees bent "
+                  "and weight sinking back, holding for a moment at the top",
+        "strike": "the weapon brought down hard in one heavy blow to waist height in front of her, her whole body "
+                  "dropping into it and the front knee bending with the impact, then a short, heavy follow-through"},
     "thistle": {
         "strike": "the arrow loosed, the bowstring snapping forward, her drawing hand flung back past her ear"},
     "ratatoille": {
@@ -199,6 +229,8 @@ MOVES = {
         "strike": "both hands thrust straight out toward the enemy at chest height, leaning forward onto the front "
                   "foot, the straw hat tilted back"},
 }
+# Heroes whose attack is a weapon swing: the prompt asks for weight.
+SWINGS = {"godrick_pendlebrook", "liriel_dawnsong"}
 CAST_MOVES = ("one hand raised before the chest with the palm open, the other arm drawn back, eyes intent",
               "the hand thrust forward with the palm out, leaning forward")
 
@@ -206,7 +238,7 @@ CAST_MOVES = ("one hand raised before the chest with the palm open, the other ar
 def prompt(hero, kind, d="s"):
     spec = json.loads((ROOT / "art" / "anim" / "animations.json").read_text()).get(hero, {})
     spec.update(MOVES.get(hero, {}))
-    he, his = ("she", "her") if hero in SHE else ("he", "his")
+    he, his, him = ("she", "her", "her") if hero in SHE else ("he", "his", "him")
     He = he.capitalize()
     who = spec.get("who", "the character")
     who = who.split(", ", 1)[1] if ", " in who else who      # the description, not the name
@@ -230,21 +262,37 @@ def prompt(hero, kind, d="s"):
         body = (f"{He} stands still in a relaxed, ready stance, {facing}, breathing gently, {his} weight shifting "
                 f"slightly; {his} hair and clothes stir in a light breeze. {gear}{He} does not walk, speak or move "
                 f"{his} feet.")
+    elif kind == "attack" and hero in SWINGS:
+        body = (f"A big, powerful {spec.get('attack', 'attack')}, animated like a high-end 2D fighting game with full, "
+                f"exaggerated key poses, {facing}. Anticipation: {he} sinks into a deep crouch, knees bent wide, the torso "
+                f"twisting away, the weapon drawn far back and up; {his} cape and hair swing back with the motion; "
+                f"{his} face is fierce, teeth gritted. Then {he} explodes into the blow: {he} drives off the back leg "
+                f"into a low lunge, the whole body whipping round behind the weapon as it comes down hard, the cape "
+                f"flaring out and whipping after {him}, hair flying. A short, heavy follow-through, a beat held at the "
+                f"end of the blow, then {he} straightens back into the pose in the image while the cape swings and "
+                f"settles. {his.capitalize()} cape, hair and clothes never stop moving; nothing is stiff. The front "
+                f"foot may step forward and back, but {he} ends exactly where {he} began." + no_fx)
     elif kind == "attack":
         body = (f"One powerful {spec.get('attack', 'attack')}, {facing}: first the wind-up, "
                 f"{spec.get('windup', '')}; then the strike, {spec.get('strike', '')}; then {he} returns to the pose in "
-                f"the image and holds still. The whole attack takes about one second and {his} feet stay planted."
+                f"the image and holds still. The whole attack takes about {'a second and a half' if hero in SWINGS else 'one second'} "
+                f"and {his} feet stay planted."
+                + (f" It must feel heavy and weighty: a slow, deliberate wind-up that pauses at the top, then a sudden, "
+                   f"fast, powerful strike carrying {his} whole weight, then a brief settle." if hero in SWINGS else "")
                 + no_fx)
     elif kind == "hurt":
-        body = (f"{He} is struck by an unseen blow, {facing}: {he} flinches hard, the body jolting back and the head "
-                f"snapping aside, staggers on the spot, then recovers to the pose in the image and holds still. The "
-                f"whole flinch takes about half a second and {his} feet stay in place." + no_fx)
+        # Not "struck by a blow": Veo drew an impact flash for it whatever else the prompt said.
+        body = (f"{He} flinches, {facing}: as if shoved hard in the chest, {his} body jolts back and the head snaps "
+                f"aside, {he} staggers on the spot, then recovers to the pose in the image and holds still. The "
+                f"whole flinch takes about half a second and {his} feet stay in place. {He} does not draw, swing or "
+                f"pick up anything; {his} hands keep exactly what they hold in the image." + no_fx)
     else:
         gather = CAST_MOVES[0] if "cast_gather" not in MOVES.get(hero, {}) else spec["cast_gather"]
         release = CAST_MOVES[1] if "cast_release" not in MOVES.get(hero, {}) else spec["cast_release"]
-        body = (f"{He} casts a spell, {facing}: first gathering it, {gather}; then releasing it, {release}; then {he} "
-                f"returns to the pose in the image and holds still. The whole spell takes about one second and {his} "
-                f"feet stay planted." + no_fx)
+        # Not "casts a spell": with that word Veo drew bursts of light whatever else the prompt said.
+        body = (f"{He} makes a commanding gesture, {facing}: first {gather}; then {release}; then {he} returns to the "
+                f"pose in the image and holds still. It takes about one second and {his} feet stay planted. Nothing "
+                f"magical appears: nothing new comes into {his} hands and nothing glows, sparks or bursts." + no_fx)
     return head + body + common
 
 
@@ -262,6 +310,7 @@ def generate_one(hero, kind, d, key):
     body = {"instances": [inst], "parameters": {"aspectRatio": "9:16", "resolution": "720p",
                                                 "durationSeconds": seconds_of(kind), "personGeneration": "allow_adult"}}
     SIZE = size_of(kind)
+    model = model_of(kind)
 
     def call(url, data=None):
         req = urllib.request.Request(url, data=json.dumps(data).encode() if data else None,
@@ -269,38 +318,38 @@ def generate_one(hero, kind, d, key):
         with urllib.request.urlopen(req, timeout=120) as r:
             return json.loads(r.read())
 
-    gb.guard(MODEL, SIZE, key)
+    gb.guard(model, SIZE, key)
     for attempt in range(5):
         try:
-            op = call(f"{API}/models/{MODEL}:predictLongRunning", body)
+            op = call(f"{API}/models/{model}:predictLongRunning", body)
             while not op.get("done"):
                 time.sleep(8)
                 op = call(f"{API}/{op['name']}")
             break
         except urllib.error.HTTPError as e:
-            gb.record(MODEL, SIZE, f"{hero}/{name}", "veo", "error", code=e.code, key=key)
+            gb.record(model, SIZE, f"{hero}/{name}", "veo", "error", code=e.code, key=key)
             if e.code == 429 and attempt < 4:
                 time.sleep(45 * (attempt + 1))    # Veo's requests a minute; a refused request costs nothing
                 continue
             return f"{hero} {name}: HTTP {e.code} {e.read().decode()[:300]}"
         except (urllib.error.URLError, TimeoutError) as e:
-            gb.record(MODEL, SIZE, f"{hero}/{name}", "veo", "error", code="network", key=key)
+            gb.record(model, SIZE, f"{hero}/{name}", "veo", "error", code="network", key=key)
             return f"{hero} {name}: network {e}"
     if "error" in op:
-        gb.record(MODEL, SIZE, f"{hero}/{name}", "veo", "error", code=op["error"].get("code"), key=key)
+        gb.record(model, SIZE, f"{hero}/{name}", "veo", "error", code=op["error"].get("code"), key=key)
         return f"{hero} {name}: {json.dumps(op['error'])[:300]}"
     samples = op.get("response", {}).get("generateVideoResponse", {}).get("generatedSamples") or []
     if not samples:
-        gb.record(MODEL, SIZE, f"{hero}/{name}", "veo", "refused", key=key)
+        gb.record(model, SIZE, f"{hero}/{name}", "veo", "refused", key=key)
         return f"{hero} {name}: no video ({json.dumps(op.get('response', {}))[:300]})"
     req = urllib.request.Request(samples[0]["video"]["uri"], headers={"x-goog-api-key": key})
     with urllib.request.urlopen(req, timeout=300) as r:
         out.write_bytes(r.read())
-    gb.record(MODEL, SIZE, f"{hero}/{name}", "veo", "ok", key=key)
+    gb.record(model, SIZE, f"{hero}/{name}", "veo", "ok", key=key)
     with CLIPS_LOCK:
         log = OUT / hero / "clips.json"
         clips = json.loads(log.read_text()) if log.exists() else {}
-        clips[name] = {"model": MODEL, "seconds": seconds_of(kind), "prompt": text, "made": gb._stamp(),
+        clips[name] = {"model": model, "seconds": seconds_of(kind), "prompt": text, "made": gb._stamp(),
                        "centre": CENTRE, "scale": first_scale(hero, kind, d),
                        "last_frame": seconds_of(kind) == ONE_SHOT_SECONDS,
                        "screen": screen_of(hero)}
@@ -315,7 +364,8 @@ def generate(heroes, kinds, dirs, redo):
         print("veo: every clip is there")
         return
     # An 8-second clip costs two 4-second ones; the preflight counts it so.
-    units = sum(seconds_of(k) // SECONDS for _h, k, _d in todo)
+    unit = gb.price(MODEL, f"720p-{SECONDS}s")
+    units = round(sum(gb.price(model_of(k), size_of(k)) for _h, k, _d in todo) / unit)
     gb.preflight(units, f"720p-{SECONDS}s", f"Veo clips for {', '.join(sorted({h for h, _, _ in todo}))}", MODEL)
     key = gb.api_key()
     for h, k, d in todo:
@@ -366,6 +416,31 @@ def key_screen(im, screen="green"):
             c=ch, k=share))
     rgba = Image.merge("RGBA", (*chans, alpha))
     return Image.composite(rgba, Image.new("RGBA", im.size, (0, 0, 0, 0)), alpha)
+
+
+def keep_figure(rgba):
+    """The figure without the specks Veo still scatters round a blow or a gesture (sparks, a flying bit of light): only
+    the opaque parts joined to the figure's body, found by flood-filling a quarter-size mask (widened by 5 px so a
+    sword tip or a strand of hair keeps its join) from the opaque pixel nearest the cell centre's column at mid-body."""
+    a = rgba.getchannel("A")
+    q = a.resize((a.width // 4, a.height // 4), Image.BILINEAR).point(lambda v: 255 if v > 40 else 0)
+    q = q.filter(ImageFilter.MaxFilter(3))
+    cx, cy = WORK_CENTRE[0] // 4, (WORK_CENTRE[1] - 120) // 4
+    seed = None
+    for r in range(0, 60):
+        for dx, dy in ((0, r), (0, -r), (r, 0), (-r, 0)):
+            x, y = cx + dx, cy + dy
+            if 0 <= x < q.width and 0 <= y < q.height and q.getpixel((x, y)) == 255:
+                seed = (x, y)
+                break
+        if seed:
+            break
+    if seed is None:
+        return rgba
+    from PIL import ImageDraw
+    ImageDraw.floodfill(q, seed, 128)
+    body = q.point(lambda v: 255 if v == 128 else 0).resize(a.size, Image.NEAREST).filter(ImageFilter.MaxFilter(5))
+    return Image.composite(rgba, Image.new("RGBA", rgba.size, (0, 0, 0, 0)), ImageChops.multiply(a, body))
 
 
 def small(rgba):
@@ -424,7 +499,11 @@ def idle_frames(frames, thumbs):
         "loop": [s, n], "score": round(score, 2), "seam_in_steps": round(score / max(step, 0.01), 1)}
 
 
-def one_shot_frames(frames, thumbs, count, hit, fps):
+def info_hit(hero):
+    return ATTACK_TIMING.get(hero, (ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS))[1]
+
+
+def one_shot_frames(frames, thumbs, count, hit, fps, ease=1.0, quick=False):
     """From guard back to guard, retimed so the fastest motion (the blow) lands on frame `hit` of `count`."""
     motion = [diff(thumbs[i], thumbs[i + 1]) for i in range(len(thumbs) - 1)]
     quiet = sorted(motion)[len(motion) // 4]
@@ -437,10 +516,13 @@ def one_shot_frames(frames, thumbs, count, hit, fps):
     back = [diff(thumbs[i], thumbs[0]) for i in after]
     lo, mid = min(back), sorted(back)[len(back) // 2]
     end = next(i for i, b in zip(after, back) if b <= lo + 0.3 * (mid - lo))
+    if quick:
+        # A flinch is over in a moment; an 8-second clip fills the rest with other business (raising a sword).
+        end = min(end, next((i for i, b in zip(after, back) if b <= lo + 0.12 * (mid - lo)), end), peak + 24)
     picks = []
     for i in range(count):
         if i <= hit:
-            picks.append(int(round(start + (peak - start) * i / hit)))
+            picks.append(int(round(start + (peak - start) * (i / hit) ** ease)))
         else:
             picks.append(int(round(peak + (end - peak) * (i - hit) / (count - 1 - hit))))
     return picks, fps, {"start": start, "peak": peak, "end": end,
@@ -504,7 +586,7 @@ def choose(hero, kind, d):
         ox, oy = round(WORK_CENTRE[0] - at[0] / s), round(WORK_CENTRE[1] - at[1] / s)
         work = Image.new("RGBA", WORK, (0, 0, 0, 0))
         work.paste(k, (ox, oy))
-        frames.append(work)
+        frames.append(keep_figure(work) if kind in ONE_SHOTS else work)
         inside = (ox, oy, ox + k.width, oy + k.height)
     thumbs = [small(f) for f in frames]
     if kind == "walk":
@@ -514,9 +596,10 @@ def choose(hero, kind, d):
         picks = [0]
     elif kind == "attack":
         picks, fps, info = one_shot_frames(frames, thumbs, *ATTACK_TIMING.get(hero, (ATTACK_FRAMES, ATTACK_HIT,
-                                                                                      ATTACK_FPS)))
+                                                                                      ATTACK_FPS)), ease=WINDUP_EASE)
+        info["durations"] = [IMPACT_HOLD if i == info_hit(hero) else 1.0 for i in range(len(picks))]
     elif kind == "hurt":
-        picks, fps, info = one_shot_frames(frames, thumbs, HURT_FRAMES, HURT_PEAK, HURT_FPS)
+        picks, fps, info = one_shot_frames(frames, thumbs, HURT_FRAMES, HURT_PEAK, HURT_FPS, quick=True)
     else:
         picks, fps, info = one_shot_frames(frames, thumbs, CAST_FRAMES, CAST_HIT, CAST_FPS)
     # The framing (owner 2026-10-19: no zooming): the clip's first frame must sit where the frame Veo was given sat, at
@@ -613,13 +696,15 @@ def write_tres(path, texture, cell, entries, meta):
     subs, anims, n = [], [], 0
     for name, fps, loop, frames in entries:
         ids = []
-        for (x, y, w, h), (left, top) in frames:
+        durations = []
+        for (x, y, w, h), (left, top), du in frames:
             sid = f"f_{n}"
             n += 1
             subs.append(f'[sub_resource type="AtlasTexture" id="{sid}"]\natlas = ExtResource("1")\n'
                         f"region = Rect2({x}, {y}, {w}, {h})\nmargin = Rect2({left}, {top}, {cw - w}, {ch - h})\n")
             ids.append(sid)
-        listed = ", ".join(f'{{"duration": 1.0, "texture": SubResource("{i}")}}' for i in ids)
+            durations.append(du)
+        listed = ", ".join(f'{{"duration": {float(du)}, "texture": SubResource("{i}")}}' for i, du in zip(ids, durations))
         anims.append(f'{{\n"frames": [{listed}],\n"loop": {"true" if loop else "false"},\n"name": &"{name}",\n'
                      f'"speed": {float(fps)}\n}}')
     meta_lines = "".join(f"metadata/{k} = {json.dumps(v)}\n" for k, v in meta.items())
@@ -639,14 +724,22 @@ def build_sheet(hero, sheet, kinds, dirs, notes):
         break
     chosen = {}
     for kind in kinds:
+        if (hero, kind) in KEEP:
+            print(f"{hero} {kind}: kept as the owner chose (KEEP)")
+            continue
+        missing = [d for d in DIRS if not (OUT / hero / f"{kind}_{d}.mp4").exists()]
+        if kind in ("attack", "cast") and missing and len(missing) < len(DIRS):
+            # One hit frame serves every direction: a sheet half Veo, half drawn would land some blows early.
+            print(f"{hero} {kind}: waiting for {', '.join(missing)} before its sheet is rebuilt")
+            continue
         for d in dirs:
             if (OUT / hero / f"{kind}_{d}.mp4").exists():
                 fr, fps, info = choose(hero, kind, d)
-                chosen[(kind, d)] = ([finish(f) for f in fr], fps)
+                chosen[(kind, d)] = ([finish(f) for f in fr], fps, info.get("durations"))
                 notes[f"{kind}_{d}"] = info
     if not chosen:
         return
-    every = [f for fr, _ in chosen.values() for f in fr]
+    every = [f for fr, _fps, _durs in chosen.values() for f in fr]
     # The walk sheet keeps its cell (the game sizes a sprite by its standing frame); others grow to fit a raised sword.
     cell = base if sheet == "walk" else even_cell(every, base)
     entries, crops, order = [], [], []
@@ -656,9 +749,9 @@ def build_sheet(hero, sheet, kinds, dirs, notes):
         names.append((name, kind, d))
     for name, kind, d in names:
         if (kind, d) in chosen:
-            fr, fps = chosen[(kind, d)]
+            fr, fps, durs = chosen[(kind, d)]
             placed = [trim(f, cell) for f in fr]
-            order.append((name, fps, kind in ("walk", "idle"), placed))
+            order.append((name, fps, kind in ("walk", "idle"), placed, durs))
         else:
             # An animation the clips don't replace: its old frames, moved onto the new cell.
             placed = []
@@ -666,21 +759,24 @@ def build_sheet(hero, sheet, kinds, dirs, notes):
                 (x, y, w, h), (ml, mt, mw, mh) = old_subs[sid]
                 dx, dy = (cell[0] - (w + mw)) // 2, (cell[1] - (h + mh)) // 2
                 placed.append((old_png.crop((x, y, x + w, y + h)), (ml + dx, mt + dy)))
-            order.append((name, old_speeds[name], READ_LOOPS[str(tres)].get(name, False), placed))
-    for _name, _fps, _loop, placed in order:
+            order.append((name, old_speeds[name], READ_LOOPS[str(tres)].get(name, False), placed,
+                          [du for _sid, du in old_anims[name]]))
+    for _name, _fps, _loop, placed, _durs in order:
         crops.extend(c for c, _ in placed)
     atlas, rects = pack(crops)
     i = 0
-    for name, fps, loop, placed in order:
+    for name, fps, loop, placed, durs in order:
         frames = []
-        for _crop, at in placed:
-            frames.append((rects[i], at))
+        for j, (_crop, at) in enumerate(placed):
+            frames.append((rects[i], at, durs[j] if durs else 1.0))
             i += 1
         entries.append((name, fps, loop, frames))
     if "attack" in kinds and sheet == "attack":
         hit = ATTACK_TIMING.get(hero, (ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS))[1]
         meta["hit_frames"] = {"attack": hit}
         meta["hit_frame"] = hit
+        if hero in SWINGS:
+            meta["casts"] = False        # a weapon swing now, never played as a spell gesture
     if "cast" in kinds and sheet == "cast":
         meta["hit_frames"] = {"cast": CAST_HIT}
     meta["veo"] = True
