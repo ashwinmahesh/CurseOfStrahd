@@ -403,3 +403,14 @@ only (Classic keeps what it had); the rules grid never sees any of it.
 
 `Drystone.enabled`, `StandingStone.enabled` and `GroundCover.enabled` switch them off for tests and timing runs that
 compare with the old pieces. tests/integration/test_natural_small_things.gd.
+
+## Indoor rubble and webs across the floor (the vault's Natural Maps Plan, I4)
+
+Every `~` square of an interior or a dungeon carried one piece of dressing, so a run of rubble or a hall of webs was a
+cube or a web in each square. In the Modern look:
+
+- **Clumps across squares** (`GroundCover`, as outdoors): rubble heaps and webs scattered by noise over the run instead of
+  one on each square. Walls here are built, so a clump keeps out of them; rubble (a heap, `GroundCover.HEAPS`) is turned any
+  way and not stretched long, and a sprite stays under a token's height.
+
+tests/integration/test_natural_small_things.gd.

@@ -9,7 +9,8 @@ extends RefCounted
 ## the squares' edges. A run's rim may reach a little way into the open ground beside it (rule 2: ground-level things
 ## up to half a square; here a third, so a token in the middle of that square and its ring stay clear) and never into
 ## water or the void. Every difficult square still carries a clump near its middle, so it reads as difficult.
-## Modern only (Classic keeps its one bush a square); cosmetic, the rules grid never sees any of it.
+## Indoors (I4) the same: rubble heaps and webs across the floor, never into a wall. Modern only (Classic keeps its one
+## bush a square); cosmetic, the rules grid never sees any of it.
 
 ## The step (squares) the scatter's jittered lattice is laid on.
 const SPACING := 0.6
@@ -20,6 +21,9 @@ const REACH_WET := 0.04
 const MIN_SCALE := 0.75
 const MAX_SCALE := 2.0
 const MAX_HALF := 0.95
+## Arts that are heaps of loose things (rubble), not banks or thickets: they grow no longer than this many times their
+## model, are turned any way and not stretched long, and don't pile up higher deep in a run.
+const HEAPS := {"rubble": 1.45}
 ## The tallest a clump grows (squares): a token's height, so a thicket never hides the party behind it.
 const TALLEST := 0.9
 ## How close two clumps may stand, as a share of their two radii (so they grow into each other a little).
@@ -59,27 +63,18 @@ var _tall: Dictionary = {}  ## art -> how tall its model stands (squares)
 const OPEN := 1
 const WET := 2
 const DIFF := 3
+const SOLID := 4   ## a wall, where walls are built (indoors, dungeons, rock), so a clump never reaches into one
 var _w := 0
 var _d := 0
 var _cls := PackedByteArray()
 var _near: Array = []
+var _walled := false   ## whether the board's wall squares are built (not trees): clumps keep out of them
 
 
-## Whether this board's '~' squares are planted as thickets: the Modern look, outdoors (a place's own set indoors, rubble
-## and webs, is left to the interiors package).
-static func wanted(board_: ArenaBoard, key: String) -> bool:
-	if not enabled or not Look.modern():
-		return false
-	if board_.theme in ArenaBoard.WILD or board_.theme in ArenaBoard.TOWNS or board_.theme == "shrine_yard":
-		return true
-	return key == board_.place and _outdoors(board_)
-
-
-static func _outdoors(board_: ArenaBoard) -> bool:
-	if board_.place == "" or not Compendium.shared().has("locations", board_.place):
-		return false
-	var map := Compendium.shared().get_entry("locations", board_.place).get("map", {}) as Dictionary
-	return bool(map.get("outdoors", false))
+## Whether this board's '~' squares are planted as thickets: the Modern look, anywhere ('~' indoors is rubble and webs
+## across the floor, Natural Maps Plan I4).
+static func wanted(_board: ArenaBoard, _key: String) -> bool:
+	return enabled and Look.modern()
 
 
 ## Plants the board's difficult squares with `choices` (catalog `difficult` art ids); null when none of them has art.
@@ -91,7 +86,7 @@ static func plan(board_: ArenaBoard, choices: Array) -> GroundCover:
 		if SetDressing.has_art(art) and not art in g._arts:
 			g._arts.append(art)
 			g._r0[art] = _base_radius(art)
-			g._low[art] = _is_low(art)
+			g._low[art] = _is_low(art) and not HEAPS.has(art)
 			g._tall[art] = _height_of(art)
 	if g._arts.is_empty():
 		return null
@@ -116,6 +111,7 @@ func _plant() -> void:
 	_d = grid.depth
 	_cls.resize(_w * _d)
 	_near.resize(_w * _d)
+	_walled = not (board.theme in ArenaBoard.WILD or board.theme in ArenaBoard.TOWNS or board.theme == "shrine_yard")
 	var diff: Array[Vector2i] = []
 	var lo := Vector2i(_w, _d)
 	var hi := Vector2i(-1, -1)
@@ -126,7 +122,7 @@ func _plant() -> void:
 			if (f & (CombatGrid.WATER | CombatGrid.VOID)) != 0:
 				k = WET
 			elif (f & CombatGrid.WALL) != 0:
-				k = 0
+				k = SOLID if _walled else 0
 			elif (f & CombatGrid.DIFFICULT) != 0:
 				k = DIFF
 				diff.append(Vector2i(x, z))
@@ -187,28 +183,37 @@ func _class_at(c: Vector2i) -> int:
 func _shape(p: Vector2, art: String, want: float, min_scale: float, rng: RandomNumberGenerator) -> Clump:
 	var r0 := float(_r0[art])
 	var low := bool(_low[art])
-	var sx := rng.randf_range(1.15, 1.9) if low else rng.randf_range(0.95, 1.3)
-	var sz := rng.randf_range(0.62, 0.95) if low else rng.randf_range(0.85, 1.1)
+	var heap := HEAPS.has(art)
+	if heap:
+		want = minf(want, float(HEAPS[art]))
+	var sx := rng.randf_range(1.15, 1.9) if low else (rng.randf_range(0.9, 1.2) if heap else rng.randf_range(0.95, 1.3))
+	var sz := rng.randf_range(0.62, 0.95) if low else (rng.randf_range(0.9, 1.2) if heap else rng.randf_range(0.85, 1.1))
 	var open := _gap(p, OPEN)
 	var wet := _gap(p, WET)
 	var room := minf(open.x + REACH_CLEAR, wet.x + REACH_WET)
-	# The way the nearest square a clump may not spread over (open ground, water, the void) lies; none where it is far.
+	# The way the nearest square a clump may not spread over (open ground, water, the void, a built wall) lies; none
+	# where it is far.
 	var near := open if open.x <= wet.x else wet
+	if _walled:
+		var solid := _gap(p, SOLID)
+		room = minf(room, solid.x + REACH_WET)
+		if solid.x < near.x:
+			near = solid
 	var edge := Vector2(near.y, near.z).normalized() if near.x < 1.4 and near.x > 0.0001 else Vector2.ZERO
 	# Deep in a run the thicket grows big and tall, a mass with a ragged rim; at the rim it thins to small low tufts.
 	var depth := minf(near.x, 3.0)
-	var deep := smoothstep(0.9, 2.4, depth)
+	var deep := 0.0 if heap else smoothstep(0.9, 2.4, depth)
 	want *= lerpf(1.0, 1.6, deep)
 	var max_half := MAX_HALF * lerpf(1.0, 1.7, deep)
 	var yaw := rng.randf_range(0.0, TAU)
 	var along := 0.0
-	if edge != Vector2.ZERO:
+	if edge != Vector2.ZERO and not heap:
 		# Lying along the edge of the run, the long way, give or take (local x along the tangent, whose heading is
 		# atan2(edge.x, edge.y) as a turn about y).
 		yaw = atan2(edge.x, edge.y) + rng.randf_range(-0.55, 0.55)
 		along = edge.dot(Vector2(cos(yaw), -sin(yaw)))
 	# How far the clump reaches along the edge's direction, per unit of scale (r0 times the stretch's share of it).
-	var across := sqrt(along * along * sx * sx + (1.0 - along * along) * sz * sz) if edge != Vector2.ZERO else maxf(sx, sz)
+	var across := sqrt(along * along * sx * sx + (1.0 - along * along) * sz * sz) if edge != Vector2.ZERO and not heap else maxf(sx, sz)
 	var s := minf(want, minf(room / (r0 * across), max_half / (r0 * maxf(sx, sz))))
 	if s < min_scale:
 		return null
@@ -220,7 +225,7 @@ func _shape(p: Vector2, art: String, want: float, min_scale: float, rng: RandomN
 	k.art = art
 	k.pick = rng.randi() % 7
 	k.yaw = yaw
-	var sy := lerpf(0.8, 1.5, smoothstep(0.3, 1.8, depth)) * rng.randf_range(0.9, 1.1)
+	var sy := (rng.randf_range(0.85, 1.2) if heap else lerpf(0.8, 1.5, smoothstep(0.3, 1.8, depth))) * rng.randf_range(0.9, 1.1)
 	k.stretch = Vector3(sx, maxf(minf(sy, TALLEST / (float(_tall[art]) * s)), 0.7), sz)   # (never taller than a token)
 	k.toward_edge = edge
 	return k
@@ -307,18 +312,21 @@ static func _model_id(art: String) -> String:
 	return str(entry) if entry is String else ""
 
 
-## Half the width of the art's 3D model (squares), else a bush's.
+## Half the width of the art's 3D model (squares), else of its sprite, else a bush's.
 static func _base_radius(art: String) -> float:
 	var size := ((ModelPiece.manifest().get(_model_id(art), {}) as Dictionary).get("size", []) as Array)
 	if size.size() == 3:
 		return maxf(float(size[0]), float(size[2])) / 2.0
-	return 0.38
+	var info := SetDressing.manifest().get(art, {}) as Dictionary
+	return maxf(float(info.get("world_width", 0.76)) / 2.0, 0.2)
 
 
-## How tall the art's model stands (squares), else a bush's.
+## How tall the art's model (else its sprite) stands (squares).
 static func _height_of(art: String) -> float:
 	var size := ((ModelPiece.manifest().get(_model_id(art), {}) as Dictionary).get("size", []) as Array)
-	return maxf(float(size[1]), 0.05) if size.size() == 3 else 0.4
+	if size.size() == 3:
+		return maxf(float(size[1]), 0.05)
+	return maxf(float((SetDressing.manifest().get(art, {}) as Dictionary).get("world_height", 0.4)), 0.05)
 
 
 ## Whether the art's model is a low thing (a drift, a patch of ice) rather than a bush.
@@ -355,6 +363,7 @@ func _place(c: Vector2i, k: Clump) -> void:
 		flat.set_meta("ground_cover", true)
 		board.add_child(flat)
 		return
-	var bush := board.prop_sprite(k.art, at, k.scale)
+	var bush := board.prop_sprite(k.art, at, minf(k.scale, TALLEST / float(_tall.get(k.art, 0.5))))
 	if bush != null:
+		bush.flip_h = k.pick % 2 == 0   # (a web or a bush facing either way)
 		bush.set_meta("ground_cover", true)   # brambles may grow into each other

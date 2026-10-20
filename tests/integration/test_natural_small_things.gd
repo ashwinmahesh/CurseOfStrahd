@@ -332,3 +332,32 @@ func test_ruins_have_broken_walls() -> void:
 	Look.set_style("classic", false)
 	var c := await _view("argynvostholt")
 	assert_eq(_pieces(c.board, "yard").size(), 0, "Classic keeps the kit's wall")
+
+
+# --- Indoor rubble, water and webs (Natural Maps Plan I4) ------------------------------------------------------------
+
+## Rubble clumps indoors keep out of the walls: a clump's narrowest half-width never reaches into a wall square.
+func test_indoor_clumps_keep_out_of_walls() -> void:
+	Look.set_style("modern", false)
+	var v := await _view("argynvostholt_west_wing")
+	var board := v.board
+	assert_true(board._cover != null, "the west wing's rubble is planted as clumps")
+	if board._cover == null:
+		return
+	var bad := 0
+	var total := 0
+	for z in board.grid.depth:
+		for x in board.grid.width:
+			for k: Variant in board._cover.clumps_in(Vector2i(x, z)):
+				var cl := k as GroundCover.Clump
+				total += 1
+				for dz in range(-2, 3):
+					for dx in range(-2, 3):
+						var n := Vector2i(x + dx, z + dz)
+						if board.grid.in_bounds(n) and board.grid.has_flag(n, CombatGrid.WALL):
+							var ex := maxf(maxf(float(n.x) - cl.at.x, cl.at.x - float(n.x + 1)), 0.0)
+							var ez := maxf(maxf(float(n.y) - cl.at.y, cl.at.y - float(n.y + 1)), 0.0)
+							if sqrt(ex * ex + ez * ez) + GroundCover.REACH_WET + 0.02 < cl.half_min:
+								bad += 1
+	assert_true(total > 10, "the rubble has clumps (%d)" % total)
+	assert_eq(bad, 0, "no clump reaches into a wall")
