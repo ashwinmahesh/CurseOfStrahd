@@ -75499,6 +75499,12 @@
   "recipe": "dd92281f92",
   "text": "Ratatouille has laid out his spices on a cloth in a row, by colour, and is choosing between two that look exactly the same."
  },
+ "narrator/c5ae8bf36d2d622d": {
+  "chars": 63,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The hand never shakes on that last line, which is how you know."
+ },
  "narrator/c5b488c5fa619a46": {
   "chars": 83,
   "model": "eleven_v4",
@@ -92036,6 +92042,13 @@
   "recipe": "3c0173db4e",
   "text": "Two years. Two years I've sat at that window and watched the square for him. Who went into the Baron's. Who went to church. Who looked up."
  },
+ "strahd/000d40bb438f4b84": {
+  "chars": 218,
+  "direction": "[proud, cold, measured]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "I have set down my victories, my medals and the honours the court heaped upon my name. A prince is measured by what he holds. Far below, my soldiers cheered among the smoking fields, and I did not turn to look at them."
+ },
  "strahd/0100fd8e9f96e190": {
   "chars": 103,
   "model": "eleven_v3",
@@ -92160,6 +92173,13 @@
   "recipe": "71f51bdb43",
   "text": "Do not get up. We have not been introduced. I am Strahd von Zarovich, and you are sleeping in my house. All of this is my house."
  },
+ "strahd/1091f380751e5c14": {
+  "chars": 220,
+  "direction": "[patient, silken, quietly menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "In each new life I seek her out with patience, letters, gifts and rescues, hoping she will choose me at last. I was gentle with her at the first. When gentleness fails me, I lay courtesy aside and return to the old ways."
+ },
  "strahd/1249e9f743e68b56": {
   "chars": 76,
   "direction": "[quiet, knowing, amused]",
@@ -92231,6 +92251,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Because you are the most interesting thing to happen in my valley for a very long time. And because I wanted to see you up close. Before."
+ },
+ "strahd/1c4c7a237f5b2ed1": {
+  "chars": 235,
+  "direction": "[low, reverent, dark]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "I made the long freezing climb into the high mountains, where a courteous old warden led me before a hollow sarcophagus of amber. In that dark a voice understood me at last. It asked only what I wanted, and I answered without ornament."
  },
  "strahd/1f317c6729a24191": {
   "chars": 128,
@@ -92304,6 +92331,13 @@
   "recipe": "71f51bdb43",
   "text": "There. You're mine now, a little. Don't look so worried. I'm very patient with the things I own."
  },
+ "strahd/290ac55fb3e21e2b": {
+  "chars": 226,
+  "direction": "[stricken, slow, bitter]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Tatyana ran along the high castle walls as the white mist rose from the stones. When I reached for her she looked once into my face and stepped into the fog. She mistook my reach for ruin, and the precipice took what was mine."
+ },
  "strahd/2b6586bdb3398d5a": {
   "chars": 125,
   "direction": "[light, cruel, amused]",
@@ -92334,6 +92368,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "You have read my book. Then you know I was not always this. Do not pity me for it. I never pitied anyone."
+ },
+ "strahd/3180b6a13b60bc9f": {
+  "chars": 213,
+  "direction": "[stiff, defensive, simmering]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "I told myself it was the proper concern of an elder brother and the master of the house. Yet I asked the page why a boy who had never bled for a single field should win so easily what a proven commander is denied."
  },
  "strahd/324aab210d00e5ef": {
   "chars": 73,
@@ -92402,6 +92443,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "You did once. You will again."
+ },
+ "strahd/3fadf9caf6ecc79a": {
+  "chars": 204,
+  "direction": "[hollow, flat, stung]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "She heard my offer to the end, and then she declined it with a small, apologetic smile that cut deeper than any cruelty. She looked upon me with pity. I wrote it down in one flat line and closed the book."
  },
  "strahd/40757887e6e92fc8": {
   "chars": 57,
@@ -92695,6 +92743,13 @@
   "recipe": "71f51bdb43",
   "text": "You saw me on the ridge. You looked thin. Do eat. I prefer my guests well fed."
  },
+ "strahd/68eb13a848fa3110": {
+  "chars": 212,
+  "direction": "[smooth, courteous, chilling]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "All that week I showed Tatyana every kindness while she chose her white flowers for the feast. The price of my bargain fell due on the very day I was to claim my happiness: a necessary debt, best settled swiftly."
+ },
  "strahd/699397fff128913d": {
   "chars": 183,
   "direction": "[courtly, then intimate and menacing]",
@@ -92790,6 +92845,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "The little thief carries her portrait. Keep it close, child. When I want it back, I will come for it, and for the hand that holds it."
+ },
+ "strahd/80bf961ef6347994": {
+  "chars": 208,
+  "direction": "[bitter, controlled, wounded pride]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "As the elder son I paid for my rank, my army and every acre of this stone in years and blood. Sergei never kept a winter watch or held a line, yet he was given, for nothing, the love I had wanted all my life."
  },
  "strahd/816daf00c48a3f21": {
   "chars": 128,
@@ -93002,6 +93064,13 @@
   "recipe": "71f51bdb43",
   "text": "You have refused my carriage. I am told it was a fine evening for a drive."
  },
+ "strahd/a6942c0975837e1f": {
+  "chars": 186,
+  "direction": "[quiet, envious, wistful]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "My younger brother Sergei had the gift of being loved without trying. The halls warmed to his step before he had done a single day of service. My brother wore the sun as easily as linen."
+ },
  "strahd/a924142741fa02f4": {
   "chars": 59,
   "direction": "[soft, cold]",
@@ -93068,6 +93137,13 @@
   "recipe": "71f51bdb43",
   "text": "Well said. There are other windows in this town, and other people asleep behind them. I wonder which I will visit instead."
  },
+ "strahd/b8c45c2af5272a01": {
+  "chars": 189,
+  "direction": "[weary, restless, flat]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "I made the castle that bears my mother's name my seat, and then the quiet came. Peace left nothing to conquer. A kingdom won is merely a house to keep, and I was not bred for keeping house."
+ },
  "strahd/bbdf977c74200841": {
   "chars": 152,
   "model": "eleven_v3",
@@ -93133,6 +93209,13 @@
   "recipe": "71f51bdb43",
   "text": "You have Ireena with you. Keep her warm and keep her close. I should be desolate if anything happened to her that I had not arranged."
  },
+ "strahd/c9233ace334ce89a": {
+  "chars": 54,
+  "direction": "[calm, absolute, unrepentant]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "I chose every step of it, and I would choose it again."
+ },
  "strahd/c97a30d88e01134b": {
   "chars": 104,
   "direction": "[gracious, menacing]",
@@ -93145,6 +93228,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "The village hid her from me, and in the morning she was dead in their chapel. So I sent the river to ask them why. It is still asking."
+ },
+ "strahd/ce59bf5755e4ca13": {
+  "chars": 179,
+  "direction": "[heavy, bleak, resigned]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "The grey mist closed round the mountains and sealed the valley shut. The valley and I are one thing now. I keep the accounts of these stones, and I still call my hunger a kingdom."
  },
  "strahd/ce9085c451735a65": {
   "chars": 157,
@@ -93209,6 +93299,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "There. Civilised. We will dine together, one evening. I insist, and I am not used to being refused."
+ },
+ "strahd/d79a44fef7ca16c0": {
+  "chars": 236,
+  "direction": "[formal, hopeful, self-assured]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "I put on my dress uniform, heavy with ribbons and campaign medals, and went to Tatyana. I offered her my hand and my house, and laid ten years of hard-won glory before her, judging that a heart, like any fortress, must yield to honours."
  },
  "strahd/d7d86cccffdde693": {
   "chars": 107,
@@ -93325,6 +93422,13 @@
   "recipe": "71f51bdb43",
   "text": "I am at the gate, my dear, as a guest should be. Everything past it is mine: the yard, the grave, the man in it. And you. Keep the scarf on. I know what is under it. I put it there."
  },
+ "strahd/e936589a9dde446c": {
+  "chars": 223,
+  "direction": "[soft, wondering, aching]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Tatyana came to the castle in white gowns, a young woman with auburn hair, and the light in the hall belonged to her. I had taken a country by force, yet before her quiet grace I found something that could not be commanded."
+ },
  "strahd/eb5e32eb7da0574b": {
   "chars": 116,
   "direction": "[courtly, warm, insincere]",
@@ -93395,6 +93499,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Ireena is upstairs, dressing for dinner. She asks after you. Less than she did."
+ },
+ "strahd/fc4bee38b4a7e870": {
+  "chars": 180,
+  "direction": "[cold, resolved, hard]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "That night I resolved the matter. I had endured the winter marches and the iron of my enemies, but I would not endure her pity. What is mine by merit shall not be lost to softness."
  },
  "strahd/fcbfb8ec0b6b9baf": {
   "chars": 90,
