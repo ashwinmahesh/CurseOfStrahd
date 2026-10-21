@@ -113,7 +113,7 @@ func test_the_tome_keeps_its_voiced_narrator_lines_word_for_word() -> void:
 		assert_true(text in narrator, "%s stays in the conversation as it was" % key)
 		assert_true(VoiceOver.has_clip("narrator", text), "and it is already voiced")
 	var fresh := narrator.filter(func(t: String) -> bool: return not VoiceOver.has_clip("narrator", t))
-	assert_eq(fresh.size(), 1, "only the new closing line is unvoiced")
+	assert_eq(fresh.size(), 0, "every line of the Tome is voiced, the new closing line too")
 
 
 ## Every scene has a picture of its own, each a different still, and they come in the order of the book.
