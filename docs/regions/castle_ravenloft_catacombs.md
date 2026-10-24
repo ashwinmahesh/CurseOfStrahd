@@ -61,7 +61,7 @@ larders part's long stair, arriving at `from_larders`. `from_gates` stays where 
 | `castle_ravenloft_crypt_of_the_wizard` | catacombs | container `cat_conjurer_reliquary` (5, 23), key `arcane_focus_wand` | |
 | `castle_ravenloft_gargoyle_tomb` | catacombs | container `cat_champion_slab` (39, 9) | |
 | `castle_ravenloft_sergeis_tomb` (broken_one, innocent) | tombs | dialogue `castle_ravenloft/catacombs_sergei:take_treasure` | `cat_sergei_final` |
-| `castle_ravenloft_tomb_of_barov_and_ravenovia` (ghost, raven) | tombs | container `cat_ravenovia_sarcophagus` (18, 22) | `cat_royal_final` |
+| `castle_ravenloft_tomb_of_barov_and_ravenovia` (ghost, raven) | tombs | container `cat_ravenovia_sarcophagus` (15, 22), beside King Barov's (14, 22) | `cat_royal_final` |
 | `castle_ravenloft_strahds_tomb` (darklord) | Strahd's tomb | container `cat_tomb_chest` (11, 16): 150 gp, 3 candles, 2 Potions of Healing (Supreme), the Nine Lives Stealer longsword he carried when he took the valley (very rare) | `cat_darklord_final` |
 
 - **The Mad Dog** (book: General Kroval "Mad Dog" Grislek, a K84 crypt). The gate is chained (lock 15). A scything
@@ -244,7 +244,7 @@ unless a step says otherwise. Prefer: "Take what lies in his hands", "Drive the 
 - **Sergei's tomb:** `go_to("castle_ravenloft_catacombs_tombs")` (exit (5, 29)), `walk_to((6, 6))` (the final battle
   if `broken_one` or `innocent`), `use((6, 4))` → "Take what lies in his hands".
 - **Royal tomb:** in the tombs map, `walk_to((16, 18))` (through the guardians' curtain: with no dark gift it asks nothing and its ward opens), then
-  `walk_to((16, 20))` (the final battle if `ghost` or `raven`), `use((18, 22))`.
+  `walk_to((16, 20))` (the final battle if `ghost` or `raven`), `use((15, 22))`.
 - **Strahd's tomb:** from the catacombs `go_to("castle_ravenloft_catacombs_strahd")` (the black stair (18, 15)),
   `walk_to((11, 9))` (the darklord battle if `darklord`, else `cat_tomb_keepers`), `use((11, 16))` for the treasure.
 - **The end:** with `strahd_in_coffin` set (after any final battle), go to Strahd's tomb, `walk_to((11, 9))`
