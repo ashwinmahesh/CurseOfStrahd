@@ -531,6 +531,8 @@
     "dragonchess_set": "skoll/chess-knight@bone",
     "dream_pastry": "delapouite/croissant@leather",
     "coffin": "lorc/coffin@wood",
+    "silvius_wedding_cask": "delapouite/barrel@wood",
+    "stanimirs_plum_wine": "delapouite/wine-bottle@berry",
     "wine_purple_grapemash": "delapouite/wine-bottle@berry",
     "wine_red_dragon_crush": "lorc/brandy-bottle@red",
     "wine_champagne_du_le_stomp": "delapouite/wine-bottle@bottle",
