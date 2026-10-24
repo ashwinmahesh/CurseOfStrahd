@@ -5666,11 +5666,89 @@ def dragon_skull(p):
 WING_SCALE = 0.24
 WING_DROOP = 25.0
 
+# The download stops at the pelvis: it has no tail. The tail is built here, vertebra by vertebra, in the source's own
+# units (a neck vertebra is about 1.4 across with its side processes), so it can go through the same fit as the bones.
+TAIL_ROOT = Vector((0.0, 3.7, 6.2))   # inside the pelvis's rear (it spans y 0.8 to 4.2, z 4.9 to 7.8)
+TAIL_STEP = 0.5                       # arc length between vertebrae
+TAIL_BONES = 25
+TAIL_ARC = 7.85                       # the curl: a half circle about 2.5 across, towards -x (the south side on the bier)
+TAIL_DROP = 5.5                       # how far along it comes down from the pelvis to the floor
+TAIL_R0, TAIL_R1 = 0.45, 0.07          # a vertebra's radius at the root and at the tip
+TAIL_TALL = 1.35                      # taller than wide: the fit squashes z by 0.6, this keeps them round
+
+
+def _dragon_tail(floor):
+    """The skeleton's tail as a bmesh in source units: vertebrae tapering from the pelvis to a tip, each with a spine on
+    top, and side processes on the first ones, curling along the floor (`floor` is the z the bones rest on)."""
+    t = bmesh.new()
+    path = [(TAIL_ROOT.copy(), 0.0)]
+    pos, s = TAIL_ROOT.copy(), 0.0
+    ds = 0.02
+    total = TAIL_STEP * TAIL_BONES + 0.4
+    while s < total:
+        th = math.radians(90.0 + 180.0 * min(1.0, s / TAIL_ARC) + 5.0 * math.sin(1.1 * s))
+        u = min(1.0, s / total)
+        r = TAIL_R0 + (TAIL_R1 - TAIL_R0) * u ** 0.9
+        ground = floor + 0.84 * TAIL_TALL * r + 0.03
+        drop = max(0.0, 1.0 - s / TAIL_DROP) ** 2
+        z = ground + (TAIL_ROOT.z - ground) * drop
+        pos = Vector((pos.x + ds * math.cos(th), pos.y + ds * math.sin(th), z))
+        s += ds
+        path.append((pos.copy(), s))
+    def at(arc):
+        i = min(len(path) - 1, max(1, int(round(arc / ds))))
+        return path[i][0], (path[i][0] - path[i - 1][0]).normalized()
+    for i in range(TAIL_BONES):
+        arc = TAIL_STEP * (i + 0.6)
+        c, f = at(arc)
+        f = (at(arc + 0.2)[0] - at(max(arc - 0.2, 0.05))[0]).normalized()
+        w = f.cross(Vector((0, 0, 1))).normalized()
+        u_ = w.cross(f).normalized()
+        k = i / (TAIL_BONES - 1.0)
+        r = TAIL_R0 + (TAIL_R1 - TAIL_R0) * k ** 0.9
+        ln = TAIL_STEP * 0.8
+        rings = []
+        for off, sc in ((-0.5, 0.78), (-0.22, 1.0), (0.22, 1.0), (0.5, 0.78)):   # a spool: wide in the middle, waisted at the ends
+            ring = []
+            for a in (2.0 * math.pi * j / 8.0 for j in range(8)):
+                ring.append(t.verts.new(c + f * (off * ln) + w * (math.cos(a) * r * sc) + u_ * (math.sin(a) * r * sc * TAIL_TALL)))
+            rings.append(ring)
+        for lo, hi in zip(rings, rings[1:]):
+            for j in range(8):
+                t.faces.new((lo[j], lo[(j + 1) % 8], hi[(j + 1) % 8], hi[j]))
+        for ring in (rings[0], list(reversed(rings[-1]))):
+            t.faces.new(ring)
+        top = c + u_ * (0.7 * r * TAIL_TALL)   # the spine: a blade on top, leaning back, fading to a nub at the tip
+        hs = 0.1 + 0.6 * (1.0 - k) ** 0.8
+        th_ = 0.05 + 0.14 * (1.0 - k)
+        poly = [(-0.38 * ln, 0.0), (0.46 * ln, 0.0), (0.84 * ln, hs), (0.1 * ln, hs * 0.92)]
+        fr = [t.verts.new(top + f * a + u_ * b - w * th_) for a, b in poly]
+        bk = [t.verts.new(top + f * a + u_ * b + w * th_) for a, b in poly]
+        t.faces.new(list(reversed(fr)))
+        t.faces.new(bk)
+        for j in range(4):
+            t.faces.new((fr[j], fr[(j + 1) % 4], bk[(j + 1) % 4], bk[j]))
+        if k < 0.5:   # side processes on the first dozen
+            reach = r + 0.3 * (1.0 - k / 0.5) ** 1.1 + 0.04
+            for sd in (-1.0, 1.0):
+                base = [c + f * a + w * (sd * r * 0.55) for a in (-0.3 * ln, 0.3 * ln)]
+                tipp = [c + f * a + w * (sd * reach) for a in (-0.1 * ln, 0.22 * ln)]
+                up_ = [u_ * 0.045 * TAIL_TALL, -u_ * 0.045 * TAIL_TALL]
+                lo = [t.verts.new(v + up_[1]) for v in base + tipp[::-1]]
+                hi = [t.verts.new(v + up_[0]) for v in base + tipp[::-1]]
+                t.faces.new(list(reversed(lo)))
+                t.faces.new(hi)
+                for j in range(4):
+                    t.faces.new((lo[j], lo[(j + 1) % 4], hi[(j + 1) % 4], hi[j]))
+    bmesh.ops.recalc_face_normals(t, faces=t.faces)
+    return t
+
 
 @model("dragon_bones", "free", ["dragon_bones"], big=True)
 def dragon_bones(p):
     """The dragon's skeleton (mgsawwinhtike3002, @SawWinHtike, CC BY 4.0), headless, wings laid to the sides: about 2.1
-    long, head end to -x. The data's `scale` makes it the mausoleum's 30 ft and more."""
+    long, the neck's end to +x and the pelvis to -x, where a tail built here (the download has none) curls along the
+    floor. The data's `scale` makes it the mausoleum's 30 ft and more."""
     import numpy as np
     from mathutils import Quaternion, kdtree
     added, meshes = _import_glb(SOURCED / "sketchfab_dragon_skeleton_sawwinhtike" / "dragon_skeleton_low-poly.glb")
@@ -5774,11 +5852,21 @@ def dragon_bones(p):
             out.faces.new([mp.setdefault(v.index, out.verts.new(v.co)) for v in f.verts])
     bm.free()
     out = _decimated(out, 0.5)
-    _fit(out, 90.0, 2.1, lambda lo, hi: Vector((-(lo.x + hi.x) / 2.0, -(lo.y + hi.y) / 2.0, -lo.z)))
+    floor = min(v.co.z for v in out.verts)
+    rest = []
+    k = _fit(out, 90.0, 2.1, lambda lo, hi: rest.append(Vector((-(lo.x + hi.x) / 2.0, -(lo.y + hi.y) / 2.0, -lo.z))) or rest[-1])
     bmesh.ops.scale(out, vec=(1.0, 1.0, 0.6), verts=out.verts)   # it lies on the bier: the crouch is settled, the ribs lower
     zs = [f.calc_center_median().z for f in out.faces]
     cuts = np.percentile(zs, [30, 78, 97])   # lit from above: the low bones darker, the high ones paler, the whole of it old
+    tail = _dragon_tail(floor)   # the download has no tail: this one goes through the same fit, so it grows with the bones
+    bmesh.ops.rotate(tail, cent=(0, 0, 0), matrix=Euler((0, 0, math.radians(90.0))).to_matrix(), verts=tail.verts)
+    bmesh.ops.scale(tail, vec=(k, k, k), verts=tail.verts)
+    bmesh.ops.translate(tail, vec=rest[0], verts=tail.verts)
+    bmesh.ops.scale(tail, vec=(1.0, 1.0, 0.6), verts=tail.verts)
+    tail.normal_update()
     _append_faces(p, out, lambda f: BONE_RAMP[int(sum(f.calc_center_median().z > c for c in cuts))])
+    _append_faces(p, tail, lambda f: BONE_RAMP[max(int(sum(f.calc_center_median().z > c for c in cuts)), 2 if f.normal.z > 0.6 else 1 if f.normal.z > 0.2 else 0)],
+                  smooth=False)
 
 
 def bounds(ob):

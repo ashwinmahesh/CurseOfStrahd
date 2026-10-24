@@ -256,8 +256,9 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
   triangles and each face takes the nearest of four bone colours from the painted texture, smoothed over the mesh; the
   skeleton, a fixed pose with no rig, loses its head and the rock and base it stood on, lowers its neck, and each wing
   (the bones joined to a shoulder blade) is laid flat, drooped and shrunk to a quarter about its shoulder, then
-  the whole is thinned to 10k triangles and settled to 0.6 of its height. Their `size` in art/models/manifest.json is
-  what the data's `scale` multiplies.
+  the whole is thinned to 10k triangles and settled to 0.6 of its height. The download has no tail, so the builder adds
+  one (`_dragon_tail`: vertebrae from the pelvis, curling away from the hind legs along the dais's near edge). Their
+  `size` in art/models/manifest.json is what the data's `scale` multiplies.
 - **Silver heaps** (`silver_heap`, `world/look/coin_heap.gd`): the Undercroft's eight heaps of silver are built from
   about a thousand coins each over a lumpy dune. The gold heap model scaled up was a smooth blob with a few big discs
   on it. Pillars and fight squares keep clear of them; the biggest, at [19, 5], is 7.5 ft tall.

@@ -153,4 +153,6 @@ Two pieces are not modelled from our own art: `dragon_skull` (a wall trophy, in 
 mausoleum's skeleton, `big`) are free CC BY 4.0 models from Sketchfab, read from art/sourced/sketchfab_*/ by their
 builders in blender/models_3d.py and put on the bone colours of the palette, thinned and sized like the rest of the
 set (docs/art/set_dressing.md, Scale-ups; credits in art/credits.json). A builder imports from a temporary copy so the
-originals stay untouched, and `make models ONLY="dragon_skull dragon_bones"` rebuilds them.
+originals stay untouched, and `make models ONLY="dragon_skull dragon_bones"` rebuilds them. The skeleton download stops at
+the pelvis (it has no tail), so `_dragon_tail` builds one: 25 tapering vertebrae with a blade spine each (side processes on the
+first dozen), drawn through the same fit as the bones, curling from the pelvis along the floor.

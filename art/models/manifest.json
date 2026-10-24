@@ -2350,8 +2350,8 @@
         "dragon_bones"
       ],
       "size": [
-        2.1,
-        1.335,
+        2.227,
+        1.338,
         2.598
       ],
       "materials": [
@@ -2360,7 +2360,7 @@
         "pal_parchment",
         "pal_vellum"
       ],
-      "triangles": 10080,
+      "triangles": 12168,
       "big": true
     },
     "mobile": {

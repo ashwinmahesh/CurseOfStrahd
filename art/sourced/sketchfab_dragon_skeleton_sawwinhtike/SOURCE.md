@@ -9,5 +9,5 @@
   the skeleton is used. sha256 d38dc569d0b1b4a08196580ba15c8f4eea876c01886911b2cbeb7c2553e979bd. Kept untouched.
 - Picked by the owner (2026-10-18, thread: scale-ups) for the dragon skeleton in Argynvostholt's mausoleum.
 - Changes made for the game are made in blender/models_3d.py (the base and rock dropped, headless, thinned, put on the
-  palette's bone colours, scaled and posed on its bier) and written to art/models/dragon_bones.glb; this folder's
+  palette's bone colours, scaled and posed on its bier, and given a tail built in code, since this file stops at the pelvis) and written to art/models/dragon_bones.glb; this folder's
   file is the original.
