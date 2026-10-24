@@ -558,8 +558,7 @@
             11,
             15
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "berserker",
@@ -567,8 +566,7 @@
             14,
             16
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "berserker",
@@ -576,8 +574,7 @@
             10,
             19
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "berserker",
@@ -585,40 +582,35 @@
             15,
             19
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             7,
             16
-          ],
-          "hp": 23
+          ]
         },
         {
           "monster": "needle_blight",
           "cell": [
             16,
             14
-          ],
-          "hp": 23
+          ]
         },
         {
           "monster": "needle_blight",
           "cell": [
             13,
             20
-          ],
-          "hp": 23
+          ]
         },
         {
           "monster": "needle_blight",
           "cell": [
             9,
             18
-          ],
-          "hp": 23
+          ]
         },
         {
           "monster": "berserker",
@@ -626,16 +618,14 @@
             26,
             17
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             25,
             27
-          ],
-          "hp": 23
+          ]
         },
         {
           "monster": "berserker",
@@ -643,16 +633,14 @@
             26,
             7
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             4,
             28
-          ],
-          "hp": 23
+          ]
         },
         {
           "monster": "berserker",
@@ -660,16 +648,14 @@
             15,
             28
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             6,
             7
-          ],
-          "hp": 23
+          ]
         },
         {
           "monster": "berserker",
@@ -677,16 +663,14 @@
             14,
             7
           ],
-          "name": "Warden of the hill",
-          "hp": 97
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             20,
             8
-          ],
-          "hp": 23
+          ]
         }
       ],
       "surprise": "",
@@ -704,8 +688,7 @@
             11,
             15
           ],
-          "name": "Warden of the hill",
-          "hp": 68
+          "name": "Warden of the hill"
         },
         {
           "monster": "berserker",
@@ -713,8 +696,7 @@
             14,
             16
           ],
-          "name": "Warden of the hill",
-          "hp": 68
+          "name": "Warden of the hill"
         },
         {
           "monster": "berserker",
@@ -722,48 +704,42 @@
             10,
             19
           ],
-          "name": "Warden of the hill",
-          "hp": 68
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             7,
             16
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "needle_blight",
           "cell": [
             16,
             14
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "needle_blight",
           "cell": [
             13,
             20
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "needle_blight",
           "cell": [
             9,
             18
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "needle_blight",
           "cell": [
             26,
             17
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "berserker",
@@ -771,16 +747,14 @@
             23,
             27
           ],
-          "name": "Warden of the hill",
-          "hp": 68
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             26,
             7
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "berserker",
@@ -788,16 +762,14 @@
             4,
             28
           ],
-          "name": "Warden of the hill",
-          "hp": 68
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             14,
             28
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "berserker",
@@ -805,16 +777,14 @@
             6,
             7
           ],
-          "name": "Warden of the hill",
-          "hp": 68
+          "name": "Warden of the hill"
         },
         {
           "monster": "needle_blight",
           "cell": [
             31,
             25
-          ],
-          "hp": 16
+          ]
         },
         {
           "monster": "berserker",
@@ -822,16 +792,14 @@
             15,
             7
           ],
-          "name": "Warden of the hill",
-          "hp": 68
+          "name": "Warden of the hill"
         },
         {
           "monster": "twig_blight",
           "cell": [
             20,
             20
-          ],
-          "hp": 7
+          ]
         }
       ],
       "surprise": "",
@@ -976,8 +944,7 @@
             28,
             12
           ],
-          "name": "Silverjaw",
-          "hp": 140
+          "name": "Silverjaw"
         },
         {
           "monster": "wight",
@@ -1069,8 +1036,7 @@
             28,
             12
           ],
-          "name": "Silverjaw",
-          "hp": 140
+          "name": "Silverjaw"
         },
         {
           "monster": "wight",

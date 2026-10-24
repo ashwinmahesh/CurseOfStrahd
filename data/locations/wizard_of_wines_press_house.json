@@ -329,8 +329,7 @@
             12,
             8
           ],
-          "name": "Kostin",
-          "hp": 44
+          "name": "Kostin"
         },
         {
           "monster": "shambling_mound",
@@ -409,8 +408,7 @@
             12,
             8
           ],
-          "name": "Kostin",
-          "hp": 55
+          "name": "Kostin"
         },
         {
           "monster": "druid",
@@ -426,8 +424,7 @@
             15,
             5
           ],
-          "name": "The Mash",
-          "hp": 160
+          "name": "The Mash"
         },
         {
           "monster": "vine_blight",
@@ -519,8 +516,7 @@
             12,
             8
           ],
-          "name": "Kostin",
-          "hp": 60
+          "name": "Kostin"
         },
         {
           "monster": "shambling_mound",
@@ -528,8 +524,7 @@
             15,
             5
           ],
-          "name": "The Mash",
-          "hp": 160
+          "name": "The Mash"
         },
         {
           "monster": "vine_blight",
@@ -612,8 +607,7 @@
             12,
             8
           ],
-          "name": "Kostin",
-          "hp": 44
+          "name": "Kostin"
         },
         {
           "monster": "shambling_mound",
@@ -621,8 +615,7 @@
             15,
             5
           ],
-          "name": "The Mash",
-          "hp": 160
+          "name": "The Mash"
         },
         {
           "monster": "vine_blight",

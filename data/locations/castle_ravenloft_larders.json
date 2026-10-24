@@ -1218,104 +1218,91 @@
             24,
             2
           ],
-          "name": "Sergeant of the Watch",
-          "hp": 102
+          "name": "Sergeant of the Watch"
         },
         {
           "monster": "wight",
           "cell": [
             20,
             6
-          ],
-          "hp": 102
+          ]
         },
         {
           "monster": "helmed_horror",
           "cell": [
             21,
             2
-          ],
-          "hp": 75
+          ]
         },
         {
           "monster": "helmed_horror",
           "cell": [
             26,
             2
-          ],
-          "hp": 75
+          ]
         },
         {
           "monster": "strahd_zombie",
           "cell": [
             19,
             6
-          ],
-          "hp": 38
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             22,
             6
-          ],
-          "hp": 45
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             25,
             7
-          ],
-          "hp": 45
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             28,
             6
-          ],
-          "hp": 45
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             29,
             3
-          ],
-          "hp": 45
+          ]
         },
         {
           "monster": "wight",
           "cell": [
             21,
             4
-          ],
-          "hp": 102
+          ]
         },
         {
           "monster": "helmed_horror",
           "cell": [
             19,
             4
-          ],
-          "hp": 75
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             19,
             2
-          ],
-          "hp": 45
+          ]
         },
         {
           "monster": "wight",
           "cell": [
             28,
             1
-          ],
-          "hp": 102
+          ]
         }
       ]
     },
@@ -1332,128 +1319,112 @@
             26,
             5
           ],
-          "name": "Cyrus Belview",
-          "hp": 80
+          "name": "Cyrus Belview"
         },
         {
           "monster": "berserker",
           "cell": [
             19,
             5
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             26,
             1
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             22,
             1
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             19,
             2
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             29,
             3
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             29,
             6
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             24,
             1
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             21,
             3
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             21,
             5
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             21,
             7
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             28,
             1
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             19,
             7
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             21,
             4
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             22,
             2
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             23,
             1
-          ],
-          "hp": 80
+          ]
         }
       ]
     }

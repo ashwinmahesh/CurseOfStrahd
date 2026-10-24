@@ -1666,7 +1666,6 @@
             32,
             18
           ],
-          "hp": 118,
           "facing": "southwest"
         },
         {
@@ -1675,7 +1674,6 @@
             33,
             22
           ],
-          "hp": 118,
           "facing": "northwest"
         },
         {
@@ -1684,7 +1682,6 @@
             22,
             16
           ],
-          "hp": 118,
           "unseen": true
         },
         {
@@ -1693,7 +1690,6 @@
             25,
             23
           ],
-          "hp": 118,
           "unseen": true
         }
       ]
@@ -1787,24 +1783,21 @@
           "cell": [
             49,
             7
-          ],
-          "hp": 125
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             40,
             6
-          ],
-          "hp": 125
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             48,
             8
-          ],
-          "hp": 125
+          ]
         }
       ]
     },
@@ -1848,24 +1841,21 @@
           "cell": [
             49,
             7
-          ],
-          "hp": 95
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             40,
             6
-          ],
-          "hp": 95
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             48,
             8
-          ],
-          "hp": 95
+          ]
         }
       ]
     },
@@ -1887,8 +1877,7 @@
             7,
             1
           ],
-          "name": "Corporal Vell",
-          "hp": 126
+          "name": "Corporal Vell"
         },
         {
           "monster": "vampire_spawn",
@@ -1896,8 +1885,7 @@
             1,
             2
           ],
-          "name": "Private Venn",
-          "hp": 126
+          "name": "Private Venn"
         },
         {
           "monster": "vampire_spawn",
@@ -1905,40 +1893,35 @@
             10,
             1
           ],
-          "name": "Private Corrin",
-          "hp": 126
+          "name": "Private Corrin"
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             4,
             1
-          ],
-          "hp": 126
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             5,
             1
-          ],
-          "hp": 126
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             6,
             1
-          ],
-          "hp": 126
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             6,
             2
-          ],
-          "hp": 126
+          ]
         }
       ]
     },
@@ -1956,8 +1939,7 @@
             5,
             2
           ],
-          "name": "Private Venn",
-          "hp": 144
+          "name": "Private Venn"
         },
         {
           "monster": "vampire_spawn",
@@ -1965,8 +1947,7 @@
             1,
             2
           ],
-          "name": "Private Corrin",
-          "hp": 144
+          "name": "Private Corrin"
         },
         {
           "monster": "vampire_spawn",
@@ -1974,40 +1955,35 @@
             10,
             1
           ],
-          "name": "Private Ash",
-          "hp": 144
+          "name": "Private Ash"
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             7,
             2
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             3,
             2
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             6,
             2
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             5,
             1
-          ],
-          "hp": 144
+          ]
         }
       ]
     },
@@ -2029,8 +2005,7 @@
             2,
             9
           ],
-          "name": "Captain Merrow",
-          "hp": 162
+          "name": "Captain Merrow"
         },
         {
           "monster": "vampire_spawn",
@@ -2038,8 +2013,7 @@
             1,
             6
           ],
-          "name": "Private Hale",
-          "hp": 162
+          "name": "Private Hale"
         },
         {
           "monster": "vampire_spawn",
@@ -2047,8 +2021,7 @@
             1,
             12
           ],
-          "name": "Private Dosh",
-          "hp": 162
+          "name": "Private Dosh"
         },
         {
           "monster": "vampire_spawn",
@@ -2056,8 +2029,7 @@
             12,
             5
           ],
-          "name": "Lance-Corporal Brannock",
-          "hp": 162
+          "name": "Lance-Corporal Brannock"
         },
         {
           "monster": "vampire_spawn",
@@ -2065,8 +2037,7 @@
             12,
             13
           ],
-          "name": "Private Lind",
-          "hp": 162
+          "name": "Private Lind"
         }
       ]
     },
@@ -2088,8 +2059,7 @@
             2,
             9
           ],
-          "name": "Captain Merrow",
-          "hp": 110
+          "name": "Captain Merrow"
         },
         {
           "monster": "vampire_spawn",
@@ -2126,8 +2096,7 @@
             2,
             9
           ],
-          "name": "Captain Merrow",
-          "hp": 110
+          "name": "Captain Merrow"
         }
       ]
     },
@@ -2144,32 +2113,28 @@
           "cell": [
             22,
             16
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             29,
             16
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             24,
             23
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             27,
             23
-          ],
-          "hp": 65
+          ]
         }
       ]
     },
@@ -2186,32 +2151,28 @@
           "cell": [
             22,
             16
-          ],
-          "hp": 52
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             29,
             16
-          ],
-          "hp": 52
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             24,
             23
-          ],
-          "hp": 52
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             27,
             23
-          ],
-          "hp": 52
+          ]
         }
       ]
     },
@@ -2227,32 +2188,28 @@
           "cell": [
             22,
             16
-          ],
-          "hp": 47
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             29,
             16
-          ],
-          "hp": 47
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             24,
             23
-          ],
-          "hp": 47
+          ]
         },
         {
           "monster": "red_dragon_wyrmling",
           "cell": [
             27,
             23
-          ],
-          "hp": 47
+          ]
         }
       ]
     }

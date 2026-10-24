@@ -373,40 +373,35 @@
           "cell": [
             6,
             11
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             11,
             11
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "helmed_horror",
           "cell": [
             14,
             9
-          ],
-          "hp": 75
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             5,
             2
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "helmed_horror",
           "cell": [
             12,
             2
-          ],
-          "hp": 75
+          ]
         }
       ]
     },

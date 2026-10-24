@@ -641,8 +641,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 55
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "druid",
@@ -721,8 +720,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 45
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "druid",
@@ -785,8 +783,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 58
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "druid",
@@ -857,8 +854,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 90
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "twig_blight",
@@ -913,8 +909,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 55
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "berserker",
@@ -922,8 +917,7 @@
             5,
             6
           ],
-          "name": "Warden of the hill",
-          "hp": 40
+          "name": "Warden of the hill"
         },
         {
           "monster": "twig_blight",
@@ -978,8 +972,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 60
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "twig_blight",
@@ -1048,8 +1041,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 60
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "druid",
@@ -1057,8 +1049,7 @@
             13,
             14
           ],
-          "name": "Kostin",
-          "hp": 44
+          "name": "Kostin"
         },
         {
           "monster": "druid",
@@ -1129,8 +1120,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 90
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "druid",
@@ -1138,8 +1128,7 @@
             13,
             14
           ],
-          "name": "Kostin",
-          "hp": 30
+          "name": "Kostin"
         },
         {
           "monster": "twig_blight",
@@ -1194,8 +1183,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 130
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "druid",
@@ -1203,8 +1191,7 @@
             13,
             14
           ],
-          "name": "Kostin",
-          "hp": 44
+          "name": "Kostin"
         },
         {
           "monster": "druid",
@@ -1275,8 +1262,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 55
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "twig_blight",
@@ -1331,8 +1317,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 60
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "twig_blight",
@@ -1400,8 +1385,7 @@
             15,
             10
           ],
-          "name": "Mother Ruxandra",
-          "hp": 50
+          "name": "Mother Ruxandra"
         },
         {
           "monster": "twig_blight",

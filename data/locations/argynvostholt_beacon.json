@@ -386,8 +386,7 @@
           "cell": [
             9,
             17
-          ],
-          "hp": 50
+          ]
         },
         {
           "monster": "specter",
@@ -477,8 +476,7 @@
             2,
             17
           ],
-          "name": "Dead Knight",
-          "hp": 220
+          "name": "Dead Knight"
         },
         {
           "monster": "revenant",
@@ -486,8 +484,7 @@
             4,
             13
           ],
-          "name": "Dead Knight",
-          "hp": 220
+          "name": "Dead Knight"
         },
         {
           "monster": "phantom_warrior",
@@ -503,8 +500,7 @@
             7,
             13
           ],
-          "name": "Dead Knight",
-          "hp": 220
+          "name": "Dead Knight"
         },
         {
           "monster": "wight",
@@ -538,8 +534,7 @@
             2,
             17
           ],
-          "name": "Dead Knight",
-          "hp": 110
+          "name": "Dead Knight"
         }
       ]
     },

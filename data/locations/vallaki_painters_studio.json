@@ -288,8 +288,7 @@
             2,
             2
           ],
-          "name": "A Copy",
-          "hp": 40
+          "name": "A Copy"
         },
         {
           "monster": "guardian_portrait",
@@ -297,8 +296,7 @@
             12,
             2
           ],
-          "name": "A Copy",
-          "hp": 40
+          "name": "A Copy"
         },
         {
           "monster": "guardian_portrait",
@@ -306,8 +304,7 @@
             2,
             5
           ],
-          "name": "A Copy",
-          "hp": 40
+          "name": "A Copy"
         },
         {
           "monster": "guardian_portrait",
@@ -315,8 +312,7 @@
             13,
             4
           ],
-          "name": "A Copy",
-          "hp": 40
+          "name": "A Copy"
         },
         {
           "monster": "guardian_portrait",
@@ -324,8 +320,7 @@
             4,
             1
           ],
-          "name": "A Copy",
-          "hp": 40
+          "name": "A Copy"
         },
         {
           "monster": "guardian_portrait",
@@ -333,8 +328,7 @@
             11,
             5
           ],
-          "name": "A Copy",
-          "hp": 40
+          "name": "A Copy"
         },
         {
           "monster": "guardian_portrait",
@@ -342,8 +336,7 @@
             4,
             4
           ],
-          "name": "A Copy",
-          "hp": 40
+          "name": "A Copy"
         }
       ],
       "surprise": "",

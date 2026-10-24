@@ -479,8 +479,7 @@
             20,
             4
           ],
-          "name": "Druid of Yester Hill",
-          "hp": 35
+          "name": "Druid of Yester Hill"
         },
         {
           "monster": "druid",
@@ -488,8 +487,7 @@
             25,
             5
           ],
-          "name": "Druid of Yester Hill",
-          "hp": 35
+          "name": "Druid of Yester Hill"
         },
         {
           "monster": "druid",
@@ -497,8 +495,7 @@
             15,
             8
           ],
-          "name": "Druid of Yester Hill",
-          "hp": 35
+          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
@@ -516,8 +513,7 @@
             20,
             4
           ],
-          "name": "Druid of Yester Hill",
-          "hp": 65
+          "name": "Druid of Yester Hill"
         },
         {
           "monster": "druid",
@@ -525,8 +521,7 @@
             25,
             5
           ],
-          "name": "Druid of Yester Hill",
-          "hp": 60
+          "name": "Druid of Yester Hill"
         },
         {
           "monster": "druid",
@@ -639,8 +634,7 @@
           "cell": [
             19,
             6
-          ],
-          "hp": 169
+          ]
         },
         {
           "monster": "twig_blight",
@@ -846,8 +840,7 @@
           "cell": [
             19,
             6
-          ],
-          "hp": 40
+          ]
         },
         {
           "monster": "vine_blight",

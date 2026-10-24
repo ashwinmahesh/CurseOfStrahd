@@ -266,128 +266,112 @@
           "cell": [
             14,
             3
-          ],
-          "hp": 11
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             17,
             7
-          ],
-          "hp": 11
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             13,
             8
-          ],
-          "hp": 11
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             9,
             6
-          ],
-          "hp": 11
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             20,
             3
-          ],
-          "hp": 11
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             16,
             10
-          ],
-          "hp": 11
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             1,
             6
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             24,
             10
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             7,
             12
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             1,
             12
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             9,
             1
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             4,
             1
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             11,
             12
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             5,
             7
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             20,
             11
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             24,
             6
-          ],
-          "hp": 55
+          ]
         }
       ]
     },
@@ -404,112 +388,98 @@
           "cell": [
             14,
             3
-          ],
-          "hp": 13
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             17,
             7
-          ],
-          "hp": 13
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             13,
             8
-          ],
-          "hp": 13
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             9,
             6
-          ],
-          "hp": 13
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             20,
             3
-          ],
-          "hp": 13
+          ]
         },
         {
           "monster": "swarm_of_ravens",
           "cell": [
             16,
             10
-          ],
-          "hp": 13
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             1,
             6
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             7,
             12
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             1,
             12
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             21,
             12
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             1,
             1
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             11,
             12
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             5,
             8
-          ],
-          "hp": 65
+          ]
         },
         {
           "monster": "wereraven",
           "cell": [
             10,
             2
-          ],
-          "hp": 65
+          ]
         }
       ]
     }

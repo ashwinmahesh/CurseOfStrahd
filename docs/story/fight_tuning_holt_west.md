@@ -1,5 +1,7 @@
 # The west wing's spiders and the chapel's revenants (dungeon expansion packages A1 and A2)
 
+**Hit Points since 2026-10-24** (owner: "for ALL monster HP, just use the Monster Manual values; no custom HP"): the foes in these fights fight at their stat blocks' Hit Points. The raised or lowered Hit Points the tables below describe are gone from the data, and the win counts are the ones measured before; the combat-length pass measures the fights again.
+
 (2026-10-18, owner's rule: the sharp test party wins 5 in 8 on Balanced, give or take one; the plan holds both fights to
 it, and Ashwin's note of the same day keeps fights that guard something to their band. Held by
 `tests/integration/test_scaled_fights_holt_ballroom.gd` and `test_scaled_fights_holt_chapel.gd`, three level variants

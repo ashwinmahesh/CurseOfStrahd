@@ -794,64 +794,56 @@
           "cell": [
             22,
             5
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             24,
             5
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             21,
             4
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             23,
             2
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             23,
             6
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             28,
             7
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             21,
             3
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             21,
             5
-          ],
-          "hp": 85
+          ]
         }
       ],
       "surprise": "",

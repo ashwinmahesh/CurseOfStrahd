@@ -661,8 +661,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -672,8 +671,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -683,8 +681,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -694,8 +691,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -705,8 +701,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -716,8 +711,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -727,8 +721,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -738,8 +731,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -749,8 +741,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -760,8 +751,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -771,8 +761,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         },
         {
           "monster": "swarm_of_rats",
@@ -782,8 +771,7 @@
           ],
           "states": [
             "boiling_tide"
-          ],
-          "hp": 200
+          ]
         }
       ]
     }

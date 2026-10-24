@@ -4,7 +4,7 @@
   "source": {
     "book": "MM2025",
     "edition": "2014",
-    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual helmed horror. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight. Its resistance to nonmagical, non-adamantine weapons is entered as plain Bludgeoning, Piercing and Slashing resistance. Spell Immunity is text only (the engine has no per-spell immunity); the longsword is used one-handed (it carries a shield)."
+    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book, apart from its Hit Points, 67 (9d8 + 27) as the 2025 block has them (read from aidedd.org's DnD 5.5 page, 2026-10-24). Numbers follow the 2014 Monster Manual helmed horror. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight. Its resistance to nonmagical, non-adamantine weapons is entered as plain Bludgeoning, Piercing and Slashing resistance. Spell Immunity is text only (the engine has no per-spell immunity); the longsword is used one-handed (it carries a shield)."
   },
   "size": "medium",
   "type": "construct",
@@ -13,8 +13,8 @@
   "ac_note": "Plate armor and shield",
   "initiative": 1,
   "hp": {
-    "average": 60,
-    "dice": "8d8+24"
+    "average": 67,
+    "dice": "9d8+27"
   },
   "speed": {
     "walk": 30,

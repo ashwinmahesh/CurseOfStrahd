@@ -1,5 +1,7 @@
 # The last non-boss fights without a series test, and the churchyard dead
 
+**Hit Points since 2026-10-24** (owner: "for ALL monster HP, just use the Monster Manual values; no custom HP"): the foes in these fights fight at their stat blocks' Hit Points. The raised or lowered Hit Points the tables below describe are gone from the data, and the win counts are the ones measured before; the combat-length pass measures the fights again.
+
 (2026-10-15, owner's rule: the sharp party wins 5 in 8 on Balanced, give or take one; none of these is on the boss lane's
 list. Held by `tests/integration/test_scaled_fights_rest.gd`; the churchyard by `test_scaled_fights_barovia.gd`.)
 

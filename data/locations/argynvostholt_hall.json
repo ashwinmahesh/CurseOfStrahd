@@ -835,8 +835,7 @@
             21,
             3
           ],
-          "name": "Vladimir's second",
-          "hp": 190
+          "name": "Vladimir's second"
         },
         {
           "monster": "revenant",
@@ -844,8 +843,7 @@
             20,
             4
           ],
-          "name": "Vladimir's second",
-          "hp": 190
+          "name": "Vladimir's second"
         },
         {
           "monster": "revenant",
@@ -853,8 +851,7 @@
             23,
             8
           ],
-          "name": "Vladimir's second",
-          "hp": 190
+          "name": "Vladimir's second"
         },
         {
           "monster": "revenant",
@@ -862,7 +859,6 @@
             17,
             3
           ],
-          "hp": 80,
           "name": "Vladimir's second"
         }
       ]
@@ -917,7 +913,6 @@
             6
           ],
           "name": "A Knight at Prayer",
-          "hp": 180,
           "facing": "west"
         },
         {
@@ -927,7 +922,6 @@
             3
           ],
           "name": "A Knight at Prayer",
-          "hp": 180,
           "facing": "north"
         },
         {
@@ -937,7 +931,6 @@
             1
           ],
           "name": "A Knight at Prayer",
-          "hp": 180,
           "facing": "north"
         },
         {
@@ -947,7 +940,6 @@
             5
           ],
           "name": "A Knight at Prayer",
-          "hp": 180,
           "facing": "north"
         }
       ],
@@ -968,7 +960,6 @@
             6
           ],
           "name": "A Knight at Prayer",
-          "hp": 120,
           "facing": "west"
         },
         {
@@ -978,7 +969,6 @@
             3
           ],
           "name": "A Knight at Prayer",
-          "hp": 120,
           "facing": "north"
         },
         {
@@ -988,7 +978,6 @@
             1
           ],
           "name": "A Knight at Prayer",
-          "hp": 120,
           "facing": "north"
         },
         {
@@ -998,7 +987,6 @@
             5
           ],
           "name": "A Knight at Prayer",
-          "hp": 120,
           "facing": "north"
         }
       ],
@@ -1019,7 +1007,6 @@
             6
           ],
           "name": "A Knight at Prayer",
-          "hp": 135,
           "facing": "west"
         },
         {
@@ -1029,7 +1016,6 @@
             3
           ],
           "name": "A Knight at Prayer",
-          "hp": 135,
           "facing": "north"
         },
         {
@@ -1039,7 +1025,6 @@
             1
           ],
           "name": "A Knight at Prayer",
-          "hp": 135,
           "facing": "north"
         },
         {
@@ -1049,7 +1034,6 @@
             5
           ],
           "name": "A Knight at Prayer",
-          "hp": 135,
           "facing": "north"
         }
       ],

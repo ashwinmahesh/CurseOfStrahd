@@ -1,5 +1,7 @@
 # Castle Ravenloft's rooms and watches, and the road home from Yester Hill
 
+**Hit Points since 2026-10-24** (owner: "for ALL monster HP, just use the Monster Manual values; no custom HP"): the foes in these fights fight at their stat blocks' Hit Points. The raised or lowered Hit Points the tables below describe are gone from the data, and the win counts are the ones measured before; the combat-length pass measures the fights again.
+
 (Owner, 2026-10-13: the book's fights were written for weaker characters. Over seeds 1-8 the four pregens on the sharp
 autopilot win five in eight on Balanced, give or take one, each fight played from where walking in or touching something
 sets it off, its foes starting spread out. The bosses are the boss lane's, in `docs/story/boss_fights.md`.)

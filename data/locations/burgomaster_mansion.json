@@ -639,8 +639,7 @@
             3,
             4
           ],
-          "name": "The Tenant",
-          "hp": 55
+          "name": "The Tenant"
         },
         {
           "monster": "ghoul",
@@ -648,8 +647,7 @@
             2,
             5
           ],
-          "name": "A Siege-Winter Servant",
-          "hp": 35
+          "name": "A Siege-Winter Servant"
         },
         {
           "monster": "ghoul",
@@ -657,8 +655,7 @@
             9,
             3
           ],
-          "name": "A Siege-Winter Servant",
-          "hp": 35
+          "name": "A Siege-Winter Servant"
         },
         {
           "monster": "ghoul",
@@ -666,8 +663,7 @@
             1,
             4
           ],
-          "name": "A Siege-Winter Servant",
-          "hp": 35
+          "name": "A Siege-Winter Servant"
         },
         {
           "monster": "ghoul",
@@ -675,8 +671,7 @@
             2,
             3
           ],
-          "name": "A Siege-Winter Servant",
-          "hp": 35
+          "name": "A Siege-Winter Servant"
         },
         {
           "monster": "ghoul",
@@ -684,8 +679,7 @@
             3,
             3
           ],
-          "name": "A Siege-Winter Servant",
-          "hp": 35
+          "name": "A Siege-Winter Servant"
         }
       ],
       "surprise": "",
@@ -703,8 +697,7 @@
             3,
             4
           ],
-          "name": "The Tenant",
-          "hp": 70
+          "name": "The Tenant"
         },
         {
           "monster": "ghoul",
@@ -712,8 +705,7 @@
             2,
             5
           ],
-          "name": "A Siege-Winter Servant",
-          "hp": 45
+          "name": "A Siege-Winter Servant"
         },
         {
           "monster": "ghoul",
@@ -721,8 +713,7 @@
             9,
             3
           ],
-          "name": "A Siege-Winter Servant",
-          "hp": 45
+          "name": "A Siege-Winter Servant"
         },
         {
           "monster": "zombie",
@@ -754,8 +745,7 @@
             3,
             4
           ],
-          "name": "The Tenant",
-          "hp": 24
+          "name": "The Tenant"
         },
         {
           "monster": "ghoul",

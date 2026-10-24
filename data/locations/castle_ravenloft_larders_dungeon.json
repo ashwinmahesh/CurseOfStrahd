@@ -1380,7 +1380,6 @@
             22,
             2
           ],
-          "hp": 135,
           "facing": "southwest"
         },
         {
@@ -1389,7 +1388,6 @@
             25,
             2
           ],
-          "hp": 135,
           "facing": "west"
         },
         {
@@ -1398,7 +1396,6 @@
             24,
             4
           ],
-          "hp": 135,
           "facing": "west"
         },
         {
@@ -1407,7 +1404,6 @@
             14,
             2
           ],
-          "hp": 135,
           "unseen": true
         },
         {
@@ -1416,7 +1412,6 @@
             12,
             5
           ],
-          "hp": 135,
           "unseen": true
         },
         {
@@ -1425,7 +1420,6 @@
             10,
             4
           ],
-          "hp": 135,
           "unseen": true
         },
         {
@@ -1434,7 +1428,6 @@
             11,
             2
           ],
-          "hp": 135,
           "unseen": true
         },
         {
@@ -1443,7 +1436,6 @@
             16,
             5
           ],
-          "hp": 135,
           "unseen": true
         }
       ]
@@ -1501,136 +1493,119 @@
             6,
             21
           ],
-          "name": "The Questioner",
-          "hp": 151
+          "name": "The Questioner"
         },
         {
           "monster": "black_pudding",
           "cell": [
             7,
             24
-          ],
-          "hp": 153
+          ]
         },
         {
           "monster": "black_pudding",
           "cell": [
             10,
             24
-          ],
-          "hp": 153
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             3,
             21
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             4,
             23
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             11,
             21
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             12,
             24
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             10,
             23
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             2,
             24
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             14,
             21
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "black_pudding",
           "cell": [
             8,
             20
-          ],
-          "hp": 153
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             8,
             22
-          ],
-          "hp": 151
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             5,
             25
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "black_pudding",
           "cell": [
             6,
             22
-          ],
-          "hp": 153
+          ]
         },
         {
           "monster": "wraith",
           "cell": [
             14,
             23
-          ],
-          "hp": 151
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             14,
             25
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "black_pudding",
           "cell": [
             11,
             22
-          ],
-          "hp": 153
+          ]
         }
       ]
     },
@@ -1647,24 +1622,21 @@
             5,
             16
           ],
-          "name": "Brother Anatol",
-          "hp": 315
+          "name": "Brother Anatol"
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             10,
             12
-          ],
-          "hp": 315
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ],
-          "hp": 315
+          ]
         }
       ]
     },
@@ -1681,24 +1653,21 @@
             5,
             16
           ],
-          "name": "Brother Anatol",
-          "hp": 315
+          "name": "Brother Anatol"
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             10,
             12
-          ],
-          "hp": 315
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ],
-          "hp": 315
+          ]
         }
       ]
     },
@@ -1723,48 +1692,42 @@
           "cell": [
             5,
             9
-          ],
-          "hp": 104
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             13,
             9
-          ],
-          "hp": 104
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             17,
             9
-          ],
-          "hp": 104
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             5,
             10
-          ],
-          "hp": 104
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             13,
             10
-          ],
-          "hp": 104
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             17,
             10
-          ],
-          "hp": 104
+          ]
         }
       ]
     },

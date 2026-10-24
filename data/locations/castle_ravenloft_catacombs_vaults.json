@@ -1053,48 +1053,42 @@
           "cell": [
             34,
             4
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "wight",
           "cell": [
             25,
             10
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "wight",
           "cell": [
             25,
             1
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "wight",
           "cell": [
             38,
             10
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "wight",
           "cell": [
             29,
             5
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "wight",
           "cell": [
             38,
             1
-          ],
-          "hp": 144
+          ]
         },
         {
           "monster": "skeleton",
@@ -1194,8 +1188,7 @@
             20,
             21
           ],
-          "name": "Sasha Ivliskova",
-          "hp": 86
+          "name": "Sasha Ivliskova"
         },
         {
           "monster": "vampire_spawn",
@@ -1203,8 +1196,7 @@
             14,
             22
           ],
-          "name": "A bridesmaid in webs",
-          "hp": 86
+          "name": "A bridesmaid in webs"
         },
         {
           "monster": "vampire_spawn",
@@ -1212,8 +1204,7 @@
             21,
             16
           ],
-          "name": "A bridesmaid in webs",
-          "hp": 86
+          "name": "A bridesmaid in webs"
         },
         {
           "monster": "vampire_spawn",
@@ -1221,8 +1212,7 @@
             17,
             21
           ],
-          "name": "A bridesmaid in webs",
-          "hp": 86
+          "name": "A bridesmaid in webs"
         },
         {
           "monster": "vampire_spawn",
@@ -1230,8 +1220,7 @@
             21,
             19
           ],
-          "name": "A bridesmaid in webs",
-          "hp": 86
+          "name": "A bridesmaid in webs"
         },
         {
           "monster": "vampire_spawn",
@@ -1239,8 +1228,7 @@
             15,
             21
           ],
-          "name": "A bridesmaid in webs",
-          "hp": 86
+          "name": "A bridesmaid in webs"
         },
         {
           "monster": "vampire_spawn",
@@ -1248,8 +1236,7 @@
             16,
             22
           ],
-          "name": "A bridesmaid in webs",
-          "hp": 86
+          "name": "A bridesmaid in webs"
         }
       ]
     },
@@ -1264,56 +1251,49 @@
           "cell": [
             36,
             22
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             41,
             20
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             32,
             17
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             32,
             21
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             33,
             24
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             40,
             23
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             39,
             21
-          ],
-          "hp": 80
+          ]
         },
         {
           "monster": "wraith",
@@ -1356,104 +1336,91 @@
           "cell": [
             9,
             22
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             2,
             23
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             11,
             16
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             5,
             22
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             11,
             24
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             7,
             24
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             10,
             20
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             7,
             21
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             11,
             18
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghoul",
           "cell": [
             4,
             24
-          ],
-          "hp": 79
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             9,
             24
-          ],
-          "hp": 98
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             3,
             21
-          ],
-          "hp": 98
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             8,
             23
-          ],
-          "hp": 98
+          ]
         }
       ]
     }

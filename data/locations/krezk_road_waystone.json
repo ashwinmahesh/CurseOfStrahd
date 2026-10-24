@@ -193,8 +193,7 @@
             27,
             8
           ],
-          "name": "A Pack Hunter",
-          "hp": 55
+          "name": "A Pack Hunter"
         },
         {
           "monster": "werewolf",
@@ -202,8 +201,7 @@
             24,
             4
           ],
-          "name": "A Pack Hunter",
-          "hp": 55
+          "name": "A Pack Hunter"
         },
         {
           "monster": "werewolf",
@@ -211,8 +209,7 @@
             4,
             4
           ],
-          "name": "A Pack Hunter",
-          "hp": 55
+          "name": "A Pack Hunter"
         },
         {
           "monster": "werewolf",
@@ -220,8 +217,7 @@
             10,
             13
           ],
-          "name": "A Pack Hunter",
-          "hp": 55
+          "name": "A Pack Hunter"
         },
         {
           "monster": "wolf",

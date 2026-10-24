@@ -1,5 +1,7 @@
 # The Dungeon Expansion's T1 fight: the ambush under the faceless god
 
+**Hit Points since 2026-10-24** (owner: "for ALL monster HP, just use the Monster Manual values; no custom HP"): the foes in these fights fight at their stat blocks' Hit Points. The raised or lowered Hit Points the tables below describe are gone from the data, and the win counts are the ones measured before; the combat-length pass measures the fights again.
+
 (Owner, 2026-10-13: the book's fights were written for weaker characters. Over seeds 1-8 the four pregens on the sharp
 autopilot win five in eight on Balanced, give or take one, each fight played from where the party stands when it starts, its
 foes starting spread out. Owner, 2026-10-18: attrition fights may stay at 8 in 8, "unless theyre guarding something or its a

@@ -485,40 +485,35 @@
           "cell": [
             9,
             8
-          ],
-          "hp": 180
+          ]
         },
         {
           "monster": "revenant",
           "cell": [
             13,
             8
-          ],
-          "hp": 180
+          ]
         },
         {
           "monster": "revenant",
           "cell": [
             7,
             8
-          ],
-          "hp": 180
+          ]
         },
         {
           "monster": "revenant",
           "cell": [
             15,
             8
-          ],
-          "hp": 180
+          ]
         },
         {
           "monster": "revenant",
           "cell": [
             10,
             9
-          ],
-          "hp": 80
+          ]
         }
       ]
     }

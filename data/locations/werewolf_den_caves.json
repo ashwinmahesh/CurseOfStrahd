@@ -978,24 +978,21 @@
           "cell": [
             16,
             18
-          ],
-          "hp": 140
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             23,
             23
-          ],
-          "hp": 140
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             24,
             18
-          ],
-          "hp": 140
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1030,8 +1027,7 @@
           "cell": [
             18,
             13
-          ],
-          "hp": 140
+          ]
         },
         {
           "monster": "wolf",
@@ -1086,32 +1082,28 @@
           "cell": [
             16,
             18
-          ],
-          "hp": 110
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             23,
             23
-          ],
-          "hp": 110
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             24,
             18
-          ],
-          "hp": 110
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             26,
             16
-          ],
-          "hp": 110
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1125,8 +1117,7 @@
           "cell": [
             18,
             13
-          ],
-          "hp": 110
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1351,8 +1342,7 @@
             9,
             17
           ],
-          "name": "Emil Toranescu",
-          "hp": 45
+          "name": "Emil Toranescu"
         },
         {
           "monster": "werewolf",
@@ -1360,24 +1350,21 @@
             30,
             17
           ],
-          "name": "Zuleika",
-          "hp": 125
+          "name": "Zuleika"
         },
         {
           "monster": "werewolf",
           "cell": [
             18,
             21
-          ],
-          "hp": 150
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             21
-          ],
-          "hp": 150
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1398,8 +1385,7 @@
           "cell": [
             18,
             20
-          ],
-          "hp": 150
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1440,8 +1426,7 @@
             9,
             17
           ],
-          "name": "Emil Toranescu",
-          "hp": 45
+          "name": "Emil Toranescu"
         },
         {
           "monster": "werewolf",
@@ -1449,8 +1434,7 @@
             30,
             17
           ],
-          "name": "Zuleika",
-          "hp": 60
+          "name": "Zuleika"
         },
         {
           "monster": "werewolf",
@@ -1512,8 +1496,7 @@
             9,
             17
           ],
-          "name": "Emil Toranescu",
-          "hp": 45
+          "name": "Emil Toranescu"
         },
         {
           "monster": "werewolf",
@@ -1521,8 +1504,7 @@
             30,
             17
           ],
-          "name": "Zuleika",
-          "hp": 60
+          "name": "Zuleika"
         },
         {
           "monster": "werewolf",

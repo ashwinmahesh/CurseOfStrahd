@@ -1478,7 +1478,6 @@
             17
           ],
           "name": "The count's armour",
-          "hp": 120,
           "facing": "east"
         },
         {
@@ -1487,7 +1486,6 @@
             12,
             21
           ],
-          "hp": 102,
           "facing": "northeast"
         },
         {
@@ -1496,7 +1494,6 @@
             17,
             22
           ],
-          "hp": 102,
           "facing": "north"
         },
         {
@@ -1505,7 +1502,6 @@
             16,
             18
           ],
-          "hp": 102,
           "facing": "east"
         },
         {
@@ -1514,7 +1510,6 @@
             26,
             21
           ],
-          "hp": 102,
           "unseen": true
         }
       ],
@@ -1555,8 +1550,7 @@
           "cell": [
             22,
             19
-          ],
-          "hp": 50
+          ]
         },
         {
           "monster": "strahds_animated_armor",
@@ -1588,24 +1582,21 @@
           "cell": [
             20,
             12
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             28,
             12
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             22,
             12
-          ],
-          "hp": 120
+          ]
         }
       ],
       "surprise": "",
@@ -1622,64 +1613,56 @@
             4,
             21
           ],
-          "name": "The rug",
-          "hp": 120
+          "name": "The rug"
         },
         {
           "monster": "crawling_claw",
           "cell": [
             2,
             20
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             6,
             20
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "crawling_claw",
           "cell": [
             8,
             15
-          ],
-          "hp": 4
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             8,
             19
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             6,
             22
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             8,
             21
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             2,
             16
-          ],
-          "hp": 120
+          ]
         }
       ],
       "surprise": "",

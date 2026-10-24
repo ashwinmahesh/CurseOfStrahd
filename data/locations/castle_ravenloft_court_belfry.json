@@ -331,64 +331,56 @@
           "cell": [
             38,
             8
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             45,
             8
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             38,
             18
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             45,
             18
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             41,
             8
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             41,
             18
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             38,
             13
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "giant_spider",
           "cell": [
             45,
             13
-          ],
-          "hp": 185
+          ]
         }
       ]
     }

@@ -1,5 +1,7 @@
 # Fight tuning: 5 wins in 8 on the sharp test party
 
+**Hit Points since 2026-10-24** (owner: "for ALL monster HP, just use the Monster Manual values; no custom HP"): the foes in these fights fight at their stat blocks' Hit Points. The raised or lowered Hit Points the tables below describe are gone from the data, and the win counts are the ones measured before; the combat-length pass measures the fights again.
+
 The owner's rule (2026-10-13 18:05): the test party (four pregens on the autopilot that smites, opens with Spirit
 Guardians and throws Fireball, as he plays) wins **5 of 8 on Balanced at every level**, seeds 1-8, for every fight that
 is not a boss (bosses are the boss lane's, at their own target). The tests hold 4 to 6; where no line-up landed on 5

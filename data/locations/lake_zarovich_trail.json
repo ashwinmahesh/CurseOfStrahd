@@ -338,8 +338,7 @@
             21,
             5
           ],
-          "name": "The Count's Fowler",
-          "hp": 120
+          "name": "The Count's Fowler"
         },
         {
           "monster": "vampire_spawn",
@@ -416,8 +415,7 @@
             21,
             5
           ],
-          "name": "The Count's Fowler",
-          "hp": 120
+          "name": "The Count's Fowler"
         },
         {
           "monster": "vampire_spawn",
@@ -480,8 +478,7 @@
             21,
             5
           ],
-          "name": "The Count's Fowler",
-          "hp": 90
+          "name": "The Count's Fowler"
         },
         {
           "monster": "swarm_of_bats",
@@ -543,8 +540,7 @@
             21,
             5
           ],
-          "name": "The Count's Fowler",
-          "hp": 120
+          "name": "The Count's Fowler"
         },
         {
           "monster": "vampire_spawn",
@@ -600,8 +596,7 @@
             21,
             5
           ],
-          "name": "The Count's Fowler",
-          "hp": 120
+          "name": "The Count's Fowler"
         },
         {
           "monster": "vampire_spawn",
@@ -650,8 +645,7 @@
             21,
             5
           ],
-          "name": "The Count's Fowler",
-          "hp": 90
+          "name": "The Count's Fowler"
         },
         {
           "monster": "swarm_of_bats",

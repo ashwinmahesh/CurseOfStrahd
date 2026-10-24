@@ -984,8 +984,7 @@
           "cell": [
             22,
             18
-          ],
-          "hp": 102
+          ]
         },
         {
           "monster": "needle_blight",
@@ -1101,8 +1100,7 @@
           "cell": [
             22,
             18
-          ],
-          "hp": 160
+          ]
         },
         {
           "monster": "needle_blight",
@@ -1116,8 +1114,7 @@
           "cell": [
             26,
             24
-          ],
-          "hp": 8
+          ]
         }
       ],
       "surprise": "party",
@@ -1211,8 +1208,7 @@
           "cell": [
             22,
             18
-          ],
-          "hp": 50
+          ]
         },
         {
           "monster": "needle_blight",

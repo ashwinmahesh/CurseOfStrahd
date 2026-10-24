@@ -2125,8 +2125,7 @@
             28,
             19
           ],
-          "name": "Wachter's captain",
-          "hp": 40
+          "name": "Wachter's captain"
         },
         {
           "monster": "cultist",
@@ -2162,8 +2161,7 @@
             28,
             19
           ],
-          "name": "Wachter's captain",
-          "hp": 40
+          "name": "Wachter's captain"
         },
         {
           "monster": "bandit",
@@ -2579,8 +2577,7 @@
             26,
             11
           ],
-          "name": "Captain of the watch",
-          "hp": 40
+          "name": "Captain of the watch"
         },
         {
           "monster": "vallaki_guard",
@@ -2839,8 +2836,7 @@
             27,
             12
           ],
-          "name": "Sergeant of the watch",
-          "hp": 40
+          "name": "Sergeant of the watch"
         },
         {
           "monster": "vallaki_guard",
@@ -3023,8 +3019,7 @@
             11,
             28
           ],
-          "name": "Catalina",
-          "hp": 60
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3069,8 +3064,7 @@
             11,
             28
           ],
-          "name": "Catalina",
-          "hp": 50
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3129,8 +3123,7 @@
             11,
             28
           ],
-          "name": "Catalina",
-          "hp": 45
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3138,8 +3131,7 @@
             14,
             26
           ],
-          "name": "Irina",
-          "hp": 55
+          "name": "Irina"
         },
         {
           "monster": "bat",
@@ -3175,8 +3167,7 @@
             11,
             28
           ],
-          "name": "Catalina",
-          "hp": 40
+          "name": "Catalina"
         },
         {
           "monster": "swarm_of_bats",
@@ -3219,8 +3210,7 @@
             46,
             6
           ],
-          "name": "Catalina",
-          "hp": 40
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3228,8 +3218,7 @@
             44,
             1
           ],
-          "name": "Irina",
-          "hp": 50
+          "name": "Irina"
         },
         {
           "monster": "vampire_spawn",
@@ -3237,8 +3226,7 @@
             46,
             8
           ],
-          "name": "Daria",
-          "hp": 50
+          "name": "Daria"
         },
         {
           "monster": "vampire_spawn",
@@ -3274,8 +3262,7 @@
             46,
             6
           ],
-          "name": "Catalina",
-          "hp": 35
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3283,8 +3270,7 @@
             44,
             1
           ],
-          "name": "Irina",
-          "hp": 45
+          "name": "Irina"
         },
         {
           "monster": "vampire_spawn",
@@ -3292,8 +3278,7 @@
             46,
             8
           ],
-          "name": "Daria",
-          "hp": 45
+          "name": "Daria"
         },
         {
           "monster": "swarm_of_bats",
@@ -3336,8 +3321,7 @@
             46,
             6
           ],
-          "name": "Catalina",
-          "hp": 30
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3345,8 +3329,7 @@
             45,
             5
           ],
-          "name": "Irina",
-          "hp": 35
+          "name": "Irina"
         },
         {
           "monster": "ghoul",
@@ -3382,8 +3365,7 @@
             46,
             6
           ],
-          "name": "Catalina",
-          "hp": 60
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3428,8 +3410,7 @@
             46,
             6
           ],
-          "name": "Catalina",
-          "hp": 50
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3515,8 +3496,7 @@
             46,
             6
           ],
-          "name": "Catalina",
-          "hp": 45
+          "name": "Catalina"
         },
         {
           "monster": "vampire_spawn",
@@ -3524,8 +3504,7 @@
             45,
             5
           ],
-          "name": "Irina",
-          "hp": 55
+          "name": "Irina"
         },
         {
           "monster": "giant_rat",

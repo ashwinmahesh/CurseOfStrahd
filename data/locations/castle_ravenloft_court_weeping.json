@@ -1080,16 +1080,14 @@
           "cell": [
             6,
             13
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             11,
             13
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "vampire_spawn",
@@ -1097,8 +1095,7 @@
             2,
             14
           ],
-          "name": "One of Strahd's spawn",
-          "hp": 150
+          "name": "One of Strahd's spawn"
         },
         {
           "monster": "vampire_spawn",
@@ -1106,8 +1103,7 @@
             13,
             13
           ],
-          "name": "One of Strahd's spawn",
-          "hp": 150
+          "name": "One of Strahd's spawn"
         }
       ],
       "surprise": "",
@@ -1150,16 +1146,14 @@
           "cell": [
             6,
             13
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             11,
             13
-          ],
-          "hp": 120
+          ]
         }
       ],
       "surprise": "",
@@ -1184,24 +1178,21 @@
           "cell": [
             26,
             17
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             34,
             17
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             32,
             15
-          ],
-          "hp": 120
+          ]
         }
       ],
       "surprise": "",
@@ -1227,24 +1218,21 @@
           "cell": [
             26,
             17
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             34,
             17
-          ],
-          "hp": 120
+          ]
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             32,
             15
-          ],
-          "hp": 120
+          ]
         }
       ],
       "surprise": "",

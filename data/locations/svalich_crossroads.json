@@ -837,8 +837,7 @@
             18,
             22
           ],
-          "name": "Corporal Vell",
-          "hp": 45
+          "name": "Corporal Vell"
         },
         {
           "monster": "strahd_zombie",
@@ -1180,8 +1179,7 @@
             22,
             16
           ],
-          "name": "The Lead Horse",
-          "hp": 50
+          "name": "The Lead Horse"
         },
         {
           "monster": "specter",
@@ -1238,8 +1236,7 @@
             22,
             16
           ],
-          "name": "The Lead Horse",
-          "hp": 50
+          "name": "The Lead Horse"
         },
         {
           "monster": "specter",
@@ -1261,8 +1258,7 @@
             32,
             12
           ],
-          "name": "Steaua",
-          "hp": 50
+          "name": "Steaua"
         }
       ],
       "surprise": "",

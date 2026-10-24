@@ -205,8 +205,7 @@
             12,
             13
           ],
-          "name": "The Boatmaster",
-          "hp": 90
+          "name": "The Boatmaster"
         },
         {
           "monster": "warrior_veteran",
@@ -214,8 +213,7 @@
             14,
             14
           ],
-          "name": "A Boatman",
-          "hp": 110
+          "name": "A Boatman"
         },
         {
           "monster": "warrior_veteran",
@@ -223,8 +221,7 @@
             10,
             13
           ],
-          "name": "A Boatman",
-          "hp": 110
+          "name": "A Boatman"
         },
         {
           "monster": "tough",
@@ -264,8 +261,7 @@
             18,
             10
           ],
-          "name": "Something in the Reeds",
-          "hp": 100
+          "name": "Something in the Reeds"
         }
       ]
     }

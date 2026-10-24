@@ -934,40 +934,35 @@
           "cell": [
             10,
             6
-          ],
-          "hp": 82
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             6
-          ],
-          "hp": 82
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             15,
             4
-          ],
-          "hp": 82
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             10,
             12
-          ],
-          "hp": 82
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             20,
             12
-          ],
-          "hp": 82
+          ]
         }
       ],
       "surprise": "",
@@ -984,40 +979,35 @@
           "cell": [
             10,
             6
-          ],
-          "hp": 78
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             6
-          ],
-          "hp": 78
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             15,
             4
-          ],
-          "hp": 78
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             10,
             12
-          ],
-          "hp": 78
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             20,
             12
-          ],
-          "hp": 78
+          ]
         }
       ],
       "surprise": "",
@@ -1034,40 +1024,35 @@
           "cell": [
             10,
             6
-          ],
-          "hp": 62
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             6
-          ],
-          "hp": 62
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             15,
             4
-          ],
-          "hp": 62
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             10,
             12
-          ],
-          "hp": 62
+          ]
         },
         {
           "monster": "werewolf",
           "cell": [
             20,
             12
-          ],
-          "hp": 62
+          ]
         }
       ],
       "surprise": "",

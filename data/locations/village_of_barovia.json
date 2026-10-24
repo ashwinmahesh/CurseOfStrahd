@@ -2041,8 +2041,7 @@
             37,
             11
           ],
-          "name": "The Coachman",
-          "hp": 45
+          "name": "The Coachman"
         },
         {
           "monster": "zombie",
@@ -2163,8 +2162,7 @@
             8,
             13
           ],
-          "name": "The Woodpile",
-          "hp": 85
+          "name": "The Woodpile"
         },
         {
           "monster": "twig_blight",
@@ -2642,8 +2640,7 @@
             21,
             13
           ],
-          "name": "Zinaida",
-          "hp": 40
+          "name": "Zinaida"
         },
         {
           "monster": "shadow",

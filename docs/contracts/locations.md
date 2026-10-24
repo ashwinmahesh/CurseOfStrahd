@@ -73,7 +73,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   reports each square's light level.)
 - **Encounter triggers:** `enter_area:<area>`, `open:<door_or_container>`, `examine:<prop>`, `flag:<flag>` (when a
   flag is set, e.g. by dialogue), `dialogue` (only started by a `combat` line). On victory the game sets `flag` and
-  moves `quest: {id, stage}` along. A monster entry may carry `hp` to tune that stat block for this fight.
+  moves `quest: {id, stage}` along. A boss's monster entry (narrative/combat/bosses.json, or a foe with legendary actions) may carry `hp` to tune that stat block for this fight; every other foe fights at its stat block's Hit Points (owner, 2026-10-24: the Monster Manual's, no custom HP).
   `waiting: true` (an `enter_area` fight only) puts its foes in plain view before the fight: they show once the party
   can see them, can notice the party, and can be attacked first (docs/rules/stealth.md, F7). A waiting monster's
   `facing` (north, south, east, west or between) points its sight cone; unset, it faces the middle of its group. A foe

@@ -653,8 +653,7 @@
             24,
             8
           ],
-          "name": "The Roc's Mate",
-          "hp": 85
+          "name": "The Roc's Mate"
         }
       ],
       "surprise": "",
@@ -956,8 +955,7 @@
             30,
             13
           ],
-          "name": "The Falconer",
-          "hp": 150
+          "name": "The Falconer"
         },
         {
           "monster": "vampire_spawn",
@@ -1043,8 +1041,7 @@
             28,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 420
+          "name": "A Stone Demon"
         },
         {
           "monster": "vrock",
@@ -1052,8 +1049,7 @@
             33,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 420
+          "name": "A Stone Demon"
         }
       ],
       "surprise": "",
@@ -1071,8 +1067,7 @@
             28,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 380
+          "name": "A Stone Demon"
         },
         {
           "monster": "vrock",
@@ -1080,8 +1075,7 @@
             33,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 380
+          "name": "A Stone Demon"
         }
       ],
       "surprise": "",
@@ -1099,8 +1093,7 @@
             28,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 280
+          "name": "A Stone Demon"
         },
         {
           "monster": "vrock",
@@ -1108,8 +1101,7 @@
             33,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 280
+          "name": "A Stone Demon"
         }
       ],
       "surprise": "",
@@ -1127,8 +1119,7 @@
             28,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 200
+          "name": "A Stone Demon"
         },
         {
           "monster": "vrock",
@@ -1136,8 +1127,7 @@
             33,
             8
           ],
-          "name": "A Stone Demon",
-          "hp": 200
+          "name": "A Stone Demon"
         }
       ],
       "surprise": "",
