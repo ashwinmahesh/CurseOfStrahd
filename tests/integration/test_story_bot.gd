@@ -36,7 +36,7 @@ func test_the_road_out_of_the_crossroads_is_an_open_one() -> void:
 	var road := bot.road_out("svalich_crossroads")
 	assert_false(road.is_empty(), "the crossroads has roads out")
 	var exit := road["exit"] as Dictionary
-	assert_ne(str(exit["id"]), "castle_road", "not the castle road, which is shut")
+	assert_eq(str(exit["id"]), "road_east", "the bot takes the first open road out, the east one (the castle road, last in the list, is open too: test_castle_road.gd)")
 	assert_true(StoryConditions.check(str(exit.get("when", "")), GameState.story), "an exit that's open now")
 
 
