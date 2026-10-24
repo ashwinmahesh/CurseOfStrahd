@@ -2923,7 +2923,7 @@ SCULPTED = {
     "rocking_horse": (0.7, 0.3), "spinning_wheel": (0.8, 0.45), "cage_covered": (1.0, 0.8), "crib_shroud": (0.7, 0.8),
     "fishing_nets": (1.2, 0.35), "signpost_broken": (1.2, 0.2), "stocks_broken": (0.7, 0.45), "oil_lamp": (0.8, 0.5),
     "colossus": (6.0, 0.4), "statue_faceless": (5.0, 0.35), "strahd_effigy": (4.0, 0.3), "wicker_sun": (3.6, 0.15),
-    "gate_pillar": (4.2, 0.35), "gargoyle": (1.0, 0.55), "black_horse": (1.4, 0.35), "saint_defaced": (1.6, 0.42),
+    "gate_pillar": (4.2, 0.35), "gargoyle": (1.0, 0.2), "black_horse": (1.4, 0.35), "saint_defaced": (1.6, 0.42),
     "bone_throne": (1.3, 0.55), "bone_chair": (0.9, 0.55), "statue_young_strahd": (1.6, 0.4),
 }
 BIG_SCULPTED = {"horse", "black_horse", "colossus", "statue_faceless", "strahd_effigy", "wicker_sun", "gate_pillar"}
