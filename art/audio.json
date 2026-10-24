@@ -53,7 +53,8 @@
     "castle_ravenloft_spires_roost": "castle",
     "vallaki_st_andrals": "church",
     "castle_ravenloft_court_belfry": "castle",
-    "castle_ravenloft_catacombs_vaults": "castle"
+    "castle_ravenloft_catacombs_vaults": "castle",
+    "berez_marinas_monument": "castle"
   },
   "levels": {
     "title": -2.0,
