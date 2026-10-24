@@ -51,3 +51,19 @@ Dead Knight: We pray for the lamp. Pray, or pass.
 ~ kneeling_bye
 Dead Knight: Go in peace.
 -> END
+
+# Package A3 (Dungeon Expansion Plan): four knights at rest round the table on the third floor, waiting for orders. Once the
+# Order has chosen, they say what the knights at Vladimir's table say.
+
+~ round_table
+if flag.order_fate == "ride" or flag.order_fate == "grudge"
+-> table
+endif
+Narrator: Behind the visor, dried skin clings to the bone round two dull coals that turn a little toward your voice.
+Dead Knight: The table is set. We wait on the word.
+* Whose word are you waiting for? -> round_table_word
+* (Leave them to their waiting.) -> END
+
+~ round_table_word
+Dead Knight: The commander's. The lord's. Neither has come up the stair.
+-> END

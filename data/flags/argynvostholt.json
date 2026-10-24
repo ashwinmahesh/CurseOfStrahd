@@ -190,6 +190,11 @@
       "id": "chapel_revenants_cleared",
       "type": "bool",
       "summary": "The party beat the three revenants that rise in the chapel at night against a party that lacks the Order's oath and Godfrey's word (encounter chapel_revenants)."
+    },
+    {
+      "id": "trapped_hall_cleared",
+      "type": "bool",
+      "summary": "The phantom knights of the third floor's cold hallway are beaten (trapped_hall, Dungeon Expansion Plan A3)."
     }
   ]
 }

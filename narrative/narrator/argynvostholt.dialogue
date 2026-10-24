@@ -464,3 +464,94 @@ once
 
 ~ trap:holt_front_steps:triggered
 | A pale light snaps underfoot, and a sheet of bitter frost leaps from the stone to lock your breath in your throat.
+
+# ---------------------------------------------------------------- The third floor and the roof (Dungeon Expansion Plan A3, A4)
+# Lines drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_dungeon/A3_A4/). Unvoiced.
+
+~ enter:argynvostholt_third
+| Your boots ring on the top step, and your breath hangs white in the still air. The cold up here has had four hundred years to settle in.
+once
+
+~ enter:holt_trapped_hall
+| Heavy oak doors stand shut to your left and right, their latches crusted with frost. The boards between them don't creak under your weight.
+| [not flag.trapped_hall_cleared and not flag.order_fate and (flag.order_oath_learned or flag.godfrey_remembers or guest:sir_godfrey_gwilym)] Pale shapes lean out through the shut doors and look at you with eyes like winter ponds. Whatever they look for, they find it, and sink back into the wood without a sound.
+cooldown 30
+
+~ enter:holt_quarters_west
+| Narrow cots and iron footlockers line the walls between empty armour stands. The blankets are folded square under a finger's depth of grey dust.
+once
+
+~ enter:holt_quarters_east
+| Narrow cots and iron footlockers line the walls between empty armour stands. The blankets are folded square under a finger's depth of grey dust.
+once
+
+~ enter:holt_upper_passage
+| A long corridor runs east, smelling of wet mortar and old soot. Ahead, the gloom gives way to a cold grey light and the sound of dripping water.
+once
+
+~ enter:holt_collapsed_ceiling
+| Broken rafters and wet slate choke the floor where the roof has given way, and the sky looks straight in.
+once
+
+~ enter:holt_audience_hall
+| You step into a hall built for wings rather than shoulders, its ceiling lost in the dark under the roof. At the far end a great stone chair sits with its back turned squarely to the door.
+once
+
+~ examine:holt_dragon_throne
+| The seat is carved wide enough for a beast and faces the tall windows and the dark crag of the castle across the valley. Whoever sat here preferred a terrible view to the company of guests.
+
+~ enter:holt_round_table
+| [flag.order_fate != "rest" and not flag.beacon_stand_begun] Four knights in tarnished plate sit around a great round table, hands resting on the pommels of their swords. None of them breathes, and none of them looks up.
+| [not (flag.order_fate != "rest" and not flag.beacon_stand_begun)] Four chairs stand pushed back from the oak ring, their legs leaving clean tracks in the old ash. Only the carved words of the oath remain to keep watch round the empty table.
+once
+
+~ examine:holt_round_table
+| Words are cut deep into the oak rim, worn smooth by gauntleted hands: "I will keep the watch while others sleep. And when the light goes out, I will be the light."
+
+~ enter:holt_surcoat_closet
+| Folded linen surcoats fill the narrow shelves, their silver dragons eaten through by generations of moths.
+once
+
+~ enter:holt_dragon_vault
+| Behind the stone that turned lies a cold chamber, its walls gouged deep by great talons. Whoever emptied it left nothing on the floor but stone dust and old spite.
+once
+
+~ search:holt_vault_flagstone
+| Along the foot of the back wall a loose flagstone tilts under your hand. Wedged in the grit beneath it lies one small thing the thieves overlooked.
+
+~ enter:holt_upstairs_gallery
+| Three tall windows line the gallery wall, their leaded panes bowed inward by the mountain wind. Dust drifts through the dim coloured light on the floorboards.
+once
+
+~ examine:holt_stained_windows
+| In the cracked glass a silver dragon spreads its wings over a green valley, and armoured knights kneel below a tower crowned with fire. The lead holds the pieces together like old scars.
+
+~ enter:holt_dragon_bedroom
+| No tapestries here and no hearth rug: only bare stone shelves and a bed frame the size of a hay wain. It smells faintly of cold iron, and of summer rain that fell centuries ago.
+once
+
+~ examine:holt_empty_shelves
+| Pale rings in the dust mark where small, heavy things rested for years before rough hands swept them away.
+
+~ enter:argynvostholt_roof
+| The wind strikes your face as you step out onto the wet slates between low stone parapets. Above the broken roofline rises the beacon tower.
+cooldown 30
+
+~ examine:holt_roof_gargoyle
+| A stone dragon crouches on the parapet, its jaws parted to the wind that whistles through its throat. Listen too long and the hollow note sounds almost like a voice sighing, "The fire is cold."
+| [flag.argynvost_beacon_lit] A stone dragon crouches on the parapet, silver light from the tower lying along its back. The wind goes through its jaws, and for once it sounds like nothing but the wind.
+
+~ examine:holt_old_ballista
+| The great bow has gone the colour of driftwood, its cords frayed and stiff with rot. It still points out over the valley, toward a road no army marches now.
+
+~ examine:holt_broken_ballista
+| This engine lies in splinters on the slates, wrenched round on its pivot to point back at the beacon tower. Where its bolt would have struck, the tower's stone is torn by immense claws.
+
+~ examine:holt_roof_edge
+| Below the slick lip of slate the wall drops sheer to the mist and the rocks of the ridge.
+
+~ examine:holt_roof_hole
+| Splintered beams frame a dark drop into the passage below, where water drips from the broken rafters.
+
+~ examine:holt_roof_turret
+| Inside the round turret, arrow slits look out on three sides over grey fog and black pines.

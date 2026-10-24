@@ -140,6 +140,10 @@
     "from_tower": [
       33,
       2
+    ],
+    "from_third": [
+      22,
+      14
     ]
   },
   "exits": [
@@ -162,6 +166,16 @@
       "to": "argynvostholt_beacon",
       "spawn": "stair_foot",
       "label": "Up the beacon tower stair"
+    },
+    {
+      "id": "stairs_up_third",
+      "cell": [
+        23,
+        13
+      ],
+      "to": "argynvostholt_third",
+      "spawn": "from_upper",
+      "label": "Up the stair to the third floor"
     }
   ],
   "doors": [

@@ -318,3 +318,45 @@ room; a Large foe takes 2 x 2 squares), are in docs/story/fight_tuning_holt_west
 
 **Still wanted as art** (nothing is held for the scale-ups lane any more): a dragon-statue model for the statue and the
 hollow (both draw stand-ins at scale: the plan's C7 art), and the claw marks on the den's walls.
+
+
+## 16. The dungeon expansion: the third floor and the roof (A3, A4)
+
+Packages A3 and A4 of the Dungeon Expansion Plan (2026-10-18). Book source: Elven Tower chapter 7 (Q25, Q27, Q28, Q33, Q35 to
+Q43 for the third floor, Q43 to Q49 for the roof) and the *Curse of Strahd: Reloaded* citations for the room numbers and names.
+They give the rooms' names and a monster or a feature each, so everything below beyond that is **ours**, in our own words. Rule 2
+of the plan holds: the upper floor gains one exit and one spawn, the beacon tower one exit and one spawn, and nothing that stood
+there moved.
+
+| Where | What | Source |
+|---|---|---|
+| `argynvostholt_upper`, the landing (23, 13) | A new exit `stairs_up_third` (spawn `from_third` at (22, 14)) up to the third floor | ours (the plan: "a new map up a stair from our upper floor's landing") |
+| `argynvostholt_third` (40 x 24, `manor`, dark) | The stair head and the cold hallway across the way up (Q25), the knights' quarters either side (Q27, Q28), a long upper passage north of them with the fallen ceiling at its east end (Q33), and off it the dragon's audience hall (Q36), the round table room (Q37) with its closet of surcoats (Q38), the dragon's vault (Q41) behind a hidden door, the upstairs gallery (Q35) and Argynvost's bedroom (Q42), and the east stair up to the roof | names and numbers: the references; layout ours |
+| Q25, the cold hallway | **The trapped hallway** (`trapped_hall`): stepping up from the stair into the hallway, stone grinds shut at both ends and phantom knights come out through the quarters' doors and up through the boards (the hallway lies across the only way up). A party with the Order's oath (`order_oath_learned`), Godfrey's word (`godfrey_remembers`) or Godfrey himself (a guest) is looked at and let be (the same rule as A2's kneeling knights); nor once the hallway is clear (`trapped_hall_cleared`) or the Order has chosen (`order_fate`). Three versions by level: 16 phantom warriors at 55 Hit Points at level 8 and above, 14 at level 7, 12 below, spread through the two quarters and the stair head | the fight: Q25's phantom warriors; the sparing and the counts ours |
+| Q27, Q28, the knights' quarters | Narrow cots, footlockers, armour on stands; two doors, locked (lock 15), a footlocker each (a dice set and 18 gp; two potions of invulnerability) | ours |
+| Q33, the fallen ceiling | The passage's east end where the roof has come in: rubble and wet slate (difficult ground), fallen rafters, the sky | ours |
+| Q36, the dragon's audience hall | A great throne 2.6 times a throne's size (`scale`), **turned to face the tall windows** and the dark crag of the castle across the valley, **empty**: Vladimir keeps his great-hall table scenes below, and an `hours` entry that moved him out of the hall would risk the story bot's visits | the throne's facing: the plan; its being empty is our decision |
+| Q37, the round table | A great round table with the oath carved round its rim (`holt_round_table`, examine) and **four knights of the Order at it** waiting for orders (`order_knight` in `knights:round_table`: "The table is set. We wait on the word."; once the Order has chosen, they are gone and the chairs stand pushed back) | the table: Q37; the waiting is ours |
+| Q38, the closet | Shelves of moth-eaten surcoats with the silver dragon | ours |
+| Q41, the dragon's vault | Behind a hidden door in the audience hall's wall (secret 15): claw-scored stone, emptied by looters; a loose flagstone (Perception 14) hides the one small thing they missed, a scroll of Dragon's Breath | the plan's "one small thing the looters missed" |
+| Q35, the gallery | Three cracked stained-glass windows: the silver dragon over the valley, knights kneeling to the oath, the beacon on its tower | ours |
+| Q42, Argynvost's bedroom | A bed far too big for a man (scale 2), empty stone shelves where he kept his curiosities (pale rings in the dust) | ours |
+| `argynvostholt_roof` (32 x 18, `dungeon`, outdoors, dim, a 40 ft drop; its low cover is the stone parapet, `low_cover.argynvostholt_roof` in the prop catalog) | The roof (Q43 to Q49): the leads between low parapets, the slate ridge over the audience hall, the corner turrets (Q47), the hole in the roof over the passage (Q43), the parapet gone at four squares (Q48), the beacon tower and its second door (Q49: `beacon_roof_door`, joined to the tower's own `roof_door` at (11, 2), spawn `from_roof` (10, 2)); **no fight** | ours |
+| Q44, the gargoyle | A stone dragon on the parapet whose open jaws the wind talks through: "The fire is cold." (a second line once the beacon is lit) | the whispering: Q44 |
+| Q45, Q46, the ballistas | The ancient ballista still pointing out over the valley, and the broken one wrenched round to point at the beacon tower, whose stone is gouged by claws where its bolt would have struck | Q45, Q46; the claw marks ours |
+
+Flag: `trapped_hall_cleared` (bool, registered in `data/flags/argynvostholt.json`, read only by the hallway). Nothing here touches a
+main flag, a quest or a milestone.
+
+**Fights** (the sharp test party on Balanced, 8 seeds, band 4 to 6): the hallway holds 5 of 8 on all three level variants, every
+seed finishing (tests/integration/test_scaled_fights_a3.gd; the numbers and what moved them are in
+docs/story/fight_tuning_holt_upper.md).
+
+**Art:** the roof's ancient ballista is drawn (Gemini, on Ashwin's yes, art/generated/props/sheet_holt_ballista.png, recipe
+`holt_ballista`) and waits for the Blender cut; a weapon rack (`holt_old_ballista`'s `model: weapon_rack`) stands in until it is
+cut. The broken one is a heap of boards.
+
+Words: every line is in narrative/narrator/argynvostholt.dialogue (appended), narrative/argynvostholt/knights.dialogue
+(`round_table`) and the hallway's encounter text. Drafted by Gemini through the ai-bridge and edited here: the briefs, the raw
+replies and the edits are in docs/plans/gemini_dungeon/A3_A4/. None is voiced yet.
+

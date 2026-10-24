@@ -1216,6 +1216,13 @@
       "items": [
         "wedding_cake"
       ]
+    },
+    "holt_ballista": {
+      "view": "stand",
+      "aspect": "1:1",
+      "items": [
+        "holt_ballista"
+      ]
     }
   },
   "props": {
@@ -2967,6 +2974,10 @@
     "wedding_cake": {
       "height": 0.9,
       "subject": "a tall four-tiered wedding cake four hundred years old on a tarnished silver stand, slumped and leaning, every tier furred with grey-green mould and dripping, cobwebs between the tiers, a tiny porcelain bride in a white gown standing alone on the top"
+    },
+    "holt_ballista": {
+      "height": 0.9,
+      "subject": "an ancient siege ballista, a huge crossbow on a squat timber stand with a wide iron-bound bow arm, a winch and a long groove for its bolt, the wood weathered grey and split, the cords rotted and hanging slack, one long iron-tipped bolt still laid in the groove, pointing to the left"
     }
   },
   "pair_prompt": "A game prop sheet: two objects, each shown twice, arranged in a 2 by 2 grid with wide empty white space between the four drawings; nothing touches or crosses the middle of the image. Every drawing uses the same three-quarter view from slightly above, and each object is turned the same way in its pair: its front faces toward the lower right of the picture. Top left: {0}, seen from the front. Top right: the very same object seen from directly behind at the same angle, so its back faces toward the lower right. Bottom left: {1}, seen from the front. Bottom right: the very same object seen from directly behind at the same angle. Same colours, size and details in each pair, on a plain flat white background, no ground, no ground shadows, no labels, no text, no grid lines, no borders.",

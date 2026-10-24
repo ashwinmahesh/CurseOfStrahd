@@ -79,6 +79,10 @@
     "lantern_landing": [
       2,
       13
+    ],
+    "from_roof": [
+      10,
+      2
     ]
   },
   "exits": [
@@ -111,6 +115,16 @@
       "to": "argynvostholt_beacon",
       "spawn": "stair_top",
       "label": "Down to the turns of the stair"
+    },
+    {
+      "id": "roof_door",
+      "cell": [
+        11,
+        2
+      ],
+      "to": "argynvostholt_roof",
+      "spawn": "from_beacon",
+      "label": "Out onto the roof"
     }
   ],
   "props": [

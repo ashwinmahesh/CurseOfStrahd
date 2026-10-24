@@ -90,6 +90,7 @@
     "boarded_houses": "boarded_window",
     "boarded_windows": "boarded_window",
     "castle_glimpse": null,
+    "holt_roof_turret": null,
     "ceiling_marks": null,
     "church_facade": null,
     "clawed_front_door": "door_clawed",
@@ -660,6 +661,12 @@
       "wall_low"
     ],
     "berez_run": [
+      "wall_low"
+    ],
+    "argynvostholt_roof": [
+      "wall_low"
+    ],
+    "argynvostholt_roof_run": [
       "wall_low"
     ]
   },

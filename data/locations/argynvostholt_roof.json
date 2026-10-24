@@ -1,0 +1,181 @@
+{
+  "id": "argynvostholt_roof",
+  "name": "Argynvostholt, the Roof",
+  "region": "argynvostholt",
+  "summary": "The roof of the dragon's house: the leads between low parapets, the corner turrets, a stone dragon gargoyle the wind talks through, the old ballista and the broken one turned on the tower, the hole over the passage below, and the beacon tower's second door.",
+  "text": "Wet slates between low parapets, open to the sky. The beacon tower rises at the north-east corner, with a door on the roof.",
+  "map": {
+    "rows": [
+      "                                ",
+      " ======================#######= ",
+      " =##...................#######= ",
+      " =##...................#######= ",
+      " =.....................#######= ",
+      " =.......#############.#######= ",
+      " =.......#############.#######= ",
+      " =.......#############........= ",
+      " =.......#############........= ",
+      " ........#############........= ",
+      " ........#############........= ",
+      " =............................. ",
+      " =...........~  ..............= ",
+      " =...........~  ~.............= ",
+      " =##..........~...............= ",
+      " =##..........................= ",
+      " ===========.================== ",
+      "                                "
+    ],
+    "theme": "dungeon",
+    "light": "dim",
+    "outdoors": true,
+    "drop_ft": 40
+  },
+  "areas": [
+    {
+      "id": "holt_roof",
+      "name": "The roof",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          30,
+          16
+        ]
+      ],
+      "floor": "castle/flagstones",
+      "walls": "village/roof_slate"
+    },
+    {
+      "id": "holt_beacon_face",
+      "name": "The beacon tower",
+      "cells": [
+        [
+          23,
+          1
+        ],
+        [
+          29,
+          6
+        ]
+      ],
+      "walls": "dungeon/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      26,
+      12
+    ],
+    "from_third": [
+      26,
+      12
+    ],
+    "from_beacon": [
+      22,
+      4
+    ]
+  },
+  "exits": [
+    {
+      "id": "roof_hatch_down",
+      "cell": [
+        27,
+        12
+      ],
+      "to": "argynvostholt_third",
+      "spawn": "from_roof",
+      "label": "The stair hatch down to the third floor"
+    },
+    {
+      "id": "beacon_roof_door",
+      "cell": [
+        23,
+        4
+      ],
+      "to": "argynvostholt_beacon",
+      "spawn": "from_roof",
+      "label": "The beacon tower door"
+    }
+  ],
+  "props": [
+    {
+      "id": "holt_roof_gargoyle",
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "examine",
+      "label": "A stone dragon on the parapet",
+      "model": "gargoyle",
+      "facing": "south",
+      "scale": 1.6
+    },
+    {
+      "id": "holt_old_ballista",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "examine",
+      "label": "An ancient ballista",
+      "model": "weapon_rack",
+      "facing": "west"
+    },
+    {
+      "id": "holt_broken_ballista",
+      "cell": [
+        20,
+        3
+      ],
+      "kind": "examine",
+      "label": "A smashed ballista",
+      "model": "broken_boards",
+      "facing": "east"
+    },
+    {
+      "id": "holt_tower_claws",
+      "cell": [
+        23,
+        3
+      ],
+      "kind": "decor",
+      "label": "Claw marks in the tower's stone",
+      "model": "claw_marks"
+    },
+    {
+      "id": "holt_roof_edge",
+      "cell": [
+        1,
+        9
+      ],
+      "kind": "examine",
+      "label": "The roof's edge",
+      "model": "rubble"
+    },
+    {
+      "id": "holt_roof_hole",
+      "cell": [
+        13,
+        12
+      ],
+      "kind": "examine",
+      "label": "A hole in the roof",
+      "model": "broken_boards"
+    },
+    {
+      "id": "holt_roof_turret",
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "examine",
+      "label": "A corner turret"
+    }
+  ],
+  "narration": {
+    "enter": "enter:argynvostholt_roof"
+  },
+  "rest": "risky"
+}
