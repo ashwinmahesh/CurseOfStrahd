@@ -149,11 +149,14 @@ func test_the_stone_demons_wake_only_for_a_party_that_forced_the_gate_past_the_w
 	assert_false(_vrocks(9, "fought").is_empty(), "the watch fought and the gate up: they come down")
 
 
-func test_the_stone_demons_are_tuned_by_level_and_wake_at_the_gate() -> void:
-	for pair: Array in [[7, 200], [8, 280], [9, 380], [10, 420], [11, 420]]:
-		var enc := _vrocks(int(pair[0]), "fought")
-		var hps: Array = (enc["monsters"] as Array).map(func(m: Variant) -> int: return int((m as Dictionary)["hp"]))
-		assert_eq(hps, [int(pair[1]), int(pair[1])], "two vrocks at level %d" % int(pair[0]))
+## Owner, 2026-10-24: a foe that is no boss fights at its Monster Manual Hit Points, so the two vrocks carry no `hp` of
+## their own at any level (they had 200 to 420 by level before).
+func test_the_stone_demons_keep_their_stat_block_and_wake_at_the_gate() -> void:
+	for level: int in [7, 8, 9, 10, 11]:
+		var enc := _vrocks(level, "fought")
+		assert_eq((enc["monsters"] as Array).size(), 2, "two vrocks at level %d" % level)
+		for m0: Variant in enc["monsters"]:
+			assert_false((m0 as Dictionary).has("hp"), "a vrock at level %d fights at its stat block's Hit Points" % level)
 		assert_eq(str(enc["trigger"]), "enter_area:tsolenka_gate_road")
 		for m: Variant in enc["monsters"]:
 			assert_eq(str((m as Dictionary)["monster"]), "vrock")
