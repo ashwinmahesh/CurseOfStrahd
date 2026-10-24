@@ -6,76 +6,28 @@ extends Node3D
 ## health bar (exact for the party, only Bloodied for enemies, per the combat view spec), its name and its
 ## conditions. It only shows state; the encounter decides everything.
 
+## Per-creature facts: sprite height, own light and art aliases (art/creature_looks.json; tools/art/new_creatures.py adds heights).
+const LOOKS := "res://art/creature_looks.json"
+
 ## Sprite height in world units (1 unit = 5 ft) by creature, so a halfling stands half a human's height. A creature
 ## is drawn as big as its size's squares ask (DrawnCreatures.BANDS, test_creature_sizes: a Large one at least 1.3, a
 ## Huge one 1.95, a Gargantuan one 3.2; owner 2026-10-14, after a Huge snake stood no taller than a man).
-const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.0, "silvain_aster": 1.25,
-	"godrick_pendlebrook": 1.55, "liriel_dawnsong": 1.18, "thistle": 1.22, "ratatoille": 1.24, "wren_featherfoot": 0.74,
-	"kip_smudgewick": 1.28,
-	"zombie": 1.25, "wolf": 0.8, "dire_wolf": 1.35, "ismark": 1.32, "ireena": 1.2, "rose": 0.9, "lantern_girl": 0.9, "thorn": 0.75,
-	"donavich": 1.15, "bildrath": 1.2, "parriwimple": 1.45, "mad_mary": 1.15, "morgantha": 1.1, "strahd": 1.4,
-	"ghoul": 1.15, "ghast": 1.2, "specter": 1.25, "shadow": 1.2, "cultist": 1.2, "animated_armor": 1.3,
-	"animated_flying_sword": 0.8, "broom_of_animated_attack": 1.0, "grick": 0.9, "shambling_mound": 1.7,
-	"swarm_of_rats": 0.8, "vampire_spawn": 1.25, "strahd_zombie": 1.25, "commoner": 1.2, "noble": 1.25,
-	"villager": 1.2, "madam_eva": 1.05, "baron_vargas": 1.25, "izek": 1.4, "lady_wachter": 1.22, "father_lucian": 1.25,
-	"rictavio": 1.38, "blinsky": 1.2, "urwin_martikov": 1.28, "danika_martikov": 1.2, "arrigal": 1.3,
-	"victor_vallakovich": 1.15, "lydia_petrovna": 1.18, "vallaki_guard": 1.45, "vistana": 1.22, "milivoj": 1.3, "henrik": 1.22,
-	"gunther_arasek": 1.3, "luvash": 1.38, "arabelle": 0.75, "bluto": 1.22, "kasimir_velikov": 1.32, "stanimir": 1.38,
-	"alenka": 1.25, "mirabel": 1.22, "sorvia": 1.15, "arik": 1.25, "doru": 1.22, "gustav_durst": 1.3, "elisabeth_durst": 1.25,
-	"durst_nursemaid": 1.2, "lorghoth": 1.9, "cult_shades": 1.3,
-	"ezmerelda": 1.25, "sir_godfrey_gwilym": 1.42, "vladimir_horngaard": 1.4, "davian_martikov": 1.24,
-	"emil_toranescu": 1.38, "mordenkainen": 1.25, "baba_lysaga": 0.95, "exethanter": 1.28, "vosk": 1.24,
-	"abbot": 1.3, "vasilka": 1.22, "kiril_stoyanovich": 1.45, "zuleika_toranescu": 1.25, "ilinca_vrana": 1.1,
-	"bella_sunbane": 1.2, "offalia_wormwiggle": 1.15, "ruxandra": 1.1, "adrian_martikov": 1.3,
-	"stefania_martikov": 1.2, "kostin": 1.25, "dmitri_krezkov": 1.32, "anna_krezkova": 1.1, "ilya_krezkov": 0.8,
-	"kasha_varo": 0.95, "krezk_guard": 1.3, "clovin_belview": 1.1, "belview": 1.15, "mirela": 0.85,
-	"ilka_sarnov": 0.82, "toma_sarnov": 0.65, "order_knight": 1.32, "phantom_warden": 1.3, "tsolenka_sergeant": 1.3,
-	"tsolenka_watchman": 1.28, "patrina_velikovna": 1.25, "amber_sentinel": 6.0, "argynvost_echo": 4.0,
-	"sergei_von_zarovich": 1.3,
-	"amber_golem": 2.0, "arcanaloth": 1.35, "baba_lysagas_creeping_hut": 3.8, "banshee": 1.25, "deva": 1.45,
-	"flameskull": 0.6, "flesh_golem": 1.6, "gargoyle": 1.3, "ghost": 1.25, "giant_spider": 1.3,
-	"mongrelfolk": 1.2, "mummy": 1.3, "needle_blight": 1.2, "night_hag": 1.15, "nothic": 1.0, "ogre": 2.1,
-	"phantom_warrior": 1.35, "revenant": 1.3, "roc": 3.8, "scarecrow": 1.35, "swarm_of_bats": 1.5,
-	"swarm_of_insects": 0.6, "swarm_of_ravens": 0.9, "tree_blight": 3.0, "twig_blight": 0.7, "vine_blight": 1.1,
-	"werewolf": 1.45, "wereraven": 1.3, "wight": 1.3, "will_o_wisp": 0.5, "wraith": 1.35, "berserker": 1.3,
-	"raven": 0.5,
-	"air_elemental": 2.0, "ape": 1.2, "axe_beak": 1.7, "baboon": 0.6, "badger": 0.35, "bat": 0.3,
-	"black_bear": 1.0, "boar": 0.8, "brown_bear": 1.4, "djinni": 2.0, "earth_elemental": 2.0, "efreeti": 2.1,
-	"elephant": 2.8, "fire_elemental": 2.0, "giant_badger": 0.7, "giant_boar": 1.3,
-	"giant_constrictor_snake": 2.6, "giant_elk": 2.3, "giant_fly": 1.4, "giant_goat": 1.4, "giant_hyena": 1.45,
-	"giant_owl": 1.6, "giant_rat": 0.5, "giant_weasel": 0.6, "goat": 0.8, "griffon": 1.7, "jackal": 0.55,
-	"lion": 1.4, "mastiff": 0.75, "nightmare": 1.7, "owl": 0.35, "panther": 0.8, "rat": 0.25, "rhinoceros": 1.5,
-	"saber_toothed_tiger": 1.5, "tiger": 1.4, "water_elemental": 2.0, "weasel": 0.25,
-	"mimic": 0.9,
-	"apprentice_wizard": 1.2, "bandit": 1.25, "bandit_captain": 1.3, "druid": 1.25, "knight": 1.35, "mage": 1.25,
-	"priest": 1.25, "priest_acolyte": 1.2, "scout": 1.25, "tough": 1.3, "warrior_veteran": 1.3,
-	"severed_arm": 0.35, "severed_head": 0.35, "crawling_claw": 0.3, "skeleton": 1.25, "vampire": 1.35,
-	"barovian_witch": 1.15, "black_pudding": 1.4, "guardian_portrait": 1.4, "helmed_horror": 1.35,
-	"rug_of_smothering": 1.6, "strahds_animated_armor": 1.4, "illusion": 1.3, "bigbys_hand": 1.6,
-	"animated_object": 0.8, "giant_insect": 1.5, "aberrant_spirit": 1.3, "bestial_spirit": 0.8,
-	"celestial_spirit": 1.45, "construct_spirit": 1.4, "draconic_spirit": 1.6, "elemental_spirit": 1.4,
-	"fey_spirit": 0.8, "fiendish_spirit": 1.5, "undead_spirit": 1.25, "otherworldly_steed": 1.7,
-	"primal_beast": 0.9, "imp_familiar": 0.4, "pseudodragon_familiar": 0.45, "quasit_familiar": 0.4,
-	"slaad_tadpole_familiar": 0.3, "sphinx_familiar": 0.45, "sprite_familiar": 0.35,
-	"venomous_snake_familiar": 0.3,
-	"rahadin": 1.2, "ludmilla_vilisevic": 1.22, "anastrasya_karelova": 1.18, "volenta_popofsky": 1.12,
-	"escher": 1.3, "pidlwick_ii": 0.85, "cyrus_belview": 1.35, "gertruda": 1.15, "brother_anatol": 1.25,
-	"lief_lipsiege": 1.12, "nadia_boteanu": 1.15, "strahd_mist": 1.4,
-	"beholder": 2.5,
-	"werewolf_human": 1.3, "wereraven_human": 1.25,
-	"cosmin": 1.05, "guardian_of_faith": 1.8, "dinosaur_spirit": 3.0, "plant_spirit": 1.9,
-	"red_dragon_wyrmling": 1.1,
-	"vrock": 1.85,
-	"iron_golem": 2.6}
+static var HEIGHTS: Dictionary = _look_table("heights")
 
 ## Figures that are their own light, by art id: how much of their colours they show whatever the scene's lights
 ## (DirectionalSprite.glow). The Lantern Girl is made of the light she held up.
-const OWN_LIGHT := {"lantern_girl": 1.0}
+static var OWN_LIGHT: Dictionary = _look_table("own_light")
 
 ## Stat blocks that wear another creature's sprite: a named villain's block and the person drawn for them, or a
 ## familiar and the animal it looks like.
-const ART_ALIASES := {"strahd_von_zarovich": "strahd", "izek_strazni": "izek", "ezmerelda_davenir": "ezmerelda",
-	"owl_familiar": "owl", "skeleton_familiar": "skeleton"}
+static var ART_ALIASES: Dictionary = _look_table("art_aliases")
+
+
+## One table of art/creature_looks.json (heights, own_light, art_aliases): the per-creature facts live in data, so the combat
+## code names no creature (docs/plans/engine_split.md).
+static func _look_table(key: String) -> Dictionary:
+	var all := JSON.parse_string(FileAccess.get_file_as_string(LOOKS)) as Dictionary
+	return all[key] as Dictionary
 
 ## The art each character on the field wears, by creature id: an Echo Knight's echo (`look_of` in its stat block) is
 ## drawn as a ghostly copy of its knight.

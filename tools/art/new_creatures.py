@@ -10,7 +10,7 @@ The Phase 5 creature pass used art/anim/creature_specs.json. The spec maps each 
   pose       the standing pose for animals and creatures ("standing on all four legs in a neutral pose")
   body       BODY flag for make sprite (quadruped, float, hop, slither, lumber, swarm); none for the humanoid rig
   sat        optional SAT flag (chroma boost before the palette snap)
-  height     world units for CombatToken.HEIGHTS (a person is about 1.25)
+  height     world units for CombatToken.HEIGHTS (art/creature_looks.json) (a person is about 1.25)
   expression the portrait's expression
   who, attack, windup, strike, casts   its art/anim/animations.json entry (docs/art/animation.md)
 
@@ -147,22 +147,13 @@ def register(spec, ids):
     json.loads(text)
     rpath.write_text(text + "\n")
     # Heights.
-    tpath = ROOT / "world" / "combat" / "combat_token.gd"
-    src = tpath.read_text()
-    m = re.search(r"const HEIGHTS := \{(.*?)\}\n", src, re.S)
-    known = set(re.findall(r'"(\w+)":', m.group(1)))
-    new = [f'"{cid}": {spec[cid]["height"]}' for cid in ids if cid not in known and "height" in spec[cid]]
+    lpath = ROOT / "art" / "creature_looks.json"
+    looks = json.loads(lpath.read_text())
+    new = [cid for cid in ids if cid not in looks["heights"] and "height" in spec[cid]]
     if new:
-        body = m.group(1).rstrip()
-        lines, line = [], "\t"
-        for item in new:
-            if len(line) + len(item) > 110:
-                lines.append(line.rstrip())
-                line = "\t"
-            line += item + ", "
-        lines.append(line.rstrip().rstrip(","))
-        body = body + ",\n" + "\n".join(lines)
-        tpath.write_text(src[:m.start(1)] + body + src[m.end(1):])
+        for cid in new:
+            looks["heights"][cid] = spec[cid]["height"]
+        lpath.write_text(json.dumps(looks, indent=1) + "\n")
     print(f"registered {len(added)} manifest entries, {len(new)} heights", flush=True)
 
 
