@@ -37,6 +37,7 @@ func after_each() -> void:
 		root.queue_free()
 		root = null
 	GameSettings.set_value("saves_sort", "newest")
+	SaveSystem.finished_slot = ""
 	for f in DirAccess.get_files_at(SaveSystem.save_dir):
 		DirAccess.remove_absolute(SaveSystem.save_dir.path_join(f))
 	DirAccess.remove_absolute(SaveSystem.save_dir)
@@ -447,6 +448,34 @@ func test_a_save_can_be_deleted_after_a_question() -> void:
 	assert_eq(SaveSystem.current_slot, "", "no slot of its own any more")
 	assert_eq(SaveSystem.quick_save(), OK)
 	assert_true(SaveSystem.current_slot not in ["", "mine"], "F5 makes a new one")
+	root.call("close_screen")
+
+
+## The pages say it once a game has been finished, so nobody wonders whether an ending took a save of theirs.
+func test_the_pages_say_an_ending_keeps_its_own_save() -> void:
+	assert_eq(SaveSystem.save("mine"), OK)
+	var menu := await _menu()
+	await _press(menu, "Load a Save")
+	assert_false(_shows(_page(menu), SavesScreen.FINISHED_NOTE), "nothing about endings before one")
+	root.call("close_screen")
+	await _frames(1)
+	assert_eq(SaveSystem.save_finished("strahd_destroyed", "Dawn over Barovia"), OK)
+	var ended := SaveSystem.finished_slot
+	assert_eq(SaveSystem.current_slot, "mine", "the game's own slot is still its own")
+	menu = await _menu()
+	await _press(menu, "Load a Save")
+	var load_page := _page(menu)
+	assert_true(_shows(load_page, SavesScreen.FINISHED_NOTE), "the load page says so")
+	assert_true(load_page.find_child(ended, true, false) != null, "and lists the finished game")
+	assert_true(_shows(load_page, "Finished"), "marked as finished")
+	root.call("close_screen")
+	await _frames(1)
+	menu = await _menu()
+	await _press(menu, "Save Game")
+	var save_page := _page(menu)
+	assert_true(_shows(save_page, SavesScreen.FINISHED_NOTE), "the save page says so too")
+	var offered: Array = save_page.slots().map(func(s: Dictionary) -> String: return str(s["slot"]))
+	assert_eq(offered, ["mine"], "and offers only the saves still being played, never the ending's")
 	root.call("close_screen")
 
 

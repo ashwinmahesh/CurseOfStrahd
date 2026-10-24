@@ -10,6 +10,9 @@ var save_dir := "user://saves/"
 ## The game's own save slot: the one it was last loaded from or saved to. Quicksave (F5) writes here; a new game
 ## starts with none, and its first quicksave makes one.
 var current_slot := ""
+## The slot the campaign's ending was last written to (save_finished), "" until one is: a slot of its own, never the
+## game's (the ending screen says where its save went).
+var finished_slot := ""
 ## The game's safety net (docs/plans/ui_polish.md): written on arriving somewhere new, after a rest and after a won
 ## fight, never during one. Like the round-start save it is never the game's own slot: it remembers that slot, and
 ## loading it goes back to it, so F5 still saves where it did. The newest is AUTOSAVE; the AUTOSAVES - 1 before it
@@ -156,19 +159,26 @@ func _write(slot: String, data: Dictionary) -> Error:
 	return OK
 
 
-## The campaign's end (ADR 0014): the game's own slot (a new one if it has none) is written one last time, marked
-## finished with the ending reached. Finished saves list last and show the ending instead of the place.
+## The campaign's end (ADR 0014): the game as it ends is written to a slot of its own, marked finished with the ending
+## reached, and every save the player made stays as it was (Ashwin, 2026-10-24: reaching an ending had written over his
+## own save, and the game before it was gone). The game's own slot is neither written nor changed, so Continue still
+## loads it; the finished save carries its note, so the two read as one run. Finished saves list last and show the ending
+## instead of the place. An Honour run is the one exception: its one save is the run, and its ending seals it.
 func save_finished(ending_id: String, title: String) -> Error:
-	var slot := current_slot if current_slot != "" and not is_beside(current_slot) else new_slot_name()
+	var sealed := honour()
+	var slot := honour_slot() if sealed else new_slot_name()
 	var data := GameState.to_dict()
 	data["finished"] = {"ending": ending_id, "title": title}
-	var note := str(_read(slot_path(slot)).get("note", ""))
+	var own := slot if sealed else current_slot
+	var note := str(_read(slot_path(own)).get("note", "")) if own != "" and not is_beside(own) else ""
 	if note != "":
 		data["note"] = note
 	var err := _write(slot, data)
 	if err != OK:
 		return err
-	current_slot = slot
+	finished_slot = slot
+	if sealed:
+		current_slot = slot
 	EventBus.game_saved.emit(slot)
 	return OK
 

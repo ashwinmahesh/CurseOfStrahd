@@ -23,6 +23,8 @@ const PICTURE := Vector2(160, 90)
 ## How the list is sorted, kept with the player's settings: [id, the button's words].
 const SORTS := [["newest", "Newest first"], ["place", "By place"], ["day", "By day"]]
 const TABS: Array[String] = ["Your Saves", "Chapters"]
+## Under the page's hint once a game has been finished: the ending kept its own save and wrote over none of the player's.
+const FINISHED_NOTE := "A finished game is kept apart, so an ending never writes over your saves."
 ## The travel map, for a chapter's picture and a save without one of its own.
 const MAP := "res://art/ui/map/barovia.png"
 ## How much of the map a picture shows, in map pixels (16:9).
@@ -143,9 +145,14 @@ func _build() -> void:
 ## a fight's round start are the game's, and a finished game is kept as its ending), and in an Honour run only its own
 ## one save; to load, every one.
 func slots(dir: String = "") -> Array[Dictionary]:
+	return _offered(SaveSystem.list_slots(dir))
+
+
+## `list` (every save, as list_slots gives it) as far as this page offers it, sorted.
+func _offered(list: Array[Dictionary]) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var honour := mode == Mode.SAVE and SaveSystem.honour()
-	for s in SaveSystem.list_slots(dir):
+	for s in list:
 		if honour and str(s["slot"]) != SaveSystem.current_slot:
 			continue   # an Honour run saves only over its own one save
 		if mode == Mode.LOAD or (str(s["kind"]) == "" and str(s["finished"]) == ""):
@@ -224,7 +231,11 @@ func _fill() -> void:
 		return
 	else:
 		_hint.text = "Choose a save to load. The game's own autosaves and a fight's round start are here too."
-	var shown := slots()
+	var all := SaveSystem.list_slots()
+	# Said once there is a finished game in the list, so nobody wonders whether an ending took a save of theirs.
+	if not (mode == Mode.SAVE and SaveSystem.honour()) and all.any(func(s: Dictionary) -> bool: return str(s["finished"]) != ""):
+		_hint.text += " " + FINISHED_NOTE
+	var shown := _offered(all)
 	if shown.is_empty():
 		_list.add_child(UiKit.label("No saves of your own yet: New Save makes the first." if mode == Mode.SAVE
 			else "No saves yet.", 15, "parchment"))

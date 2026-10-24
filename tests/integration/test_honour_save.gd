@@ -37,6 +37,7 @@ func after_each() -> void:
 	DirAccess.remove_absolute(SaveSystem.save_dir)
 	SaveSystem.save_dir = _real_dir
 	SaveSystem.current_slot = ""
+	SaveSystem.finished_slot = ""
 	GameState.reset()
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	(Compendium.shared().tables["locations"] as Dictionary).erase("test_hall")
@@ -73,6 +74,18 @@ func test_an_honour_run_keeps_one_save() -> void:
 	assert_eq(_slots(), [slot], "autosaves and F5 all write over the one save: %s" % [_slots()])
 	assert_eq(float((_on_disk(slot)["story"] as Dictionary)["gold"]), 55.0)
 	assert_eq(str(SaveSystem.describe(slot)["mode"]), "Honour", "the lists say it's an Honour run")
+
+
+## An ending keeps its own save for every other game (SaveSystem.save_finished); an Honour run has no other save, and its
+## ending seals the one it has.
+func test_the_ending_seals_the_honour_save() -> void:
+	assert_eq(SaveSystem.autosave(), OK)
+	var slot := SaveSystem.current_slot
+	assert_eq(SaveSystem.save_finished("strahd_destroyed", "Dawn over Barovia"), OK)
+	assert_eq(_slots(), [slot], "no second save: the run's one save is all there is")
+	assert_eq(SaveSystem.finished_slot, slot)
+	assert_eq(SaveSystem.current_slot, slot)
+	assert_eq(str(SaveSystem.describe(slot)["finished"]), "Dawn over Barovia", "the ending is the run's last word")
 
 
 func test_a_fight_is_kept_round_by_round() -> void:

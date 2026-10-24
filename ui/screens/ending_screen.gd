@@ -375,7 +375,7 @@ func _show_end() -> void:
 	_card.add_child(_display("The End", 84, str(_tone[2])))
 	_card.add_child(_display(str(ending.get("title", "")), 32, "gilt_light"))
 	_card.add_child(UiKit.divider(380.0))
-	var note := "Your story is saved, marked finished." if saved else "Your story is told."
+	var note := "Your story is saved, marked finished. Your other saves are as you left them." if saved else "Your story is told."
 	_card.add_child(_centred(UiKit.label(note, 18, "parchment")))
 	var earned := st.run_stats.get("earned", []) as Array
 	if not earned.is_empty():

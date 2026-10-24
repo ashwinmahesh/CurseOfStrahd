@@ -42,6 +42,21 @@ and the full text is in the row's tooltip.
 - **Ways back**: Back, or Escape. Escape closes the overwrite question first, then the page, then (in the game) the
   pause menu. The page hides what opened it (the pause menu's arch, the title's column) until it closes.
 
+## The ending's save (Ashwin, 2026-10-24)
+
+Reaching an ending (`SaveSystem.save_finished`, from `ui/screens/ending_screen.gd`) writes the game as it ends to a
+**new slot** (`save_<date>T<time>`, marked `"finished": {ending, title}`), never over a save the player made: it
+had been written over the game's own slot, and the manual save from before the ending was gone. The game's own slot is
+not touched and stays the game's own, so Continue still loads it and F5 still saves there; the finished save copies
+that slot's note, so the two read as one run (`SaveSystem.finished_slot` names the new one). The Load page, and the
+Save page too, say under their hint once a finished game exists: "A finished game is kept apart, so an ending never
+writes over your saves." The ending's last card says the same of the other saves.
+
+An Honour run is the one exception, because it has no other save to lose: its one save is the run, and the ending
+seals it (finished over it, nothing to go back to). The other ways a save is lost on purpose were checked and are fine:
+Honour can only be picked at a new game (`current_slot` is empty then, so it never reaches a manual save), a wipe's
+`end_honour` only changes that run's own difficulty, and Delete asks first with Cancel focused.
+
 ## "Previously in Barovia" (Q3)
 
 Loading a game saved at least 30 minutes ago (`SaveSystem.RECAP_AFTER`, by the computer's clock) opens the

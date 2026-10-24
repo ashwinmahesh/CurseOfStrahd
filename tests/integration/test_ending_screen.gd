@@ -20,6 +20,9 @@ func after_each() -> void:
 		root.queue_free()
 		root = null
 	SaveSystem.delete_slot("test_ending")
+	if SaveSystem.finished_slot != "":
+		SaveSystem.delete_slot(SaveSystem.finished_slot)
+	SaveSystem.finished_slot = ""
 	SaveSystem.current_slot = ""
 	GameState.reset()
 	ModeController.force(ModeController.Mode.EXPLORATION)
@@ -90,6 +93,9 @@ func _play_through(screen: EndingScreen) -> int:
 
 func test_end_game_in_a_conversation_opens_the_ending_and_finishes_the_save() -> void:
 	await _start()
+	# The player's own save of this game, from before the end: the ending must leave it as it is (Ashwin, 2026-10-24).
+	assert_eq(SaveSystem.save("test_ending", "before the end"), OK)
+	var before := FileAccess.get_file_as_string(SaveSystem.slot_path("test_ending"))
 	var st := GameState.story
 	st.add_guest("ireena")
 	st.set_flag("vallaki_backed", "wachter")
@@ -116,8 +122,14 @@ func test_end_game_in_a_conversation_opens_the_ending_and_finishes_the_save() ->
 	assert_eq(slides, screen.slides.size(), "every slide shown in turn")
 	assert_true(screen.lines_shown.size() >= 5, "the narration played: %s" % [screen.lines_shown])
 	assert_true(screen.saved, "the save is marked finished")
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(SaveSystem.slot_path("test_ending")))
+	assert_eq(FileAccess.get_file_as_string(SaveSystem.slot_path("test_ending")), before, "the player's own save is as it was")
+	assert_eq(SaveSystem.current_slot, "test_ending", "and still the game's own slot")
+	var finished := SaveSystem.finished_slot
+	assert_true(finished != "" and finished != "test_ending", "the ending went to a slot of its own")
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(SaveSystem.slot_path(finished)))
 	assert_eq(str(((data as Dictionary).get("finished", {}) as Dictionary).get("ending", "")), "ireena_given_up")
+	assert_true(screen.find_children("*", "Label", true, false).any(func(l: Node) -> bool:
+		return (l as Label).text.contains("Your other saves are as you left them")), "the last card says so")
 	var home := screen.find_child("ReturnToTitle", true, false) as Button
 	assert_true(home != null, "Return to the title")
 	if home != null:

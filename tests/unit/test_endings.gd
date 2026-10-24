@@ -7,8 +7,28 @@ const ENDINGS: Array[String] = ["strahd_destroyed", "strahd_triumphant", "ireena
 	"new_darklord"]
 
 
+var _real_dir := ""
+
+
 func before_each() -> void:
 	Endings.clear_cache()
+	# A saves folder of this file's own inside the run's, so the finished saves never show in another file's lists.
+	_real_dir = SaveSystem.save_dir
+	SaveSystem.save_dir = _real_dir.path_join("endings/")
+	DirAccess.make_dir_recursive_absolute(SaveSystem.save_dir)
+	SaveSystem.current_slot = ""
+	SaveSystem.finished_slot = ""
+	ModeController.force(ModeController.Mode.EXPLORATION)
+
+
+func after_each() -> void:
+	for f in DirAccess.get_files_at(SaveSystem.save_dir):
+		DirAccess.remove_absolute(SaveSystem.save_dir.path_join(f))
+	DirAccess.remove_absolute(SaveSystem.save_dir)
+	SaveSystem.save_dir = _real_dir
+	SaveSystem.current_slot = ""
+	SaveSystem.finished_slot = ""
+	GameState.reset()
 
 
 func _party() -> StoryState:
@@ -204,27 +224,63 @@ func test_the_finished_save_lists_last_with_its_ending() -> void:
 	st.party.append(TestChars.pregen("hedda_ironvow", 3))
 	st.set_flag("strahd_destroyed", true)
 	Endings.request(st)
-	SaveSystem.current_slot = "unit_test_ongoing"
-	assert_eq(SaveSystem.save_round("unit_test_ongoing"), OK)
-	SaveSystem.current_slot = "unit_test_finished"
+	assert_eq(SaveSystem.save("unit_test_ongoing"), OK)
 	assert_eq(SaveSystem.save_finished("strahd_destroyed", "Dawn over Barovia"), OK)
-	assert_eq(SaveSystem.current_slot, "unit_test_finished")
+	var finished := SaveSystem.finished_slot
+	assert_true(finished != "" and finished != "unit_test_ongoing", "the ending has a slot of its own")
+	assert_eq(SaveSystem.current_slot, "unit_test_ongoing", "and the game's own slot stays the game's")
 	var slots := SaveSystem.list_slots()
 	var ongoing := -1
 	var done := -1
 	for i in slots.size():
 		if str(slots[i]["slot"]) == "unit_test_ongoing":
 			ongoing = i
-		elif str(slots[i]["slot"]) == "unit_test_finished":
+		elif str(slots[i]["slot"]) == finished:
 			done = i
 	assert_true(ongoing >= 0 and done > ongoing, "unfinished games list first (Continue loads them)")
 	if done >= 0:
 		assert_eq(str(slots[done]["finished"]), "Dawn over Barovia")
 		assert_true(str(slots[done]["location"]).contains("Dawn over Barovia"), "the menu shows the ending")
 	GameState.reset()
-	assert_eq(SaveSystem.load_slot("unit_test_finished"), OK)
+	assert_eq(SaveSystem.load_slot(finished), OK)
 	assert_eq(Endings.reached(GameState.story), "strahd_destroyed", "the loaded game knows it is over")
-	SaveSystem.delete_slot("unit_test_ongoing")
-	SaveSystem.delete_slot("unit_test_finished")
-	SaveSystem.current_slot = ""
+
+
+## Ashwin, 2026-10-24: reaching an ending had written over his own save, and the game before it was gone.
+func test_an_ending_never_writes_over_the_players_own_save() -> void:
 	GameState.reset()
+	var st := GameState.story
+	st.party.append(TestChars.pregen("hedda_ironvow", 3))
+	st.gold = 123.0
+	assert_eq(SaveSystem.save("unit_test_mine", "before the last stair"), OK)
+	var before := FileAccess.get_file_as_string(SaveSystem.slot_path("unit_test_mine"))
+	st.gold = 999.0
+	st.set_flag("strahd_destroyed", true)
+	Endings.request(st)
+	assert_eq(SaveSystem.save_finished("strahd_destroyed", "Dawn over Barovia"), OK)
+	assert_eq(FileAccess.get_file_as_string(SaveSystem.slot_path("unit_test_mine")), before, "the save the player made is as it was")
+	assert_eq(SaveSystem.current_slot, "unit_test_mine", "still the game's own slot (F5 saves there)")
+	var first := SaveSystem.finished_slot
+	var done := SaveSystem.describe(first)
+	assert_eq(str(done["finished"]), "Dawn over Barovia")
+	assert_eq(str(done["note"]), "before the last stair", "the run's note goes with its ending")
+	assert_eq(str(SaveSystem.list_slots()[0]["slot"]), "unit_test_mine", "Continue still lands on the game, not its ending")
+	GameState.reset()
+	assert_eq(SaveSystem.load_slot("unit_test_mine"), OK)
+	assert_eq(Endings.reached(GameState.story), "", "the save before the end is still before it")
+	assert_eq(GameState.story.gold, 123.0, "as it was saved")
+	# Reaching the end again from it makes a second finished save, and writes over neither.
+	GameState.story.set_flag("strahd_destroyed", true)
+	Endings.request(GameState.story)
+	assert_eq(SaveSystem.save_finished("strahd_destroyed", "Dawn over Barovia"), OK)
+	assert_ne(SaveSystem.finished_slot, first, "a slot of its own each time")
+	assert_true(SaveSystem.has_slot(first) and SaveSystem.has_slot("unit_test_mine"), "nothing was written over")
+	assert_eq(FileAccess.get_file_as_string(SaveSystem.slot_path("unit_test_mine")), before)
+
+
+func test_a_game_with_no_save_of_its_own_still_gets_its_ending_kept() -> void:
+	GameState.reset()
+	GameState.story.party.append(TestChars.pregen("hedda_ironvow", 3))
+	assert_eq(SaveSystem.save_finished("ireena_at_peace", "Ireena's rest"), OK)
+	assert_true(SaveSystem.has_slot(SaveSystem.finished_slot), "the ending is kept")
+	assert_eq(SaveSystem.current_slot, "", "and the game has no slot of its own until it saves")

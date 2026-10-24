@@ -196,9 +196,10 @@ can't be undone. Condition: `gift:<id>` (anyone in the party carries it).
   (story/endings.gd `Endings.request`) and never changes.
 - **The ending screen** (ui/screens/ending_screen.gd): the title card (`title`, `summary`), the `narration` node played
   line by line (Narrator, NPC and `interject` lines only; it never offers a choice), then the slides, then The End:
-  the game's save slot is written marked `"finished": {ending, title}` (SaveSystem.save_finished) and Return to the
-  title goes to the main menu. Finished saves list after unfinished ones (Continue skips them) with "The End: <title>"
-  as their place; loading one plays its ending again.
+  the game as it ends is written to a new slot of its own marked `"finished": {ending, title}` (SaveSystem.save_finished;
+  an ending never writes over a save the player made, Ashwin 2026-10-24, and an Honour run's one save is the exception: the
+  ending seals it) and Return to the title goes to the main menu. Finished saves list after unfinished ones (Continue
+  skips them) with "The End: <title>" as their place; loading one plays its ending again.
 - **Slides**: this ending's `epilogue`, then those of `epilogue_from` (and its own `epilogue_from`). Each `topic` is
   shown once: the first slide of it whose `when` holds, so an ending's own slide replaces the inherited one and a
   topic's variants go most specific first. A topic with no slide that holds is left out. `{name}` is the bearer of
