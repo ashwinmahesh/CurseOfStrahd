@@ -575,7 +575,10 @@ def best_loop(thumbs, lo, hi, starts):
 
 
 def walk_frames(frames, thumbs):
-    s, n, score = best_loop(thumbs, 16, 56, range(2, 30))
+    # One stride pair: two head dips, two footfalls (the game sends footfalls on the first and middle frames). The search
+    # once ran to 56 frames and often picked two pairs, which the 24 frames then played at double speed (owner 2026-10-25:
+    # Godrick's n and Liriel's se walks "need to slow down"; Thistle's s and se and Liriel's s did the same).
+    s, n, score = best_loop(thumbs, 18, 38, range(2, 50))
     loop = list(range(s, s + n))
     # Start on the lowest head (a foot coming down): the game sends footfalls on the first and middle frames.
     heads = [head_y(frames[i]) for i in loop]

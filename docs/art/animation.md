@@ -219,7 +219,7 @@ video at run time.
 
 | Kind | Frames | Timing |
 |---|---|---|
-| Walk | 24 (the cleanest two-step loop, starting on the lowest head, a foot coming down) | 24 fps |
+| Walk | 24 (the cleanest two-step loop of 18 to 38 clip frames, starting on the lowest head, a foot coming down; one stride pair only: two pairs squeezed into 24 frames play at double speed and miss footfalls) | 24 fps |
 | Idle | 9 to 18 (a 1.5 to 3 second loop whose last third of a second is faded into its start, since an idle drifts and seldom comes back on its own) | 6 fps |
 | Attack | 18, the fastest motion (the blow) landing on frame 11 (`hit_frames`), held two frames | 16 fps (Godrick's 20.8: owner 2026-10-24, "about 1.3x faster") |
 | Cast | 24, the release landing on frame 8: 1.5 s (owner 2026-10-25: "like 1.5 seconds") | 16 fps |
