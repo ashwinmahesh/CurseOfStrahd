@@ -5364,19 +5364,35 @@
         "hut_lysaga_back"
       ],
       "size": [
-        3.093,
-        4.066,
-        3.109
+        2.095,
+        5.4,
+        3.32
       ],
       "materials": [
-        "glow_bile",
+        "pal_ash_violet",
+        "pal_bog",
+        "pal_bog_deep",
+        "pal_bone",
         "pal_bone_dark",
+        "pal_ember_deep",
+        "pal_ink",
+        "pal_ivory",
+        "pal_leather",
+        "pal_parchment",
         "pal_peat",
+        "pal_pewter",
+        "pal_rust",
+        "pal_silver",
+        "pal_skin_shadow",
+        "pal_slate",
         "pal_stone",
+        "pal_stone_deep",
+        "pal_tan",
         "pal_umber",
-        "tex_village__roof_thatch"
+        "pal_void",
+        "pal_walnut"
       ],
-      "triangles": 858,
+      "triangles": 17536,
       "big": true
     },
     "standing_stones": {

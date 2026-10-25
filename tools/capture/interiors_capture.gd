@@ -48,11 +48,18 @@ func capture_shots(tool: Node, out: String) -> void:
 		await tool.call("wait_frames", 30)
 		tool.call("_shot", "%s_%s.png" % [out, id])
 		for c: Vector2i in spots.get(id, []):
-			view.rig.distance = 8.0
+			view.rig.distance = float(OS.get_environment("INTERIORS_DIST")) if OS.get_environment("INTERIORS_DIST") != "" else 8.0
 			view.rig.global_position = view.board.cell_center(c)
 			view.rig.snap_to_target()
 			await tool.call("wait_frames", 12)
 			tool.call("_shot", "%s_%s_%d_%d.png" % [out, id, c.x, c.y])
+			for step: String in OS.get_environment("INTERIORS_YAWS").split(",", false):
+				view.rig.rotate_step(1)
+				view.rig.snap_to_target()
+				await tool.call("wait_frames", 12)
+				tool.call("_shot", "%s_%s_%d_%d_yaw%s.png" % [out, id, c.x, c.y, step])
+			view.rig.rotate_step(-OS.get_environment("INTERIORS_YAWS").split(",", false).size())
+			view.rig.snap_to_target()
 		view.queue_free()
 		view = null
 		await tool.call("wait_frames", 2)

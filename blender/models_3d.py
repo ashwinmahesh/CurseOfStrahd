@@ -3669,25 +3669,111 @@ def tower_vr(p):
         p.box((0.12, 0.05, 0.36), (R * math.cos(r), R * math.sin(r), z), "pal_night", rot=(0, 0, a + 90))
 
 
+# Baba Lysaga's hut before the fight is Pelilasdis's "The Hut On Fowl's Legs" (CC BY 4.0, art/sourced/): a cottage on a
+# chunk of earth held up by two chicken legs. The download is a diorama (a ground disc, pine trees, a yard fence, stakes
+# with lights), so those are left out by name; the rest is thinned and each face takes the nearest palette colour to what
+# its material's texture shows there, like the other sourced models. In combat the hut stands up as its 2D creeping-hut
+# sprite (art/sprites/baba_lysagas_creeping_hut).
+HUT_LEFT_OUT = r"basegroundmat|pinetrees|_tree|woodfence|nails|Plane\.0(13|14|15|17|20)_Material"
+HUT_HEIGHT = 5.4     # standing height, in squares (a 27 ft hut): about the creeping hut's drawn height in combat
+HUT_KEEP = 0.2       # share of the triangles kept (122k in the download)
+HUT_BRIGHTEN = 3.4    # the download is dark (planks are 0.55 of their texture, roof tiles darker): lifted two stops, then
+HUT_GAMMA = 1.5       # gamma 1.5, or the palette snap makes it a black shape in the swamp's night
+
+
+def _srgb(c):
+    return 12.92 * c if c <= 0.0031308 else 1.055 * (c ** (1 / 2.4)) - 0.055
+
+
+def _srgb_to_linear(c):
+    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+
+
+def _hut_face_colours(ob, mats):
+    """The sRGB colour each polygon of `ob` shows: its material's base colour texture at the polygon's UV centre
+    (tiling textures wrap), else the base colour. `mats` caches (colour, texture pixels) per material."""
+    import numpy as np
+    me = ob.data
+    uvl = me.uv_layers.active
+    out = []
+    for poly in me.polygons:
+        mat = ob.material_slots[poly.material_index].material if poly.material_index < len(ob.material_slots) else None
+        if mat not in mats:
+            base, pix, tint = (0.5, 0.5, 0.5), None, (1.0, 1.0, 1.0)
+            for node in (mat.node_tree.nodes if mat and mat.node_tree else []):
+                if node.type == "BSDF_PRINCIPLED":
+                    inp = node.inputs["Base Color"]
+                    base = tuple(_srgb(c) for c in inp.default_value[:3])
+                    src = inp.links[0].from_node if inp.links else None
+                    if src is not None and src.bl_idname == "ShaderNodeMix" and src.blend_type == "MULTIPLY":
+                        # the download's materials multiply the texture (A) by a grey (B): the walls are 0.37 of it
+                        cols = [i for i in src.inputs if i.type == "RGBA"]   # the node's two colour sockets: A, then B
+                        tint = tuple(cols[1].default_value[:3])
+                        src = cols[0].links[0].from_node if cols[0].links else None
+                    if src is not None and src.type == "TEX_IMAGE" and src.image is not None and src.image.size[0] > 0:
+                        arr = np.empty(len(src.image.pixels), dtype=np.float32)
+                        src.image.pixels.foreach_get(arr)
+                        pix = arr.reshape(src.image.size[1], src.image.size[0], 4)
+                    break
+            mats[mat] = (base, pix, tint)
+        base, pix, tint = mats[mat]
+        if pix is None or uvl is None:
+            out.append(base)
+            continue
+        u = sum(uvl.data[i].uv.x for i in poly.loop_indices) / poly.loop_total
+        v = sum(uvl.data[i].uv.y for i in poly.loop_indices) / poly.loop_total
+        h, w = pix.shape[:2]
+        c = pix[min(h - 1, max(0, int((v % 1.0) * (h - 1)))), min(w - 1, max(0, int((u % 1.0) * (w - 1))))]
+        out.append(tuple(min(1.0, _srgb(min(1.0, _srgb_to_linear(float(c[k])) * tint[k] * HUT_BRIGHTEN))) ** (1.0 / HUT_GAMMA) for k in range(3)))
+    return out
+
+
 @model("hut_lysaga", "free", ["hut_lysaga", "hut_lysaga_back"], big=True)
 def hut_lysaga(p):
-    """Baba Lysaga's hut (2D hut_lysaga): a shack of grey planks under thatch, raised on a giant rooted stump."""
-    rng = p.rng
-    p.lathe([(0.9, 0.0), (0.6, 0.4), (0.5, 1.2), (0.6, 1.6), (0.0, 1.6)], (0, 0, 0), "pal_umber", segs=10, smooth=False)
-    for k in range(7):
-        a = 2 * math.pi * k / 7 + rng.uniform(-0.2, 0.2)
-        p.tube(curve((0.5 * math.cos(a), 0.5 * math.sin(a), 0.5), (1.2 * math.cos(a), 1.2 * math.sin(a), 0.2),
-                     (1.6 * math.cos(a), 1.6 * math.sin(a), 0.0), n=6), 0.08, "pal_umber", segs=6,
-               radii=[0.16, 0.13, 0.1, 0.08, 0.06, 0.04, 0.02], smooth=False)
-    L, W, H = 1.8, 1.5, 1.3
-    p.box((L + 0.2, W + 0.2, 0.1), (0, 0, 1.65), "pal_peat")
-    p.box((L, W, H), (0, 0, 1.7 + H / 2), "pal_bone_dark")
-    for k in range(9):
-        p.box((0.01, W + 0.02, H), (-L / 2 + 0.1 + k * 0.2, 0, 1.7 + H / 2), "pal_stone")
-    _gable_roof(p, L, W, 1.7 + H, 0.9, "tex_village__roof_thatch", over=0.2, thick=0.12)
-    p.box((0.4, 0.05, 0.75), (0, -W / 2 - 0.02, 1.7 + 0.38), "pal_peat")
-    p.box((0.25, 0.04, 0.25), (0.55, -W / 2 - 0.02, 2.5), "glow_bile")
-    p.box((0.2, 0.2, 0.9), (0.5, 0.3, 3.6), "pal_stone")
+    """Baba Lysaga's hut (Pelilasdis, CC BY 4.0), standing 5.4 high on its two chicken legs, door side to the front (-Y),
+    palette colours from its textures. See HUT_LEFT_OUT for what the diorama leaves out."""
+    import re
+    from mathutils import kdtree
+    added, meshes = _import_glb(SOURCED / "sketchfab_hut_on_fowls_legs_pelilasdis" / "the_hut_on_fowls_legs.glb")
+    rx = re.compile(HUT_LEFT_OUT, re.I)
+    meshes = [m for m in meshes if not rx.search(m.name)]
+    mats = {}
+    centres, colours = [], []
+    for ob in meshes:
+        for poly, col in zip(ob.data.polygons, _hut_face_colours(ob, mats)):
+            centres.append(ob.matrix_world @ poly.center)
+            colours.append(col)
+    tree = kdtree.KDTree(len(centres))
+    for i, c in enumerate(centres):
+        tree.insert(c, i)
+    tree.balance()
+    bm = _decimated(_world_bm(meshes), HUT_KEEP)
+    for o in added:
+        bpy.data.objects.remove(o)
+    palette = {n: tuple(int(h.lstrip("#")[i:i + 2], 16) / 255.0 for i in (0, 2, 4)) for n, h in PALETTE.items()}
+    bm.faces.index_update()
+    names = {}
+    for f in bm.faces:
+        c = colours[tree.find(f.calc_center_median())[1]]
+        names[f.index] = min(palette, key=lambda n: sum((a - b) ** 2 for a, b in zip(palette[n], c)))
+    bm.faces.ensure_lookup_table()
+    snapped = dict(names)
+    for f in bm.faces:   # one pass of the commonest colour among a face and its neighbours: no stray speckles
+        votes = {names[f.index]: 1.5}
+        for e in f.edges:
+            for g in e.link_faces:
+                if g is not f:
+                    votes[names[g.index]] = votes.get(names[g.index], 0.0) + 1.0
+        snapped[f.index] = max(votes, key=votes.get)
+    zs = [v.co.z for v in bm.verts]
+    lo_z, hi_z = min(zs), max(zs)
+    k = HUT_HEIGHT / (hi_z - lo_z)
+    feet = [v.co for v in bm.verts if v.co.z < lo_z + 0.12 * (hi_z - lo_z)]
+    cx = (min(v.x for v in feet) + max(v.x for v in feet)) / 2.0
+    cy = (min(v.y for v in feet) + max(v.y for v in feet)) / 2.0
+    bmesh.ops.translate(bm, vec=Vector((-cx, -cy, -lo_z)), verts=bm.verts)
+    bmesh.ops.scale(bm, vec=(k, k, k), verts=bm.verts)
+    _append_faces(p, bm, lambda f: "pal_" + snapped[f.index], smooth=False)
 
 
 @model("standing_stones", "free", ["standing_stones"], big=True, turns=True)
