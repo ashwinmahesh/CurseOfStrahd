@@ -9,8 +9,8 @@ list. Held by `tests/integration/test_scaled_fights_rest.gd`; the churchyard by 
 |---|---|---|---|---|---|
 | `larders_cyrus_fight` | castle_ravenloft_larders | 10 | Cyrus Belview (a mongrelfolk) | Cyrus Belview and 15 Belview cooks, all berserkers at 80 HP | 5-6 |
 | `larders_doru_hunger` | castle_ravenloft_larders_dungeon | 10 | Doru (a vampire spawn) | Doru and six more starved spawn in the neighbouring cells, all at 104 HP | 5 |
-| `larders_false_brother` | castle_ravenloft_larders_dungeon | 10 | Brother Anatol and 2 vampire spawn | since 2026-10-24 Anatol is a Vampire (the 2025 block, a boss with legendary actions and the bosses' +25% damage) and the two spawn are Vampire Spawn, all at book Hit Points; now a boss fight, measured at full ability | 2 |
-| `larders_false_brother_unmasked` | castle_ravenloft_larders_dungeon | 10 | Brother Anatol and 2 vampire spawn | the same three, a Vampire and two spawn at book Hit Points | 3 |
+| `larders_false_brother` | castle_ravenloft_larders_dungeon | 10 | Brother Anatol and 2 vampire spawn | since 2026-10-24 Anatol is a Vampire (the 2025 block, a boss with legendary actions and the bosses' +25% damage) and the two spawn are Vampire Spawn, all at book Hit Points; now a boss fight, measured at full ability. His hunger (`false_brother` state: +1 to hit and DCs, 1d6 more Necrotic a hit) is the owner's yes to hitting harder | 1 |
+| `larders_false_brother_unmasked` | castle_ravenloft_larders_dungeon | 10 | Brother Anatol and 2 vampire spawn | the same three, a Vampire with his hunger and two spawn at book Hit Points | 2 |
 | `library_wardens` | amber_temple_library | 10 | 4 flameskull | 8 flameskull | 4 |
 | `churchyard_dead` | village_of_barovia | 3 | 8 Strahd zombie, zombie (7 wins in 8) | 8 Strahd zombie, 3 zombie | 5 |
 

@@ -37,11 +37,12 @@ func test_larders_doru_hunger_v0_at_level_10() -> void:
 
 
 ## larders_false_brother, castle_ravenloft_larders_dungeon variant 0 at level 10. Brother Anatol is a Vampire, a boss
-## (owner, 2026-10-24), with his two spawn, all at book Hit Points: a boss fight (FightSeriesCase.BOSS_FIGHTS), 2 in 8.
+## (owner, 2026-10-24), with his two spawn, all at book Hit Points: a boss fight (FightSeriesCase.BOSS_FIGHTS). His
+## hunger (+1 to hit and DCs, 1d6 more Necrotic a hit; the owner's yes to hitting harder) puts it at 1 in 8.
 func test_larders_false_brother_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_false_brother", [Vector2i(5, 15), Vector2i(6, 15), Vector2i(4, 15), Vector2i(6, 16)], 2, 4, [])
+	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_false_brother", [Vector2i(5, 15), Vector2i(6, 15), Vector2i(4, 15), Vector2i(6, 16)], 1, 3, [])
 
 
-## larders_false_brother_unmasked, castle_ravenloft_larders_dungeon variant 0 at level 10: the same three, 3 in 8.
+## larders_false_brother_unmasked, castle_ravenloft_larders_dungeon variant 0 at level 10: the same three, 2 in 8.
 func test_larders_false_brother_unmasked_v0_at_level_10() -> void:
-	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_false_brother_unmasked", [Vector2i(5, 15), Vector2i(6, 15), Vector2i(4, 15), Vector2i(6, 16)], 2, 4, [])
+	await _held("castle_ravenloft_larders_dungeon", 12, 10, "larders_false_brother_unmasked", [Vector2i(5, 15), Vector2i(6, 15), Vector2i(4, 15), Vector2i(6, 16)], 1, 3, [])

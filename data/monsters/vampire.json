@@ -94,6 +94,32 @@
       "sunlight": "hypersensitivity"
     }
   ],
+  "states": {
+    "false_brother": {
+      "id": "false_brother",
+      "name": "The False Brother's Hunger",
+      "action": "passive",
+      "summary": "Starved for the blood behind the abbey's walls, he hits harder: +1 to his attack rolls and save DCs, and 1d6 Necrotic damage more on each hit.",
+      "text": "Brother Anatol, the vampire who took a brother's place in Castle Ravenloft's larders, has gone too long without feeding: he adds 1 to his attack rolls and to the save DCs of his actions, and each of his hits deals an extra 1d6 Necrotic damage. (Owner, 2026-10-24: book Hit Points, and a little more to hit and a little more damage instead.)",
+      "modifiers": [
+        {
+          "stat": "attack",
+          "value": 1
+        },
+        {
+          "stat": "spell_dc",
+          "value": 1
+        },
+        {
+          "stat": "extra_damage",
+          "dice": "1d6",
+          "type": "necrotic",
+          "on": "weapon"
+        }
+      ],
+      "implemented": "engine"
+    }
+  },
   "actions": [
     {
       "id": "multiattack",

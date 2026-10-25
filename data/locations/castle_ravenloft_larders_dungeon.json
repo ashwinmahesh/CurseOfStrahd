@@ -1622,7 +1622,10 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "states": [
+            "false_brother"
+          ]
         },
         {
           "monster": "vampire_spawn",
@@ -1653,7 +1656,10 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "states": [
+            "false_brother"
+          ]
         },
         {
           "monster": "vampire_spawn",
