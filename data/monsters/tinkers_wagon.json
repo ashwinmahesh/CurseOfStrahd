@@ -3,7 +3,7 @@
   "name": "The Tinker's Wagon",
   "source": {
     "book": "custom",
-    "note": "A side quest boss of our own (The Tinker's Wagon, docs/story/side_quests.md), built from the 2025 Monster Manual's mimic: sticky pseudopods and an acid bite, scaled to a Huge mimic of CR 7 with a spray of trinkets and legendary actions. Drawn with the mimic's sprite at Huge."
+    "note": "A side quest boss of our own (The Tinker's Wagon, docs/story/side_quests.md), built from the 2025 Monster Manual's mimic: sticky pseudopods and an acid bite, scaled to a Huge mimic of CR 7 with a spray of trinkets and legendary actions. Drawn with its own wagon-on-legs sprite at Huge (HEIGHTS 2.4)."
   },
   "size": "huge",
   "type": "monstrosity",
@@ -13,8 +13,6 @@
     "shapechanger"
   ],
   "alignment": "neutral",
-  "art": "mimic",
-  "art_height": 2.0,
   "ac": 14,
   "initiative": 1,
   "hp": {
