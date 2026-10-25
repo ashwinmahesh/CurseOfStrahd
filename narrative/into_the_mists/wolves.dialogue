@@ -1,9 +1,9 @@
 # The wolf pack in the narrows of the Old Svalich Road. NPC mists_wolves blocks the road until this resolves.
-# Talking them down sets mists_wolves_cowed; a fight is the mists_wolves encounter (7 wolves, 350 XP, level 1).
+# Talking them down sets mists_wolves_cowed; a fight is the mists_wolves encounter (3 wolves, 150 XP, level 1).
 # Speak with Animals asks them what they want: the master sent them to look (and there's an old man in the fog).
 
 ~ start
-Narrator: A grey wolf stands square in the narrows, head low, while more shapes wait in the fog beyond it and something shifts in the trees behind you. None of them growl; they are waiting to see what you do.
+Narrator: Two grey wolves stand square in the narrows, heads low, while a third shape waits in the fog beyond them. None of them growl; they are waiting to see what you do.
 if not flag.mists_arrived
 -> into_the_mists/arrival:first_sight
 endif

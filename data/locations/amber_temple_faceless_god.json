@@ -951,7 +951,7 @@
       "id": "hollow_eyed",
       "trigger": "enter_area:ring_of_amber",
       "when": "not flag.hollow_eyed_cleared and level >= 10",
-      "text": "Things that were people once come scuttling from behind the sarcophagi, each with one great eye where a face should be. Two of the wardens' dead drift up through the floor behind them.",
+      "text": "Things that were people once come scuttling from behind the sarcophagi, each with one great eye where a face should be. The wardens' dead drift up through the floor behind them.",
       "monsters": [
         {
           "monster": "nothic",

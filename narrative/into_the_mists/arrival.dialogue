@@ -98,7 +98,7 @@ endif
 ~ carcass_tracks
 set mists_carcass_studied
 set mists_read_the_pack
-Narrator: {name} reads the churned earth: a dozen wolves moving in a line, not a scatter, and a kill they never touched. They were not hungry; they were busy.
+Narrator: {name} reads the churned earth: three wolves moving in a line, not a scatter, and a kill they never touched. They were not hungry; they were busy.
 interject name:thistle: That's not a hunt. Wolves in a line like that, somebody's walking them. Like dogs.
 if not name:thistle
   interject background:soldier: Wolves in a line. That's a picket. Somebody gives them orders.
