@@ -53,6 +53,10 @@ PRICES = {
     "veo-3.1-lite-generate-preview": {"720P-4S": 0.20, "720P-6S": 0.30, "720P-8S": 0.40},
     "veo-3.1-fast-generate-preview": {"720P-4S": 0.40, "720P-6S": 0.60, "720P-8S": 0.80},
     "veo-3.1-generate-preview": {"720P-4S": 1.60, "720P-6S": 2.40, "720P-8S": 3.20},
+    # Veo 3.1 shut down on 2026-10-22. Gemini Omni Flash (the Interactions API) bills a second of 720p video as 5,792
+    # output tokens at $17.50 a million, $0.1014 (a clip's input and thinking tokens add about a cent; measured 2026-10-24:
+    # a 4-second clip came to $0.4097 to $0.4102).
+    "gemini-omni-1.1-flash": {"720P-3S": 0.31, "720P-4S": 0.41, "720P-6S": 0.61, "720P-8S": 0.81},
 }
 UNKNOWN = "unknown"   # the key of calls read from a generation log (scripts older than the ledger)
 RESERVE_HOURS = 12    # a batch's reservation lapses after this even if its process is somehow still there

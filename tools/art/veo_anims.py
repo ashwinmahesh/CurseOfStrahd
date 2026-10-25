@@ -1,12 +1,13 @@
 #!/usr/bin/python3
-"""The six heroes' walk, idle, attack and cast from Veo video clips (owner 2026-10-19, docs/art/animation.md "Veo").
+"""The six heroes' walk, idle, attack and cast from video clips: Veo 3.1 until it shut down on 2026-10-22, Gemini Omni
+since (owner 2026-10-19, docs/art/animation.md "Veo").
 
     /usr/bin/python3 tools/art/veo_anims.py [--only id ...] [--kinds walk idle attack cast] [--dirs s se e ne n]
         [--generate] [--redo kind_dir ...] [--sheets] [--review]
 
---generate  asks Veo (image to video, a flat green background) for every clip that isn't in art/generated/veo/<id>/
-            yet: one 4-second clip per kind and drawn direction, starting from that direction's first frame in the
-            hero's current sheet. Calls are counted in the shared Gemini ledger (tools/art/gemini_budget.py) and stop
+--generate  asks Gemini Omni (image to video, a flat green or cyan background) for every clip that isn't in
+            art/generated/veo/<id>/ yet: one clip per kind and drawn direction (4 seconds for a walk or idle, 3 for an
+            attack, cast or flinch), starting from that direction's first frame in the hero's current sheet. Calls are counted in the shared Gemini ledger (tools/art/gemini_budget.py) and stop
             at the key's stop point. --redo names clips to draw again (e.g. attack_ne).
 --sheets    turns the clips into the sheets the game plays (walk.png/.tres with walk_ and idle_, attack, cast): every
             frame keyed off the green, cut to the hero's cell, snapped to the palette like the drawn sheets, and the
@@ -43,23 +44,21 @@ HEROES = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wr
 KINDS = ["walk", "idle", "attack", "cast", "hurt"]
 DIRS = ["s", "se", "e", "ne", "n"]          # the drawn directions; the sheets show nw, w and sw as mirror images
 SHE = {"liriel_dawnsong", "thistle"}
-MODEL = "veo-3.1-lite-generate-preview"
-# Godrick's and Liriel's swings were made on Veo Fast ($0.80 an 8-second clip, its own 50 requests a day) when the owner
-# turned down the stiff Lite swings (2026-10-20: "there's no movement ... their capes, their bodies, their expressions").
-# The fix was mostly the prompt (the fighting-game swing below), and the owner wants every other clip on Lite (2026-10-20:
-# "do the rest of the swings in Veo Lite, along with all the other videos"). MODEL_OF names a kind to make on another model.
-FAST = "veo-3.1-fast-generate-preview"
-MODEL_OF = {}
-# One-off choices of the owner: (hero, kind) made on Veo Fast ($0.80 a clip) (2026-10-20: "Let's use Veo Fast for
-# Ratatouille's spellcasting").
-MODEL_FOR = {("ratatoille", "cast"): FAST}
+# Veo 3.1 (Lite, Fast and standard) shut down on 2026-10-22; its replacement is Gemini Omni Flash, called through the
+# Interactions API: an image (or two) and a prompt in, a video out. It takes no length: the prompt says how long, and a
+# clip costs about $0.10 a second at 720p (gemini_budget.PRICES). Clips made on Veo keep their model's name in clips.json
+# (Godrick's and Liriel's swings and Ratatouille's cast were Veo Fast, everything else Veo Lite).
+MODEL = "gemini-omni-1.1-flash"
+MODEL_OF = {}           # a kind to make on another model
+MODEL_FOR = {}          # a (hero, kind) to make on another model
 # Sheets the owner keeps as they are, whatever clips there are (owner 2026-10-20: Godrick's and Liriel's casts with their
 # effects, his the first Veo one, hers the drawn one).
 KEEP = {("godrick_pendlebrook", "cast"), ("liriel_dawnsong", "cast")}
 SECONDS = 4
-# Attacks and casts are 8-second clips that end on their first frame (Veo's lastFrame): without it Veo often turned a
-# hero seen from behind round to face the camera, or left him in another pose than he started from.
-ONE_SHOT_SECONDS = 8
+# Attacks, casts and flinches are 3-second clips that end on their first frame (the first image sent twice, as first and
+# last frame): without it Veo often turned a hero seen from behind round to face the camera, or left him in another pose
+# than he started from. They are asked for in real time: Veo's 8-second ones ran the motion in slow motion.
+ONE_SHOT_SECONDS = 3
 FPS = 24
 W, H = 720, 1280
 CENTRE = (360, 776)                         # where a sheet's cell centre sits in a clip
@@ -271,6 +270,23 @@ CAST_MOVES = ("one hand raised before the chest with the palm open, the other ar
               "the hand thrust forward with the palm out, leaning forward")
 
 
+# How each drawn direction is faced, in words. The first Omni walk turned Kip from facing the camera to three-quarter view
+# (2026-10-24) until the prompt said his chest and face stay squared and his body never rotates. e, se and ne face the
+# viewer's right in the sheets.
+FACING = {
+    "s": "facing straight toward the camera, a front view with {his} chest, shoulders, hips and face squared to the viewer "
+         "exactly as in the first frame, never turned to either side or into three-quarter view",
+    "se": "turned three-quarters toward the camera and to the viewer's right, exactly as in the first frame, never turning "
+          "further round",
+    "e": "in side profile facing the viewer's right, exactly as in the first frame, never turning toward or away from the "
+         "camera",
+    "ne": "seen from behind the whole time, exactly as in the first frame (we only ever see {his} back; {he} never turns "
+          "toward the viewer)",
+    "n": "seen from behind the whole time, exactly as in the first frame (we only ever see {his} back; {he} never turns "
+         "toward the viewer)",
+}
+
+
 def prompt(hero, kind, d="s"):
     spec = json.loads((ROOT / "art" / "anim" / "animations.json").read_text()).get(hero, {})
     spec.update(MOVES.get(hero, {}))
@@ -279,11 +295,9 @@ def prompt(hero, kind, d="s"):
     who = spec.get("who", "the character")
     who = who.split(", ", 1)[1] if ", " in who else who      # the description, not the name
     gear = (spec["gear"][0].upper() + spec["gear"][1:] + ". ") if spec.get("gear") else ""
-    facing = f"always facing exactly the way {he} faces in the image"
+    facing = FACING[d].format(he=he, his=his)
     backdrop = ("Flat, even chroma-key green background" if screen_of(hero) == "green"
                 else "Flat, even solid cyan (turquoise) background")
-    if d in ("n", "ne"):
-        facing = f"seen from behind the whole time (we only ever see {his} back; {he} never turns toward the viewer)"
     common = (f" {He} stays the same size and in the same spot in the frame and never turns. Locked-off static camera: "
               f"no zoom, no pan, no camera shake. {backdrop} everywhere, no floor, no "
               f"shadow, no other objects or people. Keep {his} face, clothes, colours and gear exactly as in the image. "
@@ -295,7 +309,7 @@ def prompt(hero, kind, d="s"):
         body = (f"{He} walks in place as if on a treadmill, {facing}: a lively, full-bodied walk cycle in the style of a "
                 f"high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms "
                 f"swinging, the shoulders and head moving, {his} cape, clothes and hair flowing and swaying with every "
-                f"step, a living expression. {gear}{He} never moves forward or sideways.")
+                f"step, a living expression. {gear}{He} never moves forward or sideways and {his} body never rotates.")
     elif kind == "idle":
         body = (f"{He} stands still in a relaxed, ready stance, {facing}, breathing gently, {his} weight shifting "
                 f"slightly; {his} hair and clothes stir in a light breeze. {gear}{He} does not walk, speak or move "
@@ -343,60 +357,89 @@ def prompt(hero, kind, d="s"):
 
 # ---- generation ----------------------------------------------------------------------------------------------------
 
+def omni_video(answer, key, out):
+    """Saves the video in an Interactions answer to `out`: inline base64, or a files/ uri to wait on and download.
+    Returns None, or what went wrong."""
+    def find(o):
+        if isinstance(o, dict):
+            if o.get("type") == "video" or str(o.get("mime_type", "")).startswith("video"):
+                return o
+            for x in o.values():
+                if (r := find(x)):
+                    return r
+        elif isinstance(o, list):
+            for x in o:
+                if (r := find(x)):
+                    return r
+        return None
+
+    def call(url):
+        req = urllib.request.Request(url, headers={"x-goog-api-key": key})
+        return urllib.request.urlopen(req, timeout=600)
+
+    video = find(answer)
+    if not video:
+        return f"no video in the answer ({json.dumps(answer)[:300]})"
+    if video.get("data"):
+        out.write_bytes(base64.b64decode(video["data"]))
+        return None
+    if not video.get("uri"):
+        return f"a video with neither data nor uri ({json.dumps(video)[:300]})"
+    file_id = video["uri"].rstrip("/").split("/")[-1].split(":")[0]
+    for _ in range(90):
+        with call(f"{API}/files/{file_id}") as r:
+            state = json.loads(r.read()).get("state")
+        if state in ("ACTIVE", "FAILED"):
+            break
+        time.sleep(4)
+    with call(f"{API}/files/{file_id}:download?alt=media") as r:
+        out.write_bytes(r.read())
+    return None
+
+
 def generate_one(hero, kind, d, key):
     name = f"{kind}_{d}"
     out = OUT / hero / f"{name}.mp4"
-    text = prompt(hero, kind, d)
-    img = {"bytesBase64Encoded": base64.b64encode(first_frame(hero, kind, d).read_bytes()).decode(),
-           "mimeType": "image/png"}
-    inst = {"prompt": text, "image": img}
-    if seconds_of(kind) == ONE_SHOT_SECONDS:
-        inst["lastFrame"] = img
-    body = {"instances": [inst], "parameters": {"aspectRatio": "9:16", "resolution": "720p",
-                                                "durationSeconds": seconds_of(kind), "personGeneration": "allow_adult"}}
+    seconds, one_shot = seconds_of(kind), kind in ONE_SHOTS
+    text = prompt(hero, kind, d) + f" The clip is exactly {seconds} seconds long."
+    image = {"type": "image", "data": base64.b64encode(first_frame(hero, kind, d).read_bytes()).decode(),
+             "mime_type": "image/png"}
+    if one_shot:
+        text += " The first image is the clip's first frame and the second image is its last frame."
+    body = {"model": model_of(kind, hero),
+            "input": [image] + ([image] if one_shot else []) + [{"type": "text", "text": text}],
+            "response_format": {"type": "video", "aspect_ratio": "9:16", "resolution": "720p", "delivery": "uri"},
+            "generation_config": {"video_config": {"task": "image_to_video"}}}
     SIZE = size_of(kind)
-    model = model_of(kind, hero)
-
-    def call(url, data=None):
-        req = urllib.request.Request(url, data=json.dumps(data).encode() if data else None,
-                                     headers={"x-goog-api-key": key, "Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=120) as r:
-            return json.loads(r.read())
-
+    model = body["model"]
     gb.guard(model, SIZE, key)
     for attempt in range(5):
         try:
-            op = call(f"{API}/models/{model}:predictLongRunning", body)
-            while not op.get("done"):
-                time.sleep(8)
-                op = call(f"{API}/{op['name']}")
+            req = urllib.request.Request(f"{API}/interactions", data=json.dumps(body).encode(),
+                                         headers={"x-goog-api-key": key, "Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=900) as r:
+                answer = json.loads(r.read())
             break
         except urllib.error.HTTPError as e:
-            gb.record(model, SIZE, f"{hero}/{name}", "veo", "error", code=e.code, key=key)
-            if e.code == 429 and attempt < 4:
-                time.sleep(45 * (attempt + 1))    # Veo's requests a minute; a refused request costs nothing
+            gb.record(model, SIZE, f"{hero}/{name}", "omni", "error", code=e.code, key=key)
+            if e.code in (429, 500, 503) and attempt < 4:
+                time.sleep(45 * (attempt + 1))    # the requests a minute; a refused request costs nothing
                 continue
             return f"{hero} {name}: HTTP {e.code} {e.read().decode()[:300]}"
         except (urllib.error.URLError, TimeoutError) as e:
-            gb.record(model, SIZE, f"{hero}/{name}", "veo", "error", code="network", key=key)
+            gb.record(model, SIZE, f"{hero}/{name}", "omni", "error", code="network", key=key)
             return f"{hero} {name}: network {e}"
-    if "error" in op:
-        gb.record(model, SIZE, f"{hero}/{name}", "veo", "error", code=op["error"].get("code"), key=key)
-        return f"{hero} {name}: {json.dumps(op['error'])[:300]}"
-    samples = op.get("response", {}).get("generateVideoResponse", {}).get("generatedSamples") or []
-    if not samples:
-        gb.record(model, SIZE, f"{hero}/{name}", "veo", "refused", key=key)
-        return f"{hero} {name}: no video ({json.dumps(op.get('response', {}))[:300]})"
-    req = urllib.request.Request(samples[0]["video"]["uri"], headers={"x-goog-api-key": key})
-    with urllib.request.urlopen(req, timeout=300) as r:
-        out.write_bytes(r.read())
-    gb.record(model, SIZE, f"{hero}/{name}", "veo", "ok", key=key)
+    problem = omni_video(answer, key, out)
+    if problem:
+        # The clip was made and billed whether or not it could be fetched.
+        gb.record(model, SIZE, f"{hero}/{name}", "omni", "refused", key=key)
+        return f"{hero} {name}: {problem}"
+    gb.record(model, SIZE, f"{hero}/{name}", "omni", "ok", key=key)
     with CLIPS_LOCK:
         log = OUT / hero / "clips.json"
         clips = json.loads(log.read_text()) if log.exists() else {}
-        clips[name] = {"model": model, "seconds": seconds_of(kind), "prompt": text, "made": gb._stamp(),
-                       "centre": CENTRE, "scale": first_scale(hero, kind, d),
-                       "last_frame": seconds_of(kind) == ONE_SHOT_SECONDS,
+        clips[name] = {"model": model, "seconds": seconds, "prompt": text, "made": gb._stamp(),
+                       "centre": CENTRE, "scale": first_scale(hero, kind, d), "last_frame": one_shot,
                        "screen": screen_of(hero)}
         log.write_text(json.dumps(clips, indent=1) + "\n")
     return f"{hero} {name}: ok"
@@ -406,16 +449,16 @@ def generate(heroes, kinds, dirs, redo):
     todo = [(h, k, d) for h in heroes for k in kinds for d in dirs
             if f"{k}_{d}" in redo or not (OUT / h / f"{k}_{d}.mp4").exists()]
     if not todo:
-        print("veo: every clip is there")
+        print("every clip is there")
         return
-    # An 8-second clip costs two 4-second ones; the preflight counts it so.
+    # A clip's price depends on its length; the preflight counts them in 4-second units.
     unit = gb.price(MODEL, f"720p-{SECONDS}s")
     units = round(sum(gb.price(model_of(k, h), size_of(k)) for h, k, _d in todo) / unit)
-    gb.preflight(units, f"720p-{SECONDS}s", f"Veo clips for {', '.join(sorted({h for h, _, _ in todo}))}", MODEL)
+    gb.preflight(units, f"720p-{SECONDS}s", f"video clips for {', '.join(sorted({h for h, _, _ in todo}))}", MODEL)
     key = gb.api_key()
     for h, k, d in todo:
         first_frame(h, k, d)      # kept from the first take: the sheet may already be the Veo one
-    # Two at once: each clip takes Veo about half a minute, and more at once runs into its requests a minute.
+    # Two at once: each clip takes about half a minute, and more at once runs into the requests a minute.
     by_hero = {}
     for h, k, d in todo:
         by_hero.setdefault(h, []).append((k, d))

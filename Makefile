@@ -243,7 +243,7 @@ keys:
 
 ## The six heroes' walk, idle, attack, cast and hurt cut from Veo clips (tools/art/veo_anims.py, docs/art/animation.md "Veo"):
 ## make veo-anims [ONLY="id ..."] [KINDS="walk idle attack cast hurt"] [GENERATE=1] [REDO="attack_ne ..."]. GENERATE=1 asks
-## Veo for missing clips (Gemini ledger, make art-spend); REDO draws those again. Run it again after make keys.
+## Gemini Omni for missing clips (Gemini ledger, make art-spend); REDO draws those again. Run it again after make keys.
 veo-anims:
 	/usr/bin/python3 tools/art/veo_anims.py $(if $(ONLY),--only $(ONLY),) $(if $(KINDS),--kinds $(KINDS),) $(if $(GENERATE),--generate,) $(if $(REDO),--redo $(REDO),) --sheets
 	$(IMPORT) | $(LOGCHK) > /dev/null

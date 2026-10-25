@@ -1,0 +1,67 @@
+{
+ "walk_s": {
+  "model": "gemini-omni-1.1-flash",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a wild human ranger, from the image. She walks in place as if on a treadmill, facing straight toward the camera, a front view with her chest, shoulders, hips and face squared to the viewer exactly as in the first frame, never turned to either side or into three-quarter view: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, her cape, clothes and hair flowing and swaying with every step, a living expression. She never moves forward or sideways and her body never rotates. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even solid cyan (turquoise) background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent. The clip is exactly 4 seconds long.",
+  "made": "2026-10-24T21:14:03-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "cyan"
+ },
+ "walk_e": {
+  "model": "gemini-omni-1.1-flash",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a wild human ranger, from the image. She walks in place as if on a treadmill, in side profile facing the viewer's right, exactly as in the first frame, never turning toward or away from the camera: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, her cape, clothes and hair flowing and swaying with every step, a living expression. She never moves forward or sideways and her body never rotates. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even solid cyan (turquoise) background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent. The clip is exactly 4 seconds long.",
+  "made": "2026-10-24T21:14:55-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "cyan"
+ },
+ "walk_se": {
+  "model": "gemini-omni-1.1-flash",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a wild human ranger, from the image. She walks in place as if on a treadmill, turned three-quarters toward the camera and to the viewer's right, exactly as in the first frame, never turning further round: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, her cape, clothes and hair flowing and swaying with every step, a living expression. She never moves forward or sideways and her body never rotates. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even solid cyan (turquoise) background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent. The clip is exactly 4 seconds long.",
+  "made": "2026-10-24T21:14:56-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "cyan"
+ },
+ "walk_ne": {
+  "model": "gemini-omni-1.1-flash",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a wild human ranger, from the image. She walks in place as if on a treadmill, seen from behind the whole time, exactly as in the first frame (we only ever see her back; she never turns toward the viewer): a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, her cape, clothes and hair flowing and swaying with every step, a living expression. She never moves forward or sideways and her body never rotates. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even solid cyan (turquoise) background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent. The clip is exactly 4 seconds long.",
+  "made": "2026-10-24T21:15:25-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "cyan"
+ },
+ "walk_n": {
+  "model": "gemini-omni-1.1-flash",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a wild human ranger, from the image. She walks in place as if on a treadmill, seen from behind the whole time, exactly as in the first frame (we only ever see her back; she never turns toward the viewer): a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, her cape, clothes and hair flowing and swaying with every step, a living expression. She never moves forward or sideways and her body never rotates. She stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even solid cyan (turquoise) background everywhere, no floor, no shadow, no other objects or people. Keep her face, clothes, colours and gear exactly as in the image. Silent. The clip is exactly 4 seconds long.",
+  "made": "2026-10-24T21:15:26-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "cyan"
+ }
+}

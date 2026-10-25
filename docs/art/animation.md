@@ -146,8 +146,12 @@ keep the earlier behaviour (the lunge, the flattened fall, the attack used as a 
 ## Veo clips: the heroes' walk, idle, attack, cast and hurt (owner 2026-10-19)
 
 The owner asked for smoother motion from video for the most common animations. The six heroes' walk, idle, attack,
-cast and hurt (the flinch) are cut from Veo 3.1 Lite clips (image to video) as the clips come in. Until a hero's clips
+cast and hurt (the flinch) are cut from video clips (image to video) as the clips come in. Until a hero's clips
 for a kind are in, that kind stays on its drawn frames. Their fall, lying down, riding and sneaking stay drawn.
+
+Veo 3.1 shut down on 2026-10-22. The clips made until then are Veo 3.1 Lite (Fast for Godrick's and Liriel's swings and
+Ratatouille's cast); every clip since is Gemini Omni Flash (`gemini-omni-1.1-flash`, the Interactions API), which the
+tool now calls. `clips.json` names each clip's model. The sheets built from either play alike.
 
 The clips show the motions only (owner 2026-10-19: "no effects when spellcasting or making an attack, just the
 motions; the effects come from our game engine"). The tool's `MOVES` gives each hero's wind-up and strike in words
@@ -157,9 +161,9 @@ swings feel heavier"): 18 frames, the wind-up eased so it gathers slowly and the
 the blow on frame 11, held for two frames (`IMPACT_HOLD`). Godrick and Liriel (`SWINGS`) swing a weapon overhead in
 their clips (owner 2026-10-19: "make it look like a heavier attack").
 
-Godrick's and Liriel's attacks were made on Veo 3.1 Fast ($0.80 a clip); every other clip is made on Lite (owner
-2026-10-20: "do the rest of the swings in Veo Lite, along with all the other videos"; `MODEL_OF` names a kind for another
-model). The owner turned down the first Lite swings on 2026-10-20 ("there's no movement ... their capes, their bodies,
+Godrick's and Liriel's attacks were made on Veo 3.1 Fast ($0.80 a clip); every other Veo clip is made on Lite (owner
+2026-10-20: "do the rest of the swings in Veo Lite, along with all the other videos"). `MODEL_OF` and `MODEL_FOR` name a
+kind, or a hero's kind, for another model; both are empty now that there is one model. The owner turned down the first Lite swings on 2026-10-20 ("there's no movement ... their capes, their bodies,
 their expressions"; "their legs bending, squatting"), so a swing's prompt asks for full fighting-game key poses: a deep crouch, a lunge into the blow, the cape flaring and whipping after
 it, a fierce face. Fast draws white swoosh arcs round the blade in some frames even when asked not to; the owner liked
 the result with them. Liriel swings a longsword in every direction (owner 2026-10-20): Gemini redrew the weapon in her e,
@@ -171,7 +175,7 @@ effect)"; "Godrick's previous casting animation with the effect").
 
 The casters' casts (owner 2026-10-20: "putting power into it, as if they are channeling magic") ask for a braced,
 bent-legged stance, the body gathering, then thrown forward, with the robes and coat flowing (`MOVES`'
-`cast_gather` and `cast_release`), motions only. Ratatouille's were made on Veo Fast (`MODEL_FOR`, his choice).
+`cast_gather` and `cast_release`), motions only. Ratatouille's were made on Veo Fast (his choice).
 
 The tool is `tools/art/veo_anims.py` (`make veo-anims [ONLY=<id>] [KINDS=…] [GENERATE=1]
 [REDO="cast_se …"]`). The sheets are still sprite sheets: the game plays frames as before, and nothing decodes
@@ -182,10 +186,16 @@ video at run time.
   720x1280 (9:16) at 24 fps, with the cell centre at (360, 776), so a clip's pixels are the sheet's pixels and the
   figure keeps its size and ground line.
 - The screen is green, except for Kip and Thistle, who wear green and stand on cyan. No hero has a cyan hue.
-- Walks and idles are 4-second clips ($0.20 each).
-- Attacks, casts and flinches are 8-second clips that end on their first frame (Veo's `lastFrame`; $0.40 each on Lite,
-  $0.80 on Fast). Without that
-  frame Veo turned heroes seen from behind round to face the camera, or left them in another pose.
+- Walks and idles are 4-second clips: $0.41 each on Gemini Omni (about $0.10 a second of 720p video; Veo Lite was $0.20).
+  Omni takes no length, so the prompt ends "The clip is exactly 4 seconds long."
+- Omni turned Kip from facing the camera into three-quarter view on his first walk (2026-10-24), so every prompt now says
+  how the hero faces in words (`FACING`: front, three-quarter toward the viewer's right, side profile, seen from behind) and
+  that his body never rotates. Retaking that one clip with the new wording kept him square to the camera.
+- Attacks, casts and flinches are 3-second clips ($0.31 each), asked for in real time (Veo's 8-second clips ran the motion
+  in slow motion, so a cast squeezed into 12 frames played at several times its real speed). They are meant to end on
+  their first frame: the first image is sent twice, as the first and last frame. Without that, Veo turned heroes seen from
+  behind round to face the camera, or left them in another pose. Not tried on Omni yet: the first attack, cast or flinch
+  made on it is the test.
 - The first frame of an attack or cast is drawn at 0.8 scale, so a swing stays inside the 720-wide clip, and the
   frames are scaled back up.
 - A cast and a flinch start and end on the standing frame, because the drawn cast's first frame holds a glowing orb and
