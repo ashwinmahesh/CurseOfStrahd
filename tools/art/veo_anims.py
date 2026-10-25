@@ -294,7 +294,7 @@ FLOWS = {
     "godrick_pendlebrook": "tabard and long hair",
     "liriel_dawnsong": "cloak, robes and long hair",
     "thistle": "cloak, clothes and hair",
-    "ratatoille": "robes, apron and hair",
+    "ratatoille": "robes and apron",       # not "hair": Omni gave him long dark hair from the front
     "wren_featherfoot": "loose clothes and hair",
     "kip_smudgewick": "tail, apron, clothes and hair",
 }
