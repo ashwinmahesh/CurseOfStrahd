@@ -1219,15 +1219,19 @@ func _build_spellcasting() -> void:
 
 ## Spells from modifiers. Class and subclass features keep their class (so the spell uses that class's save DC
 ## and attack bonus) and default to its spellcasting ability. Free uses are a number, a formula ("mod:wis",
-## with `min`) or a class table column (`count_column`: Favored Enemy).
+## with `min`) or a class table column (`count_column`: Favored Enemy). A dark gift's `spell` modifiers count too: the
+## gifts' modifiers are not part of `_modifiers` (they join through intrinsic_modifiers()), so they are read here by
+## hand, and a gift's spell has no class (its own `ability` is the casting ability).
 func _collect_granted_spells() -> void:
 	var ctx := formula_context()
+	var sources: Array[Modifier] = _modifiers.duplicate()
+	sources.append_array(gift_modifiers())
 	var highest_slot := 0
 	var slots := spell_slots()
 	for i in slots.size():
 		if slots[i] > 0:
 			highest_slot = i + 1
-	for m in _modifiers:
+	for m in sources:
 		if m.stat != &"spell" or highest_slot < m.number("at_slot_level", 0):
 			continue
 		var spell_id := m.text("value")
