@@ -156,5 +156,3 @@ set (docs/art/set_dressing.md, Scale-ups; credits in art/credits.json). A builde
 originals stay untouched, and `make models ONLY="dragon_skull dragon_bones"` rebuilds them. The skeleton download stops at
 the pelvis (it has no tail), so `_dragon_tail` builds one: 25 tapering vertebrae with a blade spine each (side processes on the
 first dozen), drawn through the same fit as the bones, curling from the pelvis along the floor.
-
-**Baba Lysaga's creeping hut** (2026-10-25) is the one sourced model that is a sprite, not a 3D piece: Pelilasdis's "The Hut On Fowl's Legs" (CC BY 4.0, art/sourced/sketchfab_hut_on_fowls_legs_pelilasdis/) is rendered by `blender/render_views.py` (the ground, trees, yard and stakes hidden by name; lit from the camera; five orthographic views, then a dark outline round each) into a turnaround sheet, and `make sprite BODY=lumber SAT=1.2` makes the walk sheet from it. The creeping hut is drawn at 5.6 in art/creature_looks.json (was 3.8). Its portrait is a crop of the same render.
