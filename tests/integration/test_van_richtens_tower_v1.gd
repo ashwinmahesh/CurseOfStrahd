@@ -7,8 +7,9 @@ extends TestCase
 const FOUR: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 const INTERIOR := "van_richtens_tower_interior"
 const TOWER := "van_richtens_tower"
-## sha1 of the sorted "kind:id:x:y" lines of everything the maps held before V1 (see _signature).
-const TOWER_SHA := "57b9b614aa2efb79e82a15e025eb995e6412295b"
+## sha1 of the sorted "kind:id:x:y" lines of everything the maps held before V1 (see _signature); the island's foe lines
+## since 2026-10-25 are the night visitors' book line-up (owner: no extra enemies).
+const TOWER_SHA := "f6e8ccbf6a6240365d0a6c537e0055f67c3720bc"
 const INTERIOR_SHA := "362cf96b799913cf50e119096c21b838bfd6185d"
 ## sha1 of the maps' squares before V1: the island's rows, and the tower's first 35 rows (three floors, nothing moved).
 const TOWER_ROWS_SHA := "d1a5d800b40f9bea3407aec9416c9a34f84799c6"
