@@ -28,11 +28,11 @@ static func journal(st: StoryState) -> Array[Dictionary]:
 		for s: Variant in q.get("stages", []):
 			var stage := s as Dictionary
 			if str(stage["id"]) in hist:
-				entries.append(Tarokka.fill(str(stage["journal"]), st))
+				entries.append(Campaign.module().fill(str(stage["journal"]), st))
 			if str(stage["id"]) == str(entry.get("stage", "")):
 				for o: Variant in stage.get("objectives", []):
-					objectives.append(Tarokka.fill(str(o), st))
-				hint = Tarokka.fill(str(stage.get("hint", "")), st)
+					objectives.append(Campaign.module().fill(str(o), st))
+				hint = Campaign.module().fill(str(stage.get("hint", "")), st)
 				if str(stage.get("ends", "")) != "":
 					status = str(stage["ends"])
 		var giver := str(q.get("giver", ""))

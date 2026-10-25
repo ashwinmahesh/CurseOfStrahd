@@ -198,16 +198,16 @@ func _term() -> bool:
 		var path := t.substr(8)
 		if path == "drawn":
 			return not st.tarokka.is_empty()
-		var value := Tarokka.field(st, path)
+		var value := Campaign.module().field(st, path)
 		if op == "":
 			return value != ""
 		return (value == str(_literal(rhs))) == (op == "==")
 	if t.begins_with("final_room:"):
-		return Tarokka.final_room(st) == t.substr(11) and t.substr(11) != ""
+		return Campaign.module().final_room(st) == t.substr(11) and t.substr(11) != ""
 	if t.begins_with("guest:"):
 		return t.substr(6) in st.guest_ids
 	if t.begins_with("treasure_at:"):
-		return not Tarokka.treasures_at(t.substr(12), st).is_empty()
+		return not Campaign.module().treasures_at(t.substr(12), st).is_empty()
 	if t.begins_with("gift:"):
 		for ch in st.party:
 			if ch.dark_gifts().has(t.substr(5)):
@@ -240,9 +240,9 @@ func _term() -> bool:
 		# Strahd's attention (F9): a number, or a tier's name (`attention >= marked`).
 		var want: Variant = 0
 		if op != "":
-			var named := StrahdPresence.tier_min(rhs)
+			var named := Campaign.module().presence_tier_min(rhs)
 			want = named if named >= 0 else _literal(rhs)
-		return _compare(StrahdPresence.attention(st), op if op != "" else ">", want)
+		return _compare(Campaign.module().presence_attention(st), op if op != "" else ">", want)
 	if t == "weather":
 		# The weather where the party is (F12, story/weather.gd): `weather == fog`; bare `weather` is anything but overcast.
 		var now := Weather.now(st)

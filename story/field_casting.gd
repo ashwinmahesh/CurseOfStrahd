@@ -597,8 +597,8 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 			caster.name.get_slice(" ", 0), data["name"], count, Compendium.shared().display_name("monsters", kind),
 			"" if count == 1 else "s", "s" if count == 1 else ""]}
 	# Scouting and divining (story/oracles.gd): what the spell finds out where the party stands.
-	if spell_id in Oracles.HANDLED:
-		return {"ok": true, "effect": spell_id, "text": Oracles.cast(st, caster, spell_id, choice)}
+	if Campaign.module().handles_spell(spell_id):
+		return {"ok": true, "effect": spell_id, "text": Campaign.module().cast_spell(st, caster, spell_id, choice)}
 	# Tenser's Floating Disk: it carries 500 lb more for its caster while it lasts.
 	if spell_id == "tensers_floating_disk" and lasting > 0:
 		for old: Effect in caster.effects.duplicate():

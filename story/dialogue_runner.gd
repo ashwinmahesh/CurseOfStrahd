@@ -243,22 +243,18 @@ func next() -> Dictionary:
 				st.advance_minutes(wait)
 			"tarokka_draw":
 				pc += 1
-				Tarokka.ensure_drawn(st)
+				Campaign.module().ensure_drawn(st)
 			"tarokka_read":
 				pc += 1
-				var slot := str(s["slot"])
-				Tarokka.ensure_drawn(st)
-				var card_id := str(st.tarokka.get(slot, ""))
-				if card_id == "":
+				var reading := Campaign.module().reading(str(s["slot"]), st)
+				if reading.is_empty():
 					continue
-				var o := Tarokka.outcome(slot, card_id)
-				_queued.append(_line_beat(str(s["speaker"]), "", str(o.get("verse", ""))))
-				return {"kind": "notice", "text": "%s: %s" % [Tarokka.SLOT_NAMES.get(slot, slot), Tarokka.card(card_id).get("name", card_id)],
-					"card": card_id, "slot": slot}
+				_queued.append(_line_beat(str(s["speaker"]), "", str(reading["verse"])))
+				return {"kind": "notice", "text": str(reading["title"]), "card": reading["card"], "slot": reading["slot"]}
 			"tarokka_give":
 				pc += 1
 				# The treasures the reading hid here, handed to the party's leader (ADR 0011).
-				var got := Tarokka.take_from(str(s["place"]), st)
+				var got := Campaign.module().take_from(str(s["place"]), st)
 				if got.is_empty():
 					continue
 				var taker := st.leader_character()
@@ -369,7 +365,7 @@ func next() -> Dictionary:
 			"end_game":
 				# The campaign ends here (ADR 0014): the ending that holds now is recorded; the game plays it when the
 				# conversation closes.
-				Endings.request(st)
+				Campaign.module().request_ending(st)
 				ended_game = true
 				finished = true
 			_:

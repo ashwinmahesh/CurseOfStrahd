@@ -83,7 +83,7 @@ static func warning(st: StoryState, quest_id: String) -> String:
 	for rule: Dictionary in rules(quest_id):
 		if str(rule.get("warn", "")) != "" and applies(rule, st.quest_stage(quest_id)) \
 				and StoryConditions.check(str(rule.get("warn_when", "")), st):
-			return Tarokka.fill(str(rule["warn"]), st)
+			return Campaign.module().fill(str(rule["warn"]), st)
 	return ""
 
 

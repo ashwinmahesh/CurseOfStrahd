@@ -167,7 +167,7 @@ static func roll(road: Dictionary, st: StoryState, dice: DiceRoller, journey_to:
 	# Ground the party knows is quieter (Ashwin, 2026-10-18); Strahd's eyes and the weather are added after.
 	chance *= RoadFamiliarity.scale(st, road, journey_to, leg_to)
 	# Strahd's attention (F9): the more he has noticed the party, the more of his eyes and patrols are on the roads.
-	var watch := StrahdPresence.tier(st)
+	var watch := Campaign.module().presence_tier(st)
 	chance = minf(0.95, chance + float(watch.get("road_night" if st.is_night() else "road_day", 0.0)) + Weather.road_bonus(st))
 	var d100 := dice.roll_one(100, "Random encounter on %s" % road.get("name", road["id"]))
 	if d100 > roundi(chance * 100.0):

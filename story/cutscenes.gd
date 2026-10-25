@@ -125,9 +125,9 @@ static func _with_more(id: String, lines: Array[String], st: StoryState, narrato
 ## The caption under a treasure's picture (`find:<item>`), in our own words.
 static func found_line(item_id: String) -> String:
 	var name := Compendium.shared().display_name("magic_items", item_id)
-	for slot: String in Tarokka.TREASURE_ITEMS:
-		if str(Tarokka.TREASURE_ITEMS[slot]) == item_id:
-			name = str(Tarokka.SLOT_NAMES[slot])   # "The Sunsword", as Madam Eva names them
+	var campaign_name := Campaign.module().treasure_name(item_id)   # "The Sunsword", as Madam Eva names them
+	if campaign_name != "":
+		name = campaign_name
 	return "%s, in your hands at last." % name
 
 

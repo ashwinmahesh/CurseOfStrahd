@@ -178,9 +178,9 @@ func _settle_ally() -> void:
 		return
 	if str(tarokka.get("ally", "")) == "darklord":
 		set_quest_stage("find_the_ally", "alone")
-	elif Tarokka.field(self, "ally.npc") in guest_ids:
+	elif Campaign.module().field(self, "ally.npc") in guest_ids:
 		set_quest_stage("find_the_ally", "found")
-	elif Tarokka.field(self, "ally.lost") != "":
+	elif Campaign.module().field(self, "ally.lost") != "":
 		set_quest_stage("find_the_ally", "lost")   # gone before the cards named them (Wiki findings 101, 113)
 
 
@@ -833,7 +833,7 @@ func guest_stays(npc_id: String) -> String:
 		var rule := s as Dictionary
 		if StoryConditions.check(str(rule.get("when", "")), self):
 			return str(rule["why"])
-	if Tarokka.field(self, "ally.npc") == npc_id:
+	if Campaign.module().field(self, "ally.npc") == npc_id:
 		return "Madam Eva's cards named %s for the end of this, and that isn't a promise to walk away from." \
 			% str(npc.get("name", npc_id))
 	return ""
@@ -1047,7 +1047,7 @@ static func _upgrade_quests(st: StoryState) -> void:
 			esc["stage"] = back
 	# Madam Eva handed her treasure over without marking it found, so her chest held a second copy (Wiki finding 63).
 	if bool(st.get_flag("tser_treasure_given", false)):
-		for slot: String in Tarokka.treasures_at("tser_pool_eva_tent", st):
+		for slot: String in Campaign.module().treasures_at("tser_pool_eva_tent", st):
 			st.set_flag("treasure_found_" + slot, true)
 	st._settle_ally()
 	# A quest an earlier version left stuck closes on load when its data says so (`closes` with `old_saves`): the journal

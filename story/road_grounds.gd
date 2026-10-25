@@ -125,7 +125,7 @@ static func placed(monsters: Array, home: String, ground: String) -> Array:
 		var taken: Array[Vector2i] = []
 		for k: Variant in used.keys():
 			taken.append(k as Vector2i)
-		var rest := StrahdPresence.placed({"monsters": out}, rows, taken, to_spawn)
+		var rest := Campaign.module().place_visitors({"monsters": out}, rows, taken, to_spawn)
 		out = rest["monsters"] as Array
 	return out
 

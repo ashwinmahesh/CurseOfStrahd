@@ -46,7 +46,7 @@ static func at(st: StoryState, location_id: String, minute: int) -> String:
 		return "overcast"
 	# Strahd's temper (F9): the more he has noticed the party, the more storms over his valley.
 	if weights.has("storm"):
-		var tier := str(StrahdPresence.tier(st).get("id", ""))
+		var tier := str(Campaign.module().presence_tier(st).get("id", ""))
 		weights["storm"] = float(weights["storm"]) * float((data().get("storm_by_attention", {}) as Dictionary).get(tier, 1.0))
 	var spell := floori(float(minute) / (SPELL_HOURS * 60))
 	var rng := RandomNumberGenerator.new()

@@ -337,7 +337,7 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			return {"ok": true, "text": "%s's %s %s." % [nm, label, params.get("text", "does something harmless")]}
 		"icon_augury":
 			# The Icon of Ravenloft's Augury: the same reading as the spell (story/oracles.gd), cast from the icon.
-			return {"ok": true, "effect": "augury", "text": Oracles.cast(st, ch, "augury")}
+			return {"ok": true, "effect": "augury", "text": Campaign.module().cast_spell(st, ch, "augury")}
 		"read_tome":
 			# The Tome of Strahd (Curse of Strahd): its history goes into the codex; the vampire knows it was read.
 			var lore := st.add_codex("tome_of_strahd")

@@ -12,7 +12,7 @@ const ENGINE_DIRS: Array[String] = ["res://rules", "res://combat", "res://story"
 ## Files of story/ that are the campaign itself (they move to the Strahd game's module, not to dnd_core).
 const CAMPAIGN_MODULES: Array[String] = [
 	"res://story/tarokka.gd", "res://story/strahd_presence.gd", "res://story/oracles.gd", "res://story/endings.gd",
-	"res://story/cheat_codes.gd",
+	"res://story/cheat_codes.gd", "res://story/strahd_campaign.gd",
 ]
 
 const NAMES: Array[String] = ["strahd", "barovi", "ravenloft", "tarokka", "vallaki", "krezk", "ireena", "ezmerelda", "izek", "rahadin",

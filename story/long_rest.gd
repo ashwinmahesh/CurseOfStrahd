@@ -122,8 +122,8 @@ static func restless(st: StoryState, text: String = "") -> Dictionary:
 ## tonight may come to blows: if so the rest breaks there, before its benefits; else they come (finish's).
 static func _sleep_on(st: StoryState, dice: DiceRoller, start: int, left: int, ask_strahd: bool, warned: String = "") -> Dictionary:
 	st.advance_minutes(left)
-	var night := StrahdPresence.night_between(start, st.total_minutes())
-	if ask_strahd and StrahdPresence.may_fight(StrahdPresence.find(st, "rest", {"night": night})):
+	var night := Campaign.module().night_between(start, st.total_minutes())
+	if ask_strahd and Campaign.module().visit_may_fight(st, "rest", {"night": night}):
 		_break(st, start, 0, true)
 		(st.flags[BROKEN] as Dictionary)["night"] = night
 		return _result(st, STRAHD, start, "Before dawn, the one on watch shakes everyone awake: something is out there.")
