@@ -200,38 +200,6 @@ func _voice_ok(c: Combatant, s: Dictionary) -> bool:
 	return true
 
 
-## Counterspell (2024) from a creature the AI plays: `c` is casting `s` (`seen`: with Verbal, Somatic or Material
-## components left) and a creature hostile to it within 60 ft that sees it can cast Counterspell (a mage's Protective
-## Magic, Kasimir's or Mordenkainen's Spellcasting, an enemy wizard's slot). It does when the spell is a levelled one
-## (coordinator relay 2026-10-13: foes never cast Shield or Counterspell; the owner's rule is that foes use their spells
-## when best). `c` makes a Constitution save against its spell save DC; on a failure the spell dissipates with no
-## effect: its action is spent, a slot isn't. Heroes and the guests the player runs don't counter here (asking them
-## would have to pause the cast). True when the spell is countered.
-func counterspelled(c: Combatant, s: Dictionary, seen: bool = true) -> bool:
-	var e := enc()
-	if not seen or int(s.get("level", 0)) < 1:
-		return false
-	for o in e.living():
-		if o == c or o.is_player_controlled() or not o.hostile_to(c) or e.distance(o, c) > 60 or not e.can_see(o, c):
-			continue
-		if not can_cast_reaction(o, "counterspell") or e._reaction_decision(o, "counterspell") == "never":
-			continue
-		o.reaction_available = false
-		if not sp().casting_gate(o):
-			continue
-		pay(o, "counterspell")
-		var dc := reaction_dc(o, "counterspell")
-		e.log.add("spell", "%s casts Counterspell at %s" % [o.name(), c.name()], o.id)
-		e.events.append({"type": "spell", "caster": o.id, "spell": "counterspell", "cells": [], "targets": [c.id]})
-		var test := c.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Counterspell (%s)" % c.name(), SpellCaster.spell_save_keys(o.id))
-		if test.success:
-			e.log.add("save", "%s's %s gets through the Counterspell" % [c.name(), s["name"]], c.id, [test.describe()])
-			return false
-		e.log.add("spell", "%s's %s dissipates (Counterspell): the action is spent, the spell slot kept" % [c.name(), s["name"]], c.id, [test.describe()])
-		return true
-	return false
-
-
 ## `c` casts `s`: the Counterspells it may meet, and the chain they make (SpellCounters.run). `proceed` is the rest of the
 ## cast, run when nothing stops it.
 func counter_chain(c: Combatant, s: Dictionary, seen: bool, proceed: Callable) -> CombatResult:

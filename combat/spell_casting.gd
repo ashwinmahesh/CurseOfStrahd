@@ -393,8 +393,24 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 	var tgt := check["targets"] as Array[Combatant]
 	if not spells.casting_gate(c):
 		return CombatResult.new()
-	if spells.reaction_spells.counterspelled(c, s):
-		return CombatResult.new()
+	# A hero who sees the casting may Counterspell it (SpellCounters): the rest of the cast waits for the answer.
+	var cx := {"c": c, "spell_id": spell_id, "s": s, "level": level, "nums": nums, "opts": opts, "point": point, "tgt": tgt, "cell": check["cell"]}
+	return spells.reaction_spells.counter_chain(c, s, true, func() -> CombatResult: return _cast_numbers_after_counter(cx))
+
+
+## The rest of a stat-block cast (`cx`: what cast_with_numbers worked out) once no Counterspell stopped it: Concentration
+## begun, the spell's events and its resolution. Called at once, or after a hero's answer to a Counterspell prompt.
+func _cast_numbers_after_counter(cx: Dictionary) -> CombatResult:
+	var spells := sp()
+	var e := enc()
+	var c := cx["c"] as Combatant
+	var spell_id := str(cx["spell_id"])
+	var s := cx["s"] as Dictionary
+	var level := int(cx["level"])
+	var nums := cx["nums"] as Dictionary
+	var opts := cx["opts"] as Dictionary
+	var point := cx["point"] as Vector2
+	var tgt := cx["tgt"] as Array[Combatant]
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]), s["duration"] as Dictionary)
@@ -413,7 +429,7 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 	# A wall drawn square by square (opts.path) covers those squares; a ring takes its own size.
 	cells = spells.targeting.wall_cells(s, opts, point, cells)
 	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,
-		"choice": SpellCaster.choice_of(s, opts), "direction": opts.get("direction", Vector2.ZERO), "cell": check["cell"]}
+		"choice": SpellCaster.choice_of(s, opts), "direction": opts.get("direction", Vector2.ZERO), "cell": cx["cell"]}
 	var r := CombatResult.new()
 	return spells._before_attack_rolls(ctx, tgt, r, func() -> CombatResult:
 		return e.then(_resolve(ctx, tgt, cells, r, true), func() -> CombatResult:

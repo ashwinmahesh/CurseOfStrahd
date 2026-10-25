@@ -12,8 +12,8 @@ extends RefCounted
 ## The foes the AI plays answer whenever they can (SpellReactions: a levelled spell is worth a Counterspell, and a
 ## Counterspell is a level 3 spell). The heroes and guests the player runs are asked on the usual Reaction prompt, whose
 ## text says what each side's save is and its odds; the slot to pay with is a pick when there are several ways, and an
-## Automatic rule still asks then. Heroes don't Counterspell a foe's own spells (docs/rules/deviations.md): only a
-## Counterspell aimed at their side's casting opens the chain to them.
+## Automatic rule still asks then. They are asked about a Counterspell aimed at their side's casting and about any levelled
+## spell a foe casts, a stat block's Spellcasting included (Ashwin, 2026-10-24: Baba Lysaga's and Strahd's Fireball).
 
 var _enc: WeakRef
 
@@ -42,8 +42,44 @@ func run(c: Combatant, s: Dictionary, seen: bool, proceed: Callable) -> CombatRe
 	while first != null and not _declare(chain, first, c, c, s, 0):
 		first = _ai_answer(c)   # its casting was stopped (the Reaction is spent): the next foe
 	if chain.is_empty():
-		return proceed.call() as CombatResult
+		return _ask_heroes(c, s, proceed)
 	return _answered(chain, c, s, proceed, CombatResult.new())
+
+
+## `c`, a foe the AI plays, casts `s`: each hero or guest who sees it within 60 ft and could Counterspell it is asked, one
+## after another. The first yes opens the chain (the foes may answer that Counterspell: _answered); all no's let the
+## spell go ahead.
+func _ask_heroes(c: Combatant, s: Dictionary, proceed: Callable) -> CombatResult:
+	if c.is_player_controlled():
+		return proceed.call() as CombatResult
+	var chain: Array[Dictionary] = []
+	var r := CombatResult.new()
+	var offers: Array = []
+	for h in _player_answers(c):
+		offers.append(_first_offer(chain, h, c, s, proceed, r))
+	if offers.is_empty():
+		return proceed.call() as CombatResult
+	return enc().reactions.offer(offers, func() -> CombatResult: return _resolve(chain, c, s, proceed), r)
+
+
+## `h`'s offer to Counterspell `c`'s spell `s` itself (the first step of a chain, which `chain` is still empty of).
+func _first_offer(chain: Array[Dictionary], h: Combatant, c: Combatant, s: Dictionary, proceed: Callable, r: CombatResult) -> Dictionary:
+	var picks := _pay_choices(h)
+	var pick := {"slot": 0}
+	var offer := {"kind": "counterspell", "reactor": h, "trigger": c.id, "title": "Reaction: Counterspell?",
+		"text": func() -> String: return _first_text(h, c, s),
+		"cost": func() -> String: return _cost_text(h, picks),
+		"target_choices": picks, "ways": func() -> int: return maxi(1, picks.size()),
+		"still": func() -> bool: return chain.is_empty() and _rs().can_cast_reaction(h, "counterspell") and enc().distance(h, c) <= 60 and enc().can_see(h, c),
+		"select": func(picked: Array) -> void: pick["slot"] = (-1 if str(picked[0]) == "free" else int(str(picked[0]))) if not picked.is_empty() else 0,
+		"use": func() -> void: _declare(chain, h, c, c, s, int(pick["slot"])),
+		"stop": func() -> CombatResult: return _answered(chain, c, s, proceed, r),
+		"stop_if": func() -> bool: return not chain.is_empty() and chain.back()["caster"] == h}
+	if not picks.is_empty():
+		offer["selected_ids"] = [str(picks[0]["id"])]
+		offer["min_targets"] = 1
+		offer["max_targets"] = 1
+	return offer
 
 
 ## The creature the AI plays that would Counterspell `caster` now: hostile to it, seeing it within 60 ft, with its
@@ -171,6 +207,13 @@ func _prompt_text(chain: Array[Dictionary], h: Combatant, d: Combatant, c: Comba
 	var back := "goes ahead" if chain.size() == 1 else "stands"
 	return "%s casts Counterspell at %s: unless %s's Constitution save holds (%s), %s dissipates. Counterspell it? %s's save would be against DC %d (%s); on a failure the Counterspell fizzles, its slot is kept, and %s %s." \
 		% [d.name(), t.name(), t.name(), _odds(t, int(last["dc"])), what, d.name(), _rs().reaction_dc(h, "counterspell"), _odds(d, _rs().reaction_dc(h, "counterspell")), what, back]
+
+
+## What the prompt says for a foe's own spell: who casts it, the odds of the save it asks for, and what happens to it.
+func _first_text(h: Combatant, c: Combatant, s: Dictionary) -> String:
+	var dc := _rs().reaction_dc(h, "counterspell")
+	return "%s casts %s. Counterspell it? Unless %s's Constitution save holds (%s), the spell dissipates: its action is spent and its slot kept. If a foe Counterspells yours, it fizzles and your slot is kept." \
+		% [c.name(), s["name"], c.name(), _odds(c, dc)]
 
 
 ## "+2 against DC 15, 40% to fail": a Constitution save of `who` against `dc`.
