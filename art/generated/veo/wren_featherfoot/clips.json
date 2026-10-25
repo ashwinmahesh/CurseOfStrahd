@@ -1,0 +1,67 @@
+{
+ "walk_s": {
+  "model": "gemini-omni-1.1-flash",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a halfling monk, from the image. He walks in place as if on a treadmill, facing straight toward the camera, a front view with his chest, shoulders, hips and face squared to the viewer exactly as in the first frame, never turned to either side or into three-quarter view: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He never moves forward or sideways and his body never rotates. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent. The clip is exactly 4 seconds long.",
+  "made": "2026-10-24T21:58:25-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_se": {
+  "model": "gemini-omni-1.1-flash",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a halfling monk, from the image. He walks in place as if on a treadmill, turned three-quarters toward the camera and to the viewer's right, exactly as in the first frame, never turning further round: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He never moves forward or sideways and his body never rotates. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent. The clip is exactly 4 seconds long.",
+  "made": "2026-10-24T21:16:59-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_e": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a halfling monk, from the image. He walks in place as if on a treadmill, always facing exactly the way he faces in the image: a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:24:18-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_ne": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a halfling monk, from the image. He walks in place as if on a treadmill, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:24:36-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ },
+ "walk_n": {
+  "model": "veo-3.1-lite-generate-preview",
+  "seconds": 4,
+  "prompt": "Hand-painted 2D game character animation of a halfling monk, from the image. He walks in place as if on a treadmill, seen from behind the whole time (we only ever see his back; he never turns toward the viewer): a lively, full-bodied walk cycle in the style of a high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms swinging, the shoulders and head moving, his cape, clothes and hair flowing and swaying with every step, a living expression. He never moves forward or sideways. He stays the same size and in the same spot in the frame and never turns. Locked-off static camera: no zoom, no pan, no camera shake. Flat, even chroma-key green background everywhere, no floor, no shadow, no other objects or people. Keep his face, clothes, colours and gear exactly as in the image. Silent.",
+  "made": "2026-10-20T13:25:01-04:00",
+  "centre": [
+   360,
+   776
+  ],
+  "scale": 1.0,
+  "last_frame": false,
+  "screen": "green"
+ }
+}

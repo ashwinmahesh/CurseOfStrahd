@@ -191,6 +191,10 @@ video at run time.
 - Omni turned Kip from facing the camera into three-quarter view on his first walk (2026-10-24), so every prompt now says
   how the hero faces in words (`FACING`: front, three-quarter toward the viewer's right, side profile, seen from behind) and
   that his body never rotates. Retaking that one clip with the new wording kept him square to the camera.
+- The walk prompt names what flows on each hero (`FLOWS`: Godrick's tabard and hair, Ratatouille's robes and apron, ...).
+  Told "cape, clothes and hair" for everyone, Omni drew Godrick a black cape and Ratatouille a dark cloak on some walks.
+  Those clips (Godrick's s, se and e; Ratatouille's s) were kept on their earlier Veo clips; retaking them with the new
+  wording is $0.41 each.
 - Attacks, casts and flinches are 3-second clips ($0.31 each), asked for in real time (Veo's 8-second clips ran the motion
   in slow motion, so a cast squeezed into 12 frames played at several times its real speed). They are meant to end on
   their first frame: the first image is sent twice, as the first and last frame. Without that, Veo turned heroes seen from
@@ -218,7 +222,7 @@ video at run time.
 | Walk | 24 (the cleanest two-step loop, starting on the lowest head, a foot coming down) | 24 fps |
 | Idle | 9 to 18 (a 1.5 to 3 second loop whose last third of a second is faded into its start, since an idle drifts and seldom comes back on its own) | 6 fps |
 | Attack | 18, the fastest motion (the blow) landing on frame 11 (`hit_frames`), held two frames | 16 fps (Godrick's 20.8: owner 2026-10-24, "about 1.3x faster") |
-| Cast | 12, the release landing on frame 4 | 16 fps |
+| Cast | 24, the release landing on frame 8: 1.5 s (owner 2026-10-25: "like 1.5 seconds") | 16 fps |
 | Hurt | 8, the flinch landing on frame 2 (4-second clips; the sheet's die_ and down_ stay drawn) | 16 fps |
 
 For the attack and cast, the frames run from just before the hero moves to the first frame back at the starting

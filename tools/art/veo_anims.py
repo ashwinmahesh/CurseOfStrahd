@@ -85,7 +85,9 @@ SEAM = 8                                    # clip frames an idle loop's end is 
 ATTACK_FRAMES, ATTACK_HIT, ATTACK_FPS = 18, 11, 16.0
 WINDUP_EASE = 1.6
 IMPACT_HOLD = 2.0
-CAST_FRAMES, CAST_HIT, CAST_FPS = 12, 4, 16.0
+# A cast plays for 1.5 s (owner 2026-10-25: "It should be like 1.5 seconds"): 24 frames at 16 fps. It had been 12 frames at 16
+# fps, 0.75 s, which squeezed five or six seconds of slow Veo video into less than a second.
+CAST_FRAMES, CAST_HIT, CAST_FPS = 24, 8, 16.0
 HURT_FRAMES, HURT_PEAK, HURT_FPS = 8, 2, 16.0     # a flinch and back (the hurt sheet's die_ and down_ stay drawn)
 # A hero whose attack needs other timing: (frames, hit frame, fps).
 ATTACK_TIMING = {
@@ -287,6 +289,17 @@ FACING = {
 }
 
 
+# What flows on each hero in a walk. The first Omni walks, told "cape, clothes and hair", drew Godrick and Ratatouille a cape.
+FLOWS = {
+    "godrick_pendlebrook": "tabard and long hair",
+    "liriel_dawnsong": "cloak, robes and long hair",
+    "thistle": "cloak, clothes and hair",
+    "ratatoille": "robes, apron and hair",
+    "wren_featherfoot": "loose clothes and hair",
+    "kip_smudgewick": "tail, apron, clothes and hair",
+}
+
+
 def prompt(hero, kind, d="s"):
     spec = json.loads((ROOT / "art" / "anim" / "animations.json").read_text()).get(hero, {})
     spec.update(MOVES.get(hero, {}))
@@ -308,8 +321,8 @@ def prompt(hero, kind, d="s"):
     if kind == "walk":
         body = (f"{He} walks in place as if on a treadmill, {facing}: a lively, full-bodied walk cycle in the style of a "
                 f"high-end 2D game, the knees bending with each step, the weight rolling from foot to foot, the arms "
-                f"swinging, the shoulders and head moving, {his} cape, clothes and hair flowing and swaying with every "
-                f"step, a living expression. {gear}{He} never moves forward or sideways and {his} body never rotates.")
+                f"swinging, the shoulders and head moving, {his} {FLOWS.get(hero, 'clothes and hair')} flowing and swaying with "
+                f"every step, a living expression. {gear}{He} never moves forward or sideways and {his} body never rotates.")
     elif kind == "idle":
         body = (f"{He} stands still in a relaxed, ready stance, {facing}, breathing gently, {his} weight shifting "
                 f"slightly; {his} hair and clothes stir in a light breeze. {gear}{He} does not walk, speak or move "
