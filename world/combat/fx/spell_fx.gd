@@ -31,6 +31,8 @@ static var _icon_picks: Dictionary = {}
 var rng := RandomNumberGenerator.new()
 ## The missile whose flights wait for its attack rolls: {"cue", "caster"}, until the caster's next action.
 var _volley: Dictionary = {}
+## How many missiles have flown (a test and capture hook: each beam of a spell shows its own).
+var missiles_flown := 0
 ## The last cue cast, for the creatures it summons and the jumps it makes.
 var last_cue: Dictionary = {}
 
@@ -397,6 +399,7 @@ func volley(attacker: CombatToken, target: CombatToken, hit: bool, action: Strin
 func missile(cue: Dictionary, attacker: CombatToken, target: CombatToken, hit: bool) -> void:
 	if not is_instance_valid(attacker) or not is_instance_valid(target):
 		return
+	missiles_flown += 1
 	var to := SpellFx.chest(target)
 	await FxMissiles.fly(self, str(cue["family"]), cue, SpellFx.hand(attacker, to), to, hit)
 

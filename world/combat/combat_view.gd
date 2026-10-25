@@ -2041,8 +2041,11 @@ func _play_events() -> void:
 		var kind := str(ev["type"])
 		match kind:
 			"move":
-				cast_by = ""
-				fx.end_volley()
+				# A push or a pull the spell itself makes between its beams (Repelling Blast, Grasp of Hadar) doesn't end the
+				# volley: the beams after it still fly (Ashwin, 2026-10-23: they showed no animation).
+				if not bool(ev.get("forced", false)):
+					cast_by = ""
+					fx.end_volley()
 				var tok := _tok(str(ev["id"]))
 				if tok == null:
 					continue
