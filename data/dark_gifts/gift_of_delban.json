@@ -1,0 +1,46 @@
+{
+  "id": "gift_of_delban",
+  "name": "The Winter in the Throat",
+  "vestige": "Delban, the star of ice and hate",
+  "summary": "Resistance to cold and Cone of Cold once a Long Rest. The price: vulnerability to fire, and Disadvantage on Persuasion checks.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's (the breached vault's X33d); the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_breached_vault (the breached vault off the vault stair)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "resistance",
+        "value": "cold"
+      },
+      {
+        "stat": "spell",
+        "value": "cone_of_cold",
+        "ability": "con",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "cone_of_cold"
+    ],
+    "text": "You breathe out winter, and the bitterest cold bites you far less than it did."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "vulnerability",
+        "value": "fire"
+      },
+      {
+        "stat": "disadvantage",
+        "on": "check:persuasion"
+      }
+    ],
+    "flaw": "Fire knows you for its enemy now, and burns you deeper than it burns warm men. Your voice has gone cold and dead.",
+    "text": "No living soul warms to a plea or a promise from your lips."
+  },
+  "implemented": "data"
+}

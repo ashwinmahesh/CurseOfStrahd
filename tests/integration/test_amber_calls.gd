@@ -4,7 +4,7 @@ extends TestCase
 ## the temple is sealed, the talk was had or its gift is taken. The first call of the game says how the voices reach
 ## them. The lines are one or two short sentences with no pitch (docs/story/drafts/amber-calls/).
 
-const PLACES := ["amber_temple_faceless_god", "amber_temple_vault"]
+const PLACES := ["amber_temple_faceless_god", "amber_temple_vault", "amber_temple_breached_vault"]
 
 
 func before_each() -> void:
@@ -52,7 +52,7 @@ func _vestige_props(loc_id: String) -> Array[Dictionary]:
 	return out
 
 
-## All sixteen props call, from three squares, only while the temple is open and the talk is still to come.
+## All nineteen props call, from three squares, only while the temple is open and the talk is still to come.
 func test_every_vestige_calls_from_its_prop() -> void:
 	var count := 0
 	for loc_id: String in PLACES:
@@ -64,7 +64,7 @@ func test_every_vestige_calls_from_its_prop() -> void:
 			var when := str(p.get("call_when", ""))
 			assert_true("flag.amber_temple_sealed" in when and ("flag.vestige_%s_heard" % id) in when and ("gift:gift_of_%s" % id) in when,
 				"%s calls only while the temple is open, unheard, and its gift untaken" % id)
-	assert_eq(count, 16, "the ring has six and the hall of vestiges ten")
+	assert_eq(count, 19, "the ring has six, the hall of vestiges ten and the breached vault three")
 
 
 ## One or two short sentences, in the vestige's own voice, no pitch and no game words.

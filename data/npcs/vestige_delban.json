@@ -1,0 +1,16 @@
+{
+  "id": "vestige_delban",
+  "name": "Delban",
+  "title": "A Voice in the Amber",
+  "summary": "A vestige sealed in a sarcophagus of amber in the breached vault off the Amber Temple's vault stair: the star of ice and hate. Still able to speak and to bargain. A single blue-white point of light with needles of frost reaching out through the resin.",
+  "portrait": "vestige_amber",
+  "attitude": "indifferent",
+  "voice": "docs/voice/amber_vestiges.md",
+  "guest": false,
+  "tags": [
+    "vestige",
+    "amber_temple"
+  ],
+  "pronouns": "it",
+  "region": "amber_temple"
+}

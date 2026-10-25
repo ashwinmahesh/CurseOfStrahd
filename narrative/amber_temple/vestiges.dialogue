@@ -225,6 +225,33 @@ endif
 
 # ================================================================================================ The ring of amber
 
+# ---- the breached vault's three calls (T2)
+
+~ zrin_hala_call
+if not flag.amber_calls_begun
+set amber_calls_begun
+Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
+endif
+vestige_zrin_hala: Quiet, so much quiet under this stone! Come closer and help me crack the roof right off this mountain!
+-> END
+
+~ delban_call
+if not flag.amber_calls_begun
+set amber_calls_begun
+Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
+endif
+vestige_delban: Four warm hearts, pumping filth through soft meat. Stand still and let the frost quiet you.
+-> END
+
+~ vaund_call
+if not flag.amber_calls_begun
+set amber_calls_begun
+Narrator: The air stays dead silent, yet a voice unfolds directly behind your eyes, like a memory that is not yours.
+endif
+vestige_vaund: Not there, look to your left. Almost had me that time.
+-> END
+
+
 ~ zantras
 if flag.amber_temple_sealed
 -> sealed
@@ -1401,4 +1428,216 @@ endif
 
 ~ dahlver_nar_refuse
 vestige_dahlver_nar: Goodbye, goodbye, goodbye. We'll practise your voices while you're away.
+-> END
+
+# ================================================================================================ The breached vault's three (Dungeon Expansion Plan T2)
+
+# Zrin-Hala, Delban and Vaund, in the side vault the wardens bricked up and someone broke into (amber_temple_breached_vault, off the
+# vault stair). Same pattern as the sixteen above. Lines drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_dungeon/T2/). Unvoiced.
+
+~ zrin_hala
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_zrin_hala
+Narrator: The frozen bolt inside the amber flares white as the one who carries its gift steps near, and a low rumble shakes the dust from the floor.
+vestige_zrin_hala: There is my thunderhead; go find something tall and split it in two!
+-> END
+endif
+if flag.vestige_zrin_hala_heard
+vestige_zrin_hala: Back again, and still walking softly when you could be shaking the walls!
+-> zrin_hala_menu
+endif
+set vestige_zrin_hala_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: Inside the amber churns a black thunderhead with a gaping mouth, caught forever in the act of roaring. A jagged fork of white lightning hangs frozen from its tongue to the base of the block.
+vestige_zrin_hala: Hear how still this dead hall is? It makes my teeth ache! Put your hands on the amber and let me out into your bones. Will you carry a storm out of this pit?
+-> zrin_hala_menu
+
+~ zrin_hala_menu
+* What do you want with us? -> zrin_hala_want
+* What are you offering? -> zrin_hala_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> zrin_hala_lid | zrin_hala_lid_fail
+* (Step away from the amber.) -> END
+
+~ zrin_hala_want
+vestige_zrin_hala: I want the sky torn open and every high roof brought down in splinters! Give me a hand that can throw the bolt, and I will laugh through your throat!
+-> zrin_hala_menu
+
+~ zrin_hala_offer
+vestige_zrin_hala: Once each day you can hurl a bolt of living lightning straight from your hand. When the sky roars or the lightning strikes you, it will feel like little more than a slap of rain.
+* And the price? -> zrin_hala_price
+* No. -> zrin_hala_refuse
+* I accept. -> zrin_hala_accept
+
+~ zrin_hala_price
+vestige_zrin_hala: The storm will live under your skin, and the air around you will smell of rain and crackle when you move, so you will never creep up on anyone again. Worse for you, my temper comes with the bolt. When someone tries to bend your mind or twist your will, you will find your thoughts too wild to hold steady.
+* No. -> zrin_hala_refuse
+* I accept. -> zrin_hala_accept
+
+~ zrin_hala_lid
+Narrator: The inscription, in plain words: "Zrin-Hala, the howling storm. It loved nothing save the noise of breaking."
+-> zrin_hala_menu
+
+~ zrin_hala_lid_fail
+Narrator: Deep cracks spiderweb across the face of the amber as if struck from within, breaking the carved letters into unreadable shards.
+-> zrin_hala_menu
+
+~ zrin_hala_accept
+dark_gift gift_of_zrin_hala
+if gift:gift_of_zrin_hala
+set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
+Narrator: Hair lifts on {name}'s arms as a blue spark snaps from knuckle to knuckle, filling the vault with the sharp tang of scorched air. Deep inside the block, thunder rolls like a laugh.
+vestige_zrin_hala: Now go, and leave nothing standing that can fall!
+else
+vestige_zrin_hala: Go tiptoe through the dark then, little mice!
+endif
+-> END
+
+~ zrin_hala_refuse
+vestige_zrin_hala: Keep your quiet little hands; the first real gale will blow you flat!
+-> END
+
+~ delban
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_delban
+Narrator: Rime blooms across the face of the amber in sudden geometric ferns as the one who took its gift approaches.
+vestige_delban: Your breath barely fogs the air now; soon you will be almost clean.
+-> END
+endif
+if flag.vestige_delban_heard
+vestige_delban: Still breathing, still steaming in the cold.
+-> delban_menu
+endif
+set vestige_delban_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: At the heart of the pale amber burns a single speck of blue white light, small and sharp as a winter star. Long needles of frost reach outward from it through the resin toward your hand.
+vestige_delban: I can hear your blood rushing from here. Loud, wet, brief. Touch the stone if you wish to hold the winter that outlasts all flesh. Will you take the cold into your hands?
+-> delban_menu
+
+~ delban_menu
+* What do you want with us? -> delban_want
+* What are you offering? -> delban_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> delban_lid | delban_lid_fail
+* (Step away from the amber.) -> END
+
+~ delban_want
+vestige_delban: I want every beating thing stilled and every warm hearth turned to ash and ice. Carry my frost into the world and silence what moves.
+-> delban_menu
+
+~ delban_offer
+vestige_delban: Once each day you may open your hands and breathe out a cone of killing frost. The bitterest winter will bite your flesh far less than before.
+* And the price? -> delban_price
+* No. -> delban_refuse
+* I accept. -> delban_accept
+
+~ delban_price
+vestige_delban: Fire will know you for its enemy and burn you far deeper than it burns warm men. And the winter will settle in your throat forever. Your voice will stay so cold and dead that no living soul will ever warm to a plea or a promise from your lips.
+* No. -> delban_refuse
+* I accept. -> delban_accept
+
+~ delban_lid
+Narrator: The inscription, in plain words: "Delban, the star of ice and hate. It wished the whole world still and white."
+-> delban_menu
+
+~ delban_lid_fail
+Narrator: A thick crust of clear ice clings to the amber, filling every carved groove until the letters vanish under the glare.
+-> delban_menu
+
+~ delban_accept
+dark_gift gift_of_delban
+if gift:gift_of_delban
+set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
+Narrator: The colour drains from {name}'s lips, and the frost on the amber creeps over {name}'s fingertips without melting. When {name} speaks, the words drop into the air like chips of ice.
+vestige_delban: Go then, and make them still.
+else
+vestige_delban: Go rot in your own heat.
+endif
+-> END
+
+~ delban_refuse
+vestige_delban: Keep your fevered blood; it will cool soon enough.
+-> END
+
+~ vaund
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_vaund
+Narrator: The hooded shadow inside the resin slips from corner to corner in time with the shadow of whoever carries its gift.
+vestige_vaund: Careful, friend, I almost saw you standing still just then.
+-> END
+endif
+if flag.vestige_vaund_heard
+vestige_vaund: Back so soon, or did you never quite leave?
+-> vaund_menu
+endif
+set vestige_vaund_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: The amber block looks quite empty when you stare straight into its heart. Only at the corner of your eye do you catch a slight figure in a hooded cloak, slipping toward whichever side you are not watching.
+vestige_vaund: Looking for me? You are a hair too slow, friend, just like the rest of them. Well, almost the rest of them, since the stone caught up at last. Care to learn how not to be where the blade falls?
+-> vaund_menu
+
+~ vaund_menu
+* What do you want with us? -> vaund_want
+* What are you offering? -> vaund_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> vaund_lid | vaund_lid_fail
+* (Step away from the amber.) -> END
+
+~ vaund_want
+vestige_vaund: Why would a thing in a box want anything except a walk outside? Let me ride on your heels, and we can both be somewhere else when trouble arrives.
+-> vaund_menu
+
+~ vaund_offer
+vestige_vaund: A few times each day you can step from here to there in the blink of an eye. When a blow comes for you, you will find yourself half an inch away from where it lands.
+* And the price? -> vaund_price
+* No. -> vaund_refuse
+* I accept. -> vaund_accept
+
+~ vaund_price
+vestige_vaund: Half of you will always be leaning toward the next step, so your body will be a little less hardy when a blow does land. And once you know how easy it is to slip out of sight, how could you ever trust another face? You will never again believe anyone is quite who they claim to be.
+* No. -> vaund_refuse
+* I accept. -> vaund_accept
+
+~ vaund_lid
+Narrator: The inscription, in plain words: "Vaund, the evasive. It slipped every snare save this stone."
+-> vaund_menu
+
+~ vaund_lid_fail
+Narrator: The carved letters seem clear enough until you look straight at them, and then the angles of the amber shift and slide the words away from your eyes.
+-> vaund_menu
+
+~ vaund_accept
+dark_gift gift_of_vaund
+if gift:gift_of_vaund
+set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
+Narrator: For the space of a heartbeat {name} is not standing before the sarcophagus at all, but three paces back by the wall, though neither foot moved. {name}'s eyes dart toward the rest of you, narrowed and uncertain.
+vestige_vaund: There now, try to catch yourself!
+else
+vestige_vaund: Stand right where you are, then; see what finds you.
+endif
+-> END
+
+~ vaund_refuse
+vestige_vaund: Stand still and take what comes, if you like the feel of iron.
 -> END

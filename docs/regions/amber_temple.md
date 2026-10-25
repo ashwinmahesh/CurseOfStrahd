@@ -12,7 +12,7 @@ mountain, an order of wizards (the wardens) once gathered the vestiges, the last
 sealed each one in a sarcophagus of amber, the only thing that holds them. A prison where the prisoners can talk
 becomes, given a few centuries, a market. The wardens listened, one by one, and the temple fell.
 
-The region is a dungeon of temptations. Sixteen sarcophagi talk; each offers a gift that solves a real problem and
+The region is a dungeon of temptations. Nineteen sarcophagi talk; each offers a gift that solves a real problem and
 costs something real and permanent (data/dark_gifts, §4.3). Under them lies the empty sarcophagus of the Thirst, the
 thing that went into a prince of the west four centuries ago, and beside it the copper record of his bargain. The
 climax is the broker of that bargain, the arcanaloth Vosk, offering the party the same deal.
@@ -44,7 +44,7 @@ centuries, and it took you one breath."); the Sentinel speaks in capitals (SPEAK
 
 ## 3. Layout and scenes
 
-Five maps (data/locations/). Themes: `dungeon` for the temple (the doors map is `outdoors` for the sky and the day),
+Six maps (data/locations/). Themes: `dungeon` for the temple (the doors map is `outdoors` for the sky and the day),
 `wilderness` for the ice stair. A dedicated `amber_temple` theme is an art need (§13).
 
 | Map | Areas (enter: triggers) | What happens |
@@ -53,6 +53,7 @@ Five maps (data/locations/). Themes: `dungeon` for the temple (the doors map is 
 | `amber_temple_faceless_god` (40 x 29) | `south_gallery`, `great_hall`, `ring_of_amber`, `hall_of_echoes`, `wardens_cells`, `arrow_slit_gallery` | The colossal statue with no face and the offerings at its feet (**Tarokka spot**: `statue_offerings`; a gaze trap on the step before it). The first step into the great hall springs the ambush under the faceless god (§4.7). West of the south gallery, behind two arrow slits, the wardens' firing gallery (reached from the hall of echoes; the rack holds a Cone of Cold scroll and a fire resistance potion). East: the ring of amber, six sarcophagi and the hollow-eyed seekers (fight). West: the hall of echoes, Patrina (approach). North: the wardens' cells (loot, a frost vent), the library passage and the stair down. Risky rest. |
 | `amber_temple_library` (30 x 20) | `library_stacks`, `reading_room`, `restricted_stacks`, `exethanter_study` | Vosk reading in the stacks (approach, once). The reading room's books: the wardens' charter, the visitors' ledger (Strahd and Exethanter), a treatise on amber. The barred alcove (iron gate, DC 18) and its chained case (the wardens' flameskulls). Exethanter's study: his wall of notes (Investigation 15), the jar labelled NOT THE PHYLACTERY (search DC 13). Risky rest. |
 | `amber_temple_vault` (40 x 30) | `vault_stair`, `hall_of_vestiges`, `treasure_vault`, `sanctum` | Black ice on the stair (trap). The hall of vestiges: ten sarcophagi, a warding glyph line (trap), an empty plinth, a dead sarcophagus. The honey-glow doors (prop `honey_door_seal`) and their guardian; the vault of offerings (**Tarokka spot**: `gift_heap`; falling amber trap). The sanctum: the hollow sarcophagus, the copper pact ledger, Vosk (approach), later Exethanter (approach). No rest. |
+| `amber_temple_breached_vault` (17 x 13) | `breached_vault`, `breached_niche` | Off the vault stair's west wall (§4.8): the wardens' bricked-up side vault, broken into from outside; three more sarcophagi of amber, one behind a hidden door. |
 | `amber_temple_road` (30 x 16) | `switchbacks` | The battlefield for the climb's random fights and events (data/random_encounters/amber_temple_road.json). |
 
 ### The flow (every step optional except the climax)
@@ -103,7 +104,7 @@ the party as strangers every visit unless they pin "These are friends" to his sl
 
 ### 4.3 The dark gifts (the centrepiece)
 
-Sixteen sarcophagi, each a node in `amber_temple/vestiges`, each a vestige NPC speaker. Every node: sealed (silent) /
+Nineteen sarcophagi (sixteen at first, the breached vault's three in §4.8), each a node in `amber_temple/vestiges`, each a vestige NPC speaker. Every node: sealed (silent) /
 its gift already carried (a short "sated" line) / heard before (a short greeting) / first hearing (the Narrator
 describes the shape in the amber; the voice makes its pitch). Its menu: what it wants, what it offers, the price, the
 wardens' lid inscription (History 13), and personal hooks. "No." comes before "I accept." in every menu. Accepting runs
@@ -200,11 +201,39 @@ reached on foot from the hall of echoes (5, 22). Its rack holds a scroll of Cone
 Vosk mentions the hall's welcome when he greets the party, without owning it. Tuned to 5 wins in 8 (docs/story/
 fight_tuning_dungeon_t1.md). The Look Plan owns how the statue looks; this owns the fight and the gallery round it.
 
+### 4.8 The breached vault: three more vestiges (Dungeon Expansion Plan T2, the book's X33d)
+
+Source: R. C. Veeder's area-by-area survey of the 2016 text (rcveeder.net, the Amber Temple's X33d, read 2026-10-20): the vault of
+vestiges holds three more than we had, Zrin-Hala (the howling storm), Delban (the star of ice and hate) and Vaund (the evasive).
+Ours: a side vault off the stair down to the hall of vestiges, `amber_temple_breached_vault` (17 x 13, `dungeon`, dark; mood
+`amber_vault`), reached by `vault_breach` in the stair room's west wall, (0, 3), spawn `from_breach` (1, 3). The wardens bricked
+its doorway up and someone long ago broke through from the stair: the rubble (`breach_bricks`, examine) lies inside among the
+three blocks. Zrin-Hala (4, 6) and Delban (4, 9) stand in the open chamber; Vaund's (8, 1) lies in a niche behind a secret door
+(`breach_niche_door` at (8, 3), search 16), and even found, its figure is never where the eye lands. No fight, no rest.
+
+Each is a vestige NPC speaker (`vestige_zrin_hala`, `vestige_delban`, `vestige_vaund`), a `sarc_<id>` prop in the amber's own case
+(`amber_case`, a shape in art/amber_shapes.json) with a call (`approach: 3`, as the sixteen), a node and menu in
+`amber_temple/vestiges` (want, offer, price, the wardens' lid, "No." before "I accept.") and a gift in data/dark_gifts, every
+price stated before it is taken:
+
+| Vestige | Gift | Price |
+|---|---|---|
+| Zrin-Hala, the howling storm (a thundercloud with a howling mouth, a fork of lightning frozen from its tongue) | `gift_of_zrin_hala`, The Howling Hand: Lightning Bolt once a Long Rest, resistance to lightning and thunder | Disadvantage on Stealth checks and on Wisdom saving throws |
+| Delban, the star of ice and hate (one blue-white point with needles of frost) | `gift_of_delban`, The Winter in the Throat: Cone of Cold once a Long Rest, resistance to cold | vulnerability to fire, Disadvantage on Persuasion checks |
+| Vaund, the evasive (a hooded figure always at the edge of the eye) | `gift_of_vaund`, The Slipped Snare: Advantage on Dexterity saving throws, Misty Step as often as the Proficiency Bonus a Long Rest | one Hit Point less per level, Disadvantage on Insight checks |
+
+Gifts, benefits and prices are ours (the names and ideas are the book's). Taking one counts toward `dark_gifts_taken` like the
+others (the Sentinel, Vosk, Exethanter, the epilogues and the endings read the count, and the hollow's offer stays the last and worst).
+Nineteen vestiges now call, talk and glow (tests/integration/test_amber_calls.gd, test_amber_glow.gd, tests/unit/
+test_amber_shapes.gd; the new map's own test is tests/integration/test_breached_vault.gd). Words: the lines are in
+narrative/amber_temple/vestiges.dialogue and the temple's Narrator file; they were drafted by Gemini through the ai-bridge and
+edited here (docs/plans/gemini_dungeon/T2/). None is voiced yet; the three new speakers need casting.
+
 ## 5. Choices and their consequences
 
 | Choice | Where | Options | Immediate | Downstream |
 |---|---|---|---|---|
-| Dark gifts (each) | the 16 sarcophagi, the hollow | accept (who), refuse | permanent benefit and cost in the build; `dark_gifts_taken` | the Sentinel blocks the way out; Exethanter, Vosk, banter, rests react; Phase 6 endings (`gift:gift_of_the_hollow`, the count) |
+| Dark gifts (each) | the 19 sarcophagi, the hollow | accept (who), refuse | permanent benefit and cost in the build; `dark_gifts_taken` | the Sentinel blocks the way out; Exethanter, Vosk, banter, rests react; Phase 6 endings (`gift:gift_of_the_hollow`, the count) |
 | The wardens' word | lintel, Exethanter, notes | learn it or not | stills the Sentinel, opens the honey doors cleanly | leaving with gifts without a fight |
 | The phylactery | Exethanter's shelf | return, keep, smash | his attitude; the jackal's name | his help in the sanctum and the sealing rite; Phase 6 / epilogue |
 | Exethanter's memory | the ledger | let him forget, make him remember | his line in the sanctum | epilogue |
@@ -338,7 +367,7 @@ Modern finish only; Classic keeps what it had. Nothing here changes a rule, a fl
   the great hall; honey down the nave; green flameskull points in the library), frosted flags in the cold rooms, rock (not
   a snowfield) round the three inside maps, polished black stone that mirrors the glow, and the `amber` light kind (one
   slow breath about every five seconds).
-- **The amber** (`AmberGlow`): the sixteen vestiges stand upright, two squares tall, lit from inside, each holding its own
+- **The amber** (`AmberGlow`): the nineteen vestiges stand upright, two squares tall, lit from inside, each holding its own
   shape (game-icons.net silhouettes, art/amber_shapes.json, `make vestige_shapes`) with a touch of its own; the hollow
   sarcophagus is the largest block of all, dead and clouded, with a thin crimson thread rising out of it (bright once
   `amber_thread_seen`); the Eye's block is the size of a cottage, broken open like an egg; the sleepers lie down. A block
@@ -408,10 +437,11 @@ should choose **"No one"** (the last entry). With no gift taken, the Sentinel le
 - NPCs: data/npcs/{exethanter, vosk, patrina_velikovna, amber_sentinel, vestige_zantras, vestige_fekre,
   vestige_taar_haak, vestige_shami_amourae, vestige_yog, vestige_drizlash, vestige_khirad, vestige_norganas,
   vestige_savnok, vestige_seriach, vestige_sykane, vestige_tarakamedes, vestige_tenebrous, vestige_yrrga,
-  vestige_zhudun, vestige_dahlver_nar}.json
+  vestige_zhudun, vestige_dahlver_nar, vestige_zrin_hala, vestige_delban, vestige_vaund}.json
 - Dark gifts: data/dark_gifts/{gift_of_zantras, gift_of_fekre, gift_of_taar_haak, gift_of_shami_amourae, gift_of_yog,
   gift_of_drizlash, gift_of_khirad, gift_of_norganas, gift_of_savnok, gift_of_seriach, gift_of_sykane,
-  gift_of_tarakamedes, gift_of_tenebrous, gift_of_yrrga, gift_of_zhudun, gift_of_dahlver_nar, gift_of_the_hollow}.json
+  gift_of_tarakamedes, gift_of_tenebrous, gift_of_yrrga, gift_of_zhudun, gift_of_dahlver_nar, gift_of_zrin_hala, gift_of_delban,
+  gift_of_vaund, gift_of_the_hollow}.json
 - Quests: data/quests/{the_amber_temple, something_with_a_lid, patrinas_wail}.json
 - Flags: data/flags/amber_temple.json
 - Locations: data/locations/{amber_temple_entrance, amber_temple_faceless_god, amber_temple_library,

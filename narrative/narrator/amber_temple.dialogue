@@ -332,3 +332,17 @@ once
 
 ~ check:religion:faceless_rite:failure
 | You meet the statue's gaze while you puzzle at the rite, and it looks back into you.
+
+# ---------------------------------------------------------------- The breached vault (Dungeon Expansion Plan T2; lines drafted by
+# Gemini through the ai-bridge, docs/plans/gemini_dungeon/T2/, trimmed)
+
+~ enter:amber_temple_breached_vault
+| Your boots crunch over shattered brick and dry mortar scattered across the stone floor. Beyond the rubble stand two blocks of dark gold amber, while a draught slips from a seam in the far wall.
+cooldown 30
+
+~ examine:breach_bricks
+| The masonry that once sealed this doorway lies in jagged heaps inside the chamber. Whoever broke the wall drove their picks from the stair outside to reach what waited within.
+
+~ open:breach_niche_door
+| Your fingers catch on a bevel in the stone, and a slab grinds back to reveal a third amber block tucked in the shadow.
+

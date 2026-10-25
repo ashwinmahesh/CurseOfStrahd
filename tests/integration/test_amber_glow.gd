@@ -1,6 +1,6 @@
 extends TestCase
 ## The Amber Temple's amber (Amber Temple Look Plan, step 4: AmberGlow, shaders/world/amber.gdshader): in the Modern
-## finish the sixteen vestiges stand upright, about two squares tall, lit from inside, each on the '=' square its prop
+## finish the nineteen vestiges stand upright, about two squares tall, lit from inside, each on the '=' square its prop
 ## already has; the Thirst's empty sarcophagus is the largest block of all, lying across its four squares; the cracked
 ## one is dead, the plinth empty, the sleepers under the vaults lie down, the Eye's block of amber is the size of a
 ## cottage; and Classic keeps the lying box it was frozen with.
@@ -56,17 +56,18 @@ func _glass_box(case: AmberGlow.Case) -> AABB:
 const RING := ["sarc_zantras", "sarc_fekre", "sarc_taar_haak", "sarc_shami_amourae", "sarc_yog", "sarc_drizlash"]
 const NAVE := ["sarc_khirad", "sarc_norganas", "sarc_savnok", "sarc_seriach", "sarc_sykane", "sarc_tarakamedes",
 	"sarc_tenebrous", "sarc_yrrga", "sarc_zhudun", "sarc_dahlver_nar"]
+const BREACH := ["sarc_zrin_hala", "sarc_delban", "sarc_vaund"]
 
 
 ## Every vestige is an upright block about two squares tall and under a square wide, standing on its own '=' square
 ## (the rules' squares are untouched), with a light of the amber kind inside it.
 func test_the_vestiges_stand_upright_on_their_squares() -> void:
-	for loc_id: String in ["amber_temple_faceless_god", "amber_temple_vault"]:
+	for loc_id: String in ["amber_temple_faceless_god", "amber_temple_vault", "amber_temple_breached_vault"]:
 		var v := _view(loc_id)
 		await _frames(3)
 		for prop: Variant in v.loc["props"]:
 			var id := str((prop as Dictionary)["id"])
-			if not (id in RING or id in NAVE):
+			if not (id in RING or id in NAVE or id in BREACH):
 				continue
 			var case := _case(v, id)
 			assert_true(case != null, "%s is a case of amber" % id)
@@ -96,13 +97,13 @@ func test_the_vestiges_stand_upright_on_their_squares() -> void:
 func test_each_vestige_holds_its_own_shape() -> void:
 	var held := {}
 	var views: Array[LocationView] = []
-	for loc_id: String in ["amber_temple_faceless_god", "amber_temple_vault"]:
+	for loc_id: String in ["amber_temple_faceless_god", "amber_temple_vault", "amber_temple_breached_vault"]:
 		var v := _view(loc_id)
 		views.append(v)
 		await _frames(4)
 		for prop: Variant in v.loc["props"]:
 			var id := str((prop as Dictionary)["id"])
-			if not (id in RING or id in NAVE):
+			if not (id in RING or id in NAVE or id in BREACH):
 				continue
 			var case := _case(v, id)
 			var vid := id.trim_prefix("sarc_")
@@ -111,7 +112,7 @@ func test_each_vestige_holds_its_own_shape() -> void:
 			assert_true(case.shape_materials.size() == (2 if vid == "dahlver_nar" else 1), "%s: %d planes" % [id, case.shape_materials.size()])
 			held[vid] = case
 	await _frames(3)
-	assert_eq(held.size(), 16, "all sixteen")
+	assert_eq(held.size(), 19, "all nineteen")
 	var savnok := held["savnok"] as AmberGlow.Case
 	assert_true(savnok.locked and savnok.light != null and LightFlicker.of(savnok.light) == null, "Savnok's light holds still")
 	var normal := held["zantras"] as AmberGlow.Case

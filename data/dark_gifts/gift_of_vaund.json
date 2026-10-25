@@ -1,0 +1,46 @@
+{
+  "id": "gift_of_vaund",
+  "name": "The Slipped Snare",
+  "vestige": "Vaund, the evasive",
+  "summary": "Advantage on Dexterity saving throws and Misty Step a few times a Long Rest. The price: one Hit Point lost per level, and Disadvantage on Insight checks.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's (the breached vault's X33d); the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_breached_vault (the breached vault off the vault stair)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "advantage",
+        "on": "save:dex"
+      },
+      {
+        "stat": "spell",
+        "value": "misty_step",
+        "ability": "dex",
+        "uses": {
+          "count": "pb",
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "misty_step"
+    ],
+    "text": "Blows land half an inch from where you stood, and when trouble comes you are already somewhere else."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "hp_max",
+        "value": "-level"
+      },
+      {
+        "stat": "disadvantage",
+        "on": "check:insight"
+      }
+    ],
+    "flaw": "Half of you is always leaning toward the next step, and your body is a little less hardy for it.",
+    "text": "Once you know how easy it is to slip out of sight, you can never again believe anyone is quite who they claim to be."
+  },
+  "implemented": "data"
+}

@@ -325,6 +325,21 @@
       "id": "statue_shape_withdrew",
       "type": "bool",
       "summary": "The shape in the dark at the faceless god's head (Vosk, unseen) left the ambush unharmed and pleased (the encounter's withdraw)."
+    },
+    {
+      "id": "vestige_zrin_hala_heard",
+      "type": "bool",
+      "summary": "Zrin-Hala (the breached vault) has spoken to the party."
+    },
+    {
+      "id": "vestige_delban_heard",
+      "type": "bool",
+      "summary": "Delban (the breached vault) has spoken to the party."
+    },
+    {
+      "id": "vestige_vaund_heard",
+      "type": "bool",
+      "summary": "Vaund (the breached vault) has spoken to the party."
     }
   ]
 }

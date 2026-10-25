@@ -1,6 +1,6 @@
 extends TestCase
 ## What the Amber Temple's blocks of amber hold (Amber Temple Look Plan §3.2: art/amber_shapes.json, built by make
-## vestige_shapes from the game-icons silhouettes): all sixteen vestiges have an entry, every picture it names is built
+## vestige_shapes from the game-icons silhouettes): all nineteen vestiges have an entry, every picture it names is built
 ## and told apart from the others, every silhouette it uses exists and its artist is credited, and every colour and
 ## touch it names is a palette colour or one the shader draws.
 
@@ -11,7 +11,7 @@ const SHAPES := "res://art/textures/amber/shapes/"
 const ARTISTS := {"lorc": "Lorc", "delapouite": "Delapouite", "skoll": "Skoll", "carl-olsen": "Carl Olsen"}
 
 const VESTIGES := ["zantras", "fekre", "taar_haak", "shami_amourae", "yog", "drizlash", "khirad", "norganas", "savnok",
-	"seriach", "sykane", "tarakamedes", "tenebrous", "yrrga", "zhudun", "dahlver_nar"]
+	"seriach", "sykane", "tarakamedes", "tenebrous", "yrrga", "zhudun", "dahlver_nar", "zrin_hala", "delban", "vaund"]
 
 
 func _data() -> Dictionary:

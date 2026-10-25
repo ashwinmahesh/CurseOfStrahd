@@ -1,0 +1,205 @@
+{
+  "id": "amber_temple_breached_vault",
+  "name": "The Amber Temple, the Breached Vault",
+  "region": "amber_temple",
+  "summary": "A side vault off the stair down to the hall of vestiges. The wardens bricked its doorway up; long ago someone broke through from the stair, and the rubble lies inside among three more sarcophagi of amber: a storm, a star of ice, and one the eye keeps losing.",
+  "text": "Broken brick and dry mortar on the floor of a chamber the wardens meant to keep shut.",
+  "map": {
+    "rows": [
+      "#################",
+      "#######.=.#######",
+      "#######...#######",
+      "########.########",
+      "#...............#",
+      "#..........~.~..#",
+      "#...=.......~...#",
+      "#...............#",
+      "#............~..#",
+      "#...=.......~...#",
+      "#.............~.#",
+      "#...............#",
+      "#################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "breached_vault",
+      "name": "The breached vault",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          15,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "breached_niche",
+      "name": "The niche",
+      "cells": [
+        [
+          7,
+          1
+        ],
+        [
+          9,
+          2
+        ]
+      ],
+      "furnish": false
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      7
+    ],
+    "from_vault": [
+      15,
+      7
+    ]
+  },
+  "exits": [
+    {
+      "id": "breach_to_vault",
+      "cell": [
+        16,
+        7
+      ],
+      "to": "amber_temple_vault",
+      "spawn": "from_breach",
+      "label": "Back through the breach"
+    }
+  ],
+  "doors": [
+    {
+      "id": "breach_niche_door",
+      "cell": [
+        8,
+        3
+      ],
+      "label": "A seam in the stone",
+      "secret_dc": 16
+    }
+  ],
+  "props": [
+    {
+      "id": "sarc_zrin_hala",
+      "cell": [
+        4,
+        6
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a storm cloud)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:zrin_hala",
+      "approach": 3,
+      "call": "amber_temple/vestiges:zrin_hala_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_zrin_hala_heard and not gift:gift_of_zrin_hala"
+    },
+    {
+      "id": "sarc_delban",
+      "cell": [
+        4,
+        9
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a frozen point of light)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:delban",
+      "approach": 3,
+      "call": "amber_temple/vestiges:delban_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_delban_heard and not gift:gift_of_delban"
+    },
+    {
+      "id": "sarc_vaund",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (an empty block)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:vaund",
+      "approach": 3,
+      "call": "amber_temple/vestiges:vaund_call",
+      "call_when": "not flag.amber_temple_sealed and not flag.vestige_vaund_heard and not gift:gift_of_vaund"
+    },
+    {
+      "id": "breach_bricks",
+      "cell": [
+        14,
+        4
+      ],
+      "kind": "examine",
+      "label": "The broken bricks of the old doorway",
+      "model": "rubble"
+    },
+    {
+      "id": "breach_rubble_a",
+      "cell": [
+        12,
+        6
+      ],
+      "kind": "decor",
+      "label": "Broken brick",
+      "model": "rubble"
+    },
+    {
+      "id": "breach_rubble_b",
+      "cell": [
+        13,
+        8
+      ],
+      "kind": "decor",
+      "label": "Broken brick",
+      "model": "rubble"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        5,
+        5
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "mist_blue"
+    },
+    {
+      "cell": [
+        5,
+        10
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "amber",
+      "bright_ft": 0,
+      "dim_ft": 10,
+      "color": "flame"
+    }
+  ],
+  "npcs": [],
+  "encounters": [],
+  "narration": {
+    "enter": "enter:amber_temple_breached_vault"
+  },
+  "rest": "no",
+  "rest_text": "Nobody sleeps down here. The voices in the amber know your names now, and they take turns.",
+  "treasure_spots": {}
+}

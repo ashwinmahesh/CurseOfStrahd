@@ -229,6 +229,21 @@
       "case": "vestige",
       "classic": "amber_sarcophagus"
     },
+    "sarc_zrin_hala": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_delban": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_vaund": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
     "cracked_sarcophagus": {
       "art": "amber_case",
       "case": "cracked",

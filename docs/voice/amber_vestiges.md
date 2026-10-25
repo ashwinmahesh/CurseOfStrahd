@@ -1,6 +1,6 @@
 # The vestiges of the Amber Temple — voice bible
 
-Sixteen talking sarcophagi (NPCs `vestige_<name>`, no stat blocks; speakers `vestige_<name>`), the Amber Sentinel
+Nineteen talking sarcophagi (NPCs `vestige_<name>`, no stat blocks; speakers `vestige_<name>`), the Amber Sentinel
 (`amber_sentinel`), and the Thirst, whose amber is empty. Region: the Amber Temple
 (narrative/amber_temple/vestiges.dialogue, sentinel.dialogue). Gifts: data/dark_gifts/. Shared portrait
 `vestige_amber` (a glow in amber; an art need); the Narrator describes what is in each block.
@@ -41,6 +41,9 @@ knows. The lid inscriptions (History 13) are the wardens' blunt warnings.
 | Yrrga, the eye that opened outside | terrible truth | clinical pity for the blind |
 | Zhudun, the dead star | cold light | grand and lonely; "I was a sun once" |
 | Dahlver-Nar, the mouth of borrowed teeth | collection | many voices, repeating words in threes |
+| Zrin-Hala, the howling storm | fury | loud, gusting, impatient; laughs like thunder; wants everything broken open (the breached vault) |
+| Delban, the star of ice and hate | cold hatred | quiet, precise, contemptuous; every word cold and clipped; despises warmth, breath and heartbeats (the breached vault) |
+| Vaund, the evasive | escape | light, amused, slippery; answers questions with questions; "over here", "not quite" (the breached vault) |
 | The Amber Sentinel | the wardens' rule | capitals, three or four words: SPEAK THE WORD. NOTHING LEAVES. |
 
 ## Sample lines

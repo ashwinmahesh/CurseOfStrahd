@@ -115,6 +115,10 @@
     "from_deep": [
       35,
       12
+    ],
+    "from_breach": [
+      1,
+      3
     ]
   },
   "exits": [
@@ -138,6 +142,16 @@
       "spawn": "from_vault",
       "label": "Down under the vault floor",
       "when": "flag.deep_stair_open"
+    },
+    {
+      "id": "vault_breach",
+      "cell": [
+        0,
+        3
+      ],
+      "to": "amber_temple_breached_vault",
+      "spawn": "from_vault",
+      "label": "A breach broken through the wall"
     }
   ],
   "doors": [

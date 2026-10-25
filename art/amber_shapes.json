@@ -83,6 +83,18 @@
         {"icon": "lorc/tooth", "at": [0.27, 0.27], "size": 0.12, "rot": 315, "plane": "orbit"}
       ],
       "tint": "umber", "touch": "orbit"
+    },
+    "zrin_hala": {
+      "layers": [{"icon": "lorc/lightning-storm", "at": [0.5, 0.5], "size": 0.94}],
+      "tint": "slate", "core": "frost", "edge": "mist_blue", "touch": "sparks_up"
+    },
+    "delban": {
+      "layers": [{"icon": "lorc/snowflake-2", "at": [0.5, 0.5], "size": 0.9}],
+      "tint": "moon_blue", "core": "frost", "edge": "moon_blue", "touch": "glints"
+    },
+    "vaund": {
+      "layers": [{"icon": "lorc/hood", "at": [0.62, 0.5], "size": 0.8}],
+      "tint": "ink", "touch": "fade", "soft": 2.2
     }
   }
 }
