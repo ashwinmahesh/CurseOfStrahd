@@ -421,14 +421,9 @@ func end_honour() -> void:
 ## saves P4 keeps (tests/saves, made by the auto-player the playthrough tests use, so the same saves the tests load);
 ## each chapter's newest save version is offered. Loaded, a chapter is a game with no slot of its own, like a backup.
 const CHAPTERS_DIR := "res://tests/saves/"
-## Story order: [chapter, title, the travel map's place it starts at]. A chapter without a save isn't offered.
-const CHAPTERS := [["into_the_mists", "Into the Mists", "gates_of_barovia"], ["death_house", "Death House", "village_of_barovia"],
-	["village_of_barovia", "The Village of Barovia", "village_of_barovia"], ["tser_pool", "Tser Pool", "tser_pool"],
-	["vallaki", "Vallaki", "vallaki"], ["old_bonegrinder", "Old Bonegrinder", "old_bonegrinder"],
-	["wizard_of_wines", "The Wizard of Wines", "wizard_of_wines"], ["krezk", "Krezk", "krezk"],
-	["berez", "The Ruins of Berez", "berez"], ["argynvostholt", "Argynvostholt", "argynvostholt"],
-	["werewolf_den", "The Werewolf Den", "werewolf_den"], ["amber_temple", "The Amber Temple", "amber_temple"],
-	["castle_ravenloft_gates", "The Gates of Castle Ravenloft", "castle_ravenloft"]]
+## Story order, from data/progression/chapters.json: {id, title, place} (the travel map's place the chapter starts at). A
+## chapter without a save isn't offered.
+const CHAPTERS_FILE := "res://data/progression/chapters.json"
 
 
 ## The chapters there are saves for, in story order, as describe() gives them, with {chapter, title, number, place}.
@@ -445,17 +440,19 @@ func chapters() -> Array[Dictionary]:
 		if not newest.has(chapter) or int((newest[chapter] as Array)[0]) < int(version):
 			newest[chapter] = [int(version), stem]
 	var out: Array[Dictionary] = []
-	for i in CHAPTERS.size():
-		var c := CHAPTERS[i] as Array
-		if not newest.has(str(c[0])):
+	var listed := (JSON.parse_string(FileAccess.get_file_as_string(CHAPTERS_FILE)) as Dictionary)["chapters"] as Array
+	for i in listed.size():
+		var c := listed[i] as Dictionary
+		var id := str(c["id"])
+		if not newest.has(id):
 			continue
-		var s := describe(str((newest[str(c[0])] as Array)[1]), CHAPTERS_DIR)
+		var s := describe(str((newest[id] as Array)[1]), CHAPTERS_DIR)
 		if s.is_empty():
 			continue
-		s["chapter"] = str(c[0])
-		s["title"] = str(c[1])
+		s["chapter"] = id
+		s["title"] = str(c["title"])
 		s["number"] = i + 1
-		s["place"] = str(c[2])
+		s["place"] = str(c["place"])
 		out.append(s)
 	return out
 

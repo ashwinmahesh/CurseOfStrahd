@@ -1,0 +1,25 @@
+{
+  "$id": "chapters.schema.json",
+  "title": "Jump-in chapters (SaveSystem.chapters)",
+  "type": "object",
+  "required": ["id", "summary", "chapters"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"const": "chapters"},
+    "summary": {"type": "string"},
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "place"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9_]+$", "description": "The chapter's name in tests/saves: v<save version>_<id>.json."},
+          "title": {"type": "string", "minLength": 1},
+          "place": {"type": "string", "pattern": "^[a-z0-9_]+$", "description": "The travel map place the chapter starts at (data/travel)."}
+        }
+      }
+    }
+  }
+}

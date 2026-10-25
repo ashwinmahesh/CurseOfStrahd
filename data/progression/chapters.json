@@ -1,0 +1,71 @@
+{
+  "id": "chapters",
+  "summary": "The Jump-in chapters the saves screen offers (SaveSystem.chapters): story order, the title shown, and the travel map's place the chapter starts at. A chapter is offered only when tests/saves has a save for it.",
+  "chapters": [
+    {
+      "id": "into_the_mists",
+      "title": "Into the Mists",
+      "place": "gates_of_barovia"
+    },
+    {
+      "id": "death_house",
+      "title": "Death House",
+      "place": "village_of_barovia"
+    },
+    {
+      "id": "village_of_barovia",
+      "title": "The Village of Barovia",
+      "place": "village_of_barovia"
+    },
+    {
+      "id": "tser_pool",
+      "title": "Tser Pool",
+      "place": "tser_pool"
+    },
+    {
+      "id": "vallaki",
+      "title": "Vallaki",
+      "place": "vallaki"
+    },
+    {
+      "id": "old_bonegrinder",
+      "title": "Old Bonegrinder",
+      "place": "old_bonegrinder"
+    },
+    {
+      "id": "wizard_of_wines",
+      "title": "The Wizard of Wines",
+      "place": "wizard_of_wines"
+    },
+    {
+      "id": "krezk",
+      "title": "Krezk",
+      "place": "krezk"
+    },
+    {
+      "id": "berez",
+      "title": "The Ruins of Berez",
+      "place": "berez"
+    },
+    {
+      "id": "argynvostholt",
+      "title": "Argynvostholt",
+      "place": "argynvostholt"
+    },
+    {
+      "id": "werewolf_den",
+      "title": "The Werewolf Den",
+      "place": "werewolf_den"
+    },
+    {
+      "id": "amber_temple",
+      "title": "The Amber Temple",
+      "place": "amber_temple"
+    },
+    {
+      "id": "castle_ravenloft_gates",
+      "title": "The Gates of Castle Ravenloft",
+      "place": "castle_ravenloft"
+    }
+  ]
+}
