@@ -2678,6 +2678,16 @@
       "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: looming, the hollow mouth gaping. Lit by cold moonlight from the side (like the specter's portrait), not candlelight. Base portrait only: Lorghoth has no dialogue lines, so no mood is ever asked for."
     },
     {
+      "id": "fennimore_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/fennimore_portrait.png",
+      "sprites": "art/portraits/fennimore.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ambrose Fennimore, a mildly pompous, kind and observant middle-aged human travel writer from beyond the mists, a little lost but cheerful: a round, ruddy, clean-shaven face with thick grey-brown muttonchop whiskers, small round brass spectacles, thinning swept-back hair, a rumpled mustard-yellow waistcoat over a cream cravat under a worn green travelling coat, an ink-stained quill tucked behind one ear and a leather satchel strap across his chest. Head and shoulders, facing the viewer, a mild benevolent half-smile, on a plain flat white background, no ground shadow.",
+      "notes": "Ambrose Fennimore's own portrait (wave 1 art, 2026-10-24, Ashwin's typed yes): he had shared the generic noble's. One Gemini call, 1024 -> 512 px by blender/portrait.py with BG=ash_violet SAT=0.8: at the default saturation the palette snap turned the pink shading on his face into a red stripe like war paint, and 0.9 made his coat blotchy green; 0.8 keeps a warm face and a plain drab coat. Sprite stays the noble's."
+    },
+    {
       "id": "cult_shades_portrait",
       "kind": "portrait",
       "status": "generated",
