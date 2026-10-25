@@ -102,8 +102,9 @@ night was fifty years; his little ones, Petra and Mihail, are Goodwife Petra who
 sexton (Insight DC 11 sees the moss in his seams). **Escalation:** the moment he sets off, the count's wolves come out
 of the fog for him.
 
-- Fight `ilarion_wolves` on the road: level 1 five wolves and a rat, 260 XP (the sharp autopilot wins 5 of 8,
-  2026-10-13); level 2 six; level 3 a dire wolf leader and four wolves.
+- Fight `ilarion_wolves` on the road: level 1 three wolves and a rat, 160 XP; level 2 four (owner, 2026-10-25: the opening
+  wolves hit too hard below level 3, so these are the book-sized packs again; they were five and a rat, and six); level 3 a
+  dire wolf leader and seven wolves.
 - At the well, Petra knows her father. He gives the party his wife's grandmother's boots, which walk on air a little:
   Winged Boots (uncommon). Old Mihail fills in the grave he dug fifty years ago.
 

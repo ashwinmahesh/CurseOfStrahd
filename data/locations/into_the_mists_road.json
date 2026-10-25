@@ -513,34 +513,6 @@
             26,
             17
           ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            19,
-            14
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            19,
-            15
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            20,
-            13
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            19,
-            13
-          ]
         }
       ],
       "text": "The pack stops pretending."
@@ -1027,20 +999,6 @@
         {
           "monster": "wolf",
           "cell": [
-            24,
-            16
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            26,
-            17
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
             22,
             13
           ]
@@ -1072,20 +1030,6 @@
           "monster": "wolf",
           "cell": [
             29,
-            17
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            24,
-            16
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            26,
             17
           ]
         },

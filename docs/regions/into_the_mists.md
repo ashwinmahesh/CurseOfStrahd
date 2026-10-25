@@ -55,7 +55,7 @@ independently; the journal shows whichever were reached.
 
 | id | Trigger | Monsters | XP | Party level | Difficulty (2024 DMG, 4 PCs) |
 |---|---|---|---|---|---|
-| `mists_wolves` | dialogue (failed check or "draw steel") | 7 wolves (the three in the narrows and behind, and four more out of the fog) | 350 | 1 | Moderate+ (budget 200 / 300 / 400); scaled up for 2024 heroes (owner, 2026-10-13), then retuned for the sharp test party (5 wins in 8): 4 wins in 8, the harder side (six wolves were 7, six with any seventh beast 3) |
+| `mists_wolves` | dialogue (failed check or "draw steel") | 3 wolves (the three in the narrows and behind) | 150 | 1 | The book's pack again (owner, 2026-10-25: the opening wolves hit too hard below level 3; it had been scaled up to 7 for 2024 heroes and the sharp test party) |
 
 Trap: `mists_wolf_trap` [25, 15], detect 11, disarm 11, Dex save 11, 1d6 piercing.
 
