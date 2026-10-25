@@ -6045,6 +6045,18 @@
   "e3f29d164ae90f38": "[many voices, gleeful, tempting]",
   "e4305c1f61646966": "[many voices, disappointed, eerie]"
  },
+ "vestige_delban": {
+  "5b4574fb115f7748": "[ancient, hateful, calm, intent]",
+  "5cd9f919bd99bfe5": "[cold, slow, approving]",
+  "5ffd10739fa2a262": "[icy, slow, disdainful]",
+  "73c4b57b5da93fc8": "[thin, precise, hateful, inviting]",
+  "7405fbaf0bf598f3": "[measured, cold, matter-of-fact]",
+  "79e5a0c06d243329": "[hollow, slow, grim, quietly cruel]",
+  "8262282ad61f42c9": "[glacial, flat, contemptuous]",
+  "988e2d69e8e117bf": "[calm, dismissive, loathing]",
+  "ddc202098e7493dc": "[flat, bitter, unmoved]",
+  "fa6d5c8303207901": "[quiet, cold, satisfied]"
+ },
  "vestige_drizlash": {
   "0d69cdefe78a4f6d": "[rapid, skittering whisper, excited]",
   "20d52d1b2287788e": "[skittering whisper, rapid]",
@@ -6182,6 +6194,18 @@
   "d5b188705effcdec": "[whispering, longing]",
   "e9d267ad1fad5a23": "[hushing, displeased whisper]"
  },
+ "vestige_vaund": {
+  "18a431f9d3c5d571": "[mischievous, quick, taunting]",
+  "365e8f38d96c7857": "[playful, evasive, laughing]",
+  "3e76d588e50f2b0b": "[arch, teasing, dismissive]",
+  "51b82b902625228f": "[playful, quick, coy]",
+  "5d60afc7257f9c1b": "[sly, teasing, pleased]",
+  "714989a4852d6741": "[roguish, teasing, wry, tempting]",
+  "8c5e40eb9f118d7b": "[coaxing, slippery, amused]",
+  "d0b65e366d6a3e60": "[light, quick, bright, persuasive]",
+  "f3c94bb18fef2e0f": "[wry, rueful, slyly honest]",
+  "f4c3470ea9e5625e": "[sly, airy, shrugging]"
+ },
  "vestige_yog": {
   "092194039c4c48c1": "[enormous, slow, rumbling]",
   "43147802045b92a4": "[enormous, slow, rumbling]",
@@ -6233,6 +6257,18 @@
   "af2a4d8d9a13bbba": "[aching, lonely]",
   "b35a92f7e7ac3ec4": "[grateful, faint]",
   "de4a928c4e85b09c": "[grand, fading, lonely]"
+ },
+ "vestige_zrin_hala": {
+  "268f6a5fd89e2a84": "[thunderous, mocking, amused]",
+  "359bb816839d2590": "[scornful, laughing, thunderous]",
+  "8cc61f6e320fc9be": "[booming, gleeful, approving]",
+  "9092f70f6a9e39d3": "[reckless, ravenous, gleeful, booming]",
+  "981b5f6075b18669": "[thunderous, reckless, exultant]",
+  "9a1bc82599418735": "[booming, wicked, relishing, wild]",
+  "9bb0d92e211c95c6": "[booming, jeering, laughing]",
+  "a10f0297f8eed9e3": "[vast, cheerful, boasting]",
+  "a46a829759051ba2": "[gleeful, impatient, thunderous]",
+  "dbd33b7c2e227a10": "[deep, booming, restless, eager]"
  },
  "victor_vallakovich": {
   "02a1277c575b6189": "[sneering, curious]",

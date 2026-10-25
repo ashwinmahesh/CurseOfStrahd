@@ -2716,6 +2716,20 @@
       "accent_tag": "[refined courtly accent]",
       "model": "eleven_v3",
       "released": true
+    },
+    "vestige_delban": {
+      "voice_id": "yME24iAnTpDeMyYoDKU2",
+      "name": "Barovia Delban (2026-10-25)",
+      "description": "A cold, ancient, hateful voice, like frost cracking across glass. Thin, hollow and glacial, slow and precise, flat and utterly without warmth, quiet loathing for anything warm and living. Calm, never loud.",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "vestige_zrin_hala": {
+      "voice_id": "13MaukCPIyVEEOWSVWkU",
+      "name": "Barovia Zrin-Hala (2026-10-25)",
+      "description": "A vast, boisterous, ageless voice: a thunderstorm given a throat. Deep, booming and gleeful, reckless and restless, laughing with delight at things breaking, gravel and thunder in every word. Never whispering, never sad.",
+      "model": "eleven_v3",
+      "released": true
     }
   },
   "sfx": {
