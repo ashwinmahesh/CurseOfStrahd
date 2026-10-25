@@ -4470,14 +4470,15 @@
       "id": "baba_lysagas_creeping_hut",
       "kind": "creature",
       "status": "generated",
-      "source": "art/generated/characters/baba_lysagas_creeping_hut_turnaround.png",
+      "source": "art/generated/characters/baba_lysagas_creeping_hut_turnaround_model.png",
       "sprites": "art/sprites/baba_lysagas_creeping_hut/walk.tres",
       "portrait": "art/portraits/baba_lysagas_creeping_hut.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Baba Lysaga's creeping hut, a small ramshackle wooden witch's hut with a crooked thatched roof, a dark doorway and two glowing windows, standing on a massive tangle of gnarled living tree roots shaped like two huge clawed bird legs. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on its two legs, same scale and height, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (21:9) -> make sprite BODY=lumber -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "notes": "Rebuilt from Pelilasdis's 3D model \"The Hut On Fowl's Legs\" (CC BY 4.0, art/sourced/sketchfab_hut_on_fowls_legs_pelilasdis/, wave 1 art 2026-10-25, Ashwin's typed yes): blender/render_views.py rendered five views (ground, trees and yard left out; lit from the camera; an ink outline added round each view) into the turnaround, then make sprite BODY=lumber SAT=1.2, drawn at 5.6 (was 3.8). The portrait is a crop of the same render. The attack sheet is still drawn from the old Gemini hut (art/generated/anim) until it is redrawn from the new sheet. The first Gemini turnaround stays in art/generated/characters.",
       "sprite_flags": [
-        "BODY=lumber"
+        "BODY=lumber",
+        "SAT=1.2"
       ]
     },
     {
