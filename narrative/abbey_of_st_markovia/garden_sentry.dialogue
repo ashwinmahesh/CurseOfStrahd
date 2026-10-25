@@ -13,5 +13,5 @@ endif
 
 ~ cut
 Narrator: The stitches part with a sound like a sigh. Inside, wrapped in a nun's old apron, is the thing it was holding closer than any gardener would.
-tarokka give abbey_of_st_markovia_garden
+reading give abbey_of_st_markovia_garden
 -> END

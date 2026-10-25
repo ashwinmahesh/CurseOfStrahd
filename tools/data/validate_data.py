@@ -625,7 +625,7 @@ pending_list = []
 
 
 def treasure_checks(data, parsed, errors, pending):
-    """Treasure spots, `tarokka give`, allies and dark gifts (ADR 0011)."""
+    """Treasure spots, `reading give`, allies and dark gifts (ADR 0011)."""
     out = data.get("tarokka", {}).get("outcomes", {})
     places = {}
     for slot in ("tome", "symbol", "sword"):
@@ -650,14 +650,14 @@ def treasure_checks(data, parsed, errors, pending):
                 fkey, _, node = spot["dialogue"].rpartition(":")
                 if fkey not in parsed or node not in parsed[fkey]["nodes"]:
                     errors.append(f"{w}: treasure spot '{place}': no dialogue node '{spot['dialogue']}'")
-                elif not any(pl == place for pl, _ in parsed[fkey].get("tarokka_give", [])):
-                    errors.append(f"{w}: treasure spot '{place}': {fkey} never says `tarokka give {place}`")
+                elif not any(pl == place for pl, _ in parsed[fkey].get("reading_give", [])):
+                    errors.append(f"{w}: treasure spot '{place}': {fkey} never says `reading give {place}`")
     gives = {}
     for key, p in parsed.items():
-        for place, where in p.get("tarokka_give", []):
+        for place, where in p.get("reading_give", []):
             gives.setdefault(place, []).append(where)
             if place not in places:
-                errors.append(f"narrative/{where}: tarokka give '{place}' isn't a Tarokka place")
+                errors.append(f"narrative/{where}: reading give '{place}' isn't a Tarokka place")
         for gid, where in p.get("dark_gifts", []):
             if gid not in data.get("dark_gifts", {}):
                 errors.append(f"narrative/{where}: unknown dark gift '{gid}'")

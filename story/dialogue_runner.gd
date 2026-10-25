@@ -241,17 +241,17 @@ func next() -> Dictionary:
 				if wait <= 0:
 					wait += 24 * 60
 				st.advance_minutes(wait)
-			"tarokka_draw":
+			"reading_draw":
 				pc += 1
 				Campaign.module().ensure_drawn(st)
-			"tarokka_read":
+			"reading_read":
 				pc += 1
 				var reading := Campaign.module().reading(str(s["slot"]), st)
 				if reading.is_empty():
 					continue
 				_queued.append(_line_beat(str(s["speaker"]), "", str(reading["verse"])))
 				return {"kind": "notice", "text": str(reading["title"]), "card": reading["card"], "slot": reading["slot"]}
-			"tarokka_give":
+			"reading_give":
 				pc += 1
 				# The treasures the reading hid here, handed to the party's leader (ADR 0011).
 				var got := Campaign.module().take_from(str(s["place"]), st)

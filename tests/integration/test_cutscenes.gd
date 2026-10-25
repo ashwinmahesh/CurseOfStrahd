@@ -39,7 +39,7 @@ Narrator: The ridge is bare.
 -> END
 
 ~ treasure
-tarokka give argynvostholt_vladimir
+reading give argynvostholt_vladimir
 Narrator: It is heavier than it looks.
 -> END
 

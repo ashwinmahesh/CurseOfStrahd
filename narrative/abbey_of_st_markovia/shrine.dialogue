@@ -27,7 +27,7 @@ endif
 if tarokka.sword.place == abbey_of_st_markovia_shrine
 quest find_the_sunsword found
 endif
-tarokka give abbey_of_st_markovia_shrine
+reading give abbey_of_st_markovia_shrine
 if name:ratatoille
 interject name:ratatoille: "Look behind the light." She was right. As one diviner to another, madame, I salute you.
 else

@@ -72,7 +72,7 @@ Kasimir: I know. I have stood behind one for a very long time.
 # The Beggar's treasure: he keeps it, and trades it for a road into the mountains (Wiki finding 70).
 ~ trade
 Kasimir: A road into the mountains. (He puts the net down.) Then I have something for you. The Vistani found it on the road and brought it to me, because I am the one who keeps the things nobody else wants.
-tarokka give vallaki_vistani_camp:camp_edge
+reading give vallaki_vistani_camp:camp_edge
 Kasimir: Find me that road. I will hold you to it.
 -> menu
 
@@ -90,7 +90,7 @@ Kasimir: I will come. Somewhere along your road is the castle, and beneath it, m
 # The road into the mountains is his now, so is the trade (Wiki finding 100).
 if treasure_at:vallaki_vistani_camp:camp_edge
 Kasimir: And you will want this. I was keeping it for whoever would take me into the mountains. It seems that is you.
-tarokka give vallaki_vistani_camp:camp_edge
+reading give vallaki_vistani_camp:camp_edge
 endif
 join kasimir_velikov
 quest find_the_ally found

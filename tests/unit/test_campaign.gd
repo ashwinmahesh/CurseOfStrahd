@@ -65,9 +65,9 @@ func test_conditions_hints_and_the_reading_in_dialogue() -> void:
 	var f := DialogueFile.parse("""
 ~ eva
 madam_eva: Sit.
-tarokka draw
-tarokka read sword
-tarokka read ally
+reading draw
+reading read sword
+reading read ally
 -> END
 """, "test/eva")
 	assert_true(f.errors.is_empty(), str(f.errors))
@@ -191,7 +191,7 @@ func test_treasure_spots_hand_over_the_reading_once() -> void:
 	assert_true(bool(st.get_flag("treasure_found_tome")))
 	assert_true(Tarokka.take_from("place_swords_1", st).is_empty(), "found once")
 	assert_false(StoryConditions.check("treasure_at:place_swords_1", st))
-	DialogueFile.register(DialogueFile.parse("~ hand\ntarokka give place_coins_3\n-> END\n", "test/hand"))
+	DialogueFile.register(DialogueFile.parse("~ hand\nreading give place_coins_3\n-> END\n", "test/hand"))
 	var r := DialogueRunner.new(st, DiceRoller.new(1))
 	r.start("test/hand:hand")
 	var b := r.next()

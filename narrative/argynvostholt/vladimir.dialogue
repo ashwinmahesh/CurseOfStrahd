@@ -248,7 +248,7 @@ Vladimir: Take it. Use it to break him. If you use it to end him, the Order will
 else
 Vladimir: Take it. I kept it so that nobody would end him. It seems I was keeping it for you.
 endif
-tarokka give argynvostholt_vladimir
+reading give argynvostholt_vladimir
 endif
 -> END
 

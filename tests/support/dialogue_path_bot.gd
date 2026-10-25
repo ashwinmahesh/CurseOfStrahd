@@ -1,6 +1,6 @@
 class_name DialoguePathBot
 extends RefCounted
-## Test support (Phase 5 exit): plays a conversation toward a goal statement (`tarokka give <place>`, `join <npc>`),
+## Test support (Phase 5 exit): plays a conversation toward a goal statement (`reading give <place>`, `join <npc>`),
 ## picking at every menu an enabled option from which the goal can still be reached by the files' jumps, and trying
 ## again with other dice when a check sends it the wrong way. `done` says whether the goal happened.
 

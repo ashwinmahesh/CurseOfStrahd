@@ -139,7 +139,7 @@ func _obtain(loc: String, place: String) -> String:
 		v._spoils(str(spot["encounter"]), enc)
 	elif spot.has("dialogue"):
 		var bot := DialoguePathBot.new()
-		var goal := func(s: Dictionary) -> bool: return str(s.get("t", "")) == "tarokka_give" and str(s.get("place", "")) == place
+		var goal := func(s: Dictionary) -> bool: return str(s.get("t", "")) == "reading_give" and str(s.get("place", "")) == place
 		var done := func() -> bool: return bool(st.get_flag("treasure_found_tome", false))
 		if not bot.play(st, str(spot["dialogue"]), goal, done):
 			v.loot_opened.disconnect(catch)

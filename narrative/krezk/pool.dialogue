@@ -40,7 +40,7 @@ endif
 if tarokka.sword.place == krezk_pool_of_the_white_sun
 quest find_the_sunsword found
 endif
-tarokka give krezk_pool_of_the_white_sun
+reading give krezk_pool_of_the_white_sun
 interject class:cleric: Madam Eva said wade in. I'll never doubt that woman again. I'll want to, but I won't.
 else
 Narrator: Silt, cold stones, a child's lost button. Nothing the pool wants to give you, today. Your feet are warm all the way back to the shrine, which is gift enough.

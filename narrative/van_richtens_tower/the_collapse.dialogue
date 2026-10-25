@@ -34,7 +34,7 @@ Narrator: Every heavy block you pry free brings three more sliding down to take 
 ~ dig_found
 set vrt_strongbox_dug
 Narrator: A beam shifts, opening a dark pocket under the old window sill. Inside, an iron strongbox rests unharmed on its side, surrounded by dry pages from the hunter's desk.
-tarokka give van_richtens_tower
+reading give van_richtens_tower
 if not flag.van_richten_strongbox_opened
 set van_richten_strongbox_opened
 gold +120

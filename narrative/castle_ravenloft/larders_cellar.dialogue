@@ -23,7 +23,7 @@ time +10
 Narrator: The bricks come out one at a time. Behind them, in a rack's worth of space, a man in a good merchant's coat sits among his own bottles, long dead, with his ledger in his lap.
 if treasure_at:castle_ravenloft_wine_cellar
 Narrator: Under the ledger, wrapped in a fold of his coat as if he were keeping it warm, is something that was never a wine merchant's.
-tarokka give castle_ravenloft_wine_cellar
+reading give castle_ravenloft_wine_cellar
 endif
 Narrator: His purse is still on his belt. The ledger's last page is a bill to the castle for six casks, marked paid in a different hand.
 gold +35

@@ -103,7 +103,7 @@ func test_asking_him_along_makes_him_a_guest_and_empties_the_camp() -> void:
 	var node: Array = DialogueFile.load_key("allies/kasimir").nodes["come"]
 	var gives := false
 	for s: Dictionary in node:
-		gives = gives or str(s["t"]) == "tarokka_give"
+		gives = gives or str(s["t"]) == "reading_give"
 	assert_true(gives, "the Beggar's treasure he keeps goes with the road, as in his other ways of joining")
 	# At the camp the party can still send him home (nothing keeps him there), and the offer comes back.
 	assert_eq(st.guest_stays(KASIMIR), "")

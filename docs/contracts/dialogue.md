@@ -104,9 +104,12 @@ sacrifice                          The player picks a living party member, who d
                                    party (StoryState.fallen keeps their name). Skipped if only one is alive. The
                                    last option backs out ("No one. Not this."): check.last is false after it, true
                                    after a pick, so the node can return to its menu.
-tarokka draw                       Draws Madam Eva's reading (once per playthrough; docs/contracts/campaign.md).
-tarokka read tome [speaker]        Turns the card for a slot (tome, symbol, sword, ally, enemy): a notice with
+reading draw                       Draws Madam Eva's reading (once per playthrough; docs/contracts/campaign.md).
+reading read tome [speaker]        Turns the card for a slot (tome, symbol, sword, ally, enemy): a notice with
                                    the card, then the verse spoken by `speaker` (default madam_eva).
+reading give <place>               Hands the party the treasures the campaign's reading hid at that place
+                                   (CampaignModule.take_from). (Renamed from `tarokka ...` when the engine moved into
+                                   dnd_core: the engine names no campaign, the module decides what a reading is.)
 shop                               Opens the shop of the NPC being spoken to; the conversation resumes after.
 services                           Opens the services of the NPC being spoken to (a temple's spells, an inn's
                                    rooms; story/services.gd); the conversation resumes after.

@@ -2,7 +2,7 @@ extends TestCase
 ## The Phase 5 exit (plan §10, ADR 0011): every Tarokka outcome place outside Castle Ravenloft exists and its treasure
 ## can be obtained, and every ally outside the castle can join. For each place the reading is set so a treasure lies
 ## there, then the spot hands it over the way the game does: the chest opened, the fight's spoils, or the conversation
-## played by DialoguePathBot up to `tarokka give`. Each ally's conversation is played up to `join`. The regions'
+## played by DialoguePathBot up to `reading give`. Each ally's conversation is played up to `join`. The regions'
 ## critical paths are played end to end by StoryBot below. Slow: `make test ONLY=phase5_exit`.
 
 ## Story state a spot or ally scene expects before it can happen (flags set earlier in its region's story), by place
@@ -162,7 +162,7 @@ func _obtain(loc: String, place: String) -> String:
 		v._spoils(str(spot["encounter"]), enc)
 	elif spot.has("dialogue"):
 		var bot := DialoguePathBot.new()
-		var goal := func(s: Dictionary) -> bool: return str(s.get("t", "")) == "tarokka_give" and str(s.get("place", "")) == place
+		var goal := func(s: Dictionary) -> bool: return str(s.get("t", "")) == "reading_give" and str(s.get("place", "")) == place
 		var done := func() -> bool: return bool(st.get_flag("treasure_found_tome", false))
 		if not bot.play(st, str(spot["dialogue"]), goal, done):
 			v.loot_opened.disconnect(catch)

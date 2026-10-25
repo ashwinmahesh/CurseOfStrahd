@@ -187,13 +187,13 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 			return {"t": "xp"}
 		"sacrifice":
 			return {"t": "sacrifice"}
-		"tarokka":
+		"reading":
 			if parts.size() >= 2 and parts[1] == "draw":
-				return {"t": "tarokka_draw"}
+				return {"t": "reading_draw"}
 			if parts.size() >= 3 and parts[1] == "read":
-				return {"t": "tarokka_read", "slot": parts[2], "speaker": parts[3] if parts.size() > 3 else "madam_eva"}
+				return {"t": "reading_read", "slot": parts[2], "speaker": parts[3] if parts.size() > 3 else "madam_eva"}
 			if parts.size() == 3 and parts[1] == "give":
-				return {"t": "tarokka_give", "place": parts[2]}
+				return {"t": "reading_give", "place": parts[2]}
 		"dark_gift":
 			if parts.size() == 2:
 				return {"t": "dark_gift", "gift": parts[1]}

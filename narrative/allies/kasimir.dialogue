@@ -45,7 +45,7 @@ Kasimir: I ask only one courtesy: when we find my sister, let me be the first to
 # The road into the mountains is his now, so is the Beggar's treasure (as in vallaki/kasimir:ally and :trade).
 if treasure_at:vallaki_vistani_camp:camp_edge
 Kasimir: And you will want this. I was keeping it for whoever would take me into the mountains. It seems that is you.
-tarokka give vallaki_vistani_camp:camp_edge
+reading give vallaki_vistani_camp:camp_edge
 endif
 join kasimir_velikov
 -> END

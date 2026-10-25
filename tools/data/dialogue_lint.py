@@ -52,9 +52,9 @@ RE_COOLDOWN = re.compile(r"^(cooldown\s+\d+|once)$")
 RE_XP = re.compile(r"^xp\s+milestone$")
 RE_XP_FIGHT = re.compile(rf"^xp\s+fight\s+({ID})$")
 RE_SACRIFICE = re.compile(r"^sacrifice$")
-RE_TAROKKA_GIVE = re.compile(r"^tarokka\s+give\s+([a-z][a-z0-9_]*(?::[a-z][a-z0-9_]*)?)$")
+RE_READING_GIVE = re.compile(r"^reading\s+give\s+([a-z][a-z0-9_]*(?::[a-z][a-z0-9_]*)?)$")
 RE_DARK_GIFT = re.compile(r"^dark_gift\s+([a-z][a-z0-9_]*)$")
-RE_TAROKKA = re.compile(r"^tarokka\s+(draw|read\s+(tome|symbol|sword|ally|enemy)(\s+[a-z][a-z0-9_]*)?)$")
+RE_READING = re.compile(r"^reading\s+(draw|read\s+(tome|symbol|sword|ally|enemy)(\s+[a-z][a-z0-9_]*)?)$")
 RE_TIME = re.compile(r"^time\s+(\+\d+|until\s+\d{1,2})$")
 RE_SHOP = re.compile(r"^(shop|services|respec)$")
 RE_END_GAME = re.compile(r"^end_game$")
@@ -299,15 +299,15 @@ def parse_file(path):
             if m.group(4):
                 out["selectors"].append((m.group(4), where))
             continue
-        m = RE_TAROKKA_GIVE.match(line)
+        m = RE_READING_GIVE.match(line)
         if m:
-            out.setdefault("tarokka_give", []).append((m.group(1), where))
+            out.setdefault("reading_give", []).append((m.group(1), where))
             continue
         m = RE_DARK_GIFT.match(line)
         if m:
             out.setdefault("dark_gifts", []).append((m.group(1), where))
             continue
-        if RE_GOLD.match(line) or RE_XP.match(line) or RE_SACRIFICE.match(line) or RE_TAROKKA.match(line) or RE_SHOP.match(line) or RE_TIME.match(line):
+        if RE_GOLD.match(line) or RE_XP.match(line) or RE_SACRIFICE.match(line) or RE_READING.match(line) or RE_SHOP.match(line) or RE_TIME.match(line):
             continue
         if RE_END_GAME.match(line):
             out.setdefault("end_games", []).append(where)  # the campaign ends here (ADR 0014)

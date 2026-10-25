@@ -94,7 +94,7 @@ Luvash [sad]: You tried. They tell me you tried. Go away now. Please.
 # The Tax Collector's treasure isn't lost with her (Wiki finding 99).
 if treasure_at:vallaki_vistani_camp:luvash_wagon
 Luvash [sad]: Take whatever's in the chest. I don't want anything in it.
-tarokka give vallaki_vistani_camp:luvash_wagon
+reading give vallaki_vistani_camp:luvash_wagon
 endif
 -> END
 endif
@@ -133,7 +133,7 @@ endif
 # The Tax Collector's treasure: the lid opens once his daughter is home (Wiki finding 70).
 if treasure_at:vallaki_vistani_camp:luvash_wagon
 Luvash: And my chest. It wouldn't open for me all the while she was gone. Whatever's in it now, it's yours.
-tarokka give vallaki_vistani_camp:luvash_wagon
+reading give vallaki_vistani_camp:luvash_wagon
 endif
 if tarokka.ally.npc == arabelle and not guest:arabelle and flag.arabelle_stayed
 # She stayed once: she asks again, without the whole scene (Wiki finding 77).

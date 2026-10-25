@@ -1,5 +1,5 @@
 # Madam Eva, seer of the Tser Pool Vistani (docs/voice/madam_eva.md). The Tarokka reading (docs/contracts/campaign.md):
-# `tarokka draw` deals the playthrough's five cards once; each `tarokka read <slot>` shows a card and Eva speaks its
+# `reading draw` deals the playthrough's five cards once; each `reading read <slot>` shows a card and Eva speaks its
 # verse (data/tarokka/outcomes.json). The path: greeting -> the price (coin, a true thing, kin's thanks, Persuasion,
 # a threat) -> the reading -> one question -> later visits (`again`: hear it again, a reading for one of you alone).
 
@@ -278,7 +278,7 @@ Madam Eva [sad]: You have bloodied my family and driven the rest into the trees.
 # --- The reading ---
 
 ~ reading
-tarokka draw
+reading draw
 cutscene madam_eva_reading
 Narrator: She shuffles once, twice, and the cards whisper together like dry leaves. Then she deals five face down in the shape of a cross, and lays her hand flat beside them.
 Madam Eva: Five cards. Three for what was lost, one for who will help you, one for where he waits. Don't touch them. Don't breathe on them. Listen.
@@ -286,28 +286,28 @@ if flag.eva_reading_paid == "forced"
 Madam Eva: You did not pay what the cards asked. They will tell you anyway. They are not kind, and neither am I.
 endif
 Madam Eva: The first card is the past: a book in his own hand, the story of how he became what he is. Knowing it is a weapon. This one cuts him.
-tarokka read tome
+reading read tome
 if name:ratatoille
 interject name:ratatoille: His own hand. A primary source. A devil's diary. I would give my good skillet to read it.
 elif class:wizard
 interject class:wizard: A primary source. The devil kept a diary. Of course he did.
 endif
 Madam Eva: The second card is a holy thing, made by people who believed the sun would come back. In the right hands it makes the dead remember they are dead.
-tarokka read symbol
+reading read symbol
 if name:liriel_dawnsong
 interject name:liriel_dawnsong: Made by people who believed the sun would come back. Then I'm not the first. Oh, I'm so glad I'm not the first.
 elif class:cleric
 interject class:cleric: A holy thing, still holding its light in this place. Then somebody kept faith here, once.
 endif
 Madam Eva: The third card is a blade. Not steel: daylight with an edge, once carried by the one he hated most. He cannot bear to look at it.
-tarokka read sword
+reading read sword
 if name:godrick_pendlebrook
 interject name:godrick_pendlebrook: A sword made of daylight. Now that's a proper knight's sword. Right. Good. I understand swords.
 elif class:fighter
 interject class:fighter: A blade he can't stand to look at. I can work with that.
 endif
 Madam Eva: The fourth card is a friend. One who will stand beside you when the others run.
-tarokka read ally
+reading read ally
 -> ally_seen
 
 ~ ally_seen
@@ -344,7 +344,7 @@ elif tarokka.ally.npc == arabelle
 Madam Eva [sad]: A child of ours. Don't sit here listening to me. When we're done, go.
 endif
 Madam Eva: The last card. Where the darkness will be waiting when you come for him. And you will come for him; the cards are very sure of that part.
-tarokka read enemy
+reading read enemy
 cutscene eva_candles_lean
 Narrator: The candles lean, all together, as if someone has opened a door. Nobody has.
 Madam Eva [sad]: There. That is the shape of it. Three things lost, a friend, and the room at the end. Everything else, you will have to do yourselves.
@@ -383,7 +383,7 @@ else
 Narrator: Inside lies a sword hilt of pale platinum with a sunburst guard and no blade. The candles burn a little brighter while it is uncovered.
 interject name:godrick_pendlebrook: No blade? I'll hold it anyway. Somebody ought to.
 endif
-tarokka give tser_pool_eva_tent
+reading give tser_pool_eva_tent
 set tser_treasure_given
 endif
 -> question
@@ -541,11 +541,11 @@ Ezmerelda: I will take half a loaf from Stanimir's cart before we go. It is rude
 
 ~ reread
 Madam Eva: Once more, then, and slowly.
-tarokka read tome
-tarokka read symbol
-tarokka read sword
-tarokka read ally
-tarokka read enemy
+reading read tome
+reading read symbol
+reading read sword
+reading read ally
+reading read enemy
 Madam Eva: The cards don't change. Only the people carrying them.
 -> again_menu
 

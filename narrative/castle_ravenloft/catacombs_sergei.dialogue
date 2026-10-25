@@ -27,7 +27,7 @@ endif
 
 ~ take_treasure
 Narrator: It comes away easily, as if the hands had only been holding it until somebody asked.
-tarokka give castle_ravenloft_sergeis_tomb
+reading give castle_ravenloft_sergeis_tomb
 interject tag:pious: He kept it for us. Four hundred years in the ground and still on the right side.
 -> tomb_menu
 

@@ -36,8 +36,8 @@ image in `art/tarokka/`.
 ## The reading in dialogue and conditions
 
 ```
-tarokka draw              Draws the reading (once per playthrough; StoryState.seed decides it).
-tarokka read tome         Madam Eva (the speaker) turns a card: a notice with the card's name, then her verse.
+reading draw              Draws the reading (once per playthrough; StoryState.seed decides it).
+reading read tome         Madam Eva (the speaker) turns a card: a notice with the card's name, then her verse.
                           Slots: tome, symbol, sword, ally, enemy.
 ```
 
@@ -153,7 +153,7 @@ In a location file:
   Castle Ravenloft must have exactly one spot, in a location of its region.
 - `container`: a container id in the same location. Opening it also yields every treasure the reading put there.
 - `encounter`: an encounter id in the same location. Winning that fight adds the treasure to the loot.
-- `dialogue`: a conversation node (file:node) that reaches `tarokka give <place id>`.
+- `dialogue`: a conversation node (file:node) that reaches `reading give <place id>`.
 - Condition `treasure_at:<place id>`: a treasure not yet found is there (so a line can hint at it).
 - Found treasures set `treasure_found_tome`, `treasure_found_symbol`, `treasure_found_sword`. Items:
   `tome_of_strahd`, `holy_symbol_of_ravenkind`, `sunsword`.
