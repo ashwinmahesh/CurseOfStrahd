@@ -1,7 +1,7 @@
 {
 	"combat/ai/ai_brain.gd": 2,
 	"combat/ai/ai_tactics.gd": 4,
-	"combat/ai/boss_brain.gd": 5,
+	"combat/ai/boss_brain.gd": 4,
 	"combat/d20_responses.gd": 2,
 	"combat/encounter.gd": 2,
 	"combat/encounter_damage.gd": 2,
