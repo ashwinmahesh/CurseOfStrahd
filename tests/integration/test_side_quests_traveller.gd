@@ -13,7 +13,9 @@ func test_one_night_and_fifty_years() -> void:
 	assert_true(SideQuestPlay.text(beats).contains("Petra and Mihail"))
 	assert_eq(SideQuestPlay.combat_of(beats), "ilarion_wolves")
 	var enc := SideQuestPlay.encounter(st, "into_the_mists_road", "ilarion_wolves")
-	assert_true(SideQuestPlay.xp(enc) >= 200 and SideQuestPlay.xp(enc) <= 400, "Low to High for level 1: %d" % SideQuestPlay.xp(enc))
+	# Owner, 2026-10-25: the opening wolves are the book's pack again, three wolves and the rat (160 XP, under Low for
+	# four level 1 heroes), so the band starts there.
+	assert_true(SideQuestPlay.xp(enc) >= 150 and SideQuestPlay.xp(enc) <= 400, "the book's pack up to High for level 1: %d" % SideQuestPlay.xp(enc))
 	st.set_flag("ilarion_wolves_beaten")
 	beats = SideQuestPlay.play(st, "into_the_mists/the_last_traveller:ilarion")
 	assert_eq(st.quest_stage("the_last_traveller"), "home")
