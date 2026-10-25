@@ -1617,7 +1617,7 @@
       "surprise": "party",
       "monsters": [
         {
-          "monster": "vampire_spawn",
+          "monster": "vampire",
           "cell": [
             5,
             16
@@ -1648,7 +1648,7 @@
       "surprise": "",
       "monsters": [
         {
-          "monster": "vampire_spawn",
+          "monster": "vampire",
           "cell": [
             5,
             16

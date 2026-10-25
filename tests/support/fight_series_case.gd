@@ -37,7 +37,7 @@ const BOSS_FIGHTS: Array[String] = [
 	"cat_royal_final", "cat_sergei_final", "larders_donjon", "court_rahadin_fight", "court_rahadin_chamber_fight",
 	"court_brides_fight", "cat_oathbreakers", "corvina", "querreth", "summit_ritual", "ash_effigy", "vine_mother",
 	"strahd_test_of_strength", "strahd_at_the_window", "sentinel_wakes", "sentinel_stops_you", "vault_guardian", "lorghoth_rises", "lorghoth_rises_late",
-	"brazier_golems"]
+	"brazier_golems", "larders_false_brother", "larders_false_brother_unmasked"]
 
 
 func after_each() -> void:
