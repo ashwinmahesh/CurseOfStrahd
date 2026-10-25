@@ -25,7 +25,7 @@ endif
 -> door_menu
 
 ~ door_menu
-* [if flag.khazan_known] Say the name: Khazan. -> open
+* [if flag.khazan_known] Say the name: Khazan. -> said_name
 * [if not flag.tower_lintel_read] [History DC 14] Read the worn letters on the lintel. -> read_ok | read_fail
 * [if not flag.tower_ward_known] [Arcana DC 14] Study the wards on the door. -> arcana_ok | arcana_fail
 * [if not flag.tower_figures_studied] Study the eight small figures cut into the stone frame. -> figures
@@ -68,6 +68,11 @@ Narrator: Eight carved dancers ring the lintel, each frozen with its arms raised
 
 ~ poses_ok
 set tower_poses_solved
+-> open
+
+~ said_name
+# Khazan greets a party that said his name at the door as one he knows (the_name_over_the_door:khazan, Wiki finding 138).
+set khazan_said_at_door
 -> open
 
 ~ poses_fail

@@ -73,3 +73,20 @@ func test_freed_children_arent_left() -> void:
 	st.set_flag("den_children_freed")
 	var said := SideQuestPlay.text(SideQuestPlay.play(st, "camp/thistle:doubt"))
 	assert_false(said.contains("We left the pups"), said)
+
+
+## Wiki finding 138: Khazan says "You said mine at my door" only to a party that said his name there; one that came in
+## by the poses, the scaffold or with Van Richten is told it didn't.
+func test_khazan_knows_whether_you_said_his_name_at_the_door() -> void:
+	var door := SideQuestPlay.party(["ilse_varga"], 10, "van_richtens_tower", 12)
+	door.set_flag("khazan_known")
+	SideQuestPlay.play(door, "van_richtens_tower/tower:door", ["Say the name"])
+	assert_true(bool(door.get_flag("khazan_said_at_door", false)), "saying the name at the door is remembered")
+	for said: bool in [true, false]:
+		var st := SideQuestPlay.party(["ilse_varga"], 10, "khazan_undercroft", 12)
+		if said:
+			st.set_flag("khazan_said_at_door")
+		var text := SideQuestPlay.text(SideQuestPlay.play(st, "van_richtens_tower/the_name_over_the_door:khazan", ["Who are you?"]))
+		assert_eq(text.contains("You said mine at my door"), said, "the greeting knows (said %s)" % said)
+		assert_eq(text.contains("you said it at the door"), said, "and so does who he is (said %s)" % said)
+		assert_eq(text.contains("You never said mine at my door"), not said, "told they didn't (said %s)" % said)

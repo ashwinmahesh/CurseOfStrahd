@@ -72,7 +72,11 @@ endif
 cutscene sq_khazan
 Narrator: In a high chair on a step at the end of the study sits a dead man in a scholar's robe, very straight, his hands folded on a book. His skin is parchment over the bone. Two small lights move in his eyes, and turn to you.
 Khazan: Visitors. And you've come down the stair, not up it. That hasn't happened in a long time. Sit, if you can find a chair. I keep meaning to have more chairs.
+if flag.khazan_said_at_door
 Khazan: I know your names, of course. You said mine at my door. That's the bargain the door makes: a name for a name. I've been writing you down.
+else
+Khazan: I don't know your names, I'm afraid. You never said mine at my door, and the door's bargain is a name for a name. It's a little rude, coming in without it. Still, you're here now. I'll write you down anyway.
+endif
 -> khazan_menu
 
 ~ khazan_menu
@@ -85,7 +89,11 @@ Khazan: I know your names, of course. You said mine at my door. That's the barga
 
 ~ who
 set khazan_heard
+if flag.khazan_said_at_door
 Khazan: Khazan. You know that; you said it at the door. Archmage to the old kings of this valley, when it had kings. I built the tower on the tarn. Then the count's family came, and I came downstairs, and I've been reading ever since.
+else
+Khazan: Khazan. It's cut over the door, though you didn't trouble yourselves to say it. Archmage to the old kings of this valley, when it had kings. I built the tower on the tarn. Then the count's family came, and I came downstairs, and I've been reading ever since.
+endif
 Khazan: I'm not his. I'd like you to understand that. I was here first. He has never once said my name, which I find very rude.
 if name:ratatoille
 interject name:ratatoille: I said I'd read of him briefly. I'd like it noted that I was being generous about how briefly.

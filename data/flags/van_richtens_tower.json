@@ -353,6 +353,11 @@
       "summary": "The party opened the tower's door by acting out the figures' poses (Performance DC 14, the book's riddle) instead of saying Khazan's name."
     },
     {
+      "id": "khazan_said_at_door",
+      "type": "bool",
+      "summary": "The party opened the tower's door by saying Khazan's name, so Khazan greets them as people he knows (not by the poses, the scaffold or Van Richten)."
+    },
+    {
       "id": "tower_ward_1",
       "type": "bool",
       "summary": "The lightning ward on the tower door has gone off once (its trap vrt_door_ward_1 set it). The werewolves come down from the ridge (fight ward_wolves)."
