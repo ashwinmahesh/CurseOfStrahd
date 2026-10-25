@@ -1658,10 +1658,11 @@
       "kind": "character",
       "status": "generated",
       "source": "art/generated/characters/tinker_iosif_turnaround.png",
+      "sprites": "art/sprites/tinker_iosif/walk.tres",
       "portrait": "art/portraits/tinker_iosif.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Iosif the Tinker, a thin, wiry, unshaven young Vistani man who talks fast and cheerfully: messy black curly hair under a faded red and gold headscarf tied at the back, a gold hoop earring in one ear, dark stubble, a bright patched waistcoat of mustard, crimson and moss-green patches over a cream shirt with rolled sleeves, a leather tinker's belt hung with small pots, ladles and little bells, patched brown trousers and worn brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
-      "notes": "Iosif the Tinker as a man (wave 1 art, 2026-10-24, Ashwin's typed yes): he had the Vistana's female portrait and sprite. 5-view turnaround (16:9), one Gemini call. The walk and attack sheets (make sprite, then make anims) are still to do: the Blender walk render waits for Ashwin's Mac-idle word, so the NPC's sprite is still the Vistana's. The Mimic-wagon cutscene picture uses this sheet as its reference."
+      "notes": "Iosif the Tinker as a man (wave 1 art, 2026-10-24, Ashwin's typed yes): he had the Vistana's female portrait and sprite. 5-view turnaround (16:9), one Gemini call. Walk sheet by make sprite, attack (ladle swing) by make anims (2026-10-25, after Ashwin's Mac-idle word). The Mimic-wagon cutscene picture uses this sheet as its reference."
     },
     {
       "id": "tinker_iosif_portrait",

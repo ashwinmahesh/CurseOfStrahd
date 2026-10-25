@@ -4,7 +4,7 @@
   "title": "A Vistani Tinker",
   "summary": "A thin Vistani tinker with a green painted wagon of pots and trinkets on the Old Svalich Road, who talks very fast and very cheerfully and never steps down from the wagon's board. His left ankle is chained to it with something that isn't iron.",
   "portrait": "tinker_iosif",
-  "sprite": "vistana",
+  "sprite": "tinker_iosif",
   "attitude": "friendly",
   "monster": "commoner",
   "guest": false,
