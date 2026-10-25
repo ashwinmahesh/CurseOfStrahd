@@ -17,7 +17,7 @@ make magic-prices (writes data/treasure/magic_prices.json, Sane Magical Prices, 
 make xp-sim [RULES=build|plan|literal] (XP levelling's simulator: the party's level at every story gate, docs/plans/xp_mode.md)
 make wiki (rewrites the vault's spoiler wiki, Wiki/, from the data; prose outside its %% auto %% blocks is kept) · make wiki-shots (its screenshots)
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
-make core-extract [WRITE=1 DEST=dir] (the engine split: what moves to the private core repo DndCoreEngine, docs/plans/engine_split.md; `--leaks` lists what it still needs from the game)
+The engine is the git submodule addons/dnd_core (private repo DndCoreEngine, docs/plans/engine_split.md): after a fresh clone or a lane, `git submodule update --init`; to change it, edit and commit inside addons/dnd_core, then commit the new submodule commit here (its path shows as the change)
 
 ## Godot windows (the owner works on this Mac)
 - Never open a Godot window that can take focus or cover the owner's work. Checks without pixels run headless
@@ -53,8 +53,8 @@ make core-extract [WRITE=1 DEST=dir] (the engine split: what moves to the privat
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
-- `rules/` is a pure library: no nodes, scenes, autoloads or UI. It takes a DiceRoller argument.
-- `combat/` (grid, Encounter, spells, features, AI, action catalog) is pure logic too (ADR 0007); scenes and the
+- `addons/dnd_core/rules/` is a pure library: no nodes, scenes, autoloads or UI. It takes a DiceRoller argument.
+- `addons/dnd_core/combat/` (grid, Encounter, spells, features, AI, action catalog) is pure logic too (ADR 0007); scenes and the
   HUD only show it and send it commands. Contract: docs/contracts/combat.md.
 - Every die roll goes through DiceRoller (Dice.roller in game code). Cosmetic randomness uses its own RNG.
 - The player controls every party member and guest; AI only drives enemies and neutrals.
@@ -76,14 +76,18 @@ make core-extract [WRITE=1 DEST=dir] (the engine split: what moves to the privat
   and the engine together, never only in data). Every number the UI shows is a `Breakdown`.
 - A character is its `build` (keyed choices, see ADR 0006); `refresh()` derives the rest. The UI never computes rules:
   it reads CharacterBuilder / LevelUpController and picks widgets by `Choice.kind`.
-- `make lint` compiles rules/ and combat/ standalone, so an autoload reference there fails CI.
-- The engine split (docs/plans/engine_split.md): rules/, combat/ and the story engine core are meant to move into the
-  private core repo DndCoreEngine (submodule addons/dnd_core) and name no campaign. Campaign facts (the Tarokka reading,
+- `make lint` compiles the core's rules/, combat/ and story/ standalone, so an autoload reference there fails CI.
+- The engine split (docs/plans/engine_split.md): rules/, combat/, the story engine core, the rules data (data/ spells, items,
+  monsters ... of the books), their schemas and the test runner live in the private core repo DndCoreEngine (submodule
+  addons/dnd_core, res://addons/dnd_core/...) and name no campaign. The game keeps its own data beside the core's (CoS and
+  custom entries, locations, NPCs, quests ...): `Compendium` reads both data roots, `Compendium.data_files(folder)` lists a
+  folder's files across them (a game file replaces the core's of its name), tools use tools/data/dataroots.py. Campaign facts (the Tarokka reading,
   Strahd's attention and visits, field oracles, endings) reach the story engine through `Campaign.module()`
   (story/campaign_module.gd; this game's is story/strahd_campaign.gd, named in data/campaign.json); creature heights are data
   (art/creature_looks.json). tests/unit/test_engine_names.gd fails when an engine file gains a campaign name
-  (its baseline only shrinks). Per-creature or per-campaign facts go in data or the module, never in rules/, combat/ or
-  the story engine files.
+  (its baseline only shrinks). Per-creature or per-campaign facts go in data or the module, never in the core's rules/, combat/ or
+  story engine files. The host provides the autoloads the core uses (Dice, GameSettings, GameState, ModeController,
+  SaveSystem ...) and `data/campaign.json`.
 
 ## Rules source
 Full 2024 PHB (owner decision 2026-10-05, personal use only). SRD 5.2 is the import starting point.

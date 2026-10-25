@@ -77,9 +77,8 @@ func test_the_materials_are_sold_and_every_kind_has_an_item() -> void:
 	var lucian := Compendium.shared().get_entry("npcs", "father_lucian")
 	var sold: Array = (lucian["shop"]["sells"] as Array).map(func(x: Dictionary) -> String: return str(x["id"]))
 	assert_true("diamond" in sold and "diamond_dust" in sold and "incense" in sold, "the Vallaki church sells them")
-	for f in DirAccess.get_files_at("res://data/spells"):
-		if not f.ends_with(".json"):
-			continue
+	for path in Compendium.data_files("spells"):
+		var f := path.get_file()
 		var spell := Compendium.shared().spell_data(f.get_basename())
 		var cc := Character.costly_component(spell)
 		if cc.is_empty():
@@ -107,12 +106,11 @@ func test_every_used_up_component_is_always_for_sale() -> void:
 	st.party.append(Pregens.build("liriel_dawnsong", 1))
 	st.gold = 10000.0
 	var materials := {}
-	for f in DirAccess.get_files_at("res://data/spells"):
-		if f.ends_with(".json"):
-			var spell := Compendium.shared().spell_data(f.get_basename())
-			var cc := Character.costly_component(spell)
-			if not cc.is_empty() and Compendium.playable(spell):
-				materials[str(cc["material"])] = true
+	for path in Compendium.data_files("spells"):
+		var spell := Compendium.shared().spell_data(path.get_file().get_basename())
+		var cc := Character.costly_component(spell)
+		if not cc.is_empty() and Compendium.playable(spell):
+			materials[str(cc["material"])] = true
 	assert_true(materials.has("diamond") and materials.has("onyx"), str(materials.keys()))
 	for m: String in materials:
 		var sellers: Array[String] = []

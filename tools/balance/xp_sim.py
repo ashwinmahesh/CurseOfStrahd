@@ -44,7 +44,7 @@ def frac_level(xp):
 class Data:
     def __init__(self, repo):
         self.ms = {}
-        for f in glob.glob(os.path.join(repo, 'data/monsters/*.json')):
+        for f in glob.glob(os.path.join(repo, 'data/monsters/*.json')) + glob.glob(os.path.join(repo, 'addons/dnd_core/data/monsters/*.json')):
             d = json.load(open(f))
             self.ms[d['id']] = d
         self.groups = collections.defaultdict(list)   # encounter id -> [(when, xp)] in data order

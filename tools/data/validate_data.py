@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dataroots  # noqa: E402
 import dialogue_lint  # noqa: E402
 import fail_routes  # noqa: E402
 import magic_prices  # noqa: E402
@@ -20,7 +21,6 @@ import quest_strands  # noqa: E402
 import story_reach  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-SCHEMAS = ROOT / "data" / "schemas"
 
 # Data folder -> schema name. Folders not listed have no schema yet and are skipped.
 FOLDERS = {
@@ -52,7 +52,7 @@ _schema_cache = {}
 
 def load_schema(name):
     if name not in _schema_cache:
-        _schema_cache[name] = json.loads((SCHEMAS / name).read_text())
+        _schema_cache[name] = json.loads(dataroots.schema_file(name).read_text())
     return _schema_cache[name]
 
 
@@ -137,7 +137,7 @@ def load_all():
     data = {}
     for folder in FOLDERS:
         data[folder] = {}
-        for f in sorted((ROOT / "data" / folder).glob("*.json")):
+        for f in dataroots.data_files(folder):
             try:
                 d = json.loads(f.read_text())
             except json.JSONDecodeError:
@@ -160,7 +160,7 @@ def semantic_checks(data):
     """Cross-file checks: every id one file names must exist in its folder. Returns (errors, pending)."""
     errors, pending = [], []
     items, feats, spells = data["items"], data["feats"], data["spells"]
-    skills = set(json.loads((SCHEMAS / "common.schema.json").read_text())["$defs"]["skill"]["enum"])
+    skills = set(json.loads(dataroots.schema_file("common.schema.json").read_text())["$defs"]["skill"]["enum"])
 
     def need(kind, table, ident, where, level=0):
         if ident in table or (kind == "item" and ident in data.get("magic_items", {})):
@@ -860,7 +860,7 @@ def approval_checks(data, p, errors):
     """Companion approval and Heroic Inspiration in one parsed dialogue file (story/approval.gd, story/in_character.gd):
     `approve` and `approval.<id>` name roster companions, and a condition compares with a tier or a number."""
     companions = {pid for pid, pg in data["pregens"].items() if pg.get("roster", True)}
-    tiers = set(re.findall(r'"id": "([a-z_]+)", "name"', (ROOT / "story" / "approval.gd").read_text()))
+    tiers = set(re.findall(r'"id": "([a-z_]+)", "name"', dataroots.engine_file("story/approval.gd").read_text()))
     for cid, delta, where in p.get("approvals", []):
         if cid not in companions:
             errors.append(f"narrative/{where}: approve: '{cid}' isn't one of the six companions ({', '.join(sorted(companions))})")
@@ -1337,7 +1337,7 @@ def story_checks(data, errors, need):
 def main():
     errors = []
     checked = 0
-    for schema_file in sorted(SCHEMAS.glob("*.schema.json")):
+    for schema_file in dataroots.schema_files():
         try:
             json.loads(schema_file.read_text())
         except json.JSONDecodeError as e:
@@ -1345,7 +1345,7 @@ def main():
     for folder, schema_name in FOLDERS.items():
         schema_file = f"{schema_name}.schema.json" if isinstance(schema_name, str) else ""
         seen = {}
-        for data_file in sorted((ROOT / "data" / folder).glob("*.json")):
+        for data_file in dataroots.data_files(folder):
             rel = data_file.relative_to(ROOT)
             if isinstance(schema_name, dict):
                 if data_file.stem not in schema_name:

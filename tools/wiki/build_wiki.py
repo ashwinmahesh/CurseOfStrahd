@@ -29,6 +29,8 @@ from collections import OrderedDict, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "data"))
+import dataroots  # noqa: E402
 VAULT = Path.home() / "Documents" / "Obsidian Vault" / "CurseOfStrahd"
 WIKI = "Wiki"                     # the folder in the vault; links are written vault-relative ("Wiki/Quests/...")
 DEFAULT_OUT = VAULT / WIKI
@@ -280,7 +282,7 @@ class Game:
 
         def folder(name):
             out = OrderedDict()
-            for f in sorted((d / name).glob("*.json")):
+            for f in dataroots.data_files(name, root):
                 j = load_json(f)
                 out[str(j.get("id", f.stem))] = j
             return out
@@ -360,7 +362,7 @@ class Game:
     def scroll_consts(self):
         """Spell Scroll price, rarity and save DC by spell level (rules/equipment/magic_items.gd SCROLL_*)."""
         if not hasattr(self, "_scroll_consts"):
-            src = (self.root / "rules" / "equipment" / "magic_items.gd").read_text()
+            src = dataroots.engine_file("rules/equipment/magic_items.gd").read_text()
             vals = {}
             for name in ("SCROLL_PRICE", "SCROLL_RARITY", "SCROLL_DC"):
                 m = re.search(rf"const {name}: Array\[\w+\] = \[(.*?)\]", src, re.S)
@@ -1203,7 +1205,7 @@ class Wiki:
     def wild_themes(self):
         """The map themes a camp counts as the wild (story/camp_site.gd WILD_THEMES)."""
         if not hasattr(self, "_wild_themes"):
-            src = (self.g.root / "story" / "camp_site.gd").read_text()
+            src = dataroots.engine_file("story/camp_site.gd").read_text()
             m = re.search(r"const WILD_THEMES: Array\[String\] = \[(.*?)\]", src)
             self._wild_themes = re.findall(r'"([a-z_]+)"', m[1]) if m else []
         return self._wild_themes
@@ -2456,7 +2458,7 @@ class Wiki:
     def magic_qty(self, iid):
         """Trade.magic_qty: how many of a magic item a shop's magic stock holds."""
         if not hasattr(self, "_magic_qty"):
-            m = re.search(r"const MAGIC_QTY := (\{.*?\})", (self.g.root / "story" / "trade.gd").read_text())
+            m = re.search(r"const MAGIC_QTY := (\{.*?\})", dataroots.engine_file("story/trade.gd").read_text())
             self._magic_qty = json.loads(m[1]) if m else {"lasting": 1, "consumable": 3, "ammunition": 20}
         d = self.g.item_data(iid)
         if d.get("category") == "ammunition":
@@ -2494,7 +2496,7 @@ class Wiki:
     # Merchants and services -------------------------------------------------------------------------------------
 
     def _services(self):
-        src = (self.g.root / "story" / "services.gd").read_text()
+        src = dataroots.engine_file("story/services.gd").read_text()
         out = OrderedDict()
         for m in re.finditer(r'^\t"([a-z_]+)": \{(.*?)\},?\n(?=\t"|\})', src, re.S | re.M):
             body = m[2]
@@ -2511,7 +2513,7 @@ class Wiki:
 
     def merchant_page(self):
         g, s = self.g, self.site
-        trade = (g.root / "story" / "trade.gd").read_text()
+        trade = dataroots.engine_file("story/trade.gd").read_text()
         dc = re.search(r"const HAGGLE_DC := (\d+)", trade)
         msr = re.search(r"const MAGIC_SELL_RATE := ([\d.]+)", trade)
         magic_rate = float(msr[1]) if msr else 0.5
@@ -2779,7 +2781,7 @@ class Wiki:
                              + (f" ({', '.join(s.quest(q) for q in quests)})" if quests else "") + ".")
             lines.append("")
         # Every spell, level by level, and what random finds can hold at each.
-        m = re.search(r"var levels := (\{.*?\})\n", (g.root / "story" / "treasure.gd").read_text())
+        m = re.search(r"var levels := (\{.*?\})\n", dataroots.engine_file("story/treasure.gd").read_text())
         by_rarity = json.loads(m[1]) if m else {"common": [0, 1], "uncommon": [2, 3], "rare": [4, 5],
                                                 "very_rare": [6, 7, 8], "legendary": [9]}
         rar_from, lo = {}, 1
@@ -3034,7 +3036,7 @@ class Wiki:
 
     def spell_pages(self):
         g, s = self.g, self.site
-        field = (g.root / "story" / "field_casting.gd").read_text()
+        field = dataroots.engine_file("story/field_casting.gd").read_text()
         exploring = set(re.findall(r'"([a-z_]+)"', re.search(r"EXPLORING_TOO[^\[]*\[(.*?)\]", field, re.S)[1])) \
             if re.search(r"EXPLORING_TOO", field) else set()
         by_level = defaultdict(list)
@@ -3237,7 +3239,7 @@ class Wiki:
             return "" if v is None else (f"{v:.0f}%" if v >= 10 else f"{v:.1f}%")
         # A road the party has walked, or a journey to a place it has been, rolls this share of the chance
         # (story/road_familiarity.gd).
-        fam_src = (g.root / "story" / "road_familiarity.gd").read_text()
+        fam_src = dataroots.engine_file("story/road_familiarity.gd").read_text()
         fam_m = re.search(r"const SCALE := ([0-9.]+)", fam_src)
         fam = float(fam_m[1]) if fam_m else 1.0
 
@@ -3385,7 +3387,7 @@ class Wiki:
 
     def difficulty_lines(self):
         """The four modes, from combat/difficulty.gd's MODES table (its describe() in words)."""
-        src = (self.g.root / "combat" / "difficulty.gd").read_text()
+        src = dataroots.engine_file("combat/difficulty.gd").read_text()
         lines = []
         for mid, body in re.findall(r'^\t"([a-z]+)": \{(.*?)\},?$', src, re.S | re.M):
             def val(k):

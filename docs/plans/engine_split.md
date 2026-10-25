@@ -2,9 +2,8 @@
 
 Plan for moving the shareable parts of this game into a separate private repo, github.com/ashwinmahesh/DndCoreEngine
 (local copy ~/Documents/DndCoreEngine), used here as a git submodule at `addons/dnd_core`. Study (2026-10-24):
-https://claude.ai/artifact/XdvkGY28acaWLp4kAQJAmh. Owner decision 2026-10-24. Nothing is pushed to the core repo and
-project.godot is not changed until the planned full-download release (1.0.11 or later, owner's typed yes in the release
-thread). Until then main keeps its layout and every step below is an ordinary patch.
+https://claude.ai/artifact/XdvkGY28acaWLp4kAQJAmh. Owner decision 2026-10-24. The switch (steps 3 and 4) was written on 2026-10-25 with the
+owner's typed yes, to land in the planned full-download release (1.0.11); "Where it stands" at the end says what it did.
 
 ## Order
 
@@ -58,26 +57,28 @@ lanes are editing.
 private and holds all the data (owner decision 2026-10-25: no SRD flag, no srd/ and books/ split). Anything made public
 from it would need its own licence review first.
 
-## Where it stands (2026-10-25)
+## Where it stands (2026-10-25): switched
 
-- Done in this repo: the guard test, creature heights as data, the screen pass and palette renamed, the campaign-module hook
-  (`Campaign.module()`: story_state, dialogue_runner, long_rest, travel, weather, quest log and the rest ask it instead of
-  naming Tarokka, StrahdPresence, Oracles or Endings; world/, ui/ and core/achievements.gd still name them and stay in the game).
-- `make core-extract` (tools/core/manifest.json) works out what moves: 2,250 files today (160 combat, 54 rules, 96 story, 24
-  schemas, 1,598 data entries of the books, 140 unit tests, 8 test helpers, the test runner and tools). The 78 CoS and custom
-  data entries stay in the game. `make core-extract WRITE=1` writes the files into ~/Documents/DndCoreEngine; the core's first
-  commit is local, not pushed, until the owner says so.
-- The only things the moving scripts still need from the game are five autoloads (Dice, GameSettings, GameState,
-  ModeController, SaveSystem), all through tests/test_runner.gd; the engine code itself is clean (`--leaks`).
+The game now uses the core as the submodule `addons/dnd_core` (private repo DndCoreEngine). `.gitmodules` names the GitHub
+url; the files of the core keep their folders there, so the engine is `res://addons/dnd_core/rules`, `combat`, `story`,
+the rules data is `res://addons/dnd_core/data/<folder>` and the test runner `res://addons/dnd_core/tests/test_runner.tscn`.
 
-## What the switch (one full-download release) has to do
-
-1. Add the submodule at `addons/dnd_core` and delete the game's copies of everything `make core-extract --list` names.
-2. Rewrite the `res://` paths that point at moved folders (about 55 in code) and change project.godot's autoload paths if
-   any autoload moves; this is the project.godot change that makes the release a full download.
-3. `Compendium` reads two data roots, the core's and the game's own (CoS and custom entries, locations, NPCs, quests).
-4. Point the Makefile, tools/check.py, lint and the test runner at the new paths; the runner needs the five autoloads above.
-5. Dialogue grammar still names `tarokka_draw/read/give` and `end_game`: rename them to neutral statements in the grammar,
-   the linters and the dialogue data, or keep them as the Strahd module's own statements.
-6. The guard baseline (122 lines in 40 files) keeps shrinking: flags and ids in story_state, long_rest, travel and the
-   combat AI profile still name Strahd.
+- **Moved**: everything `tools/core/manifest.json` named (2,229 files: 160 combat, 54 rules, 90 story, 26 schemas, 1,598 data
+  entries of the books, 140 unit tests, 8 test helpers, the runner). `combat/ravenloft_features.gd` and the Faerûn packs went
+  with the core after all (combat's own code names them, so leaving them would have made the core need the game). The
+  tools stayed here (`tools/run_tests.py`, `check.py`, `lint_gd.sh`, `logcheck.sh`, `godot_slot.sh`, `tools/data/*.py`);
+  they find the core by its path, and `tools/data/dataroots.py` gives the Python ones both data roots.
+- **Two data roots**: `Compendium.shared()` loads `addons/dnd_core/data` and then `res://data` (CoS and custom entries,
+  locations, NPCs, quests ...); a game entry replaces a core entry with its id. `Compendium.data_files(folder)` lists a
+  folder's files across both. The core finds its own root from where `compendium.gd` sits (`Compendium.core_root()`).
+- **Host contract**: the core's runner uses the host's autoloads (Dice, GameSettings, GameState, ModeController, SaveSystem);
+  the story engine reads the host's `data/campaign.json` and the host data it names (cutscenes, schedule, weather, treasure
+  levels, XP, chapters, AI profiles, night visitors).
+- **Dialogue grammar**: `tarokka draw|read|give` became `reading draw|read|give` (step kinds `reading_*`); the module still
+  carries them out. `end_game` stays: any campaign ends.
+- **Guard test**: `tests/unit/test_engine_names.gd` scans the core's rules, combat and story through the submodule; the
+  baseline keeps its paths from the core's root (115 lines in 40 files) and only shrinks. A fix to the engine is a commit in
+  `addons/dnd_core`, then a new submodule commit here.
+- `project.godot` has no change (the autoloads are the game's); the release is a full download because every moved script
+  has a new `res://` path. `export_presets.cfg`'s exclude filter no longer drops `addons/*` (it would have dropped the whole
+  engine); it drops the core's unit tests, test case and runner as it did the game's.

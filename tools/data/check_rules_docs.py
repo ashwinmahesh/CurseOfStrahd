@@ -66,7 +66,9 @@ def engine_names() -> dict[str, str]:
             for v in node:
                 walk(v, path)
 
-    for path in glob.glob(os.path.join(ROOT, "data", "**", "*.json"), recursive=True):
+    # The core's data (addons/dnd_core/data) lies under ROOT, so one walk covers it and the game's.
+    for path in glob.glob(os.path.join(ROOT, "data", "**", "*.json"), recursive=True) + \
+            glob.glob(os.path.join(ROOT, "addons", "dnd_core", "data", "**", "*.json"), recursive=True):
         try:
             walk(json.load(open(path, encoding="utf-8")), os.path.relpath(path, ROOT))
         except (OSError, ValueError):

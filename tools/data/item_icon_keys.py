@@ -5,9 +5,12 @@ An item's icon is its `icon` field, else its own id. Magic items built on a base
 id weapon_plus_1__longsword) use the template's `icon` if it has one, else the base item's `icon`, else the base item's
 id: so every mundane weapon and armor id is a key too. Spell Scrolls use the template's `icon` (scroll).
 """
-import glob
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dataroots  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs" / "assets" / "item_icon_keys.md"
@@ -15,8 +18,8 @@ OUT = ROOT / "docs" / "assets" / "item_icon_keys.md"
 
 def load(folder):
     out = {}
-    for f in sorted(glob.glob(str(ROOT / "data" / folder / "*.json"))):
-        d = json.loads(Path(f).read_text())
+    for f in dataroots.data_files(folder):
+        d = json.loads(f.read_text())
         out[d["id"]] = d
     return out
 

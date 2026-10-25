@@ -30,9 +30,9 @@ func _named_ids() -> Array[String]:
 
 ## A class or subclass feature's id, anywhere in data/classes or data/subclasses (Bladesong, Vow of Enmity, Wild Shape).
 func _is_class_feature(key: String) -> bool:
-	for dir: String in ["res://data/classes/", "res://data/subclasses/"]:
-		for f in DirAccess.get_files_at(dir):
-			if f.ends_with(".json") and FileAccess.get_file_as_string(dir + f).contains('"id": "%s"' % key):
+	for folder: String in ["classes", "subclasses"]:
+		for path in Compendium.data_files(folder):
+			if FileAccess.get_file_as_string(path).contains('"id": "%s"' % key):
 				return true
 	return false
 

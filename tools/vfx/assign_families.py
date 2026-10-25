@@ -144,7 +144,7 @@ def spell_family(s):
 
 def load(folder):
     out = []
-    for f in sorted(glob.glob(os.path.join(ROOT, "data", folder, "*.json"))):
+    for f in sorted(glob.glob(os.path.join(ROOT, "data", folder, "*.json")) + glob.glob(os.path.join(ROOT, "addons", "dnd_core", "data", folder, "*.json"))):
         j = json.load(open(f))
         if isinstance(j, dict) and j.get("source", {}).get("book") not in SKIP_BOOKS:
             out.append(j)

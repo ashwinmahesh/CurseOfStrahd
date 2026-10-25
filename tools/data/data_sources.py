@@ -2,8 +2,12 @@
 """Writes docs/rules/data_sources.md: for every data folder, how many entries were checked against the free 2024
 Basic Rules (source.checked_against) and which ones were entered from knowledge and still need a book check."""
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dataroots  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 FOLDERS = ["classes", "subclasses", "species", "backgrounds", "feats", "spells", "items", "magic_items", "monsters", "conditions"]
@@ -20,7 +24,7 @@ def main():
              "| Data | Total | Checked | From knowledge |", "|---|---|---|---|"]
     unchecked = {}
     for folder in FOLDERS:
-        entries = [json.loads(f.read_text()) for f in sorted((ROOT / "data" / folder).glob("*.json"))]
+        entries = [json.loads(f.read_text()) for f in dataroots.data_files(folder)]
         checked = [e for e in entries if e.get("source", {}).get("checked_against")]
         rest = [e for e in entries if not e.get("source", {}).get("checked_against")]
         lines.append(f"| {folder} | {len(entries)} | {len(checked)} | {len(rest)} |")
@@ -74,7 +78,7 @@ def main():
 def monster_editions():
     """Owner rule (2026-10-06): a monster uses its 2025 Monster Manual block where one exists, else the 2014 one."""
     by = defaultdict(list)
-    for f in sorted((ROOT / "data" / "monsters").glob("*.json")):
+    for f in dataroots.data_files("monsters"):
         e = json.loads(f.read_text())
         src = e.get("source", {})
         by[(src.get("edition", "?"), src.get("checked_against", "-"), src.get("book", "?"))].append(e.get("name", e["id"]))

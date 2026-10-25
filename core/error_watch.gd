@@ -119,7 +119,7 @@ func _process(delta: float) -> void:
 	if active == -1:
 		var first := get_tree().current_scene
 		var path := first.scene_file_path if first != null else ""
-		active = 0 if path.begins_with("res://tools/") or path.begins_with("res://tests/") else 1
+		active = 0 if path.begins_with("res://tools/") or path.begins_with("res://tests/") or path.begins_with("res://addons/dnd_core/tests/") else 1
 	var queued := catcher.take()
 	if active == 0:
 		return

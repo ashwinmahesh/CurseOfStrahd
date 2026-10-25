@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Compiles every rules/ and combat/ script on its own (godot --check-only, no autoloads), so a rules script no test
+# Compiles every script of the engine core (addons/dnd_core: rules/, combat/, story/) and of the game's own story/ and
+# combat/ on its own (godot --check-only, no autoloads), so a rules script no test
 # loads still can't hide a parse error, and rules/ and combat/ provably stay free of autoloads. Exit 1 on failure.
 # Several scripts compile at once (LINT_JOBS, 6 by default); each failure prints as one block.
 GODOT="${GODOT:-/Applications/Godot.app/Contents/MacOS/Godot}"
@@ -13,7 +14,7 @@ check() {
   fi
 }
 export -f check
-files=$(find rules combat story -name "*.gd" | sort)
+files=$(find addons/dnd_core/rules addons/dnd_core/combat addons/dnd_core/story story -name "*.gd" | sort)
 echo "$files" | xargs -P "${LINT_JOBS:-6}" -I{} bash -c 'check "$1"' _ {}
 status=$?   # 123 when any check failed
 echo "$(echo "$files" | grep -c .) scripts checked"

@@ -17,6 +17,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dataroots  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 ID = r"[a-z][a-z0-9_]*"
 SOCIAL = {"persuasion", "intimidation", "deception", "performance", "insight"}
@@ -40,7 +43,7 @@ RE_GIFT = re.compile(rf"^dark_gift\s+({ID})$")
 
 def _table(root, name):
     out = {}
-    for f in sorted((root / "data" / name).glob("*.json")):
+    for f in dataroots.data_files(name, root):
         try:
             out[f.stem] = json.loads(f.read_text())
         except json.JSONDecodeError:
@@ -156,7 +159,7 @@ class Story:
             self.dlg[str(f.relative_to(self.root / "narrative").with_suffix(""))] = parse_dialogue(f)
         gr = (self.root / "world" / "game_root.gd").read_text()
         self.first = re.search(r'FIRST_LOCATION\s*:=\s*"([a-z0-9_]+)"', gr).group(1)
-        crime = (self.root / "story" / "crime.gd").read_text()
+        crime = dataroots.engine_file("story/crime.gd", self.root).read_text()
         self.watch_regions = set(re.findall(r'"([a-z_]+)":\s*"[a-z_]+"', re.search(r"const WATCH := \{([^}]*)\}", crime).group(1)))
         self.facts = set()
         self.why = {}

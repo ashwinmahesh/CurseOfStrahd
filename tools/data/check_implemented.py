@@ -2,14 +2,18 @@
 """Checks the `implemented` labels on features, feats, species traits and monster traits against the code.
 
 A feature marked "engine" must be read by code: its id (or one of its flag values) appears as a string literal in
-rules/ or combat/. Run with --fix to set false "engine" labels to "text" and to mark features the code reads (but that
+rules/ or combat/ (the core's, addons/dnd_core, and the game's). Run with --fix to set false "engine" labels to "text" and to mark features the code reads (but that
 are labelled "text"/"data") as "engine". Exit 1 when a label is wrong (without --fix).
 """
 import glob, json, re, sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dataroots  # noqa: E402
 
 FIX = "--fix" in sys.argv
 code = ""
-for f in glob.glob("rules/**/*.gd", recursive=True) + glob.glob("combat/**/*.gd", recursive=True):
+for f in [str(p) for r in dataroots.roots() for d in ("rules", "combat") for p in (r / d).rglob("*.gd")]:
     code += open(f).read()
 literals = set(re.findall(r'"([a-z0-9_:]+)"', code))
 
@@ -63,15 +67,14 @@ def walk(f):
 
 bad = []
 changed = set()
-for path in sorted(glob.glob("data/classes/*.json") + glob.glob("data/subclasses/*.json") + glob.glob("data/feats/*.json")
-                   + glob.glob("data/species/*.json") + glob.glob("data/monsters/*.json")):
+for path in sorted(str(p) for folder in ("classes", "subclasses", "feats", "species", "monsters") for p in dataroots.data_files(folder)):
     d = json.load(open(path))
     for top in features(d):
         for f in walk(top):
             label = f.get("implemented")
             if label is None:
                 continue
-            reads = read_by_code(f, d.get("id", "") if path.startswith("data/feats/") else "")
+            reads = read_by_code(f, d.get("id", "") if "/data/feats/" in path else "")
             passive_numbers = f.get("action", "passive") == "passive" and any(m.get("stat") != "flag" for m in f.get("modifiers", []))
             if label == "engine" and not reads and not passive_numbers:
                 bad.append("%s: %s says engine but no code reads it" % (path, f.get("id")))

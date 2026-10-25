@@ -1,13 +1,15 @@
 extends TestCase
-## The engine split (docs/plans/engine_split.md): rules/, combat/ and the story engine core are meant to move into the
-## shared dnd_core repo, so they must not name this campaign. Every code line (comment-only lines are skipped) that
+## The engine split (docs/plans/engine_split.md): rules/, combat/ and the story engine core live in the shared dnd_core
+## repo (the submodule at addons/dnd_core), so they must not name this campaign. Every code line (comment-only lines are skipped) that
 ## names a campaign id, place or character counts as a hit; tests/fixtures/engine_campaign_baseline.json holds today's
 ## hits per file. A file may only lose hits: a new one fails, and a file that got cleaner must lower its entry so the
 ## baseline only shrinks. The campaign modules of story/ are not engine and are listed in CAMPAIGN_MODULES.
 ## Regenerate the baseline after cleaning up: ENGINE_NAMES_WRITE=1 make test FILES=test_engine_names.gd prints it.
 
 const BASELINE := "res://tests/fixtures/engine_campaign_baseline.json"
-const ENGINE_DIRS: Array[String] = ["res://rules", "res://combat", "res://story"]
+## The engine lives in the dnd_core submodule; the baseline keeps its paths from the core's own root (rules/..., story/...).
+const CORE := "res://addons/dnd_core/"
+const ENGINE_DIRS: Array[String] = ["res://addons/dnd_core/rules", "res://addons/dnd_core/combat", "res://addons/dnd_core/story"]
 
 ## Files of story/ that are the campaign itself (they move to the Strahd game's module, not to dnd_core).
 const CAMPAIGN_MODULES: Array[String] = [
@@ -57,7 +59,7 @@ func _scan() -> Dictionary:
 			continue
 		var n := _hits(f)
 		if n > 0:
-			out[f.trim_prefix("res://")] = n
+			out[f.trim_prefix(CORE)] = n
 	return out
 
 

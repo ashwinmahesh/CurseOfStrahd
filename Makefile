@@ -167,7 +167,7 @@ validate:
 	python3 tools/data/check_implemented.py
 	python3 tools/data/check_rules_docs.py
 
-## Compiles every rules/ script standalone (no autoloads allowed there).
+## Compiles every engine script (addons/dnd_core/rules, combat, story) and the game's own story/ standalone (no autoloads allowed there).
 lint: import
 	tools/lint_gd.sh
 
@@ -323,10 +323,3 @@ cursors:
 ## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.
 wireframes:
 	python3 tools/ui/wireframes.py
-
-## The shareable engine for the private core repo DndCoreEngine (docs/plans/engine_split.md, tools/core/manifest.json):
-## make core-extract shows what would move and what it still needs from the game; make core-extract WRITE=1 [DEST=dir]
-## writes it into ~/Documents/DndCoreEngine (or DEST). Nothing is committed or pushed there by the target.
-.PHONY: core-extract
-core-extract:
-	python3 tools/core/extract.py $(if $(WRITE),--write $(DEST),)

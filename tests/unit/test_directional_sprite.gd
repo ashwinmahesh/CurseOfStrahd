@@ -161,13 +161,12 @@ func test_every_fighting_creature_has_a_sprite() -> void:
 			if n is Dictionary:
 				people[str((n as Dictionary).get("sprite", (n as Dictionary).get("id", "")))] = true
 	var ids: Array[String] = []
-	for f in DirAccess.get_files_at("res://data/monsters"):
-		if f.ends_with(".json"):
-			var d: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/monsters/" + f))
-			if d is Dictionary:
-				var id := str((d as Dictionary).get("art", (d as Dictionary).get("id", "")))
-				if not people.has(id):
-					ids.append(id)
+	for path in Compendium.data_files("monsters"):
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if d is Dictionary:
+			var id := str((d as Dictionary).get("art", (d as Dictionary).get("id", "")))
+			if not people.has(id):
+				ids.append(id)
 	ids.append_array(["severed_arm", "severed_head", "illusion", "bigbys_hand", "animated_object", "giant_insect",
 		"aberrant_spirit", "bestial_spirit", "celestial_spirit", "construct_spirit", "draconic_spirit", "elemental_spirit",
 		"fey_spirit", "fiendish_spirit", "undead_spirit", "otherworldly_steed", "primal_beast", "imp_familiar",
@@ -364,12 +363,9 @@ func test_figures_made_one_after_another_never_share_a_depth() -> void:
 ## "Granny Ash's combat sprite should be scaled up").
 func test_a_monster_on_a_smaller_creatures_sprite_is_drawn_at_its_size() -> void:
 	var sizes := ["tiny", "small", "medium", "large", "huge", "gargantuan"]
-	var dir := DirAccess.open("res://data/monsters")
 	var short: Array[String] = []
-	for f in dir.get_files():
-		if not f.ends_with(".json"):
-			continue
-		var d := JSON.parse_string(FileAccess.get_file_as_string("res://data/monsters/" + f)) as Dictionary
+	for path in Compendium.data_files("monsters"):
+		var d := JSON.parse_string(FileAccess.get_file_as_string(path)) as Dictionary
 		var art := str(d.get("art", d.get("id", "")))
 		var lent := Compendium.shared().monster_data(art)
 		if art == str(d.get("id", "")) or lent.is_empty() or d.has("art_height"):

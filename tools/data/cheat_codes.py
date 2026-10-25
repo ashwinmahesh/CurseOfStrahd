@@ -15,7 +15,11 @@ import argparse
 import datetime
 import hashlib
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dataroots  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path.home() / "Documents" / "Obsidian Vault" / "CurseOfStrahd" / "Cheat Codes.md"
@@ -50,7 +54,7 @@ def assign(ids):
 
 def load(folder):
     out = {}
-    for f in sorted((ROOT / "data" / folder).glob("*.json")):
+    for f in dataroots.data_files(folder):
         d = json.loads(f.read_text())
         out[str(d.get("id", f.stem))] = d
     return out

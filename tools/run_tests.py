@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """make test: the test files run in several headless Godot processes at once (P2).
 
-Every process runs tests/test_runner.tscn with --claim=<a folder of this run's>: it goes down the same list of files,
+Every process runs addons/dnd_core/tests/test_runner.tscn (the dnd_core submodule's) with --claim=<a folder of this run's>: it goes down the same list of files,
 longest first, and takes the next one no other process has claimed, so no process sits idle while another still has
 a queue. Times come from .godot/test_times.json (this checkout's last runs, written after each run) or else
 tests/support/test_times.json (a copy kept in the repo for fresh checkouts); a file with no time yet goes first.
@@ -42,7 +42,8 @@ import threading
 import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEST_DIRS = ("tests/unit", "tests/integration")
+# The game's tests, then the core's own unit tests (the dnd_core submodule, addons/dnd_core).
+TEST_DIRS = ("tests/unit", "tests/integration", "addons/dnd_core/tests/unit", "addons/dnd_core/tests/integration")
 LOCAL_TIMES = os.path.join(ROOT, ".godot", "test_times.json")
 REPO_TIMES = os.path.join(ROOT, "tests", "support", "test_times.json")
 MAX_JOBS = 8
@@ -57,7 +58,7 @@ ERROR = re.compile(r"SCRIPT ERROR|ERROR:|Parse Error|Failed loading|WARNING: .*G
 
 
 def test_files() -> list[str]:
-    """Every test file, in the order the single runner takes them (tests/unit, then tests/integration)."""
+    """Every test file, in the order the single runner takes them (tests/unit, then tests/integration, then the core's)."""
     out = []
     for d in TEST_DIRS:
         full = os.path.join(ROOT, d)
@@ -394,7 +395,7 @@ def main() -> int:
         if split:
             jobs = max(1, wanted)   # a split file's tests can keep more processes busy than there are files
 
-    base = [a.godot, "--path", ROOT, "--headless", "--quit-after", "100000", "res://tests/test_runner.tscn", "--"]
+    base = [a.godot, "--path", ROOT, "--headless", "--quit-after", "100000", "res://addons/dnd_core/tests/test_runner.tscn", "--"]
     if a.only:
         base.append("--only=" + a.only)
     claim = tempfile.mkdtemp(prefix="strahd_tests_")

@@ -14,9 +14,12 @@ import statistics
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dataroots  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 TABLE = ROOT / "data" / "treasure" / "magic_prices.json"
-FOLDERS = [ROOT / "data" / "magic_items", ROOT / "data" / "items"]
+FOLDERS = ["magic_items", "items"]
 ## The 2024 DMG's price by rarity (MagicItems.PRICE; consumables half), for `rule: book`.
 BOOK = {"common": 100, "uncommon": 400, "rare": 4000, "very_rare": 40000, "legendary": 200000}
 
@@ -77,7 +80,7 @@ def run(apply=False):
     table = json.loads(TABLE.read_text())
     guide, med = table["guide"], medians(table["guide"])
     errors, changed = [], 0
-    files = {f.stem: f for folder in FOLDERS for f in folder.glob("*.json")}
+    files = {f.stem: f for folder in FOLDERS for f in dataroots.data_files(folder)}
     for id_, how in table["items"].items():
         if id_ not in files:
             errors.append(f"{id_}: no such item")

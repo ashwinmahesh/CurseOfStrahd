@@ -39,16 +39,18 @@ import sys
 import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEST_DIRS = ("tests/unit/", "tests/integration/")
+CORE = "addons/dnd_core/"  # the engine core, a git submodule (docs/plans/engine_split.md)
+TEST_DIRS = ("tests/unit/", "tests/integration/", CORE + "tests/unit/", CORE + "tests/integration/")
 DOCS_EXT = {".md", ".txt", ".url", ".uid"}  # a .uid goes with its script, which is in the list too
 DOCS = ("docs/", ".gitignore", ".gitattributes", "skills/")  # .gitattributes only says what goes to Git LFS
 ASSET_EXT = {".png", ".jpg", ".jpeg", ".webp", ".svg", ".ogg", ".wav", ".mp3", ".glb", ".gltf", ".blend", ".import",
              ".gpl", ".jsonl", ".gdignore", ".ttf", ".otf"}
 ASSET_DIRS = ("blender/", "tools/art/", "tools/audio/", "tools/ui/", "art/generated/", "art/sourced/")
 CODE_EXT = {".gd", ".tscn", ".tres", ".gdshader", ".gdshaderinc"}
-EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/run_tests.py", "tools/logcheck.sh",
+# A new commit of the core (the submodule's path) or a change to .gitmodules is the engine changing: everything runs.
+EVERYTHING = ("Makefile", "project.godot", "addons/", ".gitmodules", "tests/test_runner.", "tools/run_tests.py", "tools/logcheck.sh",
               "tools/lint_gd.sh")
-LINTED = ("rules/", "combat/", "story/")
+LINTED = (CORE + "rules/", CORE + "combat/", CORE + "story/", "story/")
 GOLDEN = "tests/saves/"  # the golden saves: test_golden_saves loads them all (P4)
 RULES_DOCS = ("docs/rules/", "docs/tasks/")  # make validate checks them against the plan and the data (P12)
 DEPTH = 1  # DEPTH=n's default reach when given without a number (see above); None follows every user
@@ -165,7 +167,8 @@ class Index:
     """What every script, scene and shader outside art/ refers to: class names, autoloads, res:// paths, file names."""
 
     def __init__(self) -> None:
-        listed = git("ls-files", "--cached", "--others", "--exclude-standard").split()
+        # The core is a submodule: --recurse-submodules lists its files too (with their addons/dnd_core/ prefix).
+        listed = git("ls-files", "--cached", "--recurse-submodules").split() + git("ls-files", "--others", "--exclude-standard").split()
         self.files = [p for p in listed if os.path.splitext(p)[1] in CODE_EXT and not p.startswith("art/")
                       and os.path.exists(os.path.join(ROOT, p))]
         self.text: dict[str, str] = {}
@@ -223,9 +226,11 @@ def quick_plan(files: list[str]) -> dict:
     """The quick check: lint and the compile check for any code change, validate for data and the rules docs, and the
     test files the branch changed. Never the full suite."""
     kinds = {p: kind(p) for p in files}
-    code = any(k in ("code", "everything") and os.path.splitext(p)[1] in CODE_EXT | {".godot"} for p, k in kinds.items())
+    # A new commit of the core shows up as its path (a submodule is one entry); it is code and data at once.
+    core_moved = any(p == CORE.rstrip("/") or p.startswith(CORE) for p in files)
+    code = core_moved or any(k in ("code", "everything") and os.path.splitext(p)[1] in CODE_EXT | {".godot"} for p, k in kinds.items())
     out = {"validate": False, "lint": code, "import": False, "tests": [], "why": [], "dry": [], "compile": code}
-    out["validate"] = any(k in ("data", "tool") for k in kinds.values()) or any(p.startswith(RULES_DOCS) for p in files)
+    out["validate"] = core_moved or any(k in ("data", "tool") for k in kinds.values()) or any(p.startswith(RULES_DOCS) for p in files)
     out["import"] = any(k == "asset" for k in kinds.values())
     tests = {p for p in files if is_test(p)}
     if code:
