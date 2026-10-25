@@ -1017,11 +1017,11 @@
     },
     "sq_tinkers_wagon": {
       "refs": [
-        "vistana",
+        "tinker_iosif",
         "mimic"
       ],
-      "prompt": "A muddy crossroads by day under a grey sky. A tinker's green painted wagon, hung with pots, ladles and little bells, stands up off its wheels like a beast getting to its feet: its tailboard yawns open on rows of teeth, grey sticky tendrils lash from under the paint, the pots on its sides all turn toward the viewer. On its front board a thin Vistani man in a bright scarf is chained by the ankle with a wet grey cord growing into the wood, drawn after the first reference, his face terrified. Low camera; {party} in the foreground drawing weapons.",
-      "use": "a"
+      "prompt": "A muddy crossroads by day under a grey sky. A tinker's green painted wagon, hung with pots, ladles and little bells, stands up off its wheels like a beast getting to its feet: its tailboard yawns open on rows of teeth, grey sticky tendrils lash from under the paint, the pots on its sides all turn toward the viewer. On its front board a thin Vistani man in a bright headscarf, patched waistcoat and trousers is chained by the ankle with a wet grey cord growing into the wood, drawn after the first reference, his face terrified. Low camera; {party} in the foreground drawing weapons.",
+      "use": "c"
     },
     "sq_grandsire": {
       "refs": [

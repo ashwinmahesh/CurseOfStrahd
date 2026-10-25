@@ -1654,6 +1654,29 @@
       "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: amused, sly."
     },
     {
+      "id": "tinker_iosif",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/tinker_iosif_turnaround.png",
+      "portrait": "art/portraits/tinker_iosif.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Iosif the Tinker, a thin, wiry, unshaven young Vistani man who talks fast and cheerfully: messy black curly hair under a faded red and gold headscarf tied at the back, a gold hoop earring in one ear, dark stubble, a bright patched waistcoat of mustard, crimson and moss-green patches over a cream shirt with rolled sleeves, a leather tinker's belt hung with small pots, ladles and little bells, patched brown trousers and worn brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Iosif the Tinker as a man (wave 1 art, 2026-10-24, Ashwin's typed yes): he had the Vistana's female portrait and sprite. 5-view turnaround (16:9), one Gemini call. The walk and attack sheets (make sprite, then make anims) are still to do: the Blender walk render waits for Ashwin's Mac-idle word, so the NPC's sprite is still the Vistana's. The Mimic-wagon cutscene picture uses this sheet as its reference."
+    },
+    {
+      "id": "tinker_iosif_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/tinker_iosif_portrait.png",
+      "sprites": "art/portraits/tinker_iosif.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Iosif the Tinker, a thin, wiry, unshaven young Vistani man with messy black curly hair under a faded red and gold headscarf, a gold hoop earring, dark stubble, a bright patched mustard, crimson and moss-green waistcoat over a cream open-necked shirt, three-quarter view, grinning cheerfully and quick-eyed, as if mid-sentence selling a pot. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Head and shoulders against a plain flat dark purple background with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/tinker_iosif_turnaround.png"
+      ],
+      "notes": "Bust portrait of the male Iosif from his turnaround as the reference (wave 1 art, 2026-10-24). 1024 -> 512 px by blender/portrait.py with BG=ash_violet SAT=1.2: at the default saturation the palette snap turned his red headscarf brown and his skin olive-grey; 1.2 keeps the red scarf and the patches, 1.4 added purple eye-shadow."
+    },
+    {
       "id": "ilse_varga_smile_portrait",
       "kind": "portrait",
       "status": "generated",
