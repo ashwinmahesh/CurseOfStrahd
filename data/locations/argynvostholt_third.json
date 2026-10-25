@@ -625,128 +625,112 @@
           "cell": [
             13,
             18
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             13,
             21
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             9,
             19
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             5,
             18
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             9,
             22
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             3,
             21
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             7,
             20
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             26,
             18
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             26,
             21
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             30,
             19
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             34,
             18
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             30,
             22
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             36,
             21
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             32,
             20
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             17,
             22
-          ],
-          "hp": 55
+          ]
         },
         {
           "monster": "phantom_warrior",
           "cell": [
             22,
             22
-          ],
-          "hp": 55
+          ]
         }
       ],
       "surprise": "",

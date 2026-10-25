@@ -850,13 +850,6 @@
             19,
             22
           ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            12,
-            22
-          ]
         }
       ],
       "surprise": "",
