@@ -1065,11 +1065,12 @@
     },
     "volenta_popofsky": {
       "settings": {},
-      "description": "Library voice chosen for Volenta Popofsky: Nadya - Energetic and Clear.",
-      "voice_id": "GCPLhb1XrVwcoKUJYcvz",
-      "name": "Nadya - Energetic and Clear",
-      "library": true,
-      "model": "eleven_v3"
+      "description": "A grown young woman in her late twenties, the third of a vampire count's brides. A warm, low-to-mid, smoky woman's voice with a clear Romanian accent: playful and teasing, delighted by fear, a purr with a cruel edge, mature and confident, clearly not a girl.",
+      "voice_id": "3NqWXtmFfoUcqPpdryUf",
+      "name": "Barovia Volenta Popofsky (2026-10-25)",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "kip_smudgewick": {
       "voice_id": "oCHQAjcoZiUR4mk6bigI",
