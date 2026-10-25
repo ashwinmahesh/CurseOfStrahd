@@ -10,7 +10,7 @@ thread). Until then main keeps its layout and every step below is an ordinary pa
 
 1. **Decouple inside this repo** (no project.godot change). Move tables to data, rename the shader and palette, add a
    campaign-module hook, and keep the guard test green (`tests/unit/test_engine_names.gd`, below).
-2. **Tag SRD** with `source.in_srd`, then plan the split of data/ into `srd/` and `books/` (plan only at first).
+2. Move the rules data (items, monsters, spells, feats, subclasses and the rest) with the code: the core is private and takes all of it.
 3. **Extract** the engine files listed below into the core repo.
 4. **Consume** it as a submodule at `addons/dnd_core`, landing with the project.godot path change in one release.
 5. A skeleton game proves the core boots on its own (a later task).
@@ -31,7 +31,7 @@ file belongs in data or behind a campaign-module hook instead.
 | Combat and AI | `combat/` except `ravenloft_features.gd` and the Faerûn packs (`faerun_*.gd`, optional supplement modules, off by default) |
 | Story engine core | `story/` minus the campaign modules: state, dialogue file and runner, conditions, quest log, narrator, banter, schedule, services, crime, long rest, rest rules, camp, captives, approval, check aids, field items and casting |
 | Schemas | the 31 `data/schemas/*.schema.json` except the campaign ones (`tarokka_*`, `strahd_*`, `ending`, `ally_visits`, `night_visitors`) |
-| Rules data | `data/` spells, items, magic_items, monsters, feats, subclasses, species, classes, backgrounds, conditions (the SRD part ships publicly, the rest only in the private repo; see Licence) |
+| Rules data | `data/` spells, items, magic_items, monsters, feats, subclasses, species, classes, backgrounds, conditions (all of it, SRD or not; see Licence) |
 | Test framework | `tests/test_case.gd`, `tests/test_runner.*`, `tests/support/` (generic files), `tools/run_tests.py`, `tools/check.py`, `tools/data/validate_data.py`, `tools/data/dialogue_lint.py`, `tools/lint_gd.sh`, `tools/logcheck.sh` |
 
 Unit tests of rules and combat move with the code; integration tests that name campaign content stay here.
@@ -55,6 +55,5 @@ lanes are editing.
 ## Licence
 
 `docs/assets/LICENSES.md`: content beyond SRD 5.2.1 is personal-use only and never distributed. The core repo stays
-private; any public release of it ships SRD-only data. `source.in_srd` marks which entries may ship; `tools/data/srd_report.py` (added with the flag)
-lists the counts. The flag is first filled in from knowledge of the SRD and is **unverified** until it is compared with the
-SRD 5.2.1 text.
+private and holds all the data (owner decision 2026-10-25: no SRD flag, no srd/ and books/ split). Anything made public
+from it would need its own licence review first.
