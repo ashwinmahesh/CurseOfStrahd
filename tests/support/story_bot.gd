@@ -773,7 +773,16 @@ func rest(long: bool) -> void:
 		note("no long rest: %s" % " ".join(refused))
 	if long and refused.is_empty():
 		rs.call("_long_rest", rule)
-		note("long rest")
+		# A risky place's night can break (LongRest: a 1 on a d6): the hour slept counts as a Short Rest and the next Long
+		# Rest may start at once, so a careful player lies down again (2026-10-25: after a broken night on Barrow Moor the
+		# Wizard of Wines playthrough climbed Yester Hill hurt and out of spell slots and lost the summit eight times).
+		var nights := 1
+		while waits_for_long_rest and not bool(rs.get("_long_done")) and not LongRest.broken(st()) and nights < 4 \
+				and RestRules.long_rest_refusals(st()).is_empty():
+			note("the night was broken; lies down again")
+			rs.call("_long_rest", rule)
+			nights += 1
+		note("long rest" if bool(rs.get("_long_done")) else "long rest broken: %s" % str(rs.get("_log").text))
 	else:
 		for ch in st().party:
 			for i in 6:
