@@ -20,7 +20,7 @@ grade.
 | What lies past the edge when the camera tilts up: the mountains, Castle Ravenloft on its crag, Lake Zarovich | `world/look/vista.gd` (`Vista`), `art/vistas/`, `shaders/atmosphere/vista*.gdshader` |
 | The land lane's before-and-after shots: trees and plants, ground, vistas | `tools/capture/land_capture.tscn` |
 | Weather: leaves, rain, snow, wisps, dust, crows, chimney smoke, embers, lit windows | `world/look/atmosphere_weather.gd` (`AtmosphereWeather`) |
-| Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/strahd_post.gdshader` |
+| Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/screen_pass.gdshader` |
 | Water, forest trees (one MultiMesh), leaves, rain, splashes, motes, crows, smoke | `shaders/atmosphere/` |
 | Art QA: a place at each time of day from the game camera, with frame times | `tools/art/preview/atmosphere_preview.tscn` |
 | The renderer by graphics preset: anti-aliasing, shadow maps, how many lamps cast shadows | `world/look/graphics.gd` (`Graphics`) |
@@ -298,7 +298,7 @@ is frozen, and `lit_world.gdshader` has no grid at all. The grid is a layer laid
 ## The sky in the Modern finish
 
 Improvement Ideas W13, the sky half. Where the tilted camera looks out past everything (see Vistas below), the screen
-pass draws Barovia's sky (`strahd_post.gdshader` `sky_colour`, set by `Atmosphere._apply_sky` by the time of day,
+pass draws Barovia's sky (`screen_pass.gdshader` `sky_colour`, set by `Atmosphere._apply_sky` by the time of day,
 outdoors only): a gradient from the land's haze at the horizon up to the place's sky colour, a low ceiling of cloud
 drifting with the mood's cloud wind (never clear: at least 60% cover), lit from beneath towards the moon or the low
 sun, and the moon on the key light's bearing, low enough to be seen (`MOON_HEIGHT`), a disc glowing through thin cloud

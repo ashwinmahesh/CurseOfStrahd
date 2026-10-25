@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Builds the Strahd palette files from the single list below (plan §4.1).
 
-Writes art/palette/strahd_palette.gpl (GIMP/Aseprite/Krita), palette.json (tools), and
-strahd_palette.png (an N x 1 strip the palette post-process shader samples). Stdlib only.
+Writes art/palette/palette.gpl (GIMP/Aseprite/Krita), palette.json (tools), and
+palette.png (an N x 1 strip the palette post-process shader samples). Stdlib only.
 """
 import json
 import struct
@@ -58,9 +58,9 @@ def main():
     for name, h in PALETTE:
         r, g, b = bytes.fromhex(h)
         lines.append(f"{r:3d} {g:3d} {b:3d}\t{name}")
-    (OUT / "strahd_palette.gpl").write_text("\n".join(lines) + "\n")
+    (OUT / "palette.gpl").write_text("\n".join(lines) + "\n")
     (OUT / "palette.json").write_text(json.dumps({n: "#" + h for n, h in PALETTE}, indent=2) + "\n")
-    png_strip([h for _, h in PALETTE], OUT / "strahd_palette.png")
+    png_strip([h for _, h in PALETTE], OUT / "palette.png")
     (OUT / "ui_palette.json").write_text(json.dumps({n: "#" + h for n, h in UI_PALETTE}, indent=2) + "\n")
     print(f"{len(PALETTE)} colours (+{len(UI_PALETTE)} for the UI) written to {OUT.relative_to(ROOT)}")
 

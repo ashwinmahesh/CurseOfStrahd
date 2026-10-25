@@ -13,7 +13,7 @@ render_mode unshaded, fog_disabled, cull_disabled, depth_test_disabled, depth_dr
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
 uniform sampler2D depth_tex : hint_depth_texture, filter_nearest;
 uniform sampler2D normal_tex : hint_normal_roughness_texture, filter_nearest;
-// N x 1 strip from art/palette/strahd_palette.png, read raw (sRGB values).
+// N x 1 strip from art/palette/palette.png, read raw (sRGB values).
 uniform sampler2D palette_tex : filter_nearest;
 uniform int palette_size = 46;
 uniform bool quantize = true;

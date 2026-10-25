@@ -53,7 +53,7 @@ void fragment() {
 	}
 	ALBEDO = base;
 	EMISSION = emission;
-	// Never below 0.1: the screen pass reads near-zero roughness as water (strahd_post.gdshader).
+	// Never below 0.1: the screen pass reads near-zero roughness as water (screen_pass.gdshader).
 	ROUGHNESS = clamp(r, 0.1, 1.0);
 	METALLIC = m;
 	SPECULAR = specular;

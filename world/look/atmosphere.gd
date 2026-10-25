@@ -421,7 +421,7 @@ func _flat_floors_cast_no_shadow() -> void:
 			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
-## The Modern finish's depth blur, drawn by the screen pass (strahd_post.gdshader's edge blur): the middle of the
+## The Modern finish's depth blur, drawn by the screen pass (screen_pass.gdshader's edge blur): the middle of the
 ## screen stays sharp and the world softens toward the edges, most in the corners. Settings > Display > Depth blur
 ## picks how far in it reaches (`name`): `start` is how far out from the middle it begins (1 = the middle of each side,
 ## the corners are 1.41), `lod` how soft the corners get (the screen copy's mip level at 1080 lines). Owner request
@@ -705,7 +705,7 @@ const MIN_COVER := 0.6
 var _tilt_shown := 0.0
 
 
-## Barovia's sky in the screen pass (strahd_post.gdshader sky_on): outdoors in the Modern finish, coloured by the time
+## Barovia's sky in the screen pass (screen_pass.gdshader sky_on): outdoors in the Modern finish, coloured by the time
 ## of day; seen when the camera tilts toward the horizon (CameraRig.horizon).
 func _apply_sky(v: Dictionary) -> void:
 	var on := Look.modern() and outdoors

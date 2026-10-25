@@ -60,7 +60,7 @@ void fragment() {
 		vec3 q = world_pos * 12.0 + vec3(TIME * 0.25, -TIME * 0.4, TIME * 0.15);
 		float speck = step(0.993, hash(floor(q)));
 		float twinkle = 0.5 + 0.5 * sin(TIME * 1.7 + hash(floor(q) + 7.0) * 6.28);
-		// The play camera's depth blur softens the screen's edges (strahd_post.gdshader), which this draws after: the
+		// The play camera's depth blur softens the screen's edges (screen_pass.gdshader), which this draws after: the
 		// beams fade out there instead of standing sharp in a blurred corner.
 		float edge = 1.0 - smoothstep(0.6, 1.25, length((SCREEN_UV - 0.5) * 2.0));
 		ALBEDO = colour * (strength * core * streak + mote_strength * strength * speck * twinkle * core) * ends * edge;

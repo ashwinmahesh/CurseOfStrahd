@@ -229,7 +229,7 @@ void fragment() {
 		float glance = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), 3.0);
 		EMISSION = world_sky.rgb * puddle * (0.04 + glance * 0.3);
 	}
-	// Never below 0.1: the screen pass reads near-zero roughness as water (strahd_post.gdshader).
+	// Never below 0.1: the screen pass reads near-zero roughness as water (screen_pass.gdshader).
 	ROUGHNESS = clamp(r, 0.1, 1.0);
 	METALLIC = m;
 	SPECULAR = specular;

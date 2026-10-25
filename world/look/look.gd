@@ -4,8 +4,8 @@ extends RefCounted
 ## Colours come from art/palette/palette.json so nothing invents its own (style bible rule).
 
 const CEL_SHADER := preload("res://shaders/cel.gdshader")
-const POST_SHADER := preload("res://shaders/post/strahd_post.gdshader")
-const PALETTE_TEX := preload("res://art/palette/strahd_palette.png")
+const POST_SHADER := preload("res://shaders/post/screen_pass.gdshader")
+const PALETTE_TEX := preload("res://art/palette/palette.png")
 const PALETTE_JSON := "res://art/palette/palette.json"
 ## Menu-only colours (crimson, black and gilt): never in the strip, so the world's palette pass doesn't change.
 const UI_PALETTE_JSON := "res://art/palette/ui_palette.json"
@@ -533,7 +533,7 @@ static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
 static var _noise: ImageTexture = null
 
 
-## A 256 x 256 tile of random values for the screen pass's noise in the Modern finish (strahd_post.gdshader
+## A 256 x 256 tile of random values for the screen pass's noise in the Modern finish (screen_pass.gdshader
 ## fast_noise): its own fixed seed, so the mist is the same from run to run (cosmetic, never Dice).
 static func noise_texture() -> ImageTexture:
 	if _noise == null:
