@@ -296,7 +296,9 @@ func test_old_bonegrinder_the_children_go_home() -> void:
 
 ## Region 6 (docs/regions/wizard_of_wines.md): retake the winery, return its stone, break Yester Hill.
 func test_wizard_of_wines_saved_and_yester_hill_broken() -> void:
-	await _start("wizard_of_wines", 6)
+	# Level 7, the top of what the region handles (docs/regions/wizard_of_wines.md): a foe beside a hero it can strike no longer
+	# walks off into an Opportunity Attack (Ashwin, 2026-10-24), so the winery's brawl is harder for the bot's party than at 6.
+	await _start("wizard_of_wines", 7)
 	var st := GameState.story
 	st.gold = 400.0
 	var bot := _bot(["Take us to your father.", "We'll clear your house.", "Turn the third hoop and pull.", "Then we'll take it back.",

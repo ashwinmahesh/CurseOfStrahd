@@ -391,9 +391,9 @@ func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 
 
 ## An action that casts a spell on a Recharge (a vine blight's Entangling Plants), placed where its area catches two
-## foes or more (or the only one in range) and more foes than friends, and never a friend stronger than the caster:
-## Entangle holds whoever stands in it, and a blight that roots its own tree blight in place has done the party's work
-## (2026-10-13, the Yester Hill summit).
+## foes or more (or the only one in range) and no friend or itself: Entangle holds whoever stands in it, and a blight that
+## roots its own tree blight in place has done the party's work (2026-10-13, the Yester Hill summit; every friend left
+## out, Ashwin 2026-10-24).
 func _recharge_spell_plan(c: Combatant) -> Dictionary:
 	var e := enc()
 	if not c.action_available:
@@ -406,7 +406,6 @@ func _recharge_spell_plan(c: Combatant) -> Dictionary:
 		var s := Compendium.shared().spell_data(spell_id)
 		var reach := int((s.get("range", {}) as Dictionary).get("feet", 60))
 		var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return not h.is_down() and e.distance(c, h) <= reach and not companion(h))
-		var mine := c.creature as Monster
 		var best := Vector2.INF
 		var best_n := 0
 		var best_score := 0
@@ -422,22 +421,20 @@ func _recharge_spell_plan(c: Combatant) -> Dictionary:
 						continue
 					var n := 0
 					var friends := 0
-					var master := false
 					for o in e.spells.creatures_in(e.spells.area_for(c, s, p, Vector2.RIGHT)):
-						if o == c or o.is_down():
+						if o.is_down():
 							continue
-						if c.hostile_to(o):
-							n += 1
-						else:
+						if o == c or not c.hostile_to(o):
 							friends += 1
-							var om := o.creature as Monster
-							master = master or om == null or mine == null or om.cr > mine.cr
-					if master or n - friends <= 0:
+						else:
+							n += 1
+					# Never a friend in it, or itself (Ashwin, 2026-10-24): the near edge moves off the foe to leave them out.
+					if friends > 0 or n <= 0:
 						continue
-					if n - friends > best_score or (n - friends == best_score and n > best_n):
+					if n > best_score:
 						best = p
 						best_n = n
-						best_score = n - friends
+						best_score = n
 						aimed = f
 		if aimed != null and (best_n >= 2 or foes.size() == 1):
 			return {"kind": "cast", "action": act, "spell": spell_id, "point": best, "why": "%s at %s" % [act.get("name", ""), aimed.name()]}
@@ -459,7 +456,10 @@ func _save_action_plan(c: Combatant) -> Dictionary:
 		if spread and not act.has("recharge"):
 			var best_t: Combatant = null
 			for t0 in targets:
-				var foes := e.monster_actions.save_victims(c, act, t0).filter(func(v: Combatant) -> bool: return c.hostile_to(v) and not companion(v))
+				var caught := e.monster_actions.save_victims(c, act, t0)
+				if _catches_friend(c, caught):
+					continue
+				var foes := caught.filter(func(v: Combatant) -> bool: return c.hostile_to(v) and not companion(v))
 				if foes.size() >= 2:
 					best_t = t0
 			if best_t != null:
@@ -477,13 +477,23 @@ func _save_action_plan(c: Combatant) -> Dictionary:
 			# no one, did nothing and stayed charged, so it was the plan again every turn while the monster stood still.
 			var pick: Combatant = null
 			for t1 in targets:
-				if spread and not t1 in e.monster_actions.save_victims(c, act, t1):
+				var victims := e.monster_actions.save_victims(c, act, t1)
+				if spread and (not t1 in victims or _catches_friend(c, victims)):
 					continue
 				if pick == null or (companion(pick) and not companion(t1)):
 					pick = t1   # a hero before a familiar or a steed
 			if pick != null:
 				return {"kind": "save_action", "action": act, "target": pick, "why": "%s on %s" % [act.get("name", ""), pick.name()]}
 	return {}
+
+
+## Whether an area that catches `caught` would catch someone on `c`'s side: an ally or a creature that isn't its foe. A foe's
+## own blast never falls on its friends (Ashwin, 2026-10-24: it steps out of the area or aims the area clear first).
+func _catches_friend(c: Combatant, caught: Array[Combatant]) -> bool:
+	for v in caught:
+		if v != c and not c.hostile_to(v):
+			return true
+	return false
 
 
 func _effect_of(c: Combatant, source_id: String) -> Effect:
@@ -673,6 +683,10 @@ func plan_turn(c: Combatant) -> Dictionary:
 		if not t.creature.has_flag("ethereal"):
 			strikable.append(t)
 	var crowd := crowd_map(c)
+	# Next to a hero it can strike with its strongest attack, it doesn't walk off to another when leaving would draw an
+	# Opportunity Attack (Ashwin, 2026-10-24); on dangerous ground it goes where it must.
+	var standing: Array[Vector2i] = [c.cell]
+	var holds := _holds_ground(c, options, strikable) and (hz == null or hz.cost(standing) <= 0.01)
 	# Squares of its own first; a square it would share with an ally only when none of its own gives it an attack
 	# (owner, 2026-10-19: foes may share, and the pack doesn't pile in when there's room round the hero).
 	for sharing: bool in [false, true]:
@@ -689,6 +703,8 @@ func plan_turn(c: Combatant) -> Dictionary:
 						continue
 					# The walk there goes round the dangerous ground when that reaches the square.
 					var walk := calm if calm.has(cell) else reach
+					if holds and cell != c.cell and _oa_risk(c, CombatGrid.path_to(walk, cell), threats) > 0.0:
+						continue
 					var path: Array[Vector2i] = []
 					if hz != null:
 						path = CombatGrid.path_to(walk, cell)
@@ -852,7 +868,10 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	var avg := _avg(c, o)
 	# Foes spread their blows (the party's autopilot keeps its odds as they are: AiTactics.spreads).
 	var chance := sqrt(maxf(0.0, float(hc["chance"]))) if tactics.spreads(c) else float(hc["chance"])
-	var expected := chance * avg
+	# A Multiattack counts whole, in blows' worth: the option's whole action over the blows a turn makes (_action_avg, _blows),
+	# so a melee Multiattack is weighed against one throw as the whole of it and a blow keeps the scale the other terms
+	# (a finishing blow, a concentrating caster, the fear of an Opportunity Attack) were set against.
+	var expected := chance * _action_avg(c, o) / _blows(c)
 	# An Echo Knight's echo is only an image (its knight calls another with a Bonus Action): worth little.
 	var echo := EchoKnight.is_echo(t)
 	if echo:
@@ -884,13 +903,7 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 func action_worth(c: Combatant, weapon: Dictionary) -> float:
 	if str(weapon.get("kind", "")) != "attack":
 		return 0.0
-	var n := maxi(1, enc().attacks_per_action(c))
-	if c.creature is Monster:
-		var multi := (c.creature as Monster).action("multiattack")
-		var count := 0
-		for entry: Variant in multi.get("multiattack", []):
-			count += int((entry as Dictionary).get("count", 1))
-		n = maxi(n, count)
+	var n := _blows(c) if c.creature is Monster else float(maxi(1, enc().attacks_per_action(c)))
 	return float(weapon["score"]) * n
 
 
@@ -900,6 +913,48 @@ func _avg(c: Combatant, o: Dictionary) -> float:
 		var act := (c.creature as Monster).action(str(o["action_id"]))
 		return (c.creature as Monster).average_damage(str(o["action_id"])) + (4.0 if act.has("on_hit") else 0.0)
 	return (o["profile"] as WeaponProfile).average_damage()
+
+
+## What `o` is worth over the whole action, in damage: a monster's Multiattack counts each of its entries that has a choice
+## of the same kind as `o` (melee or ranged), at the best of those choices, so a melee Multiattack is weighed against one
+## ranged attack as the whole of it (an ape's two fists, 11, against its rock, 10: Ashwin, 2026-10-24, "prefer melee when it
+## out-damages ranged"). One attack's average for everything else, and for an option outside the Multiattack.
+func _action_avg(c: Combatant, o: Dictionary) -> float:
+	var one := _avg(c, o)
+	if not c.creature is Monster:
+		return one
+	var multi := (c.creature as Monster).action("multiattack")
+	if multi.is_empty():
+		return one
+	var melee := bool(o["melee"])
+	var total := 0.0
+	var found := false
+	for entry: Variant in multi.get("multiattack", []):
+		var en := entry as Dictionary
+		var choices: Array = [str(en["action"])]
+		choices.append_array(en.get("or", []))
+		var best := -1.0
+		for cid: Variant in choices:
+			var opt := enc().option_by_id(c, "monster:" + str(cid))
+			if opt.is_empty() or bool(opt["melee"]) != melee:
+				continue
+			best = maxf(best, _avg(c, opt))
+		if best >= 0.0:
+			total += best * int(en.get("count", 1))
+			found = true
+	return maxf(total, one) if found else one
+
+
+## How many blows `c`'s action makes: a monster's Multiattack counts (the stat block's `count`s), else one. Scores are in
+## blows' worth (_score), so a score times this is the action's.
+func _blows(c: Combatant) -> float:
+	if not c.creature is Monster:
+		return 1.0
+	var multi := (c.creature as Monster).action("multiattack")
+	var count := 0
+	for entry: Variant in multi.get("multiattack", []):
+		count += int((entry as Dictionary).get("count", 1))
+	return float(maxi(1, count))
 
 
 ## Hostiles that could make an Opportunity Attack on `c` this turn: [{p, reach, expected}] (expected damage).
@@ -933,6 +988,24 @@ func _oa_risk(c: Combatant, path: Array[Vector2i], threats: Array[Dictionary]) -
 				risk += float(t["expected"])
 				break
 	return risk
+
+
+## Whether `c`, where it stands, can strike a hero (not a familiar or a steed) with its strongest attack of those it can
+## use: it then doesn't leave for another target when that walk draws an Opportunity Attack (plan_turn).
+func _holds_ground(c: Combatant, options: Array[Dictionary], strikable: Array[Combatant]) -> bool:
+	var strongest := {}
+	var top := -1.0
+	for o in options:
+		var v := _action_avg(c, o)
+		if v > top:
+			top = v
+			strongest = o
+	if strongest.is_empty():
+		return false
+	for t in strikable:
+		if not companion(t) and enc().attack_legal(c, t, strongest) == "":
+			return true
+	return false
 
 
 ## No attack this turn: Dash toward the most attractive target and end as close to it as possible.

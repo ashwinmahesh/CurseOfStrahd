@@ -237,12 +237,16 @@ func test_a_foes_cone_goes_straight_at_its_target() -> void:
 	var caught := e.monster_actions.save_victims(c, act, target)
 	assert_true(target in caught and beside in caught, "the one aimed at and the one on the way")
 	assert_false(below in caught, "not the one below the row that the row-wise cone took")
-	var mage := TestCombat.foe(e, "mage", Vector2i(16, 4))
-	var plan := e.ai.spells._best_use(mage, "cone_of_cold")
+	# The mage's cone, with no zombie of its own side in the way (a cone through them is never cast).
+	var e2 := _field()
+	var c2 := _wizard(e2, Vector2i(2, 12))
+	TestCombat.start_with(e2, c2)
+	var mage := TestCombat.foe(e2, "mage", Vector2i(16, 4))
+	var plan := e2.ai.spells._best_use(mage, "cone_of_cold")
 	assert_false(plan.is_empty(), "a mage weighs its Cone of Cold")
 	if not plan.is_empty():
 		var d := plan["direction"] as Vector2
-		var at := (e.center_of(c) - e.center_of(mage)).normalized()
+		var at := (e2.center_of(c2) - e2.center_of(mage)).normalized()
 		assert_true(d.distance_to(at) < 0.0001, "straight at the wizard, not along a diagonal (%s)" % d)
 
 

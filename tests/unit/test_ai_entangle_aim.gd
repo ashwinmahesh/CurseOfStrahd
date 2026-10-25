@@ -1,7 +1,7 @@
 extends TestCase
 ## A vine blight's Entangling Plants holds everyone in its square, its own side included. It goes where it catches more
-## of the party than of its friends and no friend stronger than itself (2026-10-13: at the Yester Hill summit the blights
-## kept rooting Wintersplinter itself), and waits rather than hold one.
+## of the party and none of its friends (2026-10-13: at the Yester Hill summit the blights kept rooting Wintersplinter itself;
+## a friend of any strength since 2026-10-24), and waits rather than hold one.
 
 
 static func _field() -> Encounter:
@@ -41,17 +41,14 @@ func test_the_vines_wait_rather_than_hold_a_stronger_friend() -> void:
 	assert_true(e.ai._recharge_spell_plan(vb).is_empty(), "a berserker on either side is in every square that holds a hero")
 
 
-## Lesser friends (twig blights) may be caught along with more of the party.
-func test_the_vines_hold_two_heroes_and_a_twig_blight() -> void:
+## Not even a lesser friend (a twig blight) is caught along with the party any more (Ashwin, 2026-10-24: an area never takes in
+## the caster's friends): the cube can't leave both twig blights out, so the vines wait.
+func test_the_vines_wait_rather_than_hold_even_a_twig_blight() -> void:
 	var e := _field()
-	var godrick := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(10, 4), 6)
-	var liriel := TestCombat.hero(e, "liriel_dawnsong", Vector2i(11, 4), 6)
+	TestCombat.hero(e, "godrick_pendlebrook", Vector2i(10, 4), 6)
+	TestCombat.hero(e, "liriel_dawnsong", Vector2i(11, 4), 6)
 	TestCombat.foe(e, "twig_blight", Vector2i(9, 4))
 	TestCombat.foe(e, "twig_blight", Vector2i(12, 4))
 	var vb := TestCombat.foe(e, "vine_blight", Vector2i(3, 4))
 	TestCombat.start_with(e, vb)
-	var plan := e.ai._recharge_spell_plan(vb)
-	assert_false(plan.is_empty(), "two heroes for one twig blight is worth it")
-	var caught := _caught(e, vb, plan)
-	assert_true(godrick in caught and liriel in caught, "both heroes: %s" % plan.get("point"))
-	assert_eq(caught.filter(func(o: Combatant) -> bool: return o.side == &"enemy").size(), 1, "one twig blight, not both")
+	assert_true(e.ai._recharge_spell_plan(vb).is_empty(), "a twig blight on each side: no square leaves both out")

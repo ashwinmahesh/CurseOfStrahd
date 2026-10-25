@@ -4,9 +4,9 @@ extends RefCounted
 ## stat block's list (or the scroll it carries) against the best weapon attack, weighed in the same units as AiBrain's
 ## attack scores, expected damage. Damage counts by the chance to hit or the chance the save fails (half on a success when the spell
 ## says so); a condition counts by what it takes away from the target, a creature's whole turn for Paralyzed or
-## Unconscious; allies caught in an area count against it. A spell that needs Concentration waits while the caster
-## keeps another. Spells that summon, place an object or a wall, teleport, buff or heal are left to the stat block's
-## own AI (combat/ai/ai_brain.gd).
+## Unconscious; an area that would catch the caster or an ally is never cast (it is aimed clear of them, or not at all).
+## A spell that needs Concentration waits while the caster keeps another. Spells that summon, place an object or a wall,
+## teleport, buff or heal are left to the stat block's own AI (combat/ai/ai_brain.gd).
 
 ## What a condition takes from a creature, as a share of its turn.
 const CONDITION_WORTH := {"paralyzed": 2.0, "stunned": 1.8, "unconscious": 1.8, "petrified": 2.0, "incapacitated": 1.5,
@@ -106,26 +106,38 @@ func _best_use(c: Combatant, id: String) -> Dictionary:
 	if s.has("area") and not s.has("attack"):
 		var best := {}
 		for f in foes:
-			var point := e.center_of(f)
-			var dir := Vector2.ZERO
-			if self_origin:
-				dir = (point - e.center_of(c)).normalized()
-				point = Vector2.INF
-			elif e.distance(c, f) > rng + 5:
-				continue
-			var cells := e.spells.area_for(c, s, point if point != Vector2.INF else e.center_of(c), dir)
-			var score := 0.0
-			for v in e.spells.creatures_in(cells):
-				# The caster in its own blast (a Fireball at the foe beside it) counts against it like an ally.
-				if v == c and self_origin:
+			# Where the area goes: on the foe, or a square or so off it where that leaves the caster and its friends out
+			# of the blast (Ashwin, 2026-10-24: an area that catches itself or its allies is never cast).
+			var spots: Array[Vector2] = [e.center_of(f)]
+			if not self_origin:
+				for d: Vector2 in [Vector2(-1, 0), Vector2(1, 0), Vector2(0, -1), Vector2(0, 1), Vector2(-1, -1), Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1)]:
+					spots.append(e.center_of(f) + d)
+			for spot in spots:
+				var point := spot
+				var dir := Vector2.ZERO
+				if self_origin:
+					dir = (point - e.center_of(c)).normalized()
+					point = Vector2.INF
+				elif e.grid.distance_ft(c.cell, c.size_cells, Vector2i(floori(point.x), floori(point.y)), 1) > rng + 5:
 					continue
-				var w := worth(c, s, v)
-				score += -1.5 * w if not c.hostile_to(v) else w
-			if not self_origin and str(e.spells._check_targets(c, s, 0, [], point, {})["why"]) != "":
-				continue
-			if best.is_empty() or score > float(best["score"]):
-				best = {"kind": "cast", "spell": id, "targets": [], "point": point, "direction": dir, "score": score,
-					"why": "%s at %s" % [s.get("name", id), f.name()]}
+				var cells := e.spells.area_for(c, s, point if point != Vector2.INF else e.center_of(c), dir)
+				var score := 0.0
+				var clear := true
+				for v in e.spells.creatures_in(cells):
+					# A cone or line from the caster doesn't take in the caster itself; a friend in it rules the spot out.
+					if v == c and self_origin:
+						continue
+					if not c.hostile_to(v):
+						clear = false
+						break
+					score += worth(c, s, v)
+				if not clear:
+					continue
+				if not self_origin and str(e.spells._check_targets(c, s, 0, [], point, {})["why"]) != "":
+					continue
+				if best.is_empty() or score > float(best["score"]):
+					best = {"kind": "cast", "spell": id, "targets": [], "point": point, "direction": dir, "score": score,
+						"why": "%s at %s" % [s.get("name", id), f.name()]}
 		return best
 	if str((s.get("targets", {}) as Dictionary).get("kind", "creature")) != "creature":
 		return {}
