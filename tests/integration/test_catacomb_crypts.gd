@@ -6,9 +6,9 @@ extends TestCase
 
 const SIX: Array[String] = ["liriel_dawnsong", "godrick_pendlebrook", "ratatoille", "thistle"]
 ## sha1 of the sorted "kind:id:x:y" lines of everything the maps held before C1 (made.py in the lane's hand-off); the foe
-## lines since 2026-10-25 are the book's line-ups (owner: no extra enemies).
-const CAT_SHA := "d1a49b11a111ce1b538d7cd9bfcb91ae5f38b178"
-const STRAHD_SHA := "028612e8fd9f184f25b7d914f218f74eaf084926"
+## lines since 2026-10-25 are the book's line-ups, boss fights' too (owner: no extra enemies).
+const CAT_SHA := "7a0f83c1d07628cf60b0deddd0c84231f9b4b786"
+const STRAHD_SHA := "3e3e368858c2e1126ea1ba09b7c8a2aa27291920"
 ## What C1 added to those two maps (the pinned lines leave these out).
 const CAT_NEW: Array = ["cat_bascal_bell", "cat_bascal_epitaph", "cat_bascal_spork", "cat_c31_epitaph", "cat_crypt_31", "cat_crypt_bascal", "cat_crypt_eisglaze", "cat_crypt_erick", "cat_crypt_klutz", "cat_crypt_tasha", "cat_crypt_troisky", "cat_eisglaze_epitaph", "cat_eisglaze_mold", "cat_eisglaze_sword", "cat_erick_epitaph", "cat_erick_gold", "cat_klutz_epitaph", "cat_klutz_sword", "cat_stair_chink", "cat_stairs_to_vaults", "cat_tasha_epitaph", "cat_tasha_sun", "cat_tasha_symbol", "cat_troisky_coffer", "cat_troisky_epitaph", "cat_troisky_helm", "from_vaults"]
 const STRAHD_NEW: Array = ["cat_finderway_alcove", "cat_finderway_back", "from_finderway"]
