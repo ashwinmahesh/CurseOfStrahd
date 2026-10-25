@@ -207,7 +207,7 @@ video at run time.
 |---|---|---|
 | Walk | 24 (the cleanest two-step loop, starting on the lowest head, a foot coming down) | 24 fps |
 | Idle | 9 to 18 (a 1.5 to 3 second loop whose last third of a second is faded into its start, since an idle drifts and seldom comes back on its own) | 6 fps |
-| Attack | 18, the fastest motion (the blow) landing on frame 11 (`hit_frames`), held two frames | 16 fps |
+| Attack | 18, the fastest motion (the blow) landing on frame 11 (`hit_frames`), held two frames | 16 fps (Godrick's 20.8: owner 2026-10-24, "about 1.3x faster") |
 | Cast | 12, the release landing on frame 4 | 16 fps |
 | Hurt | 8, the flinch landing on frame 2 (4-second clips; the sheet's die_ and down_ stay drawn) | 16 fps |
 

@@ -89,7 +89,10 @@ IMPACT_HOLD = 2.0
 CAST_FRAMES, CAST_HIT, CAST_FPS = 12, 4, 16.0
 HURT_FRAMES, HURT_PEAK, HURT_FPS = 8, 2, 16.0     # a flinch and back (the hurt sheet's die_ and down_ stay drawn)
 # A hero whose attack needs other timing: (frames, hit frame, fps).
-ATTACK_TIMING = {}
+ATTACK_TIMING = {
+    # Godrick's swing plays 1.3x faster than the others' (owner 2026-10-24: "about 1.3x faster"): 16 fps x 1.3.
+    "godrick_pendlebrook": (ATTACK_FRAMES, ATTACK_HIT, 20.8),
+}
 PAD = 12                                    # border kept round each trimmed frame (the shader's outline)
 CLIPS_LOCK = threading.Lock()
 
