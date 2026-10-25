@@ -1,0 +1,1 @@
+Sourced originals for blender/models_3d.py: Godot never imports them (the game's own models are art/models/*.glb).
