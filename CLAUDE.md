@@ -17,6 +17,7 @@ make magic-prices (writes data/treasure/magic_prices.json, Sane Magical Prices, 
 make xp-sim [RULES=build|plan|literal] (XP levelling's simulator: the party's level at every story gate, docs/plans/xp_mode.md)
 make wiki (rewrites the vault's spoiler wiki, Wiki/, from the data; prose outside its %% auto %% blocks is kept) · make wiki-shots (its screenshots)
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
+make core-extract [WRITE=1 DEST=dir] (the engine split: what moves to the private core repo DndCoreEngine, docs/plans/engine_split.md; `--leaks` lists what it still needs from the game)
 
 ## Godot windows (the owner works on this Mac)
 - Never open a Godot window that can take focus or cover the owner's work. Checks without pixels run headless
@@ -76,6 +77,13 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - A character is its `build` (keyed choices, see ADR 0006); `refresh()` derives the rest. The UI never computes rules:
   it reads CharacterBuilder / LevelUpController and picks widgets by `Choice.kind`.
 - `make lint` compiles rules/ and combat/ standalone, so an autoload reference there fails CI.
+- The engine split (docs/plans/engine_split.md): rules/, combat/ and the story engine core are meant to move into the
+  private core repo DndCoreEngine (submodule addons/dnd_core) and name no campaign. Campaign facts (the Tarokka reading,
+  Strahd's attention and visits, field oracles, endings) reach the story engine through `Campaign.module()`
+  (story/campaign_module.gd; this game's is story/strahd_campaign.gd, named in data/campaign.json); creature heights are data
+  (art/creature_looks.json). tests/unit/test_engine_names.gd fails when an engine file gains a campaign name
+  (its baseline only shrinks). Per-creature or per-campaign facts go in data or the module, never in rules/, combat/ or
+  the story engine files.
 
 ## Rules source
 Full 2024 PHB (owner decision 2026-10-05, personal use only). SRD 5.2 is the import starting point.
