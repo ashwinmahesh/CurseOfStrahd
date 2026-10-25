@@ -125,19 +125,19 @@ func _save_victim(ctx: Dictionary, t: Combatant, victims: Array[Combatant], st: 
 	var details: Array[String] = []
 	if str(t.creature.creature_type) in (s.get("auto_success_types", []) as Array):
 		details.append("%s succeeds automatically (%s)" % [t.name(), str(t.creature.creature_type).capitalize()])
-		return _after_save(ctx, t, true, details, victims, st, r)
+		return _after_save(ctx, t, true, details, victims, st, r, pausable)
 	if auto_fail:
 		details.append("%s fails automatically (%s)" % [t.name(), str(t.creature.creature_type).capitalize()])
-		return _after_save(ctx, t, false, details, victims, st, r)
+		return _after_save(ctx, t, false, details, victims, st, r, pausable)
 	if willing:
 		details.append("%s doesn't resist" % t.name())
-		return _after_save(ctx, t, false, details, victims, st, r)
+		return _after_save(ctx, t, false, details, victims, st, r, pausable)
 	var roll := func() -> D20Test:
 		return t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, save_bd, dc, keys, adv, dis,
 			"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
 	var after := func(test: D20Test) -> CombatResult:
 		details.append(test.describe() + bonus_text)
-		return _after_save(ctx, t, test.success, details, victims, st, r)
+		return _after_save(ctx, t, test.success, details, victims, st, r, pausable)
 	if pausable:
 		return e.d20.then_after(t, roll, after, r)
 	return after.call(roll.call() as D20Test) as CombatResult
@@ -145,7 +145,8 @@ func _save_victim(ctx: Dictionary, t: Combatant, victims: Array[Combatant], st: 
 
 ## What the spell does to `t` once its save is settled: Spell Turning and reflection, damage (whole or half), the
 ## effects on a failure or a success, and a spell that ends on a successful save.
-func _after_save(ctx: Dictionary, t: Combatant, success: bool, details: Array[String], victims: Array[Combatant], st: Dictionary, r: CombatResult) -> CombatResult:
+func _after_save(ctx: Dictionary, t: Combatant, success: bool, details: Array[String], victims: Array[Combatant], st: Dictionary, r: CombatResult,
+		pausable: bool = false) -> CombatResult:
 	var e := enc()
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
@@ -159,6 +160,10 @@ func _after_save(ctx: Dictionary, t: Combatant, success: bool, details: Array[St
 		return r
 	if success:
 		e.faerun.reflects_spell(c, t, ctx, victims, r)
+	# The damage the save leaves, once it is dealt: `dealt` takes the Reactions its prompt already answered (Absorb Elements,
+	# SpellReactions) and `incoming` is what a hero could answer, asked before it lands (a passed save's half included).
+	var dealt := Callable()
+	var incoming: Array = []
 	if bool(st["has_damage"]) and not multi.is_empty():
 		var parts: Array = []
 		for pr in multi:
@@ -167,8 +172,10 @@ func _after_save(ctx: Dictionary, t: Combatant, success: bool, details: Array[St
 			parts.append({"amount": amt, "type": str(pr["type"]), "spell": true})
 			details.append(str(pr["text"]))
 		if parts.any(func(x: Dictionary) -> bool: return int(x["amount"]) > 0):
-			var drm := spells.deal_spell_damage(ctx, t, parts, false, str(s["name"]), details)
-			r.damage += drm.final
+			incoming = parts
+			dealt = func(resolved: Array) -> void:
+				var drm := spells.deal_spell_damage(ctx, t, parts, false, str(s["name"]), details, true, resolved)
+				r.damage += drm.final
 		else:
 			r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
 	elif bool(st["has_damage"]):
@@ -183,24 +190,32 @@ func _after_save(ctx: Dictionary, t: Combatant, success: bool, details: Array[St
 			details.append("Interpose Shield: no damage")
 		details.append(str(rolled["text"]))
 		if amount > 0:
-			var dr := spells.deal_spell_damage(ctx, t, [{"amount": amount, "type": spells._damage_type(ctx), "spell": true}], false, str(s["name"]), details)
-			r.damage += dr.final
-			# Harm: a failed save lowers the Hit Point maximum by the Necrotic damage taken (never below 1).
-			if bool(s.get("reduce_max_hp", false)) and not success and dr.final > 0 and t.is_alive():
-				var cut := mini(dr.final, t.creature.max_hp() - 1)
-				if cut > 0:
-					e.monster_actions.drain_max_hp(t, cut, str(s["name"]))
+			incoming = [{"amount": amount, "type": spells._damage_type(ctx), "spell": true}]
+			dealt = func(resolved: Array) -> void:
+				var dr := spells.deal_spell_damage(ctx, t, incoming, false, str(s["name"]), details, true, resolved)
+				r.damage += dr.final
+				# Harm: a failed save lowers the Hit Point maximum by the Necrotic damage taken (never below 1).
+				if bool(s.get("reduce_max_hp", false)) and not success and dr.final > 0 and t.is_alive():
+					var cut := mini(dr.final, t.creature.max_hp() - 1)
+					if cut > 0:
+						e.monster_actions.drain_max_hp(t, cut, str(s["name"]))
 		else:
 			r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
 	else:
 		r.lines.append(e.log.add("info", "%s %s the %s save" % [t.name(), "succeeds on" if success else "fails", s["name"]], t.id, details))
-	if t.is_alive():
-		spells.apply_effect_entries(ctx, t, s.get("effects", []) as Array, "success" if success else "fail", r)
-	if success and bool(s.get("ends_on_save", false)):
-		ctx["ended_on_save"] = true
-		if ctx["conc"] != null:
-			(ctx["conc"] as Concentration).end("successful save")
-	return r
+	var rest := func() -> CombatResult:
+		if t.is_alive():
+			spells.apply_effect_entries(ctx, t, s.get("effects", []) as Array, "success" if success else "fail", r)
+		if success and bool(s.get("ends_on_save", false)):
+			ctx["ended_on_save"] = true
+			if ctx["conc"] != null:
+				(ctx["conc"] as Concentration).end("successful save")
+		return r
+	if not dealt.is_valid():
+		return rest.call() as CombatResult
+	return spells.reaction_spells.absorb_before_save_damage(t, c, incoming, func(resolved: Array) -> CombatResult:
+		dealt.call(resolved)
+		return rest.call() as CombatResult, r, pausable)
 
 
 ## The conditions a spell's effects impose (for saves against them: Dwarven Resilience, Fey Ancestry, Brave).

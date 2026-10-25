@@ -537,7 +537,6 @@ func _after_save_one(c: Combatant, act: Dictionary, t: Combatant, test: D20Test,
 	var sv := act["save"] as Dictionary
 	var ab := StringName(str(sv["ability"]))
 	var immune_key := ClassFeatures.meta_key("immune_%s_%s" % [c.id, str(act.get("name", ""))])
-	var by_type := {}
 	var parts: Array = []
 	var texts: Array[String] = [test.describe()]
 	var i := 0
@@ -553,21 +552,28 @@ func _after_save_one(c: Combatant, act: Dictionary, t: Combatant, test: D20Test,
 		amount = t.creature.damage_after_save(amount, ab, test.success, str(sv.get("success", "none")) == "half", bool(act.get("magical", false)))
 		parts.append({"amount": amount, "type": str(dd["type"]), "magic": bool(act.get("magical", false))})
 		texts.append(str(rolled["text"]))
-	if not parts.is_empty() and parts.any(func(p: Dictionary) -> bool: return int(p["amount"]) > 0):
-		var dr := e.deal_damage(c, t, parts, false, str(act.get("name", "")), texts)
-		r.damage += dr.final
-		by_type = taken_by_type(t, parts)
-	elif test.success:
-		e.log.add("info", "%s resists %s" % [t.name(), act.get("name", "")], t.id, texts)
-	if test.success and bool(act.get("immune_on_success", false)):
-		t.set_meta(immune_key, true)
-	# A banshee's Deathly Wail: a failed save at that many Hit Points or fewer drops the creature to 0.
-	if not test.success and act.has("drop_at_hp") and t.is_alive() and t.creature.hp > 0 and pre_hp <= int(act["drop_at_hp"]):
-		e.log.add("condition", "%s collapses (%s)" % [t.name(), act.get("name", "")], t.id)
-		e.deal_damage(c, t, [{"amount": t.creature.hp + t.creature.temp_hp, "type": "psychic"}], false, str(act.get("name", "")))
-	if not test.success and t.is_alive():
-		apply_riders(c, t, act.get("on_fail", []) as Array, by_type, str(act.get("name", "")), pausable)
-	return r
+	# What follows the damage: `resolved` is the Reactions its prompt already answered (Absorb Elements, SpellReactions).
+	var rest := func(resolved: Array) -> CombatResult:
+		var by_type := {}
+		if not parts.is_empty() and parts.any(func(p: Dictionary) -> bool: return int(p["amount"]) > 0):
+			var dr := e.deal_damage(c, t, parts, false, str(act.get("name", "")), texts, true, resolved)
+			r.damage += dr.final
+			by_type = taken_by_type(t, parts)
+		elif test.success:
+			e.log.add("info", "%s resists %s" % [t.name(), act.get("name", "")], t.id, texts)
+		if test.success and bool(act.get("immune_on_success", false)):
+			t.set_meta(immune_key, true)
+		# A banshee's Deathly Wail: a failed save at that many Hit Points or fewer drops the creature to 0.
+		if not test.success and act.has("drop_at_hp") and t.is_alive() and t.creature.hp > 0 and pre_hp <= int(act["drop_at_hp"]):
+			e.log.add("condition", "%s collapses (%s)" % [t.name(), act.get("name", "")], t.id)
+			e.deal_damage(c, t, [{"amount": t.creature.hp + t.creature.temp_hp, "type": "psychic"}], false, str(act.get("name", "")))
+		if not test.success and t.is_alive():
+			apply_riders(c, t, act.get("on_fail", []) as Array, by_type, str(act.get("name", "")), pausable)
+		return r
+	# A hero who could answer the damage with Absorb Elements is asked before it lands, a passed save's half included.
+	if parts.any(func(p: Dictionary) -> bool: return int(p["amount"]) > 0):
+		return e.spells.reaction_spells.absorb_before_save_damage(t, c, parts, rest, r, pausable)
+	return rest.call([]) as CombatResult
 
 
 ## How much of each damage type a creature actually took (after Resistance, Immunity, Vulnerability).

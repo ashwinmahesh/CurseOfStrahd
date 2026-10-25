@@ -308,14 +308,14 @@ func _delayed_damage(ctx: Dictionary, t: Combatant, params: Dictionary) -> void:
 
 ## Preserve the casting class on damage from both immediate and sustained spell recipes.
 func deal_spell_damage(ctx: Dictionary, target: Combatant, parts: Array, critical: bool, label: String,
-		details: Array = [], log_it: bool = true) -> DamageResult:
+		details: Array = [], log_it: bool = true, resolved: Array = []) -> DamageResult:
 	var typed := parts.duplicate(true)
 	for raw: Variant in typed:
 		var p := raw as Dictionary
 		p["spell_class"] = str((ctx.get("nums", {}) as Dictionary).get("class_id", ""))
 		p["spell"] = true
 	var caster := ctx["c"] as Combatant
-	var dr := enc().deal_damage(caster, target, typed, critical, label, details, log_it)
+	var dr := enc().deal_damage(caster, target, typed, critical, label, details, log_it, resolved)
 	if bool((ctx.get("s", {}) as Dictionary).get("drain", false)) and dr.final > 0:
 		var healed := caster.creature.heal(dr.final / 2, label)
 		if healed > 0:

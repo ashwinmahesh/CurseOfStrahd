@@ -447,8 +447,9 @@ func _damage_type_safe(ctx: Dictionary) -> String:
 	return damage._damage_type_safe(ctx)
 
 
-func deal_spell_damage(ctx: Dictionary, target: Combatant, parts: Array, critical: bool, label: String, details: Array = [], log_it: bool = true) -> DamageResult:
-	return damage.deal_spell_damage(ctx, target, parts, critical, label, details, log_it)
+func deal_spell_damage(ctx: Dictionary, target: Combatant, parts: Array, critical: bool, label: String, details: Array = [], log_it: bool = true,
+		resolved: Array = []) -> DamageResult:
+	return damage.deal_spell_damage(ctx, target, parts, critical, label, details, log_it, resolved)
 
 
 # --- Saving throws (SpellSaves) -------------------------------------------------------------------

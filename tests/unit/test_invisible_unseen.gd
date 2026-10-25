@@ -23,6 +23,8 @@ func _scene() -> Dictionary:
 	var fighter := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
 	var foe := TestCombat.punching_bag(e, Vector2i(6, 3), 200)
 	TestCombat.start_with(e, wiz)
+	# A Fireball cast here reaches the wizard too, and Absorb Elements would ask it first (a spell's save damage is asked about).
+	wiz.reaction_rules["absorb_elements"] = "never"
 	return {"e": e, "wiz": wiz, "fighter": fighter, "foe": foe}
 
 

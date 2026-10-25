@@ -162,6 +162,7 @@ func test_erupting_spellpower_lifts_low_dice_and_topples() -> void:
 	_knows(c, "fireball")
 	# The wizard stands at the Fireball's edge: its own failed save would ask about Heroic Inspiration (F6).
 	c.reaction_rules["heroic_inspiration"] = "never"
+	c.reaction_rules["absorb_elements"] = "never"   # nor does the wizard stop to ask itself about Absorb Elements
 	assert_true(e.spells.cast(c, "fireball", 3, [foe], Vector2(6.5, 3.5)).ok)
 	assert_true(foe.creature.max_hp() - foe.creature.hp >= 24, "8d6 with every die at least 3")
 	assert_true(foe.creature.has_condition(&"prone"), "knocked Prone")

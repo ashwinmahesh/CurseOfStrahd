@@ -506,7 +506,21 @@ func absorb_offers(target: Combatant, source: Combatant, parts: Dictionary, resp
 		"use": func() -> void: cast_absorb_elements(target, ty, int(pick["slot"]))}]
 
 
-## Damage that can't pause (spells, hazards): Absorb Elements is cast only on Automatic, at the casting Hellish Rebuke's
+## The damage a saving throw has left for `target` (`parts`: a breath's or a spell's, whole after a failed save, half after a
+## passed one; none left, none to ask about): Absorb Elements is offered on the usual Reaction prompt before it lands, a
+## passed save that still deals damage included (Ashwin, 2026-10-24: it must ask, and never fire by itself). `go` deals the
+## damage and is given the Reactions already answered, to hand to deal_damage so the blow doesn't act on Absorb Elements'
+## rule a second time. `pausable` false (a caller that can't wait) goes straight to `go`.
+func absorb_before_save_damage(target: Combatant, source: Combatant, parts: Array, go: Callable, r: CombatResult, pausable: bool) -> CombatResult:
+	var responded: Array = []
+	if pausable:
+		var offers := absorb_offers(target, source, amounts_of(parts), responded)
+		if not offers.is_empty():
+			return enc().reactions.offer(offers, func() -> CombatResult: return go.call(responded) as CombatResult, r)
+	return go.call(responded) as CombatResult
+
+
+## Damage that can't pause (a spell's attack, hazards, zones): Absorb Elements is cast only on Automatic, at the casting Hellish Rebuke's
 ## rule would pay with (a free casting first unless it waits for the pact slots, else the lowest slot).
 func absorb_synchronous(target: Combatant, parts: Array, resolved: Array) -> void:
 	if "absorb_elements" in resolved or not target.creature is Character or str(target.reaction_rules.get("absorb_elements", "ask")) != "auto":
