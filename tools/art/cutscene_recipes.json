@@ -1655,8 +1655,8 @@
     },
     "hunt_begins": {
       "refs": [],
-      "prompt": "A moonlit crossroads in the Svalich woods with a gallows silhouette and a snow-dusted road: a pack of tall, silent grey hounds with pale almost-human eyes surges down the east road toward the viewer in a river of grey bodies, and behind them the Huntsman, a long grey man in a weathered black hunting coat, lifts a curved horn to his lips with a boar spear in his other hand. {party} in the foreground at the crossroads, seen from behind, hooded, weapons drawn, one holding a lantern. Cold moonlight and mist; terrifying speed, no gore.",
-      "use": "a"
+      "prompt": "A moonlit crossroads in the Svalich woods with a gallows silhouette and a snow-dusted road: a pack of tall, silent grey hounds with pale almost-human eyes surges down the east road toward the viewer in a river of grey bodies, and behind them the Huntsman, a long grey man in a weathered black hunting coat, lifts a curved horn to his lips with a boar spear in his other hand. {party} in the foreground at the crossroads, seen from behind, hooded, weapons drawn, one holding a lantern. Cold moonlight and mist; terrifying speed, no gore. The hounds run flat out, bodies stretched in a full gallop, paws off the ground, with speed streaks along the road; the Huntsman stands tall at the back, his horn raised, not on a horse. Only the road, snow, mist, fence posts and the gallows: no campfire, no candles, no lanterns except the one the party holds. The party is seen strictly from behind, hooded or helmeted, their faces never visible.",
+      "use": "b"
     },
     "bear_blights": {
       "refs": [],
