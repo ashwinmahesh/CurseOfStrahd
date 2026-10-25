@@ -2711,6 +2711,29 @@
       "notes": "Ambrose Fennimore's own portrait (wave 1 art, 2026-10-24, Ashwin's typed yes): he had shared the generic noble's. One Gemini call, 1024 -> 512 px by blender/portrait.py with BG=ash_violet SAT=0.8: at the default saturation the palette snap turned the pink shading on his face into a red stripe like war paint, and 0.9 made his coat blotchy green; 0.8 keeps a warm face and a plain drab coat. Sprite stays the noble's."
     },
     {
+      "id": "tinkers_wagon",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/tinkers_wagon_turnaround.png",
+      "portrait": "art/portraits/tinkers_wagon.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of the Tinker's Wagon, a Vistani tinker's covered wagon that is really a huge mimic: a green painted wooden wagon with a rounded canvas-and-plank roof, its peeling paint flaking off grey sticky flesh, standing up off the ground on a dozen thick grey pseudopod legs like a beast, a wide yawning mouth of jagged teeth and a long wet purple tongue where the tailboard opens, tin pots, ladles and little brass bells hung along its sides with small yellow eyes on the pots, two wooden wheels hanging off its sides, grey sticky tendrils trailing from underneath. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer, the toothy mouth toward the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on its legs, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "The Tinker's Wagon boss's own art (wave 1 art, 2026-10-24, Ashwin's typed yes): it drew the mimic's sprite at Huge. Gemini drew eight views in two rows instead of five in one, so the turnaround is those views cut out and set in one row (front, front three-quarter, side facing right, back three-quarter, back), padded to 16:9; the raw sheet is not kept. The walk and attack sheets (make sprite, make anims) are still to do: they render in Blender and wait for Ashwin's Mac-idle word. Until they land the boss keeps `art: mimic` in data/monsters/tinkers_wagon.json; switch it (and set art_height / a HEIGHTS entry) together with the sprite."
+    },
+    {
+      "id": "tinkers_wagon_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/tinkers_wagon_portrait.png",
+      "sprites": "art/portraits/tinkers_wagon.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of the Tinker's Wagon, a Vistani tinker's green covered wagon that is really a huge mimic, shown head-on as a creature: the wagon's rounded canvas roof like a brow, a wide yawning mouth of jagged teeth with a long wet purple tongue lolling out where the tailboard opens, tin pots hung on its sides with small glaring yellow eyes on them and little brass bells, peeling green paint over grey sticky flesh, grey tendrils curling in at the edges of the frame. The reference image is this creature's turnaround sheet: draw the same creature (same colours and details) as one single bust portrait, not a sheet. Against a plain flat dark purple background with no texture, no glow and no visible light source; no props or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/tinkers_wagon_turnaround.png"
+      ],
+      "notes": "Head-on bust of the wagon from its turnaround as the reference (wave 1 art, 2026-10-24). 1024 -> 512 px by blender/portrait.py with BG=ash_violet at the default saturation. Shown once the boss's `art` is tinkers_wagon (portraits are looked up by art id)."
+    },
+    {
       "id": "cult_shades_portrait",
       "kind": "portrait",
       "status": "generated",
