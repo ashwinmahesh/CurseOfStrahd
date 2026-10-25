@@ -1,0 +1,21 @@
+{
+  "$id": "ai_profiles.schema.json",
+  "title": "AI profiles (Combatant.ai_profile)",
+  "type": "object",
+  "required": ["id", "summary", "profiles"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"const": "profiles"},
+    "summary": {"type": "string"},
+    "profiles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "wanted_items": {"type": "array", "items": {"type": "string"}, "description": "Item ids (data/items, data/magic_items) the creature wants out of the party's hands."}
+        }
+      }
+    }
+  }
+}

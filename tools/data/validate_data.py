@@ -40,6 +40,7 @@ FOLDERS = {
     "camp": {"night_visitors": "night_visitors"},
     "progression": {"xp": "xp"},
     "achievements": "achievements",
+    "ai": {"profiles": "ai_profiles"},
 }
 
 TYPES = {
@@ -289,6 +290,9 @@ def semantic_checks(data):
             if band != enc["difficulty"]:
                 errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
     story_checks(data, errors, need)
+    for pid, prof in data.get("ai", {}).get("profiles", {}).get("profiles", {}).items():
+        for iid in prof.get("wanted_items", []):
+            need("item", items, iid, f"ai/profiles {pid} wanted_items")
     object_checks(data, errors)
     camp_checks(data, errors)
     achievement_checks(data, errors)

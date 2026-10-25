@@ -11,10 +11,22 @@ extends RefCounted
 ## step out of it before its turn and walks out after its action when no foe can strike it as it goes.
 ## Legendary and lair choices work for any monster that has them; the strahd profile only sharpens the targets.
 
-## The Tarokka's treasures (story/tarokka.gd TREASURE_ITEMS): Strahd wants them out of the party's hands.
-const TREASURES := ["sunsword", "holy_symbol_of_ravenkind", "tome_of_strahd"]
+## Items an AI profile wants out of the party's hands (data/ai/profiles.json `wanted_items`; the strahd profile's are the
+## Tarokka's treasures, story/tarokka.gd TREASURE_ITEMS).
+const PROFILES := "res://data/ai/profiles.json"
+static var TREASURES: Array = _wanted_items()
 
 var _enc: WeakRef
+
+
+static func _wanted_items() -> Array:
+	var profiles := (JSON.parse_string(FileAccess.get_file_as_string(PROFILES)) as Dictionary)["profiles"] as Dictionary
+	var out: Array = []
+	for profile: Dictionary in profiles.values():
+		for id: Variant in profile.get("wanted_items", []):
+			if not id in out:
+				out.append(id)
+	return out
 
 
 func _init(encounter: Encounter) -> void:

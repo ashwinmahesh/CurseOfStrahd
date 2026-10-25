@@ -1,0 +1,13 @@
+{
+  "id": "profiles",
+  "summary": "AI profiles (Combatant.ai_profile): what a profile adds to the usual move-and-attack turn. wanted_items are ids a profile's creature wants out of the party's hands: a carrier scores higher as a target (BossBrain).",
+  "profiles": {
+    "strahd": {
+      "wanted_items": [
+        "sunsword",
+        "holy_symbol_of_ravenkind",
+        "tome_of_strahd"
+      ]
+    }
+  }
+}
