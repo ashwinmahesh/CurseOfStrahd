@@ -865,12 +865,13 @@
       "library": true
     },
     "sergei_von_zarovich": {
-      "voice_id": "WczBIOau2qV9z7nLeDqq",
-      "name": "Nikolay Ivanov - Warm, Joyful, and Rich",
-      "description": "A young man with a gentle, clear, noble voice and a noticeable old-world Eastern European accent, heard as if through water: kind, calm and full of longing.",
+      "voice_id": "v9JqMpySCopiR54wE5lJ",
+      "name": "Barovia Sergei von Zarovich (2026-10-25)",
+      "description": "A young man in his twenties, Strahd's gentle younger brother, a ghost heard faintly as if through water. A clear, warm, noble voice with a noticeable old-world Eastern European (Romanian) accent. Kind, calm and unhurried, full of longing and tenderness, never theatrical.",
       "settings": {},
-      "library": true,
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "mirabel": {
       "voice_id": "wEJjJg8SheKHTwm83mZY",
@@ -1028,35 +1029,39 @@
     },
     "nadia_boteanu": {
       "settings": {},
-      "description": "Library voice chosen for Nadia Boteanu: Kate - English Female Voice With Soft Accent.",
-      "voice_id": "xVQH621DS3eyBYrseRt5",
-      "name": "Kate - English Female Voice With Soft Accent",
-      "library": true,
-      "model": "eleven_v3"
+      "description": "A woman in her thirties, a lamplighter from Vallaki kept for weeks in a cell. A tired, dry, quick-witted working woman's voice with a clear Romanian accent. Frightened but wry, voice roughened by thirst, resilient and plain-spoken, with a flicker of gallows humour.",
+      "voice_id": "IoaiKz4w0PsdBT1xuNj4",
+      "name": "Barovia Nadia Boteanu (2026-10-25)",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "brother_anatol": {
       "settings": {},
-      "description": "Library voice chosen for Brother Anatol: Andrei - Clear, Gentle and Warm.",
-      "voice_id": "pvY1pikBdoI4SB62vEVo",
-      "name": "Andrei - Clear, Gentle and Warm",
-      "library": true,
-      "model": "eleven_v3"
+      "description": "A man in his fifties, a half-starved Morninglord priest. A gentle, hoarse, warm voice with a clear Romanian accent. Kindly and faithful, weakened but steady, a soft pastoral cadence, still believing against the odds.",
+      "voice_id": "wsKbfCCObExoRQMb1GRe",
+      "name": "Barovia Brother Anatol (2026-10-25)",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "ludmilla_vilisevic": {
       "settings": {},
-      "description": "Library voice chosen for Ludmilla Vilisevic: Sarah - Calm, Clear and Warm.",
-      "voice_id": "jmuki9rdPecaWw4g7Exe",
-      "name": "Sarah - Calm, Clear and Warm",
-      "library": true,
-      "model": "eleven_v3"
+      "description": "A woman in her thirties, the eldest of a vampire count's brides: cold, well read and jealous. A cool, precise, aristocratic voice with a clear Romanian accent, dry and bored, quietly bitter, measured and condescending, knowing everything in the house that hurts.",
+      "voice_id": "QtjiSaz7tJ9q3gCClUiW",
+      "name": "Barovia Ludmilla Vilisevic (2026-10-25)",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "anastrasya_karelova": {
       "settings": {},
-      "description": "Library voice chosen for Anastrasya Karelova: Dasha - Warm, Serious, and Smooth.",
-      "voice_id": "8HSRAwEWAAa6wv9cdi5S",
-      "name": "Dasha - Warm, Serious, and Smooth",
-      "library": true,
-      "model": "eleven_v3"
+      "description": "A young woman of nineteen from the village of Krezk, the youngest of a vampire count's brides. A soft, sad, plain voice with a clear Romanian accent, tired and wistful, weary of being undead, gentle and longing to stop, never theatrical.",
+      "voice_id": "frfqeGMwema8mouSp0z3",
+      "name": "Barovia Anastrasya Karelova (2026-10-25)",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "volenta_popofsky": {
       "settings": {},
@@ -2526,12 +2531,12 @@
     },
     "castle_ghost_servant": {
       "settings": {},
-      "description": "Vlaicu the Lamplighter: a stooped ghost who died on the two hundred and ninth step with a lit lamp; quiet, patient, wistful. Library voice picked 2026-10-15 (was Ignat's shared voice).",
-      "voice_id": "vUFdND4zaX02jqEhu3Hl",
-      "name": "Library voice: Evan - Quiet, Low, and Smooth",
-      "library": true,
+      "description": "A stooped old man, the castle's ghost lamplighter who died halfway up a tall stair. A tired, mild, slow voice with a clear Romanian accent, humble and gently dazed, dry and wry, patient, a little sad, with a faint hollow quality.",
+      "voice_id": "GsGooc8Neh1H1lOMKlnz",
+      "name": "Barovia Vlaicu the Lamplighter (2026-10-25)",
       "model": "eleven_v3",
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "castle_courtier_2": {
       "settings": {},

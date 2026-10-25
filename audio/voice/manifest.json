@@ -1067,37 +1067,37 @@
  "anastrasya_karelova/13c01aaf0232a38e": {
   "chars": 77,
   "model": "eleven_v3",
-  "recipe": "0e8a83b635",
+  "recipe": "c4e8217352",
   "text": "Then be quick about him. I've waited a long time. I can wait a little longer."
  },
  "anastrasya_karelova/2d1bd8962334888b": {
   "chars": 83,
   "model": "eleven_v3",
-  "recipe": "0e8a83b635",
+  "recipe": "c4e8217352",
   "text": "They're gone. I'm still here. I don't want to be still here. Will you help me stop?"
  },
  "anastrasya_karelova/766096fc6c01b452": {
   "chars": 83,
   "model": "eleven_v3",
-  "recipe": "0e8a83b635",
+  "recipe": "c4e8217352",
   "text": "When you find him, end it. When he goes, we can stop. Please. I would like to stop."
  },
  "anastrasya_karelova/a650ce3019c64bdd": {
   "chars": 49,
   "model": "eleven_v3",
-  "recipe": "0e8a83b635",
+  "recipe": "c4e8217352",
   "text": "Krezk. You can't see it from here. I look anyway."
  },
  "anastrasya_karelova/bbcd227565c68059": {
   "chars": 122,
   "model": "eleven_v3",
-  "recipe": "0e8a83b635",
+  "recipe": "c4e8217352",
   "text": "Is there someone in the yellow room now? There is. I hear her humming. Tell her about me. Tell her what the gowns are for."
  },
  "anastrasya_karelova/c6cf77b3656c2862": {
   "chars": 164,
   "model": "eleven_v3",
-  "recipe": "0e8a83b635",
+  "recipe": "c4e8217352",
   "text": "He wrote to me. Letters like the books my mother hid. Then a carriage, and a room on this floor, the yellow one, and gowns. They were the nicest dresses I ever had."
  },
  "anna_krezkova/01401729de773b46": {
@@ -7143,55 +7143,55 @@
  "brother_anatol/2a1c8e2cad5a2293": {
   "chars": 95,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Weeks. I count the days by the cook's visits. He brings bread. I pray over it and give it back."
  },
  "brother_anatol/2c88c4f3a172b4cc": {
   "chars": 80,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Pity. The Master so enjoys it when the rescuers walk me to his table themselves."
  },
  "brother_anatol/644c4698dda56eed": {
   "chars": 27,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "I fast. It is a discipline."
  },
  "brother_anatol/800b701d0d57055f": {
   "chars": 110,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Brother Anatol, of St. Andral's in Vallaki. I came to pray for the lord of this house. He did not care for it."
  },
  "brother_anatol/8029f7b898d20ffe": {
   "chars": 63,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Lucian. Yes. Of course. Lucian and I... It was a long time ago."
  },
  "brother_anatol/92d941f217dde445": {
   "chars": 57,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Back with that stake? Or did you only come to look at me?"
  },
  "brother_anatol/99d4dc4962771332": {
   "chars": 39,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Friends. Bless the dawn, you came back."
  },
  "brother_anatol/a8657e464fcab82b": {
   "chars": 79,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Bless the dawn. Visitors, and not the cook. The Morninglord heard me after all."
  },
  "brother_anatol/c8f33232d4e6bea9": {
   "chars": 33,
   "model": "eleven_v3",
-  "recipe": "f6d71b65ad",
+  "recipe": "3c80a7c7c4",
   "text": "Bless you. Truly. Now hold still."
  },
  "camp_cook/1efd9178db660ce4": {
@@ -7870,98 +7870,98 @@
   "chars": 75,
   "direction": "[amazed, tender, hollow]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Two hundred and nine. Is that all it was? It felt much further in the dark."
  },
  "castle_ghost_servant/10260fa96b3a409e": {
   "chars": 89,
   "direction": "[quiet, patient, wistful]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "You want the tower seal? It is at the top of the stair, and I have never reached the top."
  },
  "castle_ghost_servant/60e965065dbf6081": {
   "chars": 82,
   "direction": "[kind, soft, practical]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Take the brass stamp from my belt. The soot on it will mark the paper well enough."
  },
  "castle_ghost_servant/764831803ca03cce": {
   "chars": 116,
   "direction": "[wistful, weary, hollow]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "I counted the steps once. Then I died on the two hundred and ninth, and I haven't had the heart to count them since."
  },
  "castle_ghost_servant/83586acecdcf00f0": {
   "chars": 90,
   "direction": "[low, uneasy, confiding]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Rooms. Wind. A pretty young gentleman who doesn't like the light and doesn't like company."
  },
  "castle_ghost_servant/8c85b8c014f01256": {
   "chars": 113,
   "direction": "[wary, hushed, warning]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "And the little wooden fellow. Mind him on the stair. He likes to walk up behind you, and he likes to give a push."
  },
  "castle_ghost_servant/8e2b6c6082bc881e": {
   "chars": 33,
   "direction": "[soft, wistful, rueful]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Makes them think somebody's home."
  },
  "castle_ghost_servant/a3ee54daad38c3d7": {
   "chars": 106,
   "direction": "[soft, sorrowful, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Two hundred and nine steps to the high lantern, and on the last one my heart gave out and spilled the oil."
  },
  "castle_ghost_servant/a7093bf50a128b1c": {
   "chars": 92,
   "direction": "[proud, quiet, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Vlaicu. I light the lamps, every one in this tower, every night, from the closet to the top."
  },
  "castle_ghost_servant/a8bb66ce0dfe1a8b": {
   "chars": 91,
   "direction": "[serene, dreamy, peaceful]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Look at the mist over the roofs. A man could stand here a long while and not mind the cold."
  },
  "castle_ghost_servant/e1d43ca11bf5dc79": {
   "chars": 121,
   "direction": "[quiet, thoughtful, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "The dead don't need them. The living do, coming up the road at night. He likes them to see the tower lit from the valley."
  },
  "castle_ghost_servant/e39989cff66cfe63": {
   "chars": 92,
   "direction": "[gentle, pleading, hopeful]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Walk up beside me and count them out loud, every one, so I know when my feet have got there."
  },
  "castle_ghost_servant/e3d2afd9d35828fe": {
   "chars": 87,
   "direction": "[gruff, wry, mild]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Guests, is it? Then he'll want the tower lit. He always wants the tower lit for guests."
  },
  "castle_ghost_servant/e675cb11a57c18ac": {
   "chars": 74,
   "direction": "[quiet, dry, patient]",
   "model": "eleven_v3",
-  "recipe": "e440ec2d98",
+  "recipe": "ca348c10f9",
   "text": "Evening. If you're going up, go up. If you're coming down, mind the lamps."
  },
  "castle_ghost_servant_2/11479326d893cba8": {
@@ -42445,43 +42445,43 @@
  "ludmilla_vilisevic/2734ad73504fe617": {
   "chars": 112,
   "model": "eleven_v3",
-  "recipe": "80a265bcf5",
+  "recipe": "4681881f3c",
   "text": "Poetry. A man loved a woman who did not love him back, and wrote four hundred pages about it. I find it restful."
  },
  "ludmilla_vilisevic/31135dc0ed628dd8": {
   "chars": 22,
   "model": "eleven_v3",
-  "recipe": "80a265bcf5",
+  "recipe": "4681881f3c",
   "text": "How tiresome. Volenta."
  },
  "ludmilla_vilisevic/353123d5449e809b": {
   "chars": 35,
   "model": "eleven_v3",
-  "recipe": "80a265bcf5",
+  "recipe": "4681881f3c",
   "text": "Yes? Be brief. I am at a good part."
  },
  "ludmilla_vilisevic/bd521799203f4cc2": {
   "chars": 32,
   "model": "eleven_v3",
-  "recipe": "80a265bcf5",
+  "recipe": "4681881f3c",
   "text": "Of course not. That is the poem."
  },
  "ludmilla_vilisevic/e7fc2d735b1f2cb6": {
   "chars": 62,
   "model": "eleven_v3",
-  "recipe": "80a265bcf5",
+  "recipe": "4681881f3c",
   "text": "They are his guests, Volenta. You may look. You may not touch."
  },
  "ludmilla_vilisevic/ec4117f3a32b3484": {
   "chars": 142,
   "model": "eleven_v3",
-  "recipe": "80a265bcf5",
+  "recipe": "4681881f3c",
   "text": "It swings open, you know, onto his money. Push the left side of the frame. He thinks I don't know. I know everything in this house that hurts."
  },
  "ludmilla_vilisevic/fc84af068f79630c": {
   "chars": 116,
   "model": "eleven_v3",
-  "recipe": "80a265bcf5",
+  "recipe": "4681881f3c",
   "text": "He has had her painted forty times. I counted. There is one in the long hall he visits more often than he visits me."
  },
  "luminita/0d2878bcf2224c6a": {
@@ -46008,97 +46008,97 @@
  "nadia_boteanu/0f0c0b1d752d91e6": {
   "chars": 91,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Nadia. Nadia Boteanu. I light the lamps in Vallaki. Lit them. I don't know which, any more."
  },
  "nadia_boteanu/142105069a4af000": {
   "chars": 98,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "A carriage stopped beside me on the road at dusk. Black, no driver. The door swung open by itself."
  },
  "nadia_boteanu/3a97d6519ce4ad93": {
   "chars": 91,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Once. The cook walked me down the passage, past the other cells, to a long hall at the end."
  },
  "nadia_boteanu/40aa9c9ff3d1661e": {
   "chars": 113,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "A chain went up into the dark toward the noise. There's a noise down here like something breathing, all the time."
  },
  "nadia_boteanu/415da946a71e1db2": {
   "chars": 62,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Don't. Please. Oh. You're not him. You're not the cook either."
  },
  "nadia_boteanu/449eca996cf8fec0": {
   "chars": 94,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "I thought, well, it's going toward Vallaki, and my feet hurt. It was not going toward Vallaki."
  },
  "nadia_boteanu/4c4f5f212a047e37": {
   "chars": 76,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Shut the gate behind you. It's worse when it's open and I can't go anywhere."
  },
  "nadia_boteanu/730d824f10d7ca3e": {
   "chars": 110,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "He asked me about Vallaki's lamps, very politely, as if he cared. Then he sent me back. He said I wasn't ripe."
  },
  "nadia_boteanu/91cd841821786396": {
   "chars": 23,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Is it over? Is he gone?"
  },
  "nadia_boteanu/92154a61b5b2cb10": {
   "chars": 73,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "In a barrel. With the scraps. Of course. Why would anything here be easy."
  },
  "nadia_boteanu/9ab99c832e2e49fd": {
   "chars": 39,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Up there? Through his house? On my own?"
  },
  "nadia_boteanu/9b0b9ad55a8781f2": {
   "chars": 35,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "It should have been a rule already."
  },
  "nadia_boteanu/bdd818738dfce05a": {
   "chars": 45,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Out. Yes. Which way is out? I came in asleep."
  },
  "nadia_boteanu/be21741bf4d09463": {
   "chars": 101,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "A man sat at the head of a table made of bones. The chairs were bones. The lamp over it burned green."
  },
  "nadia_boteanu/f634606a060c822e": {
   "chars": 102,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "Hide. In the cell. Like a guest who's very good at being a guest. All right. Shut the gate. Come back."
  },
  "nadia_boteanu/fe6007572ece5c98": {
   "chars": 82,
   "model": "eleven_v3",
-  "recipe": "01cb7dd074",
+  "recipe": "2d15c2d5e8",
   "text": "You came back. Nobody comes back down here. Except the cook, and he doesn't count."
  },
  "narrator/0000501905a38459": {
@@ -91150,103 +91150,103 @@
  "sergei_von_zarovich/03824ceac528790b": {
   "chars": 20,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "Go and live, Ireena."
  },
  "sergei_von_zarovich/15579638ad306abf": {
   "chars": 156,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "I gave it to her on a spring morning, at this water. She wore it the day she fell. My brother took it from the gorge, and he has used it as bait ever since."
  },
  "sergei_von_zarovich/1e149fdd77586c69": {
   "chars": 51,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "Then be someone. That is all I ever wanted for her."
  },
  "sergei_von_zarovich/211ce24dc51abb0a": {
   "chars": 72,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "Not this time. I know. Forgive me. I only ever had the one name for you."
  },
  "sergei_von_zarovich/3f9b0cf17c7ef6cc": {
   "chars": 102,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "Keep it out of my brother's sight, Ireena. He wants it to remind you. Let it remind you of me instead."
  },
  "sergei_von_zarovich/44b9b4f368f760bb": {
   "chars": 111,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "You needn't give it to me. It isn't mine any more. It is yours, or hers, or his, depending on what you do next."
  },
  "sergei_von_zarovich/49a5a61f4758aa63": {
   "chars": 8,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "Tatyana."
  },
  "sergei_von_zarovich/7e655b5e835c05f5": {
   "chars": 64,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "You kept your promise. So did I. I have waited a very long time."
  },
  "sergei_von_zarovich/8aec54a73ae81db9": {
   "chars": 26,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "I am. I have had practice."
  },
  "sergei_von_zarovich/904caeff223df67a": {
   "chars": 95,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "Thank you, thief. You are the first person in a very long time to steal something back for her."
  },
  "sergei_von_zarovich/aa9f0ee6912c8b25": {
   "chars": 52,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "I know where he is. I have always known where he is."
  },
  "sergei_von_zarovich/c1e9702b9403d74c": {
   "chars": 120,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "There is a pool at the top of the valley where the sun stays in the water. I can say more there. Here I am mostly bones."
  },
  "sergei_von_zarovich/ce1138e4649376d7": {
   "chars": 20,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "I have had practice."
  },
  "sergei_von_zarovich/d172746476e3f7c5": {
   "chars": 86,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "Then carry her carefully. My brother will ask for her too, and he will not ask nicely."
  },
  "sergei_von_zarovich/dbf257dc9a992de7": {
   "chars": 28,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "You came the long way round."
  },
  "sergei_von_zarovich/e68f06756231ab31": {
   "chars": 126,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "The water is the only door I have. I cannot come out. You could come in. When you are ready. Not before. It will wait. I will."
  },
  "sergei_von_zarovich/f08ccd92875ce202": {
   "chars": 96,
   "model": "eleven_v3",
-  "recipe": "e48e7ecc4b",
+  "recipe": "493d79a270",
   "text": "No. Not this time. But you came to the water. You always did, in the mornings, before the bells."
  },
  "silvain_aster/02b71c1a4f30a756": {
