@@ -57,3 +57,27 @@ lanes are editing.
 `docs/assets/LICENSES.md`: content beyond SRD 5.2.1 is personal-use only and never distributed. The core repo stays
 private and holds all the data (owner decision 2026-10-25: no SRD flag, no srd/ and books/ split). Anything made public
 from it would need its own licence review first.
+
+## Where it stands (2026-10-25)
+
+- Done in this repo: the guard test, creature heights as data, the screen pass and palette renamed, the campaign-module hook
+  (`Campaign.module()`: story_state, dialogue_runner, long_rest, travel, weather, quest log and the rest ask it instead of
+  naming Tarokka, StrahdPresence, Oracles or Endings; world/, ui/ and core/achievements.gd still name them and stay in the game).
+- `make core-extract` (tools/core/manifest.json) works out what moves: 2,250 files today (160 combat, 54 rules, 96 story, 24
+  schemas, 1,598 data entries of the books, 140 unit tests, 8 test helpers, the test runner and tools). The 78 CoS and custom
+  data entries stay in the game. `make core-extract WRITE=1` writes the files into ~/Documents/DndCoreEngine; the core's first
+  commit is local, not pushed, until the owner says so.
+- The only things the moving scripts still need from the game are five autoloads (Dice, GameSettings, GameState,
+  ModeController, SaveSystem), all through tests/test_runner.gd; the engine code itself is clean (`--leaks`).
+
+## What the switch (one full-download release) has to do
+
+1. Add the submodule at `addons/dnd_core` and delete the game's copies of everything `make core-extract --list` names.
+2. Rewrite the `res://` paths that point at moved folders (about 55 in code) and change project.godot's autoload paths if
+   any autoload moves; this is the project.godot change that makes the release a full download.
+3. `Compendium` reads two data roots, the core's and the game's own (CoS and custom entries, locations, NPCs, quests).
+4. Point the Makefile, tools/check.py, lint and the test runner at the new paths; the runner needs the five autoloads above.
+5. Dialogue grammar still names `tarokka_draw/read/give` and `end_game`: rename them to neutral statements in the grammar,
+   the linters and the dialogue data, or keep them as the Strahd module's own statements.
+6. The guard baseline (122 lines in 40 files) keeps shrinking: flags and ids in story_state, long_rest, travel and the
+   combat AI profile still name Strahd.
