@@ -21,6 +21,9 @@ var custom_fight: Dictionary = {}
 ## A trigger to fire to start the fight (open:hag_oven, check:rahadin_footlocker:failure), for an encounter whose versions have
 ## different triggers: that trigger starts its own version (LocationFights._trigger_encounter).
 var fire_trigger := ""
+## Whether a series may end without a win, for a fight whose result was accepted at none in 8 (a boss that hits 25% harder
+## since 2026-10-19, no retune): unset, every series needs a win.
+var winless_ok := false
 
 ## The boss fights (owner, 2026-10-14: 3 wins in 8 for a party that uses its skills to the full): the autopilot plays
 ## them at full ability (PartyAutopilot.full); every other fight is still tuned against sharp play alone.
@@ -41,6 +44,7 @@ const BOSS_FIGHTS: Array[String] = [
 
 
 func after_each() -> void:
+	winless_ok = false
 	if root != null:
 		root.queue_free()
 		root = null
@@ -137,8 +141,8 @@ static func step_aside(v: LocationView, encounter: String) -> void:
 					LocationNpcs.hide_npcs_of(v, ref)
 
 
-## Plays `encounter` once per seed: every fight finishes and at least one is won. Returns the wins, for a test that
-## wants more of them.
+## Plays `encounter` once per seed: every fight finishes and at least one is won (unless winless_ok). Returns the wins,
+## for a test that wants more of them.
 func _series(location: String, hour: int, level: int, encounter: String, seeds: Array, flags: Array[String] = [],
 		guests: Array[String] = [], open_doors: Array[String] = [], at: Array[Vector2i] = []) -> int:
 	var wins := 0
@@ -153,5 +157,5 @@ func _series(location: String, hour: int, level: int, encounter: String, seeds: 
 		rounds += int(res["rounds"])
 	print("        %s at level %d: %d/%d won, %.1f rounds, %.1f party members dropped per fight" % [
 		encounter, level, wins, seeds.size(), rounds / float(seeds.size()), downs / float(seeds.size())])
-	assert_true(wins >= 1, "%s can be won at level %d (%d/%d)" % [encounter, level, wins, seeds.size()])
+	assert_true(wins >= 1 or winless_ok, "%s can be won at level %d (%d/%d)" % [encounter, level, wins, seeds.size()])
 	return wins

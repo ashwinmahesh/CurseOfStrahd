@@ -153,9 +153,11 @@ func test_the_tinkers_wagon_at_level_5() -> void:
 
 
 ## The Tinker's Wagon at level 6: The Tinker's Wagon (450 HP), 5 Mimics; 2 in 8, the harder side (no step lands on 3);
-## 1 since foes' cones aim freely (owner, 2026-10-18: accept the new results, no retune).
+## 1 since foes' cones aim freely (owner, 2026-10-18: accept the new results, no retune), and none since bosses hit 25%
+## harder (with the boss damage back at 1 the same seeds win 1; accepted 2026-10-25, no retune).
 func test_the_tinkers_wagon_at_level_6() -> void:
 	speakers_step_aside = true
+	winless_ok = true
 	var wins := await _series("svalich_crossroads", 12, 6, "tinkers_wagon", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 0 and wins <= 2, "the Wagon falls in 0 to 2 of 8 (%d)" % wins)
 
