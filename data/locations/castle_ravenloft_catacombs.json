@@ -1674,20 +1674,6 @@
           "monster": "vampire_spawn",
           "cell": [
             41,
-            16
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            40,
-            17
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
             14
           ]
         },
@@ -1696,41 +1682,6 @@
           "cell": [
             42,
             18
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            17
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            15
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            42,
-            16
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            18
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            42,
-            17
           ]
         }
       ]
@@ -1748,62 +1699,6 @@
           "cell": [
             39,
             16
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            16
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            14
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            18
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            15
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            41,
-            17
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            42,
-            16
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            42,
-            15
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            42,
-            17
           ]
         },
         {
@@ -1842,14 +1737,6 @@
         {
           "monster": "gargoyle",
           "cell": [
-            38,
-            11
-          ],
-          "facing": "northwest"
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
             41,
             11
           ],
@@ -1874,80 +1761,8 @@
         {
           "monster": "gargoyle",
           "cell": [
-            40,
-            9
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
             42,
             9
-          ],
-          "facing": "west"
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            40,
-            8
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            41,
-            9
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            40,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            41,
-            8
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            41,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            40,
-            7
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            40,
-            11
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            42,
-            8
           ],
           "facing": "west"
         }

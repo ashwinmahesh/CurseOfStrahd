@@ -33,23 +33,9 @@
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            27,
-            11
-          ]
-        },
-        {
           "monster": "wolf",
           "cell": [
             13,
-            6
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            5,
             6
           ]
         },
@@ -65,13 +51,6 @@
           "cell": [
             22,
             12
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            23,
-            4
           ]
         }
       ],
@@ -165,13 +144,6 @@
             3,
             14
           ]
-        },
-        {
-          "monster": "rat",
-          "cell": [
-            26,
-            4
-          ]
         }
       ],
       "text": "The woods fill with eyes. The howling comes from everywhere at once, which is the point of it."
@@ -209,13 +181,6 @@
             5,
             6
           ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            22,
-            12
-          ]
         }
       ],
       "text": "Something on two legs steps out of the pines ahead, sniffing the air, and grins with far too many teeth."
@@ -225,13 +190,6 @@
       "weight": 1,
       "when": "night",
       "monsters": [
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            27,
-            9
-          ]
-        },
         {
           "monster": "strahd_zombie",
           "cell": [
@@ -251,13 +209,6 @@
           "cell": [
             5,
             13
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            24,
-            6
           ]
         },
         {
@@ -282,37 +233,9 @@
           ]
         },
         {
-          "monster": "zombie",
-          "cell": [
-            8,
-            11
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            7,
-            7
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            22,
-            12
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             27,
-            4
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            23,
             4
           ]
         }
@@ -449,13 +372,6 @@
           "cell": [
             3,
             14
-          ]
-        },
-        {
-          "monster": "rat",
-          "cell": [
-            26,
-            4
           ]
         }
       ],

@@ -1574,13 +1574,6 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            27,
-            3
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
             38,
             3
           ]
@@ -1614,38 +1607,10 @@
           ]
         },
         {
-          "monster": "strahd_zombie",
-          "cell": [
-            26,
-            4
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            28,
-            2
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            28,
-            3
-          ]
-        },
-        {
           "monster": "zombie",
           "cell": [
             28,
             4
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            37,
-            3
           ]
         }
       ],
@@ -1678,34 +1643,6 @@
             28,
             8
           ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            30,
-            12
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            26,
-            14
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            26,
-            18
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            29,
-            22
-          ]
         }
       ],
       "surprise": "",
@@ -1719,27 +1656,6 @@
       "text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
       "monsters": [
         {
-          "monster": "strahd_zombie",
-          "cell": [
-            16,
-            10
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            25,
-            16
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            15,
-            15
-          ]
-        },
-        {
           "monster": "zombie",
           "cell": [
             26,
@@ -1749,36 +1665,8 @@
         {
           "monster": "zombie",
           "cell": [
-            19,
-            9
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
             24,
             17
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            15,
-            9
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            15,
-            10
-          ]
-        },
-        {
-          "monster": "ghoul",
-          "cell": [
-            15,
-            11
           ]
         },
         {
@@ -1809,27 +1697,6 @@
         {
           "monster": "zombie",
           "cell": [
-            26,
-            10
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            19,
-            9
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            20,
-            5
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
             20,
             1
           ]
@@ -1837,43 +1704,8 @@
         {
           "monster": "zombie",
           "cell": [
-            19,
-            17
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            23,
-            15
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            23,
-            19
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            23,
-            23
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
             22,
             27
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            24,
-            3
           ]
         }
       ],

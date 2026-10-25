@@ -523,41 +523,6 @@
             24
           ],
           "name": "Doru"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            9,
-            24
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            19,
-            19
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            12,
-            18
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            19,
-            24
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            12,
-            22
-          ]
         }
       ],
       "surprise": "",
@@ -577,27 +542,6 @@
           ],
           "name": "Doru",
           "hp": 45
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            18,
-            20
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            18,
-            16
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            14,
-            16
-          ]
         }
       ],
       "surprise": "",

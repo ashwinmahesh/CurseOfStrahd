@@ -129,8 +129,9 @@ all eight tries.
 Critical path at level 1: the armor (310), plus the nursemaid (725, avoidable) and the storage room (325, optional).
 Critical path at level 2: no fight, only the spiked pit (stair foot, crypts, well, pit passage, dining hall, stair
 down). The grick, the ghouls, the shrine, the mimic and the Dursts are all off that route, as the book's dungeon is: the
-deadliest rooms are the ones a party chooses to open. The book's creatures are kept and there are more of them now
-(owner ask 2026-10-06: match the book; 2026-10-13: scale its fights up for 2024 heroes).
+deadliest rooms are the ones a party chooses to open. The book's creatures are kept, in the book's numbers again
+(owner ask 2026-10-06: match the book; 2026-10-13: scale its fights up for 2024 heroes; 2026-10-25: back to the book's
+line-ups, so the scaled line-ups in the table above are gone from the data).
 
 Traps (fair DCs; damage sized for level 1 above ground and level 2 below):
 

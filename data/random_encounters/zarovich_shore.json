@@ -21,49 +21,17 @@
           "cell": [
             20,
             5
-          ],
-          "name": "Drowned fisher"
+          ]
         },
         {
           "monster": "ghast",
           "cell": [
             24,
             8
-          ],
-          "name": "Drowned fisher"
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            22,
-            11
-          ],
-          "name": "Drowned fisher"
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            26,
-            14
-          ],
-          "name": "Drowned fisher"
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            27,
-            6
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            28,
-            10
-          ]
-        },
-        {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
             17,
             12
@@ -71,32 +39,26 @@
           "name": "Drowned fisher"
         },
         {
-          "monster": "wight",
+          "monster": "strahd_zombie",
           "cell": [
-            23,
-            4
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            21,
+            26,
             14
           ],
           "name": "Drowned fisher"
         },
         {
-          "monster": "wight",
+          "monster": "strahd_zombie",
           "cell": [
-            25,
+            28,
             10
-          ]
+          ],
+          "name": "Drowned fisher"
         },
         {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
-            24,
-            13
+            21,
+            14
           ],
           "name": "Drowned fisher"
         }
@@ -119,22 +81,8 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            22,
-            11
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
             10,
             14
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            23,
-            4
           ]
         },
         {
@@ -143,64 +91,15 @@
             28,
             10
           ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            17,
-            12
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            19,
-            6
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            26,
-            14
-          ]
-        },
-        {
-          "monster": "banshee",
-          "cell": [
-            27,
-            6
-          ]
-        },
-        {
-          "monster": "banshee",
-          "cell": [
-            21,
-            14
-          ]
-        },
-        {
-          "monster": "banshee",
-          "cell": [
-            24,
-            8
-          ]
         }
       ],
-      "text": "Pale lights bob out over the reeds and drift toward you, swaying, the way a lantern sways in the hand of someone walking. Nobody is holding them, and something wails under the water."
+      "text": "Pale lights bob out over the reeds, three of them, and drift toward you, swaying, the way a lantern sways in the hand of someone walking. Nobody is holding them."
     },
     {
       "id": "shore_wolves",
       "weight": 2,
       "when": "day and flag.wolf_pack_leader != \"emil\"",
       "monsters": [
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            23,
-            4
-          ]
-        },
         {
           "monster": "dire_wolf",
           "cell": [
@@ -227,48 +126,6 @@
           "cell": [
             19,
             6
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            17,
-            12
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            22,
-            11
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            25,
-            10
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            28,
-            10
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            24,
-            8
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            24,
-            13
           ]
         }
       ],

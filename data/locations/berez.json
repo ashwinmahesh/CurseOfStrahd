@@ -807,14 +807,6 @@
         {
           "monster": "scarecrow",
           "cell": [
-            36,
-            18
-          ],
-          "facing": "southeast"
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
             24,
             21
           ],
@@ -827,46 +819,6 @@
             21
           ],
           "facing": "southeast"
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            30,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            34,
-            21
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            27,
-            15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            35,
-            14
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            31,
-            31
-          ],
-          "unseen": true
         },
         {
           "monster": "will_o_wisp",
@@ -885,14 +837,6 @@
           "unseen": true
         },
         {
-          "monster": "scarecrow",
-          "cell": [
-            44,
-            13
-          ],
-          "unseen": true
-        },
-        {
           "monster": "will_o_wisp",
           "cell": [
             44,
@@ -905,78 +849,6 @@
           "cell": [
             19,
             15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            29,
-            23
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            36,
-            29
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            24,
-            26
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            19,
-            21
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            26,
-            31
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            42,
-            25
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            19,
-            26
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            20,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            30,
-            19
           ],
           "unseen": true
         },
@@ -1018,14 +890,6 @@
         {
           "monster": "scarecrow",
           "cell": [
-            26,
-            18
-          ],
-          "facing": "southwest"
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
             36,
             18
           ],
@@ -1040,130 +904,10 @@
           "facing": "southwest"
         },
         {
-          "monster": "will_o_wisp",
-          "cell": [
-            30,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            27,
-            15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            35,
-            14
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            39,
-            28
-          ],
-          "unseen": true
-        },
-        {
           "monster": "swarm_of_insects",
           "cell": [
             29,
             31
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            19,
-            31
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            44,
-            19
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            44,
-            11
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            30,
-            24
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            19,
-            15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            38,
-            23
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            34,
-            29
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            25,
-            26
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            19,
-            21
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            20,
-            26
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            24,
-            32
           ],
           "unseen": true
         },
@@ -1180,30 +924,6 @@
           "cell": [
             39,
             33
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            44,
-            29
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            20,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            31,
-            20
           ],
           "unseen": true
         },
@@ -1261,152 +981,8 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            27,
-            15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            35,
-            14
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            31,
-            28
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
             41,
             28
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            21,
-            30
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            44,
-            19
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            44,
-            11
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            19,
-            19
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            25,
-            24
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            19,
-            13
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            31,
-            20
-          ],
-          "facing": "south"
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            30,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            38,
-            23
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            36,
-            29
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            26,
-            29
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            20,
-            25
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            31,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            30,
-            24
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            40,
-            19
           ],
           "unseen": true
         },
@@ -1415,22 +991,6 @@
           "cell": [
             31,
             32
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            42,
-            23
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            40,
-            15
           ],
           "unseen": true
         }
@@ -1448,42 +1008,7 @@
           "monster": "will_o_wisp",
           "cell": [
             13,
-            14
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            20,
-            16
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            13,
             22
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            18,
-            18
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            21,
-            13
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            31,
-            17
           ]
         },
         {
@@ -1498,13 +1023,6 @@
           "cell": [
             31,
             7
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            28,
-            27
           ]
         },
         {
@@ -1534,55 +1052,6 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            13,
-            14
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            21,
-            17
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            18,
-            18
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            17,
-            4
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            31,
-            13
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            31,
-            23
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            13,
-            28
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
             26,
             4
           ]
@@ -1592,48 +1061,6 @@
           "cell": [
             8,
             5
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            35,
-            4
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            21,
-            26
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            11,
-            21
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            19,
-            10
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            25,
-            10
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            37,
-            14
           ]
         },
         {

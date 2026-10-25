@@ -324,20 +324,6 @@
           ]
         },
         {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            11,
-            11
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            3,
-            9
-          ]
-        },
-        {
           "monster": "helmed_horror",
           "cell": [
             14,
@@ -376,13 +362,6 @@
           ]
         },
         {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            11,
-            11
-          ]
-        },
-        {
           "monster": "helmed_horror",
           "cell": [
             14,
@@ -393,13 +372,6 @@
           "monster": "strahds_animated_armor",
           "cell": [
             5,
-            2
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            12,
             2
           ]
         }
@@ -414,31 +386,10 @@
       "flag": "heart_guardians_beaten",
       "monsters": [
         {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            6,
-            11
-          ]
-        },
-        {
           "monster": "helmed_horror",
           "cell": [
             14,
             9
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            5,
-            2
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            12,
-            2
           ]
         },
         {

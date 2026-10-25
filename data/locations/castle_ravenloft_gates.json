@@ -734,78 +734,6 @@
         {
           "monster": "gargoyle",
           "cell": [
-            15,
-            13
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            24,
-            13
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            12,
-            12
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            27,
-            12
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            22,
-            15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            19,
-            8
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            19,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            24,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            16,
-            15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
             11,
             15
           ],
@@ -818,14 +746,6 @@
             9
           ],
           "facing": "southeast"
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            13,
-            14
-          ],
-          "unseen": true
         },
         {
           "monster": "gargoyle",
@@ -873,90 +793,10 @@
         {
           "monster": "gargoyle",
           "cell": [
-            12,
-            12
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            27,
-            12
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            19,
-            8
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            19,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            24,
-            14
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            22,
-            15
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
             24,
             9
           ],
           "facing": "southwest"
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            15,
-            14
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            28,
-            14
-          ],
-          "facing": "west"
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            25,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            16,
-            15
-          ],
-          "unseen": true
         },
         {
           "monster": "gargoyle",

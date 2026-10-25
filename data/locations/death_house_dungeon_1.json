@@ -964,57 +964,8 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            12,
-            2
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
             10,
             2
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            14,
-            2
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            20,
-            2
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            13,
-            3
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            19,
-            4
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            18,
-            2
-          ]
-        },
-        {
-          "monster": "rat",
-          "cell": [
-            11,
-            3
           ]
         }
       ],
@@ -1053,25 +1004,10 @@
         {
           "monster": "ghoul",
           "cell": [
-            11,
-            14
-          ],
-          "lying": true
-        },
-        {
-          "monster": "ghoul",
-          "cell": [
             13,
             14
           ],
           "lying": true
-        },
-        {
-          "monster": "rat",
-          "cell": [
-            4,
-            14
-          ]
         }
       ],
       "text": "The bones in the passage stand up, and some of them still have meat on."
@@ -1086,20 +1022,6 @@
           "monster": "grick",
           "cell": [
             27,
-            2
-          ]
-        },
-        {
-          "monster": "grick",
-          "cell": [
-            26,
-            1
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            26,
             2
           ]
         }
@@ -1145,37 +1067,9 @@
             4,
             16
           ]
-        },
-        {
-          "monster": "shadow",
-          "cell": [
-            2,
-            16
-          ]
-        },
-        {
-          "monster": "shadow",
-          "cell": [
-            6,
-            16
-          ]
-        },
-        {
-          "monster": "rat",
-          "cell": [
-            1,
-            17
-          ]
-        },
-        {
-          "monster": "rat",
-          "cell": [
-            2,
-            17
-          ]
         }
       ],
-      "text": "Seven shadows peel off the walls, and none of them is yours."
+      "text": "Five shadows peel off the walls, and none of them is yours."
     },
     {
       "id": "den_mimic",
@@ -1190,21 +1084,6 @@
             18
           ],
           "name": "The Door"
-        },
-        {
-          "monster": "mimic",
-          "cell": [
-            6,
-            19
-          ],
-          "name": "The Chest"
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            4,
-            18
-          ]
         }
       ],
       "text": "The door has teeth."
@@ -1229,27 +1108,6 @@
             19
           ],
           "name": "Elisabeth Durst"
-        },
-        {
-          "monster": "ghoul",
-          "cell": [
-            9,
-            16
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            9,
-            17
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            10,
-            16
-          ]
         }
       ],
       "text": "Supper is served."
@@ -1275,34 +1133,6 @@
             19
           ],
           "name": "Elisabeth Durst"
-        },
-        {
-          "monster": "ghoul",
-          "cell": [
-            9,
-            16
-          ]
-        },
-        {
-          "monster": "ghoul",
-          "cell": [
-            9,
-            17
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            10,
-            16
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            11,
-            16
-          ]
         }
       ],
       "text": "For one moment they are only parents, and grieving."

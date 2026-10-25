@@ -1030,22 +1030,6 @@
             5
           ],
           "name": "Gallery armour"
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            30,
-            4
-          ],
-          "name": "Gallery armour"
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            22,
-            3
-          ],
-          "name": "Gallery armour"
         }
       ],
       "surprise": "",

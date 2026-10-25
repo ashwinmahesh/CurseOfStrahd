@@ -30,29 +30,8 @@
         {
           "monster": "gargoyle",
           "cell": [
-            24,
-            2
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
             6,
             2
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            12,
-            3
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            20,
-            10
           ]
         },
         {
@@ -65,43 +44,8 @@
         {
           "monster": "gargoyle",
           "cell": [
-            8,
-            10
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            26,
-            6
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            22,
-            4
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            5,
-            4
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
             14,
             13
-          ]
-        },
-        {
-          "monster": "gargoyle",
-          "cell": [
-            2,
-            11
           ]
         },
         {
@@ -165,14 +109,6 @@
             10
           ],
           "name": "The cold's own"
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            26,
-            12
-          ],
-          "name": "Frozen climber"
         }
       ],
       "text": "Shapes climb up over the edge of the shelf in the moonlight, roped together, frost in their beards. They have been climbing toward the temple for a very long time."

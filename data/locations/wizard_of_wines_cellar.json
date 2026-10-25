@@ -265,7 +265,7 @@
       "trigger": "enter_area:the_dig",
       "waiting": true,
       "when": "not flag.cellar_dig_cleared and level >= 7",
-      "text": "Needle blights are scraping at the earth floor with their claws, and druids with lanterns are telling them where. Behind you, among the casks, something else is getting up.",
+      "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
       "monsters": [
         {
           "monster": "druid",
@@ -344,92 +344,6 @@
             18,
             7
           ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            7,
-            3
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            7,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            10,
-            3
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            9,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            8,
-            6
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            20,
-            2
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            20,
-            9
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            22,
-            5
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            28,
-            5
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            27,
-            6
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            25,
-            11
-          ]
         }
       ],
       "surprise": "",
@@ -440,7 +354,7 @@
       "trigger": "enter_area:the_dig",
       "waiting": true,
       "when": "not flag.cellar_dig_cleared and level >= 6",
-      "text": "Needle blights are scraping at the earth floor with their claws, and druids with lanterns are telling them where. Behind you, among the casks, something else is getting up.",
+      "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
       "monsters": [
         {
           "monster": "druid",
@@ -497,78 +411,6 @@
           "cell": [
             27,
             11
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            7,
-            3
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            7,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            10,
-            3
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            9,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            8,
-            6
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            20,
-            2
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            20,
-            9
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            22,
-            5
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            26,
-            9
           ]
         }
       ],
@@ -583,14 +425,6 @@
       "text": "Needle blights are scraping at the earth floor with their claws, and a vine blight is hissing at them where to dig.",
       "monsters": [
         {
-          "monster": "druid",
-          "cell": [
-            24,
-            4
-          ],
-          "name": "Druid overseer"
-        },
-        {
           "monster": "vine_blight",
           "cell": [
             20,
@@ -623,70 +457,6 @@
           "cell": [
             19,
             11
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            23,
-            11
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            7,
-            3
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            7,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            10,
-            3
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            9,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            8,
-            6
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            20,
-            2
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            22,
-            5
           ]
         }
       ],

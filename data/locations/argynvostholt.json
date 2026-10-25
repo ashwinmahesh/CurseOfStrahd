@@ -789,50 +789,8 @@
         {
           "monster": "phantom_warrior",
           "cell": [
-            27,
-            9
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            13,
-            15
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            28,
-            15
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
             37,
             5
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            4,
-            10
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            20,
-            10
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            23,
-            21
           ]
         },
         {
@@ -845,36 +803,8 @@
         {
           "monster": "phantom_warrior",
           "cell": [
-            11,
-            25
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            33,
-            25
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
             1,
             22
-          ]
-        },
-        {
-          "monster": "revenant",
-          "cell": [
-            3,
-            30
-          ]
-        },
-        {
-          "monster": "revenant",
-          "cell": [
-            40,
-            27
           ]
         }
       ]
@@ -897,57 +827,8 @@
         {
           "monster": "phantom_warrior",
           "cell": [
-            27,
-            9
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            20,
-            15
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            20,
-            25
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            30,
-            19
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            10,
-            19
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            30,
-            29
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
             10,
             29
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            5,
-            10
           ]
         },
         {
@@ -955,34 +836,6 @@
           "cell": [
             34,
             8
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            20,
-            9
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            20,
-            31
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            17,
-            20
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            23,
-            20
           ]
         }
       ]
@@ -998,78 +851,8 @@
         {
           "monster": "phantom_warrior",
           "cell": [
-            14,
-            9
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            27,
-            9
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            23,
-            18
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            13,
-            21
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            23,
-            28
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            33,
-            19
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            33,
-            29
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            14,
-            30
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
             5,
             30
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            5,
-            10
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            5,
-            21
           ]
         },
         {
@@ -1077,20 +860,6 @@
           "cell": [
             34,
             8
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            16,
-            15
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            20,
-            9
           ]
         }
       ]

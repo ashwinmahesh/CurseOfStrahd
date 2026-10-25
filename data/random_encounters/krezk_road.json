@@ -35,61 +35,26 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            27,
-            11
+            16,
+            16
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            10,
-            5
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            5,
-            6
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            20,
-            14
-          ]
-        },
-        {
-          "monster": "werewolf",
+          "monster": "wolf",
           "cell": [
             12,
             15
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            16,
-            16
-          ]
-        },
-        {
-          "monster": "werewolf",
+          "monster": "wolf",
           "cell": [
             8,
             12
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            28,
-            15
-          ]
-        },
-        {
-          "monster": "werewolf",
+          "monster": "wolf",
           "cell": [
             24,
             2
@@ -106,56 +71,14 @@
         {
           "monster": "druid",
           "cell": [
-            26,
-            5
-          ]
-        },
-        {
-          "monster": "druid",
-          "cell": [
             5,
             13
           ]
         },
         {
-          "monster": "vine_blight",
-          "cell": [
-            24,
-            2
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            12,
-            15
-          ]
-        },
-        {
           "monster": "needle_blight",
           "cell": [
             16,
-            5
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            16,
-            11
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            24,
-            11
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            6,
             5
           ]
         },
@@ -174,24 +97,31 @@
           ]
         },
         {
-          "monster": "vine_blight",
+          "monster": "twig_blight",
           "cell": [
-            3,
-            9
+            26,
+            5
           ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
             2,
             5
           ]
         },
         {
-          "monster": "druid",
+          "monster": "twig_blight",
           "cell": [
-            8,
-            12
+            24,
+            11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            16,
+            11
           ]
         }
       ],
@@ -215,13 +145,6 @@
       "weight": 3,
       "when": "night",
       "monsters": [
-        {
-          "monster": "werewolf",
-          "cell": [
-            24,
-            5
-          ]
-        },
         {
           "monster": "werewolf",
           "cell": [
@@ -266,101 +189,52 @@
       "when": "night",
       "monsters": [
         {
-          "monster": "ghast",
+          "monster": "ghoul",
           "cell": [
             27,
-            9
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            25,
-            12
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            4,
-            9
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            5,
-            13
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            24,
-            6
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            15,
             4
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            16,
-            16
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            8,
-            3
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            12,
-            15
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            24,
-            2
-          ]
-        },
-        {
-          "monster": "ghast",
+          "monster": "ghoul",
           "cell": [
             2,
             5
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
           "cell": [
             8,
             12
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
-            5,
-            6
+            25,
+            12
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
-            27,
-            4
+            8,
+            3
           ]
         }
       ],

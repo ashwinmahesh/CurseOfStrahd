@@ -451,76 +451,6 @@
             9
           ],
           "name": "Phantom Watchman"
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            10,
-            1
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            18,
-            4
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            10,
-            5
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            7,
-            2
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            12,
-            7
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            11,
-            3
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            8,
-            7
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            9,
-            3
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            14,
-            7
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            16,
-            6
-          ]
         }
       ],
       "surprise": "",
@@ -566,55 +496,6 @@
             7
           ],
           "name": "Phantom Watchman"
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            9,
-            1
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            9,
-            5
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            13,
-            7
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            12,
-            1
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            10,
-            3
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            8,
-            7
-          ]
-        },
-        {
-          "monster": "phantom_warrior",
-          "cell": [
-            8,
-            3
-          ]
         }
       ],
       "surprise": "",

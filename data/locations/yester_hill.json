@@ -585,91 +585,31 @@
           "name": "Warden of the hill"
         },
         {
-          "monster": "needle_blight",
-          "cell": [
-            7,
-            16
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            16,
-            14
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            13,
-            20
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            9,
-            18
-          ]
-        },
-        {
-          "monster": "berserker",
+          "monster": "twig_blight",
           "cell": [
             26,
-            17
-          ],
-          "name": "Warden of the hill"
+            7
+          ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
             25,
             27
           ]
         },
         {
-          "monster": "berserker",
-          "cell": [
-            26,
-            7
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
             4,
             28
           ]
         },
         {
-          "monster": "berserker",
+          "monster": "twig_blight",
           "cell": [
-            15,
-            28
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            6,
-            7
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            14,
-            7
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            20,
-            8
+            26,
+            17
           ]
         }
       ],
@@ -707,98 +647,31 @@
           "name": "Warden of the hill"
         },
         {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
-            7,
-            16
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            16,
-            14
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            13,
+            20,
             20
           ]
         },
         {
-          "monster": "needle_blight",
-          "cell": [
-            9,
-            18
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            26,
-            17
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            23,
-            27
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
             26,
             7
           ]
         },
         {
-          "monster": "berserker",
-          "cell": [
-            4,
-            28
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            14,
-            28
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            6,
-            7
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
             31,
             25
           ]
         },
         {
-          "monster": "berserker",
-          "cell": [
-            15,
-            7
-          ],
-          "name": "Warden of the hill"
-        },
-        {
           "monster": "twig_blight",
           "cell": [
-            20,
-            20
+            4,
+            28
           ]
         }
       ],
@@ -828,98 +701,31 @@
           "name": "Warden of the hill"
         },
         {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
-            7,
-            16
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            16,
-            14
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            13,
-            20
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            9,
-            18
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            26,
-            17
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            23,
+            8,
             27
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            26,
-            7
           ]
         },
         {
-          "monster": "berserker",
-          "cell": [
-            1,
-            28
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            15,
-            28
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            6,
-            7
-          ],
-          "name": "Warden of the hill"
-        },
-        {
-          "monster": "needle_blight",
+          "monster": "twig_blight",
           "cell": [
             31,
             25
           ]
         },
         {
-          "monster": "berserker",
+          "monster": "twig_blight",
           "cell": [
-            15,
+            26,
             7
-          ],
-          "name": "Warden of the hill"
+          ]
         },
         {
           "monster": "twig_blight",
           "cell": [
-            8,
-            27
+            26,
+            17
           ]
         }
       ],

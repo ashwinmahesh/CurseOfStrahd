@@ -20,34 +20,6 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            4,
-            3
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            27,
-            12
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            26,
-            3
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            3,
-            12
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
             28,
             8
           ]
@@ -67,31 +39,24 @@
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            6,
-            12
-          ]
-        },
-        {
-          "monster": "werewolf",
+          "monster": "wolf",
           "cell": [
             24,
             12
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            4,
-            8
-          ]
-        },
-        {
-          "monster": "werewolf",
+          "monster": "wolf",
           "cell": [
             28,
             3
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            12
           ]
         }
       ],
@@ -144,13 +109,6 @@
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            27,
-            12
-          ]
-        },
-        {
           "monster": "wolf",
           "cell": [
             3,
@@ -160,31 +118,9 @@
         {
           "monster": "wolf",
           "cell": [
-            2,
-            8
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            8,
-            3
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
             27,
             8
           ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            6,
-            12
-          ],
-          "name": "Werewolf"
         },
         {
           "monster": "dire_wolf",
@@ -192,21 +128,6 @@
             24,
             12
           ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            4,
-            8
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            28,
-            3
-          ],
-          "name": "Werewolf"
         }
       ],
       "text": "A howl from the pines ends in a word. Something tall comes down the lane on two legs, and the pack comes with it."
@@ -217,59 +138,10 @@
       "when": "night",
       "monsters": [
         {
-          "monster": "ghast",
-          "cell": [
-            27,
-            7
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            28,
-            8
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            3,
-            7
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            26,
-            12
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            4,
-            3
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            4,
-            8
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             24,
             12
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            8,
-            3
           ]
         },
         {
@@ -280,24 +152,10 @@
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            26,
-            3
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             3,
             12
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            28,
-            3
           ]
         },
         {
@@ -308,17 +166,24 @@
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            3,
-            8
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             2,
             8
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            8,
+            3
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            26,
+            3
           ]
         }
       ],
@@ -332,20 +197,6 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            8,
-            3
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            24,
-            12
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
             20,
             3
           ]
@@ -353,92 +204,43 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            6,
-            12
+            4,
+            3
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
-            27,
+            4,
             8
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            3,
-            8
-          ]
-        },
-        {
-          "monster": "ghast",
+          "monster": "swarm_of_bats",
           "cell": [
             28,
             3
           ]
         },
         {
-          "monster": "strahd_zombie",
-          "cell": [
-            4,
-            3
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            27,
-            12
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
+          "monster": "swarm_of_bats",
           "cell": [
             3,
             12
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            26,
-            3
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            4,
-            8
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            27,
-            7
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
+          "monster": "swarm_of_bats",
           "cell": [
             13,
             1
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "swarm_of_bats",
           "cell": [
-            3,
-            7
-          ]
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            21,
-            7
+            24,
+            12
           ]
         }
       ],

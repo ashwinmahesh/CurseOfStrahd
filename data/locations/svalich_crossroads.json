@@ -714,38 +714,6 @@
             7
           ],
           "name": "Hanged dead"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            20,
-            7
-          ],
-          "name": "Hanged dead"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            20,
-            8
-          ],
-          "name": "Hanged dead"
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            20,
-            9
-          ],
-          "name": "Hanged dead"
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            21,
-            7
-          ],
-          "name": "Hanged dead"
         }
       ],
       "surprise": "",

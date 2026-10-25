@@ -292,30 +292,6 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            30,
-            9
-          ],
-          "name": "Mourner"
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            20,
-            7
-          ],
-          "name": "Mourner in Black"
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            20,
-            8
-          ],
-          "name": "Mourner in Black"
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
             20,
             9
           ],

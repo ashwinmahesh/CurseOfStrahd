@@ -436,69 +436,9 @@
         {
           "monster": "vine_blight",
           "cell": [
-            19,
-            3
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            10,
-            8
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            14,
-            8
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            7,
-            3
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            9,
-            3
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            12,
-            10
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            11,
-            3
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
             10,
             1
           ]
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            16,
-            8
-          ],
-          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
@@ -508,7 +448,7 @@
       "id": "press_house_mash",
       "trigger": "dialogue",
       "when": "level >= 6",
-      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing. Around the press, the druids lift their hands, and the vines along the walls lift with them.",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
       "monsters": [
         {
           "monster": "druid",
@@ -536,61 +476,9 @@
         {
           "monster": "vine_blight",
           "cell": [
-            19,
-            3
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            10,
-            8
-          ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            14,
-            8
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            7,
-            3
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            9,
-            3
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            11,
-            3
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
             10,
             1
           ]
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            12,
-            10
-          ],
-          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
@@ -620,29 +508,7 @@
         {
           "monster": "vine_blight",
           "cell": [
-            19,
-            3
-          ]
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            10,
-            8
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
             5,
-            3
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            7,
             3
           ]
         }

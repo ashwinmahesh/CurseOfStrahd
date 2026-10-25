@@ -566,34 +566,6 @@
             17
           ],
           "name": "Something from the shrine"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            12,
-            15
-          ]
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            12,
-            16
-          ]
-        },
-        {
-          "monster": "cultist",
-          "cell": [
-            13,
-            15
-          ]
-        },
-        {
-          "monster": "cultist",
-          "cell": [
-            13,
-            17
-          ]
         }
       ],
       "surprise": "",
@@ -661,20 +633,6 @@
             16
           ],
           "name": "Hired sword"
-        },
-        {
-          "monster": "tough",
-          "cell": [
-            15,
-            18
-          ]
-        },
-        {
-          "monster": "tough",
-          "cell": [
-            18,
-            15
-          ]
         }
       ],
       "surprise": "",
@@ -689,7 +647,7 @@
       "trigger": "enter_area:cellar",
       "waiting": true,
       "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax",
-      "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
+      "text": "Every head in the cellar turns from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
       "monsters": [
         {
           "monster": "tough",
@@ -717,20 +675,6 @@
         {
           "monster": "cultist",
           "cell": [
-            12,
-            17
-          ]
-        },
-        {
-          "monster": "cultist",
-          "cell": [
-            17,
-            17
-          ]
-        },
-        {
-          "monster": "cultist",
-          "cell": [
             21,
             16
           ]
@@ -741,14 +685,6 @@
             15,
             18
           ]
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            18,
-            15
-          ],
-          "name": "Hired sword"
         }
       ],
       "surprise": "",

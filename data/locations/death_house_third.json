@@ -662,29 +662,6 @@
             5
           ],
           "name": "Black Armor"
-        },
-        {
-          "monster": "animated_flying_sword",
-          "cell": [
-            12,
-            4
-          ],
-          "name": "Balcony Sword"
-        },
-        {
-          "monster": "animated_flying_sword",
-          "cell": [
-            17,
-            10
-          ],
-          "name": "Balcony Sword"
-        },
-        {
-          "monster": "rat",
-          "cell": [
-            15,
-            4
-          ]
         }
       ],
       "text": "The armor on the landing steps down off its stand."
@@ -701,34 +678,6 @@
             9
           ],
           "name": "The Nursemaid"
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            25,
-            14
-          ]
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            19,
-            8
-          ]
-        },
-        {
-          "monster": "shadow",
-          "cell": [
-            22,
-            13
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            21,
-            8
-          ]
         }
       ],
       "text": "She wants her baby back."
@@ -746,27 +695,6 @@
             13
           ],
           "name": "Broom"
-        },
-        {
-          "monster": "animated_armor",
-          "cell": [
-            12,
-            13
-          ]
-        },
-        {
-          "monster": "animated_flying_sword",
-          "cell": [
-            13,
-            12
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            12,
-            14
-          ]
         }
       ],
       "text": "The broom against the wall has opinions about visitors."

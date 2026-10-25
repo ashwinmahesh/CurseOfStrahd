@@ -604,13 +604,6 @@
         {
           "monster": "twig_blight",
           "cell": [
-            13,
-            1
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
             11,
             5
           ]
@@ -630,17 +623,17 @@
           ]
         },
         {
-          "monster": "shambling_mound",
-          "cell": [
-            19,
-            6
-          ]
-        },
-        {
           "monster": "twig_blight",
           "cell": [
             27,
             5
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            13,
+            1
           ]
         }
       ],
@@ -660,13 +653,6 @@
             4
           ],
           "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            14,
-            5
-          ]
         },
         {
           "monster": "vine_blight",
@@ -701,13 +687,6 @@
           "cell": [
             26,
             1
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            12,
-            9
           ]
         },
         {
@@ -753,19 +732,33 @@
           ]
         },
         {
-          "monster": "shambling_mound",
-          "cell": [
-            19,
-            6
-          ]
-        },
-        {
           "monster": "druid",
           "cell": [
             25,
             5
           ],
           "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            12,
+            9
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            14,
+            5
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            6
+          ]
         }
       ],
       "surprise": "",
@@ -833,20 +826,6 @@
           "cell": [
             12,
             9
-          ]
-        },
-        {
-          "monster": "shambling_mound",
-          "cell": [
-            19,
-            6
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            24,
-            8
           ]
         }
       ],

@@ -347,13 +347,6 @@
             6
           ],
           "name": "Barovian hunter"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            22,
-            8
-          ]
         }
       ],
       "surprise": "",

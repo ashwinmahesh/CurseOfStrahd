@@ -410,92 +410,12 @@
           "facing": "south"
         },
         {
-          "monster": "will_o_wisp",
-          "cell": [
-            4,
-            4
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            10,
-            14
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            22,
-            12
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
+          "monster": "scarecrow",
           "cell": [
             1,
             13
           ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            16,
-            10
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            22,
-            6
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            16,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            11,
-            9
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            21,
-            1
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            16,
-            6
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            6,
-            11
-          ],
-          "unseen": true
+          "facing": "south"
         }
       ],
       "surprise": "",

@@ -2,6 +2,8 @@
 
 **Hit Points since 2026-10-24** (owner: "for ALL monster HP, just use the Monster Manual values; no custom HP"): the foes in these fights fight at their stat blocks' Hit Points. The raised or lowered Hit Points the tables below describe are gone from the data, and the win counts are the ones measured before; the combat-length pass measures the fights again.
 
+**Line-ups since 2026-10-25** (owner: "for pretty much all battles in the book, we can remove extra enemies we added and just leave them how they are in the book"): the book's fights and the roads' random fights that are not boss fights are back to the line-ups they were first entered with from the module, the same number and kinds of foe (git history's first version of each fight; Elisabeth Durst stays a ghast, as the book has her). The bigger line-ups the tables below describe are gone from the data, and their intro lines that named the extra foes went back to the first wording. The boss fights, the side quests' fights and the fights entered after 2026-10-13 keep theirs for now.
+
 (2026-10-15, owner's rule: the sharp party wins 5 in 8 on Balanced, give or take one; none of these is on the boss lane's
 list. Held by `tests/integration/test_scaled_fights_rest.gd`; the churchyard by `test_scaled_fights_barovia.gd`.)
 

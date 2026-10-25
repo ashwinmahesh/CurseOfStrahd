@@ -302,76 +302,6 @@
             16,
             10
           ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            1,
-            6
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            24,
-            10
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            7,
-            12
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            1,
-            12
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            9,
-            1
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            4,
-            1
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            11,
-            12
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            5,
-            7
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            20,
-            11
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            24,
-            6
-          ]
         }
       ]
     },
@@ -423,62 +353,6 @@
           "cell": [
             16,
             10
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            1,
-            6
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            7,
-            12
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            1,
-            12
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            21,
-            12
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            1,
-            1
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            11,
-            12
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            5,
-            8
-          ]
-        },
-        {
-          "monster": "wereraven",
-          "cell": [
-            10,
-            2
           ]
         }
       ]

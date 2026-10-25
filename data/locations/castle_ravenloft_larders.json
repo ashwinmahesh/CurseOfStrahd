@@ -1099,20 +1099,6 @@
           "name": "Sergeant of the Watch"
         },
         {
-          "monster": "wight",
-          "cell": [
-            22,
-            19
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            17,
-            14
-          ]
-        },
-        {
           "monster": "helmed_horror",
           "cell": [
             23,
@@ -1120,72 +1106,10 @@
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            17,
-            18
-          ],
-          "lying": {
-            "on": "larders_watch_pallet_3"
-          }
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            18,
-            22
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            21,
-            20
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            24,
-            17
-          ],
-          "lying": {
-            "on": "larders_watch_pallet_4"
-          }
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            25,
-            20
-          ]
-        },
-        {
           "monster": "wight",
           "cell": [
             20,
             18
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            22,
-            17
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            19,
-            20
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            18,
-            16
           ]
         },
         {
@@ -1200,6 +1124,27 @@
           "cell": [
             23,
             15
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            25,
+            20
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            17,
+            18
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            22,
+            19
           ]
         }
       ]
@@ -1221,23 +1166,9 @@
           "name": "Sergeant of the Watch"
         },
         {
-          "monster": "wight",
-          "cell": [
-            20,
-            6
-          ]
-        },
-        {
           "monster": "helmed_horror",
           "cell": [
             21,
-            2
-          ]
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            26,
             2
           ]
         },
@@ -1249,34 +1180,6 @@
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            22,
-            6
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            25,
-            7
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            28,
-            6
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            29,
-            3
-          ]
-        },
-        {
           "monster": "wight",
           "cell": [
             21,
@@ -1291,17 +1194,24 @@
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
-            19,
-            2
+            28,
+            6
           ]
         },
         {
-          "monster": "wight",
+          "monster": "strahd_zombie",
           "cell": [
             28,
             1
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            25,
+            7
           ]
         }
       ]
@@ -1310,121 +1220,16 @@
       "id": "larders_cyrus_fight",
       "trigger": "dialogue",
       "flag": "larders_cyrus_slain",
-      "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping, and the Belview cooks come out of the pantries with knives.",
+      "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping.",
       "surprise": "",
       "monsters": [
         {
-          "monster": "berserker",
+          "monster": "mongrelfolk",
           "cell": [
             26,
             5
           ],
           "name": "Cyrus Belview"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            19,
-            5
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            26,
-            1
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            22,
-            1
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            19,
-            2
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            29,
-            3
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            29,
-            6
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            24,
-            1
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            21,
-            3
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            21,
-            5
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            21,
-            7
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            28,
-            1
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            19,
-            7
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            21,
-            4
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            22,
-            2
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            23,
-            1
-          ]
         }
       ]
     }

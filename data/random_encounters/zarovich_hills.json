@@ -27,13 +27,6 @@
         {
           "monster": "werewolf",
           "cell": [
-            25,
-            9
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
             24,
             13
           ]
@@ -92,13 +85,6 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            26,
-            7
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
             21,
             14
           ]
@@ -123,96 +109,15 @@
             19,
             6
           ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            22,
-            11
-          ],
-          "name": "Pack leader"
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            28,
-            10
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            24,
-            13
-          ],
-          "name": "Pack leader"
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            24,
-            8
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            26,
-            14
-          ],
-          "name": "Pack leader"
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            20,
-            12
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            23,
-            12
-          ],
-          "name": "Pack leader"
         }
       ],
-      "text": "Dire wolves, big as ponies, fan out across the slope ahead. Behind them men step out from the trees, smiling, and start to change."
+      "text": "Dire wolves, five of them, big as ponies, fanning out across the slope ahead. Behind them a man steps out from the trees, smiling, and starts to change."
     },
     {
       "id": "hill_ghouls",
       "weight": 2,
       "when": "night",
       "monsters": [
-        {
-          "monster": "ghast",
-          "cell": [
-            20,
-            5
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            24,
-            8
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            22,
-            11
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            26,
-            14
-          ]
-        },
         {
           "monster": "ghast",
           "cell": [
@@ -223,43 +128,36 @@
         {
           "monster": "ghast",
           "cell": [
-            28,
-            10
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
             17,
             12
           ]
         },
         {
-          "monster": "wight",
+          "monster": "ghoul",
           "cell": [
-            23,
-            4
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            21,
+            26,
             14
           ]
         },
         {
-          "monster": "wight",
+          "monster": "ghoul",
           "cell": [
-            25,
-            10
+            20,
+            5
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "ghoul",
           "cell": [
-            24,
-            13
+            22,
+            11
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            10
           ]
         }
       ],

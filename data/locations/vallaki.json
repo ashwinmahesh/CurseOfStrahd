@@ -1779,34 +1779,6 @@
           "name": "Karl's sword-master"
         },
         {
-          "monster": "tough",
-          "cell": [
-            15,
-            12
-          ]
-        },
-        {
-          "monster": "tough",
-          "cell": [
-            15,
-            13
-          ]
-        },
-        {
-          "monster": "tough",
-          "cell": [
-            15,
-            14
-          ]
-        },
-        {
-          "monster": "tough",
-          "cell": [
-            16,
-            12
-          ]
-        },
-        {
           "monster": "warrior_veteran",
           "cell": [
             16,
@@ -1869,13 +1841,6 @@
         {
           "monster": "cultist",
           "cell": [
-            18,
-            19
-          ]
-        },
-        {
-          "monster": "cultist",
-          "cell": [
             19,
             19
           ]
@@ -1907,6 +1872,13 @@
           "cell": [
             18,
             23
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            18,
+            19
           ]
         }
       ],
@@ -1976,21 +1948,6 @@
             32,
             13
           ]
-        },
-        {
-          "monster": "bandit_captain",
-          "cell": [
-            32,
-            14
-          ]
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            33,
-            12
-          ],
-          "name": "Hired knife"
         }
       ],
       "surprise": "",
@@ -2053,20 +2010,6 @@
             19
           ],
           "name": "Hired knife"
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            31,
-            23
-          ]
-        },
-        {
-          "monster": "scout",
-          "cell": [
-            30,
-            27
-          ]
         }
       ],
       "surprise": "",
@@ -2097,20 +2040,6 @@
             15
           ],
           "name": "Karl Wachter"
-        },
-        {
-          "monster": "cultist",
-          "cell": [
-            17,
-            18
-          ]
-        },
-        {
-          "monster": "cultist",
-          "cell": [
-            16,
-            19
-          ]
         },
         {
           "monster": "cultist",
@@ -2186,48 +2115,6 @@
             19
           ],
           "name": "Hired knife"
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            31,
-            23
-          ]
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            30,
-            27
-          ]
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            30,
-            31
-          ]
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            34,
-            32
-          ]
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            34,
-            15
-          ]
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            31,
-            11
-          ]
         }
       ],
       "surprise": "",

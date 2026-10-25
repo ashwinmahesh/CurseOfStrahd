@@ -53,13 +53,6 @@
           ]
         },
         {
-          "monster": "werewolf",
-          "cell": [
-            5,
-            6
-          ]
-        },
-        {
           "monster": "dire_wolf",
           "cell": [
             27,
@@ -76,13 +69,6 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            24,
-            5
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
             16,
             16
           ]
@@ -92,34 +78,6 @@
           "cell": [
             15,
             4
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            22,
-            12
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            8,
-            11
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            23,
-            8
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            4,
-            9
           ]
         }
       ],
@@ -133,22 +91,8 @@
         {
           "monster": "ghast",
           "cell": [
-            27,
-            4
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
             28,
             7
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            26,
-            13
           ]
         },
         {
@@ -159,66 +103,45 @@
           ]
         },
         {
-          "monster": "ghast",
-          "cell": [
-            5,
-            6
-          ]
-        },
-        {
-          "monster": "ghast",
-          "cell": [
-            6,
-            13
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            23,
-            8
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            8,
-            11
-          ]
-        },
-        {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
             16,
             16
           ]
         },
         {
-          "monster": "wight",
+          "monster": "strahd_zombie",
           "cell": [
             15,
             4
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "strahd_zombie",
           "cell": [
             22,
             12
           ]
         },
         {
-          "monster": "wight",
+          "monster": "strahd_zombie",
+          "cell": [
+            3,
+            14
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
           "cell": [
             23,
             4
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "strahd_zombie",
           "cell": [
-            3,
-            14
+            8,
+            11
           ]
         }
       ],
@@ -269,41 +192,6 @@
           "cell": [
             25,
             12
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            23,
-            8
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            23,
-            4
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            22,
-            12
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            4,
-            9
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            27,
-            9
           ]
         }
       ],

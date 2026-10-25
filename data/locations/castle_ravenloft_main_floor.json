@@ -1675,22 +1675,6 @@
             22
           ],
           "facing": "northwest"
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            22,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            25,
-            23
-          ],
-          "unseen": true
         }
       ]
     },
@@ -1698,7 +1682,7 @@
       "id": "crg_turret_guard",
       "trigger": "enter_area:crg_turret_post_east",
       "waiting": true,
-      "text": "Suits of black armour step down from their stands, as if someone had called the watch.",
+      "text": "A suit of black armour steps down from its stand, as if someone had called the watch.",
       "surprise": "",
       "flag": "crg_turret_guard_broken",
       "monsters": [
@@ -1709,30 +1693,6 @@
             18
           ],
           "facing": "southwest"
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            25,
-            24
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            24,
-            16
-          ],
-          "unseen": true
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            25,
-            9
-          ],
-          "unseen": true
         }
       ]
     },
@@ -1777,27 +1737,6 @@
             35,
             8
           ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            49,
-            7
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            40,
-            6
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            48,
-            8
-          ]
         }
       ]
     },
@@ -1834,27 +1773,6 @@
           "cell": [
             42,
             7
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            49,
-            7
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            40,
-            6
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            48,
-            8
           ]
         }
       ]

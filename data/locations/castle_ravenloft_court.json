@@ -1503,14 +1503,6 @@
             18
           ],
           "facing": "east"
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            26,
-            21
-          ],
-          "unseen": true
         }
       ],
       "surprise": "",
@@ -1605,7 +1597,7 @@
     {
       "id": "court_accountant_rug",
       "trigger": "dialogue",
-      "text": "The rug lifts off the floor like a sheet in the wind and comes for you, and from the ledger shelves something small and pale scuttles out on its fingers. The suits of armour by the desk turn to face you.",
+      "text": "The rug lifts off the floor like a sheet in the wind and comes for you, and from the ledger shelves something small and pale scuttles out on its fingers.",
       "monsters": [
         {
           "monster": "rug_of_smothering",
@@ -1634,34 +1626,6 @@
           "cell": [
             8,
             15
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            8,
-            19
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            6,
-            22
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            8,
-            21
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            2,
-            16
           ]
         }
       ],

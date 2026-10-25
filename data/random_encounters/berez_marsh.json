@@ -14,55 +14,13 @@
       "id": "insect_cloud",
       "weight": 3,
       "when": "day",
-      "text": "The reeds on both sides start to whine, and then the whine stands up and comes for you in a cloud, with scarecrows in it and pale lights over it.",
+      "text": "The reeds on both sides start to whine, and then the whine stands up and comes for you in a cloud.",
       "monsters": [
-        {
-          "monster": "scarecrow",
-          "cell": [
-            10,
-            9
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            20,
-            10
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            26,
-            9
-          ]
-        },
         {
           "monster": "scarecrow",
           "cell": [
             4,
             10
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            25,
-            5
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            5,
-            14
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            19,
-            14
           ]
         },
         {
@@ -73,13 +31,6 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
-          "cell": [
-            18,
-            17
-          ]
-        },
-        {
           "monster": "scarecrow",
           "cell": [
             28,
@@ -87,45 +38,31 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "swarm_of_insects",
           "cell": [
-            10,
-            2
+            18,
+            17
           ]
         },
         {
-          "monster": "banshee",
+          "monster": "swarm_of_insects",
           "cell": [
-            6,
-            13
+            1,
+            1
           ]
         },
         {
-          "monster": "banshee",
-          "cell": [
-            4,
-            13
-          ]
-        },
-        {
-          "monster": "banshee",
-          "cell": [
-            26,
-            5
-          ]
-        },
-        {
-          "monster": "banshee",
+          "monster": "swarm_of_insects",
           "cell": [
             26,
             4
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "swarm_of_insects",
           "cell": [
-            1,
-            1
+            20,
+            10
           ]
         }
       ]
@@ -133,64 +70,8 @@
     {
       "id": "scarecrow_walk",
       "weight": 3,
-      "text": "Scarecrows step off the poles along the track, one after another, as if somebody had called them in for supper. Pale lights come with them, and something wailing.",
+      "text": "Scarecrows step off the poles along the track, one after another, as if somebody had called them in for supper.",
       "monsters": [
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            25,
-            5
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            26,
-            4
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            5,
-            14
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            6,
-            13
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            19,
-            14
-          ]
-        },
-        {
-          "monster": "banshee",
-          "cell": [
-            12,
-            2
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            28,
-            12
-          ]
-        },
-        {
-          "monster": "banshee",
-          "cell": [
-            18,
-            17
-          ]
-        },
         {
           "monster": "will_o_wisp",
           "cell": [
@@ -199,31 +80,38 @@
           ]
         },
         {
-          "monster": "banshee",
+          "monster": "scarecrow",
           "cell": [
             4,
-            10
+            13
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "scarecrow",
           "cell": [
-            10,
+            28,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            12,
             2
           ]
         },
         {
-          "monster": "banshee",
+          "monster": "scarecrow",
           "cell": [
-            26,
-            5
+            18,
+            17
           ]
         },
         {
-          "monster": "banshee",
+          "monster": "scarecrow",
           "cell": [
-            4,
-            13
+            26,
+            4
           ]
         }
       ]
@@ -237,20 +125,6 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            10,
-            2
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            26,
-            5
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
             18,
             17
           ]
@@ -258,22 +132,8 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            4,
-            13
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
             28,
             12
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            26,
-            9
           ]
         },
         {
@@ -288,27 +148,6 @@
           "cell": [
             12,
             2
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            6,
-            13
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            5,
-            14
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            25,
-            5
           ]
         },
         {

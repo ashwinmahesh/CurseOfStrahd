@@ -1164,20 +1164,6 @@
       "text": "Shapes come up the road out of the dark on both sides, low and patient. Behind you the gate stays shut. On the wall, someone is counting them out loud.",
       "monsters": [
         {
-          "monster": "werewolf",
-          "cell": [
-            32,
-            22
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            42,
-            18
-          ]
-        },
-        {
           "monster": "dire_wolf",
           "cell": [
             42,
@@ -1189,13 +1175,6 @@
           "cell": [
             32,
             20
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            39,
-            22
           ]
         },
         {
@@ -1225,48 +1204,6 @@
             37,
             6
           ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            36,
-            18
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            37,
-            20
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            34,
-            18
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            35,
-            20
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            32,
-            18
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            36,
-            13
-          ]
         }
       ],
       "surprise": "",
@@ -1279,31 +1216,10 @@
       "text": "Shapes come up the road out of the dark on both sides, low and patient. Behind you the gate stays shut. On the wall, someone is counting them out loud.",
       "monsters": [
         {
-          "monster": "werewolf",
-          "cell": [
-            32,
-            22
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            42,
-            18
-          ]
-        },
-        {
           "monster": "dire_wolf",
           "cell": [
             42,
             21
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            39,
-            22
           ]
         },
         {
@@ -1323,50 +1239,8 @@
         {
           "monster": "wolf",
           "cell": [
-            37,
-            11
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            36,
-            18
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            33,
-            18
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
             36,
             21
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            34,
-            20
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            36,
-            13
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            32,
-            20
           ]
         }
       ],

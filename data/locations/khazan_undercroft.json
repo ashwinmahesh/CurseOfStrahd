@@ -714,44 +714,6 @@
             14
           ],
           "name": "A Visitor"
-        },
-        {
-          "monster": "ghost",
-          "cell": [
-            19,
-            8
-          ],
-          "name": "A Remembered Knight"
-        },
-        {
-          "monster": "ghost",
-          "cell": [
-            19,
-            9
-          ],
-          "name": "A Remembered Knight"
-        },
-        {
-          "monster": "ghost",
-          "cell": [
-            19,
-            10
-          ],
-          "name": "A Remembered Knight"
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            20,
-            8
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            20,
-            10
-          ]
         }
       ],
       "surprise": "",

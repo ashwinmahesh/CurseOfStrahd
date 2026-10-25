@@ -642,52 +642,18 @@
           "name": "Warden's skull"
         },
         {
-          "monster": "wraith",
+          "monster": "flameskull",
           "cell": [
             13,
             11
-          ],
-          "name": "Warden's skull"
+          ]
         },
         {
-          "monster": "wraith",
-          "cell": [
-            17,
-            11
-          ],
-          "name": "Warden's skull"
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            16,
-            1
-          ],
-          "name": "Warden's skull"
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            17,
-            3
-          ],
-          "name": "Warden's skull"
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            17,
-            2
-          ],
-          "name": "Warden's skull"
-        },
-        {
-          "monster": "wraith",
+          "monster": "flameskull",
           "cell": [
             17,
             1
-          ],
-          "name": "Warden's skull"
+          ]
         }
       ],
       "surprise": "",
