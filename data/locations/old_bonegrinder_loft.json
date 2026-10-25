@@ -450,30 +450,6 @@
           ],
           "name": "Offalia Wormwiggle",
           "hp": 195
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            7,
-            8
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            12,
-            10
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            6,
-            4
-          ],
-          "name": "Rats from the grain bins"
         }
       ],
       "surprise": "",
@@ -547,66 +523,6 @@
           ],
           "name": "Offalia Wormwiggle",
           "hp": 340
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            5,
-            8
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            13,
-            11
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            6,
-            4
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            8,
-            3
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            11,
-            4
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            10,
-            5
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            10,
-            7
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            11,
-            6
-          ],
-          "name": "Rats from the grain bins"
         }
       ],
       "surprise": "",
@@ -671,114 +587,6 @@
           ],
           "name": "Bella Sunbane",
           "hp": 110
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            5,
-            8
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            12,
-            10
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            6,
-            4
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            4,
-            11
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            12,
-            1
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            11,
-            3
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            11,
-            12
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            15,
-            2
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            9,
-            5
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            9,
-            7
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            11,
-            5
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            14,
-            9
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            2,
-            6
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            9,
-            3
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            10,
-            9
-          ]
         }
       ],
       "surprise": "",
@@ -858,48 +666,6 @@
             4
           ],
           "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            13,
-            1
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            11,
-            11
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            11,
-            6
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            4,
-            1
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            9,
-            7
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            15,
-            5
-          ]
         }
       ],
       "surprise": "",
@@ -992,62 +758,6 @@
           ],
           "name": "Bella Sunbane",
           "hp": 300
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            10,
-            5
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            11,
-            11
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            15,
-            8
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            4,
-            1
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            13,
-            11
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            13,
-            9
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            8,
-            6
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            12,
-            1
-          ]
         }
       ],
       "surprise": "",

@@ -425,7 +425,7 @@
       "final_battle": "castle_ravenloft_sergeis_tomb",
       "lair": true,
       "surprise": "",
-      "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns. Three of his spawn wait among the pillars, and wolves pad in out of the dark.",
+      "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -438,8 +438,8 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            3,
-            7
+            2,
+            9
           ]
         },
         {
@@ -452,8 +452,8 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            3,
-            4
+            2,
+            2
           ]
         },
         {
@@ -462,69 +462,6 @@
             9,
             4
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            5,
-            5
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            6,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            6,
-            6
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            7,
-            5
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            2,
-            2
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            2,
-            10
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            7,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            10,
-            10
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -535,7 +472,7 @@
       "final_battle": "castle_ravenloft_sergeis_tomb",
       "lair": true,
       "surprise": "",
-      "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns. Three of his spawn wait among the pillars, and wolves pad in out of the dark.",
+      "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -548,8 +485,8 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            3,
-            7
+            2,
+            9
           ]
         },
         {
@@ -562,8 +499,8 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            3,
-            4
+            2,
+            2
           ]
         },
         {
@@ -571,37 +508,6 @@
           "cell": [
             9,
             4
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            2,
-            2
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            6,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            2,
-            9
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            7,
-            5
           ]
         }
       ]
@@ -613,7 +519,7 @@
       "final_battle": "castle_ravenloft_tomb_of_barov_and_ravenovia",
       "lair": true,
       "surprise": "",
-      "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him. Two of his spawn come down out of the dark behind the tombs.",
+      "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -643,70 +549,6 @@
             16,
             21
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            9,
-            23
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            16,
-            22
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            16,
-            24
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            17,
-            23
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            10,
-            20
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            15,
-            24
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            17,
-            22
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            17,
-            24
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -717,7 +559,7 @@
       "final_battle": "castle_ravenloft_tomb_of_barov_and_ravenovia",
       "lair": true,
       "surprise": "",
-      "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him. Two of his spawn come down out of the dark behind the tombs.",
+      "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -747,22 +589,6 @@
             16,
             21
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            15,
-            23
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            16,
-            22
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     }

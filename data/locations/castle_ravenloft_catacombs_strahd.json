@@ -274,27 +274,6 @@
             16,
             12
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            10,
-            11
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            11,
-            10
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            11,
-            12
-          ]
         }
       ]
     },
@@ -383,7 +362,7 @@
       "lair": true,
       "surprise": "",
       "flag": "strahd_in_coffin",
-      "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy. In the coffin beside his, one of his spawn sits up.",
+      "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -406,62 +385,6 @@
             16,
             9
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            10,
-            13
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            11,
-            12
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            11,
-            17
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            12,
-            13
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            10,
-            12
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            10,
-            14
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            12,
-            12
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -483,20 +406,6 @@
         {
           "monster": "revenant",
           "cell": [
-            9,
-            8
-          ]
-        },
-        {
-          "monster": "revenant",
-          "cell": [
-            13,
-            8
-          ]
-        },
-        {
-          "monster": "revenant",
-          "cell": [
             7,
             8
           ]
@@ -506,13 +415,6 @@
           "cell": [
             15,
             8
-          ]
-        },
-        {
-          "monster": "revenant",
-          "cell": [
-            10,
-            9
           ]
         }
       ]

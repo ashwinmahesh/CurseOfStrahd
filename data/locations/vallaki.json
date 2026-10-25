@@ -2195,14 +2195,6 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            22,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
           "monster": "vallaki_guard",
           "cell": [
             22,
@@ -2763,14 +2755,6 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            27,
-            12
-          ],
-          "name": "Izek's sergeant"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
             26,
             11
           ],
@@ -2780,30 +2764,6 @@
           "monster": "warrior_veteran",
           "cell": [
             30,
-            11
-          ],
-          "name": "Izek's sergeant"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            25,
-            13
-          ],
-          "name": "Izek's sergeant"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            21,
-            12
-          ],
-          "name": "Izek's sergeant"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            22,
             11
           ],
           "name": "Izek's sergeant"

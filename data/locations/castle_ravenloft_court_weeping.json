@@ -1058,36 +1058,6 @@
           ],
           "name": "Volenta Popofsky",
           "hp": 150
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            6,
-            13
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            11,
-            13
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            2,
-            14
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            13,
-            13
-          ],
-          "name": "One of Strahd's spawn"
         }
       ],
       "surprise": "",
@@ -1124,20 +1094,6 @@
           ],
           "name": "Anastrasya Karelova",
           "hp": 210
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            6,
-            13
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            11,
-            13
-          ]
         }
       ],
       "surprise": "",
@@ -1156,27 +1112,6 @@
           ],
           "name": "Rahadin",
           "hp": 615
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            26,
-            17
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            34,
-            17
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            32,
-            15
-          ]
         }
       ],
       "surprise": "",
@@ -1196,27 +1131,6 @@
           ],
           "name": "Rahadin",
           "hp": 580
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            26,
-            17
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            34,
-            17
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            32,
-            15
-          ]
         }
       ],
       "surprise": "",

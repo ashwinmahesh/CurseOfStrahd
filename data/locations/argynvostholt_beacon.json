@@ -381,14 +381,6 @@
           "name": "Dead Knight"
         },
         {
-          "monster": "revenant",
-          "cell": [
-            4,
-            13
-          ],
-          "name": "Dead Knight"
-        },
-        {
           "monster": "phantom_warrior",
           "cell": [
             1,
@@ -403,13 +395,6 @@
             13
           ],
           "name": "Dead Knight"
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            2,
-            15
-          ]
         }
       ]
     },

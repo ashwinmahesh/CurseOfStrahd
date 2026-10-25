@@ -260,41 +260,6 @@
           ],
           "name": "Bella Sunbane",
           "hp": 610
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            15,
-            13
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            22,
-            6
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            21,
-            8
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            28,
-            11
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            20,
-            6
-          ]
         }
       ],
       "surprise": "",
@@ -332,48 +297,6 @@
           ],
           "name": "Offalia Wormwiggle",
           "hp": 300
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            13,
-            13
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            25,
-            2
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            23,
-            10
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            22,
-            8
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            19,
-            7
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            19,
-            9
-          ]
         }
       ],
       "surprise": "",

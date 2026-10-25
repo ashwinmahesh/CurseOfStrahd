@@ -460,14 +460,6 @@
         {
           "monster": "berserker",
           "cell": [
-            7,
-            10
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
             18,
             10
           ],
@@ -498,64 +490,16 @@
           "monster": "berserker",
           "cell": [
             5,
-            8
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            20,
-            8
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            5,
             12
           ],
           "name": "Belview Brute"
         },
         {
-          "monster": "flesh_golem",
+          "monster": "mongrelfolk",
           "cell": [
-            15,
-            3
+            5,
+            8
           ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            16,
-            2
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            16,
-            4
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            17,
-            3
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            15,
-            2
-          ],
-          "name": "Belview Brute"
         }
       ],
       "surprise": "",
@@ -595,66 +539,24 @@
           ]
         },
         {
-          "monster": "berserker",
-          "cell": [
-            23,
-            6
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            2,
-            14
-          ]
-        },
-        {
-          "monster": "berserker",
+          "monster": "mongrelfolk",
           "cell": [
             23,
             14
           ]
         },
         {
-          "monster": "berserker",
+          "monster": "mongrelfolk",
           "cell": [
             15,
             11
           ]
         },
         {
-          "monster": "flesh_golem",
+          "monster": "mongrelfolk",
           "cell": [
-            9,
-            3
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            12,
-            7
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            19,
-            8
-          ]
-        },
-        {
-          "monster": "flesh_golem",
-          "cell": [
-            19,
-            12
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            8,
-            14
+            23,
+            6
           ]
         }
       ],
@@ -689,13 +591,6 @@
         {
           "monster": "mongrelfolk",
           "cell": [
-            23,
-            6
-          ]
-        },
-        {
-          "monster": "mongrelfolk",
-          "cell": [
             2,
             14
           ]
@@ -705,41 +600,6 @@
           "cell": [
             14,
             11
-          ]
-        },
-        {
-          "monster": "flesh_golem",
-          "cell": [
-            22,
-            14
-          ]
-        },
-        {
-          "monster": "mongrelfolk",
-          "cell": [
-            9,
-            4
-          ]
-        },
-        {
-          "monster": "flesh_golem",
-          "cell": [
-            8,
-            10
-          ]
-        },
-        {
-          "monster": "mongrelfolk",
-          "cell": [
-            13,
-            7
-          ]
-        },
-        {
-          "monster": "flesh_golem",
-          "cell": [
-            18,
-            8
           ]
         }
       ],
@@ -774,44 +634,6 @@
             17,
             4
           ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            8,
-            6
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "flesh_golem",
-          "cell": [
-            11,
-            3
-          ]
-        },
-        {
-          "monster": "flesh_golem",
-          "cell": [
-            12,
-            2
-          ]
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            13,
-            3
-          ],
-          "name": "Belview Brute"
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            11,
-            2
-          ],
-          "name": "Belview Brute"
         }
       ],
       "surprise": "",

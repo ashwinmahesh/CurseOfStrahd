@@ -832,32 +832,8 @@
         {
           "monster": "revenant",
           "cell": [
-            21,
-            3
-          ],
-          "name": "Vladimir's second"
-        },
-        {
-          "monster": "revenant",
-          "cell": [
-            20,
-            4
-          ],
-          "name": "Vladimir's second"
-        },
-        {
-          "monster": "revenant",
-          "cell": [
             23,
             8
-          ],
-          "name": "Vladimir's second"
-        },
-        {
-          "monster": "revenant",
-          "cell": [
-            17,
-            3
           ],
           "name": "Vladimir's second"
         }

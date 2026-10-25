@@ -1523,7 +1523,7 @@
       "final_battle": "castle_ravenloft_catacombs",
       "lair": true,
       "surprise": "",
-      "text": "The black horse lifts its head from the manger, and the man beside it turns around. Two pale shapes step out of the empty stalls behind him.",
+      "text": "The black horse lifts its head from the manger, and the man beside it turns around.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -1554,46 +1554,6 @@
             34,
             21
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            28,
-            15
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            29,
-            14
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            29,
-            16
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            30,
-            15
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            28,
-            14
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -1604,7 +1564,7 @@
       "final_battle": "castle_ravenloft_catacombs",
       "lair": true,
       "surprise": "",
-      "text": "The black horse lifts its head from the manger, and the man beside it turns around. Two pale shapes step out of the empty stalls behind him.",
+      "text": "The black horse lifts its head from the manger, and the man beside it turns around.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -1635,22 +1595,6 @@
             30,
             17
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            28,
-            15
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            29,
-            14
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },

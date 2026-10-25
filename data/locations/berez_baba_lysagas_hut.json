@@ -488,13 +488,6 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            9,
-            6
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
             13,
             8
           ]
@@ -502,126 +495,7 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            11,
-            2
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            12,
-            1
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            12,
-            3
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            13,
-            2
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
             6,
-            1
-          ]
-        },
-        {
-          "monster": "swarm_of_insects",
-          "cell": [
-            13,
-            1
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            13,
-            3
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            4,
-            2
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            12,
-            4
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            14,
-            2
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            10,
-            1
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            11,
-            4
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            13,
-            4
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            14,
-            1
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            14,
-            3
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            4,
-            3
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            14,
-            4
-          ]
-        },
-        {
-          "monster": "scarecrow",
-          "cell": [
-            5,
             1
           ]
         }

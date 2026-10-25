@@ -417,41 +417,6 @@
           ],
           "name": "Offalia Wormwiggle",
           "hp": 285
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            3,
-            10
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            1,
-            8
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            8,
-            3
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            3,
-            12
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            5,
-            8
-          ]
         }
       ],
       "surprise": "",
@@ -520,48 +485,6 @@
           ],
           "name": "Offalia Wormwiggle",
           "hp": 200
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            3,
-            10
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            1,
-            8
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            8,
-            3
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            3,
-            12
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            5,
-            8
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            17,
-            7
-          ]
         }
       ],
       "surprise": "",

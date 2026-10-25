@@ -870,16 +870,8 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            8,
-            10
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            10,
-            9
+            11,
+            11
           ],
           "name": "Sergeant of the watch"
         },
@@ -890,14 +882,6 @@
             12
           ],
           "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "vallaki_guard",
-          "cell": [
-            11,
-            11
-          ],
-          "name": "Town guard"
         }
       ],
       "surprise": "",

@@ -197,7 +197,7 @@
       "when": "item:sunsword",
       "final_battle": "castle_ravenloft_overlook",
       "lair": true,
-      "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter. One of his spawn drops from the tower onto the wall walk behind you.",
+      "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter.",
       "surprise": "",
       "monsters": [
         {
@@ -229,38 +229,6 @@
             12,
             5
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            19,
-            5
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            20,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            20,
-            6
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            21,
-            5
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -269,7 +237,7 @@
       "trigger": "enter_area:crg_overlook",
       "final_battle": "castle_ravenloft_overlook",
       "lair": true,
-      "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter. One of his spawn drops from the tower onto the wall walk behind you.",
+      "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter.",
       "surprise": "",
       "monsters": [
         {
@@ -301,14 +269,6 @@
             17,
             5
           ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            19,
-            5
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     }

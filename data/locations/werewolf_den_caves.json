@@ -908,13 +908,6 @@
         {
           "monster": "werewolf",
           "cell": [
-            16,
-            18
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
             23,
             23
           ]
@@ -924,13 +917,6 @@
           "cell": [
             24,
             18
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            15,
-            25
           ]
         },
         {
@@ -948,38 +934,10 @@
           ]
         },
         {
-          "monster": "wolf",
-          "cell": [
-            20,
-            15
-          ]
-        },
-        {
           "monster": "werewolf",
           "cell": [
             18,
             13
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            21,
-            12
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            22,
-            25
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            26,
-            14
           ]
         }
       ],
@@ -1033,20 +991,6 @@
         {
           "monster": "werewolf",
           "cell": [
-            26,
-            16
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            15,
-            25
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
             18,
             13
           ]
@@ -1056,20 +1000,6 @@
           "cell": [
             21,
             12
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            22,
-            25
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            13,
-            17
           ]
         },
         {
@@ -1303,13 +1233,6 @@
           "cell": [
             15,
             25
-          ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            23,
-            24
           ]
         },
         {

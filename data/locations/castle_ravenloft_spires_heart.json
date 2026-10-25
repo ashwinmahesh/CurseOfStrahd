@@ -176,7 +176,7 @@
       "when": "item:sunsword",
       "final_battle": "castle_ravenloft_heart_of_sorrow",
       "lair": true,
-      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below. Two of his spawn and an empty suit of armour step out of the shadows by the door.",
+      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below.",
       "surprise": "",
       "flag": "spires_final_battle_fought",
       "monsters": [
@@ -196,70 +196,6 @@
             8
           ],
           "name": "Heart's Warden"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            7,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            8,
-            3
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            8,
-            5
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            9,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            7,
-            3
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            3,
-            8
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            9,
-            3
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            9,
-            5
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -269,7 +205,7 @@
       "when": "",
       "final_battle": "castle_ravenloft_heart_of_sorrow",
       "lair": true,
-      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below. Two of his spawn and an empty suit of armour step out of the shadows by the door.",
+      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below.",
       "surprise": "",
       "flag": "spires_final_battle_fought",
       "monsters": [
@@ -289,22 +225,6 @@
             9
           ],
           "name": "Heart's Warden"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            7,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            8,
-            3
-          ],
-          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -405,7 +325,7 @@
       "id": "heart_strahd_test",
       "trigger": "flag:heart_of_sorrow_shattered",
       "when": "not flag.strahd_heart_tested and not (quest.strahds_lair >= confronted) and not final_room:castle_ravenloft_heart_of_sorrow",
-      "text": "Mist pours up out of the stair and stands up in the shape of a tall man in black. He looks at the shards for a long moment before he looks at you, and then he is simply among you. On the stair behind him, two empty suits of armour turn their helms toward you.",
+      "text": "Mist pours up out of the stair and stands up in the shape of a tall man in black. He looks at the shards for a long moment before he looks at you, and then he is simply among you.",
       "surprise": "",
       "flag": "strahd_heart_tested",
       "withdraw": {
@@ -424,55 +344,6 @@
           ],
           "name": "Strahd von Zarovich",
           "hp": 455
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            7,
-            3
-          ]
-        },
-        {
-          "monster": "strahds_animated_armor",
-          "cell": [
-            8,
-            2
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            8,
-            4
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            15,
-            3
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            7,
-            2
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            3,
-            7
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            9,
-            2
-          ]
         }
       ]
     }

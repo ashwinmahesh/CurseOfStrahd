@@ -761,27 +761,6 @@
             12
           ],
           "name": "Facade gargoyle"
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            17,
-            10
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            18,
-            8
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            19,
-            10
-          ]
         }
       ],
       "surprise": "",
@@ -849,48 +828,6 @@
             "npc": "amber_sentinel"
           },
           "hp": 375
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            17,
-            10
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            18,
-            8
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            24,
-            10
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            17,
-            11
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            19,
-            11
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            16,
-            10
-          ]
         }
       ],
       "surprise": "",

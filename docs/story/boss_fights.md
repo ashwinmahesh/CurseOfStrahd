@@ -1,5 +1,7 @@
 # Boss fights at 3 wins in 8
 
+**Line-ups since 2026-10-25** (owner: "for pretty much all battles in the book, we can remove extra enemies we added and just leave them how they are in the book", then "Yes for boss fights"): in the book's boss fights every boss and every story foe stays as it is now (stat block, Hit Points, the bosses' 25% harder hits), and the other foes go back to the number and kinds the fight was first entered with from the module (git history's first version; Vallaki's guards keep their own stat block, which came before the scale-up). The extra spawn, armour, wolves, nightmares and blights the line-ups below list are gone from the data, as are the intro sentences that brought them in; the win counts are the ones measured before. The side quests' bosses keep their line-ups.
+
 Owner (2026-10-14): every boss fight is won 3 times in 8 on Balanced, seeds 1-8, by the test party playing at full ability. The party is
 the four pregens (Godrick the paladin, Liriel the Light cleric, Thistle the ranger, Ratatouille the Diviner wizard) on
 tests/support/party_autopilot.gd with `PartyAutopilot.full`: on top of sharp play (Divine Smite on a sturdy foe, Spirit Guardians once foes
