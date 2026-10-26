@@ -53,7 +53,12 @@ for its `duration`); a Spell Scroll an implicit "Read"; an Ioun Stone (`worn: "i
 ## Commands and hooks
 
 - `encounter.items.use(c, item_id, power_id, targets, point, direction, level, opts)` uses a power in a fight; the
-  hotbar's Items tab lists `items.list(c)` (kind `item`, or `item_spell` for powers that target like spells).
+  hotbar lists `items.list(c)` (kind `item`, or `item_spell` for powers that target like spells). The spells an item the hero
+  is working gives (`CombatItems.on_spells_tab`: `gives_spell` and `working`, the same test as the character sheet, and a spell
+  with combat rules) are on the **Spells** tab, one slot each by the spell's name under its level, what it has left
+  and the item on the second line ("7/10 · Staff of Fire", a daily use "1/1 · ...", "at will · ...") and what a casting costs in the tooltip;
+  a hero with none of their own gets the tab for them (`ActionCatalog.tabs_for`). Everything else, and an item's spells
+  while it is not worn, held or attuned (greyed, with the reason), stay on the Items tab.
 - `FieldItems.options(party, ch, item_id, dice)` / `FieldItems.use(st, ch, item_id, power_id, target, dice, opts)` use
   one outside a fight (the inventory's item card).
 - `ItemSpells.entries(st, ch, dice)` / `ItemSpells.cast(st, ch, item_id, power_id, targets, level, choice, dice)` (story/item_spells.gd)

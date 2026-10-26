@@ -1287,8 +1287,10 @@ func _refresh_hotbar() -> void:
 
 ## The line above the Spell tab's slots when `armor` (the caster's own, worn without training) is why none can be cast.
 func _untrained_notice(c: Combatant, armor: Dictionary) -> Label:
-	var note := _label("%s has no training with %s armor, so no spells in %s. Take it off in the pack." % [
-		c.name().get_slice(" ", 0), str((armor["armor"] as Dictionary).get("kind", "")), str(armor.get("name", "it"))], 13, "flame")
+	# An item's spells are the item's, not the hero's: they stay on the tab and still work.
+	var which := "none of their own spells" if catalog.e.items.has_item_spells(c) else "no spells"
+	var note := _label("%s has no training with %s armor, so %s in %s. Take it off in the pack." % [
+		c.name().get_slice(" ", 0), str((armor["armor"] as Dictionary).get("kind", "")), which, str(armor.get("name", "it"))], 13, "flame")
 	note.name = "UntrainedArmorNotice"
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
