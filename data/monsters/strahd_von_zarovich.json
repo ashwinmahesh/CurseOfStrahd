@@ -315,6 +315,22 @@
       "text": "Strahd casts spells as a 9th-level wizard, using Intelligence (spell save DC 18, +10 to hit with spell attacks). Cantrips (at will): Mage Hand, Prestidigitation, Ray of Frost. 1st level (4 slots): Comprehend Languages, Fog Cloud, Sleep. 2nd level (3 slots): Gust of Wind, Mirror Image. 3rd level (3 slots): Animate Dead, Fireball, Nondetection. 4th level (3 slots): Blight, Greater Invisibility, Polymorph. 5th level (1 slot): Animate Objects, Scrying."
     }
   ],
+  "reactions": [
+    {
+      "id": "counterspell",
+      "name": "Counterspell",
+      "kind": "spellcasting",
+      "summary": "Three times a day: casts Counterspell as a Reaction.",
+      "text": "Strahd casts Counterspell in response to a spell he can see being cast (three times a day). He has no Shield.",
+      "uses": {
+        "count": 3,
+        "per": "day"
+      },
+      "cast": [
+        "counterspell"
+      ]
+    }
+  ],
   "spellcasting": {
     "ability": "int",
     "dc": 18,

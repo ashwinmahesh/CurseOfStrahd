@@ -213,6 +213,7 @@ func test_polymorph_and_a_vampires_bat_use_the_same_effect() -> void:
 	var wizard := TestCombat.high_caster(e, ["polymorph"], Vector2i(3, 6))
 	var scout := TestCombat.foe(e, "scout", Vector2i(8, 6))
 	var strahd := TestCombat.foe(e, "strahd_von_zarovich", Vector2i(12, 3))
+	strahd.reaction_available = false # else he answers the Polymorph with Counterspell (owner, 2026-10-26)
 	await _show(wizard)
 	TestCombat.next_d20(e, 1)
 	assert_true(e.spells.cast(wizard, "polymorph", 4, [scout], Vector2.INF, Vector2.ZERO, {"choice": "rat"}).ok)

@@ -387,8 +387,8 @@ func test_a_teleporting_option_leaves_a_burst_behind() -> void:
 
 
 ## Boss redesign plan, group 2: the casters among the bosses answer with Counterspell or Shield (the mage's Protective
-## Magic): Baba Lysaga three times a day, the Guide and the Count's Likeness twice, Exethanter at will. (Not Strahd: with
-## his +14 and one-use Bites, Shield turned his test of strength on the road into a wipe.)
+## Magic): Baba Lysaga three times a day, the Guide and the Count's Likeness twice, Exethanter at will. Strahd counters
+## three times a day but has no Shield (with his +14 and one-use Bites, Shield made his road test a wipe).
 func test_the_boss_casters_can_counter_and_shield() -> void:
 	var uses := {"baba_lysaga": 3, "amber_guide": 2, "the_counts_likeness": 2, "exethanter": 99}
 	for id: String in uses:
@@ -402,6 +402,11 @@ func test_the_boss_casters_can_counter_and_shield() -> void:
 			assert_eq(e.monster_actions.reaction_spell_source(boss, "counterspell"), "", "%s: %d a day, then none" % [id, uses[id]])
 		else:
 			assert_eq(e.monster_actions.reaction_spell_source(boss, "counterspell"), "protective_magic", "Exethanter's are at will")
+	# Owner, 2026-10-26: "Give counterspell to Strahd (not shield)".
+	var e2 := _field()
+	var strahd := TestCombat.foe(e2, "strahd_von_zarovich", Vector2i(3, 3))
+	assert_eq(e2.monster_actions.reaction_spell_source(strahd, "counterspell"), "counterspell", "Strahd counters, three times a day")
+	assert_eq(e2.monster_actions.reaction_spell_source(strahd, "shield"), "", "but has no Shield")
 
 
 ## Boss redesign plan, group 3: the book's lieutenants act between the heroes' turns too (a strike or a move, two uses a

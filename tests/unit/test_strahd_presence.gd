@@ -351,8 +351,8 @@ func test_the_test_of_strength_ends_with_his_withdrawal_and_flag() -> void:
 	var rows: Array[String] = []
 	for z in 14:
 		rows.append("................")
-	# Seed 1 (was 4): since legendary actions come only after a hero's turn (owner, 2026-10-24) seed 4 is one of the three in
-	# eight the party loses before he goes; five in eight still end in his withdrawal, as six did before.
+	# This checks how he leaves, not whether a level 7 party can beat him: since his Counterspell (owner, 2026-10-26) the
+	# test party loses all eight seeds at his full Hit Points (three won before), so he starts this one at 40.
 	var e := TestCombat.encounter(rows, 1)
 	var taken: Array[Vector2i] = []
 	var i := 0
@@ -371,6 +371,7 @@ func test_the_test_of_strength_ends_with_his_withdrawal_and_flag() -> void:
 	assert_true(strahd != null, "Strahd is in his fight")
 	if strahd == null:
 		return
+	strahd.creature.hp = 40
 	e.legendary.set_withdraw(placed["withdraw"])
 	var res := PartyAutopilot.new(e).run(12)
 	assert_eq(str(e.legendary.departed.get(strahd.id, "")), "withdraw", "he leaves the fight (%s)" % res)
