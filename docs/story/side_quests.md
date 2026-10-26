@@ -1358,6 +1358,13 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
   legendary actions a round from six one-use options (Deathly Teleport, Disrupt Life among them), and his undercroft on
   initiative 20 (every name he knows, whispered; the cold of the lake overhead). His Visitors are wraiths. Below a
   quarter of his Hit Points he may Plane Shift out (the AI's escape), which the game counts as the fight won.
+- **Why he must be fought** (2026-10-26, lines drafted by Gemini, docs/plans/gemini_khazan/): asked what happens to the
+  names he writes (`khazan_ink_heard`), he explains the good ink: a name written a second time, in red, walks down his
+  stair in its sleep and is eaten, and what's left stays as a Visitor or a name crossed out in the hall. Van Richten's
+  second entry is half written in red; Ezmerelda, upstairs, is next, then the party. Asked to cross them out
+  (`khazan_bargain_heard`), he offers to spare the party for three new visitors each, refuse or back away. A party that
+  didn't say his name at the door goes straight into the red. He calls his two Visitors down by name (Marta, who
+  brought the post, and Sorin, a hunter) as the fight starts.
 - **His study** is 15 squares wide and 14 deep (made deeper on 2026-10-26, it was 6), his chair, desk and shelves at the
   far end from the door, the circle in the middle and the reading tables near the door.
 - **A phased fight.** While the name stands (`khazan_named`): two Visitors, his lair; he can't be destroyed, and below 30 HP he comes apart into dust that goes up through the ceiling toward the door (`withdraw`,

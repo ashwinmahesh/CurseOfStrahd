@@ -51,6 +51,7 @@ endif
 set khazan_book_read
 Narrator: A great book on a lectern, as thick as a doorstep, written in one patient hand. Names, nothing but names, one to a line, thousands of them, in every alphabet the valley has had.
 Narrator: The last pages are fresh. EZMERELDA D'AVENIR, in the same hand. RUDOLPH VAN RICHTEN, twice. And under them, the ink still wet: {name}.
+Narrator: The second VAN RICHTEN is in red, and it stops halfway through the last letter, as if the pen were waiting for him to come home.
 interject tag:blunt: It's writing us down.
 Narrator: On the first page, in larger letters, over and over, as if someone were practising: KHAZAN. KHAZAN. KHAZAN.
 -> END
@@ -75,7 +76,7 @@ Khazan: Visitors. And you've come down the stair, not up it. That hasn't happene
 if flag.khazan_said_at_door
 Khazan: I know your names, of course. You said mine at my door. That's the bargain the door makes: a name for a name. I've been writing you down.
 else
-Khazan: I don't know your names, I'm afraid. You never said mine at my door, and the door's bargain is a name for a name. It's a little rude, coming in without it. Still, you're here now. I'll write you down anyway.
+Khazan: I don't know your names, I'm afraid. You never said mine at my door, and the door's bargain is a name for a name. It's a little rude, coming in without it. Still, you're here now. I'll skip the black ink and write you down in red.
 endif
 -> khazan_menu
 
@@ -83,6 +84,8 @@ endif
 * Who are you? -> who
 * [if flag.khazan_book_read and not flag.khazan_jar_known] You keep yourself alive in that book. -> jar_book
 * [if flag.khazan_heard and not flag.khazan_jar_known and not flag.khazan_jar_tried] [Arcana DC 16] (Work out what's holding him in the world.) -> jar_worked | jar_missed
+* [if (flag.khazan_heard or flag.khazan_book_read) and not flag.khazan_ink_heard] What happens to the names you write down? -> ink
+* [if flag.khazan_ink_heard and not flag.khazan_bargain_heard] Cross out our names, and theirs. -> bargain
 * [if flag.khazan_jar_known] We're going to break the name over your door. -> threaten
 * (Leave him to his books.) -> END
 * (Draw your weapons.) -> fight
@@ -95,10 +98,29 @@ else
 Khazan: Khazan. It's cut over the door, though you didn't trouble yourselves to say it. Archmage to the old kings of this valley, when it had kings. I built the tower on the tarn. Then the count's family came, and I came downstairs, and I've been reading ever since.
 endif
 Khazan: I'm not his. I'd like you to understand that. I was here first. He has never once said my name, which I find very rude.
+Khazan: Being remembered keeps me going, mostly. But every few years one does fancy a proper meal.
 if name:ratatoille
 interject name:ratatoille: I said I'd read of him briefly. I'd like it noted that I was being generous about how briefly.
 endif
 -> khazan_menu
+
+~ ink
+set khazan_ink_heard
+Khazan: (He taps a stoppered red bottle.) The black ink is only for taking notes. When I'm hungry, I write a name a second time, in the good ink.
+Khazan: Once the red is dry, its owner comes down my stairs in their sleep. They never wake up, and they never go back up.
+Khazan: I eat what they were, which is very filling. What's left stays down here to keep me company, and I cross them out in the hall.
+Khazan: Rudolph is half written already: he keeps leaving the valley before the ink dries. So I think I'll have young Ezmerelda instead. She's right upstairs. And then you.
+interject tag:blunt: He's not a librarian. He's a spider with a ledger.
+interject tag:kind: The things in that hall were people who knocked on your door. You ate them.
+-> khazan_menu
+
+~ bargain
+set khazan_bargain_heard
+Khazan: Oh, I never cross out a name I haven't eaten. It would be a terrible waste of ink.
+Khazan: Still, we could be sensible. Send other travellers to my door to say my name: three new visitors for each of you.
+Khazan: Do that, and your names stay in black, and you walk out. Refuse, and I'll fetch the red bottle now.
+* (Refuse.) -> fight
+* (Back away up the stairs.) -> END
 
 ~ jar_book
 set khazan_jar_known
@@ -125,6 +147,8 @@ Khazan: (The lights in his eyes go very small.) No. No, I don't think you are. I
 if flag.khazan_name_broken
 combat khazan_unmade
 endif
+Khazan: Marta, dear, you used to bring the post. Do come and meet our guests.
+Khazan: And Sorin. You were a hunter before you came down in your sleep. See that they don't reach the door.
 combat khazan_named
 
 # --- His chair (prop khazan_chair), and what's on it after he's driven back into his name ---

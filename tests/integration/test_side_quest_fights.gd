@@ -397,7 +397,7 @@ func test_sarkhaza_rises_on_her_hoard() -> void:
 ## Khazan stands up out of his chair on its step with the Visitors round him, his undercroft acting for him.
 func test_khazan_stands_up_out_of_his_chair() -> void:
 	var v := await _boot("khazan_undercroft", 12, 10, ["khazan_stair_open", "khazan_withdrawn"])   # out of his chair, so it's free
-	var e := await _fight(v, "khazan_named", ["Khazan", "A Visitor"])
+	var e := await _fight(v, "khazan_named", ["Khazan", "Marta", "Sorin"])
 	assert_true(e.lair, "his undercroft acts on initiative 20")
 	await _end(v)
 

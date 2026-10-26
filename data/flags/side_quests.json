@@ -1017,6 +1017,16 @@
       "summary": "The party knows Khazan's phylactery is his name over the tower door (The Name Over the Door)."
     },
     {
+      "id": "khazan_ink_heard",
+      "type": "bool",
+      "summary": "Khazan told the party what his red ink does: a name written twice comes down his stairs and is eaten (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_bargain_heard",
+      "type": "bool",
+      "summary": "Khazan offered to spare the party for three new visitors each, and they refused or backed away (The Name Over the Door)."
+    },
+    {
       "id": "khazan_jar_tried",
       "type": "bool",
       "summary": "The party tried to work out what holds Khazan in the world, and couldn't (The Name Over the Door)."
