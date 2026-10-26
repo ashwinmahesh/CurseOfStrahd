@@ -166,3 +166,23 @@ func test_the_pack_says_a_worn_item_is_not_attuned() -> void:
 		root.call("close_screen")
 		await _frames(2)
 	assert_true(ch.idle_for_attunement(ch.entry_of("belt_of_dwarvenkind")) == false, "unlimited: not idle")
+
+
+## The Unlimited option is the player's, kept in settings.cfg beside the volumes and never in a save (resume package,
+## UI item 4): after a restart it is still on, the rules know it as soon as a save is loaded, and the save holds no
+## trace of it, so every save follows the setting.
+func test_unlimited_attunement_survives_a_restart_and_a_load() -> void:
+	GameSettings.set_unlimited_attunement(true)
+	# A restart: the settings file is read afresh, and the rules library starts from its default.
+	GameSettings.path = GameSettings.path
+	MagicItems.attunement_off = false
+	DirAccess.make_dir_recursive_absolute(SaveSystem.save_dir)
+	var text := FileAccess.get_file_as_string(GoldenSaves.DIR + "v2_amber_temple.json")
+	var out := FileAccess.open(SaveSystem.slot_path("attune"), FileAccess.WRITE)
+	out.store_string(text)
+	out.close()
+	assert_eq(SaveSystem.load_slot("attune"), OK)
+	SaveSystem.delete_slot("attune")
+	assert_true(MagicItems.attunement_off, "a loaded game follows the setting from the start")
+	assert_true(GameSettings.unlimited_attunement(), "the option is still on after the restart")
+	assert_false(text.contains("unlimited_attunement"), "a save holds no attunement setting of its own")

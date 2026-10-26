@@ -201,6 +201,9 @@ func load_from(dir: String, slot: String) -> Error:
 	if int(dict.get("version", 0)) > GameState.SAVE_VERSION:
 		return ERR_FILE_UNRECOGNIZED
 	dict = upgrade(dict)
+	# The Unlimited attunement option is the player's (settings.cfg, never the save): the rules library follows it
+	# before the party is built, even when nothing has read the settings yet this run.
+	MagicItems.attunement_off = GameSettings.unlimited_attunement()
 	GameState.from_dict(dict)
 	# A fight's round start is a retry, not a return: no recap.
 	_recap_due = slot != ROUND_START and minutes_since(str(dict.get("saved_at", ""))) >= RECAP_AFTER
