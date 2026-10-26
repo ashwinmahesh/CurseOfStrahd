@@ -156,7 +156,7 @@
       {
         "id": "fist",
         "name": "Fist",
-        "cost": 2,
+        "cost": 1,
         "action": "ash_fist",
         "summary": "Makes one Ash Fist."
       },

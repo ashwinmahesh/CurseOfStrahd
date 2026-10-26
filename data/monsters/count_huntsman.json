@@ -192,7 +192,7 @@
       {
         "id": "loose",
         "name": "Loose",
-        "cost": 2,
+        "cost": 1,
         "action": "black_arrow",
         "summary": "Makes one Black Arrow attack."
       },

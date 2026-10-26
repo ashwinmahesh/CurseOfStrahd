@@ -298,9 +298,10 @@
       {
         "id": "glare_hard",
         "name": "Hard Glare",
-        "cost": 2,
+        "cost": 1,
         "action": "enervation_ray",
-        "summary": "Uses its Enervation Ray."
+        "summary": "Uses its Enervation Ray.",
+        "once": true
       },
       {
         "id": "drift",

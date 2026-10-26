@@ -364,8 +364,8 @@
       },
       {
         "id": "bite",
-        "name": "Bite (Costs 2 Actions)",
-        "cost": 2,
+        "name": "Bite",
+        "cost": 1,
         "action": "bite",
         "summary": "Makes one Bite attack."
       }

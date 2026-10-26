@@ -822,7 +822,7 @@ func test_strahd_bites_with_a_legendary_action_and_charms_on_his_turn() -> void:
 	assert_eq(str(plan.get("option", "")), "bite", "he drinks from the one he holds")
 	assert_eq(plan.get("target") as Combatant, a)
 	e.end_turn()
-	assert_eq(e.legendary.left(s), 1, "the Bite costs two")
+	assert_eq(e.legendary.left(s), 2, "the Bite costs one use, as every legendary option does since 2026-10-26")
 	e.end_turn()
 	assert_eq(e.current(), s)
 	var charm := e.ai.boss.charm_plan(s)

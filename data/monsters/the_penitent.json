@@ -180,7 +180,7 @@
       {
         "id": "fist",
         "name": "Fist",
-        "cost": 2,
+        "cost": 1,
         "action": "frozen_fist",
         "summary": "Makes one Frozen Fist attack."
       },

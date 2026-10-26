@@ -164,7 +164,7 @@
       {
         "id": "lash",
         "name": "Lash",
-        "cost": 2,
+        "cost": 1,
         "action": "branch",
         "summary": "Makes one Branch attack."
       },

@@ -183,7 +183,7 @@
       {
         "id": "bolt",
         "name": "Bolt",
-        "cost": 2,
+        "cost": 1,
         "action": "arcane_bolt",
         "summary": "Makes one Arcane Bolt attack."
       },
