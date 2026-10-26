@@ -16,14 +16,14 @@ func _frames(n: int) -> void:
 
 
 ## Kip (a warlock at `level`, Repelling Blast on) 5 squares from a zombie that has Hit Points to spare.
-func _board(level: int = 11) -> void:
+func _board(level: int = 11, wizard: bool = false) -> void:
 	_root = Node3D.new()
 	add_child(_root)
 	var rows: Array = []
 	for z in 12:
 		rows.append("....................")
 	e = TestCombat.encounter(rows)
-	kip = TestCombat.hero(e, "kip_smudgewick", Vector2i(3, 6), level)
+	kip = TestCombat.high_caster(e, ["scorching_ray"], Vector2i(3, 6)) if wizard else TestCombat.hero(e, "kip_smudgewick", Vector2i(3, 6), level)
 	foe = TestCombat.foe(e, "zombie", Vector2i(8, 6))
 	foe.creature.hp = 900
 	TestCombat.start_with(e, kip)
@@ -87,5 +87,19 @@ func test_the_pushed_creature_is_still_on_the_board() -> void:
 	var tok := view.tokens[foe.id] as CombatToken
 	assert_true(tok.visible and tok.sprite.visible, "its figure is showing")
 	assert_true(tok.position.distance_to(view.board.cell_center(foe.cell, foe.size_cells)) < 0.05, "standing on the square it was pushed to")
+	_root.queue_free()
+	await _frames(1)
+
+
+## Every spell that rolls an attack for each ray works the same way (Ashwin, 2026-10-21: "and other multi-attack spells"):
+## Scorching Ray's three rays at its own level, four from a level 3 slot, each with its own missile.
+func test_scorching_rays_each_fly_a_missile() -> void:
+	await _board(7, true)
+	TestCombat.next_d20(e, 19)
+	var r := e.spells.cast(kip, "scorching_ray", 2, [foe, foe, foe])
+	assert_true(r.ok, r.reason)
+	await view._play_events()
+	await _frames(2)
+	assert_eq(view.fx.missiles_flown, 3, "a missile for each of the three rays")
 	_root.queue_free()
 	await _frames(1)
