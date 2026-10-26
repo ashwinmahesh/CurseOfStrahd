@@ -364,6 +364,13 @@ func go_to(location_id: String) -> bool:
 			return false
 		await frames(4)
 		if view() != null and view().get_instance_id() == left:
+			# Someone who speaks first, or a fight, can take the step onto the way out (the leader stands on it when the
+			# talk and the fight are over): a player clicks the way out again.
+			note("still here on %s: taking it again" % exit["id"])
+			view().walk_to(_cell(exit["cell"]))
+			await settle()
+			await frames(4)
+		if view() != null and view().get_instance_id() == left:
 			note("didn't leave by %s" % exit["id"])
 			return false
 		# Like a careful player: patch up on arriving somewhere you can rest.
