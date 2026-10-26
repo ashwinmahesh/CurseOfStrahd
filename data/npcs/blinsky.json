@@ -153,7 +153,9 @@
       "bag_of_tricks_gray",
       "bag_of_tricks_rust",
       "bag_of_tricks_tan",
-      "bag_of_beans"
+      "bag_of_beans",
+      "spell_scroll__dissonant_whispers",
+      "spell_scroll__compulsion"
     ],
     "buys": [
       "tool",

@@ -62,6 +62,7 @@ func test_every_magic_item_the_story_doesnt_need_is_for_sale() -> void:
 	var excluded := _table()["excluded"] as Dictionary
 	var sold := {}       # item -> merchants
 	var scroll_levels := {}
+	var scroll_sellers := {}   # "spell_scroll__fireball" -> merchants
 	for npc: String in _shops():
 		for id in _names(_shops()[npc] as Dictionary):
 			if not sold.has(_item_of(id)):
@@ -70,6 +71,9 @@ func test_every_magic_item_the_story_doesnt_need_is_for_sale() -> void:
 			var data := Compendium.shared().item_data(id)
 			if data.has("scroll_spell"):
 				scroll_levels[int(Compendium.shared().spell_data(str(data["scroll_spell"])).get("level", 0))] = true
+				if not scroll_sellers.has(id):
+					scroll_sellers[id] = []
+				(scroll_sellers[id] as Array).append(npc)
 	var count := 0
 	for item: Dictionary in Compendium.shared().all("magic_items"):
 		var id := str(item["id"])
@@ -84,6 +88,19 @@ func test_every_magic_item_the_story_doesnt_need_is_for_sale() -> void:
 	assert_true(count > 500, "the playable magic items: %d" % count)
 	for lvl in 10:
 		assert_true(scroll_levels.has(lvl), "a level %d Spell Scroll is for sale somewhere" % lvl)
+	# Every playable spell's scroll, level 1 and up, is sold by someone who stays put (resume package, 2026-10-24;
+	# cantrip scrolls are left out, Ashwin 2026-10-19): divine by Father Lucian, nature by Kasha Varo, arcane by
+	# Stanimir (level 1-5) or Xaver (6-9), bard by Blinsky, unless a merchant already sold it.
+	var scrolls := 0
+	for sp: Dictionary in Compendium.shared().all_playable("spells"):
+		if int(sp.get("level", 0)) < 1:
+			continue
+		scrolls += 1
+		var sid := "spell_scroll__%s" % sp["id"]
+		var stays_put := (scroll_sellers.get(sid, []) as Array).filter(func(n: String) -> bool:
+			return not bool(Compendium.shared().get_entry("npcs", n).get("guest", false)))
+		assert_false(stays_put.is_empty(), "%s is sold by someone who stays put: %s" % [sid, scroll_sellers.get(sid, [])])
+	assert_true(scrolls > 300, "every playable spell of level 1 or more: %d" % scrolls)
 
 
 func test_no_story_item_artifact_or_cursed_item_is_sold() -> void:
