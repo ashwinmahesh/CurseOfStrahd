@@ -3,7 +3,9 @@ extends TestCase
 ## combat/difficulty.gd boss_damage and damage_factor, EncounterDamage.deal_damage): everything one of the game's bosses
 ## (Difficulty.boss_entry: narrative/combat/bosses.json by monster or name, or any foe with legendary actions) deals the other
 ## side is multiplied before the target's defenses, with a line in the log; their minions, ordinary foes, the party and
-## a boss's own side keep the book's numbers, and so does Story.
+## a boss's own side keep the book's numbers, and so does Story. Bosses also hit more often on Balanced (owner,
+## 2026-10-25: "+1 to bosses before level 5, +2 from 5-8, and +3 for 9-11"): boss_bonus to their attack rolls and DCs by
+## the lowest hero's level, +3 on from 12; Tactician and Honour give every foe +2 instead.
 
 
 func _blow(e: Encounter, source: Combatant, target: Combatant, parts: Array = [{"amount": 20, "type": "force"}]) -> int:
@@ -96,3 +98,56 @@ func test_the_modes() -> void:
 	assert_true(Difficulty.named("balanced").describe().has("Bosses hit 25% harder."), "the New game page says so")
 	assert_false(Difficulty.named("story").describe().any(func(l: String) -> bool: return l.begins_with("Bosses hit")),
 		"Story doesn't")
+
+
+# --- To hit and DCs --------------------------------------------------------------------------------------------------
+
+
+func _bonus(c: Combatant, stat: StringName) -> int:
+	var total := 0
+	var ctx := c.creature.formula_context()
+	for m in c.creature.modifiers_for(stat):
+		total += c.creature.mod_value(m, ctx)
+	return total
+
+
+func test_on_balanced_bosses_hit_more_often_as_the_party_grows() -> void:
+	for pair: Array in [[1, 1], [4, 1], [5, 2], [8, 2], [9, 3], [11, 3], [12, 3]]:
+		var e := _field()
+		TestCombat.hero(e, "godrick_pendlebrook", Vector2i(0, 0), int(pair[0]))
+		var strahd := TestCombat.foe(e, "strahd_von_zarovich", Vector2i(3, 3))
+		var mother := _named(e, "night_hag", "Morgantha", Vector2i(5, 3))
+		var hag := TestCombat.foe(e, "night_hag", Vector2i(7, 3))
+		var wolf := TestCombat.foe(e, "wolf", Vector2i(9, 3))
+		e.difficulty.prepare(e)
+		var at := "at level %d" % int(pair[0])
+		for stat: StringName in [&"attack", &"spell_attack", &"spell_dc"]:
+			assert_eq(_bonus(strahd, stat), int(pair[1]), "Strahd, %s %s" % [stat, at])
+			assert_eq(_bonus(mother, stat), int(pair[1]), "Morgantha, listed by name, %s %s" % [stat, at])
+			assert_eq(_bonus(hag, stat), 0, "a night hag with no name, %s %s" % [stat, at])
+			assert_eq(_bonus(wolf, stat), 0, "a wolf, %s %s" % [stat, at])
+		assert_eq(e.monster_actions.dc_bonus(strahd), int(pair[1]), "his own actions' DCs (Charm) too, %s" % at)
+
+
+func test_the_lowest_hero_sets_the_step() -> void:
+	var e := _field()
+	TestCombat.hero(e, "godrick_pendlebrook", Vector2i(0, 0), 9)
+	TestCombat.hero(e, "liriel_dawnsong", Vector2i(1, 0), 4)
+	var strahd := TestCombat.foe(e, "strahd_von_zarovich", Vector2i(3, 3))
+	e.difficulty.prepare(e)
+	assert_eq(_bonus(strahd, &"attack"), 1, "a level 4 hero beside a level 9 one: +1, as the fights' level versions count")
+	assert_true(Difficulty.named("balanced").describe().has(
+		"Bosses' attack rolls and the DCs of their spells and abilities: +1 to level 4, +2 at levels 5-8, +3 from level 9."),
+		"the New game page says so")
+
+
+func test_the_boss_bonus_by_mode() -> void:
+	var want := {"story": [0, 0], "balanced": [3, 0], "tactician": [2, 2], "honour": [2, 2]}
+	for mode: String in want:
+		var e := _field(mode)
+		TestCombat.hero(e, "godrick_pendlebrook", Vector2i(0, 0), 10)
+		var strahd := TestCombat.foe(e, "strahd_von_zarovich", Vector2i(3, 3))
+		var wolf := TestCombat.foe(e, "wolf", Vector2i(9, 3))
+		e.difficulty.prepare(e)
+		assert_eq(_bonus(strahd, &"attack"), int((want[mode] as Array)[0]), "%s at level 10: Strahd" % mode)
+		assert_eq(_bonus(wolf, &"attack"), int((want[mode] as Array)[1]), "%s at level 10: a wolf" % mode)

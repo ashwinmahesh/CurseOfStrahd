@@ -164,6 +164,9 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1
 - **Boss damage (2026-10-19)**: bosses (`Difficulty.boss_entry`: narrative/combat/bosses.json and legendary-action foes) deal 25% more damage on Balanced and harder
   (`Difficulty.boss_damage`, docs/plans/difficulty.md). The line-ups and wins above were measured before it and were not re-measured (owner: the 3 in 8 tuning was a
   one-time job); a series that now leaves its band is reported by the full ci, and its expectation follows the measured value.
+- **Boss to-hit and DCs (2026-10-25)**: on Balanced the same bosses also add to their attack rolls, spell attacks and the DCs of their spells and
+  actions by the party's level (`Difficulty.boss_bonus`, the lowest hero's level): +1 to level 4, +2 at 5-8, +3 from 9. Tactician and Honour
+  already give every foe +2. Brother Anatol's hunger (+1) comes on top. Not re-measured either.
 - **Versions that never ran (2026-10-15)**: Strahd's heart-of-sorrow, horseman, darklord, Sergei and royal-tomb finals had both versions on the same condition, so the
   big one always ran; `item:sunsword` is now on the big one, like the other six finals. Two encounters have versions with different triggers (the oven Offalia, `open:hag_oven`;
   Rahadin at the failed footlocker, `check:rahadin_footlocker:failure`) and a trigger started the first version of that id whose condition held, so they never ran:
