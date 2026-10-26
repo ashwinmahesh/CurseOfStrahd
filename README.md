@@ -337,6 +337,12 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 | `tools/` | Data checks, captures, lanes, and the art and audio scripts. |
 | `docs/` | Decisions in `adr/`, interface contracts in `contracts/`, rules coverage, region notes, UI and art guides. |
 
+## License
+
+The source code and tooling are under the MIT license ([LICENSE](LICENSE)). The art, music, voice, story text and the
+Dungeons & Dragons content are not covered by it; see [NOTICE.md](NOTICE.md) for what is whose, including the SRD 5.2.1
+attribution.
+
 ## Credits
 
 The full list, with links and licence files, is in [docs/assets/LICENSES.md](docs/assets/LICENSES.md), and the game
