@@ -149,7 +149,7 @@
       "name": "Unarmed Strike (Vampire Form Only)",
       "kind": "melee",
       "attack": {
-        "bonus": 9,
+        "bonus": 14,
         "reach": 5
       },
       "damage": [
@@ -179,7 +179,7 @@
       "name": "Bite (Bat or Vampire Form Only)",
       "kind": "melee",
       "attack": {
-        "bonus": 9,
+        "bonus": 14,
         "reach": 5
       },
       "damage": [
