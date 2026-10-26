@@ -88,6 +88,17 @@ static func set_flanking(on: bool) -> void:
 	set_value("flanking", on)
 
 
+## Random fights (Ashwin, 2026-10-26: "an option to turn off combat random encounters in settings"): on by default. Off,
+## the roads' random encounters that are fights never start (Travel.roll's `fights`); meetings on the road, fights the
+## story itself sets and the night's visitors at camp are untouched.
+static func random_fights() -> bool:
+	return bool(value("random_fights", true))
+
+
+static func set_random_fights(on: bool) -> void:
+	set_value("random_fights", on)
+
+
 ## Attunement (2024 DMG "Magic Items", a house option, Ashwin 2026-10-17): off by default. On, attunement is dropped
 ## altogether: no limit of three, no requirements, and a magic item takes effect whenever it is worn, held or equipped
 ## (MagicItems.attunement_off, which this keeps in step; docs/rules/deviations.md).

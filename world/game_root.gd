@@ -906,7 +906,7 @@ func _travel_legs(from: String, to: String) -> void:
 		st.miles_since_long_rest += float(leg["hours"]) * 3.0
 		if _strahd_on_road(leg, to):
 			return
-		var ev := Travel.roll(leg["road"] as Dictionary, st, Dice.roller, to, str(leg["to"]))
+		var ev := Travel.roll(leg["road"] as Dictionary, st, Dice.roller, to, str(leg["to"]), GameSettings.random_fights())
 		RoadFamiliarity.note(st, leg["road"] as Dictionary)   # walked now: the next time along it is familiar ground
 		if ev.is_empty():
 			continue

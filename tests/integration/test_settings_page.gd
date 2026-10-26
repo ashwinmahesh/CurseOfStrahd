@@ -20,6 +20,7 @@ func after_each() -> void:
 	get_tree().paused = false
 	GameSettings.set_fast_combat(false)
 	GameSettings.set_narration_stays(false)
+	GameSettings.set_random_fights(true)
 	GameSettings.set_ui_scale(1.0)
 	GameSettings.set_text_scale(1.0)
 	GameSettings.set_depth_blur(true)
@@ -62,6 +63,23 @@ func test_choices_flip_and_are_kept() -> void:
 	assert_eq(cfg.load(GameSettings.path), OK, "written to the settings file")
 	assert_eq(bool(cfg.get_value(GameSettings.SECTION, "fast_combat", false)), true)
 	assert_ne(GameSettings.path, "user://settings.cfg", "tests never touch the player's own settings")
+
+
+## Ashwin, 2026-10-26: "add an option to turn off combat random encounters in settings". On by default; the Game page's
+## Random fights row switches it and the choice is kept.
+func test_random_fights_can_be_turned_off() -> void:
+	var menu := await _menu()
+	assert_true(GameSettings.random_fights(), "on by default")
+	var row := _choice(menu, "Random fights")
+	assert_true(row != null, "a Random fights row on the Game page")
+	if row == null:
+		return
+	assert_true(row.text.contains("On"))
+	row.pressed.emit()
+	assert_false(GameSettings.random_fights(), "Off")
+	assert_true(_choice(menu, "Random fights").text.contains("Off"))
+	_choice(menu, "Random fights").pressed.emit()
+	assert_true(GameSettings.random_fights(), "and back On")
 
 
 func test_the_look_switch_reaches_the_shaders() -> void:

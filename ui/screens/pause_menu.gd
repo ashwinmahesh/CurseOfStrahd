@@ -390,6 +390,11 @@ func _game_rows() -> void:
 			_note.text = "" if Look.modern() else "The Classic look keeps its grid painted in the ground; this is for Modern.",
 		InputActions.fill("Held: thin lines show the squares round whoever's turn it is (or your party) while you hold {show_grid}, and over the whole map in the tactical view ({camera_tactical}). In fights: on their own through every fight. Always: and round the party when you explore. Never: no lines at all."))
 	y += ROW_PITCH
+	# Random fights (Ashwin, 2026-10-26): the fights that start on the roads between places.
+	_choice_row(y, "Random fights", ["On", "Off"], 0 if GameSettings.random_fights() else 1, func(i: int) -> void:
+		GameSettings.set_random_fights(i == 0),
+		"On: a road between places may bring a fight, as the book's tables roll it. Off: no road brings a fight; a meeting on the road still can, and the story's own fights and a night's visitors at camp are untouched.")
+	y += ROW_PITCH
 	# Attunement (a house option, Ashwin 2026-10-17): the book's limit of three, or none at all.
 	_choice_row(y, "Attunement", ["Three at most", "Unlimited"], 1 if GameSettings.unlimited_attunement() else 0, func(i: int) -> void:
 		_set_attunement(i == 1),
