@@ -316,6 +316,59 @@ func test_a_fireball_burns_no_legendary_resistance_and_hold_monster_does() -> vo
 	assert_false(held.creature.has_condition(&"paralyzed"), "so it isn't held")
 
 
+# --- Spell slots, legendary-only strikes, teleports -----------------------------------------------------------------
+
+## An older stat block's spell slots (`slots` and `prepared`): the spells of a level share its slots, and the cast spends one.
+func test_a_stat_blocks_slot_spells_share_their_slots() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"spellcasting": {"ability": "int", "dc": 15, "attack": 7, "at_will": ["fire_bolt"],
+		"slots": {"3": 1}, "prepared": {"3": ["fireball", "lightning_bolt"]}}}), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(9, 3), 5)
+	_order(e, [boss, a], [20, 10])
+	var ids := e.monster_actions.spells_now(boss).map(func(sp: Dictionary) -> String: return str(sp["id"]))
+	assert_true("fireball" in ids and "lightning_bolt" in ids and "fire_bolt" in ids, "both 3rd-level spells ready (%s)" % [ids])
+	assert_true(e.monster_actions.cast(boss, "fireball", [], Vector2(9.5, 3.5)).ok)
+	ids = e.monster_actions.spells_now(boss).map(func(sp: Dictionary) -> String: return str(sp["id"]))
+	assert_false("lightning_bolt" in ids, "the one slot went on the Fireball (%s)" % [ids])
+	assert_true("fire_bolt" in ids, "an at-will spell needs none")
+
+
+## A `legendary_strikes` action is a legendary option's only: never among what it does on its own turn.
+func test_a_legendary_strike_is_for_legendary_actions_only() -> void:
+	var data := _boss({"legendary_strikes": [{"id": "pulse", "name": "Pulse", "kind": "save", "save": {"ability": "con", "dc": 99, "success": "half"},
+		"area": {"shape": "emanation", "size": 10}, "targets": {"range": 10}, "damage": [{"average": 10, "dice": "2d6+3", "type": "necrotic"}], "summary": "x"}],
+		"legendary_actions": {"per_round": 1, "options": [{"id": "pulse", "name": "Pulse", "cost": 1, "action": "pulse", "summary": "x"}]}})
+	var e := _field()
+	var boss := _add_boss(e, data, Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3), 5)
+	_order(e, [a, boss], [20, 10])
+	assert_false((boss.creature as Monster).action("pulse").is_empty(), "found by id")
+	assert_false(MonsterActions.data_of(boss).get("actions", []).any(func(x: Variant) -> bool: return str((x as Dictionary)["id"]) == "pulse"),
+		"and not one of its turn's actions")
+	var hp := a.creature.hp
+	e.end_turn()
+	assert_true(a.creature.hp < hp, "the legendary pulse caught the hero at the end of its turn")
+
+
+## Deathly Teleport: a legendary option that teleports up to its `ft` and leaves a burst on everyone beside the space it
+## left; the AI takes it as soon as a foe closes in.
+func test_a_teleporting_option_leaves_a_burst_behind() -> void:
+	var data := _boss({"legendary_actions": {"per_round": 3, "options": [{"id": "blink", "name": "Deathly Teleport", "cost": 1, "move": true,
+		"teleport": true, "ft": 60, "burst": {"dice": "2d10", "type": "necrotic", "radius": 5}, "summary": "x"}]}})
+	var e := _field()
+	var boss := _add_boss(e, data, Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3), 5)
+	var b := TestCombat.hero(e, "silvain_aster", Vector2i(12, 6), 5)
+	_order(e, [a, b, boss], [30, 25, 10])
+	assert_eq(e.legendary.move_ft(boss, e.legendary.option(boss, "blink")), 60, "its range, not its Speed")
+	var hp := a.creature.hp
+	e.end_turn()
+	assert_true(boss.cell != Vector2i(3, 3), "it teleported away from the hero beside it")
+	assert_true(e.distance(boss, a) > 5, "out of reach")
+	assert_true(a.creature.hp < hp, "and the hero it left took the burst")
+	assert_eq(e.legendary.left(boss), 2)
+
+
 # --- Lair actions ------------------------------------------------------------------------------------------------
 
 func test_the_lair_acts_on_initiative_20_losing_ties_and_never_twice_the_same() -> void:

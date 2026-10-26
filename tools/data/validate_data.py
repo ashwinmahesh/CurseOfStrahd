@@ -226,7 +226,7 @@ def semantic_checks(data):
         for c in it.get("contents", []):
             need("item", items, c["id"], f"items/{iid} contents")
     for mid, m in data["monsters"].items():
-        ids = {a["id"] for key in ("actions", "bonus_actions", "reactions") for a in m.get(key, [])}
+        ids = {a["id"] for key in ("actions", "bonus_actions", "reactions", "legendary_strikes") for a in m.get(key, [])}
         for a in m.get("actions", []):
             for ma in a.get("multiattack", []):
                 if ma["action"] not in ids:
@@ -240,7 +240,7 @@ def semantic_checks(data):
             if "action" in opt and opt["action"] not in ids:
                 errors.append(f"monsters/{mid}: legendary action '{opt['id']}' names unknown action '{opt['action']}'")
         sc = m.get("spellcasting", {})
-        for sp in sc.get("at_will", []) + [x for v in sc.get("per_day", {}).values() for x in v]:
+        for sp in sc.get("at_will", []) + [x for key in ("per_day", "prepared") for v in sc.get(key, {}).values() for x in v]:
             if sp not in spells:
                 pending.append(f"monsters/{mid}: spell '{sp}' (not in Phase 1 spell data)")
     # A found spellbook lists the spells a Wizard can copy out of it (Character.copy_spell).
