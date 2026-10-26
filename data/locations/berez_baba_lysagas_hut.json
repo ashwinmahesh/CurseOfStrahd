@@ -474,6 +474,7 @@
     {
       "id": "lysaga_in_hut",
       "trigger": "dialogue",
+      "lair": true,
       "when": "level >= 9",
       "text": "The door of the hut slams itself. The fire in the hearth stands up tall and green, and the jars on the shelf begin to hum.",
       "monsters": [
@@ -505,6 +506,7 @@
     {
       "id": "lysaga_in_hut",
       "trigger": "dialogue",
+      "lair": true,
       "when": "level >= 8",
       "text": "The door of the hut slams itself. The fire in the hearth stands up tall and green, and the jars on the shelf begin to hum.",
       "monsters": [
@@ -536,6 +538,7 @@
     {
       "id": "lysaga_in_hut",
       "trigger": "dialogue",
+      "lair": true,
       "text": "The door of the hut slams itself. The fire in the hearth stands up tall and green, and the jars on the shelf begin to hum.",
       "monsters": [
         {

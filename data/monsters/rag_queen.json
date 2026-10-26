@@ -154,6 +154,54 @@
       }
     ]
   },
+  "lair_actions": [
+    {
+      "id": "heads_turn",
+      "name": "The Scarecrows Turn Their Heads",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 15,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_start"
+        }
+      ],
+      "summary": "Every scarecrow in the field turns to look: two foes make a DC 15 Wis save or are Frightened until her next turn.",
+      "text": "Every scarecrow in the field turns its head toward up to two creatures the Rag Queen can see. Each makes a DC 15 Wisdom saving throw or has the Frightened condition until the start of her next turn."
+    },
+    {
+      "id": "rag_wind",
+      "name": "Rag Wind",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "slashing"
+        }
+      ],
+      "summary": "A wind full of torn rags and straw: two foes make a DC 15 Dex save, 2d8 Slashing, half on a success.",
+      "text": "A wind full of torn rags, straw and pins whips across the field at up to two creatures. Each makes a DC 15 Dexterity saving throw, taking 9 (2d8) Slashing damage on a failure or half as much on a success."
+    }
+  ],
   "legendary_resistance": 2,
   "regions": [
     "berez"

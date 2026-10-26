@@ -154,6 +154,54 @@
       }
     ]
   },
+  "lair_actions": [
+    {
+      "id": "phantom_hands",
+      "name": "The Order's Dead Hold Fast",
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 14,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "The hands of the Order's dead close on one foe: DC 14 Str save or Restrained until the end of his next turn.",
+      "text": "Grey hands rise from the beacon's floor round one creature Vladimir can see. It makes a DC 14 Strength saving throw or has the Restrained condition until the end of his next turn."
+    },
+    {
+      "id": "cold_flame",
+      "name": "The Cold Flame",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 14,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "The dead beacon's cold flame licks two foes: DC 14 Con save, 2d8 Necrotic, half on a success.",
+      "text": "The beacon's dead flame gutters cold and reaches out for up to two creatures. Each makes a DC 14 Constitution saving throw, taking 9 (2d8) Necrotic damage on a failure or half as much on a success."
+    }
+  ],
   "regions": [
     "argynvostholt"
   ],

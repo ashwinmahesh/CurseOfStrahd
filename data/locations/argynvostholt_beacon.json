@@ -358,6 +358,7 @@
     {
       "id": "beacon_stand",
       "trigger": "dialogue",
+      "lair": true,
       "when": "not flag.beacon_stand_won and level >= 8",
       "text": "Vladimir comes off the last step with his greatsword already moving. Behind him on the stair, dead knights in black plate, climbing.",
       "surprise": "",
@@ -400,6 +401,7 @@
     {
       "id": "beacon_stand",
       "trigger": "dialogue",
+      "lair": true,
       "when": "not flag.beacon_stand_won and level >= 7",
       "text": "Vladimir comes off the last step with his greatsword already moving. Behind him on the stair, dead knights in black plate, climbing.",
       "surprise": "",
@@ -426,6 +428,7 @@
     {
       "id": "beacon_stand",
       "trigger": "dialogue",
+      "lair": true,
       "when": "not flag.beacon_stand_won",
       "text": "Vladimir comes off the last step with his greatsword already moving. Behind him on the stair, dead knights in black plate, climbing.",
       "surprise": "",

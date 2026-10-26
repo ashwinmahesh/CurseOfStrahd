@@ -153,6 +153,53 @@
       ]
     }
   ],
+  "lair_actions": [
+    {
+      "id": "hut_lurches",
+      "name": "The Hut Lurches",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 3
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "Her hut rocks on its legs: up to three foes make a DC 16 Dex save or fall Prone.",
+      "text": "The hut heaves on its great legs. Up to three creatures Baba Lysaga can see make a DC 16 Dexterity saving throw; on a failure a creature falls Prone."
+    },
+    {
+      "id": "walls_swarm",
+      "name": "The Walls Swarm",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Insects pour out of the walls onto two foes: DC 16 Con save, 3d6 Piercing, half on a success.",
+      "text": "Biting insects boil out of the hut's walls onto up to two creatures she can see. Each makes a DC 16 Constitution saving throw, taking 10 (3d6) Piercing damage on a failure or half as much on a success."
+    }
+  ],
   "spellcasting": {
     "ability": "int",
     "dc": 17,

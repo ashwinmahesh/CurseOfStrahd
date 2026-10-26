@@ -417,6 +417,20 @@ func test_the_lieutenants_have_legendary_actions_and_izek_parries() -> void:
 	assert_eq(int(((izek["reactions"] as Array)[0] as Dictionary).get("ac_bonus", 0)), 3, "Izek parries")
 
 
+## Boss redesign plan, group 4: lairs that had none. Baba Lysaga in her hut, the Rag Queen in her field and Vladimir at
+## the beacon fight in their lairs, with two lair actions each on initiative 20.
+func test_the_new_lairs() -> void:
+	var lairs := {"berez_baba_lysagas_hut": ["lysaga_in_hut", "baba_lysaga"], "berez": ["rag_queen", "rag_queen"],
+		"argynvostholt_beacon": ["beacon_stand", "vladimir_horngaard"]}
+	for loc: String in lairs:
+		var fight := str((lairs[loc] as Array)[0])
+		for e: Variant in Compendium.shared().get_entry("locations", loc)["encounters"]:
+			if str((e as Dictionary)["id"]) == fight:
+				assert_true(bool((e as Dictionary).get("lair", false)), "%s %s is a lair fight" % [loc, fight])
+		var m := Compendium.shared().get_entry("monsters", str((lairs[loc] as Array)[1]))
+		assert_eq((m.get("lair_actions", []) as Array).size(), 2, "%s has two lair actions" % m["id"])
+
+
 # --- Lair actions ------------------------------------------------------------------------------------------------
 
 func test_the_lair_acts_on_initiative_20_losing_ties_and_never_twice_the_same() -> void:

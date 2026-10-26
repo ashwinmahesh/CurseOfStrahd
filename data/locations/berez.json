@@ -1340,6 +1340,7 @@
     {
       "id": "rag_queen",
       "trigger": "dialogue",
+      "lair": true,
       "when": "level >= 10",
       "text": "The Rag Queen steps down off her post, twice the height of a man, all rotten silk and lace and faces in the stitching. Two of the faces tear free of her and come screaming across the field in their wedding veils.",
       "monsters": [
@@ -1440,6 +1441,7 @@
     {
       "id": "rag_queen",
       "trigger": "dialogue",
+      "lair": true,
       "when": "level >= 9",
       "text": "The Rag Queen steps down off her post, twice the height of a man, all rotten silk and lace and faces in the stitching. Two of the faces tear free of her and come screaming across the field in their wedding veils.",
       "monsters": [
@@ -1509,6 +1511,7 @@
     {
       "id": "rag_queen",
       "trigger": "dialogue",
+      "lair": true,
       "when": "",
       "text": "The Rag Queen steps down off her post, twice the height of a man, all rotten silk and lace and faces in the stitching. Two of the faces tear free of her and come screaming across the field in their wedding veils.",
       "monsters": [
