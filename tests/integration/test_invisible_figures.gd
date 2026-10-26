@@ -1,9 +1,11 @@
 extends TestCase
 ## An Invisible foe leaves the board (owner, 2026-10-13: "Creatures that go invisible should disappear from the map
-## unless the player character targeting them has invisibility"): its figure, ring and bar are off the map and its
-## portrait off the turn order while the hero whose turn it is can't see it, it can't be picked with the pointer or the
-## next-target key, an Invisible hero stays for its own player see-through, and it all comes back when the invisibility
-## ends or the turn passes to a hero who sees it (CombatToken.set_unseen, CombatView._refresh_all, CombatHud._refresh_strip).
+## unless the player character targeting them has invisibility"): its figure, ring and bar are off the map while the hero
+## whose turn it is can't see it, and its card stays in the turn order as a dimmed card nobody can hover or click (owner,
+## 2026-10-24: not removed from the initiative, and no way to find where it stands); it can't be picked with the pointer
+## or the next-target key, an Invisible hero stays for its own player see-through, and it all comes back when the
+## invisibility ends or the turn passes to a hero who sees it (CombatToken.set_unseen, CombatView._refresh_all,
+## CombatHud._refresh_strip).
 
 var e: Encounter
 var view: CombatView
@@ -56,7 +58,16 @@ func _strip_cards() -> int:
 	return view.hud._strip.get_child_count()
 
 
-func test_an_invisible_foe_leaves_the_map_and_the_order_bar_until_a_hero_sees_it() -> void:
+## The order bar's cards that say they're unseen (the inert ones).
+func _unseen_cards() -> Array[Control]:
+	var out: Array[Control] = []
+	for card: Node in view.hud._strip.get_children():
+		if card is Control and (card as Control).tooltip_text.begins_with("Unseen"):
+			out.append(card as Control)
+	return out
+
+
+func test_an_invisible_foe_leaves_the_map_but_not_the_order_until_a_hero_sees_it() -> void:
 	await _board()
 	var tok := view.tokens[scout.id] as CombatToken
 	var cards := _strip_cards()
@@ -66,7 +77,13 @@ func test_an_invisible_foe_leaves_the_map_and_the_order_bar_until_a_hero_sees_it
 	view._refresh_all()
 	await _frames(2)
 	assert_true(tok.unseen and not tok.visible, "off the map")
-	assert_eq(_strip_cards(), cards - 1, "and off the turn order")
+	assert_eq(_strip_cards(), cards, "but it keeps its place in the turn order")
+	var unseen := _unseen_cards()
+	assert_eq(unseen.size(), 1, "as one dimmed card")
+	assert_true(is_equal_approx(unseen[0].modulate.a, 0.5))
+	assert_eq(unseen[0].mouse_default_cursor_shape, Control.CURSOR_ARROW, "nobody can click it")
+	assert_eq(unseen[0].get_signal_connection_list("mouse_entered").size(), 0, "or hover it to light its figure")
+	assert_eq(unseen[0].get_signal_connection_list("gui_input").size(), 0)
 	# The pointer on its square finds no one.
 	view.hover_token = null
 	view.hover_cell = scout.cell
@@ -86,6 +103,7 @@ func test_an_invisible_foe_leaves_the_map_and_the_order_bar_until_a_hero_sees_it
 	await _frames(2)
 	assert_true(tok.visible and not tok.unseen, "on the map through Hedda's eyes")
 	assert_eq(_strip_cards(), cards)
+	assert_eq(_unseen_cards().size(), 0, "and its card is a live one again")
 	# A foe's turn keeps the last hero's view; the wizard's turn takes it off again.
 	e.turn_index = e.order.find(scout)
 	e._begin_turn()

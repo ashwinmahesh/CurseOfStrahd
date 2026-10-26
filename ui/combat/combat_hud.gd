@@ -922,9 +922,10 @@ func _refresh_strip() -> void:
 			_strip.add_child(_lair_card())
 		if c.creature.dead and c.side == &"enemy":
 			continue
-		# An Invisible foe the hero whose turn it is can't see is off the order bar as it is off the map.
-		if e.sight.hidden_from_party(c, viewer):
-			continue
+		# An Invisible foe the hero whose turn it is can't see is off the map but keeps its place in the order, as a dimmed
+		# card nobody can hover or click: its turn is still coming, and the card gives no way to find where it stands
+		# (owner, 2026-10-24).
+		var unseen := e.sight.hidden_from_party(c, viewer)
 		var active := c == cur
 		var card := PanelContainer.new()
 		var frame := "gilt_light" if c.side == &"party" else ("moonlight" if c.side == &"guest" else "crimson")
@@ -938,6 +939,8 @@ func _refresh_strip() -> void:
 		card.add_theme_stylebox_override("panel", box)
 		if c.id in e.shared_ended:
 			card.modulate = Color(1, 1, 1, 0.55)
+		if unseen:
+			card.modulate = Color(1, 1, 1, 0.5)
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 1)
 		card.add_child(v)
@@ -946,19 +949,30 @@ func _refresh_strip() -> void:
 		var sl := _label(short, ORDER_NAME_SIZE if not active else ORDER_NAME_SIZE_ACTIVE, "gilt_light" if active else "vellum")
 		sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(sl)
-		v.add_child(_hp_bar(c, ORDER_BAR if not active else ORDER_BAR_ACTIVE, ORDER_BAR_HEIGHT))
-		var pips := e.legendary.pips(c)
+		if unseen:
+			# Its Hit Points are not shown either: a gap the bar's size holds the card's height.
+			var gap := Control.new()
+			gap.custom_minimum_size = Vector2(ORDER_BAR if not active else ORDER_BAR_ACTIVE, ORDER_BAR_HEIGHT)
+			v.add_child(gap)
+		else:
+			v.add_child(_hp_bar(c, ORDER_BAR if not active else ORDER_BAR_ACTIVE, ORDER_BAR_HEIGHT))
+		var pips := e.legendary.pips(c) if not unseen else ""
 		if pips != "":
 			var lg := _label(pips, ORDER_NAME_SIZE, "crimson")
 			lg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			lg.tooltip_text = "Legendary actions left this round"
 			v.add_child(lg)
+		# A card passes what it doesn't use on, so the wheel over a portrait scrolls a long order (TurnStrip).
+		card.mouse_filter = Control.MOUSE_FILTER_PASS
+		if unseen:
+			card.tooltip_text = "Unseen: you can't tell where it is"
+			_strip.add_child(card)
+			_strip_view.register(c.id, card)
+			continue
 		card.mouse_entered.connect(func() -> void: inspect_requested.emit("hover:" + c.id))
 		# A click takes a shared turn (the camera goes along), or looks at whoever it is: the camera glides over to them.
 		card.tooltip_text = ("%s shares this turn: click to take it" if ready else "Click to look at %s") % c.name()
 		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		# A card passes what it doesn't use on, so the wheel over a portrait scrolls a long order (TurnStrip).
-		card.mouse_filter = Control.MOUSE_FILTER_PASS
 		card.gui_input.connect(func(ev: InputEvent) -> void:
 			if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 				# The click is the order's alone: passed on, the board took it for a click on the square behind the card
