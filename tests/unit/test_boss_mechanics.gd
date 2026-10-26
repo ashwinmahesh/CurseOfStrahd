@@ -279,6 +279,19 @@ func test_legendary_resistance_is_kept_for_what_matters() -> void:
 		assert_eq(int(boss.get_meta("legendary_resistance_used", 0)), 1 if bool(case[1]) else 0, "%s: uses spent" % case[2])
 
 
+## The saves that put conditions on a boss carry what they put (save keys): Turn Undead's Frightened and Incapacitated
+## is worth a Legendary Resistance.
+func test_turn_undead_is_worth_a_legendary_resistance() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_resistance": 3, "abilities": {"str": 18, "dex": 14, "con": 16, "int": 12, "wis": 1, "cha": 16}}),
+		Vector2i(4, 3))
+	var cleric := TestCombat.hero(e, "liriel_dawnsong", Vector2i(2, 3), 5)
+	_order(e, [cleric, boss], [20, 10])
+	assert_true(e.features.turn_undead(cleric).ok)
+	assert_eq(int(boss.get_meta("legendary_resistance_used", 0)), 1, "it spends one on the turning")
+	assert_false(boss.creature.has_condition(&"frightened"), "and stands its ground")
+
+
 ## The boss can't pass a Dexterity or Wisdom save (both scores 1, against a level 9 caster's DC) unless it resists.
 func _mage_and_boss() -> Dictionary:
 	var e := _field()
