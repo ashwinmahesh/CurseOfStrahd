@@ -1,7 +1,7 @@
 # Engine split: dnd_core
 
-Plan for moving the shareable parts of this game into a separate private repo, github.com/ashwinmahesh/DndCoreEngine
-(local copy ~/Documents/DndCoreEngine), used here as a git submodule at `addons/dnd_core`. Study (2026-10-24):
+Plan for moving the shareable parts of this game into a separate repo, github.com/ashwinmahesh/DungeonsAndDragonsGameEngine
+(renamed from DndCoreEngine and made public 2026-10-26; local copy ~/Documents/DndCoreEngine), used here as a git submodule at `addons/dnd_core`. Study (2026-10-24):
 https://claude.ai/artifact/XdvkGY28acaWLp4kAQJAmh. Owner decision 2026-10-24. The switch (steps 3 and 4) was written on 2026-10-25 with the
 owner's typed yes, to land in the planned full-download release (1.0.11); "Where it stands" at the end says what it did.
 
@@ -9,7 +9,7 @@ owner's typed yes, to land in the planned full-download release (1.0.11); "Where
 
 1. **Decouple inside this repo** (no project.godot change). Move tables to data, rename the shader and palette, add a
    campaign-module hook, and keep the guard test green (`tests/unit/test_engine_names.gd`, below).
-2. Move the rules data (items, monsters, spells, feats, subclasses and the rest) with the code: the core is private and takes all of it.
+2. Move the rules data (items, monsters, spells, feats, subclasses and the rest) with the code: the core takes all of it.
 3. **Extract** the engine files listed below into the core repo.
 4. **Consume** it as a submodule at `addons/dnd_core`, landing with the project.godot path change in one release.
 5. A skeleton game proves the core boots on its own (a later task).
@@ -53,13 +53,14 @@ lanes are editing.
 
 ## Licence
 
-`docs/assets/LICENSES.md`: content beyond SRD 5.2.1 is personal-use only and never distributed. The core repo stays
-private and holds all the data (owner decision 2026-10-25: no SRD flag, no srd/ and books/ split). Anything made public
-from it would need its own licence review first.
+The core holds all the rules data, SRD or not (owner decision 2026-10-25: no SRD flag, no srd/ and books/ split), and the
+owner made the repo public on 2026-10-26 with an MIT license on the code only and a NOTICE.md that says the book content
+beyond SRD 5.2.1 belongs to Wizards of the Coast and is not licensed here (owner's choice of option C, against the advice
+to publish SRD-only data).
 
 ## Where it stands (2026-10-25): switched
 
-The game now uses the core as the submodule `addons/dnd_core` (private repo DndCoreEngine). `.gitmodules` names the GitHub
+The game now uses the core as the submodule `addons/dnd_core` (public repo DungeonsAndDragonsGameEngine, formerly DndCoreEngine). `.gitmodules` names the GitHub
 url; the files of the core keep their folders there, so the engine is `res://addons/dnd_core/rules`, `combat`, `story`,
 the rules data is `res://addons/dnd_core/data/<folder>` and the test runner `res://addons/dnd_core/tests/test_runner.tscn`.
 

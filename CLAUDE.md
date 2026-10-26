@@ -17,7 +17,7 @@ make magic-prices (writes data/treasure/magic_prices.json, Sane Magical Prices, 
 make xp-sim [RULES=build|plan|literal] (XP levelling's simulator: the party's level at every story gate, docs/plans/xp_mode.md)
 make wiki (rewrites the vault's spoiler wiki, Wiki/, from the data; prose outside its %% auto %% blocks is kept) · make wiki-shots (its screenshots)
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
-The engine is the git submodule addons/dnd_core (private repo DndCoreEngine, docs/plans/engine_split.md): after a fresh clone or a lane, `git submodule update --init`; to change it, edit and commit inside addons/dnd_core, then commit the new submodule commit here (its path shows as the change)
+The engine is the git submodule addons/dnd_core (public repo DungeonsAndDragonsGameEngine, docs/plans/engine_split.md): after a fresh clone or a lane, `git submodule update --init`; to change it, edit and commit inside addons/dnd_core, then commit the new submodule commit here (its path shows as the change)
 
 ## Godot windows (the owner works on this Mac)
 - Never open a Godot window that can take focus or cover the owner's work. Checks without pixels run headless
@@ -78,7 +78,7 @@ The engine is the git submodule addons/dnd_core (private repo DndCoreEngine, doc
   it reads CharacterBuilder / LevelUpController and picks widgets by `Choice.kind`.
 - `make lint` compiles the core's rules/, combat/ and story/ standalone, so an autoload reference there fails CI.
 - The engine split (docs/plans/engine_split.md): rules/, combat/, the story engine core, the rules data (data/ spells, items,
-  monsters ... of the books), their schemas and the test runner live in the private core repo DndCoreEngine (submodule
+  monsters ... of the books), their schemas and the test runner live in the public core repo DungeonsAndDragonsGameEngine (submodule
   addons/dnd_core, res://addons/dnd_core/...) and name no campaign. The game keeps its own data beside the core's (CoS and
   custom entries, locations, NPCs, quests ...): `Compendium` reads both data roots, `Compendium.data_files(folder)` lists a
   folder's files across them (a game file replaces the core's of its name), tools use tools/data/dataroots.py. Campaign facts (the Tarokka reading,

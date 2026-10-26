@@ -25,7 +25,7 @@ the project's own descriptions, not the books' text, and much of it was entered 
 ## Code
 
 The source code and tooling are under the MIT license (LICENSE), copyright (c) 2026 Ashwin Mahesh. The rules engine is
-shared with the separate DndCoreEngine repository, which has the same license and notice.
+shared with the separate DungeonsAndDragonsGameEngine repository (github.com/ashwinmahesh/DungeonsAndDragonsGameEngine), which has the same license and notice.
 
 ## Art, music, sound and fonts
 
