@@ -665,8 +665,7 @@
             23,
             10
           ],
-          "name": "The Vault Guardian",
-          "hp": 460
+          "name": "The Vault Guardian"
         },
         {
           "monster": "wraith",
@@ -710,8 +709,7 @@
             19,
             22
           ],
-          "name": "Vosk, unmasked",
-          "hp": 330
+          "name": "Vosk, unmasked"
         },
         {
           "monster": "flameskull",
@@ -747,8 +745,7 @@
             19,
             22
           ],
-          "name": "Vosk, unmasked",
-          "hp": 320
+          "name": "Vosk, unmasked"
         },
         {
           "monster": "flameskull",
@@ -786,8 +783,7 @@
             19,
             22
           ],
-          "name": "Vosk, unmasked",
-          "hp": 104
+          "name": "Vosk, unmasked"
         },
         {
           "monster": "flameskull",
@@ -816,8 +812,7 @@
             19,
             22
           ],
-          "name": "Vosk, unmasked",
-          "hp": 85
+          "name": "Vosk, unmasked"
         }
       ],
       "surprise": "",

@@ -258,8 +258,7 @@
           "cell": [
             11,
             11
-          ],
-          "hp": 410
+          ]
         },
         {
           "monster": "vampire_spawn",
@@ -292,8 +291,7 @@
           "cell": [
             11,
             11
-          ],
-          "hp": 350
+          ]
         },
         {
           "monster": "vampire_spawn",
@@ -369,8 +367,7 @@
           "cell": [
             11,
             13
-          ],
-          "hp": 270
+          ]
         },
         {
           "monster": "swarm_of_bats",
@@ -400,8 +397,7 @@
           "cell": [
             11,
             9
-          ],
-          "hp": 275
+          ]
         },
         {
           "monster": "revenant",

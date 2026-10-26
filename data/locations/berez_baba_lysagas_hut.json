@@ -482,8 +482,7 @@
           "cell": [
             12,
             2
-          ],
-          "hp": 510
+          ]
         },
         {
           "monster": "swarm_of_insects",
@@ -514,8 +513,7 @@
           "cell": [
             12,
             2
-          ],
-          "hp": 105
+          ]
         },
         {
           "monster": "swarm_of_insects",
@@ -545,8 +543,7 @@
           "cell": [
             12,
             2
-          ],
-          "hp": 85
+          ]
         },
         {
           "monster": "swarm_of_insects",

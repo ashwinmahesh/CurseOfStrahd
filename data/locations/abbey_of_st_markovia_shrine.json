@@ -454,8 +454,7 @@
           "art": "vasilka",
           "lying": {
             "on": "bride_bier"
-          },
-          "hp": 400
+          }
         },
         {
           "monster": "berserker",
@@ -575,7 +574,6 @@
             3
           ],
           "name": "Vasilka",
-          "hp": 80,
           "art": "vasilka",
           "lying": {
             "on": "bride_bier"
@@ -618,8 +616,7 @@
             12,
             3
           ],
-          "name": "The Abbot",
-          "hp": 350
+          "name": "The Abbot"
         },
         {
           "monster": "mongrelfolk",
@@ -651,8 +648,7 @@
             12,
             3
           ],
-          "name": "The Abbot",
-          "hp": 100
+          "name": "The Abbot"
         },
         {
           "monster": "mongrelfolk",
@@ -676,8 +672,7 @@
             12,
             3
           ],
-          "name": "The Abbot",
-          "hp": 85
+          "name": "The Abbot"
         }
       ],
       "surprise": "",

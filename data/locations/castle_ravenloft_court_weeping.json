@@ -1047,8 +1047,7 @@
             4,
             15
           ],
-          "name": "Ludmilla Vilisevic",
-          "hp": 150
+          "name": "Ludmilla Vilisevic"
         },
         {
           "monster": "vampire_spawn",
@@ -1056,8 +1055,7 @@
             9,
             15
           ],
-          "name": "Volenta Popofsky",
-          "hp": 150
+          "name": "Volenta Popofsky"
         }
       ],
       "surprise": "",
@@ -1074,8 +1072,7 @@
             4,
             15
           ],
-          "name": "Ludmilla Vilisevic",
-          "hp": 210
+          "name": "Ludmilla Vilisevic"
         },
         {
           "monster": "vampire_spawn",
@@ -1083,8 +1080,7 @@
             9,
             15
           ],
-          "name": "Volenta Popofsky",
-          "hp": 210
+          "name": "Volenta Popofsky"
         },
         {
           "monster": "vampire_spawn",
@@ -1092,8 +1088,7 @@
             13,
             15
           ],
-          "name": "Anastrasya Karelova",
-          "hp": 210
+          "name": "Anastrasya Karelova"
         }
       ],
       "surprise": "",
@@ -1110,8 +1105,7 @@
             32,
             17
           ],
-          "name": "Rahadin",
-          "hp": 615
+          "name": "Rahadin"
         }
       ],
       "surprise": "",
@@ -1129,8 +1123,7 @@
             32,
             17
           ],
-          "name": "Rahadin",
-          "hp": 580
+          "name": "Rahadin"
         }
       ],
       "surprise": "",

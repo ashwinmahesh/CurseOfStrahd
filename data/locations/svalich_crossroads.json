@@ -1240,8 +1240,7 @@
           "cell": [
             33,
             12
-          ],
-          "hp": 300
+          ]
         },
         {
           "monster": "nightmare",
@@ -1310,8 +1309,7 @@
           "cell": [
             33,
             7
-          ],
-          "hp": 380
+          ]
         },
         {
           "monster": "nightmare",
@@ -1452,8 +1450,7 @@
           "cell": [
             33,
             12
-          ],
-          "hp": 250
+          ]
         },
         {
           "monster": "nightmare",
@@ -1522,8 +1519,7 @@
           "cell": [
             36,
             12
-          ],
-          "hp": 520
+          ]
         },
         {
           "monster": "nightmare",
@@ -1624,8 +1620,7 @@
           "cell": [
             33,
             12
-          ],
-          "hp": 400
+          ]
         },
         {
           "monster": "nightmare",
@@ -1678,8 +1673,7 @@
           "cell": [
             33,
             12
-          ],
-          "hp": 430
+          ]
         },
         {
           "monster": "nightmare",
@@ -1756,8 +1750,7 @@
           "cell": [
             33,
             12
-          ],
-          "hp": 130
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1785,8 +1778,7 @@
           "cell": [
             33,
             12
-          ],
-          "hp": 130
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1831,8 +1823,7 @@
           "cell": [
             16,
             20
-          ],
-          "hp": 450
+          ]
         },
         {
           "monster": "mimic",
@@ -1889,8 +1880,7 @@
           "cell": [
             16,
             20
-          ],
-          "hp": 220
+          ]
         },
         {
           "monster": "mimic",
@@ -1914,8 +1904,7 @@
           "cell": [
             16,
             20
-          ],
-          "hp": 110
+          ]
         },
         {
           "monster": "mimic",

@@ -258,8 +258,7 @@
             17,
             1
           ],
-          "name": "Bella Sunbane",
-          "hp": 610
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",
@@ -276,8 +275,7 @@
             21,
             7
           ],
-          "name": "Bella Sunbane",
-          "hp": 80
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",
@@ -295,8 +293,7 @@
             20,
             13
           ],
-          "name": "Offalia Wormwiggle",
-          "hp": 300
+          "name": "Offalia Wormwiggle"
         }
       ],
       "surprise": "",
@@ -313,8 +310,7 @@
             20,
             8
           ],
-          "name": "Offalia Wormwiggle",
-          "hp": 80
+          "name": "Offalia Wormwiggle"
         }
       ],
       "surprise": "",
@@ -513,8 +509,7 @@
           "cell": [
             26,
             4
-          ],
-          "hp": 360
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -586,8 +581,7 @@
           "cell": [
             26,
             4
-          ],
-          "hp": 130
+          ]
         },
         {
           "monster": "dire_wolf",

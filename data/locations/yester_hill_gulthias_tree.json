@@ -372,8 +372,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 200
+          "name": "Wintersplinter"
         },
         {
           "monster": "twig_blight",
@@ -433,8 +432,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 135
+          "name": "Wintersplinter"
         },
         {
           "monster": "twig_blight",
@@ -494,8 +492,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 200
+          "name": "Wintersplinter"
         },
         {
           "monster": "twig_blight",
@@ -555,8 +552,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 285
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -634,8 +630,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 180
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -697,8 +692,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 285
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -768,8 +762,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 135
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -823,8 +816,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 250
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -886,8 +878,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 215
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -955,8 +946,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 220
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -1034,8 +1024,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 120
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -1097,8 +1086,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 210
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -1176,8 +1164,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 300
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -1231,8 +1218,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 200
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -1299,8 +1285,7 @@
             20,
             9
           ],
-          "name": "Wintersplinter",
-          "hp": 155
+          "name": "Wintersplinter"
         },
         {
           "monster": "druid",
@@ -1353,8 +1338,7 @@
           "cell": [
             18,
             12
-          ],
-          "hp": 205
+          ]
         },
         {
           "monster": "druid",
@@ -1415,8 +1399,7 @@
           "cell": [
             18,
             12
-          ],
-          "hp": 155
+          ]
         },
         {
           "monster": "druid",
@@ -1485,8 +1468,7 @@
           "cell": [
             18,
             12
-          ],
-          "hp": 480
+          ]
         },
         {
           "monster": "druid",
@@ -1547,8 +1529,7 @@
           "cell": [
             18,
             12
-          ],
-          "hp": 355
+          ]
         },
         {
           "monster": "druid",
@@ -1617,8 +1598,7 @@
           "cell": [
             18,
             12
-          ],
-          "hp": 430
+          ]
         },
         {
           "monster": "twig_blight",
@@ -1670,8 +1650,7 @@
           "cell": [
             18,
             12
-          ],
-          "hp": 150
+          ]
         },
         {
           "monster": "twig_blight",

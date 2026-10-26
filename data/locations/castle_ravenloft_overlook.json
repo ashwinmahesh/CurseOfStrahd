@@ -206,8 +206,7 @@
             20,
             5
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 765
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "swarm_of_bats",
@@ -246,8 +245,7 @@
             20,
             5
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 350
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "swarm_of_bats",

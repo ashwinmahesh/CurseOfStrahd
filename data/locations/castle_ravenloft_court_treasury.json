@@ -262,8 +262,7 @@
             7,
             6
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 660
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "helmed_horror",
@@ -289,8 +288,7 @@
             7,
             6
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 400
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "helmed_horror",

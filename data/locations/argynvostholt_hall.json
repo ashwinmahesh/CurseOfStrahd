@@ -826,8 +826,7 @@
             18,
             3
           ],
-          "name": "Vladimir Horngaard",
-          "hp": 290
+          "name": "Vladimir Horngaard"
         },
         {
           "monster": "revenant",
@@ -870,8 +869,7 @@
             18,
             3
           ],
-          "name": "Vladimir Horngaard",
-          "hp": 140
+          "name": "Vladimir Horngaard"
         }
       ]
     },

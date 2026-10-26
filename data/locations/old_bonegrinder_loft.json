@@ -430,8 +430,7 @@
             10,
             6
           ],
-          "name": "Morgantha",
-          "hp": 310
+          "name": "Morgantha"
         },
         {
           "monster": "night_hag",
@@ -439,8 +438,7 @@
             5,
             3
           ],
-          "name": "Bella Sunbane",
-          "hp": 195
+          "name": "Bella Sunbane"
         },
         {
           "monster": "night_hag",
@@ -448,8 +446,7 @@
             3,
             12
           ],
-          "name": "Offalia Wormwiggle",
-          "hp": 195
+          "name": "Offalia Wormwiggle"
         }
       ],
       "surprise": "",
@@ -471,8 +468,7 @@
             10,
             6
           ],
-          "name": "Morgantha",
-          "hp": 95
+          "name": "Morgantha"
         },
         {
           "monster": "night_hag",
@@ -480,8 +476,7 @@
             5,
             3
           ],
-          "name": "Bella Sunbane",
-          "hp": 60
+          "name": "Bella Sunbane"
         },
         {
           "monster": "night_hag",
@@ -489,8 +484,7 @@
             3,
             12
           ],
-          "name": "Offalia Wormwiggle",
-          "hp": 60
+          "name": "Offalia Wormwiggle"
         }
       ],
       "surprise": "",
@@ -512,8 +506,7 @@
             10,
             6
           ],
-          "name": "Morgantha",
-          "hp": 340
+          "name": "Morgantha"
         },
         {
           "monster": "night_hag",
@@ -521,8 +514,7 @@
             3,
             12
           ],
-          "name": "Offalia Wormwiggle",
-          "hp": 340
+          "name": "Offalia Wormwiggle"
         }
       ],
       "surprise": "",
@@ -544,8 +536,7 @@
             10,
             6
           ],
-          "name": "Morgantha",
-          "hp": 95
+          "name": "Morgantha"
         },
         {
           "monster": "night_hag",
@@ -553,8 +544,7 @@
             3,
             12
           ],
-          "name": "Offalia Wormwiggle",
-          "hp": 60
+          "name": "Offalia Wormwiggle"
         }
       ],
       "surprise": "",
@@ -576,8 +566,7 @@
             4,
             8
           ],
-          "name": "Morgantha",
-          "hp": 110
+          "name": "Morgantha"
         },
         {
           "monster": "night_hag",
@@ -585,8 +574,7 @@
             5,
             3
           ],
-          "name": "Bella Sunbane",
-          "hp": 110
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",
@@ -608,8 +596,7 @@
             10,
             6
           ],
-          "name": "Morgantha",
-          "hp": 95
+          "name": "Morgantha"
         },
         {
           "monster": "night_hag",
@@ -617,8 +604,7 @@
             5,
             3
           ],
-          "name": "Bella Sunbane",
-          "hp": 60
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",
@@ -640,8 +626,7 @@
             12,
             2
           ],
-          "name": "Morgantha",
-          "hp": 300
+          "name": "Morgantha"
         },
         {
           "monster": "swarm_of_rats",
@@ -687,8 +672,7 @@
             10,
             6
           ],
-          "name": "Morgantha",
-          "hp": 100
+          "name": "Morgantha"
         },
         {
           "monster": "swarm_of_rats",
@@ -725,8 +709,7 @@
             10,
             6
           ],
-          "name": "Morgantha",
-          "hp": 85
+          "name": "Morgantha"
         },
         {
           "monster": "swarm_of_rats",
@@ -756,8 +739,7 @@
             7,
             1
           ],
-          "name": "Bella Sunbane",
-          "hp": 300
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",
@@ -774,8 +756,7 @@
             10,
             6
           ],
-          "name": "Bella Sunbane",
-          "hp": 80
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",

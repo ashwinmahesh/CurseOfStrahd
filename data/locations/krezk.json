@@ -1282,8 +1282,7 @@
           "cell": [
             16,
             19
-          ],
-          "hp": 310
+          ]
         },
         {
           "monster": "werewolf",
@@ -1338,8 +1337,7 @@
           "cell": [
             16,
             19
-          ],
-          "hp": 330
+          ]
         },
         {
           "monster": "werewolf",
@@ -1425,8 +1423,7 @@
           "cell": [
             16,
             19
-          ],
-          "hp": 140
+          ]
         },
         {
           "monster": "werewolf",

@@ -743,8 +743,7 @@
           "art": "amber_sentinel",
           "steps_down": {
             "npc": "amber_sentinel"
-          },
-          "hp": 395
+          }
         },
         {
           "monster": "gargoyle",
@@ -803,8 +802,7 @@
           "art": "amber_sentinel",
           "steps_down": {
             "npc": "amber_sentinel"
-          },
-          "hp": 130
+          }
         }
       ],
       "surprise": "",
@@ -826,8 +824,7 @@
           "art": "amber_sentinel",
           "steps_down": {
             "npc": "amber_sentinel"
-          },
-          "hp": 375
+          }
         }
       ],
       "surprise": "",

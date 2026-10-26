@@ -879,8 +879,7 @@
           "cell": [
             22,
             15
-          ],
-          "hp": 435
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -949,8 +948,7 @@
           "cell": [
             22,
             15
-          ],
-          "hp": 420
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -1407,8 +1405,7 @@
           "cell": [
             18,
             4
-          ],
-          "hp": 90
+          ]
         },
         {
           "monster": "will_o_wisp",

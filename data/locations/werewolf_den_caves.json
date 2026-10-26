@@ -902,8 +902,7 @@
           "cell": [
             19,
             20
-          ],
-          "hp": 175
+          ]
         },
         {
           "monster": "werewolf",
@@ -964,8 +963,7 @@
           "cell": [
             19,
             20
-          ],
-          "hp": 145
+          ]
         },
         {
           "monster": "werewolf",
@@ -1195,8 +1193,7 @@
           "cell": [
             19,
             17
-          ],
-          "hp": 185
+          ]
         },
         {
           "monster": "emil_toranescu",

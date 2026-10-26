@@ -1121,8 +1121,7 @@
             28,
             2
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 310
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "dire_wolf",
@@ -1158,8 +1157,7 @@
             28,
             2
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 350
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "dire_wolf",
@@ -1196,8 +1194,7 @@
             5,
             3
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 605
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "swarm_of_bats",
@@ -1229,8 +1226,7 @@
             5,
             3
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 350
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "swarm_of_bats",
@@ -1304,8 +1300,7 @@
             22,
             21
           ],
-          "name": "Rahadin",
-          "hp": 795
+          "name": "Rahadin"
         }
       ],
       "surprise": "",
@@ -1322,8 +1317,7 @@
             22,
             13
           ],
-          "name": "Rahadin",
-          "hp": 600
+          "name": "Rahadin"
         }
       ],
       "surprise": "",

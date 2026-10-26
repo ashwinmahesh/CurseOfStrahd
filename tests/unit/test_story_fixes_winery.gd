@@ -14,14 +14,13 @@ func test_the_reed_isle_waits_for_the_party_to_come_back() -> void:
 	assert_eq(SideQuestPlay.combat_of(beats), "reed_isle_boatmen", "the boat comes on the second visit")
 
 
-## Finding 45: the level 7 Wintersplinter had fewer hit points than level 6's.
-func test_wintersplinter_grows_with_the_party() -> void:
-	var hp := {}
+## Finding 45 (the level 7 Wintersplinter had fewer hit points than level 6's) is settled by the owner's rule of
+## 2026-10-24: no raised Hit Points, so at every level he fights at his stat block's.
+func test_wintersplinter_fights_at_his_stat_block_at_every_level() -> void:
 	for level: int in [5, 6, 7]:
 		var st := SideQuestPlay.party(["ilse_varga"], level, "yester_hill_gulthias_tree", 20)
 		var enc := SideQuestPlay.encounter(st, "yester_hill_gulthias_tree", "summit_ritual")
-		hp[level] = int(((enc["monsters"] as Array)[0] as Dictionary).get("hp", 0))
-	assert_true(int(hp[6]) > int(hp[5]) and int(hp[7]) > int(hp[6]), "more each level: %s" % [hp])
+		assert_false(((enc["monsters"] as Array)[0] as Dictionary).has("hp"), "level %d: his own Hit Points" % level)
 
 
 ## Finding 45: Davian counted "Two" and "Three" whatever was in the ground.

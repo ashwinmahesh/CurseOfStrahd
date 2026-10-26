@@ -1530,8 +1530,7 @@
           "cell": [
             29,
             15
-          ],
-          "hp": 355
+          ]
         },
         {
           "monster": "nightmare",
@@ -1571,8 +1570,7 @@
           "cell": [
             29,
             15
-          ],
-          "hp": 375
+          ]
         },
         {
           "monster": "nightmare",
@@ -1812,8 +1810,7 @@
           "cell": [
             39,
             22
-          ],
-          "hp": 360
+          ]
         },
         {
           "monster": "helmed_horror",
@@ -1978,8 +1975,7 @@
           "cell": [
             39,
             22
-          ],
-          "hp": 130
+          ]
         },
         {
           "monster": "helmed_horror",

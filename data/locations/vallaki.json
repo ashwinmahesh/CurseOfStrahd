@@ -2230,8 +2230,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 85
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2409,8 +2408,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 60
+          "name": "Izek Strazni"
         },
         {
           "monster": "vallaki_guard",
@@ -2502,8 +2500,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 225
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2561,8 +2558,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 85
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2680,8 +2676,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 60
+          "name": "Izek Strazni"
         },
         {
           "monster": "vallaki_guard",
@@ -2749,8 +2744,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 280
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2788,8 +2782,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 95
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2819,8 +2812,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 70
+          "name": "Izek Strazni"
         }
       ],
       "surprise": "",

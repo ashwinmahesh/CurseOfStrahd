@@ -432,8 +432,7 @@
           "cell": [
             6,
             5
-          ],
-          "hp": 455
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -479,8 +478,7 @@
           "cell": [
             6,
             5
-          ],
-          "hp": 350
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -526,8 +524,7 @@
           "cell": [
             16,
             23
-          ],
-          "hp": 345
+          ]
         },
         {
           "monster": "specter",
@@ -566,8 +563,7 @@
           "cell": [
             16,
             23
-          ],
-          "hp": 400
+          ]
         },
         {
           "monster": "specter",

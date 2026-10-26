@@ -644,8 +644,7 @@
             30,
             14
           ],
-          "name": "The Roc of Mount Ghakis",
-          "hp": 285
+          "name": "The Roc of Mount Ghakis"
         }
       ],
       "surprise": "",
@@ -663,8 +662,7 @@
             30,
             14
           ],
-          "name": "The Roc of Mount Ghakis",
-          "hp": 160
+          "name": "The Roc of Mount Ghakis"
         }
       ],
       "surprise": "",
@@ -682,8 +680,7 @@
             30,
             14
           ],
-          "name": "The Roc of Mount Ghakis",
-          "hp": 130
+          "name": "The Roc of Mount Ghakis"
         }
       ],
       "surprise": "",
@@ -700,8 +697,7 @@
           "cell": [
             9,
             18
-          ],
-          "hp": 920
+          ]
         },
         {
           "monster": "ghast",
@@ -798,8 +794,7 @@
           "cell": [
             9,
             18
-          ],
-          "hp": 625
+          ]
         },
         {
           "monster": "ghast",
@@ -856,8 +851,7 @@
           "cell": [
             9,
             18
-          ],
-          "hp": 645
+          ]
         },
         {
           "monster": "ghast",
@@ -905,8 +899,7 @@
           "cell": [
             9,
             18
-          ],
-          "hp": 170
+          ]
         },
         {
           "monster": "ghast",

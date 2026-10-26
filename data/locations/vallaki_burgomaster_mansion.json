@@ -864,8 +864,7 @@
             3,
             11
           ],
-          "name": "Izek Strazni",
-          "hp": 360
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -903,8 +902,7 @@
             3,
             11
           ],
-          "name": "Izek Strazni",
-          "hp": 95
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -934,8 +932,7 @@
             3,
             11
           ],
-          "name": "Izek Strazni",
-          "hp": 60
+          "name": "Izek Strazni"
         }
       ],
       "surprise": "",

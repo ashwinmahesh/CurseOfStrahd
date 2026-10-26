@@ -404,8 +404,7 @@
             9,
             3
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 455
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "vampire_spawn",
@@ -439,8 +438,7 @@
             9,
             3
           ],
-          "name": "Strahd von Zarovich",
-          "hp": 350
+          "name": "Strahd von Zarovich"
         },
         {
           "monster": "vampire_spawn",
