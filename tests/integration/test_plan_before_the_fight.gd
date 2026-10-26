@@ -187,6 +187,8 @@ func test_a_sneaking_party_strikes_with_surprise_and_hidden_members() -> void:
 	await _frames(3)
 	assert_true(v.in_combat, "the party opens the fight")
 	assert_false(v.planning, "turn-based stops for the fight")
+	assert_false(v.sneaking, "and the fight ends the sneaking, once the surprise and hiding it earned are read")
+	assert_false((v.tokens[tucked.id] as CombatToken).sneaking, "nobody stays crouched in the fight")
 	var e := v.combat_view.e
 	for c in e.combatants:
 		if c.side == &"enemy":

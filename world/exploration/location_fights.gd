@@ -170,6 +170,7 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	if who == "":
 		surprised.append_array(LocationStealth.surprised_at_start(view, e))
 	LocationStealth.hide_at_start(view, e)
+	LocationStealth.end_for_fight(view)   # the fight ends the sneaking, now that its surprise and hiding are read
 	LocationPlan.stop(view)
 	(view.st.loc_state(view.loc_id)["encounters"] as Dictionary)[encounter_id] = "started"
 	var ctokens := _fight_tokens(view, e)

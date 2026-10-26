@@ -772,6 +772,16 @@ static func hide_at_start(view: LocationView, e: Encounter) -> void:
 		e.log.add("info", "%s starts the fight hidden (Stealth %d)" % [c.name(), total], c.id)
 
 
+## The fight is on: the party stops sneaking (V can't be used in a fight, and a party that stayed crouched would still be
+## sneaking when it ends). The surprise and the hiding it earned were read just before; the player sneaks again when they
+## choose to.
+static func end_for_fight(view: LocationView) -> void:
+	if not view.sneaking:
+		return
+	view.sneaking = false
+	show_crouch(view)
+
+
 ## The moment a fight opens is still before it: each foe that was waiting in plain view keeps its sight cone for who
 ## it noticed (the fight's own rules, with no facing, take over from its first turn). A foe that wasn't in view sees
 ## all round.

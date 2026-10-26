@@ -135,6 +135,9 @@ When the party opens a fight (an attack on a waiting foe, or stepping into the f
   Three-Quarters Cover from every foe, starts the fight hidden, with the Invisible condition from Hide: attacks
   against them have Disadvantage and theirs have Advantage, until they attack, cast a spell aloud, or a foe gets a
   clear view of them. Hiding ends with the fight.
+- **Sneaking ends:** once the surprise and the hiding are read, the fight ends the party's sneaking: nobody stays
+  crouched in it, and the party walks normally afterwards until the player chooses V again (a fresh Stealth roll if an
+  hour has passed).
 
 ## Who can see you (U10)
 
