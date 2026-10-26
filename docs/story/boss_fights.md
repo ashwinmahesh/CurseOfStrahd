@@ -65,8 +65,8 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1
 | Corvina, named (reward) | 10 | Corvina, the Doorkeeper (105 HP), 4 Helmed Horrors | Corvina, the Doorkeeper (305 HP), 8 Helmed Horrors | 4/8 | 4 |
 | Sarkhaza as she is (an ancient red, 2026-10-18) | 11 | Sarkhaza (200 HP, the old adult red), 2 Wights | Sarkhaza (507 HP), chained, in her lair | 0/8 | 0 |
 | Sarkhaza unchained, salted, the sluice open | 11 | Sarkhaza (212 HP) | Sarkhaza (507 HP), grave-salted, off her chain, no lair | 0/8 | 0 |
-| Khazan, his name standing | 10 | Khazan (210 HP), 2 Specters | Khazan (315 HP), 2 Specters | 3/8 | 3 |
-| Khazan unmade (reward) | 10 | Khazan (125 HP), 4 Specters, Wraith | Khazan (290 HP), 4 Specters, Wraith | 4/8 | 4 |
+| Khazan, his name standing | 10 | Khazan (210 HP), 2 Specters | Khazan (the CR 23 block, 315 HP), 2 Wraiths | 0/8 | 0 (kept as written) |
+| Khazan unmade (reward) | 10 | Khazan (125 HP), 4 Specters, Wraith | Khazan (the CR 23 block, 315 HP), 5 Wraiths | 0/8 | 0 (kept as written) |
 | The Eye Below | 10 | The Eye Below (135 HP), Dream-Gazer | The Eye Below (335 HP), Dream-Gazer | 3/8 | 3 |
 | The Eye, both wardens' ways (reward) | 10 | The Eye Below (100 HP) | The Eye Below (335 HP) | 4/8 | 4 |
 | Ash Effigy and Zorica L7 | 7 | The Ash Effigy (155 HP), Druid, 5 Twig Blights | The Ash Effigy (355 HP), Druid, 5 Twig Blights | 3/8 | 3 |
@@ -146,6 +146,10 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1
   Strahd's visits keep their flee-at-0-HP behaviour.
 - **The harder side (2 in 8)**: Morgantha and Offalia, the two brides, all three brides, the Tinker's Wagon at level 6, Old Greytooth with Szoldar turned,
   Bella on the road. No Hit Point step or helper added landed on 3 for these; the 2 is the step below 3.
+- **Khazan is the CR 23 block the owner chose** (2026-10-21, an Acerak block renamed) and kept as written on 2026-10-26: "a fight the party
+  should run from". His first turn's Meteor Swarm (about 180 damage to each hero after the boss damage) kills a level 10 party in round 1, so his
+  two fights expect no wins (tests: winless_ok, at most 2 in 8). His study was made deeper the same day (15 by 14 squares, was 15 by 6), his
+  chair at the far end from the door.
 - **Sarkhaza is the 2025 Monster Manual's ancient red dragon** (owner, 2026-10-18; CR 24, 507 HP, AC 22), fought at level 11, the game's cap. Her
   first Fire Breath (DC 24, 26d6 in a 90-ft cone) takes a level 11 party: 0 in 8 in every version (tests: at most 1 in 8). On 2026-10-18 the
   keepers' three tricks reached 3 in 8 while the hauled-in collar choked her breath and spells for a minute; on 2026-10-19 the owner had the choke

@@ -264,9 +264,10 @@ func test_sarkhaza_unchained_at_level_11() -> void:
 	assert_true(wins <= 1, "off her chain she takes the party (%d of 8)" % wins)
 
 
-## Khazan's study, the four just inside its door; the hall of names, the four at the stair foot.
-const KHAZAN_STUDY: Array[Vector2i] = [Vector2i(8, 6), Vector2i(9, 6), Vector2i(10, 6), Vector2i(11, 6)]
-const KHAZAN_STAIR: Array[Vector2i] = [Vector2i(14, 17), Vector2i(15, 17), Vector2i(14, 18), Vector2i(15, 18)]
+## Khazan's study, the four just inside its door; the hall of names, the four at the stair foot (8 rows further south
+## since the study was made deeper, owner 2026-10-26).
+const KHAZAN_STUDY: Array[Vector2i] = [Vector2i(8, 14), Vector2i(9, 14), Vector2i(10, 14), Vector2i(11, 14)]
+const KHAZAN_STAIR: Array[Vector2i] = [Vector2i(14, 25), Vector2i(15, 25), Vector2i(14, 26), Vector2i(15, 26)]
 const KHAZAN_DOORS: Array[String] = ["khazan_study_door_w", "khazan_study_door_e"]
 
 
@@ -278,28 +279,36 @@ func test_the_remembered_at_level_10() -> void:
 	assert_true(wins >= 5 and wins <= 8, "the remembered fall in 5 to 8 of 8 (%d)" % wins)
 
 
-## Khazan with his name at level 10: Khazan (315 HP), 2 Specters; 3 in 8, and 1 since foes' cones aim freely (owner,
-## 2026-10-18: accept the new results, no retune).
+## Khazan with his name at level 10: Khazan (the CR 23 block, 315 HP), 2 Wraiths. Owner, 2026-10-26: "keep Khazan as
+## written, a fight the party should run from"; his round 1 Meteor Swarm kills the party, so none in 8 is expected.
 func test_khazan_with_his_name_at_level_10() -> void:
 	speakers_step_aside = true
+	winless_ok = true
 	var wins := await _series("khazan_undercroft", 12, 10, "khazan_named", [1, 2, 3, 4, 5, 6, 7, 8], [], [], KHAZAN_DOORS, KHAZAN_STUDY)
 	assert_true(wins >= 0 and wins <= 2, "Khazan is driven off in 0 to 2 of 8 (%d)" % wins)
 
 
-## Driven off, not destroyed: he leaves the fight below 30 Hit Points and goes back into his name (seed 1 since the
-## 2026-10-19 combat batch; it was seed 7 after foes' cones began to aim freely, and seed 1 before that).
+## Driven off, not destroyed: he leaves the fight below 30 Hit Points and goes back into his name. The CR 23 block the
+## owner kept (2026-10-26: "a fight the party should run from") kills the party before it gets him there (a round 1
+## Meteor Swarm), so the fight opens with a blow that takes him below 30, and the party finishes the Visitors.
 func test_khazan_withdraws_into_his_name() -> void:
+	before_fight = func(e: Encounter) -> void:
+		for c: Combatant in e.combatants:
+			if c.creature is Monster and str((c.creature as Monster).data.get("id", "")) == "khazan":
+				e.deal_damage(e.combatants[0], c, [{"amount": c.creature.hp - 20, "type": "force"}], false, "test")
 	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 1, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
 	assert_eq(str(res["outcome"]), "victory", "seed 1 drives him off")
 	assert_true((res["story_flags"] as Dictionary).has("khazan_withdrawn"), "back into his name")
 	assert_true((res["departed"] as Array).has("withdraw"), "he left the fight, he didn't die in it")
 
 
-## Khazan unmade at level 10: Khazan (290 HP), 4 Specters, Wraith; 4 in 8.
+## Khazan unmade at level 10: Khazan (the CR 23 block, 315 HP), 5 Wraiths. Kept as written like the fight above (owner,
+## 2026-10-26), so none in 8 is expected.
 func test_khazan_unmade_at_level_10() -> void:
 	speakers_step_aside = true
+	winless_ok = true
 	var wins := await _series("khazan_undercroft", 12, 10, "khazan_unmade", [1, 2, 3, 4, 5, 6, 7, 8], ["khazan_name_broken"], [], KHAZAN_DOORS, KHAZAN_STUDY)
-	assert_true(wins >= 2 and wins <= 5, "Khazan unmade falls in 2 to 5 of 8 (%d)" % wins)
+	assert_true(wins >= 0 and wins <= 2, "Khazan unmade falls in 0 to 2 of 8 (%d)" % wins)
 
 
 ## The chamber of the Eye, the four at the top of its throat; the hall of sleepers, the four at the stair foot.

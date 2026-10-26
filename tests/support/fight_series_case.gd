@@ -21,6 +21,9 @@ var custom_fight: Dictionary = {}
 ## A trigger to fire to start the fight (open:hag_oven, check:rahadin_footlocker:failure), for an encounter whose versions have
 ## different triggers: that trigger starts its own version (LocationFights._trigger_encounter).
 var fire_trigger := ""
+## Run on the started fight's Encounter before the autopilot plays it, for a test of how a boss leaves rather than whether
+## the party can get him there (one started hurt): unset, nothing more.
+var before_fight: Callable
 ## Whether a series may end without a win, for a fight whose result was accepted at none in 8 (a boss that hits 25% harder
 ## since 2026-10-19, no retune): unset, every series needs a win.
 var winless_ok := false
@@ -45,6 +48,7 @@ const BOSS_FIGHTS: Array[String] = [
 
 func after_each() -> void:
 	winless_ok = false
+	before_fight = Callable()
 	if root != null:
 		root.queue_free()
 		root = null
@@ -97,6 +101,8 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	assert_true(started or v.start_encounter(encounter), "%s starts" % encounter)
 	await _frames(2)
 	var e := v.combat_view.e
+	if before_fight.is_valid():
+		before_fight.call(e)
 	var was_full := PartyAutopilot.full
 	PartyAutopilot.full = PartyAutopilot.full_by_default or encounter in BOSS_FIGHTS
 	var res := PartyAutopilot.new(e).run(30)

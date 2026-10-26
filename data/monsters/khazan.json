@@ -3,7 +3,7 @@
   "name": "Khazan",
   "source": {
     "book": "custom",
-    "note": "A side quest boss of our own (The Name Over the Door, docs/story/side_quests.md), built down from the 2025 Monster Manual's lich (CR 21) to fit a party of level 10 to 11: an archmage of the old kingdom who keeps himself in the world by being remembered, with the lich's touch and bursts, a short list of spells, legendary actions and a lair. While his name over the tower door stands he can't be destroyed, only driven back into it. Drawn with Exethanter's sprite."
+    "note": "A side quest boss of our own (The Name Over the Door, docs/story/side_quests.md). Since 2026-10-26 his numbers are the stat block Ashwin chose (2026-10-21: an Acerak block, renamed Khazan, without Invoke Curse and the Talisman of the Sphere), CR 23. Departures: one Concentration at a time, not two (Multi-Concentration isn't built); Detect Thoughts and Teleport aren't on his list (the engine doesn't run them in a fight); Misty Step as a Bonus Action is text only; the old immunity to nonmagical weapons is left out (the 2024 rules have none). His lair and his name are the game's own. While his name over the tower door stands he can't be destroyed, only driven back into it. Drawn with Exethanter's sprite."
   },
   "size": "medium",
   "type": "undead",
@@ -14,69 +14,96 @@
   ],
   "alignment": "neutral evil",
   "art": "exethanter",
-  "ac": 18,
-  "ac_note": "warded robes",
-  "initiative": 7,
+  "ac": 24,
+  "ac_note": "natural armor",
+  "initiative": 3,
   "hp": {
-    "average": 190,
-    "dice": "20d8+100"
+    "average": 315,
+    "dice": "42d8+126"
   },
   "speed": {
     "walk": 30
   },
   "abilities": {
-    "str": 11,
+    "str": 13,
     "dex": 16,
     "con": 20,
-    "int": 21,
-    "wis": 14,
-    "cha": 16
+    "int": 27,
+    "wis": 21,
+    "cha": 20
   },
   "saves": {
-    "con": 10,
-    "int": 10,
-    "wis": 7
+    "dex": 10,
+    "con": 12,
+    "int": 15,
+    "wis": 12
   },
   "skills": {
-    "arcana": 15,
-    "history": 15,
-    "insight": 7,
-    "perception": 7
+    "arcana": 22,
+    "history": 22,
+    "insight": 12,
+    "perception": 12,
+    "religion": 15
   },
   "resistances": [
     "cold",
-    "lightning",
-    "necrotic"
+    "lightning"
   ],
   "immunities": [
+    "necrotic",
     "poison"
   ],
   "condition_immunities": [
+    "blinded",
     "charmed",
+    "deafened",
     "exhaustion",
     "frightened",
     "paralyzed",
-    "poisoned"
+    "petrified",
+    "poisoned",
+    "stunned"
   ],
   "senses": {
     "truesight": 120
   },
-  "passive_perception": 17,
+  "passive_perception": 22,
   "languages": [
-    "Common",
-    "Old Barovian"
+    "All"
   ],
-  "cr": 14,
-  "xp": 11500,
-  "proficiency_bonus": 5,
+  "cr": 23,
+  "xp": 50000,
+  "proficiency_bonus": 7,
   "traits": [
     {
       "id": "legendary_resistance",
-      "name": "Legendary Resistance (3/Day)",
+      "name": "Legendary Resistance (5/Day)",
       "action": "special",
-      "summary": "Three times a day, a failed saving throw becomes a success.",
-      "text": "When Khazan fails a saving throw, he can choose to succeed instead, three times a day.",
+      "summary": "Five times a day, a failed saving throw that would put a condition on him, or one against a big spell, becomes a success.",
+      "text": "When Khazan fails a saving throw, he can choose to succeed instead, five times a day.",
       "implemented": "engine"
+    },
+    {
+      "id": "turn_resistance",
+      "name": "Turn Resistance",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:turn_undead"
+        }
+      ],
+      "summary": "Advantage on saving throws against any effect that turns Undead.",
+      "text": "Khazan has Advantage on saving throws against any effect that turns Undead.",
+      "implemented": "engine"
+    },
+    {
+      "id": "multi_concentration",
+      "name": "Multi-Concentration",
+      "action": "passive",
+      "summary": "He can concentrate on two spells at once (in the game, one).",
+      "text": "Khazan can maintain Concentration on two spells at once.",
+      "implemented": "text"
     },
     {
       "id": "remembered",
@@ -89,58 +116,17 @@
   ],
   "actions": [
     {
-      "id": "multiattack",
-      "name": "Multiattack",
-      "kind": "multiattack",
-      "multiattack": [
-        {
-          "action": "eldritch_burst",
-          "count": 1,
-          "or": [
-            "paralyzing_touch"
-          ]
-        },
-        {
-          "action": "eldritch_burst",
-          "count": 1
-        }
-      ],
-      "summary": "Two Eldritch Bursts, or a Paralyzing Touch and an Eldritch Burst.",
-      "text": "Khazan makes two Eldritch Burst attacks, or one Paralyzing Touch and one Eldritch Burst."
-    },
-    {
-      "id": "eldritch_burst",
-      "name": "Eldritch Burst",
-      "kind": "ranged",
-      "attack": {
-        "bonus": 10,
-        "range": [
-          120,
-          120
-        ]
-      },
-      "damage": [
-        {
-          "average": 22,
-          "dice": "4d10",
-          "type": "force"
-        }
-      ],
-      "summary": "A bolt of raw magic at a foe up to 120 ft away.",
-      "text": "Ranged Spell Attack Roll: +10, range 120 ft. Hit: 22 (4d10) Force damage."
-    },
-    {
       "id": "paralyzing_touch",
       "name": "Paralyzing Touch",
       "kind": "melee",
       "attack": {
-        "bonus": 10,
+        "bonus": 15,
         "reach": 5
       },
       "damage": [
         {
-          "average": 14,
-          "dice": "4d6",
+          "average": 15,
+          "dice": "3d6+5",
           "type": "cold"
         }
       ],
@@ -148,23 +134,71 @@
         {
           "do": "condition",
           "condition": "paralyzed",
-          "save": {
-            "ability": "con",
-            "dc": 18
-          },
-          "until": "target_turn_end"
+          "until": "source_turn_start"
         }
       ],
-      "summary": "A cold touch; DC 18 Con save or Paralyzed until the end of the target's next turn.",
-      "text": "Melee Spell Attack Roll: +10, reach 5 ft. Hit: 14 (4d6) Cold damage, and the target makes a DC 18 Constitution saving throw or has the Paralyzed condition until the end of its next turn."
+      "summary": "A freezing touch: 3d6+5 Cold, and the target is Paralyzed until the start of his next turn.",
+      "text": "Melee Spell Attack Roll: +15, reach 5 ft. Hit: 15 (3d6 + 5) Cold damage, and the target has the Paralyzed condition until the start of Khazan's next turn."
     },
+    {
+      "id": "eldritch_burst",
+      "name": "Eldritch Burst",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 15,
+        "range": [
+          120,
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 31,
+          "dice": "4d12+5",
+          "type": "force"
+        }
+      ],
+      "summary": "A bolt of raw magic at a foe up to 120 ft away: 4d12+5 Force.",
+      "text": "Ranged Spell Attack Roll: +15, range 120 ft. Hit: 31 (4d12 + 5) Force damage."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Casts wizard spells (Int, DC 23, +15 to hit): at will up to Fireball and Lightning Bolt at 5th level, slots from 4th to 9th.",
+      "text": "Khazan is a 20th-level spellcaster using Intelligence (spell save DC 23, +15 to hit with spell attacks). At will: Detect Magic, Dispel Magic, Fireball (5th level), Lightning Bolt (5th level), Mage Hand, Prestidigitation, Shield, Counterspell, Misty Step and Sleet Storm. 4th level (3 slots): Blight, Ice Storm, Phantasmal Killer. 5th (3 slots): Cloudkill, Hold Monster, Wall of Force. 6th (3 slots): Chain Lightning, Circle of Death, Disintegrate. 7th (2 slots): Finger of Death, Plane Shift. 8th (2 slots): Maze, Mind Blank. 9th (2 slots): Power Word Kill, Time Stop, Meteor Swarm, Prismatic Wall."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "misty_step",
+      "name": "Misty Step",
+      "kind": "special",
+      "summary": "Teleports up to 30 ft to a space he can see (text only in the game).",
+      "text": "Khazan teleports up to 30 feet to an unoccupied space he can see."
+    }
+  ],
+  "reactions": [
+    {
+      "id": "protective_magic",
+      "name": "Protective Magic",
+      "kind": "spellcasting",
+      "summary": "Casts Counterspell or Shield as a Reaction.",
+      "text": "Khazan casts Counterspell or Shield in response to that spell's trigger.",
+      "cast": [
+        "counterspell",
+        "shield"
+      ]
+    }
+  ],
+  "legendary_strikes": [
     {
       "id": "disrupt_life",
       "name": "Disrupt Life",
       "kind": "save",
       "save": {
         "ability": "con",
-        "dc": 18,
+        "dc": 20,
         "success": "half"
       },
       "area": {
@@ -176,38 +210,72 @@
       },
       "damage": [
         {
-          "average": 14,
-          "dice": "4d6",
+          "average": 42,
+          "dice": "12d6",
           "type": "necrotic"
         }
       ],
-      "summary": "Everything living within 20 ft: DC 18 Con save, 4d6 Necrotic, half on a success.",
-      "text": "Constitution Saving Throw: DC 18, each creature within 20 feet of Khazan that isn't Undead. Failure: 14 (4d6) Necrotic damage. Success: Half damage."
-    },
-    {
-      "id": "spellcasting",
-      "name": "Spellcasting",
-      "kind": "spellcasting",
-      "summary": "Casts wizard spells (Int, DC 18, +10 to hit).",
-      "text": "Khazan casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 18, +10 to hit with spell attacks): at will, Mage Hand and Ray of Frost; twice a day each, Fireball and Lightning Bolt; once a day each, Cone of Cold and Hold Monster."
+      "summary": "Everything living within 20 ft: DC 20 Con save, 12d6 Necrotic, half on a success.",
+      "text": "Constitution Saving Throw: DC 20, each creature within 20 feet of Khazan that isn't Undead. Failure: 42 (12d6) Necrotic damage. Success: Half damage."
     }
   ],
   "spellcasting": {
     "ability": "int",
-    "dc": 18,
-    "attack": 10,
+    "dc": 23,
+    "attack": 15,
     "at_will": [
+      "detect_magic",
+      "dispel_magic",
+      "fireball",
+      "lightning_bolt",
       "mage_hand",
-      "ray_of_frost"
+      "prestidigitation",
+      "shield",
+      "counterspell",
+      "misty_step",
+      "sleet_storm"
     ],
-    "per_day": {
-      "2": [
-        "fireball",
-        "lightning_bolt"
+    "levels": {
+      "fireball": 5,
+      "lightning_bolt": 5
+    },
+    "slots": {
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2,
+      "8": 2,
+      "9": 2
+    },
+    "prepared": {
+      "4": [
+        "blight",
+        "ice_storm",
+        "phantasmal_killer"
       ],
-      "1": [
-        "cone_of_cold",
-        "hold_monster"
+      "5": [
+        "cloudkill",
+        "hold_monster",
+        "wall_of_force"
+      ],
+      "6": [
+        "chain_lightning",
+        "circle_of_death",
+        "disintegrate"
+      ],
+      "7": [
+        "finger_of_death",
+        "plane_shift"
+      ],
+      "8": [
+        "maze",
+        "mind_blank"
+      ],
+      "9": [
+        "power_word_kill",
+        "time_stop",
+        "meteor_swarm",
+        "prismatic_wall"
       ]
     }
   },
@@ -215,25 +283,53 @@
     "per_round": 3,
     "options": [
       {
-        "id": "burst",
-        "name": "Burst",
-        "cost": 2,
+        "id": "at_will_fireball",
+        "name": "At-Will Spell: Fireball",
+        "cost": 1,
+        "spell": "fireball",
+        "summary": "Casts Fireball at 5th level."
+      },
+      {
+        "id": "at_will_lightning",
+        "name": "At-Will Spell: Lightning Bolt",
+        "cost": 1,
+        "spell": "lightning_bolt",
+        "summary": "Casts Lightning Bolt at 5th level."
+      },
+      {
+        "id": "deathly_teleport",
+        "name": "Deathly Teleport",
+        "cost": 1,
+        "move": true,
+        "teleport": true,
+        "ft": 60,
+        "burst": {
+          "dice": "2d10",
+          "type": "necrotic",
+          "radius": 5
+        },
+        "summary": "Teleports up to 60 ft; each creature within 5 ft of the space he left takes 2d10 Necrotic."
+      },
+      {
+        "id": "spell_attack_touch",
+        "name": "Spell Attack: Paralyzing Touch",
+        "cost": 1,
+        "action": "paralyzing_touch",
+        "summary": "Makes one Paralyzing Touch."
+      },
+      {
+        "id": "spell_attack_burst",
+        "name": "Spell Attack: Eldritch Burst",
+        "cost": 1,
         "action": "eldritch_burst",
         "summary": "Makes one Eldritch Burst."
       },
       {
-        "id": "disrupt",
+        "id": "disrupt_life",
         "name": "Disrupt Life",
-        "cost": 3,
-        "action": "disrupt_life",
-        "summary": "Uses Disrupt Life."
-      },
-      {
-        "id": "between",
-        "name": "Between the Shelves",
         "cost": 1,
-        "move": true,
-        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+        "action": "disrupt_life",
+        "summary": "Everything living within 20 ft: DC 20 Con save, 12d6 Necrotic, half on a success."
       }
     ]
   },
@@ -292,7 +388,7 @@
       "text": "The cold of the lake overhead comes down through the stone onto up to two creatures Khazan can see. Each makes a DC 15 Constitution saving throw, taking 10 (3d6) Cold damage on a failure or half as much on a success."
     }
   ],
-  "legendary_resistance": 3,
+  "legendary_resistance": 5,
   "regions": [
     "van_richtens_tower"
   ],

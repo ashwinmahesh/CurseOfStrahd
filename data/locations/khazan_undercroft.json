@@ -7,11 +7,19 @@
   "map": {
     "rows": [
       "##############################",
-      "###.............###.........##",
+      "###.............##############",
+      "##...............#############",
+      "##...............#############",
+      "##...............#############",
+      "##...............#############",
+      "##...............#############",
+      "##...............#############",
+      "##...............#############",
+      "##...............##.........##",
       "##...............##.=..wwww.##",
+      "##..=........=...##....wwww.##",
       "##...............##....wwww.##",
-      "##...............##....wwww.##",
-      "##..=........=...##.=.......##",
+      "##...............##.=.......##",
       "##...............##.........##",
       "#########..###########.#######",
       "####......................####",
@@ -41,11 +49,11 @@
       "cells": [
         [
           11,
-          16
+          24
         ],
         [
           18,
-          21
+          29
         ]
       ]
     },
@@ -55,11 +63,11 @@
       "cells": [
         [
           3,
-          8
+          16
         ],
         [
           26,
-          15
+          23
         ]
       ]
     },
@@ -69,11 +77,11 @@
       "cells": [
         [
           19,
-          1
+          9
         ],
         [
           27,
-          6
+          14
         ]
       ]
     },
@@ -87,7 +95,7 @@
         ],
         [
           16,
-          6
+          14
         ]
       ]
     }
@@ -95,11 +103,11 @@
   "spawns": {
     "default": [
       14,
-      20
+      28
     ],
     "from_tower": [
       14,
-      20
+      28
     ]
   },
   "exits": [
@@ -107,7 +115,7 @@
       "id": "undercroft_up",
       "cell": [
         14,
-        23
+        31
       ],
       "to": "van_richtens_tower_interior",
       "spawn": "from_undercroft",
@@ -117,7 +125,7 @@
       "id": "undercroft_up_2",
       "cell": [
         15,
-        23
+        31
       ],
       "to": "van_richtens_tower_interior",
       "spawn": "from_undercroft",
@@ -129,7 +137,7 @@
       "id": "khazan_study_door_w",
       "cell": [
         9,
-        7
+        15
       ],
       "label": "The study door"
     },
@@ -137,7 +145,7 @@
       "id": "khazan_study_door_e",
       "cell": [
         10,
-        7
+        15
       ],
       "label": "The study door"
     }
@@ -147,7 +155,7 @@
       "id": "undercroft_glyphs",
       "cell": [
         13,
-        20
+        28
       ],
       "kind": "examine",
       "label": "Letters in the steps",
@@ -157,7 +165,7 @@
       "id": "undercroft_puddle",
       "cell": [
         12,
-        19
+        27
       ],
       "kind": "decor",
       "label": "Water",
@@ -167,7 +175,7 @@
       "id": "undercroft_ice",
       "cell": [
         17,
-        20
+        28
       ],
       "kind": "decor",
       "label": "Ice",
@@ -177,7 +185,7 @@
       "id": "undercroft_lamp",
       "cell": [
         12,
-        17
+        25
       ],
       "kind": "decor",
       "label": "A lamp bracket",
@@ -187,7 +195,7 @@
       "id": "undercroft_cobwebs",
       "cell": [
         17,
-        17
+        25
       ],
       "kind": "decor",
       "label": "Cobwebs",
@@ -197,7 +205,7 @@
       "id": "names_shelves",
       "cell": [
         5,
-        8
+        16
       ],
       "kind": "examine",
       "label": "Shelves of books",
@@ -207,7 +215,7 @@
       "id": "names_shelves_2",
       "cell": [
         12,
-        8
+        16
       ],
       "kind": "decor",
       "label": "Shelves of books",
@@ -217,7 +225,7 @@
       "id": "names_shelves_3",
       "cell": [
         19,
-        8
+        16
       ],
       "kind": "decor",
       "label": "Shelves of books",
@@ -227,7 +235,7 @@
       "id": "names_shelves_4",
       "cell": [
         24,
-        8
+        16
       ],
       "kind": "decor",
       "label": "Shelves of books",
@@ -237,7 +245,7 @@
       "id": "names_wall",
       "cell": [
         3,
-        9
+        17
       ],
       "kind": "examine",
       "label": "Names on the wall",
@@ -247,7 +255,7 @@
       "id": "names_lectern",
       "cell": [
         8,
-        11
+        19
       ],
       "kind": "examine",
       "label": "A lectern",
@@ -257,7 +265,7 @@
       "id": "names_lectern_2",
       "cell": [
         14,
-        11
+        19
       ],
       "kind": "decor",
       "label": "A lectern",
@@ -267,7 +275,7 @@
       "id": "names_lectern_3",
       "cell": [
         20,
-        11
+        19
       ],
       "kind": "decor",
       "label": "A lectern",
@@ -277,7 +285,7 @@
       "id": "names_fallen",
       "cell": [
         8,
-        12
+        20
       ],
       "kind": "decor",
       "label": "Fallen books",
@@ -287,7 +295,7 @@
       "id": "names_fallen_2",
       "cell": [
         14,
-        12
+        20
       ],
       "kind": "decor",
       "label": "Fallen books",
@@ -297,7 +305,7 @@
       "id": "names_fallen_3",
       "cell": [
         20,
-        12
+        20
       ],
       "kind": "decor",
       "label": "Fallen books",
@@ -307,7 +315,7 @@
       "id": "names_notes",
       "cell": [
         11,
-        13
+        21
       ],
       "kind": "decor",
       "label": "Loose pages",
@@ -317,7 +325,7 @@
       "id": "names_candles",
       "cell": [
         18,
-        14
+        22
       ],
       "kind": "decor",
       "label": "Candles",
@@ -327,7 +335,7 @@
       "id": "names_cobwebs",
       "cell": [
         26,
-        13
+        21
       ],
       "kind": "decor",
       "label": "Cobwebs",
@@ -337,7 +345,7 @@
       "id": "names_table",
       "cell": [
         6,
-        14
+        22
       ],
       "kind": "examine",
       "label": "A table of open books",
@@ -347,7 +355,7 @@
       "id": "crypt_coffin",
       "cell": [
         20,
-        2
+        10
       ],
       "kind": "examine",
       "label": "A stone coffin",
@@ -357,7 +365,7 @@
       "id": "crypt_coffin_2",
       "cell": [
         20,
-        5
+        13
       ],
       "kind": "decor",
       "label": "A stone coffin",
@@ -367,7 +375,7 @@
       "id": "crypt_lid",
       "cell": [
         21,
-        4
+        12
       ],
       "kind": "decor",
       "label": "A coffin lid",
@@ -377,7 +385,7 @@
       "id": "crypt_bones",
       "cell": [
         22,
-        6
+        14
       ],
       "kind": "decor",
       "label": "Bones in the water",
@@ -387,7 +395,7 @@
       "id": "crypt_drip",
       "cell": [
         21,
-        2
+        10
       ],
       "kind": "examine",
       "label": "The lake, coming in",
@@ -397,7 +405,7 @@
       "id": "crypt_bracers",
       "cell": [
         27,
-        5
+        13
       ],
       "kind": "search",
       "label": "Something in the silt",
@@ -442,7 +450,7 @@
       "id": "khazan_reading",
       "cell": [
         4,
-        5
+        11
       ],
       "kind": "decor",
       "label": "A reading table",
@@ -452,7 +460,7 @@
       "id": "khazan_reading_2",
       "cell": [
         13,
-        5
+        11
       ],
       "kind": "decor",
       "label": "A reading table",
@@ -492,7 +500,7 @@
       "id": "khazan_circle",
       "cell": [
         9,
-        4
+        7
       ],
       "kind": "examine",
       "label": "A circle on the floor",
@@ -502,7 +510,7 @@
       "id": "khazan_floor_books",
       "cell": [
         7,
-        4
+        7
       ],
       "kind": "decor",
       "label": "Books",
@@ -512,7 +520,7 @@
       "id": "khazan_book_stack",
       "cell": [
         11,
-        5
+        11
       ],
       "kind": "decor",
       "label": "Books",
@@ -522,7 +530,7 @@
       "id": "khazan_notes",
       "cell": [
         3,
-        4
+        6
       ],
       "kind": "decor",
       "label": "Notes",
@@ -532,7 +540,7 @@
       "id": "khazan_mobile",
       "cell": [
         12,
-        4
+        7
       ],
       "kind": "examine",
       "label": "A brass orrery",
@@ -544,7 +552,7 @@
       "id": "khazan_coffer",
       "cell": [
         15,
-        5
+        2
       ],
       "label": "Khazan's coffer",
       "model": "chest_iron",
@@ -586,7 +594,7 @@
     {
       "cell": [
         18,
-        14
+        22
       ],
       "kind": "candle",
       "bright_ft": 5,
@@ -595,7 +603,7 @@
     {
       "cell": [
         12,
-        17
+        25
       ],
       "kind": "lamp",
       "bright_ft": 10,
@@ -604,7 +612,7 @@
     {
       "cell": [
         24,
-        3
+        11
       ],
       "kind": "magic",
       "color": "sickly",
@@ -647,7 +655,7 @@
           "monster": "banshee",
           "cell": [
             20,
-            9
+            17
           ],
           "name": "The First Visitor"
         },
@@ -655,7 +663,7 @@
           "monster": "ghost",
           "cell": [
             5,
-            13
+            21
           ],
           "name": "A Remembered Knight"
         },
@@ -663,7 +671,7 @@
           "monster": "ghost",
           "cell": [
             23,
-            10
+            18
           ],
           "name": "A Remembered Knight"
         },
@@ -671,7 +679,7 @@
           "monster": "specter",
           "cell": [
             6,
-            9
+            17
           ],
           "name": "A Visitor"
         },
@@ -679,7 +687,7 @@
           "monster": "specter",
           "cell": [
             12,
-            10
+            18
           ],
           "name": "A Visitor"
         },
@@ -687,7 +695,7 @@
           "monster": "specter",
           "cell": [
             17,
-            10
+            18
           ],
           "name": "A Visitor"
         },
@@ -695,7 +703,7 @@
           "monster": "specter",
           "cell": [
             24,
-            12
+            20
           ],
           "name": "A Visitor"
         },
@@ -703,7 +711,7 @@
           "monster": "wraith",
           "cell": [
             9,
-            13
+            21
           ],
           "name": "The Second Visitor"
         },
@@ -711,7 +719,7 @@
           "monster": "specter",
           "cell": [
             22,
-            14
+            22
           ],
           "name": "A Visitor"
         }
@@ -733,18 +741,18 @@
           ]
         },
         {
-          "monster": "specter",
+          "monster": "wraith",
           "cell": [
             5,
-            4
+            5
           ],
           "name": "A Visitor"
         },
         {
-          "monster": "specter",
+          "monster": "wraith",
           "cell": [
             13,
-            3
+            4
           ],
           "name": "A Visitor"
         }
@@ -776,18 +784,18 @@
           ]
         },
         {
-          "monster": "specter",
+          "monster": "wraith",
           "cell": [
             5,
-            4
+            5
           ],
           "name": "A Visitor"
         },
         {
-          "monster": "specter",
+          "monster": "wraith",
           "cell": [
             13,
-            3
+            4
           ],
           "name": "A Visitor"
         }
@@ -814,33 +822,9 @@
           ]
         },
         {
-          "monster": "specter",
+          "monster": "wraith",
           "cell": [
             5,
-            4
-          ],
-          "name": "A Visitor"
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            13,
-            3
-          ],
-          "name": "A Visitor"
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            3,
-            2
-          ],
-          "name": "A Visitor"
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            15,
             5
           ],
           "name": "A Visitor"
@@ -848,8 +832,32 @@
         {
           "monster": "wraith",
           "cell": [
+            13,
+            4
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
             3,
+            3
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            15,
             6
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            3,
+            8
           ],
           "name": "A Remembered Knight"
         }

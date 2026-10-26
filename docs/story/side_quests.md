@@ -1351,13 +1351,16 @@ in the study Khazan's book of names ends with Ezmerelda's, Van Richten's and, in
 comes in says to open it; every one of them kept him. He tells the party if they've read the book, or Arcana DC 16
 works it out. **Second twist:** without his name he doesn't know who he is, and asks to hear it once more.
 
-- **Boss: Khazan** (data/monsters/khazan.json, `source.book: custom`, built down from the 2025 Monster Manual's lich,
-  drawn with Exethanter's sprite): Medium undead, AC 18, 190 HP, two Eldritch Bursts (+10, 4d10 force) or a Paralyzing
-  Touch and a burst, Fireball and Lightning Bolt twice a day, Cone of Cold and Hold Monster once, Disrupt Life,
-  Legendary Resistance (3/day), a burst, a step or Disrupt Life between turns, and his undercroft on initiative 20
-  (every name he knows, whispered; the cold of the lake overhead). CR 14.
-- **A phased fight.** While the name stands (`khazan_named`): 210 HP, two Visitors (specters), his lair; he can't be
-  destroyed, and below 30 HP he comes apart into dust that goes up through the ceiling toward the door (`withdraw`,
+- **Boss: Khazan** (data/monsters/khazan.json, `source.book: custom`, drawn with Exethanter's sprite): since 2026-10-26
+  the stat block the owner chose (an Acerak block renamed, CR 23) and kept as written, "a fight the party should run
+  from": AC 24, 315 HP, spell attack +15 and DC 23, at-will 5th-level Fireball and Lightning Bolt, Counterspell and
+  Shield, spell slots up to 9th level (Meteor Swarm, Power Word Kill, Time Stop), Legendary Resistance (5/day), three
+  legendary actions a round from six one-use options (Deathly Teleport, Disrupt Life among them), and his undercroft on
+  initiative 20 (every name he knows, whispered; the cold of the lake overhead). His Visitors are wraiths. Below a
+  quarter of his Hit Points he may Plane Shift out (the AI's escape), which the game counts as the fight won.
+- **His study** is 15 squares wide and 14 deep (made deeper on 2026-10-26, it was 6), his chair, desk and shelves at the
+  far end from the door, the circle in the middle and the reading tables near the door.
+- **A phased fight.** While the name stands (`khazan_named`): two Visitors, his lair; he can't be destroyed, and below 30 HP he comes apart into dust that goes up through the ceiling toward the door (`withdraw`,
   `khazan_withdrawn`). The autopilot drives him off 5 times in 8 at level 10 (2026-10-13, retuned for the sharp test party to 5 in 8; the boss versions were retuned again on 2026-10-14 to 3 in 8 for the party at full ability, so the Hit Points and helpers below are the 5 in 8 ones: see docs/story/boss_fights.md for the current line-ups).
   Unmade at the door (Athletics DC 16, or chisel it out over a day), he forms again in his chair without it
   (`khazan_unmade`): 125 HP, four Visitors and a remembered knight (a wraith), no lair, no way back; given his name to
