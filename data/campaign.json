@@ -1,3 +1,4 @@
 {
-  "module": "res://story/strahd_campaign.gd"
+  "module": "res://story/strahd_campaign.gd",
+  "look": "res://world/look/strahd_look.gd"
 }

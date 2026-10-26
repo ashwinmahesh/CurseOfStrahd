@@ -245,8 +245,8 @@ static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: M
 ## corridor, a tunnel under the wall over it), not framed.
 static func _framed_sides(board: ArenaBoard, n: Vector2i, along: Vector2i, style: String) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
-	if not BuildingKit.has("kit_%s_doorway" % style) or CastleBuilder.claims(board, n - along) \
-			or CastleBuilder.claims(board, n + along):
+	if not BuildingKit.has("kit_%s_doorway" % style) or CampaignLook.current().claims(board, n - along) \
+			or CampaignLook.current().claims(board, n + along):
 		return out   # the castle's roofs: a passage through its own walls (W19)
 	if Caves.owns(board, n - along) or Caves.owns(board, n + along):
 		return out   # a gap in a cave's rock: the door brings its own frame

@@ -170,7 +170,7 @@ func _ready() -> void:
 	LocationBuilder._build_props(self)
 	LocationBuilder.open_small_decor(self)
 	LocationBuilder._build_lights(self)
-	AmberGlow.dress_place(self)   # the Amber Temple's own small things: glints on the offerings, the sanctum's braziers
+	CampaignLook.current().dress_place(self)   # the Amber Temple's own small things: glints on the offerings, the sanctum's braziers
 	LocationNpcs._build_npcs(self)
 	LocationParty._place_party(self)
 	LocationTraps._mark_found_traps(self)
@@ -225,7 +225,7 @@ func _process(delta: float) -> void:
 	if _exit_check <= 0.0:
 		_exit_check = 0.25
 		refresh_exits()
-		AmberGlow.refresh(self)   # the temple's amber: waiting, speaking, sated or sealed
+		CampaignLook.current().refresh(self)   # the temple's amber: waiting, speaking, sated or sealed
 		LocationStealth.refresh_waiting(self)   # a door opened, a lamp lit: foes come into view
 	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.mesh_occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
@@ -304,7 +304,7 @@ func refresh_exits() -> void:
 ## Whose line is on screen now ("" when none): the amber of a vestige speaking flares (AmberGlow).
 func set_speaking(speaker_id: String) -> void:
 	speaking = speaker_id
-	AmberGlow.refresh(self)
+	CampaignLook.current().refresh(self)
 
 
 ## The square of a location prop by its id, or null.

@@ -119,24 +119,15 @@ static func _place(board: ArenaBoard, spec: Dictionary, is_container: bool) -> N
 		bank.position = board.cell_center(cell)
 		root.add_child(bank)
 		return root
-	if art == "amber_case":
-		# The Amber Temple's amber (AmberGlow): built in code and lit from inside in the Modern finish; Classic keeps the
-		# lying box it was frozen with (the catalog entry's `classic`).
-		if Look.modern():
-			return AmberGlow.place(board, root, cell, look)
-		art = str(look.get("classic", "amber_sarcophagus"))
-	if art == "castle_model":
-		# The table model of Castle Ravenloft in Exethanter's study (CastleModel), built from the castle kit in the Modern
-		# finish; Classic keeps the round table's picture (the catalog entry's `classic`).
-		if Look.modern():
-			return CastleModel.place(board, root, cell)
-		art = str(look.get("classic", "table"))
+	# Set pieces the campaign builds in code (CampaignLook.place_special): its amber, a table model of its castle, a dais;
+	# in the Classic finish an entry's `classic` art stands in.
+	var special := CampaignLook.current().place_special(art, board, root, cell, spec, look)
+	if bool(special.get("handled", false)):
+		return special["node"] as Node3D
+	art = str(special.get("art", art))
 	if art == "light_curtain":
 		# A curtain of cold light across a passage (LightCurtain): drawn in code in either finish, there's no picture.
 		return LightCurtain.place(board, root, cell, spec)
-	if art == "sentinel_dais":
-		# The low dais the Amber Sentinel stands on (AmberColossus), in the Modern finish; Classic keeps the bare snow.
-		return AmberColossus.dais(board, root, cell, spec, str(look.get("case", "")) == "cracked") if Look.modern() else root
 	var on_wall_square := _wall_at(board, cell)
 	if on_wall_square and has_art(str(look.get("on_wall", ""))):
 		art = str(look["on_wall"])
@@ -214,7 +205,7 @@ static func _place(board: ArenaBoard, spec: Dictionary, is_container: bool) -> N
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
 				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET
 			if piece != null and bool(look.get("god", false)):
-				FacelessGod.dress(board, root, piece, cell)   # the faceless god (step 7): on its steps, a void for a face, a shaft of light
+				CampaignLook.current().dress_god(board, root, piece, cell)   # the faceless god (step 7): on its steps, a void for a face, a shaft of light
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
 			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):
@@ -344,8 +335,7 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 		sp.position = Vector3(0, 0, 0)
 		sp.name = "Leaf"
 		leaf.add_child(sp)
-	if art == "amber_doors" and Look.modern():
-		AmberGlow.dress_door(leaf, w, h)   # the honey-glow doors' panes are amber, pulsing, lighting both sides
+	CampaignLook.current().dress_door(art, leaf, w, h)   # a campaign's doors with a light of their own
 	var statue := str(look.get("statue", ""))
 	if bool(look.get("pillars", false)):
 		# A gateway between two stone pillars (the Gates of Barovia), each with a statue on top where there's art:
@@ -433,7 +423,7 @@ static func _pillar(board: ArenaBoard, cell: Vector2i, h: float, statue: String)
 
 
 static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, span: float = 1.0) -> void:
-	if CastleBuilder.frames(board, board.grid.cell_at(base)):
+	if CampaignLook.current().frames(board, board.grid.cell_at(base)):
 		return   # a gate in a passage through the castle's walls stands in the passage's arch (W19)
 	if span <= 1.0 and InteriorWalls.frames(board, board.grid.cell_at(base)):
 		return   # a doorway inside, framed in the place's style (W7)

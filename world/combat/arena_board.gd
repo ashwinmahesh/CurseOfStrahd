@@ -211,8 +211,8 @@ func _build() -> void:
 					if h > 0.0 and (f & CombatGrid.NATURAL) != 0 and not house_cells.has(c):
 						_floors[c] = _terrain_column("Ground", c, _floor_mat)   # a wall on a hill stands on the hill
 				continue
-			if CastleBuilder.walk_at(self, c):
-				continue   # Castle Ravenloft's wall walk and its stairs: the castle's stone (CastleBuilder, W7)
+			if CampaignLook.current().walk_at(self, c):
+				continue   # Castle Ravenloft's wall walk and its stairs: the castle's stone (CampaignLook, W7)
 			var mat: Material = grass
 			if (f & CombatGrid.DIFFICULT) != 0:
 				mat = mud
@@ -271,7 +271,7 @@ func _flights(dais: Material) -> void:
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
-			if not _walked_floor(c) or grid.has_flag(c, CombatGrid.NATURAL) or CastleBuilder.walk_at(self, c):
+			if not _walked_floor(c) or grid.has_flag(c, CombatGrid.NATURAL) or CampaignLook.current().walk_at(self, c):
 				continue
 			var top := floor_y(c)
 			var mat: Material = (_floors[c] as MeshInstance3D).material_override if _floors.has(c) else dais
@@ -810,7 +810,7 @@ func _wall(c: Vector2i) -> void:
 		var own_style := wall_style_at(c)
 		if bool(own_style.get("plinth", false)) and Look.modern():
 			if c == (own_style["rect"] as Rect2i).position:
-				FacelessGod.steps(self, own_style["rect"] as Rect2i)   # steps for a statue, built once (the squares still block)
+				CampaignLook.current().plinth_steps(self, own_style["rect"] as Rect2i)   # steps for a statue, built once (the squares still block)
 			return
 		if not own_style.is_empty() and not bool(own_style.get("plinth", false)):
 			wall_mat = BuildingKit.painted(str(own_style.get("paint", "crimson")))   # the location's own (a painted wagon)
