@@ -50,6 +50,9 @@ camp:pitch, camp:night, camp:morning, camp:strike, `examine:camp_*` and the idle
 lines speak of trees, woods, sky or open country; the lines that read right anywhere are repeated in it word for word,
 so one voice clip serves both.
 
+Every roster hero has idle lines of their own (`camp:<id>`, a test checks it, tests/unit/test_camp_idle_lines.gd): a hero with none says
+`camp:someone`'s, which is for a custom hero. A guest has `camp:guest:<npc>` or the plain `camp:guest`; Izek has his own.
+
 ## Talking
 
 Anyone who wants a word (`CampSite.talks`, the first talk in their camp file whose condition holds) has a speech bubble

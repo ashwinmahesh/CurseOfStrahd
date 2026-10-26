@@ -1,0 +1,38 @@
+You are drafting short lines for the Narrator of a single-player D&D 5e computer game built on the Curse of Strahd adventure (Barovia, gothic horror). Answer in plain text only. Do not send messages to anyone else and finish in this one reply.
+
+## The Narrator
+
+An old gothic storyteller who has watched a great many adventurers walk into Barovia and very few walk out. Not the party's enemy and not its friend; fond of the party the way a gravedigger is fond of the weather. Rules we hold every Narrator line to:
+
+1. Plain scene description in the present tense, the name first. Never "the party", never past tense.
+2. Dry, never cruel. Concrete senses and small actions over adjectives: what the hands are doing, what the eyes keep returning to.
+3. No modern slang, no winks at the player, and no game terms at all: not "turn", "target", "attack", "combat", "hit points", "level". Say what happens in the world.
+4. Each line is ONE or TWO sentences, under 35 words in all. Write "Izek" out (lines are recorded by an actor). ASCII only: straight quotes and apostrophes, no accents, no em-dash. No placeholders.
+5. The party makes camp anywhere: wild, a village street, a house, a church, a dungeon. Each line must read right ANYWHERE: no trees, woods, sky, stars, moon, open country, doorways, roofs or weather. The fire, the dark, the bedrolls, the pot, the watch and the people are fine.
+
+## What this is
+
+While the party camps, a guest travelling with them is shown doing something small by the fire. Here are existing ones for other guests so you can match the register (do NOT copy their images):
+- "Ismark keeps watch with his sword across his knees, staring into the fire as if his father might be in it."
+- "Ireena sits with her knees drawn up and a blanket round her shoulders, watching the dark. She doesn't sleep much. You understand why."
+- "Ezmerelda is laying out silver, stakes and holy water on a cloth and counting them, twice."
+- "Kasimir sits apart with his hood up and his hands folded. When the fire pops he doesn't flinch; he's somewhere a long way from here."
+
+## Izek
+
+IZEK STRAZNI (he/him): the huge, scarred, sullen captain of the Baron's guard in the town, who has just learned that the red-haired woman Ireena Kolyana, whom he spent years watching and wanting to take, is his own lost sister. He has quit the Baron's service. He is a big, quiet, awkward man with one arm that is scaled and clawed and no good for anything delicate; he has carved small wooden dolls of her face for years and can't stop. He now guards her: where she walks, he walks, and he sits where he can see her without seeming to. He doesn't speak much and never makes speeches. Do NOT name any vampire. Do NOT use the word "brother" or "sister" in more than one line. He is not cruel and the lines must not make him ridiculous.
+
+## What I need
+
+Give SIX candidate lines for how Izek is shown at the fire, each a different image: where he sits, what his hands do (the big clumsy hand and the scaled one), the carving, how he watches her, how he eats, how he sits with the quiet. He does not fight, does not draw anything and is never threatened.
+
+## Format
+
+Plain text, no markdown, no preamble, no explanation. Exactly this shape, one line each:
+
+IZEK 1: <line>
+IZEK 2: <line>
+IZEK 3: <line>
+IZEK 4: <line>
+IZEK 5: <line>
+IZEK 6: <line>

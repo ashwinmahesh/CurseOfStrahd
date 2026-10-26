@@ -1,0 +1,48 @@
+You are drafting short lines for the Narrator of a single-player D&D 5e computer game built on the Curse of Strahd adventure (Barovia, gothic horror). Answer in plain text only. Do not send messages to anyone else and finish in this one reply.
+
+## The Narrator
+
+An old gothic storyteller who has watched a great many adventurers walk into Barovia and very few walk out. Not the party's enemy and not its friend; fond of the party the way a gravedigger is fond of the weather: with interest, without illusions. Rules we hold every Narrator line to:
+
+1. Plain scene description in the present tense, the name first ("Godrick is polishing..."). Never "the party", never past tense.
+2. Dry, a little wry, never cruel. It never gloats and never cheers. A small human detail and a small joke or ache.
+3. Concrete senses and small actions over adjectives: what the hands are doing, what the eyes keep returning to.
+4. No modern slang, no winks at the player, and no game terms at all: not "turn", "target", "attack", "combat", "hit points", "spell slot", "roll", "level". Say what happens in the world. Magic is fine as magic ("cold light", "a cantrip" is NOT fine, say "a little flame").
+5. Each line is ONE or TWO sentences, under 35 words in all. Write the character's name out (lines are recorded by an actor): "Hedda", "Ilse", "Silvain", "Tamsin". ASCII only: straight quotes and apostrophes, no accents, no em-dash. No placeholders like {name}.
+6. IMPORTANT: the party makes camp anywhere: in the wild, in a village street, in a house, a church, a dungeon. So each line must read right ANYWHERE: do not mention trees, woods, sky, stars, moon, open country, doorways, roofs or weather. The fire, the dark, the bedrolls, the pot, the watch, the packs and the people are all fine. Do not say what time it is, except in lines marked NIGHT.
+
+## What these are
+
+While the party camps, each party member is shown doing something small by the fire. The game shows one line for the person at a time. These are the idle lines for four heroes who have none yet. Here are existing ones for other heroes so you can match the register (do NOT copy their jokes or images):
+- "Godrick is polishing Sir Pellam's sword, though it was clean an hour ago. He's practising a speech under his breath; it begins "Your Grace" and gets no further."
+- "Liriel sits facing east with her eyes closed, waiting for a sunrise that hasn't come in four hundred years. She can wait. She's very good at it."
+- "Wren is juggling three pine cones and a knife, and talking, and none of the four has hit the ground yet."
+- "Kip is reading his contract by the firelight, his lips moving. He reads it every night. It hasn't got any better."
+- A NIGHT one: "Wren is supposed to be asleep. He's lying very still with his eyes open, turning his master's letter over and over in his fingers."
+
+## The four
+
+HEDDA IRONVOW (she/her): a dwarf cleric of the Morninglord, a healer from a small mountain shrine whose altar the first light of every day strikes. She left her chapel quietly before dawn after a year of the same dream: a sun going out, and a silver raven clutching a sunburst. Slow, measured, unhurried, dry humor, devout, patient. Pet phrases: "Dawn comes." "Mm." "Stone remembers." She prays aloud loudly, but otherwise never raises her voice. Her secret (do NOT state it or name it; the lines may only brush against it): she has not felt her god's warmth since the mist; her spells still work but feel different.
+
+ILSE VARGA (she/her): a human fighter, a sergeant without a company. Her mercenary company of forty vanished on a fog-bound road a year ago while she lay in a roadside inn with a fever; she has carried a sealed letter signed with a single ornate S ever since. Short declarative sentences, counts things aloud (exits, arrows, days) to stay calm, military habits: watch, picket, kit, rations, the line. Blunt, loyal. Her secret (do NOT state it): she was not as sick as she let herself believe.
+
+SILVAIN ASTER (they/them): a high elf wizard, a scholar of a hundred and forty years, precise, formal, elaborate, corrects people and corrects themself, annotates everything. Hunting a book written in a vampire's own hand and a colleague named Aurel who vanished after it (do NOT name Aurel or the book's owner). Secretly kind, always for a "practical reason". Frightened, they become more precise. Pet phrases: "Technically..." "Fascinating. Horrible, but fascinating." "I'll want notes."
+
+TAMSIN TEALEAF (he/him): a cheerful halfling rogue, a thief who has never once called himself a thief ("borrowing", "re-homing"). Quick, bright, chatty, talks to objects especially locks, admires craftsmanship even evil craftsmanship. He carries a silver locket with a tiny portrait of a red-haired woman he has never met (do NOT name her or describe the portrait beyond "the locket"), and he dreams of her calling his name. He fears small rooms with one door. Secret (do NOT state it): he isn't sure he stole the locket.
+
+## What I need
+
+For EACH of the four, give 5 candidate lines: 3 plain (C1-C3) and 2 NIGHT lines (N1-N2), where a NIGHT line is shown only when the camp is in the dark of night, so it may be quieter, lonelier, someone awake while the rest sleep. Every candidate uses a different image. Keep them small, specific and in character; they may brush a hint of the character's story (the sunburst, the letter, the book, the locket) but never explain it and never reveal a secret. No line may be about fighting or killing, no line may be a joke at someone else's expense, and nothing may be cruel.
+
+## Format
+
+Plain text, no markdown, no preamble, no explanation. Exactly this shape, one line each, in this order:
+
+HEDDA C1: <line>
+HEDDA C2: <line>
+HEDDA C3: <line>
+HEDDA N1: <line>
+HEDDA N2: <line>
+ILSE C1: <line>
+...
+TAMSIN N2: <line>

@@ -1,0 +1,20 @@
+HEDDA C1: Hedda is rolling fresh linen bandages on her knee, smoothing every crease with a broad thumb. She does not expect to need fewer tomorrow.
+HEDDA C2: Hedda is holding her brass sunburst near the coals, watching the rays catch the orange light. She rubs the metal against her sleeve, waits a moment, and touches it to her cheek.
+HEDDA C3: Hedda is stirring the pot with slow, even turns, tasting the broth from a wooden spoon. She adds a pinch of salt, says "Mm," and changes nothing else.
+HEDDA N1: Hedda sits upright by the low embers with her hands folded over her knees, whispering a morning prayer into the dark. Her voice is steady, though the words come out cold.
+HEDDA N2: Hedda is awake in her bedroll, calling a tiny spark of light to her palm and letting it fade. Each time it dies, she studies her empty hand a little longer.
+ILSE C1: Ilse is laying out forty small stones beside her boots, five rows of eight, and touching each one with the tip of her knife. Then she sweeps them into her pouch and starts again.
+ILSE C2: Ilse is dividing the hardtack into equal piles, down to the last pale crumb. She gives the largest piece to the nearest pack and takes the broken corner for herself.
+ILSE C3: Ilse is checking the fletching on her arrows one by one, muttering numbers under her breath. When she reaches twenty-four, she frowns and begins again from one.
+ILSE N1: Ilse is sitting on watch with her boots laced and her pack buckled, staring into the dark beyond the firelight. She has not shifted her weight in an hour.
+ILSE N2: Ilse is turning a sealed letter toward the coals while the others sleep, tracing the wax "S" with a scarred thumb. The seal is worn smooth, and still unbroken.
+SILVAIN C1: Silvain is trimming a quill to a wicked point and writing in the narrow margin of a treatise. They cross out a single word, murmur "Technically," and write a longer one above it.
+SILVAIN C2: Silvain is mending a torn cloak hem with tiny, immaculate stitches, using a thread of pale blue light to see by. They insist a frayed edge is a hazard to concentration.
+SILVAIN C3: Silvain is scraping soot from a brass inkhorn, arranging three spare nibs by length on a flat cloth. Their hands are steady, which means they are trying very hard not to think.
+SILVAIN N1: Silvain is reading by a cold bead of light balanced on one knuckle, turning the pages without a sound. There is a ribbon marking a chapter they have not turned to once.
+SILVAIN N2: Silvain is awake beside the dead ash, writing a neat list of questions on a fresh sheet of vellum. None of the questions has an answer beneath it.
+TAMSIN C1: TAMSIN is oiling the tumblers of an old iron padlock he has no key for and no reason to keep. He is complimenting the springs in a low, encouraging murmur.
+TAMSIN C2: Tamsin is laying out three spoons, a brass button, and a thimble by his knee, claiming to have found them in his own pocket. He looks genuinely pleased on their behalf.
+TAMSIN C3: Tamsin is sitting with his back toward the widest stretch of open dark, tossing a copper piece from knuckle to knuckle. Every few moments his eyes flick around to count the ways out.
+TAMSIN N1: Tamsin is lying awake on his side, clicking a small silver locket open and shut against his palm. He never quite looks down when the clasp gives way.
+TAMSIN N2: Tamsin is sitting cross-legged in his blanket while the others sleep, whispering his own name in two or three different voices. None of them sounds like the one he is listening for.

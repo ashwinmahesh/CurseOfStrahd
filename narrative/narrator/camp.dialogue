@@ -48,7 +48,7 @@
 ~ examine:camp_tent
 | A low canvas tent, patched in three places with three different cloths. It smells of damp wool and somebody's boots.
 
-# ---------------------------------------------------------------- The six by the fire
+# ---------------------------------------------------------------- The heroes by the fire
 
 ~ camp:godrick_pendlebrook
 | Godrick is polishing Sir Pellam's sword, though it was clean an hour ago. He's practising a speech under his breath; it begins "Your Grace" and gets no further.
@@ -83,6 +83,30 @@
 | Kip is polishing apricots on his sleeve one at a time and stacking them in a pyramid. He has already priced the pyramid.
 | [night] Kip's tail twitches in his sleep. Now and then he mutters a number, then a smaller number, then wakes to check the contract is still there.
 
+# The other four heroes (Resume packages, Allies item 4: their camp lines were missing, so each fell back to camp:someone). Gemini
+# drafts through the ai-bridge (docs/plans/gemini_allies/camp_lines/), edited; unvoiced. Each reads right in any setting, so none has an
+# :indoors or :town set of its own.
+
+~ camp:hedda_ironvow
+| Hedda is rolling fresh linen bandages on her knee, smoothing every crease with a broad thumb. She does not expect to need fewer tomorrow.
+| Hedda sits with her boots unlaced, rubbing mutton tallow into the split skin across her knuckles with one slow thumb. "Stone remembers," she tells her own left hand, and gives it another dab.
+| [night] Hedda sits upright by the low embers with her hands folded over her knees, whispering a morning prayer into the dark. Her voice is steady, though the words come out cold.
+
+~ camp:ilse_varga
+| Ilse is laying out forty small stones beside her boots, five rows of eight, and touching each one with the tip of her knife. Then she sweeps them into her pouch and starts again.
+| Ilse is dividing the hardtack into equal piles, down to the last pale crumb. She hands out the largest piece to whoever sits nearest and keeps the broken corner for herself.
+| [night] Ilse is turning a sealed letter toward the coals while the others sleep, tracing the ornate S on it with a scarred thumb. The seal is worn smooth.
+
+~ camp:silvain_aster
+| Silvain is mending a torn cloak hem with tiny, immaculate stitches by a bead of pale blue light. They insist a frayed edge is a hazard to concentration.
+| Silvain is scraping soot from a brass inkhorn, arranging three spare nibs by length on a flat cloth. Their hands are steady, which means they are trying very hard not to think.
+| [night] Silvain is awake beside the low fire, writing a neat list of questions on a fresh sheet of vellum. None of the questions has an answer beneath it.
+
+~ camp:tamsin_tealeaf
+| Tamsin is oiling the tumblers of an old iron padlock he has no key for and no reason to keep. He is complimenting the springs in a low, encouraging murmur.
+| Tamsin is laying out three spoons, a brass button, and a thimble by his knee, claiming to have found them in his own pocket. He looks genuinely pleased on their behalf.
+| [night] Tamsin is lying awake on his side, clicking a small silver locket open and shut against his palm. He never quite looks down when the clasp gives way.
+
 ~ camp:someone
 | {name} sits close to the fire, hands to the warmth, watching the dark between the trees.
 | {name} is checking straps and buckles by the firelight, the way people do when they'd rather not think about tomorrow.
@@ -98,6 +122,11 @@
 
 ~ camp:guest:ismark
 | Ismark keeps watch with his sword across his knees, staring into the fire as if his father might be in it.
+
+~ camp:guest:izek
+| Izek braces a block of pine against his knee with his scaled forearm and pares away curls of wood with a small knife. Another rough little face is taking shape under his thumb.
+| Izek takes his bowl last from the pot and eats alone, gripping it in his good hand. He scrapes it clean without looking up, then sets it quietly by the fire.
+| [night] Izek sits awake long after the talk dies down, his broad back between the bedrolls and the dark. He says nothing at all, and does not seem to miss the words.
 
 ~ camp:guest:ezmerelda
 | Ezmerelda has her false leg off and is oiling the joints, swearing softly at the damp in Barovia's air.
