@@ -12,9 +12,9 @@ extends SceneTree
 ## there is touched.
 ## Run: godot --headless --path . --script res://tools/art/build_icons.gd [-- --ui | --kind=<spells|items|features>]
 
-const CATALOG := "res://art/icons.json"
-const PACK := "res://art/sourced/game_icons/icons/ffffff/transparent/1x1/"
-const OUT := "res://art/icons/"
+const CATALOG := "res://addons/dnd_core/art/icons.json"
+const PACK := "res://addons/dnd_core/art/sourced/game_icons/icons/ffffff/transparent/1x1/"
+const OUT := "res://addons/dnd_core/art/icons/"
 const SIZE := 128
 const KINDS: Array[String] = ["spells", "items", "features"]
 ## The tint an entry without "@<tint>" gets.

@@ -8,7 +8,7 @@ extends SceneTree
 ## Run: godot --headless --path . --script res://tools/art/build_vestige_shapes.gd
 
 const DATA := "res://art/amber_shapes.json"
-const PACK := "res://art/sourced/game_icons/icons/ffffff/transparent/1x1/"
+const PACK := "res://addons/dnd_core/art/sourced/game_icons/icons/ffffff/transparent/1x1/"
 const OUT := "res://art/textures/amber/shapes/"
 ## Godot imports each picture with mipmaps: the shader reads a coarse one to soften the shape, as if seen through the glass.
 const IMPORT := "[remap]\n\nimporter=\"texture\"\ntype=\"CompressedTexture2D\"\n\n[params]\n\nmipmaps/generate=true\n"

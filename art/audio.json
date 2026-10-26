@@ -365,122 +365,122 @@
   },
   "sfx": {
     "click": [
-      "res://art/sourced/kenney_interface_sounds/Audio/click_001.ogg",
-      "res://art/sourced/kenney_interface_sounds/Audio/click_002.ogg",
-      "res://art/sourced/kenney_interface_sounds/Audio/click_003.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/click_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/click_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/click_003.ogg"
     ],
     "hover": [
-      "res://art/sourced/kenney_interface_sounds/Audio/tick_001.ogg",
-      "res://art/sourced/kenney_interface_sounds/Audio/tick_002.ogg",
-      "res://art/sourced/kenney_interface_sounds/Audio/tick_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/tick_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/tick_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/tick_004.ogg"
     ],
     "close": [
-      "res://art/sourced/kenney_rpg_audio/Audio/bookClose.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/bookClose.ogg"
     ],
     "quill": [
-      "res://art/sourced/kenney_interface_sounds/Audio/scratch_004.ogg",
-      "res://art/sourced/kenney_interface_sounds/Audio/scratch_005.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/scratch_004.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/scratch_005.ogg"
     ],
     "pin": [
-      "res://art/sourced/kenney_rpg_audio/Audio/metalLatch.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/metalLatch.ogg"
     ],
     "unpin": [
-      "res://art/sourced/kenney_rpg_audio/Audio/metalClick.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/metalClick.ogg"
     ],
     "page": [
-      "res://art/sourced/kenney_rpg_audio/Audio/bookFlip1.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/bookFlip2.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/bookFlip3.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/bookFlip1.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/bookFlip2.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/bookFlip3.ogg"
     ],
     "door": [
-      "res://art/sourced/kenney_rpg_audio/Audio/doorOpen_1.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/doorOpen_2.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/doorOpen_1.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/doorOpen_2.ogg"
     ],
     "locked": [
-      "res://art/sourced/kenney_rpg_audio/Audio/doorClose_3.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/doorClose_1.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/doorClose_3.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/doorClose_1.ogg"
     ],
     "unlock": [
-      "res://art/sourced/kenney_rpg_audio/Audio/metalLatch.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/lock_01.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/lock_02.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/lock_03.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/metalLatch.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/lock_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/lock_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/lock_03.ogg"
     ],
     "coins": [
-      "res://art/sourced/kenney_rpg_audio/Audio/handleCoins.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/handleCoins2.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/item_coins_01.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/item_coins_02.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/item_coins_03.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/handleCoins.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/handleCoins2.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/item_coins_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/item_coins_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/item_coins_03.ogg"
     ],
     "card": [
-      "res://art/sourced/kenney_rpg_audio/Audio/bookPlace1.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/bookPlace2.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/bookPlace3.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/bookPlace1.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/bookPlace2.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/bookPlace3.ogg"
     ],
     "rest": [
       "res://art/sourced/oga_fire_antumdeluge/fire-1_0.ogg"
     ],
     "level_up": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
     ],
     "hit": [
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.1.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.2.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.3.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.4.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.5.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.6.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.7.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.8.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.9.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.10.ogg"
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.1.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.2.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.3.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.4.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.5.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.6.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.7.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.8.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.9.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.10.ogg"
     ],
     "crit": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_003.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_003.ogg"
     ],
     "swing": [
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-1.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-2.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-3.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-4.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-5.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-6.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-7.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-8.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-9.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-10.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-11.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-12.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-13.wav"
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-1.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-2.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-3.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-4.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-5.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-6.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-7.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-8.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-9.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-10.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-11.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-12.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-13.wav"
     ],
     "spell": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_1_0.ogg",
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg",
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_6_0.ogg",
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_7_0.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_01.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_1_0.ogg",
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg",
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_6_0.ogg",
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_7_0.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_01.ogg"
     ],
     "heal": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_2.ogg",
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_5.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_2.ogg",
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_5.ogg"
     ],
     "feast_clink": [
-      "res://art/sourced/kenney_interface_sounds/Audio/glass_001.ogg",
-      "res://art/sourced/kenney_interface_sounds/Audio/glass_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/glass_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_interface_sounds/Audio/glass_004.ogg"
     ],
     "feast_plates": [
-      "res://art/sourced/kenney_rpg_audio/Audio/metalPot2.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/metalPot3.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/metalPot2.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/metalPot3.ogg"
     ],
     "victory": [
-      "res://art/sourced/oga_fanfares_spring/VICTORY_0.ogg"
+      "res://addons/dnd_core/art/sourced/oga_fanfares_spring/VICTORY_0.ogg"
     ],
     "defeat": [
-      "res://art/sourced/oga_fanfares_spring/LOSE_0.ogg"
+      "res://addons/dnd_core/art/sourced/oga_fanfares_spring/LOSE_0.ogg"
     ],
     "wind": [
       "res://art/sourced/wikimedia_commons/Howling_wind.ogg"
@@ -492,469 +492,469 @@
       "res://art/sourced/wikimedia_commons/Rain_and_thunder_(1).ogg"
     ],
     "crow": [
-      "res://art/sourced/oga_crow_caw/crow_caw.wav"
+      "res://addons/dnd_core/art/sourced/oga_crow_caw/crow_caw.wav"
     ],
     "fall": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_004.ogg"
     ],
     "toll": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_004.ogg"
     ],
     "boss_bell": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_000.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_000.ogg"
     ],
     "enemy_death": [
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_die_01.ogg"
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_die_01.ogg"
     ],
     "thud": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_004.ogg"
     ],
     "acid_splash": [
-      "res://art/sourced/oga_squish_ezduzziteh/squish_01_0.mp3",
-      "res://art/sourced/oga_squish_ezduzziteh/squish_02.mp3",
-      "res://art/sourced/oga_squish_ezduzziteh/squish_03.mp3",
-      "res://art/sourced/oga_squish_ezduzziteh/squish_04.mp3",
-      "res://art/sourced/oga_squish_ezduzziteh/squish_05.mp3",
-      "res://art/sourced/oga_squish_ezduzziteh/squish_06.mp3"
+      "res://addons/dnd_core/art/sourced/oga_squish_ezduzziteh/squish_01_0.mp3",
+      "res://addons/dnd_core/art/sourced/oga_squish_ezduzziteh/squish_02.mp3",
+      "res://addons/dnd_core/art/sourced/oga_squish_ezduzziteh/squish_03.mp3",
+      "res://addons/dnd_core/art/sourced/oga_squish_ezduzziteh/squish_04.mp3",
+      "res://addons/dnd_core/art/sourced/oga_squish_ezduzziteh/squish_05.mp3",
+      "res://addons/dnd_core/art/sourced/oga_squish_ezduzziteh/squish_06.mp3"
     ],
     "air_rush": [
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
     ],
     "arcane_glint": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_1_0.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_1_0.ogg"
     ],
     "blade_flesh": [
-      "res://art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
     ],
     "blade_flesh_light": [
-      "res://art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
     ],
     "blessing": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
     ],
     "blood_wet": [
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
+      "res://addons/dnd_core/art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
     ],
     "body_blow": [
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
     ],
     "body_blow_hard": [
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2b.wav"
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_alt-2a.wav",
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_alt-2b.wav"
     ],
     "body_blow_light": [
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
     ],
     "bone_crack": [
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
     ],
     "bone_crunch": [
-      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
-      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
+      "res://addons/dnd_core/art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
     ],
     "bone_crunch_hard": [
-      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
-      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
+      "res://addons/dnd_core/art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
     ],
     "bone_snap": [
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
+      "res://addons/dnd_core/art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
     ],
     "bow": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_02.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_02.wav"
     ],
     "cold_impact": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_03.wav"
     ],
     "curse": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Seq_Fantasy SFX Pack Vol 1_Mana Drain_Start.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Seq_Fantasy SFX Pack Vol 1_Mana Drain_Start.wav"
     ],
     "fire_cast": [
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_01.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_02.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_03.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_04.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_05.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_06.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_07.ogg"
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_fire_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_fire_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_fire_03.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_fire_04.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_fire_05.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_fire_06.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/spell_fire_07.ogg"
     ],
     "fire_impact": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
     ],
     "fire_whoosh": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_03.wav"
     ],
     "flesh_wet": [
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
+      "res://addons/dnd_core/art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
     ],
     "flesh_wet_hard": [
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
+      "res://addons/dnd_core/art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
     ],
     "force_thump": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_004.ogg"
     ],
     "gore_splat": [
-      "res://art/sourced/oga_squish_ezduzziteh/squishsplat_impact.mp3"
+      "res://addons/dnd_core/art/sourced/oga_squish_ezduzziteh/squishsplat_impact.mp3"
     ],
     "hold_chains": [
-      "res://art/sourced/oga_80_cc0_rpg_sfx/chain_01.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/chain_02.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/chain_03.ogg"
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/chain_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/chain_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/chain_03.ogg"
     ],
     "mind_shimmer": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg"
     ],
     "necrotic_pull": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Seq_Fantasy SFX Pack Vol 1_Mana Drain_Start.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Seq_Fantasy SFX Pack Vol 1_Mana Drain_Start.wav"
     ],
     "point_flesh": [
-      "res://art/sourced/oga_fleshy_fight_leamon/piercing-1a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/piercing-1b.wav"
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/piercing-1a.wav",
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/piercing-1b.wav"
     ],
     "radiant_burst": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
     ],
     "radiant_chime": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
     ],
     "rumble": [
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
     ],
     "slime_hiss": [
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_01.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_02.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_03.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_04.ogg"
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_slime_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_slime_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_slime_03.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_slime_04.ogg"
     ],
     "smite_thump": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
     ],
     "stone_hit": [
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactStone.ogg"
+      "res://addons/dnd_core/art/sourced/oga_impact_qubodup/qubodupImpactStone.ogg"
     ],
     "teleport_in": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Teleport_In.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Teleport_In.wav"
     ],
     "teleport_out": [
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
     ],
     "thud_heavy": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_004.ogg"
     ],
     "thump_blunt": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
     ],
     "thump_heavy": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
     ],
     "thunder_boom": [
-      "res://art/sourced/oga_boom_pack_dklon/boom1.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom2.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom3.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom4.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom5.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom6.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom7.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom8.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom9.wav"
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom1.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom2.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom3.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom4.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom5.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom6.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom7.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom8.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom9.wav"
     ],
     "touch_hit": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_004.ogg"
     ],
     "ward": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_02.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_02.wav"
     ],
     "wood_knock": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_004.ogg"
     ],
     "zap_hit": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_03.wav"
     ],
     "zap_launch": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_03.wav"
     ],
     "chest": [
-      "res://art/sourced/oga_chest_creak_spookymodem/Chest Creak.wav"
+      "res://addons/dnd_core/art/sourced/oga_chest_creak_spookymodem/Chest Creak.wav"
     ],
     "cupboard": [
-      "res://art/sourced/kenney_rpg_audio/Audio/creak1.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/creak2.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/creak3.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/creak1.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/creak2.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/creak3.ogg"
     ],
     "lever": [
-      "res://art/sourced/oga_mechanical_bmaczero/mechanical1.wav"
+      "res://addons/dnd_core/art/sourced/oga_mechanical_bmaczero/mechanical1.wav"
     ],
     "rummage": [
-      "res://art/sourced/kenney_rpg_audio/Audio/cloth1.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/cloth2.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/cloth3.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/cloth4.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/cloth1.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/cloth2.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/cloth3.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_rpg_audio/Audio/cloth4.ogg"
     ],
     "step_dirt": [
-      "res://art/sourced/oga_footsteps_congusbongus/boots_0.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_1.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_2.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_3.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_4.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_5.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_6.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_7.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/boots_8.ogg"
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_0.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_1.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_2.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_3.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_4.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_5.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_6.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_7.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/boots_8.ogg"
     ],
     "step_grass": [
-      "res://art/sourced/oga_steps_tinyworlds/leaves01.ogg",
-      "res://art/sourced/oga_steps_tinyworlds/leaves02.ogg"
+      "res://addons/dnd_core/art/sourced/oga_steps_tinyworlds/leaves01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_steps_tinyworlds/leaves02.ogg"
     ],
     "step_gravel": [
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_0.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_1.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_2.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_3.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_4.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_5.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_6.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_7.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_8.ogg",
-      "res://art/sourced/oga_footsteps_congusbongus/gravel_9.ogg"
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_0.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_1.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_2.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_3.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_4.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_5.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_6.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_7.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_8.ogg",
+      "res://addons/dnd_core/art/sourced/oga_footsteps_congusbongus/gravel_9.ogg"
     ],
     "step_mud": [
-      "res://art/sourced/oga_steps_tinyworlds/mud02.ogg"
+      "res://addons/dnd_core/art/sourced/oga_steps_tinyworlds/mud02.ogg"
     ],
     "step_snow": [
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_snow_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_snow_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_snow_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_snow_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_snow_004.ogg"
     ],
     "step_stone": [
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_concrete_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_concrete_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_concrete_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_concrete_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/footstep_concrete_004.ogg"
     ],
     "step_wood": [
-      "res://art/sourced/oga_steps_tinyworlds/wood01.ogg",
-      "res://art/sourced/oga_steps_tinyworlds/wood02.ogg",
-      "res://art/sourced/oga_steps_tinyworlds/wood03.ogg"
+      "res://addons/dnd_core/art/sourced/oga_steps_tinyworlds/wood01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_steps_tinyworlds/wood02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_steps_tinyworlds/wood03.ogg"
     ],
     "trap": [
-      "res://art/sourced/oga_mechanical_bmaczero/clank1.wav"
+      "res://addons/dnd_core/art/sourced/oga_mechanical_bmaczero/clank1.wav"
     ],
     "rage_1": [
-      "res://art/sourced/oga_boom_pack_dklon/boom1.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom2.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom3.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom4.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom5.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom6.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom7.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom8.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom9.wav"
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom1.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom2.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom3.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom4.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom5.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom6.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom7.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom8.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom9.wav"
     ],
     "rage_2": [
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2b.wav"
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_alt-2a.wav",
+      "res://addons/dnd_core/art/sourced/oga_fleshy_fight_leamon/punch_alt-2b.wav"
     ],
     "rage_3": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_03.wav"
     ],
     "bladesong_1": [
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-1.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-2.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-3.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-4.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-5.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-6.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-7.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-8.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-9.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-10.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-11.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-12.wav",
-      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-13.wav"
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-1.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-2.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-3.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-4.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-5.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-6.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-7.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-8.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-9.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-10.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-11.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-12.wav",
+      "res://addons/dnd_core/art/sourced/oga_swishes_artisticdude/swishes/swish-13.wav"
     ],
     "bladesong_2": [
-      "res://art/sourced/oga_swords_starninjas/sword_clash.1.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.2.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.3.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.4.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.5.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.6.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.7.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.8.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.9.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.10.ogg"
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.1.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.2.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.3.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.4.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.5.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.6.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.7.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.8.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.9.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.10.ogg"
     ],
     "bladesong_3": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg"
     ],
     "wild_shape_1": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_7_0.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_7_0.ogg"
     ],
     "wild_shape_2": [
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_roar_01.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_roar_02.ogg",
-      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_roar_03.ogg"
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_roar_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_roar_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_80_cc0_rpg_sfx/creature_roar_03.ogg"
     ],
     "sacred_weapon_1": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
     ],
     "sacred_weapon_2": [
-      "res://art/sourced/oga_swords_starninjas/sword_clash.1.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.2.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.3.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.4.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.5.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.6.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.7.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.8.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.9.ogg",
-      "res://art/sourced/oga_swords_starninjas/sword_clash.10.ogg"
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.1.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.2.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.3.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.4.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.5.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.6.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.7.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.8.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.9.ogg",
+      "res://addons/dnd_core/art/sourced/oga_swords_starninjas/sword_clash.10.ogg"
     ],
     "innate_sorcery_1": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_6_0.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_6_0.ogg"
     ],
     "innate_sorcery_2": [
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
     ],
     "hunters_mark_1": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Teleport_In.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Teleport_In.wav"
     ],
     "hunters_mark_2": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_light_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_light_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_light_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_light_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_light_004.ogg"
     ],
     "divine_favor_1": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
     ],
     "divine_favor_2": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
     ],
     "concentration_start_1": [
-      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_2.ogg"
+      "res://addons/dnd_core/art/sourced/oga_magic_spell_sfx_jaggedstone/magical_2.ogg"
     ],
     "concentration_break_1": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_004.ogg"
     ],
     "concentration_break_2": [
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
     ],
     "vow_of_enmity_1": [
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://addons/dnd_core/art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
     ],
     "vow_of_enmity_2": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
     ],
     "vow_of_enmity_3": [
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
-      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
+      "res://addons/dnd_core/art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
     ],
     "die_bounce": [
       "res://art/sourced/elevenlabs_dice/resin_bounce_1.wav",
@@ -982,21 +982,21 @@
       "res://art/sourced/elevenlabs_dice/die_fumble_2.wav"
     ],
     "thunder_near": [
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
     ],
     "thunder_far": [
-      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
+      "res://addons/dnd_core/art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
     ],
     "thunder_crack": [
-      "res://art/sourced/oga_boom_pack_dklon/boom1.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom2.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom3.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom4.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom5.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom6.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom7.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom8.wav",
-      "res://art/sourced/oga_boom_pack_dklon/boom9.wav"
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom1.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom2.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom3.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom4.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom5.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom6.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom7.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom8.wav",
+      "res://addons/dnd_core/art/sourced/oga_boom_pack_dklon/boom9.wav"
     ]
   },
   "ambient": {

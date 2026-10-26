@@ -152,7 +152,7 @@ def load(folder):
 
 
 def proposals():
-    icons = json.load(open(os.path.join(ROOT, "art/icons.json")))["spells"]
+    icons = json.load(open(os.path.join(ROOT, "addons/dnd_core/art/icons.json")))["spells"]
     picks = {}
     for s in load("spells"):
         icon = icons.get(s.get("icon", s["id"]), "")

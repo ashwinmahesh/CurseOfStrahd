@@ -5,7 +5,7 @@ extends TestCase
 ## touch it names is a palette colour or one the shader draws.
 
 const DATA := "res://art/amber_shapes.json"
-const PACK := "res://art/sourced/game_icons/icons/ffffff/transparent/1x1/"
+const PACK := "res://addons/dnd_core/art/sourced/game_icons/icons/ffffff/transparent/1x1/"
 const SHAPES := "res://art/textures/amber/shapes/"
 ## The artist folders of the pack and the name the Credits screen gives each.
 const ARTISTS := {"lorc": "Lorc", "delapouite": "Delapouite", "skoll": "Skoll", "carl-olsen": "Carl Olsen"}

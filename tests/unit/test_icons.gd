@@ -3,7 +3,7 @@ extends TestCase
 ## catalog key is built in a defined tint (menu glyphs as plain shapes in art/ui/icons), magic items fall back to their
 ## template's or base item's icon, and every artist is credited.
 
-const CATALOG := "res://art/icons.json"
+const CATALOG := "res://addons/dnd_core/art/icons.json"
 const FIX := "Add its key to art/icons.json (a game-icons.net silhouette) and run make icons."
 
 
@@ -27,7 +27,7 @@ func test_every_catalog_key_is_built() -> void:
 	var cat := _catalog()
 	for kind: String in ["spells", "items", "features"]:
 		for key: String in cat[kind] as Dictionary:
-			assert_true(ResourceLoader.exists("res://art/icons/%s/%s.png" % [kind, key]), "%s/%s isn't built: run make icons" % [kind, key])
+			assert_true(ResourceLoader.exists("res://addons/dnd_core/art/icons/%s/%s.png" % [kind, key]), "%s/%s isn't built: run make icons" % [kind, key])
 	for key: String in cat["ui"] as Dictionary:
 		assert_true(UiKit.icon(key) != null, "menu glyph %s isn't built: run make icons" % key)
 

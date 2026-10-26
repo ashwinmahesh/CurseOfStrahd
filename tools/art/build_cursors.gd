@@ -5,7 +5,7 @@ extends SceneTree
 ## prints to walk. Written to art/ui/cursors/<name>.png at SIZE px; ui/common/cursors.gd installs them.
 ## Run: make cursors
 
-const PACK := "res://art/sourced/game_icons/icons/ffffff/transparent/1x1/"
+const PACK := "res://addons/dnd_core/art/sourced/game_icons/icons/ffffff/transparent/1x1/"
 const OUT := "res://art/ui/cursors/"
 const SIZE := 48
 ## name -> silhouette ("" = the drawn pointer)
