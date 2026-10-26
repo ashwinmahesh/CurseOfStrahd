@@ -6048,6 +6048,35 @@
         "floor_fill": 0.3,
         "centre_fill": 0.25
       },
+      "dragon_hoard": {
+        "floor": [
+          "gold_heap",
+          "bones",
+          "rubble",
+          "ash_heap"
+        ],
+        "centre": [
+          "bones",
+          "gold_heap",
+          "ash_heap"
+        ],
+        "floor_fill": 0.4,
+        "centre_fill": 0.15
+      },
+      "scorched_cave": {
+        "floor": [
+          "rubble",
+          "ash_heap",
+          "bones",
+          "rubble"
+        ],
+        "centre": [
+          "ash_heap",
+          "rubble"
+        ],
+        "floor_fill": 0.4,
+        "centre_fill": 0.15
+      },
       "wine_store": {
         "wall": [
           "jars"

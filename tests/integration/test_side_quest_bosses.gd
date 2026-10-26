@@ -205,8 +205,9 @@ func test_ilarions_wolves_at_level_1() -> void:
 
 
 
-## The four at the mouth of Sarkhaza's cavern, where her conversation starts.
-const HOARD_MOUTH: Array[Vector2i] = [Vector2i(12, 10), Vector2i(13, 10), Vector2i(12, 9), Vector2i(13, 9)]
+## The four at the mouth of Sarkhaza's cavern, where her conversation starts (10 rows further south since the hall was
+## made deeper instead of wider, owner 2026-10-26).
+const HOARD_MOUTH: Array[Vector2i] = [Vector2i(12, 20), Vector2i(13, 20), Vector2i(12, 19), Vector2i(13, 19)]
 
 
 ## The count's keepers at the gate on Ghakis, met coming up the path: eight wights, three revenants and the
@@ -223,7 +224,7 @@ func test_the_keepers_of_ghakis_at_level_10() -> void:
 func test_the_vent_fire_at_level_10() -> void:
 	speakers_step_aside = false
 	var wins := await _series("ghakis_lair", 12, 10, "vent_fire", [1, 2, 3, 4, 5, 6, 7, 8], [], [], ["ghakis_hot_door"],
-		[Vector2i(17, 17), Vector2i(18, 17), Vector2i(18, 18), Vector2i(19, 17)])
+		[Vector2i(17, 27), Vector2i(18, 27), Vector2i(18, 28), Vector2i(19, 27)])
 	assert_true(wins >= 4 and wins <= 6, "the vent-fire is put out in 4 to 6 of 8 (%d)" % wins)
 
 

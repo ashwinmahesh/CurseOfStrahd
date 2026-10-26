@@ -158,9 +158,9 @@ func test_corners_round() -> void:
 func test_what_is_built_stays_built() -> void:
 	Look.set_style("modern", false)
 	var v := await _view(LAIR)
-	assert_false(Caves.owns(v.board, Vector2i(16, 23)), "a wall of the keepers' post isn't the cave's")
-	assert_false(Caves.owns(v.board, Vector2i(10, 22)), "nor the north wall of the post")
-	assert_true(Caves.owns(v.board, Vector2i(18, 24)), "the rock between the post and the tunnel is")
+	assert_false(Caves.owns(v.board, Vector2i(16, 33)), "a wall of the keepers' post isn't the cave's")
+	assert_false(Caves.owns(v.board, Vector2i(10, 32)), "nor the north wall of the post")
+	assert_true(Caves.owns(v.board, Vector2i(18, 34)), "the rock between the post and the tunnel is")
 	var built := ((v.board.get_meta("interior_walls", {}) as Dictionary).get("walls", []) as Array).size()
 	assert_true(built > 10, "the post's walls are InteriorWalls (%d)" % built)
 	v.queue_free()
