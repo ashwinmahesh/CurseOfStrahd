@@ -351,7 +351,9 @@ func test_the_test_of_strength_ends_with_his_withdrawal_and_flag() -> void:
 	var rows: Array[String] = []
 	for z in 14:
 		rows.append("................")
-	var e := TestCombat.encounter(rows, 4)
+	# Seed 1 (was 4): since legendary actions come only after a hero's turn (owner, 2026-10-24) seed 4 is one of the three in
+	# eight the party loses before he goes; five in eight still end in his withdrawal, as six did before.
+	var e := TestCombat.encounter(rows, 1)
 	var taken: Array[Vector2i] = []
 	var i := 0
 	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:

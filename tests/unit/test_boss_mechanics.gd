@@ -83,6 +83,31 @@ func test_a_legendary_action_comes_at_the_end_of_another_creatures_turn_and_refr
 	assert_eq(own, "Only at the end of another creature's turn")
 
 
+## House rule (owner, 2026-10-24): legendary actions come only at the end of a hero's turn, never after an NPC's: a guest,
+## another foe or a summon (Legendary.opens_window).
+func test_legendary_actions_come_only_after_a_heroes_turn() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_actions": {"per_round": 3, "options": [
+		{"id": "claw", "name": "Claw", "cost": 1, "action": "claw", "summary": "x"}]}}), Vector2i(3, 3))
+	var ally := e.add(Monster.from_data(_boss({"id": "test_ally", "name": "Test Ally"})), &"guest", Vector2i(4, 3))
+	var minion := e.add(Monster.from_data(_boss({"id": "test_minion", "name": "Test Minion"})), &"enemy", Vector2i(2, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(3, 4), 5)
+	_order(e, [ally, minion, a, boss], [30, 25, 20, 10])
+	assert_false(Legendary.opens_window(ally), "a guest's turn opens no window")
+	assert_false(Legendary.opens_window(minion), "nor a foe's")
+	assert_true(Legendary.opens_window(a), "a hero's does")
+	e.end_turn()
+	assert_eq(e.current(), minion)
+	assert_eq(e.legendary.left(boss), 3, "nothing after the guest's turn")
+	e.end_turn()
+	assert_eq(e.current(), a)
+	assert_eq(e.legendary.left(boss), 3, "nor after another foe's")
+	e.end_turn()
+	assert_eq(e.current(), boss)
+	assert_eq(e.legendary.left(boss), 3, "back to three at its own turn")
+	assert_true(_kinds(e.drain_events(), "legendary").size() == 1, "one use at the end of the hero's turn")
+
+
 func test_a_legendary_move_provokes_no_opportunity_attack() -> void:
 	var e := _field()
 	var boss := _add_boss(e, _boss({"legendary_actions": {"per_round": 2, "options": [
