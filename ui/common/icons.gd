@@ -52,7 +52,7 @@ const ACTION_ICONS: Array[String] = ["dash", "disengage", "dodge", "help", "hide
 ## Hotbar ids whose tile has another key.
 const ACTION_ALIASES := {"shove_prone": "shove", "shove_push": "shove", "cunning_dash": "cunning", "cunning_disengage": "cunning",
 	"cunning_hide": "cunning", "divine_spark_heal": "divine_spark", "divine_spark_harm": "divine_spark", "fly:up": "fly",
-	"fly:down": "fly"}
+	"fly:down": "fly", "unready": "ready"}
 
 
 ## The icon for a hotbar entry (combat/action_catalog.gd): its spell, the weapon it attacks with, the item it uses, the
