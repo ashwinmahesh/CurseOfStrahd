@@ -17,6 +17,8 @@ var _where: Label
 ## The width of the top-right block the location's name has to fit.
 const WHERE_WIDTH := 346.0
 var _mode: Label
+## The followed quest's name, a small caps line above its objective (the tracked quest's, else the newest open one's).
+var _quest: Label
 ## The current objective under the time (the tracked quest's, else the newest open quest's), a click opens the journal.
 var _goal: Label
 ## Toasts that came while another was up, shown one after another.
@@ -108,16 +110,21 @@ func build(state: StoryState) -> void:
 	_mode = _label("", 15, "parchment")
 	_mode.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	top.add_child(_mode)
+	_quest = _label("", 13, "parchment")
+	_quest.add_theme_font_override("font", UiParts.caps_font())
+	_quest.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_goal = _label("", 14, "gilt_light")
-	_goal.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_goal.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_goal.custom_minimum_size = Vector2(WHERE_WIDTH, 0)
-	_goal.mouse_filter = Control.MOUSE_FILTER_STOP
-	_goal.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	_goal.gui_input.connect(func(ev: InputEvent) -> void:
-		var mb := ev as InputEventMouseButton
-		if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
-			command.emit("journal"))
+	for l: Label in [_quest, _goal]:
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.custom_minimum_size = Vector2(WHERE_WIDTH, 0)
+		l.mouse_filter = Control.MOUSE_FILTER_STOP
+		l.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		l.gui_input.connect(func(ev: InputEvent) -> void:
+			var mb := ev as InputEventMouseButton
+			if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
+				command.emit("journal"))
+	top.add_child(_quest)
 	top.add_child(_goal)
 	add_child(top)
 	var narr_panel := PanelContainer.new()
@@ -410,7 +417,10 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 	update_stealth(true)
 	# Turn-based exploring's panel takes the top of the screen: toasts drop below it.
 	_toast_panel.offset_top = 136 if planning else 70
-	_goal.text = _objective()
+	var followed := _followed()
+	_quest.text = str(followed["name"])
+	_quest.visible = _quest.text != ""
+	_goal.text = ("◆ " + str(followed["objective"])) if str(followed["objective"]) != "" else ""
 	_goal.visible = _goal.text != ""
 	var hours := st.minute_of_day / 60
 	_mode.text = "Day %d · %02d:%02d%s%s%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, _weather(),
@@ -634,22 +644,22 @@ func _pip_group(name_text: String, total: int, left: int, colour: String) -> Con
 	return box
 
 
-## The tracked quest's first objective (the journal's Track), else the newest open quest's ("◆ Follow the hidden stair
-## down"), or "".
-func _objective() -> String:
-	var newest := ""
+## The quest the HUD follows and its first objective (the journal's Track, else the newest open quest): {"name", "objective"},
+## both "" when no open quest has an objective. The objective shows as "◆ Follow the hidden stair down" under the quest's name.
+func _followed() -> Dictionary:
+	var name_ := ""
+	var objective := ""
 	for q in QuestLog.journal(st):
 		if str(q["status"]) == "active" and not (q["objectives"] as Array).is_empty():
-			newest = str((q["objectives"] as Array)[0])
-			_goal_tip = "%s · click for the journal (J)" % q["name"]
+			name_ = str(q["name"])
+			objective = str((q["objectives"] as Array)[0])
 			if bool(q["tracked"]):
 				break
-	if _goal != null:
-		_goal.tooltip_text = _goal_tip
-	return ("◆ " + newest) if newest != "" else ""
-
-
-var _goal_tip := ""
+	var tip := ("%s · click for the journal (J)" % name_) if objective != "" else ""
+	for l: Label in [_quest, _goal]:
+		if l != null:
+			l.tooltip_text = tip
+	return {"name": name_, "objective": objective}
 
 
 ## The location's name at the top right: the book hand at 24 px, smaller for a long name ("The Amber Temple: Hall of

@@ -9,9 +9,11 @@ extends CanvasLayer
 
 ## At most this many plates (the coven, the brides).
 const MOST := 3
-## The plates' row: its width, the room it leaves for the hotbar under it, and a plate's height.
+## The plates' row: its width, the room it leaves for the hotbar under it, and a plate's height. The room clears the
+## spell slot strip on the hotbar's top edge (CombatHud's _slot_box: its bottom 243 up, about 34 tall), or the line
+## under the bar, Legendary Resistance, ran over the slots (test_layout checks).
 const ROW_WIDTH := 1000.0
-const ABOVE_HOTBAR := 252.0
+const ABOVE_HOTBAR := 286.0
 const PLATE_HEIGHT := 70.0
 ## How many steps the bar drops in (quarters).
 const STEPS := 4

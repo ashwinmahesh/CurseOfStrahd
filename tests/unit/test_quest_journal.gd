@@ -33,15 +33,28 @@ func test_tracking_one_quest() -> void:
 	assert_eq(QuestLog.tracked(st), "", "a finished quest can't be followed")
 
 
-## The HUD shows the tracked quest's objective, else the newest open quest's.
+## The HUD shows the tracked quest's name and objective, else the newest open quest's.
 func test_the_hud_follows_the_tracked_quest() -> void:
 	var st := _story()
 	var hud := ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
-	assert_eq(str(hud.call("_objective")), "◆ Look over the oats in Bildrath's back room, or watch the north path at night", "the newest open quest's")
+	var followed := hud.call("_followed") as Dictionary
+	assert_eq([followed["name"], followed["objective"]], ["The Oat Thief", "Look over the oats in Bildrath's back room, or watch the north path at night"], "the newest open quest's")
 	QuestLog.track(st, "escort_ireena")
-	assert_eq(str(hud.call("_objective")), "◆ Help bury the burgomaster", "the tracked one's")
+	followed = hud.call("_followed") as Dictionary
+	assert_eq([followed["name"], followed["objective"]], ["Ireena's Escort", "Help bury the burgomaster"], "the tracked one's")
+	assert_eq((hud.get("_goal") as Label).tooltip_text, (hud.get("_quest") as Label).tooltip_text, "both lines point at the journal")
+	hud.refresh("Village of Barovia")
+	assert_eq([(hud.get("_quest") as Label).text, (hud.get("_goal") as Label).text], ["Ireena's Escort", "◆ Help bury the burgomaster"], "the quest's name above its objective")
+	assert_true((hud.get("_quest") as Label).visible and (hud.get("_goal") as Label).visible, "both lines show")
+	QuestLog.track(st, "")
+	for q in QuestLog.journal(st):
+		(st.quests[q["id"]] as Dictionary)["stage"] = "x"   # no stage, so no objectives
+	followed = hud.call("_followed") as Dictionary
+	assert_eq([followed["name"], followed["objective"]], ["", ""], "no open objective, no lines")
+	hud.refresh("Village of Barovia")
+	assert_false((hud.get("_quest") as Label).visible or (hud.get("_goal") as Label).visible, "and neither line shows")
 	hud.free()
 
 

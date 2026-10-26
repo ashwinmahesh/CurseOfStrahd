@@ -755,6 +755,30 @@ func test_the_party_with_guests() -> void:
 		return root.get("hud"))
 
 
+## The quest name and objective at the top right (ui/exploration/explore_hud.gd): the longest quest name over the longest
+## objective, at the biggest interface and text sizes too, stay inside the HUD.
+func test_the_followed_quest_at_the_top_right() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	st.set_quest_stage("mothers_ninth_improvement", "rumored")
+	st.set_quest_stage("the_hanged_vistana", "asked")
+	QuestLog.track(st, "mothers_ninth_improvement")
+	for kind: String in ["", " at the largest sizes"]:
+		if kind != "":
+			GameSettings.set_ui_scale(GameSettings.UI_SCALES.back())
+			GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+		await _check("the quest and its objective%s" % kind, func() -> Variant:
+			(root.get("hud") as ExploreHud).refresh()
+			await _frames(2)
+			return root.get("hud"))
+	QuestLog.track(st, "the_hanged_vistana")
+	await _check("the quest with the longest name", func() -> Variant:
+		(root.get("hud") as ExploreHud).refresh()
+		await _frames(2)
+		return root.get("hud"))
+
+
 ## The longest options the game's conversations offer, each with a check's chance after it, the way the cut-off ones
 ## looked (owner report).
 static func longest_options(n: int) -> Array:
@@ -1050,6 +1074,16 @@ func test_the_boss_plates() -> void:
 	var cv := view.combat_view
 	assert_true(cv.boss_bar != null and cv.boss_bar.bosses.size() == 3, "a plate for each boss")
 	await _check("the boss plates", func() -> Variant: return cv.boss_bar)
+	# The line under each bar (title, Legendary Resistance) clears the spell slots strip on the hotbar's edge, with a
+	# slot chip in it whoever's turn it is.
+	var strip := cv.hud.get("_slot_box") as Control
+	(cv.hud.get("_slot_row") as Control).add_child(cv.hud.call("_pip_chip", "1st", 4, 4, "moonlight", "Level 1 spell slots"))
+	strip.visible = true
+	await _frames(3)
+	var plates := cv.boss_bar.get("_plates") as Dictionary
+	for id: Variant in plates:
+		var words := (plates[id] as Dictionary)["words"] as Control
+		assert_true(words.get_global_rect().end.y <= strip.get_global_rect().position.y, "the boss's line is above the slots")
 	cv.finished.emit("victory")
 	await _frames(3)
 
