@@ -7,8 +7,12 @@
   "sprite": "ismark",
   "attitude": "indifferent",
   "voice": "docs/voice/ismark.md",
-  "monster": "warrior_veteran",
+  "monster": "ismark_kolyanovich",
   "guest": true,
+  "guest_build": {
+    "monster": "ismark_kolyanovich",
+    "note": "His own block, built to keep up with Ezmerelda (docs/story/ismark_companion.md): a greatsword in three cuts a turn, a crossbow while foes close, Parry."
+  },
   "tags": [
     "barovian",
     "noble",
