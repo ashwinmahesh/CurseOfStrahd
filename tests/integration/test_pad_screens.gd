@@ -515,6 +515,11 @@ func test_the_travel_map_on_a_pad() -> void:
 	var moved := false
 	for b: JoyButton in [JOY_BUTTON_DPAD_RIGHT, JOY_BUTTON_DPAD_LEFT, JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_DOWN]:
 		var before := str(map.get("_hover"))
+		# A press with no place that way leaves the map for the side panel (the view toggle is there now), so each starts on it
+		# (the pointer follows focus, and has to settle before the press or it takes the lit place back).
+		if nav.focus_in(map) != map.get("_map"):
+			nav.focus_on(map.get("_map") as Control)
+			await _frames(3)
 		await _press(b)
 		if str(map.get("_hover")) != before and str(map.get("_hover")) != "":
 			moved = true
@@ -529,6 +534,44 @@ func test_the_travel_map_on_a_pad() -> void:
 	await _trigger(JOY_AXIS_TRIGGER_LEFT)
 	assert_true(is_equal_approx(map.zoom, z) or map.zoom < z + 0.01, "LT zooms out")
 	await _back("the travel map", _screen_gone)
+
+
+## The local area view of the map on a pad (Ashwin, 2026-10-25): the toggle is in the D-pad's reach, the ways out are stepped
+## through and lit, A picks one, and B closes.
+func test_the_local_area_map_on_a_pad() -> void:
+	if not await _game(LATE):
+		return
+	root.call("open_travel", false)
+	await _frames(3)
+	var map := root.get("screen") as TravelScreen
+	await _press(JOY_BUTTON_DPAD_DOWN)
+	var toggle := map.find_child("LocalArea", true, false) as Button
+	assert_true(toggle != null, "the map offers the local area")
+	nav.focus_on(toggle)
+	assert_true(nav.focus_in(map) == toggle, "the toggle is in the D-pad's reach")
+	toggle.pressed.emit()
+	await _frames(3)
+	assert_true(map.area_mode, "the local area shows")
+	var area := map.get("_area") as AreaMap
+	nav.focus_on(area)
+	assert_true(nav.focus_in(map) == area, "and the pad can stand on it")
+	assert_true(not area.exits.is_empty(), "the Amber Temple has ways out")
+	var lit := ""
+	for b: JoyButton in [JOY_BUTTON_DPAD_RIGHT, JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_DPAD_LEFT, JOY_BUTTON_DPAD_UP]:
+		if nav.focus_in(map) != area:
+			nav.focus_on(area)
+			await _frames(3)
+		await _press(b)
+		if area.hover != "":
+			lit = area.hover
+			break
+	assert_true(lit != "", "the D-pad lights a way out")
+	if nav.focus_in(map) != area:
+		nav.focus_on(area)
+		await _frames(3)
+	await _press(JOY_BUTTON_A)
+	assert_eq(area.selected, area.hover, "A picks the one lit")
+	await _back("the local area", _screen_gone)
 
 
 ## Skirmish and the Character Lab, a scene of its own like the title screen, on each of its tabs.

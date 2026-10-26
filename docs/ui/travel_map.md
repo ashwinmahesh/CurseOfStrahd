@@ -67,6 +67,31 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   The party's place has a pulsing crimson mark; the destination's name sits on a crimson plaque. At night the sheet
   gets a moonlit wash.
 
+
+## The local area on the map screen (Ashwin, 2026-10-25)
+
+"When you open map there should be a toggle for local area map which shows the full area map with exits named (where they
+go)." Wherever the party is in a place (`TravelScreen.area_view`, set by `GameRoot.open_travel`), a toggle at the top of the
+side panel switches the map between **Barovia** (the valley, above) and **Local area** (`ui/screens/area_map.gd`):
+
+- The whole place the party is in, drawn from its grid in the minimap's own picture (`ui/exploration/map_image.gd`, which the
+  minimap shares), fitted to the panel. The wheel zooms up to 5x the fit and dragging pans; squares behind a secret door nobody
+  has found stay dark, as on the minimap.
+- Each way out is marked where it is (a gilt arrow off the edge for a road out, a diamond for a door or a gate; pewter while
+  it is shut for now) and named on a plaque: what it is, and under it where it goes ("Church", "-> Village Church"; a road that
+  opens the travel map says "The map of Barovia"; nothing when the name already says it). Ways out of one name side by side
+  (a gate two squares wide) are one plaque. The named parts of the place (`areas` in the location's data) are written faintly
+  across it where they are clear of the marks and plaques. The party is marked: the leader a gilt dot with a slow ring.
+- The side panel lists every way out (a button each, with the same two lines and "shut for now"); pointing at one, or
+  focusing it with the pad, lights it on the map, and a click on a mark or plaque lights it in the list.
+- The choice is kept (`GameSettings` "map_area") for the next map opened to look (M); a map opened to set out always opens on
+  the valley, where the places are. With no place under the party (the title's screens, tests) there is no toggle.
+- The pad: LB/RB (the toggle's tabs) or the D-pad to the toggle switch views; on the area the D-pad steps from way out to way
+  out, A lights one, LT/RT zoom, the right stick pans.
+- Code: `AreaMap` draws and takes the mouse; `TravelScreen.set_area_mode` and `_show_area_info` hold the two views. Tests:
+  `tests/integration/test_area_map.gd`, the pad in `test_pad_screens.gd`. Capture:
+  `make capture SCENE=res://tools/capture/area_map_capture.tscn NAME=area_map FRAMES=10` (`ARGS=--locations=a,b`).
+
 ## Minimap (`ui/exploration/minimap.gd`)
 
 - Top right of the exploration HUD, above the location's name and the clock; hidden with the HUD in combat and

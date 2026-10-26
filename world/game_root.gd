@@ -868,6 +868,7 @@ func open_travel(setting_out: bool) -> void:
 		return
 	var t := TravelScreen.new()
 	screen = t
+	t.area_view = view   # the map's local area view is of the place the party is in
 	add_child(t)
 	t.open_map(st, here, setting_out)
 	t.travel_chosen.connect(func(to: String) -> void:

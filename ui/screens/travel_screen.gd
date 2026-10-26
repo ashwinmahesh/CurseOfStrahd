@@ -5,7 +5,9 @@ extends CanvasLayer
 ## top, so names stay sharp at any zoom. Mist covers what the party hasn't learned of: the land around and between
 ## known places and along known roads is clear (Travel.known: been there, one road away, or heard of), and with every
 ## place known the whole valley is. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out. The wheel zooms and dragging pans.
-## Opened from a way out of town (`setting_out`), or just to look (M).
+## Opened from a way out of town (`setting_out`), or just to look (M). Where the party is somewhere (`area_view`), a toggle
+## beside the map switches it to the local area map (AreaMap): the whole place the party is in, each way out named by
+## where it goes (Ashwin, 2026-10-25).
 
 signal travel_chosen(place_id: String)
 signal closed
@@ -26,7 +28,17 @@ const ALWAYS_SEEN: Array[Array] = [[0.695, 0.73, 0.085]]
 ## The fog mask over the whole art, in pixels (3:2 like the art).
 const MASK := Vector2i(288, 192)
 
+## The map's two views, in the toggle's order: the valley, and the place the party is in (AreaMap).
+const VIEWS: Array[String] = ["Barovia", "Local area"]
+## The setting that keeps which view a map opened to look (M) shows first.
+const AREA_SETTING := "map_area"
+
 var st: StoryState
+## The location the party is in, set before open_map: with it the map offers the local area view.
+var area_view: LocationView = null
+## Showing the local area, not the valley.
+var area_mode := false
+var _area: AreaMap
 var here := ""
 var setting_out := false
 var zoom := 1.0
@@ -102,6 +114,19 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	_ink.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_ink.draw.connect(_draw_map)
 	_map.add_child(_ink)
+	if area_view != null:
+		_area = AreaMap.new()
+		_area.custom_minimum_size = MAP_SIZE
+		_area.visible = false
+		_area.set_meta(&"pad_target", true)
+		_area.set_meta(&"pad_accept", _area.pad_pick)
+		_area.exit_hovered.connect(func(_id: String) -> void: _mark_listed())
+		_area.exit_picked.connect(func(_id: String) -> void: _mark_listed())
+		holder.add_child(_area)
+		_area.show_area(area_view)
+		# A map opened to look comes up on the view it was last left on; one opened to set out is for the valley.
+		area_mode = not setting_out and bool(GameSettings.value(AREA_SETTING, false))
+		_apply_mode()
 	var corners := Control.new()
 	corners.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	holder.add_child(corners)
@@ -142,6 +167,39 @@ func _place_of_region(location_id: String) -> String:
 				return ""
 			found = str((p as Dictionary)["id"])
 	return found
+
+
+# --- The two views ---------------------------------------------------------------------------------
+
+## Shows the local area (`on`) or the valley, keeping the choice for the next map opened to look.
+func set_area_mode(on: bool) -> void:
+	if _area == null or on == area_mode:
+		return
+	area_mode = on
+	if not setting_out:
+		GameSettings.set_value(AREA_SETTING, on)
+	_apply_mode()
+	_show_info()
+	_redraw()
+	# The panel was rebuilt: a pad lands on the toggle again.
+	(func() -> void:
+		var b := _info.find_child("LocalArea" if area_mode else "Barovia", true, false) as Button
+		if b != null and PadNav.current != null and is_inside_tree():
+			PadNav.current.focus_on(b)).call_deferred()
+
+
+## The view that shows: the valley's map, fog and ink, or the area's; the pad starts on whichever it is.
+func _apply_mode() -> void:
+	_map.visible = not area_mode
+	if _area != null:
+		_area.visible = area_mode
+		# The pad starts on the view that shows (PadNav only asks whether the meta is there).
+		for pair: Array in [[_map, not area_mode], [_area, area_mode]]:
+			var c := pair[0] as Control
+			if bool(pair[1]):
+				c.set_meta(&"pad_first", true)
+			elif c.has_meta(&"pad_first"):
+				c.remove_meta(&"pad_first")
 
 
 # --- Where things are ------------------------------------------------------------------------------
@@ -536,6 +594,8 @@ func _process(delta: float) -> void:
 ## On the map, the D-pad goes from place to place: the nearest known one that way. With none that way it leaves the
 ## map for the side panel.
 func pad_step(f: Control, dir: Vector2i) -> bool:
+	if area_mode and f == _area:
+		return _area.pad_step(dir)
 	if f != _map:
 		return false
 	var now := _hover if _hover != "" else (_target if _target != "" else _at)
@@ -578,18 +638,25 @@ func _pad_pick() -> void:
 
 ## LT/RT: zoom out or in on the place lit.
 func pad_trigger(step: int) -> void:
+	if area_mode:
+		_area.pad_zoom(step)
+		return
 	zoom_at(_pos(Travel.place(_hover)) if _hover != "" else MAP_SIZE / 2.0, 1.15 if step > 0 else 1.0 / 1.15)
 
 
 ## The right stick pans the map.
 func pad_scroll(by: Vector2) -> void:
+	if area_mode:
+		_area.pad_scroll(by)
+		return
 	pan -= by
 	_clamp()
 	_redraw()
 
 
 func pad_prompts() -> Array:
-	return [["dpad", "Places"], ["lt+rt", "Zoom"], ["stick_r", "Pan"]]
+	var views := [["lb+rb", "View"]] if _area != null else []
+	return [["dpad", "Ways out" if area_mode else "Places"], ["lt+rt", "Zoom"], ["stick_r", "Pan"]] + views
 
 
 # --- The side panel --------------------------------------------------------------------------------
@@ -598,6 +665,17 @@ func _show_info() -> void:
 	for c in _info.get_children():
 		_info.remove_child(c)   # so the new Set out is the only one by that name
 		c.queue_free()
+	if _area != null:
+		var strip := UiParts.tab_strip(VIEWS, VIEWS[1] if area_mode else VIEWS[0], func(t: String) -> void: set_area_mode(t == VIEWS[1]))
+		strip.name = "MapViews"
+		strip.get_child(0).name = "Barovia"
+		strip.get_child(1).name = "LocalArea"
+		(strip.get_child(0) as Button).tooltip_text = "The valley, and the roads between its places."
+		(strip.get_child(1) as Button).tooltip_text = "The whole place you are in, with each way out named by where it goes."
+		_info.add_child(strip)
+	if area_mode:
+		_show_area_info()
+		return
 	var cur := Travel.place(_at)
 	_info.add_child(UiKit.label("You are at" if here != "" else ("You are in" if _at != "" else "You are"), 14, "parchment"))
 	var where := UiKit.header(str(cur.get("name", "off the roads")))
@@ -661,6 +739,96 @@ func _show_info() -> void:
 	_info.add_child(UiKit.button("Close", func() -> void:
 		closed.emit()
 		queue_free(), 15))
+
+
+## The side panel for the local area: where the party is, and each way out with where it goes (a click or A lights it on the
+## map).
+func _show_area_info() -> void:
+	var loc := area_view.loc
+	_info.add_child(UiKit.label("You are in", 14, "parchment"))
+	var where := UiKit.header(str(loc.get("name", "")))
+	where.add_theme_font_size_override("font_size", 23)
+	where.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	where.custom_minimum_size = Vector2(290, 0)
+	_info.add_child(where)
+	_info.add_child(UiKit.label("Day %d · %02d:%02d · %s" % [st.day, st.minute_of_day / 60, st.minute_of_day % 60,
+		"night" if st.is_night() else "day"], 15, "vellum"))
+	_info.add_child(UiKit.divider(280))
+	_info.add_child(UiKit.label("Ways out", 15, "gilt"))
+	var list := VBoxContainer.new()
+	list.name = "WaysOut"
+	list.add_theme_constant_override("separation", 5)
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	if _area.exits.is_empty():
+		list.add_child(UiKit.label("No way out is marked here.", 15, "vellum", 280))
+	for g in _area.exits:
+		list.add_child(_exit_button(g))
+	var scroll := UiParts.fill_scroll(list)
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_info.add_child(scroll)
+	_info.add_child(_area_legend())
+	var how := UiKit.label("", 13, "parchment", 290)
+	PadGlyphs.hint(how, "Click a way out to light it. Wheel: zoom · Drag: pan",
+		"D-pad: a way out · {a} lights it · {lt} {rt}: zoom · right stick: pan · {lb} {rb}: the valley")
+	_info.add_child(how)
+	_info.add_child(UiKit.button("Close", func() -> void:
+		closed.emit()
+		queue_free(), 15))
+	_mark_listed()
+
+
+## One way out in the list: what it is, and under it where it goes (the same words as on the map).
+func _exit_button(g: Dictionary) -> Button:
+	var lines := str(g["label"])
+	var goes := str(g["goes"])
+	if goes != "":
+		lines += "\n→ " + goes
+	if not bool(g["open"]):
+		lines += "\n" if goes == "" else " · "
+		lines += "shut for now"
+	var b := UiKit.button(lines, func() -> void: _area.pick(str(g["id"])), 15)
+	b.name = "Exit_" + str(g["id"])
+	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	b.custom_minimum_size = Vector2(270, 0)
+	b.tooltip_text = lines.replace("\n", " ")
+	b.mouse_entered.connect(func() -> void: _area.set_hover(str(g["id"])))
+	b.mouse_exited.connect(func() -> void: _area.set_hover(""))
+	b.focus_entered.connect(func() -> void: _area.set_hover(str(g["id"])))
+	return b
+
+
+## The list's buttons lit as the map has them: the way out under the pointer or picked is the one pressed.
+func _mark_listed() -> void:
+	if _info == null or _area == null:
+		return
+	for g in _area.exits:
+		var b := _info.find_child("Exit_" + str(g["id"]), true, false) as Button
+		if b != null:
+			b.add_theme_color_override("font_color", Look.color("rose") if str(g["id"]) in [_area.hover, _area.selected] else Look.color("vellum"))
+
+
+## What the marks mean on the local area, drawn with its own marks.
+func _area_legend() -> Control:
+	var c := Control.new()
+	c.custom_minimum_size = Vector2(290, 84)
+	c.draw.connect(func() -> void:
+		var font := ThemeDB.fallback_font
+		var ink := Look.color("void")
+		c.draw_rect(Rect2(Vector2.ZERO, c.size), Color(Look.color("vellum"), 0.1), true)
+		c.draw_rect(Rect2(Vector2.ZERO, c.size), Look.color("gilt_dark"), false, 1.0)
+		c.draw_circle(Vector2(20, 16), 7.0, Look.color("ink"), true, -1.0, true)
+		c.draw_circle(Vector2(20, 16), 5.5, Look.color("gilt_light"), true, -1.0, true)
+		c.draw_string(font, Vector2(40, 21), "Where the party is", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
+		for row: Array in [[41, "gilt_light", "A way out"], [66, "pewter", "A way out that is shut for now"]]:
+			var at := Vector2(20, float(row[0] as int))
+			var col := Look.color(str(row[1]))
+			var pts := PackedVector2Array([at + Vector2(0, -8), at + Vector2(8, 0), at + Vector2(0, 8), at + Vector2(-8, 0)])
+			c.draw_colored_polygon(pts, col)
+			pts.append(pts[0])
+			c.draw_polyline(pts, ink, 1.5, true)
+			c.draw_string(font, at + Vector2(20, 5), str(row[2]), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum")))
+	return c
 
 
 ## What the marks mean, drawn with the map's own marks.
