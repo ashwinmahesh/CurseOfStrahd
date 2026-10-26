@@ -6,6 +6,9 @@ This work includes material from the System Reference Document 5.2.1 ("SRD 5.2.1
 available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0
 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
 
+The game's original art and dialogue are CC BY 4.0 (LICENSE-CONTENT.md at the repository root); everything in the tables
+below keeps its own license.
+
 Content beyond the SRD (PHB-only subclasses, backgrounds, feats and spells; Curse of Strahd creatures) belongs to
 Wizards of the Coast and is not licensed by this repository. It was first used under the owner's personal-use decision
 (2026-10-05); the owner has since published it in the public repositories (2026-10-26, NOTICE.md says so). Data files store mechanics and our

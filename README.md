@@ -339,8 +339,9 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 
 ## License
 
-The source code and tooling are under the MIT license ([LICENSE](LICENSE)). The art, music, voice, story text and the
-Dungeons & Dragons content are not covered by it; see [NOTICE.md](NOTICE.md) for what is whose, including the SRD 5.2.1
+The source code and tooling are under the MIT license ([LICENSE](LICENSE)). The original art and the dialogue are under
+CC BY 4.0 ([LICENSE-CONTENT.md](LICENSE-CONTENT.md)). The voice recordings, the third-party music, sounds, icons and fonts, and
+the Dungeons & Dragons content are not covered by either; see [NOTICE.md](NOTICE.md) for what is whose, including the SRD 5.2.1
 attribution.
 
 ## Credits

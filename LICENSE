@@ -16,6 +16,6 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 This license covers the game's source code and tooling only: the GDScript, shader, Python and shell files, the tests and
-the JSON schemas written for this project. It does not cover the game's art, music, sound, voice recordings, story text,
-dialogue, names or the Dungeons & Dragons content described in NOTICE.md, which stay with their owners (for the art, voice
-and story the author, who has not licensed them for reuse); see NOTICE.md and docs/assets/LICENSES.md.
+the JSON schemas written for this project. The original art and the dialogue are under CC BY 4.0 (LICENSE-CONTENT.md). It does
+not cover voice recordings, third-party music, sounds, icons or fonts, names, or the Dungeons & Dragons content described in
+NOTICE.md, which stay with their owners; see NOTICE.md and docs/assets/LICENSES.md.

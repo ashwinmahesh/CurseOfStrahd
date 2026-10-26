@@ -31,4 +31,5 @@ shared with the separate DungeonsAndDragonsGameEngine repository (github.com/ash
 
 Third-party packs (music by Kevin MacLeod and Scott Buckley, OpenGameArt sound packs, Kenney, game-icons.net, Google Fonts
 and others) keep their own licenses and credits, listed with links in docs/assets/LICENSES.md and shown under Credits in the
-game. Original and generated art, voice recordings and story text are not licensed for reuse.
+game. The game's original art and its dialogue are licensed CC BY 4.0 (LICENSE-CONTENT.md, which also says what that excludes:
+the voice recordings, everything under art/sourced, and Wizards of the Coast's characters and trademarks).
