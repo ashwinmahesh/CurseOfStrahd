@@ -135,6 +135,25 @@
       "text": "Paralyzed until this creature damages him or until the end of its next turn; then Frightened for 1 minute (repeat save each turn). Text only for the engine."
     }
   ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "stroke",
+        "name": "Greatsword Stroke",
+        "cost": 1,
+        "action": "greatsword",
+        "summary": "Makes one Greatsword attack."
+      },
+      {
+        "id": "advance",
+        "name": "Advance",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
   "regions": [
     "argynvostholt"
   ],

@@ -404,6 +404,19 @@ func test_the_boss_casters_can_counter_and_shield() -> void:
 			assert_eq(e.monster_actions.reaction_spell_source(boss, "counterspell"), "protective_magic", "Exethanter's are at will")
 
 
+## Boss redesign plan, group 3: the book's lieutenants act between the heroes' turns too (a strike or a move, two uses a
+## round), and Izek, a level 4-5 fight, parries instead.
+func test_the_lieutenants_have_legendary_actions_and_izek_parries() -> void:
+	for id: String in ["rahadin", "vladimir_horngaard", "kiril_stoyanovich"]:
+		var e := _field()
+		var boss := TestCombat.foe(e, id, Vector2i(3, 3))
+		assert_eq(e.legendary.per_round(boss), 2, "%s: two uses a round" % id)
+		var kinds := e.legendary.options(boss).map(func(o: Variant) -> String: return "move" if bool((o as Dictionary).get("move", false)) else "strike")
+		assert_eq(kinds, ["strike", "move"], "%s: a strike or a move" % id)
+	var izek := Compendium.shared().get_entry("monsters", "izek_strazni")
+	assert_eq(int(((izek["reactions"] as Array)[0] as Dictionary).get("ac_bonus", 0)), 3, "Izek parries")
+
+
 # --- Lair actions ------------------------------------------------------------------------------------------------
 
 func test_the_lair_acts_on_initiative_20_losing_ties_and_never_twice_the_same() -> void:

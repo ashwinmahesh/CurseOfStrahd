@@ -167,6 +167,25 @@
       ]
     }
   ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "bite",
+        "name": "Bite",
+        "cost": 1,
+        "action": "bite",
+        "summary": "Makes one Bite attack."
+      },
+      {
+        "id": "lope",
+        "name": "Lope",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
   "bonus_actions": [
     {
       "id": "shape_shift",

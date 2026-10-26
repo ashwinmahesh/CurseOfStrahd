@@ -173,6 +173,25 @@
       "text": "Rahadin casts spells using Wisdom (spell save DC 15), needing no components. 3/day each: Misty Step, Phantasmal Killer."
     }
   ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "blade",
+        "name": "Blade",
+        "cost": 1,
+        "action": "scimitar",
+        "summary": "Makes one Scimitar attack."
+      },
+      {
+        "id": "slip",
+        "name": "Slip Away",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
   "spellcasting": {
     "ability": "wis",
     "dc": 15,

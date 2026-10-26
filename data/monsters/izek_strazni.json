@@ -113,6 +113,16 @@
       "text": "Ranged attack: +5 to hit, range 60 ft., one target. Hit: 10 (3d6) Fire damage. A flammable object that nobody is wearing or carrying bursts into flame."
     }
   ],
+  "reactions": [
+    {
+      "id": "parry",
+      "name": "Parry",
+      "kind": "special",
+      "summary": "Reaction: +3 AC against one melee attack that would hit him, while holding a weapon.",
+      "trigger": "Izek is hit by a melee attack roll while holding a weapon.",
+      "ac_bonus": 3
+    }
+  ],
   "regions": [
     "vallaki"
   ],
