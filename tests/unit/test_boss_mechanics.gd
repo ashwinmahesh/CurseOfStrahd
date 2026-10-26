@@ -204,6 +204,10 @@ func test_a_legendary_spell_is_cast_from_its_block() -> void:
 	assert_true(boss.action_available, "its own turn's action is still there")
 
 
+## A save against something that would hold it (Hold Monster's Paralyzed), the kind Legendary Resistance answers.
+const HELD: Array[String] = ["save_vs:paralyzed", "save_vs:spell", "save_vs:magic", "save_vs:spell_level:5"]
+
+
 ## 2025 Monster Manual: "Legendary Resistance (4/Day, or 5/Day in Lair)".
 func test_legendary_resistance_has_its_lair_count() -> void:
 	var e := _field()
@@ -211,19 +215,67 @@ func test_legendary_resistance_has_its_lair_count() -> void:
 	assert_eq(e.legendary.resistances(boss), 1, "one out of its lair")
 	_order(e, [boss], [10], true)
 	assert_eq(e.legendary.resistances(boss), 2, "two in it")
-	assert_true(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test").success)
-	assert_true(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test").success, "the lair's second use")
-	assert_false(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test").success)
+	assert_true(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test", HELD).success)
+	assert_true(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test", HELD).success, "the lair's second use")
+	assert_false(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test", HELD).success)
 
 
 func test_legendary_resistance_turns_failures_into_successes_while_uses_last() -> void:
 	var e := _field()
 	var boss := _add_boss(e, _boss({"legendary_resistance": 1}), Vector2i(3, 3))
 	_order(e, [boss], [10])
-	var first := boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test")
+	var first := boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test", HELD)
 	assert_true(first.success, "the first failed save succeeds instead")
-	var second := boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test")
+	var second := boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test", HELD)
 	assert_false(second.success, "no uses left")
+
+
+## House rule (owner, 2026-10-21; docs/rules/deviations.md): Legendary Resistance only turns a failed save that would put a
+## condition on the boss, or one against a spell of 5th level or higher (as cast) that does no damage on a success.
+func test_legendary_resistance_is_kept_for_what_matters() -> void:
+	var cases := [
+		[[], false, "a save with nothing riding on it"],
+		[["save_vs:spell", "save_vs:magic", "save_vs:spell_level:3", "save_vs:damage_on_success"], false, "a Fireball"],
+		[["save_vs:spell", "save_vs:magic", "save_vs:spell_level:5", "save_vs:damage_on_success"], false, "a Cone of Cold"],
+		[["save_vs:spell", "save_vs:magic", "save_vs:spell_level:6"], true, "a Disintegrate: nothing on a success, all on a failure"],
+		[["save_vs:spell", "save_vs:magic", "save_vs:spell_level:4"], false, "a 4th-level spell with no condition"],
+		[["save_vs:stunned"], true, "a Stunning Strike"],
+		[["save_vs:prone", "save_vs:spell", "save_vs:magic", "save_vs:spell_level:1", "save_vs:damage_on_success"], true,
+			"a spell that knocks it down, damage or not"],
+	]
+	for case: Array in cases:
+		var keys: Array[String] = []
+		keys.assign(case[0] as Array)
+		var e := _field()
+		var boss := _add_boss(e, _boss({"legendary_resistance": 3}), Vector2i(3, 3))
+		_order(e, [boss], [10])
+		var sv := boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test", keys)
+		assert_eq(sv.success, bool(case[1]), str(case[2]))
+		assert_eq(int(boss.get_meta("legendary_resistance_used", 0)), 1 if bool(case[1]) else 0, "%s: uses spent" % case[2])
+
+
+## The boss can't pass a Dexterity or Wisdom save (both scores 1, against a level 9 caster's DC) unless it resists.
+func _mage_and_boss() -> Dictionary:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_resistance": 3, "abilities": {"str": 18, "dex": 1, "con": 16, "int": 12, "wis": 1, "cha": 16}}),
+		Vector2i(6, 3))
+	var mage := TestCombat.caster_with(e, ["fireball", "hold_monster"], Vector2i(0, 3), 9)
+	_order(e, [mage, boss], [20, 10])
+	return {"e": e, "mage": mage, "boss": boss}
+
+
+func test_a_fireball_burns_no_legendary_resistance_and_hold_monster_does() -> void:
+	var f := _mage_and_boss()
+	var boss := f["boss"] as Combatant
+	var before := boss.creature.hp
+	assert_true((f["e"] as Encounter).spells.cast(f["mage"] as Combatant, "fireball", 3, [], Vector2(6.5, 3.5)).ok)
+	assert_eq(int(boss.get_meta("legendary_resistance_used", 0)), 0, "it takes the Fireball's full damage instead")
+	assert_true(boss.creature.hp < before, "and the fire lands")
+	var g := _mage_and_boss()
+	var held := g["boss"] as Combatant
+	assert_true((g["e"] as Encounter).spells.cast(g["mage"] as Combatant, "hold_monster", 5, [held]).ok)
+	assert_eq(int(held.get_meta("legendary_resistance_used", 0)), 1, "Hold Monster is worth one")
+	assert_false(held.creature.has_condition(&"paralyzed"), "so it isn't held")
 
 
 # --- Lair actions ------------------------------------------------------------------------------------------------
