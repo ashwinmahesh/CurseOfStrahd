@@ -136,6 +136,23 @@
       }
     }
   ],
+  "reactions": [
+    {
+      "id": "protective_magic",
+      "name": "Protective Magic",
+      "kind": "spellcasting",
+      "summary": "Three times a day: casts Counterspell or Shield as a Reaction.",
+      "text": "Baba Lysaga casts Counterspell or Shield in response to that spell's trigger (three times a day).",
+      "uses": {
+        "count": 3,
+        "per": "day"
+      },
+      "cast": [
+        "counterspell",
+        "shield"
+      ]
+    }
+  ],
   "spellcasting": {
     "ability": "int",
     "dc": 17,

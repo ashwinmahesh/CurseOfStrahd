@@ -386,6 +386,24 @@ func test_a_teleporting_option_leaves_a_burst_behind() -> void:
 	assert_eq(e.legendary.left(boss), 2)
 
 
+## Boss redesign plan, group 2: the casters among the bosses answer with Counterspell or Shield (the mage's Protective
+## Magic): Baba Lysaga three times a day, the Guide and the Count's Likeness twice, Exethanter at will. (Not Strahd: with
+## his +14 and one-use Bites, Shield turned his test of strength on the road into a wipe.)
+func test_the_boss_casters_can_counter_and_shield() -> void:
+	var uses := {"baba_lysaga": 3, "amber_guide": 2, "the_counts_likeness": 2, "exethanter": 99}
+	for id: String in uses:
+		var e := _field()
+		var boss := TestCombat.foe(e, id, Vector2i(3, 3))
+		for spell: String in ["counterspell", "shield"]:
+			assert_eq(e.monster_actions.reaction_spell_source(boss, spell), "protective_magic", "%s can cast %s as a Reaction" % [id, spell])
+		for i in mini(int(uses[id]), 5):
+			e.monster_actions.spend_reaction_spell(boss, "shield")
+		if int(uses[id]) < 99:
+			assert_eq(e.monster_actions.reaction_spell_source(boss, "counterspell"), "", "%s: %d a day, then none" % [id, uses[id]])
+		else:
+			assert_eq(e.monster_actions.reaction_spell_source(boss, "counterspell"), "protective_magic", "Exethanter's are at will")
+
+
 # --- Lair actions ------------------------------------------------------------------------------------------------
 
 func test_the_lair_acts_on_initiative_20_losing_ties_and_never_twice_the_same() -> void:

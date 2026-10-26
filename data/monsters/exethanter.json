@@ -116,6 +116,19 @@
       "text": "Intelligence is his spellcasting ability (spell save DC 17, +9 to hit). Cantrips: Mage Hand, Prestidigitation, Ray of Frost. Whatever leveled spells he still recalls are not entered yet."
     }
   ],
+  "reactions": [
+    {
+      "id": "protective_magic",
+      "name": "Protective Magic",
+      "kind": "spellcasting",
+      "summary": "At will: casts Counterspell or Shield as a Reaction.",
+      "text": "Exethanter casts Counterspell or Shield in response to that spell's trigger (at will).",
+      "cast": [
+        "counterspell",
+        "shield"
+      ]
+    }
+  ],
   "spellcasting": {
     "ability": "int",
     "dc": 17,

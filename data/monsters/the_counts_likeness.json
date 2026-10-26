@@ -156,6 +156,23 @@
       "text": "The Likeness casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 16): once a day each, Hypnotic Pattern and Hold Person."
     }
   ],
+  "reactions": [
+    {
+      "id": "protective_magic",
+      "name": "Protective Magic",
+      "kind": "spellcasting",
+      "summary": "Twice a day: casts Counterspell or Shield as a Reaction.",
+      "text": "The Likeness casts Counterspell or Shield in response to that spell's trigger (twice a day).",
+      "uses": {
+        "count": 2,
+        "per": "day"
+      },
+      "cast": [
+        "counterspell",
+        "shield"
+      ]
+    }
+  ],
   "spellcasting": {
     "ability": "cha",
     "dc": 16,
