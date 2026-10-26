@@ -37,6 +37,10 @@
       "art": "gold_heap",
       "heap": "silver"
     },
+    "gold_hoard": {
+      "art": "gold_heap",
+      "heap": "gold"
+    },
     "rope": null,
     "rags": "refuse_mound",
     "altar": "altar_church",

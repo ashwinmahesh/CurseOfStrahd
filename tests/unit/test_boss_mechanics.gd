@@ -122,6 +122,23 @@ func test_a_legendary_move_provokes_no_opportunity_attack() -> void:
 	assert_eq(e.legendary.left(boss), 1)
 
 
+## "Moves without provoking Opportunity Attacks" means none at all (owner, 2026-10-23: the dragon's Pounce bypasses
+## Sentinel), not a Disengage that a Sentinel still strikes through.
+func test_a_legendary_move_draws_no_sentinel_strike_either() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_actions": {"per_round": 2, "options": [
+		{"id": "move", "name": "Move", "cost": 1, "move": true, "summary": "x"}]}}), Vector2i(3, 3))
+	var guard := e.add(TestChars.custom("paladin", "human", 4, {"ability_score_improvement": ["sentinel"]}), &"party", Vector2i(4, 3))
+	assert_true(e.features.has_feat(guard, "sentinel"))
+	_order(e, [guard, boss], [30, 10])
+	e.default_player_reaction = "auto"
+	var r := e.legendary.use(boss, "move", null, Vector2i(0, 3))
+	assert_true(r.ok, r.reason)
+	assert_eq(boss.cell, Vector2i(0, 3))
+	assert_true(guard.reaction_available, "the Sentinel's Reaction is still unspent")
+	assert_true(e.pending == null, "and nothing was offered")
+
+
 ## Three uses, a strike that costs two and a move that costs one (the Vine Mother's shape): the strike lands at the end
 ## of the first hero's turn, and the last use isn't wasted: at the end of the last turn before its own, it moves to
 ## stand beside both heroes.

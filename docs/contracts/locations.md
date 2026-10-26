@@ -148,6 +148,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   colour's name or `"#rrggbb"`) multiplies the colours of its 3D piece: the dead colossus at the Amber Temple's doors in dark
   amber (ModelPiece.tint, applied before it can fade in the party's way). A `model` of
   `silver_heap` is a heap of coins built from the coins (CoinHeap), `scale` times the gold heap's size.
+  `gold_hoard` is the same heap in gold coin (Sarkhaza's cavern).
   A prop's `stand_ft` (5 to 60, in 5 ft steps) makes it something stood on: its squares (its cell, or all its `span`)
   are that many feet above the ground underneath (LocationView.grid_for, CombatGrid.raise). 5 ft is a step up (a
   podium); 10 ft or more is a ledge: climbed (1 extra foot per foot), jumped down from (5 ft and the fall), high ground

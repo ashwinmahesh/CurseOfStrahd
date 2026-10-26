@@ -1300,6 +1300,11 @@ keepers had three ways of going down to her safely, and each one puts her in a s
   every version, with or without the keepers' tricks (2026-10-19, once the choke went; it won 3 of 8 with all three
   tricks while the hauled-in collar choked her breath for a minute). By the owner's rule nothing was retuned for it
   (docs/story/boss_fights.md).
+- **Her cavern, 2026-10-26** (owner: "expand its lair in size", "larger piles of gold ... similar to ... the vault on
+  Argynvostholt", "we dont need stronger minions", and the fight's tuning kept): the hoard hall (`hoard_hall`) is 49 squares
+  wide instead of 26 (the map grew to 56 columns; nothing that stood there moved but the shackles, now on the new east
+  wall), with ten drifts of gold coin (`gold_hoard`, the vault's coin heaps in gold, scale 2.4 to 3.2) and two more ember
+  lights. Her Pounce, like every legendary move, provokes no Opportunity Attack at all, a Sentinel's included.
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: eight wights, three revenants and a helmed
   horror, waiting by the cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP, two flameskulls, the
   keepers who forgot the sluice, and three wights). The sharp autopilot wins each 5 of 8 at level 10.
