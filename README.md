@@ -180,7 +180,7 @@ Players update with one line from the site (`curseofstrahd.app/update.sh` on a M
 reads `downloads.curseofstrahd.app/latest.json`. When a release changes nothing a pack can't carry since the last full
 download (the Godot version, `project.godot`, files removed from the folders the game lists), the release workflow also
 exports a cumulative patch against that download (`tools/release/patch.py`, Godot's `--export-patch`) and the
-updaters fetch just that, into the game's user folder beside the saves; `core/patch_loader.gd`, the first autoload,
+updaters fetch just that, into the game's user folder beside the saves; `addons/dnd_core/core/patch_loader.gd`, the first autoload,
 loads it at startup. `release.json` beside each release's downloads records which it is.
 
 The Windows .exe ships unsigned, so SmartScreen may warn. With an Azure Artifact Signing account, the secrets
@@ -324,12 +324,9 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 
 | Folder | What's in it |
 |---|---|
-| `rules/` | The rules engine: a pure library with no nodes, scenes or UI. |
-| `combat/` | Grid, encounters, spells, features, AI and the action catalog, also pure logic. |
-| `story/` | Story state, dialogue runner, quests, travel, weather, schedules, the Tarokka and treasure. |
-| `world/`, `ui/`, `scenes/` | What you see: the board, the look, the HUDs and screens (Skirmish in `ui/skirmish/`), and the thin scene roots. |
-| `shaders/` | The world, sprite, water, atmosphere and screen shaders. |
-| `core/` | Autoloads: dice, game state, settings, saving, input, audio, voice and achievements. |
+| `addons/dnd_core/` | The engine, a separate public repo used as a git submodule ([DungeonsAndDragonsGameEngine](https://github.com/ashwinmahesh/DungeonsAndDragonsGameEngine)): `rules/` (the rules engine, a pure library), `combat/` (grid, encounters, spells, AI), `story/` (state, dialogue runner, quests, travel), `ui/` (the HUDs and screens), `world/` (the board, the look, exploration, the camera), `shaders/`, `core/` (autoloads: dice, game state, settings, saving, input, audio, voice, achievements), `skirmish/`, the rules data, the fonts, icons and sound effects, and the test runner. |
+| `story/`, `world/`, `ui/`, `scenes/` | The game's own: the Tarokka and Strahd's visits (`story/`), the hub, the tutorial and the Amber Temple and castle scenery (`world/`), the ending screen and menus (`ui/`), and the thin scene roots. |
+| `shaders/` | The game's own shaders: the Amber Temple's amber, the faceless void and the title screen. |
 | `data/` | Classes, spells, monsters, items, locations, NPCs, quests, cutscenes and more, as JSON with schemas. |
 | `narrative/` | The conversations, one `.dialogue` file per scene. |
 | `art/`, `audio/`, `blender/` | Art, voices and the pipelines that build them. |

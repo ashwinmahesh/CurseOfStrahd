@@ -333,7 +333,7 @@ another item, it is one id in `cat_eisglaze_sword`.
 
 ### Small code (hook files)
 
-- `LocationFights._light_the_fight` (world/exploration/location_fights.gd): a location light with `sunlight: true` is true
+- `LocationFights._light_the_fight` (addons/dnd_core/world/exploration/location_fights.gd): a location light with `sunlight: true` is true
   sunlight in a fight (Tasha's painted sun). Schema: `lights[].sunlight`.
 - `StoryState.release_one_fight_guests` (story/story_state.gd), asked by `LocationFights._end_encounter` after
   `see_to_fallen_guests`: an NPC with `leaves_after_fight: true` (Sir Klutz) leaves the party when the next fight ends.
@@ -370,7 +370,7 @@ back at the top of the stair, and it does nothing to those coming up. It replace
 removed with its test entry and its flag `cat_guardians_stilled`). The game tracks no alignment, so the curtain judges the
 dark gifts (`dark_gifts_taken`, the plan's default): the passage square (16, 13) is a ward, the door `cat_curtain_ward`
 with `leaf: none` (nothing drawn: its look is the code-drawn `light_curtain` prop, LightCurtain in
-world/look/light_curtain.gd), whose `when` holds with no gift, or once the party has come up through it from the tomb
+addons/dnd_core/world/look/light_curtain.gd), whose `when` holds with no gift, or once the party has come up through it from the tomb
 (the overlook's window route, C7). Two one-time calls speak as the leader nears it: from above
 (`guardians_curtain:above`: no gift, it asks nothing, `cat_curtain_passed_down`; a gift, the party is moved back to the
 top of the stair, `from_catacombs`) and from below (`guardians_curtain:below`, `cat_curtain_from_below`). A party turned

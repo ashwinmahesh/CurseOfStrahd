@@ -14,7 +14,7 @@ It has to stay testable without a scene (ADR 0001) and keep the rules library pu
   `make lint`. It takes a DiceRoller. Scenes show it; they never decide anything.
 - **The grid is data.** `CombatGrid` is built from rows of characters (`.` floor, `#` wall, `=` low cover, `~`
   Difficult Terrain, `1`-`4` raised floor, space = void) stored in `data/encounters/<id>.json`, so the rules and the
-  3D dressing (`world/combat/arena_board.gd`) read the same map. Cell (x, z) is world x..x+1, z..z+1 (ADR 0004).
+  3D dressing (`addons/dnd_core/world/combat/arena_board.gd`) read the same map. Cell (x, z) is world x..x+1, z..z+1 (ADR 0004).
 - **2024 grid rules:** every square costs 5 ft, diagonals included; Difficult Terrain doubles; diagonals can't cut a
   wall's corner; climbing more than 5 ft costs extra; distance is the larger axis gap (height counts); Large creatures
   are 2x2. Creatures: allies, Incapacitated, Tiny and two-sizes-different creatures can be passed; an enemy's square is

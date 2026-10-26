@@ -35,7 +35,7 @@ a fixed place and facing, and the camera sees the side that faces it:
 - **Free-standing pieces with a front and a back** (chests, tables, beds, chairs, carts, wagons, statues, pews,
   signposts, stalls, the cottage and tent ...): drawn twice in one Gemini call, from the front and from behind, each
   with that side toward the lower right (`<id>` and `<id>_back`, linked by `back` in the manifest). `PropView`
-  (`world/look/prop_view.gd`) shows the front when the camera is in front of the piece and the back when it's
+  (`addons/dnd_core/world/look/prop_view.gd`) shows the front when the camera is in front of the piece and the back when it's
   behind, mirrored for the other corner. A piece faces away from a wall beside it, else south (toward the opening
   camera).
 - **Pieces that look the same from every side** (barrels, wells, braziers, trees, boulders, brambles, towers) stay
@@ -46,7 +46,7 @@ a fixed place and facing, and the camera sees the side that faces it:
 ## Stairs are steps (owner report, 2026-10-06)
 
 "Stairs still look too small... the icon for stairs down looks weird." Stairs are no longer pictures: `Stairs`
-(`world/look/stairs.gd`) builds a flight up as seven solid steps climbing 7.5 ft across its square, with a banister,
+(`addons/dnd_core/world/look/stairs.gd`) builds a flight up as seven solid steps climbing 7.5 ft across its square, with a banister,
 and a stairwell down as a shaft that opens the square's floor (stone sides, a dark bottom) with steps descending 7 ft.
 Both start at the square's open side and climb or descend away from it, in wood indoors and stone below ground, and
 read right from every camera heading. Exits and props whose art is `stair_riser` or `stair_down` use them.
@@ -62,7 +62,7 @@ it, and on any front-view furniture drawn as a billboard.
 ## Pointing at pieces (owner report, 2026-10-06)
 
 The top of a tall piece is drawn over the squares behind it, so the mouse now tests what's drawn before the floor
-(`LocationView.pick_cell`, `world/exploration/sprite_pick.gd`): each person's and piece's quad as drawn, nearest the
+(`LocationView.pick_cell`, `addons/dnd_core/world/exploration/sprite_pick.gd`): each person's and piece's quad as drawn, nearest the
 camera first, and for pieces the texture's alpha, so only painted pixels count. Floor pieces and empty floor fall
 back to the floor square (`GridPick`).
 
@@ -110,7 +110,7 @@ facing its own area first. `test_no_piece_overlaps_another_or_a_wall` builds eve
 
 ## How a thing finds its art
 
-`art/sprites/props/catalog.json`, read by `world/look/set_dressing.gd` (`SetDressing`):
+`art/sprites/props/catalog.json`, read by `addons/dnd_core/world/look/set_dressing.gd` (`SetDressing`):
 
 1. `ids[<prop id>]`, then `models[<model>]`, then art with the model's own name, then `container_default` for
    containers. A value is an art id, `{art, mount, scale, on_wall}`, or `null` for an invisible spot (something
@@ -147,7 +147,7 @@ fails when a location has a prop, container or door without art.
   wall's height (1.15 indoors, the cut-away height; 1.9 outdoors). The Gates of Barovia (`doors.ids`) use
   `pillars` and a `statue`.
 
-## Towns (`world/look/town_builder.gd`)
+## Towns (`addons/dnd_core/world/look/town_builder.gd`)
 
 Inner wall squares that belong to some 2 x 2 block of wall are houses; the rest are yard walls. Each solid block is
 split into rectangles (largest first, growing right then down) and each rectangle becomes one house: walls 2.2
@@ -259,7 +259,7 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
   the whole is thinned to 10k triangles and settled to 0.6 of its height. The download has no tail, so the builder adds
   one (`_dragon_tail`: vertebrae from the pelvis, curling away from the hind legs along the dais's near edge). Their
   `size` in art/models/manifest.json is what the data's `scale` multiplies.
-- **Silver heaps** (`silver_heap`, `world/look/coin_heap.gd`): the Undercroft's eight heaps of silver are built from
+- **Silver heaps** (`silver_heap`, `addons/dnd_core/world/look/coin_heap.gd`): the Undercroft's eight heaps of silver are built from
   about a thousand coins each over a lumpy dune. The gold heap model scaled up was a smooth blob with a few big discs
   on it. Pillars and fight squares keep clear of them; the biggest, at [19, 5], is 7.5 ft tall.
 - **Sprites** are sized by `CombatToken.HEIGHTS`: the Amber Sentinel stands 6.0 units (30 ft, the amber colossus that

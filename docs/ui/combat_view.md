@@ -88,7 +88,7 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   reason when it can't go there), the tooltip the length used and who stands in the wall. Backspace or right-click
   takes back the last square; Enter or a click on the last square finishes. A Wall of Fire then shows the side that
   would burn under the pointer: click the side. A ring, globe or dome (right-click menu) is placed at a point.
-- **Second picks** (world/combat/target_picker.gd): Commander's Strike's ally, then the creature it attacks (Enter: its
+- **Second picks** (addons/dnd_core/world/combat/target_picker.gd): Commander's Strike's ally, then the creature it attacks (Enter: its
   best target); Crown of Madness's target, then the creature it must attack (Enter, or a click on the crowned creature:
   no one), and the same pick on the keep-control action; after a Maneuvering Attack hit, the ally that moves (skipped
   when only one can) and its square, with the path and any other enemy's Opportunity Attack shown. Backspace or
@@ -199,7 +199,7 @@ template), `_5_end.png` (the end of a fight). Where the build differs from the w
 - **Ready** holds an attack for an enemy coming into reach; readied spells come later (deviations.md).
   **Influence** is greyed with the reason ("Wolves and the walking dead can't be reasoned with").
 - **Level-up badge**: no experience is earned in the arena, so it never shows.
-- **Controller** (docs/ui/controller.md, world/combat/pad_combat.gd): the radial menu (hold LB, aim with the right
+- **Controller** (docs/ui/controller.md, addons/dnd_core/world/combat/pad_combat.gd): the radial menu (hold LB, aim with the right
   stick) is in; inside a tab, LT/RT step through the slots and RB uses one, D-pad up/down change the tab and
   left/right the spell slot, and the left stick moves a square cursor that A confirms, with the camera following it.
   The right stick turns and zooms the camera when the radial isn't open. X jumps to the next target, Y ends the turn
@@ -213,7 +213,7 @@ template), `_5_end.png` (the end of a fight). Where the build differs from the w
 
 - **Combat log** minimizes to its title bar (the – button or L), which then shows the latest line (owner request).
 - **Damage and healing numbers** stay over the creature for about 2.5 seconds (owner request); every Hit Point lost
-  comes with a `damage` event, so a trap's damage floats like a blow's (FloatText, world/combat/fx/float_text.gd, which
+  comes with a `damage` event, so a trap's damage floats like a blow's (FloatText, addons/dnd_core/world/combat/fx/float_text.gd, which
   a trap outside a fight uses too).
 - **Right-click any hotbar slot** (weapon, spell, ability, action) for a menu: Info (the full details: attack and
   damage breakdowns, properties and mastery, or a spell's level, school, casting time, range, components, duration,
@@ -311,7 +311,7 @@ it, a container opening its choices, a rule stepping on). Both wheels carry the 
 ## Dice moments (owner 2026-10-09)
 
 When a hero makes a saving throw in a fight (a death save included), the dice lane's big emerald d20 (`DiceRoll`,
-ui/dice/dice_roll.gd) rolls it before the action's effects play: `CombatView._dice_moments` at the start of
+addons/dnd_core/ui/dice/dice_roll.gd) rolls it before the action's effects play: `CombatView._dice_moments` at the start of
 `_play_events`, one roll after another, from the heroes' d20 events (`Creature.roll_d20` logs each roll's kind and
 test). Foes' saves and attack rolls don't get it (owner, 01:27). Any press skips a roll; fast combat plays it quicker.
 
@@ -370,7 +370,7 @@ The creature the camera went to is ringed in white in the order (`CombatHud.look
 ## A long turn order (owner, 2026-10-14)
 
 When the portraits are wider than their panel (13 or more at 1600 px) the order scrolls sideways instead of running
-past the window (`TurnStrip`, ui/combat/turn_strip.gd; the cards are still `CombatHud._strip`'s children). At the start
+past the window (`TurnStrip`, addons/dnd_core/ui/combat/turn_strip.gd; the cards are still `CombatHud._strip`'s children). At the start
 of the fight and at each new turn the row glides to put the card whose turn it is in the middle, once per turn: a
 refresh within the turn (a hit point lost, a condition) never moves it. Scrolling by hand holds the row where it was put
 until the next turn: the mouse wheel or a trackpad over it, a touch drag, or the arrows at its ends; on a pad, LB held

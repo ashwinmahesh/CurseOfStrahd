@@ -133,13 +133,13 @@ music comes back when a place cutscene closes: `GameRoot._cutscene_music`).
 ## Code
 - `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`, and
   `scenes` (a trigger's scenes in order, from `then` and `caption`).
-- `ui/cutscene/cutscene_view.gd` (`CutsceneView`): the picture (whole, letterboxed in black) and its fade, the caption, Skip and the pause
+- `addons/dnd_core/ui/cutscene/cutscene_view.gd` (`CutsceneView`): the picture (whole, letterboxed in black) and its fade, the caption, Skip and the pause
   card. Motion is off in headless runs and still captures (UiMotion).
-- `ui/cutscene/cutscene_player.gd` (`CutscenePlayer`): a place's cutscene while exploring, opened by
+- `addons/dnd_core/ui/cutscene/cutscene_player.gd` (`CutscenePlayer`): a place's cutscene while exploring, opened by
   `world/game_root.gd play_cutscene` from `LocationView.cutscene_requested` (a fight's narrator key opens it from
-  `world/combat/combat_view.gd`). It stands in as the open screen, so nothing in the world moves under it. It plays
+  `addons/dnd_core/world/combat/combat_view.gd`). It stands in as the open screen, so nothing in the world moves under it. It plays
   `Cutscenes.scenes`: each scene's captions, then the next picture.
-- `ui/dialogue/dialogue_ui.gd`: the `cutscene` beat, captions and Skip in a conversation.
+- `addons/dnd_core/ui/dialogue/dialogue_ui.gd`: the `cutscene` beat, captions and Skip in a conversation.
 
 ## Art
 `tools/art/build_cutscenes.py [--generate] [--only id ...] [--sheet out.png]` builds every picture from

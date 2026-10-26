@@ -13,17 +13,17 @@ grade.
 | Piece | File |
 |---|---|
 | Each place's mood: light per time of day, mist, clouds, grade, water, weather, land around the map | `art/atmosphere/moods.json` |
-| Builds the mood for a location and runs it (sun, sky, contact shadows, water, time-of-day blends, lightning) | `world/look/atmosphere.gd` (`Atmosphere`) |
-| The land around the map and over its empty squares: hills, forest, roads and lakes running on | `world/look/atmosphere_land.gd` (`AtmosphereLand`) |
-| The Modern look's trees and plants (docs/art/plants.md) | `world/look/flora.gd` (`Flora`), `art/plants/` |
-| The Modern look's shaped ground: the walked ground's hollows and ruts, banks under the woods | `world/look/ground_relief.gd` (`GroundRelief`) |
-| What lies past the edge when the camera tilts up: the mountains, Castle Ravenloft on its crag, Lake Zarovich | `world/look/vista.gd` (`Vista`), `art/vistas/`, `shaders/atmosphere/vista*.gdshader` |
+| Builds the mood for a location and runs it (sun, sky, contact shadows, water, time-of-day blends, lightning) | `addons/dnd_core/world/look/atmosphere.gd` (`Atmosphere`) |
+| The land around the map and over its empty squares: hills, forest, roads and lakes running on | `addons/dnd_core/world/look/atmosphere_land.gd` (`AtmosphereLand`) |
+| The Modern look's trees and plants (docs/art/plants.md) | `addons/dnd_core/world/look/flora.gd` (`Flora`), `art/plants/` |
+| The Modern look's shaped ground: the walked ground's hollows and ruts, banks under the woods | `addons/dnd_core/world/look/ground_relief.gd` (`GroundRelief`) |
+| What lies past the edge when the camera tilts up: the mountains, Castle Ravenloft on its crag, Lake Zarovich | `addons/dnd_core/world/look/vista.gd` (`Vista`), `art/vistas/`, `shaders/atmosphere/vista*.gdshader` |
 | The land lane's before-and-after shots: trees and plants, ground, vistas | `tools/capture/land_capture.tscn` |
-| Weather: leaves, rain, snow, wisps, dust, crows, chimney smoke, embers, lit windows | `world/look/atmosphere_weather.gd` (`AtmosphereWeather`) |
-| Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/screen_pass.gdshader` |
+| Weather: leaves, rain, snow, wisps, dust, crows, chimney smoke, embers, lit windows | `addons/dnd_core/world/look/atmosphere_weather.gd` (`AtmosphereWeather`) |
+| Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `addons/dnd_core/shaders/post/screen_pass.gdshader` |
 | Water, forest trees (one MultiMesh), leaves, rain, splashes, motes, crows, smoke | `shaders/atmosphere/` |
 | Art QA: a place at each time of day from the game camera, with frame times | `tools/art/preview/atmosphere_preview.tscn` |
-| The renderer by graphics preset: anti-aliasing, shadow maps, how many lamps cast shadows | `world/look/graphics.gd` (`Graphics`) |
+| The renderer by graphics preset: anti-aliasing, shadow maps, how many lamps cast shadows | `addons/dnd_core/world/look/graphics.gd` (`Graphics`) |
 | The world look's before-and-after shots, with frame times and a cost bench | `tools/capture/look_capture.tscn` |
 
 `LocationView` makes one `Atmosphere` and hands it the camera and the screen pass; `update_daylight()` tells it the
@@ -117,7 +117,7 @@ tests/integration/test_indoor_looks.gd.
   Empty squares inside a map (Krezk's approach, the Abbey's road) are hillside too, unless the mood says they are a
   drop (`"void": "drop"`: the castle's roofs and chasms, Tsolenka's gorge). No tree of the land stands within two
   squares of anywhere people can walk.
-- **Water.** In the Modern finish (W14, `shaders/world/lit_water.gdshader`) water deepens smoothly from the shore,
+- **Water.** In the Modern finish (W14, `addons/dnd_core/shaders/world/lit_water.gdshader`) water deepens smoothly from the shore,
   small ripples drift with the current and bend the light, so the moon and the lamps leave glints on it and the
   reflections waver, the sky's light lies on it more at a glancing angle, soft broken foam laps along the shore, and
   rain rings it in wet weather (W12). In Classic, lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
@@ -136,17 +136,17 @@ tests/integration/test_indoor_looks.gd.
   swallows most of it; it shows best by night. The threads are two layers of the screen pass's own ridged noise
   (four noise reads) over a shore mask (`Atmosphere.shore_mask`: one filtered read), about 0.3 ms at 3440 x 1440 at
   the lake under heavy load. `LOOK_OFF=caustics` in look_capture for without.
-- **Washing lines.** A mood's `lines` (world/look/washing_line.gd) strings a line between two posts with the week's
+- **Washing lines.** A mood's `lines` (addons/dnd_core/world/look/washing_line.gd) strings a line between two posts with the week's
   wash pegged out on it in muted palette colours, swaying: Barovia's back yards (lane 28, "an actual village"). With
   `"kind": "bunting"` it is a high festival string of little pennants with no posts, in Vallaki's yellow by default.
   Lines are built outdoors only. Krezk's yards have washing lines too.
 - **The Mists on the map.** A `fog_bank` prop (the road out of the Mists, the road east of the village) is a bank
-  of soft, camera-facing puffs (world/look/mist_bank.gd, shaders/world/mist_puff.gdshader) in the Mists' grey, not a
+  of soft, camera-facing puffs (addons/dnd_core/world/look/mist_bank.gd, addons/dnd_core/shaders/world/mist_puff.gdshader) in the Mists' grey, not a
   drawn cloud; the screen pass's Mists wall (a mood's `mists_edge`) has a soft, billowing edge with slow puffs of light
   and shade in it and only a faint ink line (lane 28: it read as a flat slab from far out).
 - **Smoke at a point.** Weather `{"kind": "smoke", "at": [[x, y, z]]}` puts a chimney plume anywhere: Old
   Bonegrinder's pipe.
-- **Waterfalls.** A mood's `falls` (world/look/waterfall.gd) pours a river over an edge: a curved sheet of falling
+- **Waterfalls.** A mood's `falls` (addons/dnd_core/world/look/waterfall.gd) pours a river over an edge: a curved sheet of falling
   water in the place's water colours, white streaks racing down it, foam at the lip and spray at the foot where the
   mist swallows it. Tser Falls has one over its gorge (its empty squares are a drop, `surround.void`).
 - **Cloud shadows** drift over the ground; broad light and dark patches break up the ground texture so it doesn't
@@ -169,7 +169,7 @@ tests/integration/test_indoor_looks.gd.
   the world has now (`Weather.dress_mood`: its own rain and snow give way to the weather's, fog thickens its mist), and
   when the weather turns during a stay, `Atmosphere.refresh_weather()` (LocationClock calls it) rebuilds the rain and
   snow and resets the mist and the wet or snowy surfaces at once.
-- **Weather on surfaces** (W12, Modern; `shaders/world/weather_surface.gdshaderinc`, the global uniforms `world_wet`,
+- **Weather on surfaces** (W12, Modern; `addons/dnd_core/shaders/world/weather_surface.gdshaderinc`, the global uniforms `world_wet`,
   `world_snow`, `world_time` and `world_sky` that Atmosphere sets from the mood's weather outdoors): rain darkens and
   glosses everything and its colour deepens, puddles gather in the low places of level ground, ringing with drops and
   holding the sky's light, and the sun and moon leave almost no highlight under rain cloud, so wet stone glistens in
@@ -211,7 +211,7 @@ built floors (boards, tiles, black stone) keep theirs, and Classic stays flat. `
 walks between a wild map's ways out; the surfaces lane's wheel-rut decals (W10) follow them.
 
 **Blended ground (N2).** The skin and the banks are one mesh (`Ground`) in one material, `Look.blend_ground`
-(`shaders/world/lit_world_blend.gdshader`), which draws up to four of the place's surfaces (the most used squares'
+(`addons/dnd_core/shaders/world/lit_world_blend.gdshader`), which draws up to four of the place's surfaces (the most used squares'
 floors, the difficult ground and an area's floor among them, and always the woods' bank ground) and melts them into each
 other at their edges instead of meeting on a square's: no square tile of mud, drift, flags or bank shows. A control map
 (`GroundRelief._control_map`, one texel a square, a channel for each surface) says which surface each square is; the
@@ -239,7 +239,7 @@ places and drawn again from that on the next visit. `AtmosphereLand.build_ms` sa
 
 ## Natural shores in the Modern finish
 
-(Natural Maps plan N3, `world/look/shores.gd`.) A map's water squares used to be 1 x 1 boxes at -0.18 beside ground at 0:
+(Natural Maps plan N3, `addons/dnd_core/world/look/shores.gd`.) A map's water squares used to be 1 x 1 boxes at -0.18 beside ground at 0:
 a pond was a square cut out of the land with a kerb round it, a lake a staircase. In the Modern look the edge of the
 water is one smooth contour per place. It is the signed distance from the water squares' outline (positive over the
 water), blurred so convex corners round off, moved about by noise seeded by the place (smooth over two squares or so),
@@ -275,7 +275,7 @@ Natural Maps plan N1 (Ashwin, 2026-10-19: "we don't need to draw our real world 
 real natural map that we just overlay a grid on top afterwards"). The Modern look paints no grid into its ground:
 `Look.cel_textured`'s `grid` argument (the faint line round each square on top faces) only draws in Classic, which
 is frozen, and `lit_world.gdshader` has no grid at all. The grid is a layer laid over the land instead,
-`BattleGrid` (`world/combat/battle_grid.gd`, `shaders/fx/battle_grid.gdshader`, `GridOverlay.lines`):
+`BattleGrid` (`addons/dnd_core/world/combat/battle_grid.gd`, `addons/dnd_core/shaders/fx/battle_grid.gdshader`, `GridOverlay.lines`):
 
 - **What it is.** One mesh per board, made the first time it is wanted and kept with the board. Every square a creature
   can stand in (not a wall, a tree, water or the void, nor a square of a hidden room) is a patch lying 0.012 above the
@@ -440,14 +440,14 @@ it on the window).
   at 3440 x 1440 (`perf_run.py --only effects_fast --effects glow`: 0.8 to 1.2 ms against 0.7 to 1.0).
 - **Heat shimmer** (Modern, out of doors; Visual Polish Plan 8): the air wavers above open fires and torches
   (`HeatShimmer`, which `_dress_light` hands each light of kind `fire` or `torch`): a patch of the finished picture
-  above the flame is read back and nudged by rising waves (`shaders/post/heat_shimmer.gdshader`), strongest just over
+  above the flame is read back and nudged by rising waves (`addons/dnd_core/shaders/post/heat_shimmer.gdshader`), strongest just over
   it and fading out up and to the sides, on a canvas layer over the world and under the HUD. The nearest six fires in
   view shimmer; indoors a hearth's heat goes up its chimney (and the patch bent the wall above it), so rooms get none.
   About 0.03 to 0.12 ms at 3440 x 1440 with a fire in view, nothing otherwise
   (`make capture SCENE=res://tools/capture/shimmer_capture.tscn NAME=shimmer FRAMES=10` prints it and shoots frames).
 - **Motes in the light** (Modern, Visual Polish Plan 9): every room has dust in the air (the `indoors` mood's weather,
   `modern_only`, so Classic's rooms stay as they were frozen; the castle's halls, chapel and court keep their own),
-  drawn with `shaders/atmosphere/dust_mote.gdshader`: a mote takes no ambient light and no moonlight, only the lamps',
+  drawn with `addons/dnd_core/shaders/atmosphere/dust_mote.gdshader`: a mote takes no ambient light and no moonlight, only the lamps',
   candles', fires' and window shafts' light at its own spot, shadows included, so it's invisible in the dark and
   glints in a lamp's pool or a window's beam, twinkling as it turns. Twice as many motes as Classic's, since most are
   dark at any moment, and under half the size (`MODERN_DUST_SIZE`), with each light's share capped under the glow's
@@ -456,13 +456,13 @@ it on the window).
   black (`INDOOR_TONE`: the ambient leans to moon blue and the moon key light is stronger).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
   wall beside the window down across the room (casting shadows) and a glowing cone of dusty haze along it
-  (`shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.
+  (`addons/dnd_core/shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.
 
 ## Characters reflected in the Modern finish
 
 Visual Polish Plan 1 (the vault's "Visual Polish Plan.md", 2026-10-09). The world's screen-space reflections can't
 show the characters (they draw after the screen pass), so each figure has its own: `SpriteReflection`, a child of its
-`DirectionalSprite`, draws the figure upside down under its feet (`shaders/world/sprite_reflection.gdshader`, the crisp
+`DirectionalSprite`, draws the figure upside down under its feet (`addons/dnd_core/shaders/world/sprite_reflection.gdshader`, the crisp
 sprite's motion, billboard and light, without its rim) and keeps only the pixels where the surface already drawn there
 is level, at the figure's feet height and glossy, read per pixel from the depth and normal-roughness buffers. So open
 water and rain puddles (roughness 0.1 and under) show it fully and waver, wet ground, polished marble and tiles show it
@@ -479,7 +479,7 @@ the village at night, Vallaki and the castle's main floor (`python3 tools/perf/p
 
 Visual Polish Plan 2 (the vault's "Visual Polish Plan.md", 2026-10-09). Out of doors a few beams of light slant down
 where it breaks through gaps in the trees and between the houses (`SunShafts`, built with the place's weather in
-`AtmosphereWeather.build`; `shaders/world/sun_shaft.gdshader`): open cones along the key light, soft at the edges, thin
+`AtmosphereWeather.build`; `addons/dnd_core/shaders/world/sun_shaft.gdshader`): open cones along the key light, soft at the edges, thin
 rays drifting across them and motes turning in them, with a soft patch of light where each lands. They fall on open
 squares (or water) with 3 to 15 squares of shade in the 5 x 5 round them, at least 5 squares apart, one for every 45
 open squares (3 to 9), the same ones every visit. They follow `Atmosphere.sun` as it turns with the time of day (never
@@ -510,7 +510,7 @@ material's scale alone didn't change how big they were drawn.
 Visual Polish Plan 11 (the vault's "Visual Polish Plan.md"). On wild outdoor maps (`ArenaBoard.WILD` themes) whose
 land is wooded (the mood's surround `trees` at `ForegroundFraming.WOODED` or more), a few fern fronds grow into the
 bottom corners of the screen, out of focus and nearly black, with a faint edge of the key light, swaying a little, as
-if the camera looked past them (`world/look/foreground_framing.gd`, `shaders/post/foreground_leaf.gdshader`, the plants'
+if the camera looked past them (`addons/dnd_core/world/look/foreground_framing.gd`, `addons/dnd_core/shaders/post/foreground_leaf.gdshader`, the plants'
 own leaf cards at a high mipmap). They sit on a canvas layer over the world and under the HUD, never take a click, keep
 clear of the middle of the screen where the party stands, and fade out for fights, conversations and other screens and
 as the camera tilts to the horizon. Towns, rooms and Classic get none. In dark woods they mostly melt into the dark

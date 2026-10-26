@@ -7,9 +7,9 @@ earned, and there is no setting to switch them off.
 
 ## E1: hidden achievements and fight counts
 
-Code: `core/achievements.gd` (the list, `hidden_defs`, `check_story`, `note_fight`, `for_fight`, `for_story_fight`),
+Code: `addons/dnd_core/core/achievements.gd` (the list, `hidden_defs`, `check_story`, `note_fight`, `for_fight`, `for_story_fight`),
 `story/fight_tally.gd` and `story/run_stats.gd` (the counts), `combat/object_fire.gd` (the burst counters),
-`ui/screens/achievements_panel.gd` (draws what `Achievements.all()` hands it), `world/game_root.gd` (`_refresh` calls
+`addons/dnd_core/ui/screens/achievements_panel.gd` (draws what `Achievements.all()` hands it), `world/game_root.gd` (`_refresh` calls
 `check_story`). Data: `data/achievements/<package>.json` (schema `data/schemas/achievements.schema.json`),
 `data/flags/eggs_engine.json`. Tests: `tests/unit/test_achievements_hidden.gd`. Validator: `tools/data/validate_data.py`
 (`achievement_checks`, the engine flags) and `tools/data/story_reach.py`.

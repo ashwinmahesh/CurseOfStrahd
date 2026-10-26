@@ -57,19 +57,19 @@ tag gives to someone else ([Cleric], name:thistle) still goes to them, and a `ch
 party member, as before.
 
 ## Code
-- `ui/dice/dice_roll.gd` (`DiceRoll`): the panel, `show_roll`, `from_test`, `from_beat`, the words.
-- `ui/dice/d20_die.gd` (`D20Die`): the 3D die, its throw (a function of time: `seek` steps it for captures), the
+- `addons/dnd_core/ui/dice/dice_roll.gd` (`DiceRoll`): the panel, `show_roll`, `from_test`, `from_beat`, the words.
+- `addons/dnd_core/ui/dice/d20_die.gd` (`D20Die`): the 3D die, its throw (a function of time: `seek` steps it for captures), the
   landing's shine, `warm`.
-- `ui/dice/d20_mesh.gd` (`D20Mesh`): the gem-cut icosahedron, its numbering and the turn that shows each number.
-- `shaders/ui/emerald_die.gdshader` (the emerald, its back facets, the landing's light), `shaders/ui/die_feather.gdshader`
+- `addons/dnd_core/ui/dice/d20_mesh.gd` (`D20Mesh`): the gem-cut icosahedron, its numbering and the turn that shows each number.
+- `addons/dnd_core/shaders/ui/emerald_die.gdshader` (the emerald, its back facets, the landing's light), `addons/dnd_core/shaders/ui/die_feather.gdshader`
   (the die's picture fades out at its edges). Colours: `emerald_*` in the UI palette (tools/art/build_palette.py).
 - Sounds (art/audio.json, generated with ElevenLabs for the die, art/sourced/elevenlabs_dice): `die_throw` as it flies
   in, `die_bounce` at each bounce (resin on wood, owner's ask) (several takes, picked at random, each bounce 4 dB softer), `die_land` as it rests,
   then a beat later `die_success` or `die_fail`, or `die_crit` and `die_fumble` for a natural 20 and 1. The owner picks
   takes on the Emerald Die Sounds listening page (https://claude.ai/artifact/AWFxBbEEhN3RfRg3Vc82mJ).
-- `ui/dialogue/dialogue_ui.gd`: shows the d20 on a check beat; the Speaker button, Tab and `cycle_speaker`.
+- `addons/dnd_core/ui/dialogue/dialogue_ui.gd`: shows the d20 on a check beat; the Speaker button, Tab and `cycle_speaker`.
 - `story/dialogue_runner.gd`: the check beat's dice; `set_speaker`, and `_check_info` for an option's check.
-- `world/exploration/location_view.gd` (`big_roll`) and its emitters in location_locks, location_crime,
+- `addons/dnd_core/world/exploration/location_view.gd` (`big_roll`) and its emitters in location_locks, location_crime,
   location_traps, pit_fall and location_care; `world/game_root.gd` rolls it and warms the die.
 - Tests: tests/integration/test_dice_roll.gd, test_d20_and_speaker.gd, test_layout.gd (both panels).
 - Captures: `make capture SCENE=res://tools/capture/d20_capture.tscn NAME=d20 FRAMES=30` (stills, then the throw frame

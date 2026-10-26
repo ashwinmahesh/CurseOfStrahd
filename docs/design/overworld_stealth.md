@@ -3,7 +3,7 @@
 Ashwin's todo: "We need to improve stealth in the overworld. There really isn't a point to it right now."
 This note says why, lays out three ways to give sneaking a point, and recommends one. Nothing here is built yet. The
 rules today are in docs/rules/stealth.md and docs/rules/deviations.md (rows "Sneaking up" to "Hiding before a
-fight"); the code is world/exploration/location_stealth.gd.
+fight"); the code is addons/dnd_core/world/exploration/location_stealth.gd.
 
 ## Why sneaking buys nothing today
 

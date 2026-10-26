@@ -3,7 +3,7 @@
 Lane 13 of the Improvement Ideas (Settings and HUD). Captures:
 `make capture SCENE=res://tools/capture/settings_capture.tscn NAME=settings/shot FRAMES=10`.
 
-## Settings (ui/screens/pause_menu.gd)
+## Settings (addons/dnd_core/ui/screens/pause_menu.gd)
 
 Three pages in the pause menu's arch, picked by the names under the title:
 
@@ -27,7 +27,7 @@ the next choice, a click on the left arrow steps back. A new row goes on the pag
 `_display_rows`), one pitch below the last. Up to six fit above the note; Display has six. Everything is kept in
 user://settings.cfg through `GameSettings`, never in a save (the respec box is the playthrough's own option).
 
-## Keys (core/input_actions.gd, ui/settings/keys_page.gd)
+## Keys (addons/dnd_core/core/input_actions.gd, addons/dnd_core/ui/settings/keys_page.gd)
 
 - `InputActions.BINDINGS` holds every action's default keys (the first is the key, the second its alternate);
   `COMMANDS` lists the ones the player can change, each in a list: "both" (walking, the camera, Tab), "explore" or
@@ -44,7 +44,7 @@ user://settings.cfg through `GameSettings`, never in a save (the respec box is t
 - Adding a rebindable key: put the action and its default in `BINDINGS`, a row in `COMMANDS`, and read it as an
   action (or let `as_default` map it, exploring).
 
-## Interface and text size (ui/settings/ui_scale.gd)
+## Interface and text size (addons/dnd_core/ui/settings/ui_scale.gd)
 
 - Interface is the window's `content_scale_factor` while a game is on screen (`UiScale.playing(game_root)`): the HUD,
   the combat HUD, conversations, the Narrator's box and rules cards grow or shrink together. A full screen keeps its
@@ -55,7 +55,7 @@ user://settings.cfg through `GameSettings`, never in a save (the respec box is t
   the journal (quests, codex, bestiary).
 - tests/integration/test_layout.gd checks the exploring HUD, a conversation and the combat HUD at the largest of both.
 
-## The party frames (ui/exploration/explore_hud.gd, U9)
+## The party frames (addons/dnd_core/ui/exploration/explore_hud.gd, U9)
 
 Each party card shows Bloodied, conditions and exhaustion as small tags (the rules words open their glossary cards,
 U1); then what's working on the hero as icons, each named on hover with how long it has left (`EffectIcons`, owner
@@ -66,7 +66,7 @@ powers on them in their own icons; a beast's shape. Then spell slots by level an
 "left/total"); hovering them gives every one by name, with when it comes back. The card's click (lead, or the sheet
 on a right-click) lies under its content, so the tags take the pointer.
 
-## Bestiary (story/bestiary.gd, ui/screens/bestiary_page.gd, U8)
+## Bestiary (story/bestiary.gd, addons/dnd_core/ui/screens/bestiary_page.gd, U8)
 
 `StoryState.bestiary`: monster id -> {n, met, where, defeated, studied}. A fight's start (new or resumed) records the
 creatures met; its end, who fell and what a Study placed (`Encounter.studied`). A creature studied once shows its

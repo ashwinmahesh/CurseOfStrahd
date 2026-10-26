@@ -7,7 +7,7 @@ source; the calls the rules leave to the DM are rows in deviations.md, and cover
 
 Outside fights the player can switch exploring into rounds at any time: T, the Turn-based button on the hotbar, or
 Exploring on the Settings page (one switch, kept in the player's settings, so a new place or the end of a fight starts
-in rounds while it's on). Code: `world/exploration/location_plan.gd`, panel `ui/exploration/plan_bar.gd`.
+in rounds while it's on). Code: `addons/dnd_core/world/exploration/location_plan.gd`, panel `addons/dnd_core/ui/exploration/plan_bar.gd`.
 
 - A round is six seconds; every ten rounds a minute passes on the clock.
 - The player moves one party member at a time (whoever leads; 1-4, Tab or a click on a portrait picks them). Each
@@ -142,7 +142,7 @@ When the party opens a fight (an attack on a waiting foe, or stepping into the f
 ## Who can see you (U10)
 
 While the party sneaks or explores turn-based, or while the player holds **L**, each foe in plain view shows the
-squares it can see and wears an eye (`world/exploration/sight_overlay.gd`, after Baldur's Gate 3's sight cones).
+squares it can see and wears an eye (`addons/dnd_core/world/exploration/sight_overlay.gd`, after Baldur's Gate 3's sight cones).
 While the party sneaks or L is held, so does everyone standing in the place, since they would see a theft or a
 trespass (below):
 
@@ -159,7 +159,7 @@ show no eye, and the warning never names them.
 
 ## Stealing and crime (F8) and the town watch (F2)
 
-Code: `story/crime.gd` (the record), `world/exploration/location_crime.gd` (the scene), the watch's dialogue in
+Code: `story/crime.gd` (the record), `addons/dnd_core/world/exploration/location_crime.gd` (the scene), the watch's dialogue in
 `narrative/watch/`.
 
 - **Who sees a crime:** anyone standing in the location who would notice the thief as a waiting foe would: within

@@ -9,7 +9,7 @@ the plain rest screen (the owner, 2026-10-12).
 
 `CampSite.makes_camp` (story/camp_site.gd): the place's own `rest` is `risky`. It goes by the place's rule, not the
 Story difficulty's safe rests: on Story the party still makes camp, and its nights are never interrupted. The rest
-screen (ui/screens/rest_screen.gd) keeps the plain Long Rest where:
+screen (addons/dnd_core/ui/screens/rest_screen.gd) keeps the plain Long Rest where:
 
 - the place's rest is `safe`: the Blue Water Inn, the Blood of the Vine, the Wizard of Wines' winery, the Krezkovs'
   house, the Mad Mage's hut, Van Richten's tower, the Tser Pool encampment and the Pool of the White Sun;
@@ -77,7 +77,7 @@ talks wait.
 
 ## The night
 
-The camp's panel (ui/exploration/camp_bar.gd) and the rest screen both offer **Sleep (8 hours)**, which is the Long
+The camp's panel (addons/dnd_core/ui/exploration/camp_bar.gd) and the rest screen both offer **Sleep (8 hours)**, which is the Long
 Rest (story/long_rest.gd, the same rules as the screen's: 16 hours since the last, the place's risk, wards, Alarm).
 An interrupted night (an hour in) brings the night's visitors out of the dark before the rest's benefits: the party
 fights with what it had when it lay down (the owner, 2026-10-13). They come 25 to 40 ft

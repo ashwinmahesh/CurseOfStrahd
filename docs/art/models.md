@@ -64,14 +64,14 @@ without a model is drawn as before.
 | woodpile, notice_board, crypt_small, crypt, gravestone, well, well_stone, bridge_parapet, signpost | the same | free-standing |
 | pine_a/b/c, pine_clawed, dead_tree_a/b | pine, pine_clawed, dead_tree (variants picked by square) | trees in the board's woods and the land past the map's edge, as tall as the 2D trees, each turned its own way; they fade like the billboards (ArenaBoard.mesh_occluders) |
 | bramble_a/b, boulder_a/b, log, stump, rubble, cairn, snowdrift, ice_patch, reeds, leaves, grave_mound, hay_bale, garden_bed, vines | the same | free-standing, turned per square (nature has no front) |
-| sculpted pieces (statues, armour, scarecrows, the stuffed wolves, carcasses, skeletons, dolls, cages, charms, sheeted furniture, the dollhouse, harp, spinning wheel, the colossus, the faceless statue, Strahd's effigy, the wicker sun ...) | the same | made from their own sprite: its silhouette made solid, swelling toward the middle, painted with the sprite in front and the 2D back view behind (`spr_<art>` materials, shaders/cel_sprite.gdshader) |
+| sculpted pieces (statues, armour, scarecrows, the stuffed wolves, carcasses, skeletons, dolls, cages, charms, sheeted furniture, the dollhouse, harp, spinning wheel, the colossus, the faceless statue, Strahd's effigy, the wicker sun ...) | the same | made from their own sprite: its silhouette made solid, swelling toward the middle, painted with the sprite in front and the 2D back view behind (`spr_<art>` materials, addons/dnd_core/shaders/cel_sprite.gdshader) |
 | wall pictures (paintings, portraits, mirrors, boards, notices, reliefs, carvings, tapestries, banners) | the same | the 2D picture kept in a 3D mount: a moulded frame, a board, a stone slab, a hanging rod |
 | wall fittings (trophies, chains, shelves of jars, winches, robes on pegs ...) | the same | sculpted from their art against the wall |
 | about 60 more hand-modelled objects (braziers, altars, shrines, cabinets, the canopy bed, harpsichord, organ, tubs, the wine press, stoves, marble hearths, the manor entrance, painted doors, windows, rugs, straw ...) | the same | as their 2D pieces were mounted |
 | cottage, tent, vardo, barn_collapsed, windmill, bell_tower, tower_vr, hut_lysaga, standing_stones, gallows, barrow, gulthias_tree, ribbon_tree ... | the same | building-sized: they keep their size and clear the trees; a piece standing in for a whole house is a 3D building over its ground, standing whole with a window round the party where it hides it (SeeThrough); tall trees fade |
 | Castle Ravenloft: throne, black_carriage, bone_table, iron_maiden, reliquary_sealed, coffin_plinth, heart_of_sorrow, lift_cage, cauldron, stone_font, glass_vessels, bat_perch, gold_heap, gold_spill, skull_chandelier, great_doors (a door leaf; spans the keep's two-square doorway), drawbridge, roof_hatch (a floor exit); gargoyle, saint_defaced, bone_throne, bone_chair, statue_young_strahd sculpted; the portraits, dragon_skull, stone_faces, names_wall, bronze_plaque, banner_regiment, key_board, wine_rack_bricked in 3D mounts | the same | as their 2D pieces were mounted; cobwebs and blood pools stay painted |
 
-## How a piece finds its place (`world/look/model_piece.gd`, `ModelPiece`)
+## How a piece finds its place (`addons/dnd_core/world/look/model_piece.gd`, `ModelPiece`)
 
 `SetDressing` asks `ModelPiece.for_art(board, art)` before drawing a 2D piece: standing pieces
 (`stand_piece`, so location props, containers, exits and the board's '=' furniture), wall pieces (`_hang`), door
@@ -98,7 +98,7 @@ panelling.
 - **Picking:** `SpritePick.hit` also tests the ray against each model's triangles, so pointing at any drawn part
   picks the piece.
 - **Elsewhere:** the board's trees, brambles and yard gravestones (`ArenaBoard`), the land's near and far trees
-  (`AtmosphereLand`, a MultiMesh per tree variant with shaders/cel_instanced.gdshader keeping the far ones darker), a
+  (`AtmosphereLand`, a MultiMesh per tree variant with addons/dnd_core/shaders/cel_instanced.gdshader keeping the far ones darker), a
   town house's windows (`TownBuilder`), torches (`LocationView`), the gates' statues and the secret bookcase door
   (`SetDressing`) all use a model where there is one.
 
@@ -119,7 +119,7 @@ The panelling takes the painted wainscot's own colours (peat panels, near-black 
 so lamplight shows its depth rather than a new colour.
 
 Sizes are real sizes (a person is 6 ft, 1.2 units): a bookcase 7 ft, a desk top 2.6 ft, a chair seat 1.65 ft with a
-4.75 ft back, stairs 7.5 ft over one square like `world/look/stairs.gd`.
+4.75 ft back, stairs 7.5 ft over one square like `addons/dnd_core/world/look/stairs.gd`.
 
 ## Making and changing them
 

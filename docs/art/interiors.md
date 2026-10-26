@@ -22,7 +22,7 @@ to the floor, a brass lantern, dripping candles.
 | Nothing on the walls | A rope along the top of every side with two to four charms per square: painted eyes, bells, bones, little mirrors, a bird's foot, beads, a tooth |
 | Nothing to say anyone lives there | Her home around the reading (owner, 2026-10-08: "really make it look like the place where she lives and does her readings"): her bed of quilts and a fur with her shawls on a cord above it and a little mirror, keepsakes, apples; a cooking fire under an iron pot with herbs drying on the wall and a sack of meal; old books and papers either side of her painted chest; candles burning on the floor either side of her; plum wine and bread set out for querents; a travelling trunk |
 
-### The tent style (`world/look/tent_walls.gd`, `world/look/charm.gd`)
+### The tent style (`addons/dnd_core/world/look/tent_walls.gd`, `addons/dnd_core/world/look/charm.gd`)
 
 A board whose interior style is `tent` (catalog `building_kit.interiors.themes.tent`) hands every wall square to
 `TentWalls` instead of building walls (`InteriorWalls.build` asks first, in either look):
@@ -103,7 +103,7 @@ its stall, away from it. It was dressed as the taproom: planks, plaster, tavern 
 interior and underground maps (282 rooms) and the plan, room by room, are in the vault: Interiors Audit and Plan.md
 and Interiors Audit - Room Facts.md. What every room gets:
 
-- **Lived-in rooms** (`world/look/furnish.gd`, catalog `furnish`). Besides what its data names, each room gets what a
+- **Lived-in rooms** (`addons/dnd_core/world/look/furnish.gd`, catalog `furnish`). Besides what its data names, each room gets what a
   room of its kind holds, matched on words in its name like the room styles, else by the board theme: kitchens herbs
   drying, jars, sacks, baskets and barrels; bedrooms pictures, mirrors, pegs, trunks and candles; libraries portraits
   and book stacks; cells chains, shackled skeletons and bones; attics cobwebs and sheeted furniture; taprooms a stag's
@@ -292,7 +292,7 @@ braziers burning in the antechamber and either side of the altar.
     of the dead amber into the dark, faint always and bright once the party has read the hollow (flag `amber_thread_seen`,
     set in amber_temple/vosk:hollow_ok); the honey-glow doors (catalog `honey_doors`, 2.1 high) are two amber panes with a
     light on both sides, dark once the temple is sealed (AmberGlow.dress_door, from SetDressing.door); the heaps of the vault
-    of offerings glint (shaders/world/glint.gdshader, AmberGlow.dress_place); and the sanctum's cold braziers flare
+    of offerings glint (addons/dnd_core/shaders/world/glint.gdshader, AmberGlow.dress_place); and the sanctum's cold braziers flare
     violet (SetDressing.FLAME_TINTS `violet`) while the fight with Vosk (`vosk_unmasked`) is on.
   - Small motion (AmberMotion, world/look/amber_motion.gd, step 11): the hall of echoes is the cold room, its desks' candles
     burn frost-blue (SetDressing.tint_candles, FLAME_TINTS `frost`) and so do their lights, but for Patrina's clear desk, where
@@ -317,7 +317,7 @@ braziers burning in the antechamber and either side of the altar.
     shrink its building-sized model, ModelPiece.big_fit). The doors give a warm wedge of light across the snow (`DoorsWedge`,
     stronger by night) and the four cut icicle sprites hang from their lintel (`DoorsIcicles`). The eyes' light and halo are
     not map `lights`, so a fight's light zones and vision are unchanged.
-  - The Sentinel steps down (StepDown, world/combat/step_down.gd, shaders/world/stomp_ring.gdshader, step 9): its four entries in the
+  - The Sentinel steps down (StepDown, addons/dnd_core/world/combat/step_down.gd, addons/dnd_core/shaders/world/stomp_ring.gdshader, step 9): its four entries in the
     doors' encounters draw the foe as the colossus (`art: amber_sentinel`, 30 ft by CombatToken.HEIGHTS) and say it is the person
     at the doors (`steps_down: {npc: amber_sentinel}`). Walking onto the ledge (`sentinel_stops_you`) hid nothing, so the standing
     colossus and the plain golem were on the board together (shown by capture before the fix); now however the fight starts
@@ -329,7 +329,7 @@ braziers burning in the antechamber and either side of the altar.
     past 1.8 s; headless runs, stills and motion off cut straight to the square. The stat block stays the Amber Golem's
     (Large, 2 x 2): only the picture is 30 ft, so the fight bands do not move. Any figure drawn taller than 4.5 units
     (CombatToken.TALL) is drawn at 55% where it hides a figure of the party's behind it on the screen.
-  - The temple's found traps glow (TrapGlow, world/look/trap_glow.gd, from TrapSight.dress; shaders/world/trap_glow.gdshader): the
+  - The temple's found traps glow (TrapGlow, addons/dnd_core/world/look/trap_glow.gd, from TrapSight.dress; addons/dnd_core/shaders/world/trap_glow.gdshader): the
     line of warding glyphs pulses runes along the floor, the faceless god's gaze is a slow violet ring of light on the
     squares it looks at, the frost vent breathes pale wisps. They go with the trap when it is disarmed; Modern only.
   - The paid art (Look Plan P1 to P3, six Gemini sheets, 2026-10-18, about $0.70; Ashwin's typed yes in the thread): two surfaces,

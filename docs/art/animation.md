@@ -131,7 +131,7 @@ the HD turnaround when there is one: 768 px cells rendered at twice the size, fr
 directions shown flipped, exactly as the heroes' sheets. The attack's wind-up and strike still come from the 1K
 strips, which are drawn at about the size they're shown. Packing alone makes a walk sheet several times smaller (the
 villager's went from 9.4 to 1.2 megapixels at 384 px), so HD sheets end up about the size of the old grids. The title
-screen's travellers, drawn some 20 times smaller, average their sheet through `shaders/ui/sprite_small.gdshader`.
+screen's travellers, drawn some 20 times smaller, average their sheet through `addons/dnd_core/shaders/ui/sprite_small.gdshader`.
 
 In game, `DirectionalSprite.frames_for` merges every sheet a sprite folder has (walk, attack, hurt, ride, sneak,
 cast) and picks the loop from its `pose`: "" (on foot), "sneak", "ride" or "down". `CombatToken` sets the pose from
@@ -264,9 +264,9 @@ dark. The ink outline and the crisp sampling are unchanged. Classic draws figure
 `tools/art/preview/lit_lab.tscn` shows figures at night with a torch behind one and a lamp by another (`--day`,
 `--flash`, `--classic`).
 
-**Auras (owner 2026-10-09).** `AuraFx` (world/look/aura_fx.gd), built by `CombatToken` for whoever has one, so it
+**Auras (owner 2026-10-09).** `AuraFx` (addons/dnd_core/world/look/aura_fx.gd), built by `CombatToken` for whoever has one, so it
 shows in fights and while exploring alike: Strahd's dark aura (smoke curling up round him with a crimson edge, a quad
-behind the figure, `shaders/fx/aura_halo.gdshader`, and a pool of creeping shadow under him, `aura_floor.gdshader`)
+behind the figure, `addons/dnd_core/shaders/fx/aura_halo.gdshader`, and a pool of creeping shadow under him, `aura_floor.gdshader`)
 surges when he attacks, casts or is struck (`AuraFx.surge`); a paladin with Aura of Protection glows faintly warm, and
 in a fight the floor shows the area the aura covers, 10 ft (two squares every way from their space, as
 `ClassFeatures._in_aura` measures it) or 30 ft with Aura Expansion. Both draw after the palette pass just before the

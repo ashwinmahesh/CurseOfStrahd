@@ -30,6 +30,6 @@ bearer falls, at the castle, and once at a camp. Every line was drafted by Gemin
 - `data/npcs/sunsword.json` (speaker "Sunsword") and `art/portraits/sunsword.png` (the item's icon, larger).
 - A fight: the existing Narrator triggers `combat:crit`, `combat:kill` and `combat:fall` carry `[item:sunsword]` variants, which
   are preferred while it is carried; `combat:sunsword_start` and `combat:sunsword_victory` are said next to `combat:start` and
-  `combat:victory` in world/exploration/location_fights.gd (those keys have their own cooldowns and `once`, which would silence it).
+  `combat:victory` in addons/dnd_core/world/exploration/location_fights.gd (those keys have their own cooldowns and `once`, which would silence it).
   The Narrator says them for now; the Sunsword's own voice needs a speaker hook in the combat log, which is the voice lane's call.
 - `story/camp_talk.gd`: the offer reads "Sunsword wants a word", and at camp it is made through whoever carries it (`who_asks`).

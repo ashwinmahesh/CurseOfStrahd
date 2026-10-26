@@ -37,7 +37,7 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
   estimate before anything is spent and a cap per run (default $5), every call logged in
   `audio/voice/generation_log.jsonl`, and `audio/voice/manifest.json` recording what made each clip, so a recast
   (`RECAST=1`) regenerates only that speaker's clips.
-- **Playback** is `VoiceOver` (`core/voice_over.gd`): `say(speaker, text)` plays the line's clip on a `Voice` bus
+- **Playback** is `VoiceOver` (`addons/dnd_core/core/voice_over.gd`): `say(speaker, text)` plays the line's clip on a `Voice` bus
   and returns its length (0 when there is none, so unvoiced lines are silent); one voice at a time; its own volume
   (`VoiceOver.set_volume`, kept in `user://settings.cfg` as `[audio] voice`) for a Voices slider beside Music and
   Effects in the pause menu. Hooks: the conversation screen speaks each line
@@ -52,7 +52,7 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
   slot) on `eleven_v4`, the owner's pick; each kind of beast, undead or creature has noises, made as `noise_<kind>`
   with ElevenLabs sound effects (`eleven_text_to_sound_v2`, billed by the second at a set length: casting.json `sfx`),
   where a noise's "text" is its prompt. `make voice` makes both, and the manifest records each clip's model.
-- **Playback** is `CombatBarks` (world/combat/combat_barks.gd), on the Voice bus beside the Narrator: a kind's battle
+- **Playback** is `CombatBarks` (addons/dnd_core/world/combat/combat_barks.gd), on the Voice bus beside the Narrator: a kind's battle
   cry the first time one acts, a taunt or snarl on some of its hits, a cry under a heavy blow, its death; one at a
   time, a pause between them, never while the Narrator speaks (a Narrator line fades a bark out). Named characters
   (Strahd, Rahadin, Izek...) stay quiet in fights for now.

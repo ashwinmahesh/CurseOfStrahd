@@ -4,7 +4,7 @@ Status: the slot picker built 2026-10-07 (owner: "When clicking Save Game, we sh
 save to, or save to a new slot"); Q9 (pictures, notes, sorting, more autosaves), Q12 (jump-in saves for
 each chapter), Q3 ("Previously in Barovia") and F1's one-save rule for Honour the same day · not yet seen by the
 owner
-Code: `ui/screens/saves_screen.gd` (the page), `core/save_system.gd` (the files). Hooks: `ui/screens/pause_menu.gd`
+Code: `addons/dnd_core/ui/screens/saves_screen.gd` (the page), `addons/dnd_core/core/save_system.gd` (the files). Hooks: `addons/dnd_core/ui/screens/pause_menu.gd`
 (Save Game, Load a Save, the game-over arch), `ui/menu/main_menu.gd` (the title's Load).
 Tests: `tests/integration/test_save_slots.gd`, `tests/integration/test_recap.gd`, and the saves pages in
 `tests/integration/test_layout.gd`.
@@ -60,7 +60,7 @@ Honour can only be picked at a new game (`current_slot` is empty then, so it nev
 ## "Previously in Barovia" (Q3)
 
 Loading a game saved at least 30 minutes ago (`SaveSystem.RECAP_AFTER`, by the computer's clock) opens the
-Narrator's box with a recap once the game has arrived (`ui/exploration/recap.gd`, shown on the tree's
+Narrator's box with a recap once the game has arrived (`addons/dnd_core/ui/exploration/recap.gd`, shown on the tree's
 `scene_changed`, so only the game itself shows one):
 
 - the Narrator's opening (`recap:open`, three variants) and where the party is (`recap:where:<region>`, a line for

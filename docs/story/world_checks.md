@@ -5,7 +5,7 @@ Perception and Investigation (Search), Sleight of Hand (pockets), Stealth, Athle
 tools had uses out there, which left Nature, Arcana, Acrobatics and most of the rest with nothing to do between
 conversations. Goal: every skill has real uses in the world.
 
-## How it works (story/world_checks.gd, world/exploration/location_checks.gd)
+## How it works (story/world_checks.gd, addons/dnd_core/world/exploration/location_checks.gd)
 
 A prop, door or chest in a location can carry `checks` (data/schemas/location.schema.json, `$defs/check`). Each one:
 

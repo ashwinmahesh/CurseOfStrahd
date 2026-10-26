@@ -28,7 +28,7 @@ the last eight moments they remember. Seven tiers:
 - **Sizes used.** 1 a manner or small kindness; 2 to 3 a clear value choice; 4 to 6 a big moral choice or a moment in
   their own story; 8 to 10 the climax of their quest or a betrayal (the Death House sacrifice, leaving children
   caged, offering Ireena to Strahd).
-- **The party screen** (`ui/screens/approval_panel.gd`): a card per companion in the company with their tier, a bar,
+- **The party screen** (`addons/dnd_core/ui/screens/approval_panel.gd`): a card per companion in the company with their tier, a bar,
   any romance and the last three moments (the rest on hover); each party card wears the tier as a pill.
 
 What each of them cares about, as tagged across the campaign:

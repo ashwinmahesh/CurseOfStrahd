@@ -3,7 +3,7 @@
 Owner ask (2026-10-06): the map screen should look like a real map, there should be a minimap of the current area in
 the top right of the HUD that moves with the party, and the ways out of an area to another region should be obvious.
 
-## Travel map (`ui/screens/travel_screen.gd`)
+## Travel map (`addons/dnd_core/ui/screens/travel_screen.gd`)
 
 - The art is the whole valley painted as the land itself in the game's gothic tone (dark moorland, near-black pines,
   grey-green mist rolling in from the edges, the castle in a red glow, after the title art; no paper or parchment),
@@ -56,7 +56,7 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   only once the party is one road from it; a place with a `when` waits for it, however close. At the gates that's
   the gates and the village; from the village, the crossroads; and so on. The story bot travels the same way, hop
   by hop toward a place it can't see yet.
-- Mist covers the rest of the art (shaders/ui/map_fog.gdshader): the land around known places and along known roads
+- Mist covers the rest of the art (addons/dnd_core/shaders/ui/map_fog.gdshader): the land around known places and along known roads
   is clear, and so is the land between them (the known places' outline, widened a little); Castle Ravenloft is seen
   from everywhere in the valley. A place the party doesn't know yet keeps a soft patch of mist over its picture, so
   the land between doesn't give it away. With every place known the whole valley is clear (owner report 2026-10-12:
@@ -72,9 +72,9 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 
 "When you open map there should be a toggle for local area map which shows the full area map with exits named (where they
 go)." Wherever the party is in a place (`TravelScreen.area_view`, set by `GameRoot.open_travel`), a toggle at the top of the
-side panel switches the map between **Barovia** (the valley, above) and **Local area** (`ui/screens/area_map.gd`):
+side panel switches the map between **Barovia** (the valley, above) and **Local area** (`addons/dnd_core/ui/screens/area_map.gd`):
 
-- The whole place the party is in, drawn from its grid in the minimap's own picture (`ui/exploration/map_image.gd`, which the
+- The whole place the party is in, drawn from its grid in the minimap's own picture (`addons/dnd_core/ui/exploration/map_image.gd`, which the
   minimap shares), fitted to the panel. The wheel zooms up to 5x the fit and dragging pans; squares behind a secret door nobody
   has found stay dark, as on the minimap.
 - Each way out is marked where it is (a gilt arrow off the edge for a road out, a diamond for a door or a gate; pewter while
@@ -92,7 +92,7 @@ side panel switches the map between **Barovia** (the valley, above) and **Local 
   `tests/integration/test_area_map.gd`, the pad in `test_pad_screens.gd`. Capture:
   `make capture SCENE=res://tools/capture/area_map_capture.tscn NAME=area_map FRAMES=10` (`ARGS=--locations=a,b`).
 
-## Minimap (`ui/exploration/minimap.gd`)
+## Minimap (`addons/dnd_core/ui/exploration/minimap.gd`)
 
 - Top right of the exploration HUD, above the location's name and the clock; hidden with the HUD in combat and
   conversations, so it never covers the combat HUD.
@@ -107,7 +107,7 @@ side panel switches the map between **Barovia** (the valley, above) and **Local 
   edge; pewter while shut). A pale wedge shows which way the camera looks. The wheel zooms (6 to 16 px a square)
   and a click walks the party there.
 
-## Ways out (`ui/exploration/exit_signs.gd`)
+## Ways out (`addons/dnd_core/ui/exploration/exit_signs.gd`)
 
 - A way out is a road to another region when it leads onto the travel map or, from outdoors, to another outdoor
   location. Doors into buildings are left to the hover hint and the minimap.
@@ -120,7 +120,7 @@ side panel switches the map between **Barovia** (the valley, above) and **Local 
 - It's a screen-space overlay on the HUD layer, so it stays crisp, the palette pass never touches it and it sits on top
   of whatever the world assets put at the exit. Ground marks stay off squares where the party stands.
 
-## Hidden areas (`world/exploration/hidden_areas.gd`)
+## Hidden areas (`addons/dnd_core/world/exploration/hidden_areas.gd`)
 
 - Owner ask (2026-10-06): rooms the party hasn't discovered stay out of sight, in the level view and on the minimap.
 - A hidden area is every square that can't be reached from the location's spawns (or where the party stands) without
@@ -134,7 +134,7 @@ side panel switches the map between **Barovia** (the valley, above) and **Local 
 - The rules grid is never changed; LocationView adds the HiddenAreas node at the end of `_ready` and asks it in
   `thing_at`.
 
-## Traps (`world/exploration/trap_sight.gd`)
+## Traps (`addons/dnd_core/world/exploration/trap_sight.gd`)
 
 - Owner playtest (2026-10-06): a found trap showed as a red box hiding whatever was there, and traps were only noticed
   within 10 ft.
@@ -165,16 +165,16 @@ side panel switches the map between **Barovia** (the valley, above) and **Local 
   lasting effect that runs out with the clock (the trap's `condition_minutes`: a minute for Frightened, ten for
   anything else), in a fight too; it used to stay on the hero for good, long rests and all
   (`EncounterTraps.give_condition`, `LocationCare.stand_up`).
-- A noticed trap's border also shows through a wall in front of it as red hatching (shaders/world/xray_mark.gdshader),
+- A noticed trap's border also shows through a wall in front of it as red hatching (addons/dnd_core/shaders/world/xray_mark.gdshader),
   so a trap in a one-square passage still reads from the diagonal camera.
 
-## What was just found (`world/exploration/found_glow.gd`)
+## What was just found (`addons/dnd_core/world/exploration/found_glow.gd`)
 
 - Owner ask (2026-10-13): "When we find something via a perception check, give that thing a glowing orange outline
   so we know what was discovered."
 - A hidden find (a search prop), a secret door or a trap that comes to light gets an orange outline
-  (`world/look/found_outline.gd`): on a 2D piece, a line hugging its picture with a dark hairline beyond it and a soft
-  glow (shaders/world/found_outline_sprite.gdshader, drawn as the sprite's overlay on a quad grown past its edges);
+  (`addons/dnd_core/world/look/found_outline.gd`): on a 2D piece, a line hugging its picture with a dark hairline beyond it and a soft
+  glow (addons/dnd_core/shaders/world/found_outline_sprite.gdshader, drawn as the sprite's overlay on a quad grown past its edges);
   on a 3D piece, an orange rim over its surfaces and a line round its silhouette (found_rim.gdshader,
   found_outline_mesh.gdshader). A trap's own pieces glow, not its red border (the border alone when it has no piece).
   Orange (candle warmed toward flame, its glow candle) so it isn't the gilt hover glow, a spell area's pale gold edge
@@ -186,7 +186,7 @@ side panel switches the map between **Barovia** (the valley, above) and **Local 
 - FoundGlow watches the place's `found` and trap states rather than each way of finding, so a Search, a check's
   `reveal`, a conversation and a spell all light what they turn up.
 
-## Pits (`world/exploration/pit_fall.gd`)
+## Pits (`addons/dnd_core/world/exploration/pit_fall.gd`)
 
 - Owner playtest (2026-10-07): the Death House crypt passage's pit is a 10-foot drop, so show the hole and let the
   party climb out; any other pit trap the same way. A trap with `pit_ft` is a pit that deep, and every pit trap has
@@ -209,7 +209,7 @@ side panel switches the map between **Barovia** (the valley, above) and **Local 
   rope. The party doesn't drag anyone in a pit along; an open pit is walked round, or jumped where it fills a
   passage.
 
-## Who to talk to (`ui/common/quest_guide.gd`)
+## Who to talk to (`addons/dnd_core/ui/common/quest_guide.gd`)
 
 - Owner ask (2026-10-12): for the tracked quest, the person to talk to is green on the map, and the journal shows who
   it is.

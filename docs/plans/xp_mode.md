@@ -390,7 +390,7 @@ bare-minimum player is still held at the milestone level and nobody is ever two 
 **Where it lives.** `story/xp.gd` (rules, pure), `data/progression/xp.json` + `data/schemas/xp.schema.json` (tables, award
 sizes, `withdraw_pays`, the two quest lists; `validate_data.py` checks them and reads the encounter budgets from it),
 `StoryState` (`xp`, `xp_reserve`, `story_level()`, `target_level()`, `add_codex()`, the `xp_gained` signal),
-`ui/common/xp_strip.gd` (the line and bar), `tools/balance/xp_sim.py` (`make xp-sim`).
+`addons/dnd_core/ui/common/xp_strip.gd` (the line and bar), `tools/balance/xp_sim.py` (`make xp-sim`).
 
 **Hooks** (each a line asking `Xp`): `LocationFights._end_encounter` (a won fight; `custom` fights are the repeatable ones),
 `DialogueRunner` (`xp milestone`, the new `xp fight <id>`, and passed `check` lines and options), `StoryState.set_quest_stage`

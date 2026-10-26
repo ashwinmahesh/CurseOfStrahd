@@ -1,7 +1,7 @@
 # Schedule: things on a clock (F2)
 
 `data/schedule/<region>.json` (schema: schedule.schema.json) holds events that happen on a day and an hour, read by
-`story/schedule.gd`. LocationClock (world/exploration/location_clock.gd) asks `Schedule.catch_up` whenever the clock has
+`story/schedule.gd`. LocationClock (addons/dnd_core/world/exploration/location_clock.gd) asks `Schedule.catch_up` whenever the clock has
 moved while the party is in a location, outside fights and conversations.
 
 ```json

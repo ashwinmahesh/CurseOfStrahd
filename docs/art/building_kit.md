@@ -31,7 +31,7 @@ House, the mansions) and `timber` (inns, shops, houses, attics). In that style:
   a dark wood rail, an oak plate, rough capstones), and where no panelling covers it the style's face: the castle's
   blind arcade on colonnettes over a plinth course, a church's plinth and string course (`ModelPiece.dress_wall`).
 
-## Rooms that sit in the world (W8, `world/look/interior_walls.gd`)
+## Rooms that sit in the world (W8, `addons/dnd_core/world/look/interior_walls.gd`)
 
 In the Modern look (`building_kit.interiors.full_walls`), a room's walls stand a full storey instead of the cut-away
 height: 3.0 in the castle and the Amber Temple, 2.8 in a church, 2.5 in a manor, 2.4 in a dungeon, 2.3 in a timber
@@ -99,7 +99,7 @@ past it, looking away from the camera, within 7 squares of the party (`InteriorW
 the cut-away height and their cut version takes over; the rest stand. A header goes down with either wall beside it.
 The rules grid, line of sight and the Classic look are unchanged.
 
-## Walls in the party's way (`world/look/see_through.gd`)
+## Walls in the party's way (`addons/dnd_core/world/look/see_through.gd`)
 
 Owner, 2026-10-17: walls dropping to a stub as the camera turned (the Tsolenka guard tower, the Amber Temple) and
 Castle Ravenloft's big walls going see-through whole ("they are in opaque view but it looks really weird") are gone.
@@ -177,7 +177,7 @@ catalog (`building_kit.castle.places`); the maps' squares are unchanged.
 `TownBuilder.plan` hands the gates and the overlook (yard boards) to `CastleBuilder.plan`; the roofs (a dungeon
 board) reach it through `BuildingKit.interior_wall`. Captures: `KIT_NO_CASTLE=1` shows the stone houses as before.
 
-## How a house is put together (`world/look/town_builder.gd`, `world/look/building_kit.gd`)
+## How a house is put together (`addons/dnd_core/world/look/town_builder.gd`, `addons/dnd_core/world/look/building_kit.gd`)
 
 TownBuilder still finds the houses in the map's `#` squares as before (docs/art/set_dressing.md). For each house:
 
@@ -219,7 +219,7 @@ town at the map's edge too, where an open village thins into pines (`TownBuilder
 stands on ground of its own, and fades when it hides the party, as the houses do. Vallaki's palisade is one mesh for the
 whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
 
-## Natural shapes (natural maps B1, `world/look/building_bend.gd`)
+## Natural shapes (natural maps B1, `addons/dnd_core/world/look/building_bend.gd`)
 
 Owner, 2026-10-19: "We can give buildings natural shapes instead of their straight lines. Natural edges can bend into a
 square the party can stand on." (the vault's Natural Maps Plan, rule 4 and package B1). In the Modern look no building is

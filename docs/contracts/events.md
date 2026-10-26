@@ -1,4 +1,4 @@
-# EventBus signals (core/event_bus.gd)
+# EventBus signals (addons/dnd_core/core/event_bus.gd)
 
 | Signal | Emitted by | Meaning |
 |---|---|---|

@@ -19,7 +19,7 @@ floor or a wall, and its aspect.
     python3 tools/art/build_decals.py [--generate] [--only floor_moss ...] [--jobs 4]
     make import && python3 tools/art/set_import.py art/textures/decals/<albedo files> && python3 tools/art/set_import.py --normal art/textures/decals/*_n.webp && make import
 
-## Where they go (`world/look/clutter.gd`, catalog `clutter`)
+## Where they go (`addons/dnd_core/world/look/clutter.gd`, catalog `clutter`)
 
 `ArenaBoard` asks `Clutter.dress` once a board is built. The rules come from the catalog's `clutter`: a place's own
 (by the start of its id: every room of Castle Ravenloft, the Death House) or its board theme's. A rule names decals

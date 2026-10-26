@@ -2,8 +2,8 @@
 
 Status: built 2026-10-07 (lane 18 of Improvement Ideas.md) · not yet seen by the owner
 Code: `skirmish/` (rules side: `SkirmishSetup`, `HeroLab`, `SkirmishLibrary`, `SkirmishState`), `ui/skirmish/`
-(`SkirmishScreen`, `MapSketch`, `SkirmishResults`), `world/combat/combat_arena.gd` (`CombatArena.skirmish`),
-`world/combat/skirmish_field.gd`, `story/fight_tally.gd`. Scene: `scenes/skirmish.tscn`.
+(`SkirmishScreen`, `MapSketch`, `SkirmishResults`), `addons/dnd_core/world/combat/combat_arena.gd` (`CombatArena.skirmish`),
+`addons/dnd_core/world/combat/skirmish_field.gd`, `story/fight_tally.gd`. Scene: `scenes/skirmish.tscn`.
 Capture: `make capture SCENE=res://tools/capture/skirmish_capture.tscn NAME=skirmish FRAMES=10`.
 
 ## What it's for

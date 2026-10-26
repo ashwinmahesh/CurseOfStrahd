@@ -12,11 +12,11 @@ everything; the effects only show it (ADR 0007).
 - With no flavour a spell takes its icon's tint (`art/icons.json`, `<silhouette>@<tint>`), else its damage type's
   flavour (`damage_flavours`), else arcane. With no pick at all, `SpellFx.derive_family` works one out from the spell's
   data (its area's shape, its attack roll, healing, on-hit), so a new spell always shows something.
-- `world/combat/fx/spell_fx.gd` (`SpellFx`) plays a family. The combat view owns one and calls it from
+- `addons/dnd_core/world/combat/fx/spell_fx.gd` (`SpellFx`) plays a family. The combat view owns one and calls it from
   `_play_events`: `cast` once the caster's gesture lands (`spell` event), `volley` on each attack roll a missile
   spell makes (the `attack` events after the cast: one bolt or beam per roll, a miss sails past), `smite` when a smite
   spell rides a hit (`smite` event, docs/contracts/combat.md).
-- `world/combat/fx/fx_kit.gd` (`FxKit`) holds the parts: GPU particle bursts and streams, beams, a churning blast
+- `addons/dnd_core/world/combat/fx/fx_kit.gd` (`FxKit`) holds the parts: GPU particle bursts and streams, beams, a churning blast
   sphere, rings on the floor, shafts of light, and real light flashes. Shaders are in `shaders/fx/`. Noise is made
   in code; no textures are needed.
 - Effects draw after the palette pass, like the character sprites (render priority 7; floor rings 5), so they stay
@@ -84,10 +84,10 @@ story reveal.
 A spell that leaves an area on the board (Darkness, Wall of Fire, Web, Grease, Spike Growth, Cloudkill, Spirit
 Guardians...) keeps a 3D look for as long as it lasts: `zones` in the data picks one of FxZones' looks (mist, dark,
 flames, spikes, vines, tentacles, web, slick, frost, daggers, swarm, spirits, aura, dome, beam, light, storm, quake,
-wind, water, prism) and its flavour. The field view (world/combat/field_view.gd) builds it under the zone with a fainter
+wind, water, prism) and its flavour. The field view (addons/dnd_core/world/combat/field_view.gd) builds it under the zone with a fainter
 floor tint (the squares still read for the rules); its emitters start already full, so a moving aura never pops.
-Thorns, vines, tentacles and web strands are lit meshes that sway (shaders/fx/fx_sway.gdshader), Grease and ice are
-slicks on the floor (shaders/fx/fx_slick.gdshader). `VFX_SET=zones` captures them before and after.
+Thorns, vines, tentacles and web strands are lit meshes that sway (addons/dnd_core/shaders/fx/fx_sway.gdshader), Grease and ice are
+slicks on the floor (addons/dnd_core/shaders/fx/fx_slick.gdshader). `VFX_SET=zones` captures them before and after.
 
 ## Abilities and attacks
 
@@ -109,10 +109,10 @@ slicks on the floor (shaders/fx/fx_slick.gdshader). `VFX_SET=zones` captures the
 
 Outside a fight a trap that goes off, a pit's fall and a climb or swim that fails and hurts show themselves the same
 way (owner todo, 2026-10-17). Once the big d20 has been seen, and no cutscene or screen holds the game
-(`world/exploration/location_hurt.gd`, `LocationHurt`; its waiting runs on timers that run while the game is paused):
+(`addons/dnd_core/world/exploration/location_hurt.gd`, `LocationHurt`; its waiting runs on timers that run while the game is paused):
 
 - the figure flashes red and flinches;
-- the trap's own effect plays on it (`world/exploration/trap_fx.gd`, `TrapFx`), built from the same parts as the
+- the trap's own effect plays on it (`addons/dnd_core/world/exploration/trap_fx.gd`, `TrapFx`), built from the same parts as the
   fights' effects: a lamp or tripwire that burns bursts into flame, a glyph or ward calls down lightning, a ward of
   thunder or force sends a shockwave, a vent of frost or a breath of soot billows, blades slash, needles, bolts and
   shards fly in (`darts`, from above, the side or below), and a weight or a failing floor comes down in chunks, dust
@@ -141,7 +141,7 @@ damage numbers come from the `damage` event, so a trap there floats its damage l
 
 ## Sounds
 
-Every effect sounds the way it looks (world/combat/fx/combat_sfx.gd, `combat` in art/audio.json). A family names the
+Every effect sounds the way it looks (addons/dnd_core/world/combat/fx/combat_sfx.gd, `combat` in art/audio.json). A family names the
 sounds of its moments: `cast` (the effect begins), `launch` (a missile leaves the hand), `impact` (it lands or bursts),
 `arrive` (a jump's far end). An entry starting with `@` is the flavour's own sound for that moment, so Fire Bolt and a
 flameskull's Fire Ray share fire's launch and burst, and Fireball layers a rumble under the same burst. `keys` gives a

@@ -85,7 +85,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   dead sitting up on their pallets, Vasilka coming down off her bier. Its `art` dresses it in another sprite than its
   stat block's (Vasilka fights on a flesh golem's block in her own look); a round-start save keeps it. Its `steps_down:
   {npc}` says the foe is that person of the place (the Amber Sentinel on its dais): however the fight starts, their figure
-  leaves the board and the foe's takes their place and strides to its start square (StepDown, world/combat/step_down.gd;
+  leaves the board and the foe's takes their place and strides to its start square (StepDown, addons/dnd_core/world/combat/step_down.gd;
   motion off cuts to it), its stat block's size untouched.
   Its `states` (ids from the stat block's own `states`) join its traits for this fight: Sarkhaza chained or
   grave-salted, each a trait on her sheet (LocationFights.with_states). A state may cut its Multiattack (`multiattack`)
@@ -115,7 +115,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   first, once, when the leader comes within n squares and can see them. `asleep: true` lays the NPC down asleep
   (Unconscious, so Incapacitated and Prone, as the 2024 rules have a sleeper); the hover hint, Look and the Alt plates
   say so. `lying` lays the figure down with no condition (owner 2026-10-13, Vasilka "lies under a sheet, very still"):
-  `true`, or `{on, head, sheet, pose, lift, picture}` (world/exploration/lying_figures.gd). A person lies on their back on
+  `true`, or `{on, head, sheet, pose, lift, picture}` (addons/dnd_core/world/exploration/lying_figures.gd). A person lies on their back on
   their own square, on top of the furniture standing there (a table, a bier, a pallet), or on the prop `on` names
   beside them; head along the furniture, or toward `head`; `sheet` lays linen over them to the `chest` or over the
   `face`. A beast or a dragon lies low on its belly (`pose`: back or belly). `picture` names a drawing of the figure

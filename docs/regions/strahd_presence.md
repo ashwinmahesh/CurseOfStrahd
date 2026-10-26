@@ -41,7 +41,7 @@ A visit (data/strahd/visits.json) has:
   (`who`, `at_hp_below`, `after_rounds`, `flag`); when the fight is over and not lost, its `after` conversation plays.
 
 Hooks (small calls into StrahdPresence): `world/game_root.gd` (`enter_location` → arrive, `travel` → each leg,
-`visit_after_rest`, and the steps after a conversation and after a fight) and `ui/screens/rest_screen.gd` (calls
+`visit_after_rest`, and the steps after a conversation and after a fight) and `addons/dnd_core/ui/screens/rest_screen.gd` (calls
 `visit_after_rest` when a Long Rest is done). A rest visit that may come to blows (`StrahdPresence.may_fight`: a
 fight of its own or in its `then`) comes before the rest's benefits: story/long_rest.gd asks for it (`find`, which
 doesn't mark it) as the night ends, the rest stays broken while he's there, and once his visit is over (his fight

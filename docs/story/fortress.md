@@ -22,7 +22,7 @@ only if nobody is inside. Ashwin's todo (2026-10-17): "It should spin up a fortr
   else north. No such plot (a lane three squares wide, a hillside, a crowded square): the card says there is no clear
   ground. This is the book's push-clear rule made a plot choice, so nobody stands where it grows.
 - **It stands on the map**: the squares are walls to walking, sight and the fights on that map; the tower is drawn over
-  them (world/look/fortress_tower.gd), dark adamantine plates, arrow slits, a toothed battlement and the door lit along its
+  them (addons/dnd_core/world/look/fortress_tower.gd), dark adamantine plates, arrow slits, a toothed battlement and the door lit along its
   seam, and it fades when it stands between the party and the camera, as the walls do (SeeThrough). It rises out of the ground when raised. It is kept in
   `StoryState.flags["_fortress"]` ({at, cell, door, front, looks, by}), so it is there when the party comes back, in a
   save, and while the party is inside.

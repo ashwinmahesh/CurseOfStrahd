@@ -8,7 +8,7 @@ the key. How do I give it to him? We should make NPCs interactable if they're wi
 ## The lead step (`lead <npc> to <where>`)
 
 One dialogue statement (docs/contracts/dialogue.md). The conversation hides, the NPC's figure walks to the spot, and the
-party's figures follow in marching order two squares behind (`LocationLead`, `world/exploration/location_lead.gd`), at
+party's figures follow in marching order two squares behind (`LocationLead`, `addons/dnd_core/world/exploration/location_lead.gd`), at
 the same smooth pace as the rest of exploring. Nothing is set off on the way (traps, areas, watchers); a click, Enter,
 Space, Esc or the pad's A skips the walk and puts everyone where it was going. The conversation then carries on where
 the party stands, with the NPC beside them.

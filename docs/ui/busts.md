@@ -34,9 +34,9 @@ alpha, quality 90, about 0.15 MB each, in Git LFS, imported with VRAM compressio
 force-add the `.import`).
 
 ## Code
-- `ui/dialogue/dialogue_busts.gd` (`DialogueBusts`): the two busts, which to show (`path_for`: the mood's bust, else the
+- `addons/dnd_core/ui/dialogue/dialogue_busts.gd` (`DialogueBusts`): the two busts, which to show (`path_for`: the mood's bust, else the
   neutral one), lighting and breathing.
-- `ui/dialogue/dialogue_ui.gd`: adds it under the box and feeds it each line, with the party's speaker
+- `addons/dnd_core/ui/dialogue/dialogue_ui.gd`: adds it under the box and feeds it each line, with the party's speaker
   (`DialogueRunner.portrait_of(runner.speaker)`) for the left side.
 
 ## Facing each other
@@ -90,7 +90,7 @@ Visual Polish Plan 7 (the vault's "Visual Polish Plan.md", 2026-10-09, after Oct
 conversation opens while exploring, the play camera eases in a step (`TalkCamera.ZOOM`), a little lower (`PITCH`),
 leaning to frame the party's leader and whoever they're talking to, brought forward (`RAISE`) so the pair sits above
 the conversation box between the busts rather than behind it; it eases back when the talk ends
-(`world/exploration/talk_camera.gd`, called from `GameRoot.start_dialogue` and `_dialogue_ended`). It moves only the
+(`addons/dnd_core/world/exploration/talk_camera.gd`, called from `GameRoot.start_dialogue` and `_dialogue_ended`). It moves only the
 CameraRig's shot, as CombatImpact does in a fight; a conversation that starts a fight puts it back at once so the
 fight's camera has the shot, and it never touches a shot it didn't move (a fight's own conversation). Like the rest of
 the interface's motion it's off in headless runs and in still captures without `--motion`.

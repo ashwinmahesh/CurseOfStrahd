@@ -25,7 +25,7 @@ her attacks (Fire Bolt among them) and nothing else. The same held for every all
   cast goes off. The player and the AI share one count (`cast_<spell>` on the combatant), so a use the AI spent shows on the tab.
 - The hover and the detail panel read the block's numbers (`_block_preview`, `_spell_details`): save DC 14 for Ezmerelda, the damage
   dice at the block's level. There is no upcast (`level_choices` is empty) and no Ready entry in the right-click menu (the game's
-  `ui/combat/combat_hud.gd` skips it for a `stat_block` action).
+  `addons/dnd_core/ui/combat/combat_hud.gd` skips it for a `stat_block` action).
 
 ## Left alone
 

@@ -3,7 +3,7 @@ Godot 4.7.2 (typed GDScript) · Blender 5.2 · macOS, Apple Silicon
 Plan: ~/Documents/Obsidian Vault/CurseOfStrahd/Game_Plan.md (status updates are fine; scope changes go through the
 project's coordinator)
 Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log NN - <title>.md")
-Bug reports from the owner (F12 or the pause menu in dev builds, core/bug_reports.gd): ~/Documents/Obsidian Vault/
+Bug reports from the owner (F12 or the pause menu in dev builds, addons/dnd_core/core/bug_reports.gd): ~/Documents/Obsidian Vault/
 CurseOfStrahd/Bug Reports/<date>T<time>-<title>/ with report.md (front matter `status: open`), screenshot.png, save.json
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
@@ -12,7 +12,7 @@ make run (the edge build) | run-main | edge | edge-add/edge-remove BRANCH=<branc
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | veo-anims [ONLY="id …"] [KINDS=…] [GENERATE=1] [REDO="kind_dir …"] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
-make cheat-codes (rewrites Cheat Codes.md in the vault from the item data; story/cheat_codes.gd makes the codes)
+make cheat-codes (rewrites Cheat Codes.md in the vault from the item data; addons/dnd_core/story/cheat_codes.gd makes the codes)
 make magic-prices (writes data/treasure/magic_prices.json, Sane Magical Prices, into the magic items' cost_gp; make validate checks it)
 make xp-sim [RULES=build|plan|literal] (XP levelling's simulator: the party's level at every story gate, docs/plans/xp_mode.md)
 make wiki (rewrites the vault's spoiler wiki, Wiki/, from the data; prose outside its %% auto %% blocks is kept) · make wiki-shots (its screenshots)

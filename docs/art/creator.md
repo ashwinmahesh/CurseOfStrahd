@@ -44,7 +44,7 @@ keys away, and a `.gdignore` (the old way) left the pieces out of exported build
   they were drawn on (moved by how the edit's lower body sits against the base's).
 - Stored form: skin pixels have alpha 254 and hair 253, with the shade in red; everything else is final colour.
 
-## Putting a look together (world/look/hero_look.gd)
+## Putting a look together (addons/dnd_core/world/look/hero_look.gd)
 
 `HeroLook.frames(appearance)` tints the body's skin with the chosen tone, then on every frame draws a **head stack**
 over the bald head: the head (tinted), the beard (hair colour; scaled by the head's height and hung from the neck)

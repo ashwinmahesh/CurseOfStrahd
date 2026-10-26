@@ -125,9 +125,9 @@ an area `floor` in its data) and `interior/blue_panelling` (the Blue Water Inn),
 
 ## How a surface takes the light (the Modern finish, Improvement Ideas W3)
 
-In the Modern finish `Look.cel_textured` gives a surface `shaders/world/lit_world.gdshader` and `Look.cel` gives
-flat colours `shaders/world/lit.gdshader`: the same world mapping and parameters as the Classic cel shaders, lit
-like painted 3D instead of in bands (`shaders/world/lit_light.gdshaderinc`: Lambert lifted towards the light,
+In the Modern finish `Look.cel_textured` gives a surface `addons/dnd_core/shaders/world/lit_world.gdshader` and `Look.cel` gives
+flat colours `addons/dnd_core/shaders/world/lit.gdshader`: the same world mapping and parameters as the Classic cel shaders, lit
+like painted 3D instead of in bands (`addons/dnd_core/shaders/world/lit_light.gdshaderinc`: Lambert lifted towards the light,
 lamps a third stronger, GGX highlights, the sun and moon at half the highlight of a lamp). Classic keeps
 `cel.gdshader` and `cel_world.gdshader` as they were frozen (owner, 2026-10-07).
 
@@ -152,7 +152,7 @@ below 0.1, which the screen pass keeps for water.
 
 ## Applying them (for the lead)
 
-- **Material.** `shaders/cel.gdshader` already has `albedo_tex` and `use_texture`. It *multiplies* `albedo`,
+- **Material.** `addons/dnd_core/shaders/cel.gdshader` already has `albedo_tex` and `use_texture`. It *multiplies* `albedo`,
   so set `albedo` to `Color(1, 1, 1)` when a texture is on. That is a multiplier, not a drawn colour; the
   texture supplies the palette colours. Keep the cel `light()` and the palette pass: the pass re-snaps after
   lighting, so the tiles stay on the palette in the lit game.
@@ -170,7 +170,7 @@ below 0.1, which the screen pass keeps for water.
   Then `uv /= tile_world_units`. The minus on y keeps the tile's top up on walls. World mapping keeps texel
   density equal on boxes of any size and lines up across neighbouring cells, so a floor of 1 x 1 boxes reads
   as one surface. `tools/art/preview/world_uv_cel.gdshader` is a working version (the cel lighting plus this
-  mapping) to port into `shaders/cel.gdshader`.
+  mapping) to port into `addons/dnd_core/shaders/cel.gdshader`.
 - **Wainscot.** u as above with `tile_world_units` 1.2. On side faces v runs from 0 at the top of the wall to 1
   at the floor, `v = (wall_top - world_pos.y) / wall_height`, once over the wall height (1.15 units for
   cut-away interior walls), never repeated. The reference shader's `wall_band` option does this.

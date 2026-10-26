@@ -18,7 +18,7 @@ consequences. Knocking a creature out instead of killing it (the 2024 rule) is l
 - **Cutting one down**: `Captives.slain_after_surrender` counts surrendered foes that died; at the fight's end the
   companions who saw it react once (`Captives.CRUELTY`: Godrick -4, Wren -4, Liriel -3, Thistle -2).
 
-## After the fight (`story/captives.gd`, `world/exploration/location_fights.gd`)
+## After the fight (`story/captives.gd`, `addons/dnd_core/world/exploration/location_fights.gd`)
 
 - **Captives** (`Captives.taken`): enemies alive at a won fight's end that surrendered, or that lane 2's knock-out
   rule left with the `knocked_out` flag and at least 1 Hit Point and who could have surrendered (a knocked-out wolf

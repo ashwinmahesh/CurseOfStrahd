@@ -5,7 +5,7 @@ Status: built (Improvement Ideas U6, owner ask 2026-10-08) · Plan: vault note "
 Every screen, exploring and fights work on a pad as well as on the mouse and keyboard. Buttons are named by the
 Xbox layout's positions (Godot's names); a PlayStation or Nintendo pad has the same buttons in the same places.
 
-## On every screen (`ui/common/pad_nav.gd`)
+## On every screen (`addons/dnd_core/ui/common/pad_nav.gd`)
 
 The conventions are the approved ones from `character_creation.md` (cc_10), `inventory.md` and
 `party_management.md`.
@@ -54,7 +54,7 @@ A screen or control can take over any part (the hooks are listed at the top of `
 Item tiles are picked when focus lands on them (their card shows), A is their double-click and X their menu, so the
 pack never needs a drag: the menu gives, stashes and wears.
 
-## Typing (`ui/common/pad_keyboard.gd`)
+## Typing (`addons/dnd_core/ui/common/pad_keyboard.gd`)
 
 A on a text field (a name, a save's note, a cheat code, the pack's search, the sheet's notes) opens an on-screen
 keyboard over the screen: the D-pad moves over the keys and A types, X deletes, Y puts a space, LB switches capitals,
@@ -67,7 +67,7 @@ the inventory in both views, settings, saves, cheat codes, the travel map, a sho
 conversation and a check, the creator's every step, the ending and Skirmish's tabs), checks that one press puts focus
 on it, that the D-pad reaches every choice from there (by PadNav's own rule), and that B goes back.
 
-## Button pictures, the prompt bar and hints (`ui/common/pad_glyphs.gd`, `pad_prompts.gd`)
+## Button pictures, the prompt bar and hints (`addons/dnd_core/ui/common/pad_glyphs.gd`, `pad_prompts.gd`)
 
 The pictures are Kenney's Input Prompts (CC0, `art/sourced/kenney_input_prompts/`, only the ones used): Xbox,
 PlayStation and Nintendo. The family follows the pad in use (by its name or vendor), or Settings > Game > Button icons
@@ -83,7 +83,7 @@ mouse and keyboard are in use and the pad's words otherwise ("Circle: close" on 
 device as it changes. The screens' "Esc: close", the rules cards' pin hint, the conversation's and the ending's
 continue hints use it.
 
-## Exploring (`world/exploration/pad_explore.gd`)
+## Exploring (`addons/dnd_core/world/exploration/pad_explore.gd`)
 
 With no screen in front, game_root hands pad events to PadExplore. The nearest thing the party can use within 8
 squares (a person, door, chest, thing, way out, or a foe in sight) is marked as the mouse's hover marks it, with its
@@ -112,7 +112,7 @@ The prompt bar shows the world's buttons too (`PadPrompts.world`). Each is an In
 pad events on `search`, `sneak`, `plan_mode`, `plan_round`, `open_map`, `show_names`, `show_sight`, `look_*`), so
 Settings can rebind them.
 
-## Fights (`world/combat/combat_view.gd`, `world/combat/pad_combat.gd`)
+## Fights (`addons/dnd_core/world/combat/combat_view.gd`, `addons/dnd_core/world/combat/pad_combat.gd`)
 
 | Button | Does |
 |---|---|

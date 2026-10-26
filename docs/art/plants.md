@@ -16,9 +16,9 @@ own wild ground, and all of it sways in the place's wind. The Classic look keeps
 | The leaf cards: needle sprays, fern fronds, grass tufts, leaf clusters, twigs and reeds, painted in one 4 x 4 atlas | `tools/art/plant_cards.py` -> `art/plants/cards.png`, `art/plants/cards.json` (each cell's drawn box) |
 | The plants: spruces (three and a young one), dead trees (three), each with a lighter `_far` copy; ferns, bracken, grass, sedge, reeds, undergrowth | `blender/plants_3d.py` -> `art/plants/*.glb`, `art/plants/manifest.json` |
 | What grows where, by mood: trees per 2D tree kind and their heights, the land's, the woods', the edges', the open ground's and the shore's plants, tint, snow, bark colours | `art/plants/flora.json` |
-| Loads the plants, sets the wind, plants the map's own ground, draws many at once | `world/look/flora.gd` (`Flora`) |
-| Plants the land: the map's trees become Flora's, the forest past the edge, its undergrowth | `world/look/atmosphere_land.gd` (`AtmosphereLand`, Modern only) |
-| Leaves (cards, wind, backlight, snow) and bark (furrows, lichen, wind) | `shaders/atmosphere/foliage.gdshader`, `bark.gdshader`, `wind.gdshaderinc` |
+| Loads the plants, sets the wind, plants the map's own ground, draws many at once | `addons/dnd_core/world/look/flora.gd` (`Flora`) |
+| Plants the land: the map's trees become Flora's, the forest past the edge, its undergrowth | `addons/dnd_core/world/look/atmosphere_land.gd` (`AtmosphereLand`, Modern only) |
+| Leaves (cards, wind, backlight, snow) and bark (furrows, lichen, wind) | `addons/dnd_core/shaders/atmosphere/foliage.gdshader`, `bark.gdshader`, `wind.gdshaderinc` |
 | Art QA: every plant in a row and a stand of forest; outdoor places before and after | `tools/art/preview/plants_preview.tscn`, `tools/capture/land_capture.tscn` |
 
     make plants                      # paint the cards, build the plants, import
@@ -69,7 +69,7 @@ a birch among the spruces, `sick` twisted oaks on Yester Hill.
 
 - **The map's own trees** (ArenaBoard's wall squares in the woods) belong to their square and fade as before, 10 to 20 ft
   tall (`scale`, `shortest`, `tallest` for `map`; a leaning tree's box too), but they are no longer one tree a square in
-  rows (Natural Maps Plan N4, `world/look/woods.gd`): each wall square's tree stands anywhere across it, varied in
+  rows (Natural Maps Plan N4, `addons/dnd_core/world/look/woods.gd`): each wall square's tree stands anywhere across it, varied in
   size, lean and kind (groves of tall trees and patches of young ones, a few squares across), each leaning a little
   and wearing its own shade (the foliage shader's `instance uniform hue`: groves a little warmer or cooler, lighter or
   darker), and a smaller tree or two fringe an edge square (more of them in a thicker wood: the set's `wood_density`,

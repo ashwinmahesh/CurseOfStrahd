@@ -176,7 +176,7 @@ that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 | death_save | id, success |
 | spell | caster, spell, cells, targets |
 | ability | source (feature, monster), by, key, targets, cells: a class feature used from the hotbar (key: its id, e.g. `second_wind`, `rage`) or a monster's saving-throw action (key: `<monster>.<action>`, e.g. `swarm_of_ravens.cacophony`), ahead of the events it caused |
-| smite | caster, spell, target: a smite spell (Divine Smite, Searing Smite...) rides the hit that just landed (the view's effect, world/combat/fx/spell_fx.gd) |
+| smite | caster, spell, target: a smite spell (Divine Smite, Searing Smite...) rides the hit that just landed (the view's effect, addons/dnd_core/world/combat/fx/spell_fx.gd) |
 | summon | caster, cell (Spiritual Weapon) |
 | object / object_gone | id, kind, cell: a spell object or lingering area appeared, moved or ended (`spells.zones.objects`) |
 | teleport | id, from, to (Misty Step, Thunder Step, Far Step, Bait and Switch, Engulf) |
@@ -187,7 +187,7 @@ that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 | round | round |
 | over | outcome (victory, defeat) |
 
-`action`, `ability`, `smite` and a `lair` event's `targets` are for the view's effects only (world/combat/fx/spell_fx.gd, docs/art/spell_effects.md):
+`action`, `ability`, `smite` and a `lair` event's `targets` are for the view's effects only (addons/dnd_core/world/combat/fx/spell_fx.gd, docs/art/spell_effects.md):
 nothing in the rules reads them, and emitting them changes no roll, order or state.
 
 ## Things on the ground (`GroundItems`, `e.ground`)
@@ -205,7 +205,7 @@ Parry. Picking up: `pick_up_why(c, g)`, `cost_of(c)`, `pick_up(c, gid)`; the AI 
 starts. `fight_over()` runs from `_check_over`: the party gets its things back (a weapon to the hand it left when
 free) and half the mundane ammunition it shot (`ammo_spent`); the foes' weapons go to `spoils` ([{id, qty}]), which
 LocationFights adds to the fight's loot. A round's save keeps it all (`EncounterSnapshot` key `ground`). The scene draws
-the piles with `GroundView.sync(e.ground.items)` (world/combat/ground_view.gd) and names them on hover
+the piles with `GroundView.sync(e.ground.items)` (addons/dnd_core/world/combat/ground_view.gd) and names them on hover
 (`describe_at(cell)`).
 
 ## Things that break and burn (`EncounterObjects`, `e.objects`)
@@ -235,7 +235,7 @@ clicked on an object's square aims at it (`redirect`); `perform` carries them ou
 are the hover text. A round's save keeps it all (EncounterSnapshot key `objects`). Events: `object_attack` {by, id, hit,
 critical, action}, `object_damage` {id, amount}, `object_broken` {id}, `object_fall` {id}, `object_burning` {id},
 `object_fire` {cell, out?, poured?}, `object_throw` {by, cell, item}; the scene plays them with ObjectView
-(world/combat/object_view.gd). BattleScenery (world/combat/battle_scenery.gd) places the objects: `from_board(e, board)`
+(addons/dnd_core/world/combat/object_view.gd). BattleScenery (addons/dnd_core/world/combat/battle_scenery.gd) places the objects: `from_board(e, board)`
 for any board's '=' squares (CombatView.begin, once: `objects.placed`), `for_location(view, e)` for a location's closed
 doors, '=' squares and props that `hang` (chandeliers), and `after_fight(view, e)`.
 
@@ -335,7 +335,7 @@ The initiative tracker shows a legendary creature's actions left (◆◇) and th
 
 Reaction offers may provide `stop_if` alongside `stop`: after `use`, the continuation stops only when the predicate is true. This allows an interrupted Shield to spend its Reaction while the original hit continues. Spell casting gates run after casting time is consumed and before slot payment or concentration replacement.
 
-Action targeting `wall` (`ActionCatalog.spell_targeting` for a wall with a length whose cast-time choice isn't a ring, globe or dome, `SpellTargeting.drawn_wall`) collects the wall's squares into `opts.path`, one at a time, each touching the last: `spells.targeting.wall_step_why` checks a square (solid squares, a wall's corner, the spell's length `wall_squares`, range: every square, or only the first for Wind Wall, Wall of Stone and Wall of Force; straight for Blade Barrier and Prismatic Wall) and `wall_path_why` the whole path; `wall_cells` is the casting hook that turns the path, a ring or a globe into the squares. A wall with `zone.side_ft` (Wall of Fire) then takes `opts.side`: `spells.placement.side_of(path, cell)` says which side a square is on, `path_side(path, side, feet)` the squares that burn. Without `opts.path` a wall is the straight one through `point` along `direction` (east-west without one), as the AI casts it. The view's picks after the first click (the wall's squares and side, Commander's Strike's target, Crown of Madness's victim, Maneuvering Attack's ally and square) are world/combat/target_picker.gd; the engine checks each: `weapons.strike_ally_why` and `weapons.strike_option(c, t)` (Commander's Strike), `spells.targeting.crown_victim_why` and `crown_attack` (the crowned creature's forced attack, read by the AI), `movement.reaction_move_reach`.
+Action targeting `wall` (`ActionCatalog.spell_targeting` for a wall with a length whose cast-time choice isn't a ring, globe or dome, `SpellTargeting.drawn_wall`) collects the wall's squares into `opts.path`, one at a time, each touching the last: `spells.targeting.wall_step_why` checks a square (solid squares, a wall's corner, the spell's length `wall_squares`, range: every square, or only the first for Wind Wall, Wall of Stone and Wall of Force; straight for Blade Barrier and Prismatic Wall) and `wall_path_why` the whole path; `wall_cells` is the casting hook that turns the path, a ring or a globe into the squares. A wall with `zone.side_ft` (Wall of Fire) then takes `opts.side`: `spells.placement.side_of(path, cell)` says which side a square is on, `path_side(path, side, feet)` the squares that burn. Without `opts.path` a wall is the straight one through `point` along `direction` (east-west without one), as the AI casts it. The view's picks after the first click (the wall's squares and side, Commander's Strike's target, Crown of Madness's victim, Maneuvering Attack's ally and square) are addons/dnd_core/world/combat/target_picker.gd; the engine checks each: `weapons.strike_ally_why` and `weapons.strike_option(c, t)` (Commander's Strike), `spells.targeting.crown_victim_why` and `crown_attack` (the crowned creature's forced attack, read by the AI), `movement.reaction_move_reach`.
 
 Action targeting `points` collects `count` distinct grid positions into `opts.points`; selecting an already chosen position deselects it. Invalid summon spaces are rejected during selection. Multi-creature feature and sustained-action selections read the action's own `count` instead of a spell's target count. `Combatant.record_step` retains the voluntary path. Charge checks count trailing steps that each close distance to the current target, allowing angled approaches on a square grid. Sideways/retreating steps break the counted approach; attacks, teleports, forced movement and new turns clear it.
 

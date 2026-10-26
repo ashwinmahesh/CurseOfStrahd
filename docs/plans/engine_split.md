@@ -37,7 +37,7 @@ Unit tests of rules and combat move with the code; integration tests that name c
 
 ## Campaign modules (stay in the Strahd game)
 
-`story/tarokka.gd`, `story/strahd_presence.gd`, `story/oracles.gd`, `story/endings.gd`, `story/cheat_codes.gd`,
+`story/tarokka.gd`, `story/strahd_presence.gd`, `story/oracles.gd`, `story/endings.gd`, `addons/dnd_core/story/cheat_codes.gd`,
 `combat/ravenloft_features.gd`, the Strahd AI profile, `data/strahd`, `data/tarokka`, `data/endings`, `data/visits`, all
 locations, NPCs, quests, cutscenes, dialogue, art and audio. The hook (campaign modules register with the engine instead
 of the engine naming them) is queued: it touches `story_state`, `dialogue_runner`, `game_root`, `long_rest`, which other

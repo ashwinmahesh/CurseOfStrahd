@@ -48,7 +48,7 @@ Speaker [away]: Text               The speaker turns their back on the other sid
 * [if <condition>] Text -> node    Shown only when the condition holds.
 * [ends:<quest>] Text -> node      Choosing it closes that quest (the next lines move it to an ending). The menu draws a
                                    broken seal in the Failed pill's rose on the option, its tooltip and the line under the
-                                   menu say "Ends <quest name>" (ui/dialogue/dialogue_ui.gd, QuestEndMark). Several may
+                                   menu say "Ends <quest name>" (addons/dnd_core/ui/dialogue/dialogue_ui.gd, QuestEndMark). Several may
                                    stand together: `[ends:a] [ends:b]`. `[ends:<quest> if <condition>]` marks it only while
                                    the condition holds (use it where the same option closes the quest in some states and not
                                    others: `[ends:the_dancing_bear if flag.tser_pool_brawl_won]`); a quest that has ended
