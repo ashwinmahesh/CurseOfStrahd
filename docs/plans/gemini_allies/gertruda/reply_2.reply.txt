@@ -1,0 +1,6 @@
+C1: Gertruda presses both hands over her ears and waits like a carved stone.
+C2: Gertruda shuts her eyes tight, then opens them to watch in silence.
+C3: Gertruda swallows a small gasp and fixes her gaze upon her shoes.
+C4: Gertruda stares down at the mud-stained hem of her borrowed gown, utterly still.
+C5: Gertruda holds her breath as every foe surges past her toward you.
+C6: Gertruda clasps her cold hands together, keeping as quiet as a shadow.

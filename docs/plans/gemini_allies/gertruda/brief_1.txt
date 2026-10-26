@@ -1,0 +1,42 @@
+You are drafting short lines for the Narrator of a single-player D&D 5e computer game built on the Curse of Strahd adventure (Barovia, gothic horror). Answer in plain text only. Do not send messages to anyone else and finish in this one reply.
+
+## The Narrator
+
+An old gothic storyteller who has watched a great many adventurers walk into Barovia and very few walk out. Not the party's enemy and not its friend; fond of the party the way a gravedigger is fond of the weather: with interest, without illusions. Rules we hold every Narrator line to:
+
+1. Second person or plain scene description, present tense. Never "the party", never past tense.
+2. Dry, ominous, never cruel. The world is cruel; the Narrator isn't. It never gloats and never cheers.
+3. Concrete senses over adjectives: a sound, a gesture, a distance, not "tense" or "scary".
+4. No modern slang, no winks at the player, and no game terms at all: not "turn", "target", "attack", "combat", "hit points", "initiative", "spell", "roll", "round". Say what happens in the world.
+5. Combat lines are fast: ONE sentence, under 15 words. (The single "first time" line below is allowed two sentences, under 30 words in all.)
+6. Do not use placeholders like {name} or {target}. Lines are recorded by an actor, so write Gertruda's name out when you need it. ASCII only: straight quotes and apostrophes, no accents, no em-dash.
+
+## What is changing in play (this is the thing the lines have to carry)
+
+Gertruda travels with the party as a companion (a "guest") while they take her home to her mother. Until now she would have stood in the fight like a party member, a sixteen-year-old with four hit points, which would only get her killed. From now on she keeps out of every fight: when a fight starts she stands back, behind the party, and stays there. She takes no turns. The enemies never attack her and never so much as look at her, and no spell from either side can touch her. The player does not control her and cannot put her in harm's way. Do NOT explain why the enemies leave her alone, and do not invent a reason (no curse, no spell, no protector, no name for anyone). The lines only show that she stands apart and nothing turns on her.
+
+Who she is: Mad Mary's daughter from the village of Barovia, sixteen, dark-haired, kept indoors behind three locks all her life by a frightened mother. She knew the world from one book of tales that fell apart from reading. A voice sang under her window, she climbed down to it, and a carriage took her to a castle where she lived in borrowed gowns believing she was in a love story. The story has cracked and she is frightened, braver than she sounds, and she has been humming a song she doesn't know since the carriage. She says "I'm good at quiet" and "I'm good at waiting". She is not a fighter, never draws steel, and is not a damsel to be pitied either: she is a girl seeing blood for the first time who stays very still. The Narrator is gentle with her and doesn't pity her.
+
+Existing Narrator lines about guests who keep out of a fight, so you can match the register (do NOT copy them):
+- "Ireena folds her arms over her cloak, watching every blow she cannot answer."
+- "Not one blade angles toward Ireena where she waits."
+- "Hungry eyes slide right past Ireena to fix on you alone."
+Existing lines Gertruda says herself after a fight, so the Narrator's lines do not contradict her: "I'm good at quiet. I stayed very quiet. Was that right?" and "In the stories nobody bleeds. I should have known."
+
+## What I need
+
+A. The FIRST-TIME line, played once ever, as the first fight begins with Gertruda along. Give 3 different options. Two sentences at most, under 30 words in all. It must make plain that she stands apart from the fight and that nothing turns on her, with the stillness of a girl who has never seen one.
+
+B. Eight candidate lines for the REGULAR line, one of which is shown as each later fight begins (the game never repeats one until all have been shown). Each is ONE sentence, under 15 words, and each uses a different image, for example where she stands, what her hands do, the humming, the borrowed gown or her book of tales, her eyes closing or opening, the distance between her and the blow, the quiet she keeps. Rules for B: she does not draw steel or swing anything; she is never hurt or threatened; no line may suggest the party is guarding her; none may be the same image as another; none may whine, plead or mock her. Name her as Gertruda in each line.
+
+## Format
+
+Plain text, no markdown, no preamble, no explanation. Exactly this shape, one line each:
+
+A1: <line>
+A2: <line>
+A3: <line>
+B1: <line>
+B2: <line>
+...
+B8: <line>

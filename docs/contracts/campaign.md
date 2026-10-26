@@ -124,7 +124,7 @@ or `"guest_build": {"pregen": "<pregen id>", "level": 3}` for a guest with a ful
 party frames), `leave ireena` removes them. Conditions: `guest:ireena`.
 
 A guest fights unless the NPC says `"guest_fights": false` (Ireena, Ashwin 2026-10-18: she doesn't attack, and enemies
-don't attack her). Such a guest is never added to an encounter (`LocationFights.start_encounter` leaves her out,
+don't attack her; Gertruda, Ashwin 2026-10-24: a non-combatant while she is with the party). Such a guest is never added to an encounter (`LocationFights.start_encounter` leaves her out,
 `LocationFights.sits_out`): she takes no turn, can't be targeted, and no area spell of either side can catch her, because
 she is not a combatant. Her figure stays on the board as a bystander: her square blocks like any bystander's, and if the
 fight starts on a square someone will stand on (the party's, a foe's) she steps aside to the nearest free one, away from

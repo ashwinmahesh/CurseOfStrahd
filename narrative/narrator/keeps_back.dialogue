@@ -1,4 +1,4 @@
-# Narrator: a guest who keeps out of fights (docs/contracts/campaign.md: her NPC's guest_fights false, Ireena).
+# Narrator: a guest who keeps out of fights (docs/contracts/campaign.md: her NPC's guest_fights false: Ireena, then Gertruda).
 # LocationFights says combat:keeps_back:<npc>:first once, as the first fight begins with her along, and
 # combat:keeps_back:<npc> in later fights (it holds off for a while between them), a beat after the fight's own opening
 # line. Combat lines are one sentence under 15 words; the first may run to two. Drafted by Gemini through the ai-bridge
@@ -19,4 +19,24 @@ once
 | Ireena calls out across the din, and a blade turns just in time.
 | Ireena weighs a road-stone in her palm, then lets it drop.
 | Ireena holds the lantern high, casting steady light across the ground where you fight.
+cooldown 20
+
+# Gertruda (docs/story/gertruda_noncombatant.md): the same rule for Mad Mary's daughter while the party takes her home. The valley
+# is not told whose she is, so nothing explains why a blow never turns on her; she only stands very still. Drafted by Gemini through
+# the ai-bridge (docs/plans/gemini_allies/gertruda/: briefs, raw replies, what was changed), edited for canon and length. Unvoiced.
+
+~ combat:keeps_back:gertruda:first
+| Gertruda steps back behind you and goes still, her hands folded in the skirts of her borrowed gown. Nothing in the fight so much as glances her way.
+once
+
+~ combat:keeps_back:gertruda
+| Gertruda gathers her borrowed skirts in both fists and stands well back.
+| The tune in Gertruda's throat dies as she settles into the quiet.
+| Well behind your shoulder, Gertruda keeps the stillness she knows best.
+| Gertruda watches the first blow fall without a sound or a step.
+| Gertruda presses both hands over her ears and waits like a carved stone.
+| Gertruda shuts her eyes tight, then opens them to watch in silence.
+| Gertruda swallows a small gasp and fixes her gaze upon her shoes.
+| Gertruda stares down at the hem of her borrowed gown, utterly still.
+| Gertruda clasps her cold hands together, keeping as quiet as a shadow.
 cooldown 20

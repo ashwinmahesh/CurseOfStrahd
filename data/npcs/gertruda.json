@@ -13,6 +13,7 @@
     "monster": "commoner",
     "note": "A sheltered girl, not a fighter: she joins only to be taken home to her mother."
   },
+  "guest_fights": false,
   "guest_stays": [
     {
       "why": "Gertruda won't be left on her own. She's going home to her mother, and only with you."
