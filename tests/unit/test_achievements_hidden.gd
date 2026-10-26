@@ -93,7 +93,7 @@ func test_the_list_keeps_its_order_and_every_id_once() -> void:
 		assert_false(seen.has(id), "%s listed twice" % id)
 		seen[id] = true
 	var last_listed := 0
-	for id: String in Achievements.LIST:
+	for id: String in Achievements.listed():
 		last_listed = maxi(last_listed, ids.find(id))
 	assert_true(ids.find(PUSH) > last_listed, "the hidden ones follow the sixteen")
 	var first_ending := ids.size()
@@ -102,7 +102,7 @@ func test_the_list_keeps_its_order_and_every_id_once() -> void:
 			first_ending = mini(first_ending, i)
 	assert_true(ids.find(KNOCKED) < first_ending, "and come before the endings")
 	for def in Achievements.hidden_defs():
-		assert_false(Achievements.LIST.has(str(def["id"])), "no clash with a listed one")
+		assert_false(Achievements.listed().has(str(def["id"])), "no clash with a listed one")
 
 
 func test_the_panel_shows_a_secret_row_until_it_is_earned() -> void:

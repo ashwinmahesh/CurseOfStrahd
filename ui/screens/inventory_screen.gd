@@ -2012,8 +2012,8 @@ func _use_power(power_id: String, opts: Dictionary) -> void:
 			var words := RestScreen.night_words(root, st)
 			var hint := RestScreen.talk_hint(st)
 			res["text"] = " ".join([str(res["text"]), words, hint]).strip_edges().replace("  ", " ")
-		if root != null and root.has_method("strahd_after_rest"):
-			root.call_deferred("strahd_after_rest", int(res.get("minutes", LongRest.HOURS * 60)))
+		if root != null and root.has_method("visit_after_rest"):
+			root.call_deferred("visit_after_rest", int(res.get("minutes", LongRest.HOURS * 60)))
 	# What it does to the place the party is in (a Wand of Secrets' pointing, a Wand of Magic Detection's Detect Magic).
 	if bool(res.get("ok", false)) and str(res.get("effect", "")) != "" and root != null and root.get("view") != null:
 		(root.get("view") as LocationView).apply_spell_effect(str(res["effect"]))

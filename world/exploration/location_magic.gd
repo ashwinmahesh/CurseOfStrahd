@@ -13,14 +13,14 @@ static func apply_spell_effect(view: LocationView, spell_id: String) -> void:
 			LocationNpcs.refresh_npcs(view)   # the hidden finds it showed (story/oracles.gd)
 			LocationTraps._mark_found_traps(view)
 		"unseen_servant":
-			var trap := Oracles.spring_trap(view.st, view.loc_id, view.leader().cell)
+			var trap := Campaign.module().spring_trap(view.st, view.loc_id, view.leader().cell)
 			if trap.is_empty():
 				view.narration.emit("The servant pads about the place and finds nothing to set off within 30 feet.")
 				return
 			LocationTraps._clear_marks(view, str(trap["id"]))
 			view.toast.emit("Unseen Servant springs %s harmlessly" % str(trap.get("label", "a trap")))
 		"stone_shape", "passwall":
-			var door := Oracles.open_way(view.st, view.loc_id, view.leader().cell)
+			var door := Campaign.module().open_way(view.st, view.loc_id, view.leader().cell)
 			if door.is_empty():
 				view.narration.emit("No locked or hidden way within 30 feet for the spell to open.")
 				return

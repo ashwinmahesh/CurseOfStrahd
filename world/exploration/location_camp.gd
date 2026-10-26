@@ -366,7 +366,7 @@ func sleep() -> void:
 
 ## How the night at camp goes on from `res` (LongRest.take, or LongRest.resume once what broke it is over: game root
 ## `_sleep_again`). Whatever comes at the camp comes before the rest's benefits (the owner, 2026-10-13): something out
-## of the dark (_night_visitors), or Strahd's visit that may come to blows (game root `strahd_after_rest`); once it's
+## of the dark (_night_visitors), or Strahd's visit that may come to blows (game root `visit_after_rest`); once it's
 ## over the party sleeps on by itself. With nothing to fight, or foes still about afterwards, nobody sleeps again (a
 ## Short Rest's benefits) and the party can try again later. A full night brings the morning, with the Narrator's
 ## lines for the night, a dream, and perhaps Strahd.
@@ -380,7 +380,7 @@ func night(res: Dictionary) -> void:
 		LongRest.STRAHD:
 			_refresh_root()
 			view.narration.emit(str(res["text"]))
-			_strahd_after(int(res["minutes"]))
+			_visit_after(int(res["minutes"]))
 			return
 		LongRest.RESTLESS:
 			_refresh_root()
@@ -403,13 +403,13 @@ func night(res: Dictionary) -> void:
 	_say_keys(CampSite.keys_for("camp:morning", setting))
 	_refresh_root()
 	_refresh_talks()
-	_strahd_after(int(res["minutes"]))   # Strahd may come in the night (ADR 0014)
+	_visit_after(int(res["minutes"]))   # Strahd may come in the night (ADR 0014)
 
 
-## Strahd's chance at the night just slept (or the visit that broke it): game root `strahd_after_rest`.
-func _strahd_after(minutes: int) -> void:
-	if root != null and root.has_method("strahd_after_rest"):
-		root.call_deferred("strahd_after_rest", minutes)
+## The campaign's chance at the night just slept (or the visit that broke it): game root `visit_after_rest`.
+func _visit_after(minutes: int) -> void:
+	if root != null and root.has_method("visit_after_rest"):
+		root.call_deferred("visit_after_rest", minutes)
 
 
 ## The night interrupted at camp: what comes out of the dark (CampSite.night_fight) falls on the camp, where everyone

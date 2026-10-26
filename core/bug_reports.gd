@@ -13,7 +13,9 @@ extends Node
 
 const NODE_NAME := "BugReports"
 const KEY := KEY_F12
-const VAULT := "Documents/Obsidian Vault/CurseOfStrahd"
+## Where the project's notes live under the home folder and the environment variable that names another folder for reports,
+## both from data/campaign.json "bug_reports" ({"vault": "...", "env": "..."}); without a vault reports go to FALLBACK.
+const CONFIG := "res://data/campaign.json"
 const FOLDER := "Bug Reports"
 const FALLBACK := "user://bug_reports/"
 ## The picture's longest side at most: a Retina window is bigger than a bug needs.
@@ -265,18 +267,31 @@ func _log() -> Array[String]:
 
 # --- Writing --------------------------------------------------------------------------------------
 
-## Where reports go: STRAHD_BUG_REPORTS, else the vault's Bug Reports folder when that vault is on this Mac, else
-## FALLBACK. An absolute path.
+## Where reports go: the environment variable named by the config, else the vault's Bug Reports folder when that vault is on
+## this Mac, else FALLBACK. An absolute path.
 func folder() -> String:
 	if dir != "":
 		return ProjectSettings.globalize_path(dir)
-	var named := OS.get_environment("STRAHD_BUG_REPORTS")
+	var env := str(setup().get("env", "BUG_REPORTS"))
+	var named := OS.get_environment(env)
 	if named != "":
 		return named
-	var vault := OS.get_environment("HOME").path_join(VAULT)
-	if DirAccess.dir_exists_absolute(vault):
-		return vault.path_join(FOLDER)
+	if vault() != "":
+		var vault_dir := OS.get_environment("HOME").path_join(vault())
+		if DirAccess.dir_exists_absolute(vault_dir):
+			return vault_dir.path_join(FOLDER)
 	return ProjectSettings.globalize_path(FALLBACK)
+
+
+## data/campaign.json "bug_reports": {"vault": folder under the home folder, "env": environment variable}.
+static func setup() -> Dictionary:
+	if not FileAccess.file_exists(CONFIG):
+		return {}
+	return (JSON.parse_string(FileAccess.get_file_as_string(CONFIG)) as Dictionary).get("bug_reports", {}) as Dictionary
+
+
+static func vault() -> String:
+	return str(setup().get("vault", ""))
 
 
 ## Writes a report: `text` is what he wrote (it may be empty), `kind` one of KINDS or "". Returns its folder, or ""

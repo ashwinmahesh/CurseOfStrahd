@@ -1,4 +1,8 @@
 {
   "module": "res://story/strahd_campaign.gd",
-  "look": "res://world/look/strahd_look.gd"
+  "look": "res://world/look/strahd_look.gd",
+  "bug_reports": {
+    "vault": "Documents/Obsidian Vault/CurseOfStrahd",
+    "env": "STRAHD_BUG_REPORTS"
+  }
 }

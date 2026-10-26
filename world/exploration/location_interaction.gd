@@ -483,8 +483,8 @@ static func _open_container(view: LocationView, ct: Dictionary, method: String, 
 		# Scrolls name their spell, and this playthrough's random magic items are in here too (story/treasure.gd).
 		items = Treasure.specify_scrolls(items, view.st, "%s:%s" % [view.loc_id, id])
 		items.append_array(((Treasure.placed(view.st, view.loc_id).get(id, []) as Array)).duplicate(true))
-	# A Tarokka treasure spot (ADR 0011): whatever the reading hid here is in the chest too.
-	for treasure in Tarokka.take_from(Tarokka.place_for(view.loc, "container", id), view.st):
+	# A treasure spot (ADR 0011): whatever the campaign's reading hid here is in the chest too.
+	for treasure in Campaign.module().take_treasure(view.loc, "container", id, view.st):
 		items.append({"id": treasure, "qty": 1})
 	view.loot_opened.emit(id, items, float(left["gold"]) if not left.is_empty() else float(ct.get("gold", 0)))
 

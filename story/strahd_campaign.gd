@@ -79,3 +79,76 @@ func cast_spell(st: StoryState, caster: Character, spell_id: String, choice: Str
 
 func request_ending(st: StoryState) -> void:
 	Endings.request(st)
+
+
+# --- Fights and places --------------------------------------------------------------------------------------------
+
+func parley_ref() -> String:
+	return "strahd/final:parley"   # Strahd parleys before a final battle, when it's written and hasn't been answered
+
+
+func parley_speaker() -> String:
+	return "strahd"
+
+
+func parley_answer(st: StoryState) -> String:
+	return str(st.get_flag("strahd_parley", ""))
+
+
+## `fight` or unset lets the battle start; `yield` and `ireena` leave it to the ending.
+func parley_allows_fight(st: StoryState) -> bool:
+	return parley_answer(st) in ["", "fight"]
+
+
+func treasure_spots(loc: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	for place: String in Tarokka.spots(loc):
+		out.append(place)
+	return out
+
+
+func take_treasure(loc: Dictionary, kind: String, id: String, st: StoryState) -> Array[String]:
+	return Tarokka.take_from(Tarokka.place_for(loc, kind, id), st)
+
+
+func final_battle_begun(st: StoryState) -> void:
+	if st.quest_stage_index("strahds_lair", st.quest_stage("strahds_lair")) < st.quest_stage_index("strahds_lair", "confronted"):
+		st.set_quest_stage("strahds_lair", "confronted")
+
+
+func fight_start_keys() -> Array[String]:
+	return ["combat:sunsword_start"]   # the Sunsword, while carried (narrative/narrator/sunsword.dialogue)
+
+
+func fight_victory_keys() -> Array[String]:
+	return ["combat:sunsword_victory"]
+
+
+func guard_monster() -> String:
+	return "vallaki_guard"
+
+
+func spring_trap(st: StoryState, location_id: String, cell: Vector2i, ft: int = 30) -> Dictionary:
+	return Oracles.spring_trap(st, location_id, cell, ft)
+
+
+func open_way(st: StoryState, location_id: String, cell: Vector2i, ft: int = 30) -> Dictionary:
+	return Oracles.open_way(st, location_id, cell, ft)
+
+
+# --- Endings and achievements -------------------------------------------------------------------------------------
+
+func endings() -> Array[Dictionary]:
+	return Endings.all()
+
+
+func ending(id: String) -> Dictionary:
+	return Endings.get_ending(id)
+
+
+func extra_achievements() -> Dictionary:
+	return {"skirmish_strahd": ["Dress Rehearsal", "Defeat Strahd in a Skirmish."]}
+
+
+func skirmish_achievements(foe_monsters: Array[String]) -> Array[String]:
+	return ["skirmish_strahd"] if "strahd_von_zarovich" in foe_monsters else ([] as Array[String])

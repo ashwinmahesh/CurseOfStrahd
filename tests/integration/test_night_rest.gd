@@ -158,7 +158,7 @@ func test_strahd_s_visit_that_may_come_to_blows_comes_before_the_benefits() -> v
 	assert_eq(str(res["how"]), LongRest.SLEPT, "and the party sleeps on, not asking for him again")
 	assert_true(_rested(st))
 	assert_eq(st.total_minutes(), start + 9 * 60, "an hour more for his fight")
-	# A visit of words only keeps the old order: the benefits, then him (game root strahd_after_rest).
+	# A visit of words only keeps the old order: the benefits, then him (game root visit_after_rest).
 	StrahdPresence.use({"id": "visits", "summary": "", "visits": [{"id": "words", "summary": "", "trigger": {"on": ["rest"]},
 		"dialogue": "strahd/visits:night"}]})
 	var st2 := _story(3)

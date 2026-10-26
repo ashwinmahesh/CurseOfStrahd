@@ -43,8 +43,14 @@ const LIST := {
 	"none_lost": ["None Left Behind", "Reach an ending without losing a hero for good."],
 	"skirmish_win": ["Proving Grounds", "Win a Skirmish."],
 	"skirmish_beyond": ["Against All Odds", "Win a Skirmish rated beyond High."],
-	"skirmish_strahd": ["Dress Rehearsal", "Defeat Strahd in a Skirmish."],
 }
+## LIST and the campaign's own (CampaignModule.extra_achievements).
+static func listed() -> Dictionary:
+	var out := LIST.duplicate()
+	out.merge(Campaign.module().extra_achievements())
+	return out
+
+
 const WOLVES: Array[String] = ["wolf", "dire_wolf", "werewolf", "winter_wolf"]
 
 
@@ -111,14 +117,15 @@ static func earn(st: StoryState, ids: Array[String]) -> Array[String]:
 static func all() -> Array[Dictionary]:
 	var got := earned()
 	var out: Array[Dictionary] = []
-	for id: String in LIST:
-		out.append({"id": id, "name": str(LIST[id][0]), "text": str(LIST[id][1]), "earned": str(got.get(id, "")), "hidden": false})
+	var list := listed()
+	for id: String in list:
+		out.append({"id": id, "name": str(list[id][0]), "text": str(list[id][1]), "earned": str(got.get(id, "")), "hidden": false})
 	for d in hidden_defs():
 		var id := str(d["id"])
 		var secret := bool(d.get("hidden", true)) and not got.has(id)
 		out.append({"id": id, "name": HIDDEN_NAME if secret else str(d["name"]), "text": HIDDEN_TEXT if secret else str(d["text"]),
 			"earned": str(got.get(id, "")), "hidden": bool(d.get("hidden", true))})
-	for e in Endings.all():
+	for e in Campaign.module().endings():
 		var id := "ending_" + str(e["id"])
 		out.append({"id": id, "name": str(e.get("title", e["id"])), "text": "Reach this ending: %s" % str(e.get("summary", "")),
 			"earned": str(got.get(id, "")), "hidden": false})
@@ -200,10 +207,11 @@ static func grant(ids: Array[String]) -> Array[String]:
 
 
 static func name_of(id: String) -> String:
-	if LIST.has(id):
-		return str(LIST[id][0])
+	var list := listed()
+	if list.has(id):
+		return str(list[id][0])
 	if id.begins_with("ending_"):
-		return str(Endings.get_ending(id.trim_prefix("ending_")).get("title", id))
+		return str(Campaign.module().ending(id.trim_prefix("ending_")).get("title", id))
 	for d in hidden_defs():
 		if str(d["id"]) == id:
 			return str(d["name"])
@@ -279,8 +287,10 @@ static func for_skirmish(setup: SkirmishSetup, e: Encounter, t: Dictionary) -> A
 		out.append("skirmish_win")
 		if setup.difficulty() == "beyond high":
 			out.append("skirmish_beyond")
-		if setup.foes.any(func(f: Dictionary) -> bool: return str(f["monster"]) == "strahd_von_zarovich"):
-			out.append("skirmish_strahd")
+		var foes: Array[String] = []
+		for f in setup.foes:
+			foes.append(str(f["monster"]))
+		out.append_array(Campaign.module().skirmish_achievements(foes))
 	out.append_array(for_fight(e, t))
 	return out
 

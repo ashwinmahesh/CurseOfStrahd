@@ -41,8 +41,8 @@ A visit (data/strahd/visits.json) has:
   (`who`, `at_hp_below`, `after_rounds`, `flag`); when the fight is over and not lost, its `after` conversation plays.
 
 Hooks (small calls into StrahdPresence): `world/game_root.gd` (`enter_location` → arrive, `travel` → each leg,
-`strahd_after_rest`, and the steps after a conversation and after a fight) and `ui/screens/rest_screen.gd` (calls
-`strahd_after_rest` when a Long Rest is done). A rest visit that may come to blows (`StrahdPresence.may_fight`: a
+`visit_after_rest`, and the steps after a conversation and after a fight) and `ui/screens/rest_screen.gd` (calls
+`visit_after_rest` when a Long Rest is done). A rest visit that may come to blows (`StrahdPresence.may_fight`: a
 fight of its own or in its `then`) comes before the rest's benefits: story/long_rest.gd asks for it (`find`, which
 doesn't mark it) as the night ends, the rest stays broken while he's there, and once his visit is over (his fight
 won, or his words had without one) the party sleeps on, an hour more for a fight (the owner, 2026-10-13). A visit
@@ -115,7 +115,7 @@ Everything else is as for his visits: the trigger (`arrive`, `rest`, `travel`, `
 what truly can't wait), the steps and `then`, a fight's `withdraw`, and the quiet places: `quiet_regions` (the castle,
 Death House, the mists) and holy ground in `quiet_at` stay quiet for friends unless the visit's trigger names the place
 in `at`. `fires()` is the same function for both. The game root's hooks (`_strahd`, `_strahd_on_road`,
-`strahd_after_rest`, the steps after a conversation and a fight) and `LongRest` are unchanged: an ally's visit plays
+`visit_after_rest`, the steps after a conversation and a fight) and `LongRest` are unchanged: an ally's visit plays
 through them, stops a journey on the road like his, and a rest visit that may come to blows (`may_fight`) breaks the
 Long Rest the same way. The memory is the same `StoryState.flags["_strahd"]`, keyed by visit id.
 

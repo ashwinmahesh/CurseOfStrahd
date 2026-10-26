@@ -218,7 +218,7 @@ static func caught(view: LocationView, victim: String, witness: String, kind: St
 ## The fight a refused fine starts (`combat watch_arrest` in the watch's dialogue), here and now: two of the watch a
 ## few squares from the party. Put first, so it's the entry the fight uses in this place.
 static func _ready_the_arrest(view: LocationView, guard: String) -> void:
-	var monster := str(Compendium.shared().get_entry("npcs", guard).get("monster", "vallaki_guard"))
+	var monster := str(Compendium.shared().get_entry("npcs", guard).get("monster", Campaign.module().guard_monster()))
 	var taken := {}
 	for m: Combatant in view.members + view.guest_members:
 		taken[m.cell] = true

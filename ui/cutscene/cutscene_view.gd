@@ -84,8 +84,8 @@ func _ready() -> void:
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_text.custom_minimum_size = Vector2(CAPTION_WIDTH, 0)
 	_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_text.add_theme_font_override("normal_font", EndingScreen.serif(false))
-	_text.add_theme_font_override("italics_font", EndingScreen.serif(true))
+	_text.add_theme_font_override("normal_font", UiKit.serif(false))
+	_text.add_theme_font_override("italics_font", UiKit.serif(true))
 	for k: String in ["normal_font_size", "italics_font_size"]:
 		_text.add_theme_font_size_override(k, 25)
 	_text.add_theme_color_override("default_color", Look.color("vellum"))

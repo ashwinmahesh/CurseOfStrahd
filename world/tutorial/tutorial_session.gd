@@ -53,6 +53,7 @@ var _opened_inventory := false
 
 func _ready() -> void:
 	name = "TutorialSession"
+	add_to_group("practice_ground")   # screens that ask (RestScreen) keep the campaign out of it
 	InputActions.ensure()
 	UiScale.playing(self)
 	_saved_dice = Dice.roller

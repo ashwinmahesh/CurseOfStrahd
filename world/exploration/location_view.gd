@@ -120,10 +120,8 @@ var fight_id := ""
 var combat_view: CombatView = null
 ## The encounter spec of the fight that ended last (the game reads its `final_battle` when combat_ended fires).
 var last_encounter: Dictionary = {}
-## A final battle waiting for Strahd's parley to end (ADR 0014): its encounter id, or "".
+## A final battle waiting for the campaign's parley to end (ADR 0014): its encounter id, or "".
 var _pending_final := ""
-## Strahd names his price before a final battle (the presence package writes it).
-const PARLEY := "strahd/final:parley"
 var hover_cell := Vector2i(-1, -1)
 var input_locked := false
 

@@ -464,7 +464,7 @@ func test_the_game_plays_visits_on_the_road_at_a_rest_and_on_arriving() -> void:
 	st.day = 4
 	st.minute_of_day = 6 * 60
 	root.call("open_screen", "rest", 0)
-	root.call("strahd_after_rest", 8 * 60)
+	root.call("visit_after_rest", 8 * 60)
 	await _frames(2)
 	assert_true(root.get("screen") is RestScreen, "he waits while the rest screen is open (its night, its words, its spells)")
 	assert_true(root.get("dialogue") == null, "no visit yet")

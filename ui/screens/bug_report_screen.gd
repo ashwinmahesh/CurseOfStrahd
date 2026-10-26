@@ -171,7 +171,7 @@ func _sent() -> void:
 	var head := UiKit.header("Sent")
 	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_box.add_child(head)
-	var in_vault := sent_to.contains("/" + BugReports.VAULT + "/")
+	var in_vault := BugReports.vault() != "" and sent_to.contains("/" + BugReports.vault() + "/")
 	var said := _line("The report is in the vault, where Claude reads it:" if in_vault \
 		else "The report is here, outside the vault: copy the folder into the vault's Bug Reports for Claude to read it.",
 		17, "vellum", WIDE)

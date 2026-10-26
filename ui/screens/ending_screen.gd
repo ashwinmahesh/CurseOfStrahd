@@ -48,8 +48,6 @@ var _card: VBoxContainer
 var _footer: HBoxContainer
 var _count: Label
 var _go: Button
-static var _serif: Font
-static var _serif_italic: Font
 
 
 func _init() -> void:
@@ -252,17 +250,7 @@ func _clear() -> void:
 
 ## The book serif (Georgia) for the narration, upright and italic.
 static func serif(italic: bool) -> Font:
-	if _serif == null:
-		for i in 2:
-			var f := SystemFont.new()
-			f.font_names = PackedStringArray(["Georgia", "Times New Roman", "Palatino"])
-			f.font_italic = i == 1
-			f.fallbacks = [ThemeDB.fallback_font]
-			if i == 0:
-				_serif = f
-			else:
-				_serif_italic = f
-	return _serif_italic if italic else _serif
+	return UiKit.serif(italic)
 
 
 static func _prose(bbcode: String, size: int, width: float) -> RichTextLabel:

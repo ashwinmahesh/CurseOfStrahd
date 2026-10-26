@@ -34,17 +34,18 @@ static func _trigger_encounter(view: LocationView, trigger: String) -> bool:
 	return false
 
 
-## Before a final battle Strahd parleys (strahd/final:parley, when it's written and hasn't been answered): the fight
-## starts once it ends, if `strahd_parley` is `fight` or unset; `yield` and `ireena` leave it to the ending. True if
-## the parley or the fight began.
+## Before a final battle the campaign may parley (CampaignModule.parley_ref, when it's written and hasn't been answered):
+## the fight starts once it ends, unless the answer leaves it to the ending. True if the parley or the fight began.
 static func _begin_final_battle(view: LocationView, encounter_id: String) -> bool:
-	var answer := str(view.st.get_flag("strahd_parley", ""))
-	var file := DialogueFile.load_key(LocationView.PARLEY.get_slice(":", 0))
-	if answer == "" and file != null and file.nodes.has(LocationView.PARLEY.get_slice(":", 1)) and view._pending_final == "":
-		view._pending_final = encounter_id
-		view.dialogue_requested.emit(LocationView.PARLEY, "strahd")
-		return true
-	if answer in ["", "fight"]:
+	var campaign := Campaign.module()
+	var ref := campaign.parley_ref()
+	if ref != "":
+		var file := DialogueFile.load_key(ref.get_slice(":", 0))
+		if campaign.parley_answer(view.st) == "" and file != null and file.nodes.has(ref.get_slice(":", 1)) and view._pending_final == "":
+			view._pending_final = encounter_id
+			view.dialogue_requested.emit(ref, campaign.parley_speaker())
+			return true
+	if campaign.parley_allows_fight(view.st):
 		return start_encounter(view, encounter_id)
 	return false
 
@@ -52,11 +53,11 @@ static func _begin_final_battle(view: LocationView, encounter_id: String) -> boo
 ## Fights triggered by a flag (set by dialogue or a lever): checked after conversations and interactions.
 static func check_flag_encounters(view: LocationView) -> bool:
 	_after_captives(view)
-	# The parley before a final battle has ended: the fight, unless Strahd's price was paid.
+	# The parley before a final battle has ended: the fight, unless the campaign's price was paid.
 	if view._pending_final != "":
 		var waiting := view._pending_final
 		view._pending_final = ""
-		if str(view.st.get_flag("strahd_parley", "")) in ["", "fight"]:
+		if Campaign.module().parley_allows_fight(view.st):
 			return start_encounter(view, waiting)
 		return false
 	for en: Variant in view.loc.get("encounters", []):
@@ -123,7 +124,7 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	e.title = str(spec.get("text", ""))
 	# Bosses (ADR 0014): the place (a Misty Escape's resting place), the lair's actions, a foe that withdraws.
 	e.location_id = view.loc_id
-	for place: String in Tarokka.spots(view.loc):
+	for place in Campaign.module().treasure_spots(view.loc):
 		e.places.append(place)
 	if str(spec.get("final_battle", "")) != "":
 		e.places.append(str(spec["final_battle"]))
@@ -137,8 +138,8 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 		e.weather_id = Weather.now(view.st, view.loc_id)
 		e.weather = Weather.kind(e.weather_id)
 	e.legendary.set_withdraw(spec.get("withdraw", {}))
-	if str(spec.get("final_battle", "")) != "" and view.st.quest_stage_index("strahds_lair", view.st.quest_stage("strahds_lair")) < view.st.quest_stage_index("strahds_lair", "confronted"):
-		view.st.set_quest_stage("strahds_lair", "confronted")
+	if str(spec.get("final_battle", "")) != "":
+		Campaign.module().final_battle_begun(view.st)
 	var party_cbs: Array[Combatant] = []
 	for m in view.members:
 		if m.creature.dead:
@@ -181,7 +182,8 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	view.combat_view.story = view.st
 	view.add_child(view.combat_view)
 	var opened := view._say("combat:start")
-	opened = view._say("combat:sunsword_start") or opened   # the Sunsword, while carried (narrative/narrator/sunsword.dialogue)
+	for key in Campaign.module().fight_start_keys():
+		opened = view._say(key) or opened   # the campaign's own (the Sunsword, while carried)
 	_say_keeps_back(view, sitting, opened)   # last: it waits a beat after whatever was just said, so neither is replaced
 	# The picture streaks toward the party and drains for a beat as the fight breaks out (Visual Polish Plan 3).
 	if ScreenPulse.on():
@@ -822,7 +824,8 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			if cr.hp <= 0 and not cr.dead and not cr.stable:
 				cr.stabilize()
 		view._say("combat:victory")
-		view._say("combat:sunsword_victory")
+		for key in Campaign.module().fight_victory_keys():
+			view._say(key)
 		view._fight_bark_due = true   # a guest may have a word as the party walks on (LocationWalk._guest_chatter)
 	# A guest who fell isn't left for dead: carried home to heal, or patched up if they can't leave, and the player is
 	# told (StoryState.see_to_fallen_guests; Ashwin, 2026-10-12: Adrian's figure walked on after he fell).
@@ -897,7 +900,7 @@ static func _spoils(view: LocationView, encounter_id: String, spec: Dictionary, 
 	var items := (loot.get("items", []) as Array).duplicate(true)
 	for it in carried:
 		items.append(it.duplicate())
-	for treasure in Tarokka.take_from(Tarokka.place_for(view.loc, "encounter", encounter_id), view.st):
+	for treasure in Campaign.module().take_treasure(view.loc, "encounter", encounter_id, view.st):
 		items.append({"id": treasure, "qty": 1})
 	var gold := float(loot.get("gold", 0))
 	# Every won fight from the place's own data also leaves its foes' coins and a find, as a road fight does

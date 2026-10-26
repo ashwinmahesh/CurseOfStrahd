@@ -1025,7 +1025,7 @@ func _strahd_on_road(leg: Dictionary, to: String) -> bool:
 ## come in the night, and comes once the screen it was taken from, and any talk started there, are done
 ## (_strahd_holds). A visit that may come to blows broke the rest before its benefits (LongRest: the rest asked for it
 ## by the night it ran through, kept with it); when it's over the party sleeps on (_sleep_again).
-func strahd_after_rest(minutes: int) -> void:
+func visit_after_rest(minutes: int) -> void:
 	var b := LongRest.broken_rest(st)
 	var night := bool(b["night"]) if LongRest.waits_on_strahd(st) and b.has("night") \
 		else StrahdPresence.night_between(st.total_minutes() - minutes, st.total_minutes())
@@ -1062,14 +1062,14 @@ func _sleep_again() -> void:
 	hud.narrate(" ".join(said.filter(func(t: String) -> bool: return t != "")))
 	_refresh()
 	if str(res["how"]) in [LongRest.SLEPT, LongRest.STRAHD]:
-		strahd_after_rest.call_deferred(int(res["minutes"]))
+		visit_after_rest.call_deferred(int(res["minutes"]))
 
 
 ## A save made while the night's rest was broken and no fight was under way: Strahd's visit that broke it comes now,
 ## or the party sleeps on.
 func _night_after_load() -> void:
 	if LongRest.waits_on_strahd(st) and not _night_visit_over():
-		strahd_after_rest(0)
+		visit_after_rest(0)
 	else:
 		_sleep_again()
 

@@ -10,6 +10,8 @@ const CORNER := preload("res://art/ui/corner.png")
 const DIVIDER := preload("res://art/ui/divider.png")
 
 static var _display_font: Font
+static var _serif_font: Font
+static var _serif_italic_font: Font
 static var _themed := false
 
 
@@ -441,3 +443,19 @@ static func scroll(child: Control, min_size: Vector2) -> ScrollContainer:
 
 static func signed(v: int) -> String:
 	return ("+%d" % v) if v >= 0 else str(v)
+
+
+## The book serif (Georgia) for the narration, upright and italic.
+static func serif(italic: bool) -> Font:
+	if _serif_font == null:
+		for i in 2:
+			var f := SystemFont.new()
+			f.font_names = PackedStringArray(["Georgia", "Times New Roman", "Palatino"])
+			f.font_italic = i == 1
+			f.fallbacks = [ThemeDB.fallback_font]
+			if i == 0:
+				_serif_font = f
+			else:
+				_serif_italic_font = f
+	return _serif_italic_font if italic else _serif_font
+
