@@ -75,8 +75,7 @@
             "text": "Strahd lets the wolves go first, and watches how you meet them.",
             "monsters": [
               {
-                "monster": "strahd_von_zarovich",
-                "hp": 355
+                "monster": "strahd_von_zarovich"
               },
               {
                 "monster": "dire_wolf"
@@ -124,8 +123,7 @@
             "text": "Strahd steps down from the sill as if onto a stair, and the bats come in behind him.",
             "monsters": [
               {
-                "monster": "strahd_von_zarovich",
-                "hp": 170
+                "monster": "strahd_von_zarovich"
               },
               {
                 "monster": "swarm_of_bats"
@@ -170,8 +168,7 @@
             "text": "Strahd steps down from the sill as if onto a stair, and the bats come in behind him.",
             "monsters": [
               {
-                "monster": "strahd_von_zarovich",
-                "hp": 360
+                "monster": "strahd_von_zarovich"
               },
               {
                 "monster": "swarm_of_bats"
