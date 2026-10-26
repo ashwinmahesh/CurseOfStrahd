@@ -1667,7 +1667,8 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 		items.append({"separator": "Metamagic"})
 		for mm: Variant in mms:
 			items.append({"id": "meta:%s" % (mm as Dictionary)["id"], "label": str((mm as Dictionary)["label"]), "enabled": usable, "why": why})
-	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null and str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) == "":
+	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null and str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) == "" \
+			and not bool(action.get("stat_block", false)):
 		items.append({"separator": "Ready"})
 		for trig: String in ["approach", "attack", "spell"]:
 			var when := {"approach": "an enemy comes within range", "attack": "an enemy within range attacks", "spell": "an enemy within range casts a spell"}[trig] as String
