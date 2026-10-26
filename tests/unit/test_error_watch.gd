@@ -3,7 +3,7 @@ extends TestCase
 ## an error during play goes into a report beside the saves, with a copy of the newest save and where the game was,
 ## and shows a notice with the way back to the title.
 
-const WATCH := preload("res://core/error_watch.gd")
+const WATCH := preload("res://addons/dnd_core/core/error_watch.gd")
 const ERROR := {"script": true, "where": "res://world/exploration/x.gd:12", "function": "_ready",
 	"text": "Cannot call method 'foo' on a null value.", "trace": "[0] _ready (res://world/exploration/x.gd:12)",
 	"time": "2026-10-07 12:00:00"}

@@ -26,7 +26,7 @@ const ROAD: Array[Vector2] = [Vector2(796.0, 676.0), Vector2(850.0, 655.0), Vect
 ## Who walks the road: a sprite with a walk sheet, whether they carry a lantern, and which way they go (1 up to the
 ## castle, -1 down from it; owner: "more travellers, and someone leaving the castle").
 ## Travellers' sheets are drawn some 20 times smaller than rendered (shaders/ui/sprite_small.gdshader).
-const SMALL_SPRITE := preload("res://shaders/ui/sprite_small.gdshader")
+const SMALL_SPRITE := preload("res://addons/dnd_core/shaders/ui/sprite_small.gdshader")
 const WALKERS := [["luvash", true, 1], ["commoner", false, 1], ["arabelle", false, 1], ["villager", false, 1],
 	["vistana", true, -1], ["noble", false, -1]]
 ## Pine forests in the key art (min and max corner, in its pixels): the wind sways them.

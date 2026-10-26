@@ -7,7 +7,7 @@ extends RefCounted
 ## above onto its open hands and the offerings at its feet. Only in the Modern finish; Classic keeps the block.
 
 const VOID_SHADER := preload("res://shaders/world/faceless_void.gdshader")
-const SHAFT_SHADER := preload("res://shaders/world/sun_shaft.gdshader")
+const SHAFT_SHADER := preload("res://addons/dnd_core/shaders/world/sun_shaft.gdshader")
 const SURFACE := "amber/black_stone"
 ## The steps from the ground up: how wide each is (in squares; the block is two) and how high.
 const STEPS: Array[Vector2] = [Vector2(2.0, 0.5), Vector2(1.62, 0.42), Vector2(1.24, 0.34)]

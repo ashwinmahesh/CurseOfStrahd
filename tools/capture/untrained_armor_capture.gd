@@ -12,7 +12,7 @@ var liriel: Combatant
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	e = TestCombat.open_field()
 	liriel = TestCombat.hero(e, "liriel_dawnsong", Vector2i(3, 3), 11)
 	(liriel.creature as Character).add_item("armor_plus_1__plate_armor")

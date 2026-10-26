@@ -3135,7 +3135,7 @@ class Wiki:
 
     def controls_page(self):
         g = self.g
-        src = (g.root / "core" / "input_actions.gd").read_text()
+        src = (g.root / "addons" / "dnd_core" / "core" / "input_actions.gd").read_text()
         keys = {}
         m = re.search(r"const BINDINGS := \{(.*?)\n\}", src, re.S)
         for a, k in re.findall(r'&"([a-z_0-9]+)":\s*\[([^\]]*)\]', m[1] if m else ""):
@@ -3350,7 +3350,7 @@ class Wiki:
         self.w.write("page/weather", "World/Weather", "Weather", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         self.soundtrack_page()
         self.cast_page()
-        src = (g.root / "core" / "achievements.gd").read_text()
+        src = (g.root / "addons" / "dnd_core" / "core" / "achievements.gd").read_text()
         ach = re.findall(r'"([a-z_0-9]+)": \["([^"]+)", "([^"]+)"\]', src)
         lines = ["| Achievement | How |", "|---|---|"] + [f"| {n} | {t} |" for _, n, t in ach]
         lines += ["", "Reaching each ending is an achievement too."]

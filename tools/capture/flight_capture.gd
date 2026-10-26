@@ -14,7 +14,7 @@ var board: ArenaBoard
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	var rows: Array[String] = []
 	for z in 8:
 		rows.append(".....=......" if z >= 1 and z <= 5 else "............")

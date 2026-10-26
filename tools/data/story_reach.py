@@ -435,7 +435,7 @@ class Story:
         if (en.get("withdraw") or {}).get("flag"):
             self.changed |= self.add(("flag", en["withdraw"]["flag"], True), w)
         if en.get("final_battle"):
-            self.changed |= self.add(("quest", "strahds_lair", "confronted"), "world/exploration/location_fights.gd")
+            self.changed |= self.add(("quest", "strahds_lair", "confronted"), "story/strahd_campaign.gd")
             self.walk("strahd/final", "parley", "the final battle's parley")
         for m in en.get("monsters", []):
             md = json.dumps(self.monsters.get(m["monster"], {}))

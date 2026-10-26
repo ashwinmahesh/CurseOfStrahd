@@ -14,7 +14,7 @@ var heroes: Dictionary = {}
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	e = TestCombat.open_field()
 	var cells := {"ilse_varga": Vector2i(3, 2), "godrick_pendlebrook": Vector2i(3, 4), "thistle": Vector2i(2, 3), "tamsin_tealeaf": Vector2i(2, 5)}
 	for id: String in cells:

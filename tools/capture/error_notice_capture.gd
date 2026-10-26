@@ -17,7 +17,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	tool.call("_shot", out + "_1_title.png")
 	# A real script error, caught by the log hook like one in play (the watch is switched on by hand: the autoload
 	# stays off in captures).
-	var watch: Node = (load("res://core/error_watch.gd") as GDScript).new()
+	var watch: Node = (load("res://addons/dnd_core/core/error_watch.gd") as GDScript).new()
 	watch.set("reports_dir", REPORTS)
 	add_child(watch)
 	await tool.call("wait_frames", 2)

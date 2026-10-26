@@ -35,7 +35,7 @@ var lamp: BattleObject
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	e = TestCombat.encounter(ROWS, 3)
 	board = ArenaBoard.build(e.grid, "shop")
 	add_child(board)

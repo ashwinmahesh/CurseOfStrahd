@@ -396,7 +396,7 @@ def achievement_checks(data, errors):
     across the files, the sixteen in Achievements.LIST and the endings' own (ending_<id>), a name is unique among them
     and the endings' titles, and a `when` condition (docs/contracts/dialogue.md) has balanced parentheses and quotes.
     The flags a `when` reads are checked with the rest, in story_checks."""
-    listed = {m[0]: m[1] for m in re.findall(r'^\t"([a-z_0-9]+)": \["([^"]+)", "[^"]+"\]', (ROOT / "core" / "achievements.gd").read_text(), re.M)}
+    listed = {m[0]: m[1] for m in re.findall(r'^\t"([a-z_0-9]+)": \["([^"]+)", "[^"]+"\]', (ROOT / "addons" / "dnd_core" / "core" / "achievements.gd").read_text(), re.M)}
     names = {name: f"Achievements.LIST {aid}" for aid, name in listed.items()}
     for end in data.get("endings", {}).values():
         names.setdefault(str(end.get("title", "")), f"ending {end['id']}")

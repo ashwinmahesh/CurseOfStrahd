@@ -1,5 +1,5 @@
 extends TestCase
-## The engine split (docs/plans/engine_split.md): rules/, combat/ and the story engine core live in the shared dnd_core
+## The engine split (docs/plans/engine_split.md): rules/, combat/, the story engine core, the UI and the world code live in the shared dnd_core
 ## repo (the submodule at addons/dnd_core), so they must not name this campaign. Every code line (comment-only lines are skipped) that
 ## names a campaign id, place or character counts as a hit; tests/fixtures/engine_campaign_baseline.json holds today's
 ## hits per file. A file may only lose hits: a new one fails, and a file that got cleaner must lower its entry so the
@@ -9,12 +9,13 @@ extends TestCase
 const BASELINE := "res://tests/fixtures/engine_campaign_baseline.json"
 ## The engine lives in the dnd_core submodule; the baseline keeps its paths from the core's own root (rules/..., story/...).
 const CORE := "res://addons/dnd_core/"
-const ENGINE_DIRS: Array[String] = ["res://addons/dnd_core/rules", "res://addons/dnd_core/combat", "res://addons/dnd_core/story"]
+const ENGINE_DIRS: Array[String] = ["res://addons/dnd_core/rules", "res://addons/dnd_core/combat", "res://addons/dnd_core/story",
+	"res://addons/dnd_core/ui", "res://addons/dnd_core/world", "res://addons/dnd_core/core", "res://addons/dnd_core/skirmish"]
 
 ## Files of story/ that are the campaign itself (they move to the Strahd game's module, not to dnd_core).
 const CAMPAIGN_MODULES: Array[String] = [
 	"res://story/tarokka.gd", "res://story/strahd_presence.gd", "res://story/oracles.gd", "res://story/endings.gd",
-	"res://story/cheat_codes.gd", "res://story/strahd_campaign.gd",
+	"res://story/strahd_campaign.gd",
 ]
 
 const NAMES: Array[String] = ["strahd", "barovi", "ravenloft", "tarokka", "vallaki", "krezk", "ireena", "ezmerelda", "izek", "rahadin",

@@ -42,7 +42,7 @@ var barrel: BattleObject
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	e = TestCombat.encounter(ROWS, 5)
 	board = ArenaBoard.build(e.grid, "manor")
 	add_child(board)

@@ -454,10 +454,10 @@ func test_volumes_are_kept_in_the_settings_file_in_use() -> void:
 	assert_eq(float(cfg.get_value("audio", "voice", -1.0)), 0.75, "voices")
 	Audio.set_volumes(music, sfx)
 	VoiceOver.set_volume(voice)
-	for dir: String in ["res://core/", "res://ui/", "res://world/", "res://story/", "res://addons/dnd_core/rules/",
-			"res://addons/dnd_core/combat/", "res://addons/dnd_core/story/"]:
+	for dir: String in ["res://addons/dnd_core/core/", "res://addons/dnd_core/ui/", "res://addons/dnd_core/world/", "res://story/",
+			"res://addons/dnd_core/rules/", "res://addons/dnd_core/combat/", "res://addons/dnd_core/story/"]:
 		for path in _scripts(dir):
-			if path == "res://core/game_settings.gd":
+			if path == "res://addons/dnd_core/core/game_settings.gd":
 				continue
 			for line in FileAccess.get_file_as_string(path).split("\n"):
 				if line.contains("\"user://settings.cfg\"") and not line.strip_edges().begins_with("#"):

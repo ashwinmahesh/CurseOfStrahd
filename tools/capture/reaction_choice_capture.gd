@@ -11,7 +11,7 @@ var view: CombatView
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	e = TestCombat.open_field()
 	var kip := TestCombat.hero(e, "kip_smudgewick", Vector2i(4, 4), 6)
 	var g := e.add(_godrick(), &"party", Vector2i(4, 3))

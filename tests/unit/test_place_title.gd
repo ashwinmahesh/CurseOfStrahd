@@ -31,7 +31,7 @@ func test_its_layer_and_clicks() -> void:
 
 func test_never_over_a_loading_card() -> void:
 	var card := CanvasLayer.new()
-	card.set_script(load("res://ui/screens/loading_card.gd"))
+	card.set_script(load("res://addons/dnd_core/ui/screens/loading_card.gd"))
 	_game.add_child(card)
 	assert_true(PlaceTitle.show_for(_game, {"name": "Vallaki", "region": "vallaki"}) == null, "the card names it")
 	card.queue_free()

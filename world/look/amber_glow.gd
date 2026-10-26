@@ -45,7 +45,7 @@ const THREAD_BRIGHT := 1.5
 const THREAD_RADIUS := 0.03
 const THREAD_LENGTH := 11.0
 ## The glint on a heap of gold (the vault of offerings), and the pieces that are heaps.
-const GLINT_SHADER := preload("res://shaders/world/glint.gdshader")
+const GLINT_SHADER := preload("res://addons/dnd_core/shaders/world/glint.gdshader")
 const HEAPS: Array[String] = ["offering_pile", "gold_heap", "gold_spill", "coin_pile", "copper_ledger"]
 const GLINTS_PER_HEAP := 3
 ## The fight the sanctum's cold braziers flare violet for, and the pieces that are those braziers.

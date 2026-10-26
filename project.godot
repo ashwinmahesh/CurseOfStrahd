@@ -17,16 +17,16 @@ boot_splash/bg_color=Color(0.0706, 0.0275, 0.0353, 1)
 
 [autoload]
 
-PatchLoader="*res://core/patch_loader.gd"
-ErrorWatch="*res://core/error_watch.gd"
-EventBus="*res://core/event_bus.gd"
-Dice="*res://core/dice.gd"
-GameState="*res://core/game_state.gd"
-SaveSystem="*res://core/save_system.gd"
-SceneRouter="*res://core/scene_router.gd"
-ModeController="*res://core/mode_controller.gd"
-Audio="*res://core/audio.gd"
-UiFeel="*res://ui/common/ui_feel.gd"
+PatchLoader="*res://addons/dnd_core/core/patch_loader.gd"
+ErrorWatch="*res://addons/dnd_core/core/error_watch.gd"
+EventBus="*res://addons/dnd_core/core/event_bus.gd"
+Dice="*res://addons/dnd_core/core/dice.gd"
+GameState="*res://addons/dnd_core/core/game_state.gd"
+SaveSystem="*res://addons/dnd_core/core/save_system.gd"
+SceneRouter="*res://addons/dnd_core/core/scene_router.gd"
+ModeController="*res://addons/dnd_core/core/mode_controller.gd"
+Audio="*res://addons/dnd_core/core/audio.gd"
+UiFeel="*res://addons/dnd_core/ui/common/ui_feel.gd"
 
 [debug]
 

@@ -54,7 +54,7 @@ LANE_NAME = "edge"                           # tools/lane.sh makes CurseOfStrahd
 LANE_BRANCH = "edge-build"                   # the branch lane.sh needs to make it; dropped once the HEAD is detached
 MARKER = "strahd-edge"                       # a file in the worktree's git dir: this worktree is the throwaway one
 RECORD = "builds/edge_build.json"            # what the last build held (builds/ is ignored by git)
-SAVE_FILE = "core/game_state.gd"
+SAVE_FILE = "addons/dnd_core/core/game_state.gd"
 SAVE_RE = re.compile(r"^const SAVE_VERSION\s*:=\s*(\d+)", re.M)
 DEFAULT_GODOT = "/Applications/Godot.app/Contents/MacOS/Godot"
 SSD_IMAGE = Path("/Volumes/ASH-SSD/Worktrees/StrahdLanes.sparsebundle")

@@ -14,7 +14,7 @@ var board: ArenaBoard
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	var rows: Array[String] = []
 	var elevation: Array[String] = []
 	for z in 10:

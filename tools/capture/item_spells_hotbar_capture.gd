@@ -13,7 +13,7 @@ var heroes: Dictionary = {}
 func _ready() -> void:
 	InputActions.ensure()
 	ModeController.force(ModeController.Mode.COMBAT)
-	(load("res://world/combat/combat_arena.gd") as GDScript).build_environment(self)
+	(load("res://addons/dnd_core/world/combat/combat_arena.gd") as GDScript).build_environment(self)
 	e = TestCombat.open_field()
 	heroes["liriel_dawnsong"] = TestCombat.hero(e, "liriel_dawnsong", Vector2i(3, 3), 9)
 	heroes["ilse_varga"] = TestCombat.hero(e, "ilse_varga", Vector2i(3, 5), 5)
