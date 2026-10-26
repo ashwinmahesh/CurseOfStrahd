@@ -308,6 +308,17 @@ new_lane() {
   extra="$(git ls-files --others --exclude-standard | wc -l | tr -d ' ')"
   [ "$extra" = "0" ] || git ls-files --others --exclude-standard -z | xargs -0 rm -f
   refresh
+  # The engine core is a git submodule (addons/dnd_core, docs/plans/engine_split.md). The copy of main's files brought a gitfile that
+  # points into main's .git, so the folder is cleared and checked out for this lane, borrowing the objects main's copy already has
+  # (no download when the lane's commit of the core is one main has). Core edits go on a branch inside it (git switch -c <name>).
+  if [ -f "$dest/.gitmodules" ] && grep -q 'addons/dnd_core' "$dest/.gitmodules"; then
+    rm -rf "$dest/addons/dnd_core"
+    local ref=()
+    [ -e "$main/addons/dnd_core/.git" ] && ref=(--reference "$main/addons/dnd_core")
+    if ! git -C "$dest" submodule update --init --quiet ${ref[@]+"${ref[@]}"} > /dev/null 2>&1; then
+      say "the engine core (addons/dnd_core) could not be checked out: run git -C $dest submodule update --init"
+    fi
+  fi
   say "$dest on $branch: $differ file(s) checked out from the branch, $extra extra file(s) removed"
   say "disk free: $before GB before, $(free_gb) GB after (other lanes write meanwhile)"
   [ -z "$(git status --porcelain)" ] || say "git status isn't clean yet: check it before working here"
@@ -380,17 +391,36 @@ done_lane() {
   dest="$(lane_dir "$1")"
   [ -d "$dest" ] || missing "$1" "$dest"
   branch="$(git -C "$dest" rev-parse --abbrev-ref HEAD)"
-  if ! git -C "$dest" merge-base --is-ancestor "$branch" main; then
-    say "$branch isn't merged into main yet; leaving $dest"
+  # Merged means in main, or replayed onto it: the build thread lands a lane's commits as new commits (cherry-picks), which
+  # git cherry recognises by their patches. Compared with origin/main too, the branch main follows.
+  git -C "$dest" fetch -q origin main > /dev/null 2>&1 || true
+  if ! git -C "$dest" merge-base --is-ancestor "$branch" main \
+      && ! git -C "$dest" merge-base --is-ancestor "$branch" origin/main \
+      && [ "$(git -C "$dest" cherry origin/main "$branch" 2> /dev/null | grep -c '^+')" != 0 ]; then
+    say "$branch isn't merged into main yet (git cherry origin/main $branch lists what is not); leaving $dest"
     exit 1
   fi
   if [ -n "$(git -C "$dest" status --porcelain --untracked-files=normal)" ]; then
     say "$dest has uncommitted changes (git -C $dest status); leaving it"
     exit 1
   fi
+  # A lane with the engine core checked out: its own edits must be committed and on the core's main, or the lane keeps them.
+  local core="$dest/addons/dnd_core"
+  if [ -e "$core/.git" ]; then
+    if [ -n "$(git -C "$core" status --porcelain --untracked-files=normal)" ]; then
+      say "the engine core in $dest has uncommitted changes (git -C $core status); leaving it"
+      exit 1
+    fi
+    git -C "$core" fetch -q origin main > /dev/null 2>&1 || true
+    if [ "$(git -C "$core" cherry origin/main HEAD 2> /dev/null | grep -c '^+')" != 0 ]; then
+      say "the engine core in $dest has commits that are not on the core's main (git -C $core cherry origin/main); leaving it"
+      exit 1
+    fi
+  fi
   before="$(free_gb)"
   [ "$source_dir" = "$main" ] || git -C "$main" worktree unlock "$dest" 2>/dev/null || true
-  git -C "$main" worktree remove "$dest"   # writes only main's .git/worktrees, never its files
+  # git refuses to remove a worktree that holds a submodule without --force; everything it could lose was checked above.
+  git -C "$main" worktree remove --force "$dest"   # writes only main's .git/worktrees, never its files
   say "removed $dest ($branch is merged into main; the branch is kept)"
   say "disk free: $before GB before, $(free_gb) GB after"
 }

@@ -54,7 +54,7 @@ LANE_NAME = "edge"                           # tools/lane.sh makes CurseOfStrahd
 LANE_BRANCH = "edge-build"                   # the branch lane.sh needs to make it; dropped once the HEAD is detached
 MARKER = "strahd-edge"                       # a file in the worktree's git dir: this worktree is the throwaway one
 RECORD = "builds/edge_build.json"            # what the last build held (builds/ is ignored by git)
-SAVE_FILE = "addons/dnd_core/core/game_state.gd"
+SAVE_FILES = ("addons/dnd_core/core/game_state.gd", "core/game_state.gd")   # the engine core's, and where it was before the move
 SAVE_RE = re.compile(r"^const SAVE_VERSION\s*:=\s*(\d+)", re.M)
 DEFAULT_GODOT = "/Applications/Godot.app/Contents/MacOS/Godot"
 SSD_IMAGE = Path("/Volumes/ASH-SSD/Worktrees/StrahdLanes.sparsebundle")
@@ -258,9 +258,21 @@ class Build:
 
 
 def save_version(repo: Path, rev: str) -> Optional[int]:
-    done = git_try(repo, "show", "%s:%s" % (rev, SAVE_FILE))
-    found = SAVE_RE.search(done.stdout) if done.returncode == 0 else None
-    return int(found.group(1)) if found else None
+    """SAVE_VERSION at `rev`: from the game's own tree, or from the engine core's commit that `rev` names (a submodule's
+    files are not in the game's tree, so they are read in the submodule's repository)."""
+    for path in SAVE_FILES:
+        done = git_try(repo, "show", "%s:%s" % (rev, path))
+        found = SAVE_RE.search(done.stdout) if done.returncode == 0 else None
+        if found:
+            return int(found.group(1))
+    link = git_try(repo, "ls-tree", rev, "addons/dnd_core").stdout.split()
+    core = repo / "addons" / "dnd_core"
+    if len(link) >= 3 and link[0] == "160000" and (core / ".git").exists():
+        done = git_try(core, "show", "%s:core/game_state.gd" % link[2])
+        found = SAVE_RE.search(done.stdout) if done.returncode == 0 else None
+        if found:
+            return int(found.group(1))
+    return None
 
 
 def plan_key(base_sha: str, entries: Sequence[Entry]) -> str:
@@ -283,6 +295,18 @@ def _why(wt: Path, done: "subprocess.CompletedProcess[str]") -> Tuple[str, str]:
         return "conflict", "conflicts with what is already in, in " + ", ".join(clash[:4]) + more
     lines = [x.strip() for x in (done.stderr + "\n" + done.stdout).splitlines() if x.strip()]
     return "failed", (lines[0] if lines else "git merge failed")[:160]
+
+
+def sync_core(wt: Path) -> None:
+    """Checks out the engine core (the submodule addons/dnd_core) at the commit the merged tree names. A branch that bumps
+    it to a core commit only its lane has (not on the core's main yet) can't be fetched: that is said, and the core stays."""
+    if not (wt / ".gitmodules").is_file():
+        return
+    done = git_try(wt, "submodule", "update", "--init", "--quiet")
+    if done.returncode != 0:
+        say("the engine core (addons/dnd_core) could not be put at the commit this build names: %s"
+            % (done.stderr.strip().splitlines() or ["see git submodule update --init"])[-1][:140])
+        say("a branch that needs a core commit only its lane has must wait until that commit is on the core's main.")
 
 
 def assemble(wt: Path, base: str, base_sha: str, entries: List[Entry], force: bool = False) -> Build:
@@ -321,6 +345,7 @@ def assemble(wt: Path, base: str, base_sha: str, entries: List[Entry], force: bo
                 git_try(wt, "merge", "--abort")
                 if git(wt, "rev-parse", "HEAD") != head:
                     git(wt, "reset", "-q", "--hard", head)
+    sync_core(wt)
     build = Build(base, base_sha, head, entries, base_version)
     record.parent.mkdir(parents=True, exist_ok=True)
     record.write_text(json.dumps({
