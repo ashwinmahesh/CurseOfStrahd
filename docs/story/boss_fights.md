@@ -38,8 +38,8 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3; Sarkhaza in every version, 0-1
 | Rahadin on the stair (Gertruda) | 10 | Rahadin (300 HP), 2 Strahd's Animated Armors, Strahd's Animated Armor (50 HP) | Rahadin (795 HP), 3 Strahd's Animated Armors, Strahd's Animated Armor (50 HP) | 3/8 | 3 |
 | Rahadin in the hall | 10 | Rahadin, 2 Strahd's Animated Armors, Strahd's Animated Armor (90 HP) | Rahadin (600 HP), 3 Strahd's Animated Armors (120 HP) | 2/8 | 2 |
 | Rahadin in his chamber | 10 | Rahadin, 3 Strahd's Animated Armors | Rahadin (615 HP), 3 Strahd's Animated Armors (120 HP) | 3/8 | 3 |
-| Two brides | 10 | 4 Vampire Spawns, 2 Strahd's Animated Armors | 4 Vampire Spawns (150 HP), 2 Strahd's Animated Armors (120 HP) | 2/8 | 2 |
-| All three brides | 10 | 3 Vampire Spawns, 2 Strahd's Animated Armors | 3 Vampire Spawns (210 HP), 2 Strahd's Animated Armors (120 HP) | 2/8 | 2 |
+| Two brides | 10 | 4 Vampire Spawns, 2 Strahd's Animated Armors | Ludmilla and Volenta, each a Vampire (195 HP), not bosses (2026-10-27) | not run | - |
+| All three brides | 10 | 3 Vampire Spawns, 2 Strahd's Animated Armors | Ludmilla, Volenta and Anastrasya, each a Vampire (195 HP), not bosses (2026-10-27) | not run | - |
 | Vladimir at Strahd's tomb | 10 | Vladimir Horngaard, 4 Revenants, Revenant (80 HP) | Vladimir Horngaard (275 HP), 4 Revenants (180 HP), Revenant (80 HP) | 3/8 | 3 |
 | Old Greytooth | 6 | Old Greytooth (195 HP), 2 Dire Wolfs, 3 Wolfs, Bandit Captain | Old Greytooth (435 HP), 2 Dire Wolfs, 3 Wolfs, Bandit Captain | 3/8 | 3 |
 | Old Greytooth, Szoldar turned | 6 | Old Greytooth (240 HP), 2 Dire Wolfs, 3 Wolfs, Werewolf | Old Greytooth (420 HP), 2 Dire Wolfs, 3 Wolfs, Werewolf | 2/8 | 2 |

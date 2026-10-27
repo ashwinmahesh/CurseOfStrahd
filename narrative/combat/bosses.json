@@ -28,10 +28,7 @@
     "vampire": {"names": {"Brother Anatol": "The False Brother"}},
     "vampire_spawn": {"names": {
       "Doru": "The Priest's Son",
-      "Escher": "Strahd's Cast-Off Consort",
-      "Ludmilla Vilisevic": "Bride of Strahd",
-      "Volenta Popofsky": "Bride of Strahd",
-      "Anastrasya Karelova": "Bride of Strahd"
+      "Escher": "Strahd's Cast-Off Consort"
     }}
   }
 }

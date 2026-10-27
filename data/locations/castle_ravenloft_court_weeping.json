@@ -1042,20 +1042,24 @@
       "text": "Ludmilla closes her book. Volenta claps her hands. Anastrasya turns her face to the wall and does not move.",
       "monsters": [
         {
-          "monster": "vampire_spawn",
+          "monster": "vampire",
           "cell": [
             4,
             15
           ],
-          "name": "Ludmilla Vilisevic"
+          "name": "Ludmilla Vilisevic",
+          "art": "ludmilla_vilisevic",
+          "boss": false
         },
         {
-          "monster": "vampire_spawn",
+          "monster": "vampire",
           "cell": [
             9,
             15
           ],
-          "name": "Volenta Popofsky"
+          "name": "Volenta Popofsky",
+          "art": "volenta_popofsky",
+          "boss": false
         }
       ],
       "surprise": "",
@@ -1067,28 +1071,34 @@
       "text": "Ludmilla closes her book. Volenta claps her hands. Anastrasya rises last, and slowest, and she is crying.",
       "monsters": [
         {
-          "monster": "vampire_spawn",
+          "monster": "vampire",
           "cell": [
             4,
             15
           ],
-          "name": "Ludmilla Vilisevic"
+          "name": "Ludmilla Vilisevic",
+          "art": "ludmilla_vilisevic",
+          "boss": false
         },
         {
-          "monster": "vampire_spawn",
+          "monster": "vampire",
           "cell": [
             9,
             15
           ],
-          "name": "Volenta Popofsky"
+          "name": "Volenta Popofsky",
+          "art": "volenta_popofsky",
+          "boss": false
         },
         {
-          "monster": "vampire_spawn",
+          "monster": "vampire",
           "cell": [
             13,
             15
           ],
-          "name": "Anastrasya Karelova"
+          "name": "Anastrasya Karelova",
+          "art": "anastrasya_karelova",
+          "boss": false
         }
       ],
       "surprise": "",

@@ -59,6 +59,31 @@ func test_ordinary_foes_and_minions_keep_the_book() -> void:
 		assert_eq(_blow(e, foe, hero), 20, "%s" % id)
 
 
+## A fight's foe marked `boss: false` (LocationFights) is no boss on any block (owner, 2026-10-27: the brides "stop counting
+## them as bosses", each on the vampire's stat block).
+func test_a_foe_marked_no_boss_keeps_the_book_on_a_bosss_block() -> void:
+	var e := _field()
+	var hero := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(0, 0), 10)
+	var vampire := TestCombat.foe(e, "vampire", Vector2i(2, 2))
+	var data := Compendium.shared().monster_data("vampire").duplicate()
+	data["boss"] = false
+	var bride := e.add(Monster.from_data(data), &"enemy", Vector2i(3, 3))
+	assert_eq(_blow(e, vampire, hero), 25, "a vampire, with its legendary actions, is a boss")
+	assert_eq(_blow(e, bride, hero), 20, "the same block marked no boss keeps the book's damage")
+	assert_true(Difficulty.boss_entry(bride).is_empty(), "no boss bar or to-hit step either")
+	var brides := 0
+	for enc: Variant in Compendium.shared().get_entry("locations", "castle_ravenloft_court_weeping")["encounters"]:
+		if str((enc as Dictionary)["id"]) != "court_brides_fight":
+			continue
+		for m: Variant in (enc as Dictionary)["monsters"]:
+			var md := m as Dictionary
+			assert_eq(str(md["monster"]), "vampire", "%s is a vampire" % md.get("name", ""))
+			assert_false(bool(md.get("boss", true)), "%s isn't a boss" % md.get("name", ""))
+			assert_eq(str(md.get("art", "")), str(md.get("name", "")).to_snake_case(), "and is drawn as herself")
+			brides += 1
+	assert_eq(brides, 5, "two brides, or all three")
+
+
 func test_only_what_a_boss_deals_the_other_side_counts() -> void:
 	var e := _field()
 	var hero := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(0, 0), 10)

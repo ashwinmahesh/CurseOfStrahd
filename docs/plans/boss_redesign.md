@@ -52,8 +52,8 @@ copies its sitter). Vosk already counters.
 **Group 5: needs engine work (one branch each, after the owner looks).**
 - The hags' Coven Spellcasting (2025 night hag: shared spells while all three stand within 30 ft).
 - The amber golems (Sentinel, Vault Guardian): legendary actions and a lair of their own (the amber hardens round a foe).
-- The brides (Volenta, Ludmilla, Anastrasya): wait on the owner's boss-flag decision (vampire spawn get the +25% and the
-  to-hit bonus as bosses today).
+- The brides (Volenta, Ludmilla, Anastrasya): done 2026-10-27 (owner: "stop counting them as bosses, but could we give
+  them each the vampire stat block?"): each fights on the Vampire's block in her own look, marked `boss: false`.
 
 **Left as they are:** the Roc, Patrina, Lorghoth, Wintersplinter, Vasilka, Doru, Escher, the Abbot: book blocks that
 already do what their fights need; their fights are story beats or attrition.
