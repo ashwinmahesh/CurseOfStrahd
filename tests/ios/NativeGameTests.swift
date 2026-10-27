@@ -96,7 +96,14 @@ final class NativeGameTests: XCTestCase {
         capture("inventory-rarity-recovered")
         tap("Filters")
         let legendary = app.buttons["Legendary"]
+        // Reopening Filters starts at the top. Offscreen controls are intentionally absent from
+        // the native projection, so scroll to the checkbox before inspecting its restored state.
+        for attempt in 0..<32 {
+            if legendary.waitForExistence(timeout: 1) && legendary.isHittable { break }
+            scrollBody(upward: attempt % 16 >= 8)
+        }
         XCTAssertTrue(legendary.waitForExistence(timeout: 60), app.debugDescription)
+        XCTAssertTrue(legendary.isHittable, "The recovered rarity control must remain reachable by touch")
         XCTAssertFalse(legendary.isSelected, "Recovery clears the rarity filter as well as search and marks")
         tap("Show filtered items")
         tap("Back", scroll: false)
