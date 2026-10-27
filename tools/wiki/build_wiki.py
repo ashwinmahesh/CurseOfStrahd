@@ -2681,6 +2681,17 @@ class Wiki:
                         out[sid].append((nid, self.shop_price(shop, {"id": iid}), ["sometimes, in the changing stock"]))
         return out
 
+    @staticmethod
+    def scroll_rest_words(n_random, n_cheat):
+        """The scroll page's last opening sentence: the spells nobody sells or leaves lying about."""
+        cheat = (f"{n_cheat} cantrip{'s' if n_cheat != 1 else ''} can only be had with a cheat code, since nothing random "
+                 f"holds a cantrip") if n_cheat else ""
+        if n_random and cheat:
+            return f"Of the rest, {n_random} come only from random finds, and {cheat}."
+        if n_random:
+            return f"The other {n_random} come only from random finds."
+        return f"The other {cheat}." if cheat else ""
+
     def scrolls_page(self):
         g, s = self.g, self.site
         sc = g.scroll_consts()
@@ -2697,10 +2708,8 @@ class Wiki:
         levels = self.shop_levels()
         lines = [f"Every one of the game's {len(spells)} spells can be had on a Spell Scroll. This page lists each "
                  f"spell's scroll by level: whose list it's on, who sells it and for how much, and every fixed place "
-                 f"it's found. {n_sold} are sold by a merchant and {n_found} lie somewhere in the world. Of the rest, "
-                 f"{n_none - n_cheat} come only from random finds" +
-                 (f", and {n_cheat} cantrips only with a cheat code, since nothing random holds a cantrip." if n_cheat else ".")
-                 + "", "",
+                 f"it's found. {n_sold} are sold by a merchant and {n_found} lie somewhere in the world. "
+                 + self.scroll_rest_words(n_none - n_cheat, n_cheat), "",
                  "## Reading a scroll", "",
                  "- Right-click the scroll in the inventory and pick **Cast**. It works only if the spell is on the "
                  "reader's class list, and needs no Material components.",
