@@ -153,7 +153,9 @@ jobs:
       - name: Fetch runtime LFS assets
         if: inputs.build_kind == 'game'
         working-directory: game
-        run: git lfs pull -X 'art/generated/**'
+        run: |
+          git lfs pull -X 'art/generated/**'
+          git -C addons/dnd_core lfs pull -X 'art/generated/**'
 
       - name: Cache engine downloads (separate from desktop imports)
         id: engine
