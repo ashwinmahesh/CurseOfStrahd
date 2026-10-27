@@ -7,7 +7,7 @@ func test_every_portrait_has_the_same_ground() -> void:
 	var ground := Look.color("ash_violet")
 	var checked := 0
 	var files: Array[String] = []
-	for root in ["res://art/portraits/", ArtPaths.CORE + "art/portraits/"]:
+	for root: String in ["res://art/portraits/", ArtPaths.CORE + "art/portraits/"]:
 		for f in DirAccess.get_files_at(root):
 			files.append(root + f)
 	for path in files:
