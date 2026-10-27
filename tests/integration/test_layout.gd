@@ -39,6 +39,10 @@ const KNOWN := [
 
 var root: Node
 var _window := Vector2i.ZERO
+var _initial_ui_scale := 1.0
+var _initial_text_scale := 1.0
+var _initial_canvas := Vector2i.ZERO
+var _initial_factor := 1.0
 var _known_seen := {}   ## KNOWN index -> true, this test
 var _opened: Array[String] = []   ## what this test checked
 
@@ -46,6 +50,10 @@ var _opened: Array[String] = []   ## what this test checked
 func before_each() -> void:
 	InputActions.ensure()
 	_window = get_tree().root.size
+	_initial_ui_scale = GameSettings.ui_scale()
+	_initial_text_scale = GameSettings.text_scale()
+	_initial_canvas = get_tree().root.content_scale_size
+	_initial_factor = get_tree().root.content_scale_factor
 
 
 func test_mobile_page_keeps_navigation_in_iphone_and_ipad_safe_areas() -> void:
@@ -77,6 +85,12 @@ func test_mobile_page_keeps_navigation_in_iphone_and_ipad_safe_areas() -> void:
 
 
 func after_each() -> void:
+	GameSettings.set_ui_scale(_initial_ui_scale)
+	GameSettings.set_text_scale(_initial_text_scale)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = _initial_canvas
+	get_tree().root.content_scale_factor = _initial_factor
 	(Compendium.shared().tables["locations"] as Dictionary).erase(str(ARENA["id"]))
 	for i in KNOWN.size():
 		var k := KNOWN[i] as Array

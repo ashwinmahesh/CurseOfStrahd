@@ -92,3 +92,30 @@ func test_shared_native_export_names_follow_the_host_project() -> void:
 	assert_eq(MobileNative.transfer_path("save"), "user://transfers/AnotherCampaign-save.json")
 	assert_eq(MobileNative.transfer_path("diagnostics"), "user://transfers/AnotherCampaign-diagnostics.json")
 	ProjectSettings.set_setting("application/config/name", title)
+
+
+func test_mobile_exploration_uses_the_shared_tracked_quest_query() -> void:
+	MobileDevice.test_size = Vector2(844, 390)
+	get_tree().root.size = Vector2i(MobileDevice.test_size)
+	MobileDevice.current.configure()
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	state.set_quest_stage("mothers_ninth_improvement", "rumored")
+	QuestLog.track(state, "mothers_ninth_improvement")
+	var hud := ExploreHud.new()
+	add_child(hud)
+	hud.build(state)
+	var expected := str(hud.followed_quest()["objective"])
+	assert_true(expected != "", "fixture has a tracked objective")
+	for panel: String in ["menu", "information"]:
+		hud.mobile.call(panel)
+		await _frames()
+		var found := false
+		for label: Label in hud.mobile.sheet.find_children("*", "Label", true, false):
+			if not label.is_queued_for_deletion() and label.text == expected:
+				found = true
+		assert_true(found, panel + " includes the same objective as the desktop query")
+		hud.mobile.close()
+		await _frames()
+	hud.queue_free()
+	await _frames()
