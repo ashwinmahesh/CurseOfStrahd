@@ -50,7 +50,9 @@ copies its sitter). Vosk already counters.
 - Argynvostholt's beacon (Vladimir's stand): the dead knights' banners (one foe Restrained by phantom hands, Str save).
 
 **Group 5: needs engine work (one branch each, after the owner looks).**
-- The hags' Coven Spellcasting (2025 night hag: shared spells while all three stand within 30 ft).
+- The hags' Coven Spellcasting: done 2026-10-27 (owner: "Build it"). The three hags' last stand puts each in the night
+  hag's `coven` state: the 2014 Monster Manual's shared spells and slots while two sisters stand within 30 ft
+  (MonsterActions.coven_casting; docs/rules/deviations.md).
 - The amber golems (Sentinel, Vault Guardian): legendary actions and a lair of their own (the amber hardens round a foe).
 - The brides (Volenta, Ludmilla, Anastrasya): done 2026-10-27 (owner: "stop counting them as bosses, but could we give
   them each the vampire stat block?"): each fights on the Vampire's block in her own look, marked `boss: false`.

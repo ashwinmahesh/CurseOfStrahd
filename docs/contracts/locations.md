@@ -91,7 +91,8 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   boss damage or to-hit step (the brides on the vampire's block).
   Its `states` (ids from the stat block's own `states`) join its traits for this fight: Sarkhaza chained or
   grave-salted, each a trait on her sheet (LocationFights.with_states). A state may cut its Multiattack (`multiattack`)
-  and its legendary uses (`legendary_uses`).
+  and its legendary uses (`legendary_uses`), or seat it in a coven (`coven`: the night hag's shared spells, the three hags'
+  last stand).
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md). A region may keep a truce (StoryConditions.TRUCES): while
   it holds, its `enter_area` fights wait as if their `when` were false, and are back as they were once it ends (Castle

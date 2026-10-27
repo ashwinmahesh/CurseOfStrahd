@@ -430,7 +430,10 @@
             10,
             6
           ],
-          "name": "Morgantha"
+          "name": "Morgantha",
+          "states": [
+            "coven"
+          ]
         },
         {
           "monster": "night_hag",
@@ -438,7 +441,10 @@
             5,
             3
           ],
-          "name": "Bella Sunbane"
+          "name": "Bella Sunbane",
+          "states": [
+            "coven"
+          ]
         },
         {
           "monster": "night_hag",
@@ -446,7 +452,10 @@
             3,
             12
           ],
-          "name": "Offalia Wormwiggle"
+          "name": "Offalia Wormwiggle",
+          "states": [
+            "coven"
+          ]
         }
       ],
       "surprise": "",
@@ -468,7 +477,10 @@
             10,
             6
           ],
-          "name": "Morgantha"
+          "name": "Morgantha",
+          "states": [
+            "coven"
+          ]
         },
         {
           "monster": "night_hag",
@@ -476,7 +488,10 @@
             5,
             3
           ],
-          "name": "Bella Sunbane"
+          "name": "Bella Sunbane",
+          "states": [
+            "coven"
+          ]
         },
         {
           "monster": "night_hag",
@@ -484,7 +499,10 @@
             3,
             12
           ],
-          "name": "Offalia Wormwiggle"
+          "name": "Offalia Wormwiggle",
+          "states": [
+            "coven"
+          ]
         }
       ],
       "surprise": "",
