@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "base_game": "ece5991ab7a862b8e8593be34e5dc9e18277008c",
+  "base_engine": "ff162caf4e948ee1d49bc1b321361334ba00ab0d",
+  "resource_game": "20bfef880a6fa52bf2f62f9f98206cbf1eb75126",
+  "engine": "e5ba9d81b6c6b980ac2249b0da1d109ca51fcb10",
+  "native_adapter_revision": "283e32485727936829b7889077bf5690b6af22ab",
+  "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+  "simulator_tooling_revision": "34e7b3f0a4d01f1376ca78a063699b4a1eee470e",
+  "simulator_profile": {
+    "version": "4.7.2",
+    "source_sha256": "e954996374cbd1cb5d72e0e3781cc537408e6ce73b010b12c6c2f308a820690a",
+    "renderer": "Compatibility",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "device_library_changed": false,
+    "profile": {
+      "profile": "arm64-simulator-logical-points-v1",
+      "source_sha256": "e954996374cbd1cb5d72e0e3781cc537408e6ce73b010b12c6c2f308a820690a",
+      "patch_sha256": "ef1cef7ade69ff9963f144fae3b9b72537b7da6c427e8108732f46c63b4976b1",
+      "library_sha256": "c97d4de2dc6d0708d346f4853cd654e6af433328eb70b7c9c6aba2ef72d2f43c",
+      "arm64_drawable_scale": 1.0,
+      "upstream_x86_64_preserved": true,
+      "source_fixes": [
+        {
+          "path": "drivers/apple_embedded/godot_view_apple_embedded.mm",
+          "sha256": "292d8c18faf99dd0335f195a7f04bbe94aaa8af06ec8da386c4c2e8f26ce0c0d"
+        },
+        {
+          "path": "platform/ios/display_server_ios.mm",
+          "sha256": "c97b21ecec6494a74ec5e10d535ab74970113e570872e38efecf30077b1b9b7f"
+        }
+      ],
+      "device_library_hashes": {
+        "ios-arm64/libgodot.a": "2b4c924b7cdaa34f1bad45b29e1c3590a02b3d6c2d8943ecf0cf166c96905128"
+      }
+    },
+    "arm64_sha256": "86a0556b64fa5aaf4b1e106c7fd2f4dd52f29b1427f11198736b20f45aba0719"
+  },
+  "original_source_inventories_preserved": true,
+  "resource_pack_and_privacy_byte_identical_to_original_export": true,
+  "native_executable_intentionally_updated": true,
+  "runtime_equivalence_record": "native-state-refresh/runtime-equivalence.json",
+  "export_inventory_note": "The original export used core E5 checked out beside game20bf before f60f2e84d recorded that exact gitlink. Its dirty inventory is retained without relabelling. The current branch pins E5 cleanly.",
+  "required_check": {
+    "passed": 217,
+    "failed": 0,
+    "log": "make-check-native-state.log"
+  },
+  "python_ios_tooling": {
+    "passed": 53,
+    "failed": 0
+  },
+  "art_regressions": {
+    "passed": 34,
+    "failed": 0
+  },
+  "native_utility_tests": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "main_native_journeys": 13,
+  "native_cases_including_preference_followup": 14,
+  "native_cases": [
+    {
+      "idiom": "tablet",
+      "test": "testCampaignInventoryCameraSaveAndRelaunch",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/tablet-CampaignInventoryCameraSaveAndRelaunch.xcresult"
+    },
+    {
+      "idiom": "tablet",
+      "test": "testBattlefieldActionsAndPracticeRecovery",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/tablet-BattlefieldActionsAndPracticeRecovery.xcresult"
+    },
+    {
+      "idiom": "tablet",
+      "test": "testBackgroundResumePreservesTheCurrentScreen",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/tablet-BackgroundResumePreservesTheCurrentScreen.xcresult"
+    },
+    {
+      "idiom": "tablet",
+      "test": "testFullPagesReturnToTheWorld",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/tablet-FullPagesReturnToTheWorld.xcresult"
+    },
+    {
+      "idiom": "tablet",
+      "test": "testExplorationMenuKeepsWorldClear",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/tablet-ExplorationMenuKeepsWorldClear.xcresult"
+    },
+    {
+      "idiom": "tablet",
+      "test": "testIPadPortraitPreservesInventorySearchAndNavigation",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/tablet-IPadPortraitPreservesInventorySearchAndNavigation.xcresult"
+    },
+    {
+      "idiom": "tablet",
+      "test": "testInventoryRarityFilterRecoversWithoutLosingTheBag",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/tablet-InventoryRarityFilterRecoversWithoutLosingTheBag.xcresult"
+    },
+    {
+      "idiom": "phone",
+      "test": "testBackgroundResumePreservesTheCurrentScreen",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/phone-BackgroundResumePreservesTheCurrentScreen.xcresult"
+    },
+    {
+      "idiom": "phone",
+      "test": "testFullPagesReturnToTheWorld",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/phone-FullPagesReturnToTheWorld.xcresult"
+    },
+    {
+      "idiom": "phone",
+      "test": "testBattlefieldActionsAndPracticeRecovery",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/phone-BattlefieldActionsAndPracticeRecovery.xcresult"
+    },
+    {
+      "idiom": "phone",
+      "test": "testCampaignInventoryCameraSaveAndRelaunch",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/phone-CampaignInventoryCameraSaveAndRelaunch.xcresult"
+    },
+    {
+      "idiom": "phone",
+      "test": "testExplorationMenuKeepsWorldClear",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/phone-ExplorationMenuKeepsWorldClear.xcresult"
+    },
+    {
+      "idiom": "phone",
+      "test": "testInventoryRarityFilterRecoversWithoutLosingTheBag",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "main_matrix",
+      "bundle": "native-state-refresh-results/phone-InventoryRarityFilterRecoversWithoutLosingTheBag.xcresult"
+    },
+    {
+      "idiom": "tablet",
+      "test": "testCampaignInventoryCameraSaveAndRelaunch",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "harness_sha256": "53697222b0a0c784c79b7cb394bb0a8d01b3c46ae31167e014fe4984bd7e74f1",
+      "simulator_profile": "arm64-simulator-logical-points-v1",
+      "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+      "scenario": "motion_preference_initially_on",
+      "bundle": "native-state-switch-on-results/tablet-CampaignInventoryCameraSaveAndRelaunch.xcresult"
+    }
+  ],
+  "initial_enemy_turn_native_proof": {
+    "evidence": "The preserved practice journal after the final tablet native journey has start followed by ai. The original native method never presses End Turn, so the initial enemy turn ran before the hero Actions assertion.",
+    "journal_file": "native-state-switch-on-results/tablet-documents-before/mobile_practice_recovery.json",
+    "sha256": "17ccbda8832a9b33f659ed9b72c7cd21872b31b86309fe6234481d8569d3f7db",
+    "command_kinds": [
+      "start",
+      "ai"
+    ],
+    "native_case_result": "Passed",
+    "native_case_bundle": "native-state-refresh-results/tablet-BattlefieldActionsAndPracticeRecovery.xcresult",
+    "game_resource_source": "20bfef880a6fa52bf2f62f9f98206cbf1eb75126",
+    "core_source": "e5ba9d81b6c6b980ac2249b0da1d109ca51fcb10",
+    "native_adapter_sha256": "06292b8ccaf3f1533899ec79c1cbcbfd7c6d530f7dcdb9fe8060213a49b1be74",
+    "simulator_profile": "arm64-simulator-logical-points-v1",
+    "physical_device": false
+  },
+  "simulator_app_bytes": 3250509834,
+  "supplemental_regression": {
+    "passed": 76,
+    "failed": 1,
+    "failure": "Temple furniture assertion with unchanged inputs; no reference-main runtime executed"
+  },
+  "retained_failure_records": [
+    "native-rarity-failure-diagnosis.json",
+    "tablet-renderer-diagnosis.json",
+    "native-state-failure-diagnosis.json"
+  ],
+  "physical_device_qualified": false,
+  "physical_metal_performance_or_thermals_measured": false,
+  "physical_controller_or_assistive_technology_qualified": false,
+  "stage_manager_qualified": false,
+  "desktop_scenery_or_assertions_changed_for_supplemental_failure": false,
+  "apple_upload": false,
+  "merged": false,
+  "single_open_ios_mr": 5,
+  "evidence_directory": "/Volumes/StrahdLanes/strahd-builds/ios-engine-port-20261027",
+  "created_at": "2026-10-27T23:53:19.974488+00:00"
+}

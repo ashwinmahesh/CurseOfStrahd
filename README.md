@@ -18,7 +18,8 @@ An iPhone and iPad development port is underway. The [iOS build instructions](do
 preparation, Xcode export, and the current limits; [the implementation plan](docs/plans/ios_support.md) tracks
 the remaining touch, layout, recovery, and device-testing work.
 Build 1.0.1 (4401) has passed Apple processing for App Store Connect/TestFlight testing; a public iOS release is not yet available.
-That build predates the current engine-layout migration, which is being qualified separately.
+That build predates the current engine-layout migration. The migration has passing iPhone/iPad simulator journeys;
+physical-device performance and hardware qualification remain open. See the [review/validation record](docs/releases/ios-engine-port-2026-10-27.md).
 
 > **An unofficial fan game.** Curse of Strahd (this game) is a free, non-commercial fan project made by one fan. It is
 > not made, approved, endorsed or sponsored by Wizards of the Coast LLC or Hasbro, Inc., and it is not affiliated with
