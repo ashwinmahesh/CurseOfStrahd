@@ -6,10 +6,15 @@ extends TestCase
 func test_every_portrait_has_the_same_ground() -> void:
 	var ground := Look.color("ash_violet")
 	var checked := 0
-	for f in DirAccess.get_files_at("res://art/portraits"):
-		if not f.ends_with(".png"):
+	var files: Array[String] = []
+	for root in ["res://art/portraits/", ArtPaths.CORE + "art/portraits/"]:
+		for f in DirAccess.get_files_at(root):
+			files.append(root + f)
+	for path in files:
+		if not path.ends_with(".png"):
 			continue
-		var img := Image.load_from_file(ProjectSettings.globalize_path("res://art/portraits/" + f))
+		var f := path.get_file()
+		var img := Image.load_from_file(ProjectSettings.globalize_path(path))
 		if img == null:
 			continue
 		var c := img.get_pixel(3, 3)

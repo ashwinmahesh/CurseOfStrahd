@@ -27,7 +27,7 @@ func _ready() -> void:
 	_environment()
 	_floor()
 	for i in _ids.size():
-		var path := "res://art/sprites/%s/walk.tres" % _ids[i]
+		var path := ArtPaths.of("art/sprites/%s/walk.tres" % _ids[i])
 		if not ResourceLoader.exists(path):
 			push_warning("no walk sheet: " + path)
 			continue

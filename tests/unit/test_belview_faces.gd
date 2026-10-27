@@ -28,7 +28,7 @@ func test_each_belview_has_its_own_face() -> void:
 		var portrait := str(npc["portrait"])
 		assert_eq(portrait, id, "%s wears its own portrait" % id)
 		assert_eq(str(npc["sprite"]), "belview", "%s still walks as the family sprite" % id)
-		assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % portrait), "%s's portrait exists" % id)
+		assert_true(ArtPaths.exists("art/portraits/%s.png" % portrait), "%s's portrait exists" % id)
 		assert_false(seen.has(portrait), "%s's face is its own" % id)
 		seen[portrait] = true
 	assert_eq(str(Compendium.shared().get_entry("npcs", "belview")["portrait"]), "belview", "the family face stays")

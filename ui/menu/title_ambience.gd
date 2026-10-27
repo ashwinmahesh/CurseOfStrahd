@@ -290,7 +290,7 @@ func _bat(c: CanvasItem, at: Vector2, half_span: float, beat: float, tilt: float
 ## A traveller: their walk sheet (sized by its cell, which is 384 or, for HD sheets, 768 px), darkened to the night,
 ## starting partway along the road so the road is never empty; `way` 1 climbs to the castle, -1 comes down from it.
 func _add_walker(sprite_id: String, lantern: bool, way: int, i: int) -> void:
-	var path := "res://art/sprites/%s/walk.tres" % sprite_id
+	var path := ArtPaths.of("art/sprites/%s/walk.tres" % sprite_id)
 	if not ResourceLoader.exists(path):
 		return
 	var s := AnimatedSprite2D.new()

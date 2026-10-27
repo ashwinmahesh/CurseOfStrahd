@@ -99,7 +99,7 @@ func test_it_answers_the_count_and_the_wedding_question() -> void:
 
 
 func test_it_never_says_his_name_and_has_a_face() -> void:
-	assert_true(ResourceLoader.exists("res://art/portraits/sunsword.png"), "its portrait is the item's icon, larger")
+	assert_true(ArtPaths.exists("art/portraits/sunsword.png"), "its portrait is the item's icon, larger")
 	assert_false(Compendium.shared().get_entry("npcs", "sunsword").is_empty())
 	for path: String in FILES:
 		for line: String in FileAccess.get_file_as_string(path).split("\n"):

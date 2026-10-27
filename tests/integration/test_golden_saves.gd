@@ -152,9 +152,9 @@ func test_every_golden_save_names_things_that_exist() -> void:
 				assert_true(HeroLook.has_pieces(ch.build.get("appearance", {}) as Dictionary), "%s's pieces are drawn" % who)
 				continue
 			var art := CombatToken.art_for(ch)
-			assert_true(ResourceLoader.exists("res://art/sprites/%s/walk.tres" % art), "%s walks as %s, which is drawn" % [who, art])
+			assert_true(ArtPaths.exists("art/sprites/%s/walk.tres" % art), "%s walks as %s, which is drawn" % [who, art])
 			var face := DialogueRunner.portrait_of(ch)
-			assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % face), "%s's portrait %s is drawn" % [who, face])
+			assert_true(ArtPaths.exists("art/portraits/%s.png" % face), "%s's portrait %s is drawn" % [who, face])
 			var pregen := comp.get_entry("pregens", ch.id)
 			if not pregen.is_empty():
 				var own := str(((pregen.get("build", {}) as Dictionary).get("appearance", {}) as Dictionary).get("art", ch.id))

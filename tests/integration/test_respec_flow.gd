@@ -122,7 +122,7 @@ func test_the_retired_heroes_are_never_offered_as_looks() -> void:
 	for id in RETIRED:
 		assert_false(id in looks, "%s retired" % id)
 	for id in looks:
-		assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % id), "%s has a portrait" % id)
+		assert_true(ArtPaths.exists("art/portraits/%s.png" % id), "%s has a portrait" % id)
 	var cs := CreationScreen.new()
 	add_child(cs)
 	var empty: Array[Dictionary] = []

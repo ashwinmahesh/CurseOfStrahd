@@ -9,7 +9,7 @@ func test_cosmin_is_a_boy_with_his_own_sprite_and_portrait() -> void:
 	var npc := Compendium.shared().get_entry("npcs", "argynvostholt_cosmin")
 	assert_eq(str(npc.get("sprite", "")), "cosmin", "he walks as himself")
 	assert_eq(str(npc.get("portrait", "")), "cosmin", "and speaks as himself")
-	assert_true(ResourceLoader.exists("res://art/portraits/cosmin.png"), "a portrait of him")
+	assert_true(ArtPaths.exists("art/portraits/cosmin.png"), "a portrait of him")
 	var frames := DirectionalSprite.frames_for("cosmin")
 	assert_true(DirectionalSprite.has_attack(frames), "a walk and an attack")
 	var sheet := (frames.get_frame_texture(&"idle_s", 0) as AtlasTexture).atlas.resource_path
@@ -91,7 +91,7 @@ func test_every_summoned_creature_has_a_sprite_and_a_portrait() -> void:
 		var art := CombatToken.monster_art(data)
 		if not DirectionalSprite.has_attack(DirectionalSprite.frames_for(art)):
 			gaps.append("%s has no walk and attack sheet (%s)" % [b["label"], art])
-		if not ResourceLoader.exists("res://art/portraits/%s.png" % art):
+		if not ArtPaths.exists("art/portraits/%s.png" % art):
 			gaps.append("%s has no portrait (%s)" % [b["label"], art])
 	assert_true(checked >= 20, "the summons are checked (%d)" % checked)
 	assert_eq(gaps, [] as Array[String], "summons drawn as capsules")

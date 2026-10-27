@@ -14,7 +14,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DATA = os.path.join(ROOT, "art/vfx/effects.json")
+DATA = os.path.join(ROOT, "addons/dnd_core/art/vfx/effects.json")   # the core's base (the game's own picks are art/vfx/effects.json)
 SKIP_BOOKS = {"FRHoF", "AU", "FRAiF", "RtHW"}
 
 # Spells whose look their data can't tell (a ray that's a saving throw, a strike from above, a drain...).

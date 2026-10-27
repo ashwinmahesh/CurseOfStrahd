@@ -26,7 +26,7 @@ func test_the_showman_until_he_drops_the_act() -> void:
 	b = _line(st)
 	assert_eq(str(b["portrait"]), "van_richten", "the old hunter's face once unmasked")
 	assert_eq(str(b["name"]), "Rictavio", "the name he goes by stays")
-	assert_true(ResourceLoader.exists("res://art/portraits/van_richten.png"), "his portrait")
+	assert_true(ArtPaths.exists("art/portraits/van_richten.png"), "his portrait")
 	assert_eq(DialogueBusts.path_for("van_richten"), "res://art/busts/van_richten.webp", "his bust")
 	assert_eq(DialogueBusts.native_facing("res://art/busts/van_richten.webp"), str((JSON.parse_string(
 		FileAccess.get_file_as_string(DialogueBusts.FACING_FILE)) as Dictionary)["facing"].get("van_richten", "")), "his facing is recorded")
@@ -53,4 +53,4 @@ func test_every_monster_has_a_portrait() -> void:
 	for id: String in c.table("monsters"):
 		var m := c.get_entry("monsters", id)
 		var art := str(m.get("art", CombatToken.ART_ALIASES.get(id, id)))
-		assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % art), "%s has a portrait (%s)" % [id, art])
+		assert_true(ArtPaths.exists("art/portraits/%s.png" % art), "%s has a portrait (%s)" % [id, art])

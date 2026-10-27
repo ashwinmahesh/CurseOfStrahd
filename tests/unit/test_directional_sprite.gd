@@ -37,8 +37,8 @@ func test_villager_sprite_frames_have_every_direction() -> void:
 ## Every character sprite sheet (art/sprites/<id>/walk.tres) and the animations the game plays from it.
 func _sprite_ids() -> Array[String]:
 	var ids: Array[String] = []
-	for d in DirAccess.get_directories_at("res://art/sprites"):
-		if d != "villager_standin" and ResourceLoader.exists("res://art/sprites/%s/walk.tres" % d):
+	for d in ArtPaths.dirs("art/sprites"):
+		if d != "villager_standin" and ArtPaths.exists("art/sprites/%s/walk.tres" % d):
 			ids.append(d)
 	return ids
 
@@ -56,7 +56,7 @@ func test_every_sprite_walks_in_every_direction() -> void:
 
 func test_every_sprite_attacks_in_every_direction() -> void:
 	for id in _sprite_ids():
-		assert_true(ResourceLoader.exists("res://art/sprites/%s/attack.tres" % id), id + " has an attack sheet")
+		assert_true(ArtPaths.exists("art/sprites/%s/attack.tres" % id), id + " has an attack sheet")
 		var frames := DirectionalSprite.frames_for(id)
 		assert_true(DirectionalSprite.has_attack(frames), id + " attack merged into its frames")
 		if not DirectionalSprite.has_attack(frames):

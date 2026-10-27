@@ -55,7 +55,7 @@ func test_every_offered_look_is_complete() -> void:
 			assert_true(FileAccess.file_exists("%s/pieces/heads/%s_%s.png" % [HeroLook.ROOT, g, h]), "head %s_%s" % [g, h])
 	assert_true(looks >= 1, "the creator offers at least one complete body")
 	for p: String in HeroLook.offered_ids({}, "portraits"):
-		assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % p), "portrait " + p)
+		assert_true(ArtPaths.exists("art/portraits/%s.png" % p), "portrait " + p)
 	assert_false(HeroLook.offered_ids({}, "portraits").is_empty(), "at least one portrait")
 	for g: String in ["female", "male"]:
 		var d := HeroLook.default_appearance(g, "fighter")

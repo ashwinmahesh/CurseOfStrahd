@@ -69,7 +69,7 @@ func test_every_ending_is_complete() -> void:
 		for s: Variant in e["epilogue"]:
 			var art := str((s as Dictionary).get("portrait", ""))
 			if art != "" and art != "{name}":
-				assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % art), "%s: portrait %s exists" % [id, art])
+				assert_true(ArtPaths.exists("art/portraits/%s.png" % art), "%s: portrait %s exists" % [id, art])
 	for i in all.size() - 1:
 		assert_true(int(all[i]["priority"]) >= int(all[i + 1]["priority"]), "highest priority first")
 

@@ -16,7 +16,7 @@ func test_every_guest_wears_their_own_look_in_a_fight() -> void:
 		checked += 1
 		var look := CombatToken.art_for(cr)
 		assert_eq(look, str(d.get("sprite", d["id"])), "%s fights as %s" % [d["id"], look])
-		assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % look), "%s has a portrait for the combat HUD" % d["id"])
+		assert_true(ArtPaths.exists("art/portraits/%s.png" % look), "%s has a portrait for the combat HUD" % d["id"])
 	assert_true(checked >= 10, "the story's guests are checked (%d)" % checked)
 
 
@@ -45,7 +45,7 @@ func _forms(e: Encounter, c: Combatant) -> Array:
 func test_a_martikov_who_changes_in_a_fight_wears_the_wereraven_hybrid() -> void:
 	# Owner ask, 2026-10-12: the wereravens' change should show. They fight in their own clothes until they shift.
 	assert_true(DirectionalSprite.frames_for("wereraven") != null, "the hybrid has a figure to swap to")
-	assert_true(ResourceLoader.exists("res://art/portraits/wereraven.png"), "and a portrait")
+	assert_true(ArtPaths.exists("art/portraits/wereraven.png"), "and a portrait")
 	for id: String in ["adrian_martikov", "davian_martikov", "ilinca_vrana"]:
 		var e := TestCombat.open_field()
 		var c := _guest(e, id)

@@ -320,7 +320,7 @@ func _show_beat(b: Dictionary) -> void:
 	else:
 		VoiceOver.say(VoiceOver.beat_voice(b), text)
 		var art := str(b.get("portrait", ""))
-		if art != "" and ResourceLoader.exists("res://art/portraits/%s.png" % art):
+		if art != "" and ArtPaths.exists("art/portraits/%s.png" % art):
 			_card.add_child(UiParts.framed_portrait(art, 220.0))
 		_card.add_child(_display(str(b.get("name", "")), 28, "gilt_light"))
 		var colour := "moonlight" if bool(b.get("party", false)) else "vellum"
@@ -345,7 +345,7 @@ func _show_slide() -> void:
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	panel.add_child(row)
 	var art := str(s.get("portrait", ""))
-	var has_art := art != "" and ResourceLoader.exists("res://art/portraits/%s.png" % art)
+	var has_art := art != "" and ArtPaths.exists("art/portraits/%s.png" % art)
 	if has_art:
 		var pic := UiParts.framed_portrait(art, 230.0)
 		pic.size_flags_vertical = Control.SIZE_SHRINK_CENTER

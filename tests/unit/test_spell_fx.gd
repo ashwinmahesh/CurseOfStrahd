@@ -3,11 +3,10 @@ extends TestCase
 ## pick names a real spell, a family and a flavour; flavours use palette colours only; the pilot spells look as picked;
 ## a smite spell tells the view when it rides a hit; and the view's effect plays its parts and clears them away.
 
-const DATA := "res://art/vfx/effects.json"
 
 
 func _data() -> Dictionary:
-	return JSON.parse_string(FileAccess.get_file_as_string(DATA)) as Dictionary
+	return SpellFx.data()
 
 
 func test_flavours_use_palette_colours_only() -> void:

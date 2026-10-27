@@ -23,7 +23,7 @@ func test_everyone_a_place_puts_on_the_map_has_a_sprite_and_a_portrait() -> void
 			var portrait := str(npc.get("portrait", id))
 			if not DirectionalSprite.has_attack(DirectionalSprite.frames_for(sprite)):
 				gaps.append("%s: %s has no walk and attack sheet (sprite %s)" % [lid, id, sprite])
-			if not ResourceLoader.exists("res://art/portraits/%s.png" % portrait):
+			if not ArtPaths.exists("art/portraits/%s.png" % portrait):
 				gaps.append("%s: %s has no portrait (%s)" % [lid, id, portrait])
 	assert_true(checked >= 100, "the places' people are checked (%d)" % checked)
 	assert_eq(gaps, [] as Array[String], "people without art")
@@ -40,9 +40,9 @@ func test_the_lantern_girl_is_a_girl_of_light_not_a_wisp() -> void:
 	var wisp := Monster.from_data(c.monster_data("will_o_wisp"))
 	assert_eq(CombatToken.art_for(girl), "lantern_girl", "her stat block is drawn as her")
 	assert_ne(CombatToken.art_for(girl), CombatToken.art_for(wisp), "not as the drowned lights round her")
-	assert_true(ResourceLoader.exists("res://art/portraits/lantern_girl.png"), "the HUD has her face")
-	assert_true(ResourceLoader.exists("res://art/sprites/lantern_girl/walk.png"), "a walk sheet of her own")
-	assert_true(ResourceLoader.exists("res://art/sprites/lantern_girl/attack.png"), "and an attack sheet")
+	assert_true(ArtPaths.exists("art/portraits/lantern_girl.png"), "the HUD has her face")
+	assert_true(ArtPaths.exists("art/sprites/lantern_girl/walk.png"), "a walk sheet of her own")
+	assert_true(ArtPaths.exists("art/sprites/lantern_girl/attack.png"), "and an attack sheet")
 	var frames := DirectionalSprite.frames_for("lantern_girl")
 	assert_true(DirectionalSprite.has_attack(frames), "a walk and an attack")
 	var sheet := (frames.get_frame_texture(&"idle_s", 0) as AtlasTexture).atlas.resource_path
