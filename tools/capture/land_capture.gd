@@ -11,6 +11,7 @@ extends Node
 ## the shaped ground), LAND_CLAY=1 (the shaped ground in plain clay), LAND_NO_DOF=1 (no depth blur, to judge the
 ## vistas without the edge blur), LAND_GIF=n (n frames a
 ## tenth of a second apart, numbered, to show the wind).
+## LAND_SOFTWARE_GROUND=1 previews only the iOS simulator's reduced-sampler blend on the same real meshes.
 ## The road and village shots stand the party where the light lane's look_capture does, so frames compare across lanes.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the camera's
@@ -77,6 +78,9 @@ func capture_shots(tool: Node, out: String) -> void:
 			continue
 		var shot := SHOTS[id] as Dictionary
 		_build(shot)
+		if OS.get_environment("LAND_SOFTWARE_GROUND") != "":
+			for material: ShaderMaterial in Look._blends:
+				material.shader = Look.blend_shader(true)
 		await tool.call("wait_frames", 45)
 		if OS.get_environment("LAND_BENCH") != "":
 			await _bench(tool, id)

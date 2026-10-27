@@ -9,6 +9,10 @@ extends TestCase
 const LATE := "v2_amber_temple.json"
 const FINISHED := "v2_the_end.json"
 
+## Landscape phones, full iPad, portrait iPad and narrow/short resizable iPad windows.
+const MOBILE_SIZES: Array[Vector2] = [Vector2(667, 375), Vector2(844, 390), Vector2(1194, 834),
+	Vector2(834, 1194), Vector2(393, 834), Vector2(600, 480)]
+
 ## A fight to check the combat HUD in: one rat, started by hand.
 const ARENA := {
 	"id": "test_layout_ward", "name": "Test Ward", "region": "test", "summary": "A fixture.",
@@ -40,7 +44,36 @@ var _opened: Array[String] = []   ## what this test checked
 
 
 func before_each() -> void:
+	InputActions.ensure()
 	_window = get_tree().root.size
+
+
+func test_mobile_page_keeps_navigation_in_iphone_and_ipad_safe_areas() -> void:
+	var original_canvas := get_tree().root.content_scale_size
+	var original_factor := get_tree().root.content_scale_factor
+	for points: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = points
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), points - Vector2(94, 29))
+		get_tree().root.size = Vector2i(points)
+		MobileDevice.current.configure()
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var body := UiKit.screen_frame(layer, "Inventory")
+		for i in 30:
+			body.add_child(UiKit.button("Item %d" % i, func() -> void: pass))
+		await _frames(3)
+		var safe := MobileDevice.safe_rect()
+		for problem: String in LayoutCheck.problems(layer, safe):
+			fail("Mobile page at %s: %s" % [points, problem])
+		var back := layer.find_child("MobileBack", true, false) as Button
+		assert_true(back != null and back.size.y >= 44, "Back stays a finger-sized target")
+		assert_true(safe.encloses(back.get_global_rect()), "Back stays within the safe area")
+		layer.queue_free()
+		await _frames(1)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = original_canvas
+	get_tree().root.content_scale_factor = original_factor
 
 
 func after_each() -> void:
@@ -1459,3 +1492,811 @@ func test_the_tutorial_coach() -> void:
 						root = null)
 	GameSettings.set_ui_scale(previous_ui)
 	GameSettings.set_text_scale(previous_text)
+
+
+func test_mobile_inventory_sections_and_item_details_fit_phone_and_tablet() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var state := StoryState.new()
+	for id: String in ["godrick_pendlebrook", "thistle", "liriel_dawnsong", "ratatoille"]:
+		state.party.append(Pregens.build(id, 5))
+	state.party[0].add_item("potion_of_healing", 4)
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var inventory := InventoryScreen.new()
+		add_child(inventory)
+		inventory.open(self, state, 0)
+		for section: String in ["Bag", "Equipment", "Stash", "Filters", "Party", "Details"]:
+			inventory.mobile.section = section if section in ["Bag", "Equipment", "Stash"] else "Bag"
+			inventory.mobile.filters_open = section == "Filters"
+			inventory.mobile.party_open = section == "Party"
+			inventory.mobile.detail = section == "Details"
+			inventory.selected = "potion_of_healing" if section == "Details" else ""
+			inventory._draw()
+			await _frames(8)
+			var issues := LayoutCheck.problems(inventory, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, section, "\n".join(issues)])
+			assert_eq(inventory.mobile.page.scroll.horizontal_scroll_mode, ScrollContainer.SCROLL_MODE_DISABLED)
+		inventory.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_action_browser_and_review_fit_phone_and_tablet() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(encounter, "zombie", Vector2i(6, 2))
+	TestCombat.start_with(encounter, actor)
+	var catalog := ActionCatalog.new(encounter)
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var actions := MobileActions.new()
+		add_child(actions)
+		actions.open(catalog, actor)
+		await _frames(8)
+		assert_true(LayoutCheck.problems(actions, MobileDevice.safe_rect()).is_empty(), "%s action browser" % size_)
+		for action in catalog.actions_for(actor):
+			actions.inspect(action)
+			await _frames(4)
+			var issues := LayoutCheck.problems(actions, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, action["id"], "\n".join(issues)])
+		actions.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_largest_text_and_interface_keep_navigation_and_details_reachable() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_ui := GameSettings.ui_scale()
+	var old_text := GameSettings.text_scale()
+	MobileDevice.test_size = Vector2(667, 375)
+	MobileDevice.test_safe = Rect2(47, 8, 573, 346)
+	get_tree().root.size = Vector2i(MobileDevice.test_size)
+	GameSettings.set_ui_scale(GameSettings.UI_SCALES.back())
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	MobileDevice.current.configure()
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 5))
+	state.party[0].add_item("potion_of_healing", 4)
+	var inventory := InventoryScreen.new()
+	add_child(inventory)
+	inventory.open(self, state, 0)
+	for section: String in ["Bag", "Equipment", "Details"]:
+		inventory.mobile.section = section if section != "Details" else "Bag"
+		inventory.mobile.detail = section == "Details"
+		inventory.selected = "potion_of_healing" if section == "Details" else ""
+		inventory._draw()
+		await _frames(8)
+		var issues := LayoutCheck.problems(inventory, MobileDevice.safe_rect())
+		assert_true(issues.is_empty(), "largest sizes %s: %s" % [section, "\n".join(issues)])
+	inventory.queue_free()
+	await _frames(2)
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(encounter, "zombie", Vector2i(6, 2))
+	TestCombat.start_with(encounter, actor)
+	var actions := MobileActions.new()
+	add_child(actions)
+	actions.open(ActionCatalog.new(encounter), actor)
+	await _frames(8)
+	var issues := LayoutCheck.problems(actions, MobileDevice.safe_rect())
+	assert_true(issues.is_empty(), "largest sizes action browser: " + "\n".join(issues))
+	actions.queue_free()
+	await _frames(2)
+	var dialogue := DialogueUI.new()
+	add_child(dialogue)
+	dialogue.busts.party_speaker("godrick_pendlebrook")
+	dialogue._show({"kind": "line", "name": "Ireena", "speaker_id": "ireena", "portrait": "ireena", "narrator": false, "party": false,
+		"text": "The mist surrounds the village. We should speak with the innkeeper before we travel. ".repeat(3)})
+	dialogue._show({"kind": "options", "options": longest_options(6)})
+	await _frames(8)
+	issues = LayoutCheck.problems(dialogue, MobileDevice.safe_rect())
+	assert_true(issues.is_empty(), "largest sizes dialogue with busts: " + "\n".join(issues))
+	for bust: TextureRect in [dialogue.busts.left, dialogue.busts.right]:
+		assert_true(bust.is_visible_in_tree())
+		assert_true(bust.size.y >= dialogue.busts.size.y * 0.95)
+	dialogue.queue_free()
+	await _frames(2)
+	GameSettings.set_ui_scale(old_ui)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_battle_hud_reactions_details_and_turn_sheets_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(encounter, "zombie", Vector2i(6, 2))
+	TestCombat.start_with(encounter, actor)
+	for size_: Vector2 in MOBILE_SIZES + [Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var hud := CombatHud.new()
+		add_child(hud)
+		hud.build(encounter, ActionCatalog.new(encounter))
+		hud.refresh()
+		for display: String in ["field", "party", "order", "log", "details", "reaction", "pool", "confirm"]:
+			hud.mobile.close()
+			match display:
+				"party": hud.mobile.overview()
+				"order": hud.mobile.order()
+				"log": hud.mobile.log_page()
+				"details": hud.show_details("A long action explanation", ["An extended explanation of targeting, resources, conditions and the effect of this action. ".repeat(8)])
+				"reaction", "pool":
+					var req := ReactionRequest.new("shield", actor.id, "foe")
+					req.title = "Choose a reaction"
+					req.text = "Protect an ally or save your reaction for later. ".repeat(6)
+					req.min_targets = 1 if display == "reaction" else 0
+					req.max_targets = 1 if display == "reaction" else 0
+					req.pool = 20 if display == "pool" else 0
+					for n in 6:
+						req.target_choices.append({"id": str(n), "label": "Companion with a long name %d" % n, "room": 20})
+					hud.show_prompt(req)
+				"confirm": hud.confirm_end_turn("You still have an Action, Bonus Action and movement available. End this character's turn?")
+			await _frames(8)
+			var issues := LayoutCheck.problems(hud, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, display, "\n".join(issues)])
+		hud.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_exploration_menu_settings_and_conversation_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 5))
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var explore := ExploreHud.new()
+		add_child(explore)
+		explore.build(state)
+		explore.refresh("The Village of Barovia", true, true, true)
+		explore.narrate("A long passage of narration. ".repeat(12))
+		await _frames(4)
+		assert_true(LayoutCheck.problems(explore, MobileDevice.safe_rect()).is_empty(), "exploration %s" % size_)
+		assert_true(MobileDevice.safe_rect().encloses(explore.minimap.get_global_rect()), "minimap stays in the safe area")
+		explore.mobile.menu()
+		await _frames(4)
+		assert_true(LayoutCheck.problems(explore, MobileDevice.safe_rect()).is_empty(), "exploration menu %s" % size_)
+		explore.mobile.history()
+		await _frames(4)
+		assert_true(LayoutCheck.problems(explore, MobileDevice.safe_rect()).is_empty(), "narration %s" % size_)
+		explore.queue_free()
+		await _frames(2)
+		var menu := PauseMenu.new()
+		add_child(menu)
+		menu.open(self, state, 0)
+		for section: String in ["Menu", "Game", "Display", "Keys"]:
+			if section != "Menu":
+				menu._show_settings(section)
+			await _frames(8)
+			var issues := LayoutCheck.problems(menu, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, section, "\n".join(issues)])
+		menu.queue_free()
+		await _frames(2)
+		var dialogue := DialogueUI.new()
+		add_child(dialogue)
+		dialogue.busts.party_speaker("godrick_pendlebrook")
+		dialogue._show({"kind": "line", "name": "Ireena", "speaker_id": "ireena", "portrait": "ireena", "narrator": false, "party": false,
+			"text": "The mist surrounds the village. We should speak with the innkeeper before we travel."})
+		dialogue._show({"kind": "options", "options": longest_options(6)})
+		await _frames(8)
+		var issues := LayoutCheck.problems(dialogue, MobileDevice.safe_rect())
+		assert_true(issues.is_empty(), "%s dialogue: %s" % [size_, "\n".join(issues)])
+		assert_true(dialogue.busts.left.is_visible_in_tree() and dialogue.busts.right.is_visible_in_tree(), "both conversation busts remain visible")
+		assert_true(dialogue.busts.get_index() < dialogue._mobile_page.get_index(), "large art stays behind readable dialogue")
+		assert_true(dialogue._portrait.is_visible_in_tree() and dialogue._portrait.texture != null, "speaker portrait remains in the panel")
+		for bust: TextureRect in [dialogue.busts.left, dialogue.busts.right]:
+			assert_true(bust.size.y >= dialogue.busts.size.y * 0.95, "mobile busts almost fill the safe height")
+			assert_true(dialogue._mobile_page.position.y > bust.global_position.y + bust.size.y * 0.35, "faces stay above the reading panel")
+		var left_center := dialogue.busts.left.get_global_rect().get_center().x
+		var right_center := dialogue.busts.right.get_global_rect().get_center().x
+		assert_true(right_center - left_center >= dialogue.busts.size.x * 0.45,
+			"large speakers stay separated in their own halves, including portrait windows")
+		assert_true(dialogue._mobile_page.size.y < MobileDevice.safe_rect().size.y * 0.65, "world remains visible above the lower panel")
+		dialogue.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_character_sheet_sections_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 9))
+	state.party.append(Pregens.build("ratatoille", 9))
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var sheet := CharacterSheetScreen.new()
+		add_child(sheet)
+		sheet.open(self, state, 0)
+		for section: String in ["Overview", "Abilities", "Actions", "Features", "Spells", "Equipment", "Effects", "Notes"]:
+			sheet.mobile_section = section
+			sheet._draw()
+			await _frames(8)
+			var issues := LayoutCheck.problems(sheet, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, section, "\n".join(issues)])
+		sheet.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_creation_level_up_rest_and_shop_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	state.location = "village_of_barovia"
+	state.milestones = 10
+	state.gold = 500
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var creator := CreationScreen.new()
+		add_child(creator)
+		creator.open_with([])
+		for step in CharacterBuilder.STEP_NAMES.size():
+			creator.step = step
+			creator._draw()
+			await _frames(8)
+			var issues := LayoutCheck.problems(creator, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s creator %d: %s" % [size_, step, "\n".join(issues)])
+		creator.queue_free()
+		await _frames(2)
+		var level := LevelUpScreen.new()
+		add_child(level)
+		level.open(self, state, 0)
+		await _frames(8)
+		var issues := LayoutCheck.problems(level, MobileDevice.safe_rect())
+		assert_true(issues.is_empty(), "%s level up: %s" % [size_, "\n".join(issues)])
+		level.queue_free()
+		await _frames(2)
+		var rest := RestScreen.new()
+		add_child(rest)
+		rest.open(self, state, 0)
+		await _frames(8)
+		issues = LayoutCheck.problems(rest, MobileDevice.safe_rect())
+		assert_true(issues.is_empty(), "%s rest: %s" % [size_, "\n".join(issues)])
+		rest.queue_free()
+		await _frames(2)
+		var shop := ShopScreen.new()
+		add_child(shop)
+		shop.open_for(self, state, "blinsky")
+		for side: String in ["Buy", "Sell", "Terms"]:
+			shop.mobile_side = side
+			shop._draw()
+			await _frames(8)
+			issues = LayoutCheck.problems(shop, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s shop %s: %s" % [size_, side, "\n".join(issues)])
+			if side == "Sell":
+				shop.mobile_filters_open = true
+				shop._draw()
+				await _frames(8)
+				issues = LayoutCheck.problems(shop, MobileDevice.safe_rect())
+				assert_true(issues.is_empty(), "%s shop filters: %s" % [size_, "\n".join(issues)])
+				shop.mobile_filters_open = false
+		shop.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_save_rows_chapters_and_confirmations_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		for mode_: int in [SavesScreen.Mode.SAVE, SavesScreen.Mode.LOAD]:
+			var page := SavesScreen.open_on(self, mode_ as SavesScreen.Mode, Callable())
+			for tab_: String in ["Your Saves", "Chapters"]:
+				page._tab = tab_
+				page._fill()
+				await _frames(8)
+				var issues := LayoutCheck.problems(page, MobileDevice.safe_rect())
+				assert_true(issues.is_empty(), "%s saves %s: %s" % [size_, tab_, "\n".join(issues)])
+			page._question({"location": "Village of Barovia", "day": 12, "party": "Godrick, Thistle and Liriel"}, "Import save?", "A long save note. ".repeat(8), "Import creates a new local save.", "Import", func() -> void: pass)
+			await _frames(8)
+			var issues := LayoutCheck.problems(page._ask, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s save review: %s" % [size_, "\n".join(issues)])
+			page.queue_free()
+			await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_interruption_page_fits_phone_and_tablet() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var lifecycle := MobileLifecycle.new()
+		add_child(lifecycle)
+		lifecycle.checkpoint_error = ERR_FILE_CANT_WRITE
+		lifecycle.suspend()
+		await _frames(8)
+		var issues := LayoutCheck.problems(lifecycle.resume_layer, MobileDevice.safe_rect())
+		lifecycle.resume_play()
+		assert_true(issues.is_empty(), "%s interruption: %s" % [size_, "\n".join(issues)])
+		lifecycle.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_loot_services_preparation_party_roster_and_wait_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	var state := StoryState.from_dict(AtomicJson.read("res://tests/saves/" + LATE)["story"] as Dictionary)
+	state.party[0].hp = 1
+	for quest: Dictionary in Compendium.shared().all("quests"):
+		state.set_quest_stage(str(quest["id"]), str((quest["stages"][0] as Dictionary)["id"]))
+	state.codex.append("tome_of_strahd")
+	Bestiary.learn(state, "zombie")
+	for size_: Vector2 in MOBILE_SIZES + [Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var loot := LootWindow.new()
+		add_child(loot)
+		loot.show_loot(state, "mobile_test", [{"id": "potion_of_healing", "qty": 3}, {"id": "longsword", "qty": 2}], 300, null)
+		await _mobile_check(loot, "loot")
+		var list_view := (loot._list.get_parent() as ScrollContainer).get_global_rect().intersection(loot._mobile_page.scroll.get_global_rect())
+		assert_true(list_view.size.y >= 48, "loot must reserve a visible finger-sized viewport for its item table")
+		for row: Control in loot._list.get_children():
+			assert_true(row is HBoxContainer, "loot retains desktop horizontal item rows")
+			assert_true(row.size.y <= 100, "loot rows stay compact even with large text")
+		loot._mobile_inspect(Compendium.shared().item_data("potion_of_healing"))
+		await _mobile_check(loot._mobile_detail, "loot details")
+		loot.queue_free()
+		await _frames(2)
+		var service := ServicesScreen.new()
+		add_child(service)
+		service.open_for(self, state, "father_lucian")
+		await _mobile_check(service, "services")
+		service._mobile_confirm(Services.offered(state, "father_lucian")[0])
+		await _mobile_check(service._mobile_review, "service review")
+		service.queue_free()
+		await _frames(2)
+		var prepare := PrepareScreen.new()
+		add_child(prepare)
+		prepare.open(self, state, 0)
+		await _mobile_check(prepare, "preparation")
+		var choices := prepare.find_children("*", "ChoiceWidget", true, false)
+		for widget: ChoiceWidget in choices:
+			if widget.choice.kind != "ability_increase" and not widget.choice.options.is_empty():
+				widget._mobile_inspect(widget.choice.options[0].id)
+				await _mobile_check(widget._mobile_sheet, "choice inspection")
+				widget._mobile_close()
+				break
+		prepare.queue_free()
+		await _frames(2)
+		var party := PartyScreen.new()
+		add_child(party)
+		party.open(self, state, 0)
+		for section: String in ["Heroes", "Marching order", "Skills", "Companions"]:
+			party.mobile_section = section
+			party._draw()
+			await _mobile_check(party, "party " + section)
+		party.queue_free()
+		await _frames(2)
+		var roster := RosterScreen.new()
+		add_child(roster)
+		roster.open(self, state, 0)
+		await _mobile_check(roster, "roster")
+		roster.queue_free()
+		await _frames(2)
+		var wait := WaitScreen.new()
+		add_child(wait)
+		wait.build(self, state, "")
+		wait.set_hours(24)
+		await _mobile_check(wait, "wait")
+		wait.queue_free()
+		await _frames(2)
+		var journal := JournalScreen.new()
+		add_child(journal)
+		journal.open(self, state, 0)
+		for tab_: String in JournalScreen.TABS:
+			journal._turn_to(tab_)
+			await _mobile_check(journal, "journal " + tab_)
+			if tab_ == "Quests":
+				for quest in QuestLog.journal(state):
+					journal._mobile_read(str(quest["id"]))
+					await _mobile_check(journal, "quest reading")
+					break
+			elif tab_ == "Codex" and not state.codex.is_empty():
+				journal._mobile_read(state.codex[0])
+				await _mobile_check(journal, "codex reading")
+			elif tab_ == "Bestiary" and not Bestiary.met(state).is_empty():
+				journal._mobile_read(Bestiary.met(state)[0])
+				await _mobile_check(journal, "bestiary reading")
+		journal.queue_free()
+		await _frames(2)
+		var travel := TravelScreen.new()
+		add_child(travel)
+		state.visited["village_of_barovia"] = true
+		travel.open_map(state, "village_of_barovia", true)
+		await _mobile_check(travel, "travel map and destinations")
+		for place in Travel.known(state):
+			if not Travel.route("village_of_barovia", str(place["id"]), state).is_empty():
+				travel.select(str(place["id"]))
+				await _mobile_check(travel, "travel route review")
+				break
+		travel.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func _mobile_check(node: Node, title: String) -> void:
+	await _frames(8)
+	var issues := LayoutCheck.problems(node, MobileDevice.safe_rect())
+	for scroll: ScrollContainer in node.find_children("*", "ScrollContainer", true, false):
+		if scroll.vertical_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED:
+			continue
+		var previous := scroll.scroll_vertical
+		var maximum := scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page
+		for fraction: float in [0.5, 1.0]:
+			scroll.scroll_vertical = roundi(maximum * fraction)
+			await _frames(3)
+			issues.append_array(LayoutCheck.problems(node, MobileDevice.safe_rect()))
+		scroll.scroll_vertical = previous
+	assert_true(issues.is_empty(), "%s %s: %s" % [MobileDevice.test_size, title, "\n".join(issues)])
+
+
+func test_mobile_skirmish_setup_results_achievements_and_guidance_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	var old_setup := SkirmishScreen.current
+	var old_tab := SkirmishScreen.kept_tab
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in MOBILE_SIZES + [Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		SkirmishScreen.current = SkirmishSetup.new()
+		SkirmishScreen.kept_tab = "Party"
+		var setup := SkirmishScreen.new()
+		add_child(setup)
+		await _mobile_check(setup, "skirmish add hero")
+		setup.setup.add_hero(Pregens.build("godrick_pendlebrook", 5))
+		setup.setup.add_foe("zombie")
+		setup._select_hero(0)
+		for tab_: String in SkirmishScreen.TABS:
+			setup.tab = tab_
+			setup._redraw()
+			await _mobile_check(setup, "skirmish " + tab_)
+		setup.tab = "Field"
+		for section: String in ["Maps", "Add foes", "Conditions", "Placement"]:
+			setup.mobile.field_section = section
+			setup._redraw()
+			await _mobile_check(setup, "field " + section)
+		setup.mobile._fight_review()
+		await _mobile_check(setup.mobile.modal, "fight review")
+		setup.queue_free()
+		await _frames(2)
+		var achievements := AchievementsPanel.open(self)
+		await _mobile_check(achievements, "achievements")
+		achievements.queue_free()
+		await _frames(2)
+		var encounter := TestCombat.open_field()
+		var hero := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+		TestCombat.foe(encounter, "zombie", Vector2i(5, 2))
+		TestCombat.start_with(encounter, hero)
+		var results := SkirmishResults.new()
+		add_child(results)
+		results.show_for(encounter, "The field", ["A difficult victory"])
+		await _mobile_check(results, "skirmish results")
+		results.queue_free()
+		await _frames(2)
+		var prompt := GuidancePrompt.ask(self, {"who": hero.creature, "skill": &"perception", "dc": 15, "casters": [{"caster": hero.creature, "ends": "Protection from Evil and Good"}]}, func(_index: int, _rule: String) -> void: pass)
+		await _mobile_check(prompt, "guidance")
+		prompt.queue_free()
+		await _frames(2)
+	SkirmishScreen.current = old_setup
+	SkirmishScreen.kept_tab = old_tab
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_cinematics_loading_ending_and_tutorial_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in MOBILE_SIZES + [Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var view := CutsceneView.new()
+		layer.add_child(view)
+		view.show_caption(true)
+		view.caption("Narrator", "A long caption with readable words and plenty of detail. ".repeat(12))
+		await _mobile_check(layer, "cutscene reading")
+		view.set_paused(true)
+		await _mobile_check(layer, "cutscene paused")
+		layer.queue_free()
+		await _frames(2)
+		var card := LoadingCard.new()
+		card.location = {"name": "The steep approach to Castle Ravenloft", "region": "castle_ravenloft"}
+		card.tip = "A long loading tip about how to play. ".repeat(6)
+		card.hold = 120
+		add_child(card)
+		await _mobile_check(card, "loading")
+		card.queue_free()
+		await _frames(2)
+		var coach := TutorialCoach.new()
+		add_child(coach)
+		coach.present({"title": "Your first adventure", "body": "Read this lesson, then try its controls. ".repeat(10), "objective": "Learn at your own pace.", "details": "Detailed instructions. ".repeat(10)}, 0, 10)
+		coach.set_action("Try this lesson", func() -> void: pass)
+		await _mobile_check(coach, "tutorial practice")
+		coach.toggle_details()
+		await _mobile_check(coach, "tutorial explanation")
+		coach.set_complete("Ready to continue.")
+		await _mobile_check(coach, "tutorial completed")
+		coach.show_menu()
+		await _mobile_check(coach, "tutorial menu")
+		coach.queue_free()
+		await _frames(2)
+		var state := StoryState.from_dict(AtomicJson.read("res://tests/saves/" + LATE)["story"] as Dictionary)
+		var ending := EndingScreen.new()
+		ending.to_title = false
+		ending.save_on_finish = false
+		add_child(ending)
+		ending.play(state, Endings.all()[0])
+		await _mobile_check(ending, "ending title")
+		ending._show_beat({"kind": "line", "narrator": true, "text": "The mist lifts over Barovia. ".repeat(20)})
+		await _mobile_check(ending, "ending narration")
+		ending._to_slides()
+		await _mobile_check(ending, "ending epilogue")
+		ending._to_end()
+		await _mobile_check(ending, "ending summary")
+		ending.show_tally()
+		await _mobile_check(ending.tally, "ending tally")
+		ending.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_new_game_roster_difficulty_and_tutorial_offer_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in MOBILE_SIZES + [Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var menu := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+		add_child(menu)
+		for method: String in ["_title", "_new_game", "_pick_difficulty", "_offer_tutorial"]:
+			menu.call(method)
+			await _mobile_check(menu, "new game " + method)
+			if method == "_new_game":
+				for grid: GridContainer in menu.find_children("*", "GridContainer", true, false):
+					if grid.columns == 2:
+						for card: Control in grid.get_children():
+							assert_true(card.size.x > grid.size.x * 0.4, "both iPad roster columns retain readable widths")
+				for button: Button in menu.find_children("*", "Button", true, false):
+					if button.text == "Back" or button.text.begins_with("Go on"):
+						assert_true(button.size.x >= 100, "mobile navigation must reserve room for its label")
+		menu.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_credits_codes_and_dice_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		print("  mobile auxiliary %s: credits" % size_)
+		var menu := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+		add_child(menu)
+		menu.call("_credits")
+		await _mobile_check(menu, "credits")
+		menu.queue_free()
+		await _frames(2)
+		var state := StoryState.new()
+		state.party.append(Pregens.build("godrick_pendlebrook", 5))
+		print("  mobile auxiliary %s: item codes" % size_)
+		var cheats := CheatCodesPage.open_on(self, state)
+		for code: String in ["", "359A02", CheatCodes.code_of("weapon_plus_1")]:
+			cheats.type_code(code)
+			await _mobile_check(cheats, "cheat code " + code)
+		cheats.queue_free()
+		await _frames(2)
+		print("  mobile auxiliary %s: dice" % size_)
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var dice := DiceRoll.new()
+		layer.add_child(dice)
+		dice.place_for_screen()
+		dice.roll({"who": "Godrick Pendlebrook", "label": "Wisdom saving throw", "kind": "save", "natural": 20,
+			"rolls": [20, 8], "advantage": true, "total": 24, "target": 18, "success": true, "critical": true})
+		await _mobile_check(layer, "dice result")
+		print("  mobile auxiliary %s: error notice" % size_)
+		ErrorWatch.show_notice({"text": "The saved game could not be opened. Your previous save is still available.", "where": "save_loader"})
+		await _mobile_check(ErrorWatch, "error notice")
+		assert_eq(PadNav.current.scope_now(), ErrorWatch.get("_notice"), "high-priority error pages own input and accessibility")
+		ErrorWatch.dismiss()
+		layer.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_controller_keyboard_and_hints_fit_safe_areas() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for points: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = points
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), points - Vector2(94, 29))
+		get_tree().root.size = Vector2i(points)
+		MobileDevice.current.configure()
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var body := MobilePage.build(layer, "Controller keyboard")
+		var field := LineEdit.new()
+		field.text = "A very long character name to verify scrolling and clipping"
+		body.add_child(field)
+		var keyboard := PadKeyboard.open_for(field)
+		PadNav.current._use_pad(true, -1)
+		await _mobile_check(keyboard, "controller keyboard and footer")
+		keyboard.queue_free()
+		layer.queue_free()
+		PadNav.current.reset()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_contextual_combat_controls_fit_without_overlapping_end_turn() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for size_: Vector2 in MOBILE_SIZES:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var controls := MobileControls.new()
+		add_child(controls)
+		controls.set_process(false)
+		for state: Dictionary in [
+			{"label": "", "enabled": false, "cancel": false, "actions": true, "end": true, "targets": false},
+			{"label": "Move 25 ft", "enabled": true, "cancel": true, "actions": true, "end": true, "targets": false},
+			{"label": "Cast Mordenkainen's Magnificent Mansion", "enabled": true, "cancel": true, "actions": true, "end": false, "targets": true},
+			{"label": "Choose square", "enabled": true, "cancel": true, "actions": true, "end": false, "targets": true, "finish": true}]:
+			controls.show_commands(state)
+			await _frames(8)
+			controls.show_commands(state)
+			await _frames(4)
+			var issues := LayoutCheck.problems(controls, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, state["label"], "\n".join(issues)])
+			if controls.end_button.visible:
+				assert_false(controls.end_button.get_global_rect().intersects(controls.bar.get_global_rect()), "%s %s: End Turn and targeting controls remain separate" % [size_, state["label"]])
+			assert_true(controls.bar.size.y <= 60, "the command row must not grow into a tall screen-blocking panel")
+		controls.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_nearby_objects_and_search_recovery_fit_small_phone_and_tablet() -> void:
+	InputActions.ensure()
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	for text_scale: float in [1.0, GameSettings.TEXT_SCALES.back()]:
+		GameSettings.set_text_scale(text_scale)
+		for size_: Vector2 in MOBILE_SIZES:
+			MobileDevice.test_size = size_
+			MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+			get_tree().root.size = Vector2i(size_)
+			MobileDevice.current.configure()
+			var hud := ExploreHud.new()
+			add_child(hud)
+			hud.build(state)
+			hud.mobile.nearby()
+			await _mobile_check(hud, "nearby empty")
+			for i in 24:
+				hud.mobile._nearby_entries.append({"text": "A weathered chest beneath the overgrown watchtower · Investigation", "kind": "container", "id": str(i), "cell": Vector2i(i, 1), "feet": i * 5})
+			hud.mobile._fill_nearby()
+			await _mobile_check(hud, "nearby long list")
+			hud.mobile.nearby_query = "nothing matches this query"
+			hud.mobile._fill_nearby()
+			await _mobile_check(hud, "nearby search recovery")
+			hud.queue_free()
+			await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

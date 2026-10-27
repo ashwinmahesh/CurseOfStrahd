@@ -512,7 +512,9 @@ func test_the_title_redraws_after_a_delete() -> void:
 func test_continue_skips_a_save_from_a_newer_build() -> void:
 	assert_eq(SaveSystem.save("mine"), OK)
 	var data := JSON.parse_string(FileAccess.get_file_as_string(SaveSystem.slot_path("mine"))) as Dictionary
-	data["version"] = GameState.SAVE_VERSION + 1
+	# Version 3 is the issued iOS alias, so the future fixture must be beyond every supported version.
+	data["version"] = maxi(GameState.SAVE_VERSION, SaveSystem.LEGACY_IOS_VERSION) + 1
+	assert_false(SaveSystem.supports_version(data), "the fixture is an unsupported future schema")
 	data["saved_at"] = "2099-01-01T00:00:00"
 	var f := FileAccess.open(SaveSystem.slot_path("from_later"), FileAccess.WRITE)
 	f.store_string(JSON.stringify(data))
@@ -520,4 +522,5 @@ func test_continue_skips_a_save_from_a_newer_build() -> void:
 	var listed: Array = SaveSystem.list_slots().map(func(s: Dictionary) -> String: return str(s["slot"]))
 	assert_eq(listed, ["mine", "from_later"], "the newer build's save, though newest, lists last")
 	assert_true(bool(SaveSystem.describe("from_later")["newer"]))
+	assert_eq(SaveSystem.load_slot("from_later"), ERR_FILE_UNRECOGNIZED, "unknown future formats remain refused")
 	assert_eq(SaveSystem.load_slot(str(listed[0])), OK, "Continue's pick loads")

@@ -8,10 +8,15 @@ on:
       - tests/tools/test_ios*.py
   workflow_dispatch:
     inputs:
+      operation:
+        description: Build the app, inspect the listing, or upload reviewed listing assets
+        type: choice
+        options: [build, inspect-listing, update-listing]
+        default: build
       version:
         description: App version (major.minor.patch)
         required: true
-        default: '1.0.0'
+        default: '1.0.2'
       build_kind:
         description: Full game or a small signing/upload check (no gameplay)
         type: choice
@@ -34,7 +39,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ios-${{ github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
+  group: ios-${{ contains(inputs.operation, 'listing') && 'listing' || github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
   cancel-in-progress: false
 
 env:
@@ -52,9 +57,10 @@ jobs:
           sparse-checkout: |
             tools/release
             tests/tools
-      - run: python3 -m unittest discover -s tests/tools -p 'test_ios_*.py' -v
+      - run: python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
   archive:
-    if: github.event_name == 'workflow_dispatch'
+    needs: tooling
+    if: github.event_name == 'workflow_dispatch' && !contains(inputs.operation, 'listing')
     runs-on: macos-15
     timeout-minutes: 350
     env:
@@ -79,6 +85,7 @@ jobs:
           ref: ${{ inputs.source_ref || github.sha }}
           lfs: false
           path: game
+          submodules: recursive
           sparse-checkout: ${{ inputs.build_kind == 'smoke' && 'art/ui/app_icon.png' || '' }}
           sparse-checkout-cone-mode: false
 
@@ -134,6 +141,15 @@ jobs:
           KEY_P8: ${{ secrets.IOS_APPLE_API_KEY_P8 }}
         run: python3 pipeline/tools/release/ios_deploy.py check-app --output "$IOS_OUT"
 
+      - name: Verify pinned engine checkout
+        if: inputs.build_kind == 'game'
+        working-directory: game
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
+          git submodule status --recursive | tee "$RUNNER_TEMP/ios-submodules.txt"
+          test -f addons/dnd_core/core/game_state.gd
+
       - name: Fetch runtime LFS assets
         if: inputs.build_kind == 'game'
         working-directory: game
@@ -187,11 +203,18 @@ jobs:
             PROVISIONING_PROFILE_SPECIFIER="$IOS_PROVISIONING_UUID" CODE_SIGN_IDENTITY="$IOS_SIGNING_IDENTITY" \
             "OTHER_CODE_SIGN_FLAGS=--keychain $IOS_KEYCHAIN" archive 2>&1 | tee "$IOS_OUT/archive.log"
           python3 - <<'PYCODE'
-          import os
+          import json, os, sys
           from pathlib import Path
+          sys.path.insert(0, str(Path("pipeline/tools/release").resolve()))
+          import ios
           apps = list((Path(os.environ['IOS_OUT']) / 'CurseOfStrahd.xcarchive/Products/Applications').glob('*.app'))
           assert len(apps) == 1, 'Expected one archived app'
+          privacy = ios.privacy_report(apps[0])
+          (Path(os.environ['IOS_OUT']) / 'app-privacy.json').write_text(json.dumps(privacy, indent=2) + '\n')
           size = sum(p.stat().st_size for p in apps[0].rglob('*') if p.is_file())
+          (Path(os.environ['IOS_OUT']) / 'app-size.json').write_text(json.dumps({
+              'app': apps[0].name, 'uncompressed_bytes': size, 'limit_bytes': 4_000_000_000,
+              'within_limit': size <= 4_000_000_000}, indent=2) + '\n')
           assert size <= 4_000_000_000, f'App exceeds 4 GB: {size} bytes'
           print(f'Uncompressed app size: {size:,} bytes')
           PYCODE
@@ -260,3 +283,36 @@ jobs:
       - name: Remove signing credentials and provisioning profiles
         if: always()
         run: python3 pipeline/tools/release/ios_signing.py cleanup --directory "$RUNNER_TEMP/ios-signing"
+
+  listing:
+    needs: tooling
+    if: github.event_name == 'workflow_dispatch' && contains(inputs.operation, 'listing')
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools/release
+            docs/releases/app-store
+          lfs: true
+      - name: Inspect or update the authorized App Store listing
+        env:
+          APP_STORE_APP_ID: ${{ vars.APP_STORE_APP_ID }}
+          KEY_ID: ${{ secrets.IOS_APPLE_API_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+          KEY_P8: ${{ secrets.IOS_APPLE_API_KEY_P8 }}
+          VERSION: ${{ inputs.version }}
+          OPERATION: ${{ inputs.operation }}
+        run: |
+          if [ "$OPERATION" = update-listing ]; then
+            python3 tools/release/ios_store.py apply --version "$VERSION" --manifest docs/releases/app-store/listing.json --output "$RUNNER_TEMP/ios-listing"
+          else
+            python3 tools/release/ios_store.py inspect --version "$VERSION" --output "$RUNNER_TEMP/ios-listing"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-listing-${{ github.run_number }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ios-listing/
+          retention-days: 14

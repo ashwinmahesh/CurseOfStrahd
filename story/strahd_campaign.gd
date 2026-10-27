@@ -138,6 +138,10 @@ func open_way(st: StoryState, location_id: String, cell: Vector2i, ft: int = 30)
 
 # --- Endings and achievements -------------------------------------------------------------------------------------
 
+func defeat_text() -> String:
+	return "Barovia keeps what it takes. Load a save to try again."
+
+
 func endings() -> Array[Dictionary]:
 	return Endings.all()
 

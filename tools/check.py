@@ -54,7 +54,7 @@ LINTED = (CORE + "rules/", CORE + "combat/", CORE + "story/", "story/")
 GOLDEN = "tests/saves/"  # the golden saves: test_golden_saves loads them all (P4)
 RULES_DOCS = ("docs/rules/", "docs/tasks/")  # make validate checks them against the plan and the data (P12)
 DEPTH = 1  # DEPTH=n's default reach when given without a number (see above); None follows every user
-COMPILE_TEST = "tests/unit/test_scripts_compile.gd"
+COMPILE_TEST = CORE + "tests/unit/test_scripts_compile.gd"
 CI_TARGETS = {"import", "validate", "lint", "test", "ci", "check"}
 
 
@@ -75,6 +75,16 @@ def changed_files(base: str) -> tuple[str, list[str]]:
     fork = git("merge-base", "HEAD", base).strip()
     files = set(git("diff", "--name-only", "--no-renames", fork).split())
     files |= set(git("ls-files", "--others", "--exclude-standard").split())
+    if os.path.exists(os.path.join(ROOT, CORE, ".git")):
+        # Git exposes a changed submodule as one path. Include its changed tests as well as the host's;
+        # otherwise the quick check silently omits every new engine regression.
+        pin = git("ls-tree", fork, CORE.rstrip("/")).split()
+        if len(pin) >= 3 and pin[0] == "160000":
+            engine = os.path.join(ROOT, CORE)
+            for args in (["diff", "--name-only", "--no-renames", pin[2]],
+                         ["ls-files", "--others", "--exclude-standard"]):
+                result = subprocess.run(["git", "-C", engine, *args], capture_output=True, text=True, check=True)
+                files.update(CORE + path for path in result.stdout.splitlines())
     return fork, sorted(files)
 
 

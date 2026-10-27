@@ -12,6 +12,16 @@ the other dims; the Narrator dims both. Each bust breathes slowly (a 1.2% swell 
 out of step; off in headless runs and still captures, like all UiMotion). A new speaker's bust fades in. The small
 portrait in the box stays as it was, so anyone without a bust still has a face. A cutscene's picture covers the busts.
 
+## iPhone and iPad conversations
+
+Mobile dialogue keeps the party speaker on the left and the NPC on the right. Busts fill 96% of the
+safe-area height behind a compact bottom reading panel, with the speaker portrait retained in its header.
+Short lines shrink the panel; long text and choices scroll. The overworld stays visible above the panel. Speaker lighting, moods, facing and Narrator dimming use the same
+presentation as desktop. When a character lacks bust art, their portrait fills that side instead. History
+opens above the conversation; returning restores the same participants. The mobile composition leaves the
+desktop dialogue layout intact. Offscreen phone/tablet evidence lives in the Obsidian iOS support note; native
+simulator verification of this update remains pending.
+
 ## The cast
 The ten pregen heroes and the 40 NPCs with the most lines (counted from `narrative/` on 2026-10-08: Ireena 186, Strahd
 179, Madam Eva 83 ... Urwin 25). Each NPC also has every mood two or more of their lines use (`Speaker [mood]:`): 117

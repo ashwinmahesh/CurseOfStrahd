@@ -11,8 +11,9 @@ not be submitted for public release. A successful run waits for Apple's processi
 and preserves that API response in `app-store-build.json`. Tester assignment and export-compliance answers
 may still be required in App Store Connect.
 
-`game` uses the iOS port's `make ios-export` target. Until the port is merged, set `source_ref` to an exact
-commit from `codex/ios-support-foundation` in this repository. Blank means the pipeline's own commit.
+`game` uses the iOS port's `make ios-export` target. The workflow and full port are integrated on
+`codex/ios-support-foundation`; dispatch that branch with `source_ref` blank to use its workflow commit.
+An optional exact `source_ref` selects another game commit from this repository.
 The resolved source SHA is recorded in the job summary and artifact. The pipeline uses its own signing
 and upload helpers regardless of the game source selected. The small native fixture in that branch is for
 simulator utility tests, so this pipeline's deployment check uses the real device template instead.
@@ -56,3 +57,18 @@ successfully signed, archived, exported and uploaded the deployment check as **1
 `be8c399a-5652-4285-9c16-8f171cc04d5e`. The source was port commit
 `456a2d4e57c9369890309b5d9dd8c1a6a7280163`; the uncompressed fixture was 68,854,620 bytes.
 This validates signing and distribution, not full-game size, performance, or mobile gameplay.
+
+## Full-game 1.0.1 deployment
+
+On October 25, 2026, [run 40240102630](https://github.com/ashwinmahesh/CurseOfStrahd/actions/runs/40240102630)
+signed, archived, exported and uploaded the complete game as **1.0.1 (4401)**. Apple reported **VALID** at
+23:51:50 UTC, build `3cc6697a-7884-4308-b976-f565dccdd951`, for `app.curseofstrahd.game` / app `6823801189`.
+The uncompressed device app is **3,231,159,332 bytes**. Qualified game source is `d623cd4bc7656849513bd8a860442e97198918b2`;
+workflow source is `b32a6e65dce6944d3cb2086ee3d20a2b7a4fc3c9`. See [the qualification and receipt record](ios-qualification-2026-10-25.md).
+
+This release passed 213 required checks, 23 focused terrain regressions and all eleven original native
+phone/tablet journeys. The first software terrain error and delayed tablet-state failure remain preserved.
+The Apple receipt, IPA/archive, inventories, toolchain, packaged policy checks, logs and file hashes are on the
+external SSD under `strahd-builds/ios-release-1.0.1/qualification-20261025/workflow-40240102630/`.
+Apple processing does not certify physical-device performance or App Review acceptance. No public review
+submission, tester invitations or merge occurred. The next new version is 1.0.2 and needs current authorization.

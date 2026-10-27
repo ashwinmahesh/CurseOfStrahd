@@ -22,6 +22,20 @@ func test_the_tips_are_there_and_short() -> void:
 		assert_true(str(t).length() <= 140, "short enough for one or two lines: %s" % t)
 
 
+func test_mobile_tips_describe_touch_controls_and_restore_desktop_hints() -> void:
+	var desktop := LoadingCard.tips().duplicate()
+	var old_size := MobileDevice.test_size
+	MobileDevice.test_size = Vector2(844, 390)
+	var mobile := LoadingCard.tips()
+	MobileDevice.test_size = old_size
+	assert_true(mobile.size() >= 10)
+	for hint: String in mobile:
+		assert_true(hint.length() <= 140)
+		assert_false(hint.contains("F1") or hint.contains("Right-click") or hint.contains("Esc"))
+	assert_true(str(mobile[0]).contains("Close"))
+	assert_eq(LoadingCard.tips(), desktop, "ordinary desktop hints are unchanged")
+
+
 func test_no_card_with_motion_off() -> void:
 	assert_true(LoadingCard.show_for(self, {"name": "Vallaki", "region": "vallaki"}) == null, "tests and captures see the place")
 

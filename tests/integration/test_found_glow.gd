@@ -159,3 +159,72 @@ func test_a_fight_puts_the_glow_away_and_it_comes_back() -> void:
 	_view().in_combat = false
 	await _wait(FoundGlow.CHECK_EVERY * 2.0)
 	assert_false(_outlines(stone).is_empty(), "after the fight it glows again")
+
+
+func test_mobile_world_tap_outlines_objects_and_people_without_changing_desktop() -> void:
+	var previous := MobileDevice.profile
+	var view := _view()
+	var prop := view.prop_nodes["old_satchel"] as Node3D
+	TouchOutline.at(view, Vector2i(4, 1))
+	assert_true(prop.get_node_or_null("TouchOutline") == null, "desktop does not get tap feedback")
+	MobileDevice.profile = "iphone"
+	assert_true(bool(root.call("touch_ready")))
+	view.rig.snap_to_target()
+	var at := view.rig.camera.unproject_position(view.board.cell_center(Vector2i(4, 1)) + Vector3(0, 0.25, 0))
+	assert_eq(view.pick_cell(view.rig.camera, at), Vector2i(4, 1), "tap hits the visible satchel")
+	root.call("touch_tap", at, true)
+	assert_true(prop.get_node_or_null("TouchOutline") != null, "real world tap routes to the object outline")
+	(root.get("menu") as ContextMenu).close()
+	var token := view.tokens[view.leader().id] as CombatToken
+	at = view.rig.camera.unproject_position(view.board.cell_center(view.leader().cell))
+	root.call("touch_tap", at, true)
+	assert_true(token.body.get_node_or_null("TouchOutline") != null, "party members also acknowledge touch")
+	(root.get("menu") as ContextMenu).close()
+	await _wait(0.55)
+	assert_true(prop.get_node_or_null("TouchOutline") == null)
+	assert_true(token.body.get_node_or_null("TouchOutline") == null)
+	TouchOutline.at(view, Vector2i(7, 2))
+	assert_true(view.find_children("TouchOutline", "", true, false).is_empty(), "bare ground does not glow")
+	MobileDevice.profile = previous
+
+
+func test_mobile_nearby_list_respects_secrets_and_opens_options_without_acting() -> void:
+	var previous := MobileDevice.profile
+	root.queue_free()
+	await _frames(1)
+	MobileDevice.profile = "iphone"
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	var view := _view()
+	view.rig.snap_to_target()
+	var hud := root.get("hud") as ExploreHud
+	var entries := hud.mobile.nearby_entries()
+	var satchel := {}
+	for entry in entries:
+		assert_false(str(entry["id"]) in ["loose_stone", "panel", "wolf_trap"], "nearby list does not reveal undiscovered content")
+		if str(entry["id"]) == "old_satchel":
+			satchel = entry
+	assert_false(satchel.is_empty(), "the discovered satchel is listed")
+	var before := GameState.story.to_dict()
+	var rng := Dice.roller.get_state()
+	hud.mobile.nearby()
+	await _frames(3)
+	assert_eq(GameState.story.to_dict(), before, "browsing nearby objects does not interact")
+	assert_eq(Dice.roller.get_state(), rng)
+	if not satchel.is_empty():
+		hud.mobile._pick_nearby(satchel)
+		assert_true((root.get("menu") as ContextMenu).is_open(), "selection opens existing context actions")
+		assert_eq(root.get("_menu_cell"), Vector2i(4, 1))
+		assert_true((view.prop_nodes["old_satchel"] as Node).get_node_or_null("TouchOutline") != null)
+		assert_eq(GameState.story.to_dict(), before, "opening options does not search, move or spend")
+		(root.get("menu") as ContextMenu).close()
+		hud.mobile.nearby()
+		view.input_locked = true
+		hud.mobile._pick_nearby(satchel)
+		assert_false((root.get("menu") as ContextMenu).is_open(), "a stale list cannot bypass an input lock")
+		assert_eq(hud.mobile.kind, "nearby")
+		assert_true(hud.mobile.nearby_entries().is_empty())
+		view.input_locked = false
+		hud.mobile.close()
+	MobileDevice.profile = previous

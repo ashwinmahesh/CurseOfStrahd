@@ -1,0 +1,18 @@
+{
+  "source": "/Users/ashwinmahesh/Documents/CurseOfStrahdSite/media/trailer-v4.mp4",
+  "website_url": "https://curseofstrahd.app/media/trailer-v4.mp4",
+  "sha256": "201c9c5779f43b067013e55d2df11aa053dbf9c2479c973c164b354d58b86ba4",
+  "original_seconds": 88,
+  "segments": [
+    [
+      0,
+      23.2
+    ],
+    [
+      69.2,
+      76
+    ]
+  ],
+  "duration": 30,
+  "reason": "Apple 15\u201330 second limit; preserve complete website narration lines 01\u201304 and 08, world footage and artwork, excluding desktop control layouts and download card. End fade starts after the last included narration ends. Aspect-fit letterboxing preserves the frame."
+}

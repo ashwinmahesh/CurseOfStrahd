@@ -45,7 +45,6 @@
 	"ui/dialogue/dialogue_ui.gd": 5,
 	"ui/exploration/recap.gd": 1,
 	"ui/screens/area_map.gd": 1,
-	"ui/screens/pause_menu.gd": 1,
 	"ui/screens/rest_screen.gd": 1,
 	"ui/screens/saves_screen.gd": 2,
 	"ui/screens/travel_screen.gd": 5,

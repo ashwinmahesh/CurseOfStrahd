@@ -1,7 +1,7 @@
 extends Node
 ## The inventory's categories, rarity borders and Attuned filter (inventory-ui lane): a pack with potions of every rarity,
 ## quest items, magic items of each rarity and some attuned, then the screens one shot each. LANE_ONLY=all,magic,potions,
-## rarities,rarity_filter,consumables,scrolls,quest,attuned,shop,shop_potions limits the shots; the tabs this build doesn't have are skipped (so the same scene
+## rarities,rarity_filter,consumables,scrolls,quest,attuned,shop,shop_potions,shop_filters,shop_buy_potions limits the shots; the tabs this build does not have are skipped (so the same scene
 ## takes the "before" shots on an older build).
 ## make capture SCENE=res://tools/capture/inventory_ui_capture.tscn NAME=inventory-ui/after FRAMES=10
 
@@ -57,6 +57,15 @@ func _inventory(setup: Callable) -> InventoryScreen:
 	setup.call(inv)
 	inv.call("_draw")
 	return inv
+
+
+func _shop(npc_id: String) -> ShopScreen:
+	root.call("open_shop", npc_id)
+	# Shops are independent overlays, not GameRoot.screen. An earlier one may await queue_free.
+	for child in root.get_children():
+		if child is ShopScreen and not child.is_queued_for_deletion():
+			return child as ShopScreen
+	return null
 
 
 func _has_tab(name_: String) -> bool:
@@ -136,15 +145,35 @@ func capture_shots(tool: Node, out: String) -> void:
 			inv.selected = "ring_of_telekinesis")
 		await _shoot(tool, "%s_attuned.png" % out)
 		root.call("close_screen")
+	if _wants("item_card") and MobileDevice.enabled():
+		var card := _inventory(func(inv: InventoryScreen) -> void: inv.selected = "ring_of_protection")
+		card.mobile.pick()
+		await _shoot(tool, "%s_item_card.png" % out)
+		root.call("close_screen")
 	if _wants("shop"):
-		root.call("open_shop", "gunther_arasek")
-		var shop := root.find_child("ShopScreen", true, false) as ShopScreen
+		var shop := _shop("gunther_arasek")
 		if shop != null:
+			if MobileDevice.enabled():
+				shop.mobile_side = "Sell"
 			shop.call("set_only_buys", false)
 			await _shoot(tool, "%s_shop.png" % out)
+			if MobileDevice.enabled() and _wants("shop_filters"):
+				shop.mobile_filters_open = true
+				shop.call("_draw")
+				await _shoot(tool, "%s_shop_filters.png" % out)
+				shop.mobile_filters_open = false
+				shop.call("_draw")
 			if _has_tab("Potions") and _wants("shop_potions"):
 				shop.call("pick_filter", "Potions")
 				await _shoot(tool, "%s_shop_potions.png" % out)
 			shop.call("pick_filter", "All")
 			shop.call("set_only_buys", true)
 			shop.queue_free()
+
+	if _wants("shop_buy_potions") and MobileDevice.enabled():
+		var merchant := _shop("father_lucian")
+		if merchant != null:
+			merchant.mobile_side = "Buy"
+			merchant.pick_ware_filter("Potions")
+			await _shoot(tool, "%s_shop_buy_potions.png" % out)
+			merchant.queue_free()

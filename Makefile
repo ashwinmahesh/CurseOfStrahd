@@ -70,10 +70,7 @@ slots-test:
 ## (tools/release/mac_app.py; Godot's own macOS export wants ETC2/ASTC textures we don't import), zipped for download.
 ## Needs the 4.7.2 export templates installed. make release [OUT=<folder>] [VERSION=1.0.0]; OUT defaults to ../strahd-builds.
 RELEASE_OUT = $(abspath $(or $(OUT),../strahd-builds))
-.PHONY: release ios-pipeline-test
-ios-pipeline-test:
-	python3 -m unittest discover -s tests/tools -p 'test_ios_*.py' -v
-
+.PHONY: release
 release:
 	@$(FRESH)
 	mkdir -p "$(RELEASE_OUT)/windows" "$(RELEASE_OUT)/macos"
@@ -81,6 +78,53 @@ release:
 	python3 tools/release/mac_app.py --pck "$(RELEASE_OUT)/windows/CurseOfStrahd.pck" --out "$(RELEASE_OUT)/macos" --version $(or $(VERSION),1.0.0)
 	rm -f "$(RELEASE_OUT)/CurseOfStrahd-windows.zip"
 	cd "$(RELEASE_OUT)/windows" && zip -q -6 -r ../CurseOfStrahd-windows.zip CurseOfStrahd.exe CurseOfStrahd.pck
+
+# Native iPhone/iPad build (docs/releases/ios.md). Imports into a fresh, separate staging project only.
+IOS_OUT ?= $(abspath ../strahd-builds/ios)
+IOS_GALLERY_OUT ?= $(abspath ../strahd-builds/ios-gallery)
+.PHONY: ios-gallery
+ios-gallery:
+	GODOT="$(GODOT)" python3 tools/release/ios_gallery.py --source-output "$(IOS_OUT)" --output "$(IOS_GALLERY_OUT)"
+
+.PHONY: ios-native-test ios-check ios-prepare ios-export ios-archive ios-report ios-test ios-simulator-export ios-simulator-build ios-game-test
+ios-game-test:
+	python3 tools/release/ios.py simulator-test --output "$(IOS_OUT)" --device "$(IOS_DEVICE)" $(if $(IOS_RESULT),--result "$(IOS_RESULT)",)
+
+ios-native-test:
+	GODOT="$(GODOT)" python3 tools/release/ios_probe.py --output "$(IOS_OUT)" --device "$(IOS_DEVICE)"
+
+ios-check:
+	GODOT="$(GODOT)" python3 tools/release/ios.py check
+
+ios-prepare:
+	python3 tools/release/ios.py prepare --output "$(IOS_OUT)"
+
+ios-export:
+	GODOT="$(GODOT)" python3 tools/release/ios.py export --output "$(IOS_OUT)"
+
+ios-simulator-export:
+	GODOT="$(GODOT)" python3 tools/release/ios.py export --simulator --output "$(IOS_OUT)"
+
+ios-simulator-build:
+	python3 tools/release/ios.py simulator-build --output "$(IOS_OUT)"
+
+ios-archive:
+	python3 tools/release/ios.py archive --output "$(IOS_OUT)"
+
+ios-report:
+	python3 tools/release/ios.py report --app "$(IOS_APP)"
+
+.PHONY: ios-pipeline-test
+ios-pipeline-test: ios-test
+
+ios-test:
+	python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
+
+## Reuse the macOS icon artwork in an opaque iOS canvas; requires Pillow only when regenerating.
+.PHONY: ios-icon
+ICON_PYTHON ?= python3
+ios-icon:
+	$(ICON_PYTHON) tools/release/make_icon.py --ios-only
 
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:

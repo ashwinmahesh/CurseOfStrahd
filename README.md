@@ -14,6 +14,10 @@ below list what's in it, and [curseofstrahd.app](https://curseofstrahd.app) has 
 
 It's built in Godot 4 with typed GDScript.
 
+An iPhone and iPad development port is underway. The [iOS build instructions](docs/releases/ios.md) cover isolated asset
+preparation, Xcode export, and the current limits; [the implementation plan](docs/plans/ios_support.md) tracks
+the remaining touch, layout, recovery, and device-testing work. Build 1.0.0 (2001) has passed Apple processing for App Store Connect/TestFlight testing; a public iOS release is not yet available.
+
 > **An unofficial fan game.** Curse of Strahd (this game) is a free, non-commercial fan project made by one fan. It is
 > not made, approved, endorsed or sponsored by Wizards of the Coast LLC or Hasbro, Inc., and it is not affiliated with
 > them in any way. It is not for sale and never will be. *Dungeons & Dragons*, *D&D*, *Curse of Strahd* and
