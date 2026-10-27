@@ -337,10 +337,17 @@ Python virtual environment. The standard tools required are Python 3, full Xcode
 and export templates.
 
 The downloaded 4.7.2 template's simulator library was Intel-only despite its universal manifest. The simulator
-build helper checks the actual architectures and, only when ARM64 is missing, verifies and builds the pinned
-4.7.2 engine source, then combines the two simulator slices in the generated project. It does not alter installed
-templates or the device engine. `simulator-engine.json` records this provenance; `IOS_ENGINE_CACHE` relocates
-the reusable engine cache. Compatibility/software rendering remains separate from device Metal qualification.
+build helper checks actual architectures and a hash-verified build profile before reusing an ARM64 slice.
+Otherwise it verifies the pinned 4.7.2 source archive and applies two guarded, idempotent simulator-only source
+fixes: the UIKit drawable scale and Godot's screen scale both use logical points. Touch, safe-area and keyboard
+coordinates therefore follow the same scale. This avoids a full Retina software drawable and its final upscale;
+changing only the 3D render scale did not resolve the tablet opening delay in the retained native diagnosis.
+The helper rebuilds ARM64 and retains the upstream Intel slice. It does not alter installed templates, the
+physical-device library or desktop rendering. Device-library hashes are checked before and after replacement.
+`simulator-engine.json` records the source, patch, library and device hashes; the isolated framework also keeps
+its reuse profile. An unknown source hunk or mismatched profile cannot silently reuse an old ARM64 binary.
+`IOS_ENGINE_CACHE` relocates the reusable engine cache. Compatibility/software rendering remains separate from
+device Metal qualification; simulator results are not physical-device performance measurements.
 
 A small fixture runs real native utility UI tests without waiting for all campaign textures to import:
 
