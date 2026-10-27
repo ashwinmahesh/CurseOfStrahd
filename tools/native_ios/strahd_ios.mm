@@ -198,10 +198,14 @@ public:
             NSMutableArray *order = [NSMutableArray array];
             NSMutableArray *elements = [NSMutableArray array];
             NSMutableDictionary *next = [NSMutableDictionary dictionary];
+            BOOL semanticChanged = NO;
             for (NSDictionary *item in snapshot[@"items"]) {
                 NSString *key = [item[@"id"] description];
                 StrahdAccessibilityElement *element = accessibilityItems[key];
                 if (!element) element = [[StrahdAccessibilityElement alloc] initWithAccessibilityContainer:accessibilityView];
+                NSString *previousValue = element.accessibilityValue;
+                NSString *previousLabel = element.accessibilityLabel;
+                UIAccessibilityTraits previousTraits = element.accessibilityTraits;
                 element.command = [NSString stringWithFormat:@"%@:%@", snapshot[@"revision"], key];
                 element.accessibilityIdentifier = key;
                 element.accessibilityLabel = item[@"label"];
@@ -213,6 +217,9 @@ public:
                 if ([role isEqualToString:@"slider"]) traits = UIAccessibilityTraitAdjustable;
                 if ([item[@"disabled"] boolValue]) traits |= UIAccessibilityTraitNotEnabled;
                 if ([item[@"selected"] boolValue]) traits |= UIAccessibilityTraitSelected;
+                semanticChanged |= previousTraits != traits
+                    || ![(previousValue ?: @"") isEqualToString:(element.accessibilityValue ?: @"")]
+                    || ![(previousLabel ?: @"") isEqualToString:(element.accessibilityLabel ?: @"")];
                 element.accessibilityTraits = traits;
                 NSArray *frame = item[@"frame"];
                 CGRect bounds = accessibilityView.bounds;
@@ -227,7 +234,9 @@ public:
             accessibilityOrder = order;
             accessibilityItems = next;
             accessibilityView.accessibilityElements = elements;
-            if (changed && assistiveAccessEnabled.load()) UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+            // The projection is already opt-in (assistive access or native testing). State changes on
+            // retained custom elements also invalidate client snapshots, without moving VoiceOver focus.
+            if (changed || semanticChanged) UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
         });
     }
     bool assistive_access_enabled() { return assistiveAccessEnabled.load(); }
