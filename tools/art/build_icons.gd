@@ -12,7 +12,10 @@ extends SceneTree
 ## there is touched.
 ## Run: godot --headless --path . --script res://tools/art/build_icons.gd [-- --ui | --kind=<spells|items|features>]
 
+## The core's catalog (and its tiles), then the game's own (for its own items), each built into its own folder.
 const CATALOG := "res://addons/dnd_core/art/icons.json"
+const GAME_CATALOG := "res://art/icons.json"
+const GAME_OUT := "res://art/icons/"
 const PACK := "res://addons/dnd_core/art/sourced/game_icons/icons/ffffff/transparent/1x1/"
 const OUT := "res://addons/dnd_core/art/icons/"
 const SIZE := 128
@@ -32,8 +35,13 @@ const IMPORT := "[remap]\n\nimporter=\"texture\"\ntype=\"CompressedTexture2D\"\n
 
 
 func _init() -> void:
-	var catalog := JSON.parse_string(FileAccess.get_file_as_string(CATALOG)) as Dictionary
-	var tints := catalog.get("tints", {}) as Dictionary
+	var core_catalog := JSON.parse_string(FileAccess.get_file_as_string(CATALOG)) as Dictionary
+	var tints := (core_catalog.get("tints", {}) as Dictionary).duplicate()
+	var layers: Array[Dictionary] = [{"catalog": core_catalog, "out": OUT}]
+	if FileAccess.file_exists(GAME_CATALOG):
+		var own := JSON.parse_string(FileAccess.get_file_as_string(GAME_CATALOG)) as Dictionary
+		tints.merge(own.get("tints", {}) as Dictionary, true)
+		layers.append({"catalog": own, "out": GAME_OUT})
 	var missing: Array[String] = []
 	var written := 0
 	# `-- --ui` writes only the menu glyphs, `-- --kind=<kind>` only that kind's tiles.
@@ -46,9 +54,30 @@ func _init() -> void:
 		kinds.append(only)
 	elif not "--ui" in OS.get_cmdline_user_args():
 		kinds = KINDS
+	for layer in layers:
+		written += _build_layer(layer["catalog"] as Dictionary, str(layer["out"]), kinds, tints, missing)
+	var glyphs := core_catalog.get("ui", {}) as Dictionary if only == "" else {}
+	for key: String in glyphs:
+		var glyph_path := PACK + str(glyphs[key]) + ".svg"
+		var img := Image.new()
+		if not FileAccess.file_exists(glyph_path) or img.load_svg_from_string(glyph(FileAccess.get_file_as_string(glyph_path)), UI_SIZE / 512.0) != OK:
+			missing.append("ui/%s: %s" % [key, glyphs[key]])
+			continue
+		var png := UI_OUT + key + ".png"
+		img.save_png(png)
+		written += 1
+	for m in missing:
+		printerr("icons: no silhouette or tint for " + m)
+	print("icons: %d tiles written" % written)
+	quit(1 if not missing.is_empty() else 0)
+
+
+## One catalog's tiles into its own folder; tiles there whose key left that catalog are removed. Returns how many were written.
+func _build_layer(catalog: Dictionary, out_dir: String, kinds: Array[String], tints: Dictionary, missing: Array[String]) -> int:
+	var written := 0
 	for kind in kinds:
 		var keys := catalog.get(kind, {}) as Dictionary
-		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT + kind))
+		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(out_dir + kind))
 		for key: String in keys:
 			var entry := str(keys[key])
 			var glyph_path := PACK + entry.get_slice("@", 0) + ".svg"
@@ -61,29 +90,16 @@ func _init() -> void:
 			if img.load_svg_from_string(svg, SIZE / 512.0) != OK:
 				missing.append("%s/%s: %s did not rasterize" % [kind, key, keys[key]])
 				continue
-			var png := OUT + "%s/%s.png" % [kind, key]
+			var png := out_dir + "%s/%s.png" % [kind, key]
 			img.save_png(png)
 			if not FileAccess.file_exists(png + ".import"):
 				FileAccess.open(png + ".import", FileAccess.WRITE).store_string(IMPORT)
 			written += 1
-		for f in DirAccess.get_files_at(OUT + kind):
+		for f in DirAccess.get_files_at(out_dir + kind):
 			if f.ends_with(".png") and not keys.has(f.get_basename()):
-				DirAccess.remove_absolute(ProjectSettings.globalize_path(OUT + kind.path_join(f)))
-				DirAccess.remove_absolute(ProjectSettings.globalize_path(OUT + kind.path_join(f + ".import")))
-	var glyphs := catalog.get("ui", {}) as Dictionary if only == "" else {}
-	for key: String in glyphs:
-		var glyph_path := PACK + str(glyphs[key]) + ".svg"
-		var img := Image.new()
-		if not FileAccess.file_exists(glyph_path) or img.load_svg_from_string(glyph(FileAccess.get_file_as_string(glyph_path)), UI_SIZE / 512.0) != OK:
-			missing.append("ui/%s: %s" % [key, glyphs[key]])
-			continue
-		var png := UI_OUT + key + ".png"
-		img.save_png(png)
-		written += 1
-	for m in missing:
-		printerr("icons: no silhouette or tint for " + m)
-	print("icons: %d tiles written to %s" % [written, OUT])
-	quit(1 if not missing.is_empty() else 0)
+				DirAccess.remove_absolute(ProjectSettings.globalize_path(out_dir + kind.path_join(f)))
+				DirAccess.remove_absolute(ProjectSettings.globalize_path(out_dir + kind.path_join(f + ".import")))
+	return written
 
 
 ## The tile as one SVG: background, the glyph with its outline (a halo for spells, a drop shadow for items), then the

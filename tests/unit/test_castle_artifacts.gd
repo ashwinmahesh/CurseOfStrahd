@@ -46,7 +46,7 @@ func test_the_three_items_are_book_items_checked_twice() -> void:
 		assert_true(note.contains("dnd5e.wikidot.com") and note.contains("5e.tools"), "%s names both sources it was checked against" % id)
 		assert_true(MagicItems.needs_attunement(d), "%s needs attunement" % id)
 		assert_false(bool((d.get("treasure", {}) as Dictionary).get("random", true)), "%s stays off the random tables" % id)
-		assert_true(FileAccess.file_exists("res://addons/dnd_core/art/icons/items/%s.png" % str(d.get("icon", id))), "%s has its icon" % id)
+		assert_true(ArtPaths.exists("art/icons/items/%s.png" % str(d.get("icon", id))), "%s has its icon" % id)
 	assert_eq(str(_comp().item_data(ICON)["magic"]["attunement"]), "by a creature of good alignment")
 	assert_eq(float(_comp().item_data(ICON)["weight_lb"]), 10.0, "ten pounds of silver")
 	assert_eq(str((_comp().item_data(THIGHBONE)["weapon"] as Dictionary)["damage"]), "1d6", "a mace's damage")

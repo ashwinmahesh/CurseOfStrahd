@@ -1,0 +1,33 @@
+{
+ "items": {
+  "coffin": "lorc/coffin@wood",
+  "diamond": "lorc/cut-diamond@glass",
+  "diamond_dust": "lorc/powder@glass",
+  "dream_pastry": "delapouite/croissant@leather",
+  "durst_attic_key": "lorc/skeleton-key@iron",
+  "gold_dust": "delapouite/powder-bag@gold",
+  "gulthias_staff": "lorc/evil-tree@wood",
+  "holy_symbol_of_ravenkind": "lorc/gem-pendant@silver",
+  "icon_of_ravenloft": "delapouite/kneeling@silver",
+  "incense": "lorc/incense@amber",
+  "jade_dust": "lorc/powder@green",
+  "jeweled_electrum_spork": "lorc/spoon@gold",
+  "onyx": "lorc/gems@shadow",
+  "pedlars_spade_head": "skoll/trench-spade@iron",
+  "pidlwicks_key": "lorc/skeleton-key@gold",
+  "rival_monster_guide": "lorc/book-cover@paper",
+  "ruby_dust": "lorc/powder@red",
+  "saint_markovias_thighbone": "delapouite/bone-mace@bone",
+  "silver_dust": "delapouite/powder-bag@silver",
+  "silvius_wedding_cask": "delapouite/barrel@wood",
+  "st_andrals_bones": "lorc/crossed-bones@bone",
+  "stanimirs_plum_wine": "delapouite/wine-bottle@berry",
+  "sunsword": "lorc/sword-hilt@gold",
+  "tiny_brass_spectacles": "lorc/spectacles@gold",
+  "tome_of_strahd": "lorc/evil-book@red",
+  "vanity_puppet": "lorc/puppet@cloth",
+  "wine_champagne_du_le_stomp": "delapouite/wine-bottle@bottle",
+  "wine_purple_grapemash": "delapouite/wine-bottle@berry",
+  "wine_red_dragon_crush": "lorc/brandy-bottle@red"
+ }
+}

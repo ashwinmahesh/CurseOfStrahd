@@ -294,6 +294,6 @@ func test_the_interface_warms_once_under_the_first_cover() -> void:
 	p._icons = [["features", "dash"]] as Array[Array]
 	p._warm_ui()
 	assert_true(PlacePreload._ui_warm, "done for the session")
-	assert_true(Icons._cache.has(Icons.DIR + "features/dash.png"), "the Dash tile is in Icons' cache")
+	assert_true(Icons._cache.has(Icons.path("features", "dash")), "the Dash tile is in Icons' cache")
 	assert_true(UiParts._figure_font != null, "the figures' font is read")
 	PlacePreload._ui_warm = was

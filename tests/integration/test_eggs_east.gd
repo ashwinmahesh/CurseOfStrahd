@@ -135,7 +135,7 @@ func test_the_marsh_slab_holds_the_pedlars_last_tin_and_his_spade_head() -> void
 	assert_eq(str(item["category"]), "gear")
 	assert_eq(float(item["cost_gp"]), 25.0)
 	assert_true(Compendium.playable(item))
-	assert_true(FileAccess.file_exists("res://addons/dnd_core/art/icons/items/pedlars_spade_head.png"), "its icon is framed")
+	assert_true(ArtPaths.exists("art/icons/items/pedlars_spade_head.png"), "its icon is framed")
 
 
 func test_the_jar_marked_do_not_turns_to_face_whoever_looks_at_it() -> void:
