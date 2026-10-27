@@ -31,6 +31,19 @@ an engine revision without mobile support. No merge or new Apple upload is part 
 | Native evidence must match the port | A fresh full-game export uses the new layout and strict iPhone/iPad journeys. Earlier source-pinned results remain separate; see the qualification status below. |
 | Authorship and hardware limits | Commits use the existing Ashwin author/committer identity without generated/coauthor trailers. Physical Metal timing/thermals, physical controller and assistive-technology sign-off, and actual Stage Manager remain unverified; the MR stays draft. |
 
+
+| Earlier review follow-up | Resolution |
+| --- | --- |
+| Mobile inventory's private-field coupling | The mobile builder now uses the host screen's public `mobile_*` access/mutation helpers; it has no `screen._...` accesses. |
+| Unused SaveSystem `_move` | Removed after the autosave rotation rewrite; no dead helper remains. |
+| Required-reason API privacy declarations | The preset declares file timestamp, system boot time and disk-space reasons. The actual new simulator package contains C617.1, 35F9.1 and E174.1, with tracking disabled. The retained 1.0.1 upload log has no ITMS-91053 entry; this port has not been uploaded, so no new Apple acceptance is claimed. |
+| README processing/download wording | Updated to 1.0.1 (4401), clearly distinguishing Apple processing for internal testing from a public iOS download, and distinguishing old-layout evidence from this migration. |
+| Mobile settings keys | `ios_reduce_motion` and `ios_haptics` remain intentionally additive, mobile-only preferences. No device smoothness or thermal result is inferred from the 30 fps cap. |
+| Atomicity on other operating systems | The `.bak` recovery path and its tests remain. Cross-platform crash atomicity has not been qualified; iOS/simulator evidence does not establish Windows filesystem behavior. |
+| Listing workflow protection suggestion | Listing changes still require the explicit manual `update-listing` operation; PR CI cannot edit the listing. A new protected Environment/reviewer gate was considered but not created, and no such protection is claimed. No listing write ran in this follow-up. |
+| Splitting marketing/listing changes | The owner explicitly requested one MR. Listing tools/assets remain in their separate directories within MR #5, with their existing provenance. No second review is kept open. |
+| App icon blob/LFS consistency | The iOS icon remains derived from the macOS artwork, using the existing plain-blob policy for `art/ui`; marketing JPEG/video files retain their LFS policy. |
+
 ## Qualification status
 
 The fresh native artifact was exported from game runtime source `20bfef880a6fa52bf2f62f9f98206cbf1eb75126` and
@@ -43,15 +56,16 @@ orientations plus resizable iPad policy pass. It uses the native adapter compile
 Godot 4.7.2 simulator framework. This is Compatibility/software GLES simulation, not physical Metal qualification.
 
 Python iOS tooling passed **50/50**, check-planner regression **1/1**, and the initial focused checks **16/16**.
-The first required check's quest-query and leaked-display-preference failures are retained. Required checks are
-being rerun on latest main. Native qualification includes the original 11 journeys with unchanged assertions and
+The first required check's quest-query and leaked-display-preference failures are retained. Required `IMPORT_HEADLESS=1 make check JOBS=1` passed **217/217** tests, including compilation,
+159-script lint, 2,567-file data validation and target dry runs. Its elapsed 31m50 includes the shared-slot queue;
+it is not a device-performance measurement. Native qualification includes the original 11 journeys with unchanged assertions and
 timeouts, plus rarity-filter recovery on each device (13 cases total). The four finalized phone cases on the
 immediately preceding source passed; the latest-main full export is getting its own results directory.
 
 A supplemental current-main regression run passed **76/77**. The remaining Temple parlour-furniture assertion has
 unchanged location/catalog/generator inputs, with hashes recorded in `inherited-interior-failure.json`. No reference
 main runtime was executed, and no desktop scenery or assertion was changed. The latest asset-move golden, portrait,
-sprite and engine-name regressions are also being checked separately.
+sprite and engine-name regressions passed **34/34** separately.
 
 Twenty-three original approved offscreen Mac captures retain individual source pairs and hashes: the first 20
 use `5f4c74019` / `ffe274a1`; the three query-fixed exploration views use `48dcd6d82` / `e5ba9d81`. Native XCTest PNGs
