@@ -677,7 +677,8 @@
         }
       ],
       "surprise": "",
-      "flag": "vault_guardian_destroyed"
+      "flag": "vault_guardian_destroyed",
+      "lair": true
     },
     {
       "id": "vault_guardian",
@@ -695,7 +696,8 @@
         }
       ],
       "surprise": "",
-      "flag": "vault_guardian_destroyed"
+      "flag": "vault_guardian_destroyed",
+      "lair": true
     },
     {
       "id": "vosk_unmasked",

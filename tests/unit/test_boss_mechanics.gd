@@ -436,6 +436,26 @@ func test_the_new_lairs() -> void:
 		assert_eq((m.get("lair_actions", []) as Array).size(), 2, "%s has two lair actions" % m["id"])
 
 
+## Boss redesign plan, group 5 (owner, 2026-10-27: "Build it"): the amber golems strike, bolt or stride between the
+## heroes' turns, two uses a round, and the temple is their lair: amber hardens round a foe or bursts into shards.
+func test_the_amber_golems_have_legendary_actions_and_a_lair() -> void:
+	var e := _field()
+	var golem := TestCombat.foe(e, "amber_golem", Vector2i(3, 3))
+	assert_eq(e.legendary.per_round(golem), 2, "two uses a round")
+	var kinds := e.legendary.options(golem).map(func(o: Variant) -> String: return "move" if bool((o as Dictionary).get("move", false)) else "strike")
+	assert_eq(kinds, ["strike", "strike", "move"], "a Slam, a Force Bolt or a stride")
+	var m := Compendium.shared().get_entry("monsters", "amber_golem")
+	assert_eq((m.get("lair_actions", []) as Array).size(), 2, "two lair actions")
+	var fights := {"amber_temple_entrance": ["sentinel_wakes", "sentinel_stops_you"], "amber_temple_vault": ["vault_guardian"]}
+	var lairs := 0
+	for loc: String in fights:
+		for enc: Variant in Compendium.shared().get_entry("locations", loc)["encounters"]:
+			if str((enc as Dictionary)["id"]) in (fights[loc] as Array):
+				assert_true(bool((enc as Dictionary).get("lair", false)), "%s %s is a lair fight" % [loc, (enc as Dictionary)["id"]])
+				lairs += 1
+	assert_eq(lairs, 6, "every version of the three fights")
+
+
 # --- Lair actions ------------------------------------------------------------------------------------------------
 
 func test_the_lair_acts_on_initiative_20_losing_ties_and_never_twice_the_same() -> void:

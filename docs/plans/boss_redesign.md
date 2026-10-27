@@ -53,7 +53,9 @@ copies its sitter). Vosk already counters.
 - The hags' Coven Spellcasting: done 2026-10-27 (owner: "Build it"). The three hags' last stand puts each in the night
   hag's `coven` state: the 2014 Monster Manual's shared spells and slots while two sisters stand within 30 ft
   (MonsterActions.coven_casting; docs/rules/deviations.md).
-- The amber golems (Sentinel, Vault Guardian): legendary actions and a lair of their own (the amber hardens round a foe).
+- The amber golems (Sentinel, Vault Guardian): done 2026-10-27 (owner: "Build it"). Two legendary uses a round (Amber
+  Fist, Amber Bolt, Grinding Stride) and a lair in all three of their fights: the amber hardens round a foe (Str save
+  or Restrained) or bursts into shards at two (Dex save, 2d10 Piercing).
 - The brides (Volenta, Ludmilla, Anastrasya): done 2026-10-27 (owner: "stop counting them as bosses, but could we give
   them each the vampire stat block?"): each fights on the Vampire's block in her own look, marked `boss: false`.
 

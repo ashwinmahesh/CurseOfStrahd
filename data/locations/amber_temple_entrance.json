@@ -763,7 +763,8 @@
         }
       ],
       "surprise": "",
-      "flag": "sentinel_destroyed"
+      "flag": "sentinel_destroyed",
+      "lair": true
     },
     {
       "id": "sentinel_wakes",
@@ -785,7 +786,8 @@
         }
       ],
       "surprise": "",
-      "flag": "sentinel_destroyed"
+      "flag": "sentinel_destroyed",
+      "lair": true
     },
     {
       "id": "sentinel_wakes",
@@ -806,7 +808,8 @@
         }
       ],
       "surprise": "",
-      "flag": "sentinel_destroyed"
+      "flag": "sentinel_destroyed",
+      "lair": true
     },
     {
       "id": "sentinel_stops_you",
@@ -828,7 +831,8 @@
         }
       ],
       "surprise": "",
-      "flag": "sentinel_destroyed"
+      "flag": "sentinel_destroyed",
+      "lair": true
     },
     {
       "id": "frozen_watch",

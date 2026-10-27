@@ -4,7 +4,7 @@
   "source": {
     "book": "custom",
     "edition": "2024",
-    "note": "An amber guardian for the Amber Temple on the 2024 Stone Golem's numbers (SRD 5.2.1), under its own name."
+    "note": "An amber guardian for the Amber Temple on the 2024 Stone Golem's numbers (SRD 5.2.1), under its own name. Legendary actions and a lair of the temple's own (owner, 2026-10-27, the boss plan's last part)."
   },
   "size": "large",
   "type": "construct",
@@ -144,6 +144,80 @@
         "slow"
       ],
       "summary": "Recharge 5-6. Casts Slow (Con, DC 17) as a Bonus Action."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "amber_fist",
+        "name": "Amber Fist",
+        "cost": 1,
+        "action": "slam",
+        "summary": "Makes one Slam attack."
+      },
+      {
+        "id": "amber_bolt",
+        "name": "Amber Bolt",
+        "cost": 1,
+        "action": "force_bolt",
+        "summary": "Makes one Force Bolt attack."
+      },
+      {
+        "id": "grinding_stride",
+        "name": "Grinding Stride",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to its Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "lair_actions": [
+    {
+      "id": "amber_hardens",
+      "name": "The Amber Hardens",
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 15,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Amber wells up round one foe's legs and sets: DC 15 Str save or Restrained until the end of the golem's next turn.",
+      "text": "Liquid amber wells up out of the floor round one creature the golem can see within 120 feet and hardens. It makes a DC 15 Strength saving throw or has the Restrained condition until the end of the golem's next turn."
+    },
+    {
+      "id": "amber_shards",
+      "name": "Amber Shards",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d10",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Shards burst from the amber walls at two foes: DC 15 Dex save, 2d10 Piercing, half on a success.",
+      "text": "The amber in the walls cracks and sprays shards at up to two creatures the golem can see within 120 feet. Each makes a DC 15 Dexterity saving throw, taking 11 (2d10) Piercing damage on a failure or half as much on a success."
     }
   ],
   "spellcasting": {
