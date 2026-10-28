@@ -39,6 +39,25 @@ Motion is off in headless runs and still captures (UiMotion): the die shows at r
 fires on the next frame, so awaiting it never stalls a test. The die's shader and numerals are readied when the game
 starts (`D20Die.warm`), so the first roll doesn't hitch. The 3D world draws only while the die moves.
 
+### A d20 rolled again, and what is added after the roll (Ashwin, 2026-10-26)
+"Do inspiration re-rolls work for conversational checks? ... Also we should display the same green dice roll when rerolling for
+inspiration" and "Same thing with other abilities which add to rolls (ex dark ones own luck, say the number rolled from that
+and whether it resulted in a success or not)."
+- `D20Test` keeps each reroll (`rerolls`: the source, the dice before and after, the kept die before and after) and each
+  addition (`added`: the source, the amount, the total once it was added and whether the roll then succeeded). Heroic Inspiration
+  and Lucky Foot roll **one die** again (`reroll_one`), so under Advantage the lower die is rolled and the other stays.
+- The roll Dictionary carries both (`rerolls`, `added`), from `from_test` and from a conversation's check beat. `DiceRoll`
+  throws the die as it first landed, sets it aside (dimmed, "Heroic Inspiration: the d20 is thrown again") and throws it again
+  for each reroll, the words coming once the last lands; a click lands every throw at once.
+- The words give each throw ("d20: 4 · Heroic Inspiration rerolled: 17 · Str modifier +2 ...") and, under them, one line for each
+  addition: "Dark One's Own Luck +7: the total is now 18, a success" (a save: "so it saves"; an attack: "it hits" or "it still
+  misses"; still short: "still a failure").
+- In a conversation an aid spent on the check goes on from the roll shown (`roll(roll_, continuing)`): a reroll throws only
+  the new die, an addition (no new d20) changes the words and leaves the die where it is. In a fight a reroll made before the
+  roll is shown (a save with Luck, Indomitable, Heroic Inspiration) is thrown in turn the same way.
+- Captures: `make capture SCENE=res://tools/capture/reroll_die_capture.tscn NAME=reroll_die FRAMES=10` (the words, the die at rest).
+  Tests: `tests/integration/test_dice_reroll_display.gd`, and in the core `tests/unit/test_d20_rerolls.gd`.
+
 ### The roll Dictionary
 `DiceRoll.from_test(t: D20Test, who, label, kind = "")` builds one; `DiceRoll.from_beat(beat)` from a conversation's
 check beat. Keys: `kind` ("check", "save", "death_save", "attack"), `natural` (the kept d20), `rolls` (both d20s under
