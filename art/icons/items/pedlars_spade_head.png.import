@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bm0ssjet2k054"
-path="res://.godot/imported/pedlars_spade_head.png-b6eefeeacc9375224605946b74c74e74.ctex"
+path="res://.godot/imported/pedlars_spade_head.png-1c1dba6fb5538ee22dc98690f747c948.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/pedlars_spade_head.png"
-dest_files=["res://.godot/imported/pedlars_spade_head.png-b6eefeeacc9375224605946b74c74e74.ctex"]
+source_file="res://art/icons/items/pedlars_spade_head.png"
+dest_files=["res://.godot/imported/pedlars_spade_head.png-1c1dba6fb5538ee22dc98690f747c948.ctex"]
 
 [params]
 

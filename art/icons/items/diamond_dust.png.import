@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c0jbtxv0lhf6e"
-path="res://.godot/imported/diamond_dust.png-1dadd637be963e0a4275fb56c210f001.ctex"
+path="res://.godot/imported/diamond_dust.png-011a54eea787f551ccc90c21a34aaa38.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/diamond_dust.png"
-dest_files=["res://.godot/imported/diamond_dust.png-1dadd637be963e0a4275fb56c210f001.ctex"]
+source_file="res://art/icons/items/diamond_dust.png"
+dest_files=["res://.godot/imported/diamond_dust.png-011a54eea787f551ccc90c21a34aaa38.ctex"]
 
 [params]
 

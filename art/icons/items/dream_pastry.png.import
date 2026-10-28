@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://besajrxjf1evp"
-path="res://.godot/imported/dream_pastry.png-875b9cdfbf9ad8667530ac7563b67ffe.ctex"
+path="res://.godot/imported/dream_pastry.png-b200375cb1c84361198256cdc172270d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/dream_pastry.png"
-dest_files=["res://.godot/imported/dream_pastry.png-875b9cdfbf9ad8667530ac7563b67ffe.ctex"]
+source_file="res://art/icons/items/dream_pastry.png"
+dest_files=["res://.godot/imported/dream_pastry.png-b200375cb1c84361198256cdc172270d.ctex"]
 
 [params]
 

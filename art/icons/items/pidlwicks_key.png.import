@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dx7y05uup8jxk"
-path="res://.godot/imported/pidlwicks_key.png-2f83cb28f2cd985401d231a972347e8a.ctex"
+path="res://.godot/imported/pidlwicks_key.png-484566f89f26bf94438f557487c3e025.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/pidlwicks_key.png"
-dest_files=["res://.godot/imported/pidlwicks_key.png-2f83cb28f2cd985401d231a972347e8a.ctex"]
+source_file="res://art/icons/items/pidlwicks_key.png"
+dest_files=["res://.godot/imported/pidlwicks_key.png-484566f89f26bf94438f557487c3e025.ctex"]
 
 [params]
 

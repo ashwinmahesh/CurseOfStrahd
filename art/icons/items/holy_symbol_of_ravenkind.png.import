@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dt755sesjc0wc"
-path="res://.godot/imported/holy_symbol_of_ravenkind.png-e48d495eeef809a622ccc24f9f71a425.ctex"
+path="res://.godot/imported/holy_symbol_of_ravenkind.png-809065f670d7939b8a1b944652205b49.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/holy_symbol_of_ravenkind.png"
-dest_files=["res://.godot/imported/holy_symbol_of_ravenkind.png-e48d495eeef809a622ccc24f9f71a425.ctex"]
+source_file="res://art/icons/items/holy_symbol_of_ravenkind.png"
+dest_files=["res://.godot/imported/holy_symbol_of_ravenkind.png-809065f670d7939b8a1b944652205b49.ctex"]
 
 [params]
 

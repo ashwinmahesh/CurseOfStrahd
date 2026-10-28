@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://huvib8xepwtk"
-path="res://.godot/imported/wine_purple_grapemash.png-33c0d706d243b6e2053e854b64fa46c3.ctex"
+path="res://.godot/imported/wine_purple_grapemash.png-092a3876d2d68c0baddcdaf4ec9325ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/wine_purple_grapemash.png"
-dest_files=["res://.godot/imported/wine_purple_grapemash.png-33c0d706d243b6e2053e854b64fa46c3.ctex"]
+source_file="res://art/icons/items/wine_purple_grapemash.png"
+dest_files=["res://.godot/imported/wine_purple_grapemash.png-092a3876d2d68c0baddcdaf4ec9325ed.ctex"]
 
 [params]
 

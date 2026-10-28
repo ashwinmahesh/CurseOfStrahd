@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6rlwbd6ayx8l"
-path="res://.godot/imported/incense.png-8fde871b1c20de669b918caa57ce38e8.ctex"
+path="res://.godot/imported/incense.png-4741731715f5a7f90dea74a2adabd5e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/incense.png"
-dest_files=["res://.godot/imported/incense.png-8fde871b1c20de669b918caa57ce38e8.ctex"]
+source_file="res://art/icons/items/incense.png"
+dest_files=["res://.godot/imported/incense.png-4741731715f5a7f90dea74a2adabd5e2.ctex"]
 
 [params]
 

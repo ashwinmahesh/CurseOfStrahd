@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dbxkl0ldphgkw"
-path="res://.godot/imported/jeweled_electrum_spork.png-060bcc28cf5238935736f7b8b6fd8e7b.ctex"
+path="res://.godot/imported/jeweled_electrum_spork.png-057c111b4a009f330db2157232296e85.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/jeweled_electrum_spork.png"
-dest_files=["res://.godot/imported/jeweled_electrum_spork.png-060bcc28cf5238935736f7b8b6fd8e7b.ctex"]
+source_file="res://art/icons/items/jeweled_electrum_spork.png"
+dest_files=["res://.godot/imported/jeweled_electrum_spork.png-057c111b4a009f330db2157232296e85.ctex"]
 
 [params]
 

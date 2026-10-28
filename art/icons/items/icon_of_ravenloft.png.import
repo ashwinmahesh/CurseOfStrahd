@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cag5sau51ukxt"
-path="res://.godot/imported/icon_of_ravenloft.png-e8604e89c6f6262a1072154de2ef899d.ctex"
+path="res://.godot/imported/icon_of_ravenloft.png-f0656599e490b56263e2755178a25f50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/icon_of_ravenloft.png"
-dest_files=["res://.godot/imported/icon_of_ravenloft.png-e8604e89c6f6262a1072154de2ef899d.ctex"]
+source_file="res://art/icons/items/icon_of_ravenloft.png"
+dest_files=["res://.godot/imported/icon_of_ravenloft.png-f0656599e490b56263e2755178a25f50.ctex"]
 
 [params]
 

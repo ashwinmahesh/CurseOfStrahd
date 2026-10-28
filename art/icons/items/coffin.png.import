@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://p5lpkc5j5by"
-path="res://.godot/imported/coffin.png-b67f26fb84f2c4041017fbfd1b7aaa9d.ctex"
+path="res://.godot/imported/coffin.png-bddea392dbb7927126fff672b2ea2ce6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/coffin.png"
-dest_files=["res://.godot/imported/coffin.png-b67f26fb84f2c4041017fbfd1b7aaa9d.ctex"]
+source_file="res://art/icons/items/coffin.png"
+dest_files=["res://.godot/imported/coffin.png-bddea392dbb7927126fff672b2ea2ce6.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://276pyoqvxrlo"
-path="res://.godot/imported/durst_attic_key.png-bdc9a9a53ca66571494b73db531f6183.ctex"
+path="res://.godot/imported/durst_attic_key.png-38cf8c2b454d0effc2014e2fdf7bc363.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/durst_attic_key.png"
-dest_files=["res://.godot/imported/durst_attic_key.png-bdc9a9a53ca66571494b73db531f6183.ctex"]
+source_file="res://art/icons/items/durst_attic_key.png"
+dest_files=["res://.godot/imported/durst_attic_key.png-38cf8c2b454d0effc2014e2fdf7bc363.ctex"]
 
 [params]
 

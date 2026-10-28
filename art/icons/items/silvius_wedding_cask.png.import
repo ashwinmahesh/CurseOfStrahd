@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxyo7sd887vkg"
-path="res://.godot/imported/silvius_wedding_cask.png-09155ba0d7d16b836ec74c337f18d489.ctex"
+path="res://.godot/imported/silvius_wedding_cask.png-c544e0840d67cc613c5c03d0e9a77441.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/silvius_wedding_cask.png"
-dest_files=["res://.godot/imported/silvius_wedding_cask.png-09155ba0d7d16b836ec74c337f18d489.ctex"]
+source_file="res://art/icons/items/silvius_wedding_cask.png"
+dest_files=["res://.godot/imported/silvius_wedding_cask.png-c544e0840d67cc613c5c03d0e9a77441.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvha8iat0xweo"
-path="res://.godot/imported/rival_monster_guide.png-d13669f59cb7444f1dc0cbedb042719d.ctex"
+path="res://.godot/imported/rival_monster_guide.png-92f96922f1382882ffdaa39d9ce20dc1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dnd_core/art/icons/items/rival_monster_guide.png"
-dest_files=["res://.godot/imported/rival_monster_guide.png-d13669f59cb7444f1dc0cbedb042719d.ctex"]
+source_file="res://art/icons/items/rival_monster_guide.png"
+dest_files=["res://.godot/imported/rival_monster_guide.png-92f96922f1382882ffdaa39d9ce20dc1.ctex"]
 
 [params]
 
