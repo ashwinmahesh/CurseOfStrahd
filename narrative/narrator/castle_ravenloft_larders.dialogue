@@ -353,3 +353,8 @@ cooldown 20
 
 ~ trap:brazier_trapdoor_hatch:triggered
 | A faint click under your boot is all the warning the mason left you. Then the polished stone tips.
+
+# ---------------------------------------------------------------- Resting
+
+~ rest:long:castle_ravenloft_larders
+| You rest in the cellar cold while a pot bubbles somewhere down the passage. Near midnight a cork gives way behind the bricks with a small, wet pop.

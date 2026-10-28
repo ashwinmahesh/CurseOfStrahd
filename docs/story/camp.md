@@ -84,7 +84,7 @@ fights with what it had when it lay down (the owner, 2026-10-13). They come 25 t
 from the fire, from more than one side, or 15 to 60 ft off where a cramped house has no room that far
 (data/camp/night_visitors.json): a group for the party's milestone level and the lie of the land, a die picking among
 several. A town's streets and indoors have their own (the file's `settings`: cutthroats, the churchyard's dead and
-Strahd's spawn in town; rats, shadows and the dead, and a wraith indoors, never a wolf pack in a house); in the wild,
+Strahd's spawn in town; rats, shadows and the dead, and a wraith indoors, never a wolf pack in a house; Castle Ravenloft's halls and roofs have the castle's own, bats and the dead and, from level 7, vampire spawn: `region_settings`); in the wild,
 the region's land (forest, marsh, mountain, castle). Where none can be placed, the night is just restless, as the
 rest screen's is: a Short Rest's benefits for the hour slept, and the party can try to sleep again. Those waiting at
 camp keep back from the fight. Once it's won the party lies down again by itself and sleeps the night out, an hour

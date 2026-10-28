@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_catacombs_vaults",
   "name": "Castle Ravenloft, the Lesser Vaults",
   "region": "castle_ravenloft",
+  "floor": "catacombs",
   "summary": "An older range of crypts under the catacombs, where the house buried the people it did not honour: servants, guildsmen, saints nobody visited, a warlord with his captains, a bride in webs. A stair leads up to the catacombs' lower gallery, and one crypt hides a niche that opens on the count's own tomb.",
   "text": "The stair ends in a long low passage of older stone with crypts on both sides. Some of the gates are polished. Some have been very carefully locked from the inside.",
   "map": {

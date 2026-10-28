@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_main_floor",
   "name": "Castle Ravenloft, the Main Floor",
   "region": "castle_ravenloft",
+  "floor": "ground",
   "summary": "The heart of the castle's ground floor: the entry and the vaulted great entry with the grand stairs, the guests' hall and the dining hall where Strahd entertains, the turret posts, the hall of faces with its ever-burning hearth, and the passage to the chapel and the crypt stairs. Every part of the castle is reached from here.",
   "text": "Cold stone, high vaults and dust, and somewhere an organ playing. Stairs climb, stairs descend, and every door is a little ajar, as if the house expects you.",
   "map": {

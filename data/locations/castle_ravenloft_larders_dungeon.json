@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_larders_dungeon",
   "name": "Castle Ravenloft, the Dungeon",
   "region": "castle_ravenloft",
+  "floor": "larders",
   "summary": "Under the larders: a vaulted hall, the jailers' post, two rows of cells and their prisoners, the torture chamber, a workroom where bones are made into furniture, the green furnace and its machinery, and the hall of bones, where the lord of the castle entertains.",
   "text": "Cold stone, dripping vaults and the sound of chains settling. Far off, a furnace breathes.",
   "map": {

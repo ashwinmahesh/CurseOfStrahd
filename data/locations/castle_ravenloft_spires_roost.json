@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_spires_roost",
   "name": "Castle Ravenloft, the Ravens' Roost",
   "region": "castle_ravenloft",
+  "floor": "tower",
   "summary": "The long space under the castle's roofs where hundreds of ravens roost on the beams. They hide bright things in their nests, and they watch everything.",
   "text": "Under the roof the dark is full of small sounds: feathers settling, claws shifting on wood, a hundred birds deciding what you are.",
   "map": {

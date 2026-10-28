@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_brazier_room",
   "name": "Castle Ravenloft, the Brazier Room",
   "region": "castle_ravenloft",
+  "floor": "larders",
   "summary": "Far below the dungeon, a stair that was never on the household's plans: a landing guarded by a warding glyph, a vault with a cold white brazier, a floating hourglass and two iron knights, and a long low tunnel through the black rock to the catacombs.",
   "text": "Cold stone, dripping steps and the feeling of a great many floors overhead.",
   "map": {

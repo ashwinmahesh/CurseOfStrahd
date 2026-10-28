@@ -30,6 +30,12 @@ cooldown 0
 | You sleep in shifts with your backs to a crypt wall. Twice in the night a gate along the row opens and shuts, and nobody goes to see why.
 cooldown 0
 
+~ rest:long:castle_ravenloft_catacombs_tombs
+| You sleep on cold marble within reach of the old king's vault and his younger son's white tomb. The stone guardians keep their eyes shut all night, which is almost reassuring.
+
+~ rest:long:castle_ravenloft_catacombs_vaults
+| You make your beds among the tombs of people the family preferred to forget. Something dry scratches inside a sealed wall until an hour before dawn, then gives up.
+
 # ---------------------------------------------------------------- The catacombs
 
 ~ enter:cat_upper_gallery

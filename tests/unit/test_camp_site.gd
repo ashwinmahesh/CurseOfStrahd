@@ -174,7 +174,8 @@ func test_companions_retired_from_the_roster_never_come_to_the_fire() -> void:
 func test_night_visitors_fit_the_place() -> void:
 	assert_eq(CampSite.land_of("svalich_road"), "forest", "the wild goes by the region")
 	assert_eq(CampSite.land_of("svalich_road", CampSite.TOWN), "town", "a town's streets have their own")
-	assert_eq(CampSite.land_of("castle_ravenloft", CampSite.INDOORS), "indoors", "and so does a roof")
+	assert_eq(CampSite.land_of("castle_ravenloft", CampSite.INDOORS), "castle", "the castle's halls and roofs have the castle's own (bats, the dead, vampire spawn: region_settings)")
+	assert_eq(CampSite.land_of("vallaki", CampSite.INDOORS), "indoors", "any other house has the indoors")
 	for where: String in [CampSite.TOWN, CampSite.INDOORS]:
 		for level in range(1, StoryState.LEVEL_CAP + 1):
 			var groups := CampSite.groups_for("village_of_barovia", level, where)

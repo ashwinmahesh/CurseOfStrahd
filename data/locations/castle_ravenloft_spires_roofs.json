@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_spires_roofs",
   "name": "Castle Ravenloft, the Roofs",
   "region": "castle_ravenloft",
+  "floor": "tower",
   "summary": "The roofs of Castle Ravenloft: the south tower's battlements, a walkway to the slate roof of the keep, and a narrow bridge across the drop to the north tower peak, where stone guardians crouch on the parapet.",
   "text": "Wind, and nothing between you and the valley but a parapet. Slate roofs fall away on every side, and beyond them a long, long drop.",
   "map": {

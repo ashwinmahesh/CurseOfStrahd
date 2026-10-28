@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_catacombs_strahd",
   "name": "Castle Ravenloft, Strahd's Tomb",
   "region": "castle_ravenloft",
+  "floor": "catacombs",
   "summary": "The tomb at the bottom of the castle where Strahd von Zarovich keeps his coffin and sleeps away the day. The only place in the valley where he can be ended for good.",
   "text": "A square vault at the foot of a long black stair. In the middle, on a stepped dais, a plain wooden coffin on trestles, and the smell of turned earth.",
   "map": {

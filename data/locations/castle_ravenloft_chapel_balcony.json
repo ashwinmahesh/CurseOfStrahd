@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_chapel_balcony",
   "name": "Castle Ravenloft, the King's Balcony",
   "region": "castle_ravenloft",
+  "floor": "ground",
   "summary": "A private timber gallery high above the chapel nave, where two tall thrones stand behind a low rail so the lord of the house might hear his prayers in solitude.",
   "text": "Dark timber boards run out to a low rail looking down into the dim well of the chapel nave. Two high thrones stand side by side in the dust, facing the cold stone below.",
   "map": {

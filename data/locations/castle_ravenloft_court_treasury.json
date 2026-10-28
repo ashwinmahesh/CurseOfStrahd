@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_court_treasury",
   "name": "Castle Ravenloft, the Treasury",
   "region": "castle_ravenloft",
+  "floor": "court",
   "summary": "A vault between the floors, reached by a narrow stair behind a portrait in the King's Hall. The count's hoard lies in heaps on the floor, centuries of tithes he has never needed to spend.",
   "text": "A low vault at the foot of a narrow stair. Coin lies on the floor in drifts, with chests and caskets sunk in it like rocks in snow.",
   "map": {

@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_court_belfry",
   "name": "Castle Ravenloft, the Back Way",
   "region": "castle_ravenloft",
+  "floor": "court",
   "summary": "A way that was never meant for guests, cut into the thickness of the keep's walls behind the study fireplace: a false treasury, a hall of webs and a belfry, ending in a secret stair down to the count's vault.",
   "text": "Soot, old webs and bare stone. The passage runs on in the dark between the walls of the keep, and whoever built it did not expect to be followed.",
   "map": {

@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_chapel",
   "name": "Castle Ravenloft, the Chapel",
   "region": "castle_ravenloft",
+  "floor": "ground",
   "summary": "The castle's chapel: broken pews in the dark, a window that lets in no morning, and an altar under a thick grey quilt of dust. One of the Tarokka's places, and a room where Strahd may wait for the end.",
   "text": "Pews in rows, some split, some fallen. A tall window of coloured glass, black now. A saint whose face has been cut away. An altar so deep in dust it looks soft.",
   "map": {

@@ -12,6 +12,19 @@
       "description": "Where the camp is (CampSite.setting: town or indoors) -> the land a group is for there, over the region's: a town's streets and a roof have their own visitors. The wild goes by the region.",
       "additionalProperties": {"$ref": "common.schema.json#/$defs/id"}
     },
+    "region_settings": {
+      "type": "object",
+      "description": "Region id -> setting (town, indoors) -> the land a group is for there, over `settings`: Castle Ravenloft's halls have the castle's own visitors (bats, the dead, vampire spawn), not any house's rats and shadows.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {"$ref": "common.schema.json#/$defs/id"}
+      }
+    },
+    "interrupt_on": {
+      "type": "object",
+      "description": "Region id -> how many faces of the d6 (1 to 5) break a Long Rest taken in a risky place there; a region not listed is 1. Castle Ravenloft's is 2: one night in three.",
+      "additionalProperties": {"type": "integer", "minimum": 1, "maximum": 5}
+    },
     "lands": {
       "type": "object",
       "description": "Region id -> the lie of the land a group is for (forest, marsh, mountain, castle).",

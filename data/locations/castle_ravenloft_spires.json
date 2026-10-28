@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_spires",
   "name": "Castle Ravenloft, the High Tower",
   "region": "castle_ravenloft",
+  "floor": "tower",
   "summary": "The high tower of Castle Ravenloft: a stair that winds up the inside of the tallest tower around an open well, from the main floor past the count's floor to the high landing, where one door leads to the tower rooms and one last stair to the Heart of Sorrow.",
   "text": "A stair without a rail climbs the inside of a tower so tall its top is lost in the dark. In the middle there is nothing at all: a well of black air going straight down.",
   "map": {

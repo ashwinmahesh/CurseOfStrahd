@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_catacombs",
   "name": "Castle Ravenloft, the Catacombs",
   "region": "castle_ravenloft",
+  "floor": "catacombs",
   "summary": "The crypts under the castle where the house of von Zarovich keeps its dead in rows: generals, servants, a conjurer, a jester, a champion watched by stone, and the black horse's stall. Stairs lead up to the castle and down to the oldest tombs.",
   "text": "Aisles of crypts run away into the dark in straight lines, each behind an iron gate with a name over it. The air is cold and very still.",
   "map": {

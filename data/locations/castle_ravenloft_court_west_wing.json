@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_court_west_wing",
   "name": "Castle Ravenloft, the West Wing",
   "region": "castle_ravenloft",
+  "floor": "court",
   "summary": "The Rooms of Weeping's west wing: a passage where two guards stand in alcoves before a steel door, the count's own dining hall with a wedding feast four centuries old, a closet of capes, the Hall of Heroes open to the storm, the maids' hall of eight lace beds, and the servants' rooms under the eaves, where a ladder runs down into the high tower.",
   "text": "Silver plates and crystal goblets under four centuries of grey dust.",
   "map": {

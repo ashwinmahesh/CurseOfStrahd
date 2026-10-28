@@ -305,3 +305,14 @@ cooldown 5
 
 ~ check:athletics:stack_smoke:failure
 | A thick billow of rising smoke catches you in the throat before you are ten feet down. Choking and blind, you claw your way back out into the open air.
+
+# ---------------------------------------------------------------- Resting
+
+~ rest:long:castle_ravenloft_spires
+| You sleep with your backs to the curving wall while the wind comes up the open well like breath through a flute. Every stone hums a slightly different note.
+
+~ rest:long:castle_ravenloft_spires_rooms
+| You sleep under the high eaves while glass rings softly in the next room. Above the ceiling, a thousand small claws shift their grip on the timber and settle again.
+
+~ rest:long:castle_ravenloft_spires_roost
+| You sleep under the rafters while hundreds of ravens look down without blinking. By morning someone's bootlace is gone, and a tarnished silver button lies in its place.

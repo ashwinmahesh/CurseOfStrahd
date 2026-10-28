@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_spires_rooms",
   "name": "Castle Ravenloft, the Tower Rooms",
   "region": "castle_ravenloft",
+  "floor": "tower",
   "summary": "The rooms high in the towers, off a narrow gallery: the count's bats, a stillroom of four glass vessels, a coven at its cauldron, Escher locked in his suite, and a ladder to the roofs.",
   "text": "A narrow gallery with doors on both sides. Somewhere a pot is boiling, somewhere bats are shifting, and behind one locked door somebody is humming.",
   "map": {

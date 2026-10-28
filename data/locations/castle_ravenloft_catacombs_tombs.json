@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_catacombs_tombs",
   "name": "Castle Ravenloft, the Old Tombs",
   "region": "castle_ravenloft",
+  "floor": "catacombs",
   "summary": "The oldest tombs under the castle: Sergei von Zarovich's white tomb, a hall of stone guardians, and the vault where King Barov and Queen Ravenovia lie side by side.",
   "text": "Below the crypts the stone changes: older, paler, cut with more care. Somebody loved the people buried here.",
   "map": {

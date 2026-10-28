@@ -273,6 +273,9 @@ cooldown 1
 ~ rest:long:castle_ravenloft_court
 | You sleep in shifts in a locked room off the long hall. Twice in the night footsteps stop outside the door, and wait, and go away.
 
+~ rest:long:castle_ravenloft_court_west_wing
+| You sleep down the hall from a wedding feast that has waited four hundred years for its guests. In the dark, silver clinks once against a plate.
+
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:count_desk_ball

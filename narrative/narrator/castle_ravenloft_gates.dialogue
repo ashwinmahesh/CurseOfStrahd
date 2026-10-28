@@ -217,6 +217,9 @@ once
 ~ rest:long:castle_ravenloft_chapel
 | You sleep in the pews. Twice in the night someone walks the length of the aisle, and both times there is no one there.
 
+~ rest:long:castle_ravenloft_chapel_balcony
+| You sleep behind the low rail with the empty nave dark below you. The seats of the two tall thrones smell faintly of old rain and someone else's hair.
+
 ~ rest:long:castle_ravenloft_gates
 | You sleep in the lee of the gatehouse. The castle's one lit window never goes out.
 

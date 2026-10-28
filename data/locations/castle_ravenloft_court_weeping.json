@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_court_weeping",
   "name": "Castle Ravenloft, the Rooms of Weeping",
   "region": "castle_ravenloft",
+  "floor": "court",
   "summary": "The castle's third floor, where the count lives: his bedroom and bath, the gallery where his portrait watches, the lounge where his three brides wait, the guest room where a village girl is kept, and Rahadin's bare room.",
   "text": "A long corridor lined with closed doors. Somewhere along it, always just out of sight, someone is crying very quietly.",
   "map": {

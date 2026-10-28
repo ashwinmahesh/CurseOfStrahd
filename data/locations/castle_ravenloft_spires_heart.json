@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_spires_heart",
   "name": "Castle Ravenloft, the Heart of Sorrow",
   "region": "castle_ravenloft",
+  "floor": "tower",
   "summary": "The round room at the very top of the high tower, with windows on the whole valley. In the middle, over a low dais, hangs a crystal heart the size of a man, beating slowly. It takes Strahd's wounds before he does.",
   "text": "A round room at the top of the world, windows on every side. In the middle hangs a heart of red crystal as big as a man, and it beats.",
   "map": {

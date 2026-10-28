@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_court",
   "name": "Castle Ravenloft, the Court of the Count",
   "region": "castle_ravenloft",
+  "floor": "court",
   "summary": "The castle's second floor, where the count keeps court: the long King's Hall, the audience hall and its throne, the study with a lady over the hearth, the trophy room, the accountant's office, the guardroom, and the stairs to the towers and to the rooms above.",
   "text": "A long hall of black stone hung with old banners runs the width of the keep. Tall doors open on a throne room to the north; a study, a trophy room and a clerk's office open off it; the grand stairs come up from below.",
   "map": {

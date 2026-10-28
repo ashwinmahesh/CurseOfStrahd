@@ -2,6 +2,7 @@
   "id": "castle_ravenloft_larders",
   "name": "Castle Ravenloft, the Larders of Ill Omen",
   "region": "castle_ravenloft",
+  "floor": "larders",
   "summary": "Below the main floor: the servants' hall, the kitchen where Cyrus Belview still cooks for his Master's guests, the larder, the wine cellar with one bricked-over rack, the guardroom of a watch nobody relieved, the lift winch, and the jailers' stair down to the dungeon and on to the crypts.",
   "text": "Low vaulted passages smelling of smoke, onions and something under the onions. A kitchen fire is the only warm thing for a hundred feet in any direction.",
   "map": {
