@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7el8h8hlxuqe"
-path.bptc="res://.godot/imported/wall_seeps_3_n.webp-1c1b69c6df84fe4a49451fa11b162760.bptc.ctex"
+path.bptc="res://.godot/imported/wall_seeps_3_n.webp-286e68fd0241a038375a1fc7941f42f2.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/dnd_core/art/textures/decals/wall_seeps_3_n.webp"
-dest_files=["res://.godot/imported/wall_seeps_3_n.webp-1c1b69c6df84fe4a49451fa11b162760.bptc.ctex"]
+source_file="res://art/textures/decals/wall_seeps_3_n.webp"
+dest_files=["res://.godot/imported/wall_seeps_3_n.webp-286e68fd0241a038375a1fc7941f42f2.bptc.ctex"]
 
 [params]
 

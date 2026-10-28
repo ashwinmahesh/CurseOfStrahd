@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://doe66jd8svv8o"
-path.s3tc="res://.godot/imported/vineyard_earth_2k.webp-3a94ea6e2959e7c8851aa0b99744c299.s3tc.ctex"
+path.s3tc="res://.godot/imported/vineyard_earth_2k.webp-5edf44d10502eee60495290b2ac9d0f0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/dnd_core/art/textures/wild/vineyard_earth_2k.webp"
-dest_files=["res://.godot/imported/vineyard_earth_2k.webp-3a94ea6e2959e7c8851aa0b99744c299.s3tc.ctex"]
+source_file="res://art/textures/wild/vineyard_earth_2k.webp"
+dest_files=["res://.godot/imported/vineyard_earth_2k.webp-5edf44d10502eee60495290b2ac9d0f0.s3tc.ctex"]
 
 [params]
 

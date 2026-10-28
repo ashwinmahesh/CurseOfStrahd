@@ -267,6 +267,7 @@ standin:
 ## art/anim/animations.json and run make anims ONLY=<id> GENERATE=1 for its attack.
 sprite:
 	$(BLENDER) -b --python blender/render_walk.py -- --turnaround $(abspath $(TURNAROUND)) --id $(ID) $(if $(SIDE),--side-faces $(SIDE),) $(if $(STATIC),--static,) $(if $(SAT),--saturate $(SAT),) $(if $(BODY),--body $(BODY),)
+	python3 tools/art/route_to_core.py $(ID)   # a creature of the engine core's data keeps its art in the core (docs/art/animation.md)
 
 ## Walk and attack sheets for every character in art/anim/animations.json, or ONLY="id ...", from the keyframe
 ## strips in art/generated/anim (docs/art/animation.md). GENERATE=1 first draws the strips that are missing (Gemini).
@@ -310,6 +311,7 @@ pregens:
 ## Portrait (square crop, 512 px, palette-snapped, flat background): make portrait SRC=<png> ID=<id> [BG=<palette name>] [SAT=1.3]
 portrait:
 	$(BLENDER) -b --python blender/portrait.py -- --in $(abspath $(SRC)) --id $(ID) $(if $(BG),--bg $(BG),) $(if $(SAT),--saturate $(SAT),)
+	python3 tools/art/route_to_core.py $(ID)
 
 ## Environment texture sets (docs/art/textures.md): make textures [GENERATE=1] [ONLY="village/cobbles ..."] [HD=1]
 ## (HD=1: only the Modern look's smooth tiles, <surface>_hd.png)
