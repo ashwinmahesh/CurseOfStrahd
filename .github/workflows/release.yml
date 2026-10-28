@@ -76,6 +76,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           lfs: false
+          # The core engine (addons/dnd_core, a public repo with no LFS files) is a submodule since the cutover.
+          submodules: recursive
 
       - name: Check the tag is free
         if: inputs.upload
@@ -118,7 +120,7 @@ jobs:
           key: lfs-${{ steps.lfs.outputs.ids }}
 
       - name: Keep the importer out of folders the game never loads
-        run: touch art/generated/.gdignore art/sourced/game_icons/.gdignore
+        run: touch art/generated/.gdignore addons/dnd_core/art/sourced/game_icons/.gdignore
 
       - name: Restore Godot and its export templates
         id: godot-cache
