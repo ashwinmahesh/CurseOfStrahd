@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cc250ofvl25fc"
-path.bptc="res://.godot/imported/floor_temple_4.webp-bf143aed6482cc73e71bfc3c2acfddc3.bptc.ctex"
+path.bptc="res://.godot/imported/floor_temple_4.webp-fcd64fb63b9da8a2c73c3d43427f71e4.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://art/textures/decals/floor_temple_4.webp"
-dest_files=["res://.godot/imported/floor_temple_4.webp-bf143aed6482cc73e71bfc3c2acfddc3.bptc.ctex"]
+source_file="res://addons/dnd_core/art/textures/decals/floor_temple_4.webp"
+dest_files=["res://.godot/imported/floor_temple_4.webp-fcd64fb63b9da8a2c73c3d43427f71e4.bptc.ctex"]
 
 [params]
 

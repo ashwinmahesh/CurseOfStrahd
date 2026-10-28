@@ -34,7 +34,7 @@ func test_the_surfaces_decals_and_props_are_all_there() -> void:
 			"floor_temple_4"]:
 		assert_true(Clutter.manifest().has(id), "the decal %s" % id)
 		var info := Clutter.manifest().get(id, {}) as Dictionary
-		assert_true(ResourceLoader.exists("res://" + str(info.get("file", ""))), "%s is imported" % id)
+		assert_true(ResourceLoader.exists(ArtPaths.of(str(info.get("file", "")))), "%s is imported" % id)
 	for id: String in PROPS:
 		assert_true(SetDressing.has_art(id), "the prop %s" % id)
 	var rules := (SetDressing.catalog().get("clutter", {}) as Dictionary).get("places", {}) as Dictionary

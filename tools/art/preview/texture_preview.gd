@@ -4,8 +4,8 @@ extends Node3D
 ##   make capture SCENE=res://tools/art/preview/texture_preview.tscn NAME=p4_09_textures FRAMES=30
 
 const SHADER := preload("res://tools/art/preview/world_uv_cel.gdshader")
-const TEXTURES := "res://art/textures/manifest.json"
-const PROPS := "res://art/sprites/props/manifest.json"
+const TEXTURES := "art/textures/manifest.json"
+const PROPS := "art/sprites/props/manifest.json"
 const SPACING := 40.0
 const SHOTS: Array[String] = ["village", "vallaki", "tavern", "church", "dungeon"]
 
@@ -15,8 +15,8 @@ var _camera: Camera3D
 
 
 func _ready() -> void:
-	_tex = (JSON.parse_string(FileAccess.get_file_as_string(TEXTURES)) as Dictionary)["themes"] as Dictionary
-	_props = (JSON.parse_string(FileAccess.get_file_as_string(PROPS)) as Dictionary)["props"] as Dictionary
+	_tex = ArtPaths.json(TEXTURES)["themes"] as Dictionary
+	_props = ArtPaths.json(PROPS)["props"] as Dictionary
 	_environment()
 	_village(_origin(0))
 	_vallaki(_origin(1))

@@ -32,19 +32,19 @@ func test_every_surface_has_its_hd_set() -> void:
 		assert_false(info.is_empty(), "%s is in the manifest" % key)
 		var size := -1
 		for f: String in ["hd_file", "normal_file", "orm_file"]:
-			assert_true(ResourceLoader.exists("res://" + str(info.get(f, ""))), "%s has its %s" % [key, f])
-		var albedo := load("res://" + str(info.get("hd_file", ""))) as Texture2D
+			assert_true(ResourceLoader.exists(ArtPaths.of(str(info.get(f, "")))), "%s has its %s" % [key, f])
+		var albedo := load(ArtPaths.of(str(info.get("hd_file", "")))) as Texture2D
 		if albedo != null:
 			size = albedo.get_width()
 		var want := int((rec["surfaces"][key] as Dictionary).get("variants", 1))
 		var variants := info.get("variants", []) as Array
 		assert_eq(variants.size(), want - 1, "%s has its variants" % key)
 		for v: Dictionary in variants:
-			var t := load("res://" + str(v.get("file", ""))) as Texture2D
+			var t := load(ArtPaths.of(str(v.get("file", "")))) as Texture2D
 			assert_true(t != null and t.get_width() == size, "%s's variants match its size" % key)
 			for f: String in ["normal_file", "orm_file"]:
-				assert_true(ResourceLoader.exists("res://" + str(v.get(f, ""))), "%s's variant has its %s" % [key, f])
-	assert_true(ResourceLoader.exists("res://" + str(Look.textures().get("macro_file", ""))), "the macro noise exists")
+				assert_true(ResourceLoader.exists(ArtPaths.of(str(v.get(f, "")))), "%s's variant has its %s" % [key, f])
+	assert_true(ResourceLoader.exists(ArtPaths.of(str(Look.textures().get("macro_file", "")))), "the macro noise exists")
 
 
 ## Every decal loads, and a village street, a dungeon and a castle hall are dressed with them in the Modern look; the
@@ -52,7 +52,7 @@ func test_every_surface_has_its_hd_set() -> void:
 func test_boards_are_dressed_with_decals() -> void:
 	for id: String in Clutter.manifest():
 		var info := Clutter.manifest()[id] as Dictionary
-		assert_true(load("res://" + str(info["file"])) is Texture2D, "decal %s loads" % id)
+		assert_true(load(ArtPaths.of(str(info["file"]))) is Texture2D, "decal %s loads" % id)
 	Look.set_style("modern", false)
 	for loc_id: String in ["village_of_barovia", "death_house_dungeon_2", "castle_ravenloft_main_floor"]:
 		var v := LocationView.create(loc_id, GameState.story, null, Dice.roller, "default")
