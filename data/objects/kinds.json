@@ -450,12 +450,13 @@
       "art": [
         "stump",
         "log",
+        "fallen_beam",
         "woodpile",
         "druid_totem",
         "scarecrow",
         "scarecrow_stitched"
       ],
-      "summary": "A stump, a fallen log, a woodpile, a scarecrow."
+      "summary": "A stump, a fallen log or beam, a woodpile, a scarecrow."
     },
     "brambles": {
       "name": "brambles",
