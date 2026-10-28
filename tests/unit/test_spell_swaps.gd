@@ -64,10 +64,12 @@ func test_a_paladin_replaces_one_prepared_spell_after_a_long_rest() -> void:
 	c = _swap(ch, "paladin.prepared", earlier, "long_rest")
 	assert_true(replacement in c.picks)
 	assert_eq(ChoiceOptions.errors(c, ch), [] as Array[String], "one spell replaced is fine")
-	# Changing the replacement again keeps the earlier spells: picking past the count drops the new one.
+	# The list is full again: another spell takes no place until one is unpicked (Ashwin, 2026-10-28: changing spells at the
+	# limit must not randomly replace one), the replacement included.
 	var second := _unpicked(c, [earlier[0], replacement])
 	var again := ChoiceOptions.toggled(c, second, true)
-	assert_true(second in again and not replacement in again, "the new pick goes, not an earlier one: %s" % [again])
+	assert_true(_same(again, c.picks), "nothing goes to make room: %s" % [again])
+	assert_true(ChoiceOptions.full(c), "the list is full, so the screen greys the rest")
 	# A second replacement is an error.
 	var two: Array = earlier.duplicate()
 	two[0] = replacement
@@ -99,12 +101,20 @@ func test_a_cleric_changes_any_number_after_a_long_rest() -> void:
 	_store(ch, "cleric.prepared", picks)
 	c = _swap(ch, "cleric.prepared", earlier, "long_rest")
 	assert_eq(ChoiceOptions.errors(c, ch), [] as Array[String], "two spells changed")
-	# Without a swap chance (character creation) picking past the count still drops the oldest pick.
+	# Without a swap chance (character creation) a full list takes no new pick until one is unpicked: nothing is dropped
+	# for it (Ashwin, 2026-10-28).
 	var free := ch.choice("cleric.prepared")
 	ChoiceOptions.populate(free, ch)
 	var more := ChoiceOptions.toggled(free, _unpicked(free), true)
-	assert_eq(more.size(), free.count)
-	assert_false(free.picks[0] in more, "the oldest pick went")
+	assert_eq(more, free.picks, "a full list drops nothing to make room")
+	assert_true(ChoiceOptions.full(free))
+	var fewer := ChoiceOptions.toggled(free, free.picks[0], false)
+	assert_eq(fewer.size(), free.count - 1, "unpicked: a place is free")
+	_store(ch, "cleric.prepared", fewer)
+	var room := ch.choice("cleric.prepared")
+	ChoiceOptions.populate(room, ch)
+	var taken := ChoiceOptions.toggled(room, _unpicked(room), true)
+	assert_eq(taken.size(), room.count, "and a new spell takes it")
 
 
 func test_a_wizard_swaps_one_cantrip_after_a_long_rest() -> void:
@@ -224,3 +234,27 @@ func test_a_wizard_level_up_leaves_cantrips_for_the_long_rest() -> void:
 	assert_true(up.choose_class("wizard"))
 	var keys: Array = up.level_choices().map(func(c: Choice) -> String: return c.key)
 	assert_false("wizard.cantrips" in keys, "a Wizard swaps a cantrip after a Long Rest, not at level 2: %s" % [keys])
+
+
+## Ashwin, 2026-10-28: "changing spells at the limit must not randomly replace one; block new selection until one is
+## unselected". A full list of spells (more than one) takes no new pick; a list of one still swaps by picking the other.
+func test_a_full_spell_list_blocks_new_picks_until_one_is_unpicked() -> void:
+	var ch := TestChars.pregen("silvain_aster", 3)
+	var c := ch.choice("wizard.cantrips")
+	ChoiceOptions.populate(c, ch)
+	assert_true(c.count > 1 and c.picks.size() == c.count, "a Wizard's cantrip list is full: %d of %d" % [c.picks.size(), c.count])
+	assert_true(ChoiceOptions.full(c), "so the screen greys the unpicked ones")
+	var other := ""
+	for o in c.options:
+		if not o.id in c.picks and o.legal:
+			other = o.id   # still legal: what the player may swap in once a place is free
+			break
+	assert_true(other != "")
+	assert_eq(ChoiceOptions.toggled(c, other, true), c.picks, "nothing is dropped to make room")
+	var fewer := ChoiceOptions.toggled(c, c.picks[0], false)
+	assert_eq(fewer.size(), c.count - 1, "unpicking frees a place")
+	_store(ch, "wizard.cantrips", fewer)
+	var room := ch.choice("wizard.cantrips")
+	ChoiceOptions.populate(room, ch)
+	assert_false(ChoiceOptions.full(room), "and the list is no longer full")
+	assert_eq(ChoiceOptions.toggled(room, other, true).size(), c.count, "so a new spell takes the place")
