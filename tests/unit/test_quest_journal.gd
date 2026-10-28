@@ -39,10 +39,10 @@ func test_the_hud_follows_the_tracked_quest() -> void:
 	var hud := ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
-	var followed := hud.call("_followed") as Dictionary
+	var followed := hud.call("followed_quest") as Dictionary
 	assert_eq([followed["name"], followed["objective"]], ["The Oat Thief", "Look over the oats in Bildrath's back room, or watch the north path at night"], "the newest open quest's")
 	QuestLog.track(st, "escort_ireena")
-	followed = hud.call("_followed") as Dictionary
+	followed = hud.call("followed_quest") as Dictionary
 	assert_eq([followed["name"], followed["objective"]], ["Ireena's Escort", "Help bury the burgomaster"], "the tracked one's")
 	assert_eq((hud.get("_goal") as Label).tooltip_text, (hud.get("_quest") as Label).tooltip_text, "both lines point at the journal")
 	hud.refresh("Village of Barovia")
@@ -51,7 +51,7 @@ func test_the_hud_follows_the_tracked_quest() -> void:
 	QuestLog.track(st, "")
 	for q in QuestLog.journal(st):
 		(st.quests[q["id"]] as Dictionary)["stage"] = "x"   # no stage, so no objectives
-	followed = hud.call("_followed") as Dictionary
+	followed = hud.call("followed_quest") as Dictionary
 	assert_eq([followed["name"], followed["objective"]], ["", ""], "no open objective, no lines")
 	hud.refresh("Village of Barovia")
 	assert_false((hud.get("_quest") as Label).visible or (hud.get("_goal") as Label).visible, "and neither line shows")
