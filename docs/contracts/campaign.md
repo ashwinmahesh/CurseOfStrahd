@@ -57,7 +57,7 @@ Conditions: `tarokka.drawn`, `tarokka.sword == swords_3` (the card), `tarokka.sw
 ```
 
 `pos` is where the place sits on the map image (0-1 across and down). A road may bend around water or mountains with `via`: a list of points `[[x, y], ...]` in the same fractions, drawn as a smooth curve (docs/ui/travel_map.md). A place without `when` is on the map from the
-start (somewhere everyone in the valley knows); a place with `when` appears once it holds or the party has been there. Entering a location's travel exit (an exit with `"to": "travel"`) opens the map.
+start (somewhere everyone in the valley knows); a place with `when` appears once it holds or the party has been there. Entering a location's travel exit (an exit with `"to": "travel"`) opens the map, unless the road leads to just one place: each place one open road from here goes with the travel exit that faces it best (the side of the place's map the exit is on, against where the place lies on the map: north is up), and an exit that is the way to exactly one place sets out for it at once (`Travel.exit_destination`). An exit that is the way to none or several (the village's single road out, or the crossroads' road east once the Grey Goose is on the map) opens the map to choose on. Nothing needs adding to the data: a place's `pos`, and its exits being on the side of the map they lead out of, are all it reads.
 
 ## data/random_encounters/<table>.json (schema: random_table.schema.json)
 

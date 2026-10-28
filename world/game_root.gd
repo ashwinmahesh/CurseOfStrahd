@@ -165,7 +165,7 @@ func enter_location(location_id: String, spawn: String, sneaking: bool = false) 
 	var leaving := view
 	view.exit_requested.connect(func(to: String, sp: String) -> void:
 		_covered.call_deferred(to, enter_location.bind(to, sp, leaving.sneaking)))
-	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
+	view.travel_requested.connect(func(to: String) -> void: _road_out.call_deferred(to))
 	view.dialogue_requested.connect(start_dialogue)
 	view.gift_requested.connect(give_to_guest)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
@@ -930,6 +930,23 @@ func open_travel(setting_out: bool) -> void:
 		screen = null
 		travel(here, to))
 	t.closed.connect(func() -> void: screen = null)
+
+
+## The party stepped onto a road out of town (LocationView.travel_requested): when the road leads to just one place
+## (`to`; Travel.exit_destination) they set out for it at once, as from the map's Set out; otherwise the map opens to
+## choose on (Ashwin, 2026-10-28).
+func _road_out(to: String) -> void:
+	var here := Travel.place_for_location(st.location)
+	var legs: Array[Dictionary] = []
+	if to != "" and here != "":
+		legs = Travel.route(here, to, st)
+	if legs.is_empty() or screen != null or dialogue != null or view.in_combat:
+		open_travel(true)
+		return
+	var hours := Travel.hours(legs)
+	hud.toast("Setting out for %s: %s hours on the road." % [str(Travel.place(to)["name"]),
+		str(int(hours)) if is_equal_approx(hours, roundf(hours)) else "%.1f" % hours])
+	travel(here, to)
 
 
 ## Whether a journey is waiting to go on from here: one is only ever waiting on a road's map, so a record anywhere
