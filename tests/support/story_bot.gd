@@ -616,8 +616,14 @@ func _go_by_map_once(location_id: String) -> bool:
 		view().click(_cell(out_exit["cell"]))
 	var map := root.get("screen") as TravelScreen
 	if map == null:
-		note("the map didn't open")
-		return false
+		# A road to one place sets out at once, with no map (GameRoot._road_out): the party has left the road's place
+		# and the journey runs on its own, so settle waits it out.
+		var here := view()
+		if here != null and here.loc_id == out_loc:
+			note("the map didn't open")
+			return false
+		note("set out at once along the road to %s" % target)
+		return await settle()
 	map.select(target)
 	map.travel_chosen.emit(target)
 	map.queue_free()
