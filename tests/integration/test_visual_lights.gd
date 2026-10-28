@@ -21,7 +21,7 @@ func test_visual_lights_give_a_fight_no_light() -> void:
 	for l: Variant in lights:
 		if bool((l as Dictionary).get("visual", false)):
 			visual += 1
-	assert_eq(visual, 17, "the great hall's added glows are painted only")
+	assert_eq(visual, 18, "the great hall's added glows are painted only")
 	var e := Encounter.new(LocationFights._combat_grid(v), Dice.roller)
 	LocationFights._light_the_fight(v, e)
 	var zones := 0
