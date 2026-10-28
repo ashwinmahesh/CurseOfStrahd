@@ -52,7 +52,8 @@
           13,
           24
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "west_arrow_slit_s",
@@ -66,7 +67,8 @@
           13,
           26
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "south_gallery",
@@ -164,7 +166,8 @@
       ],
       "light": "dark",
       "floor": "church/frosted_flags",
-      "walls": "amber/glazed_wall"
+      "walls": "amber/glazed_wall",
+      "furnish": "amber_hall"
     }
   ],
   "spawns": {
