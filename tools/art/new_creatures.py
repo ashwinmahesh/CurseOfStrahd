@@ -193,6 +193,10 @@ def main():
         register(spec, [i for i in ids if i in spec])
     else:
         portraits(spec, [i for i in ids if i in spec and (CHARS / f"{i}_turnaround.png").exists()], a.jobs)
+    # A creature of the engine core's data (its monsters, the generic summons) keeps its art in the core.
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import route_to_core
+    route_to_core.route(set(ids))
 
 
 if __name__ == "__main__":

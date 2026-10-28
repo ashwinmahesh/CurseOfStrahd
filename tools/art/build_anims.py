@@ -83,6 +83,8 @@ def main():
     if failed:
         sys.exit(f"failed: {' '.join(failed)}")
     print(f"built {len(ids)} characters")
+    import route_to_core   # monsters of the engine core's data belong in the core (docs/plans/engine_split.md)
+    route_to_core.route(set(ids))
 
 
 if __name__ == "__main__":

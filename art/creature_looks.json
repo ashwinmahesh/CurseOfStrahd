@@ -128,5 +128,8 @@
   "ezmerelda_davenir": "ezmerelda",
   "owl_familiar": "owl",
   "skeleton_familiar": "skeleton"
- }
+ },
+ "dark_aura": [
+  "strahd"
+ ]
 }

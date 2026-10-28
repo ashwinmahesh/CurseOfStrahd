@@ -22,7 +22,7 @@ const SIZE := 128
 const KINDS: Array[String] = ["spells", "items", "features"]
 ## The tint an entry without "@<tint>" gets.
 const DEFAULT_TINT := {"spells": "arcane", "items": "cloth", "features": "arcane"}
-const UI_OUT := "res://art/ui/icons/"
+const UI_OUT := "res://addons/dnd_core/art/ui/icons/"
 const UI_SIZE := 96
 ## Backgrounds when a tint names none: a crimson glow for spells, near black for items.
 const DEFAULT_BG := {"spells": ["blood", "blood_deep", "ui_black"], "items": ["ui_oxblood", "ui_black", "ui_black"],

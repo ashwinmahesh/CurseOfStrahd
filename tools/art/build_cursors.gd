@@ -6,7 +6,7 @@ extends SceneTree
 ## Run: make cursors
 
 const PACK := "res://addons/dnd_core/art/sourced/game_icons/icons/ffffff/transparent/1x1/"
-const OUT := "res://art/ui/cursors/"
+const OUT := "res://addons/dnd_core/art/ui/cursors/"
 const SIZE := 48
 ## name -> silhouette ("" = the drawn pointer)
 const CURSORS := {"pointer": "", "use": "delapouite/gauntlet", "talk": "skoll/talk", "attack": "lorc/crossed-swords",

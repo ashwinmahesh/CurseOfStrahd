@@ -279,3 +279,12 @@ turn, bobs in the walk when the sheet has no drawn bob (the earlier walk sheets)
 stops, and recoils from a hit (`hurt()` calls `recoil()`: knocked back away from where it faces and squashed). Springs
 drive it; the shader applies it to the flat figure with its feet as the pivot, so its shadow moves with it.
 `lit_lab.tscn -- --motion` records it.
+
+## Where a creature's art goes (the engine core, docs/plans/engine_split.md)
+
+The sprites and portraits of every creature in the engine core's data (its monsters and the generic summons, familiars and
+spirits) live in `addons/dnd_core/art/sprites/<id>/` and `addons/dnd_core/art/portraits/<id>.png`; the game keeps its heroes,
+NPCs and villains. The pipelines (`make sprite`, `make anims`, `make portrait`, `tools/art/new_creatures.py`) still write into the
+game's `art/` first; `tools/art/build_anims.py` and `new_creatures.py` finish by running `python3 tools/art/route_to_core.py`,
+which moves such a creature's art into the core. After `make sprite` or `make portrait` alone, run it yourself, then commit the
+new files in the core. Lookups go through `ArtPaths` (the game's art first, then the core's), so either place works at run time.
