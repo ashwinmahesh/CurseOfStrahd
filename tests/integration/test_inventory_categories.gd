@@ -101,6 +101,29 @@ func test_every_item_is_in_one_category_and_quest_items_are_not_gear() -> void:
 	assert_true(InventoryScreen.in_filter("Gear", comp.item_data("rope")), "rope is gear")
 
 
+## Ashwin, 2026-10-28: "spell scrolls and potions must not appear under the inventory's Magic section". They have tabs of
+## their own; everything else that is magic stays under Magic.
+func test_the_magic_tab_leaves_out_potions_and_spell_scrolls() -> void:
+	var comp := Compendium.shared()
+	assert_false(InventoryScreen.in_filter("Magic", comp.item_data("potion_of_healing")), "a potion is no Magic-tab item")
+	assert_false(InventoryScreen.in_filter("Magic", comp.item_data("spell_scroll_level_1")), "nor is a Spell Scroll")
+	assert_true(InventoryScreen.in_filter("Potions", comp.item_data("potion_of_healing")), "the potion is still under Potions")
+	assert_true(InventoryScreen.in_filter("Magic", comp.item_data("scroll_of_protection_undead")), "a Scroll of Protection is no Spell Scroll: still magic")
+	assert_true(InventoryScreen.in_filter("Magic", comp.item_data("cloak_of_protection")), "a cloak stays under Magic")
+	var leaks: Array[String] = []
+	var kept := 0
+	for data in _all_items():
+		if InventoryScreen.in_filter("Magic", data):
+			kept += 1
+			if str(data.get("category", "")) == "potion" or InventoryScreen.is_spell_scroll(data):
+				leaks.append(str(data.get("id", "")))
+		elif not (data.get("magic", {}) as Dictionary).is_empty():
+			assert_true(str(data.get("category", "")) == "potion" or InventoryScreen.is_spell_scroll(data),
+				"%s is magic and off the Magic tab only if it is a potion or a Spell Scroll" % data.get("id", ""))
+	assert_true(leaks.is_empty(), "potions or Spell Scrolls on the Magic tab: %s" % [leaks])
+	assert_true(kept > 100, "the Magic tab still holds the magic items: %d" % kept)
+
+
 func test_the_potions_and_quest_tabs_show_only_theirs() -> void:
 	var ch := GameState.story.party[0]
 	for id: String in ["potion_of_healing", "potion_of_speed", "spell_scroll_level_1", "scroll_of_protection_undead", "antitoxin", "rope",
