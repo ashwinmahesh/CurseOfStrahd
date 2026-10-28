@@ -768,6 +768,28 @@ func test_the_follow_prompt() -> void:
 				p.queue_free())
 
 
+## The question after a failed check (ui/common/check_aid_prompt.gd) with the most aids a character can have at once, and the
+## longest labels.
+func test_the_check_aid_prompt() -> void:
+	if not await _game(LATE):
+		return
+	var ch := GameState.story.party[0] as Character
+	var options: Array[Dictionary] = [
+		{"id": "heroic_inspiration", "label": "Heroic Inspiration: reroll the d20"},
+		{"id": "lucky_foot", "label": "Lucky Foot: reroll the natural 1 (the charm is used up)"},
+		{"id": "tactical_mind", "label": "Tactical Mind: add 1d10 (a Second Wind use, kept if it still fails)"},
+		{"id": "dark_ones_own_luck", "label": "Dark One's Own Luck: add 1d10 (99 left)"}]
+	var offer := {"who": ch, "skill": "Sleight Of Hand", "dc": 25, "test": D20Test.from_natural(D20Test.Kind.ABILITY_CHECK, 1, -3, 25),
+		"options": options}
+	await _check("the check aid prompt", func() -> Variant:
+		var p := CheckAidPrompt.ask(root, offer, func(_a: String) -> void: pass)
+		await _frames(2)
+		return p,
+		func() -> void:
+			for p in root.find_children("CheckAidPrompt*", "", false, false):
+				p.queue_free())
+
+
 ## What the party can hand a guest (ui/common/gift_picker.gd) at its fullest: a few gifts with long labels.
 func test_the_give_picker() -> void:
 	if not await _game(LATE):

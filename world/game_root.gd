@@ -181,6 +181,7 @@ func enter_location(location_id: String, spawn: String, sneaking: bool = false) 
 	view.party_tended.connect(_refresh)
 	view.party_hurt.connect(func(_who: Combatant) -> void: _refresh_panel())   # not a refresh: a pit's victim stays Prone
 	view.guidance_asked.connect(_ask_guidance)
+	view.aid_asked.connect(_ask_aid)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		Cursors.show("pointer")
@@ -756,6 +757,14 @@ func _ask_guidance(offer: Dictionary, answered: Callable) -> void:
 	guidance = GuidancePrompt.ask(self, offer, func(index: int, rule: String) -> void:
 		guidance = null
 		answered.call(index, rule))
+
+
+## An aid could turn a failed check while exploring (LocationView.ask_aid): the prompt over the place, which shows once the
+## big d20 has gone. The failure waits for the answer (LocationChecks._settle).
+func _ask_aid(offer: Dictionary, answered: Callable) -> void:
+	_prompting = CheckAidPrompt.ask(self, offer, func(aid: String) -> void:
+		_prompting = null
+		answered.call(aid))
 
 
 func _dialogue_ended(combat: String) -> void:

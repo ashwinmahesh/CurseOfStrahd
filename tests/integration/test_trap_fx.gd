@@ -173,6 +173,13 @@ func test_a_failed_climb_that_hurts_shows_the_same() -> void:
 	var who := WorldChecks.roller(GameState.story, "test_trap_fx_hall", (HALL["props"][0]["checks"] as Array)[0] as Dictionary)
 	var hp := who.hp
 	LocationChecks.act(view, view.thing_at(Vector2i(2, 1)), "check:ledge_climb")
+	# A fighter's Tactical Mind or a human's Heroic Inspiration would be asked about first (CheckAidPrompt): let the miss stand.
+	for i in 12:
+		var ask := root.get("_prompting") as CheckAidPrompt
+		if ask != null and ask.visible:
+			ask.stand_button.pressed.emit()
+			break
+		await get_tree().process_frame
 	var lost := hp - who.hp
 	assert_true(lost > 0, "the slip hurt")
 	assert_true("-%d" % lost in _marks(), "-%d over them: %s" % [lost, _marks()])

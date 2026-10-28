@@ -237,21 +237,117 @@ func test_a_flag_brings_a_chest_into_view() -> void:
 	assert_false(v.thing_at(Vector2i(1, 3)).is_empty(), "the music box is there now")
 
 
-func test_heroic_inspiration_rerolls_a_failure() -> void:
-	var v := _view()
+## The prompt that asks about an aid, once the big d20 has gone.
+func _aid_prompt() -> CheckAidPrompt:
+	for i in 12:
+		var p := root.get("_prompting") as CheckAidPrompt
+		if p != null and p.visible:
+			return p
+		await get_tree().process_frame
+	return null
+
+
+## A failed check an aid could turn waits for the answer (a successful reroll used to run on top of the failure's line, damage
+## and fight): nothing of the failure has happened while the question is up.
+func test_the_failure_waits_while_heroic_inspiration_is_offered() -> void:
 	var check := LOC["props"][0]["checks"][1] as Dictionary
 	var first := WorldChecks.roller(GameState.story, "test_checks", check)
 	first.heroic_inspiration = true
+	var hp := first.hp
 	_try(Vector2i(1, 1), "touch_runes")
-	var aid := _action(Vector2i(1, 1), "check_aid:heroic_inspiration")
-	assert_false(aid.is_empty(), "the menu offers the reroll: %s" % [v.actions_at(Vector2i(1, 1))["actions"]])
+	var p := await _aid_prompt()
+	assert_true(p != null, "the question is up")
+	if p == null:
+		return
+	assert_eq(p.choices.size(), 1, "Heroic Inspiration")
+	assert_false(said.has("A spark bites."), "the failure's line hasn't been said: %s" % [said])
+	assert_eq(first.hp, hp, "and nothing has hurt them")
+	assert_eq(root.get("_prompting"), p, "nothing behind it moves while it's up")
+	p.stand_button.pressed.emit()
+	await _frames(2)
+	assert_true(said.has("A spark bites."), "letting it stand lets the failure happen: %s" % [said])
+	assert_true(first.hp < hp, "with its damage")
+	assert_true(first.heroic_inspiration, "and the inspiration is kept")
+	assert_true(root.get("_prompting") == null, "the question is gone")
+
+
+func test_heroic_inspiration_rerolls_a_failure() -> void:
+	var check := LOC["props"][0]["checks"][1] as Dictionary
+	var first := WorldChecks.roller(GameState.story, "test_checks", check)
+	first.heroic_inspiration = true
+	var hp := first.hp
+	_try(Vector2i(1, 1), "touch_runes")
+	var p := await _aid_prompt()
+	assert_true(p != null, "the prompt offers the reroll")
+	if p == null:
+		return
 	# The new roll meets the DC (the runes give way after all).
-	((v.get_meta(LocationChecks.FAILED) as Dictionary)["test"] as D20Test).target = -20
-	v.act(Vector2i(1, 1), "check_aid:heroic_inspiration")
+	(p.offer["test"] as D20Test).target = -20
+	p.choices[0].pressed.emit()
+	await _frames(2)
 	assert_false(first.heroic_inspiration, "it's spent")
 	assert_true(WorldChecks.done(GameState.story, "test_checks", check), "and the check succeeds")
 	assert_true(said.has("Never."), str(said))
-	assert_true(_action(Vector2i(1, 1), "check_aid:heroic_inspiration").is_empty())
+	assert_false(said.has("A spark bites."), "with no failure first: %s" % [said])
+	assert_eq(first.hp, hp, "and no damage")
+	assert_true(_action(Vector2i(1, 1), "check_aid:heroic_inspiration").is_empty(), "no aid line is left on the menu")
+
+
+func test_a_reroll_that_still_misses_lets_the_failure_happen() -> void:
+	var check := LOC["props"][0]["checks"][1] as Dictionary
+	var first := WorldChecks.roller(GameState.story, "test_checks", check)
+	first.heroic_inspiration = true
+	var hp := first.hp
+	_try(Vector2i(1, 1), "touch_runes")
+	var p := await _aid_prompt()
+	assert_true(p != null)
+	if p == null:
+		return
+	p.choices[0].pressed.emit()
+	await _frames(2)
+	assert_false(first.heroic_inspiration, "the inspiration is spent on the new roll")
+	assert_true(said.has("A spark bites."), "which missed too: the failure happens now: %s" % [said])
+	assert_true(first.hp < hp)
+	assert_false(WorldChecks.done(GameState.story, "test_checks", check))
+
+
+## The fight a failure sets off (a check's `failure` encounter) doesn't start under a reroll that succeeds.
+func test_a_failure_s_fight_waits_for_the_answer_too() -> void:
+	var check := LOC["props"][0]["checks"][2] as Dictionary
+	var first := WorldChecks.roller(GameState.story, "test_checks", check)
+	first.heroic_inspiration = true
+	_try(Vector2i(1, 1), "wake_runes")
+	var p := await _aid_prompt()
+	assert_true(p != null)
+	if p == null:
+		return
+	assert_false(_view().in_combat, "no fight while it is asked")
+	(p.offer["test"] as D20Test).target = -20
+	p.choices[0].pressed.emit()
+	await _frames(3)
+	assert_false(_view().in_combat, "and none after a reroll that succeeds")
+	assert_false(said.has("Something answers."), str(said))
+
+
+func test_a_failure_s_fight_starts_when_it_is_let_stand() -> void:
+	var check := LOC["props"][0]["checks"][2] as Dictionary
+	var first := WorldChecks.roller(GameState.story, "test_checks", check)
+	first.heroic_inspiration = true
+	_try(Vector2i(1, 1), "wake_runes")
+	var p := await _aid_prompt()
+	assert_true(p != null)
+	if p == null:
+		return
+	p.stand_button.pressed.emit()
+	await _frames(3)
+	assert_true(_view().in_combat, "the runes' guard stirs")
+
+
+func test_with_no_aid_to_spend_a_failure_happens_at_once() -> void:
+	_try(Vector2i(1, 1), "touch_runes")
+	await _frames(2)
+	assert_true(said.has("A spark bites."), str(said))
+	assert_true(root.get("_prompting") == null, "nothing is asked")
 
 
 ## In the real village: the raven's success points at the lych-gate post, and the holy water hidden there is found.
