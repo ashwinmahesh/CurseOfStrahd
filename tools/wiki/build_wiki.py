@@ -747,13 +747,14 @@ class Images:
         """Wiki-relative embed path for a portrait, or ""."""
         if not art_id:
             return ""
-        src = self.g.root / "art" / "portraits" / f"{art_id}.png"
+        # A creature's portrait may live in the core (monster art moved there 2026-10-28) or the game: the game's wins.
+        src = dataroots.engine_file(f"art/portraits/{art_id}.png", self.g.root)
         dest = self.dir / "portraits" / f"{art_id}.png"
         return f"images/portraits/{art_id}.png" if self._scaled(src, dest, 256) else ""
 
     def still(self, image):
         for ext in (".jpg", ".png", ".webp"):
-            src = self.g.root / "art" / "cutscenes" / f"{image}{ext}"
+            src = dataroots.engine_file(f"art/cutscenes/{image}{ext}", self.g.root)
             if src.exists():
                 dest = self.dir / "cutscenes" / f"{image}.jpg"
                 return f"images/cutscenes/{image}.jpg" if self._scaled(src, dest, 1200, "jpeg") else ""
