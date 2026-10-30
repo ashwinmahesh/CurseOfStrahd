@@ -4,5 +4,9 @@
   "bug_reports": {
     "vault": "Documents/Obsidian Vault/CurseOfStrahd",
     "env": "STRAHD_BUG_REPORTS"
+  },
+  "camera": {
+    "free_turn": true,
+    "tilt": [30, 50]
   }
 }
