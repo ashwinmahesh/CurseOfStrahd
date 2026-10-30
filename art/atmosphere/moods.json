@@ -263,7 +263,15 @@
           }
         }
       },
-      "keep_greys": true
+      "keep_greys": true,
+      "focus": 0.8,
+      "modern": {
+        "times": {
+          "night": {
+            "moon_colour": "ivory"
+          }
+        }
+      }
     },
     "svalich_road": {
       "like": "svalich_woods",
@@ -760,7 +768,21 @@
             "mist": "slate",
             "mist_strength": 0.5
           }
-        }
+        },
+        "weather": [
+          "leaves",
+          "chimney_smoke",
+          "window_light",
+          {
+            "kind": "crows",
+            "amount": 3
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "krezk": {
@@ -843,7 +865,29 @@
             "key_energy": 0.9,
             "mist": "frost",
             "mist_strength": 0.35
+          },
+          "night": {
+            "moon_colour": "frost"
           }
+        },
+        "weather": [
+          "chimney_smoke",
+          "window_light",
+          {
+            "kind": "snow",
+            "amount": 110,
+            "wind": 0.5
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ],
+        "flame_tint": {
+          "colour": "candle",
+          "mix": 0.2,
+          "energy": 1.0
         }
       }
     },
@@ -870,7 +914,16 @@
           "amount": 80,
           "wind": 0.4
         }
-      ]
+      ],
+      "modern": {
+        "weather": [
+          {
+            "kind": "snow",
+            "amount": 80,
+            "wind": 0.4
+          }
+        ]
+      }
     },
     "abbey": {
       "like": "krezk",
@@ -942,7 +995,24 @@
             "mist": "lilac",
             "mist_strength": 0.45
           }
-        }
+        },
+        "weather": [
+          "window_light",
+          {
+            "kind": "snow",
+            "amount": 220,
+            "wind": 1.2
+          },
+          {
+            "kind": "crows",
+            "amount": 2
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "vallaki": {
@@ -1017,7 +1087,28 @@
             "key_energy": 0.75,
             "mist": "mist_blue",
             "mist_strength": 0.45
+          },
+          "night": {
+            "moon_colour": "mist_blue"
           }
+        },
+        "weather": [
+          "chimney_smoke",
+          "window_light",
+          {
+            "kind": "rain",
+            "amount": 380
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ],
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.2,
+          "energy": 1.0
         }
       }
     },
@@ -1073,7 +1164,33 @@
             7.5
           ]
         }
-      ]
+      ],
+      "modern": {
+        "weather": [
+          {
+            "kind": "leaves",
+            "amount": 90,
+            "colours": [
+              "rust",
+              "candle",
+              "ember"
+            ]
+          },
+          "embers",
+          {
+            "kind": "wisps",
+            "amount": 18,
+            "core": "wick",
+            "rim": "flame",
+            "size": 0.08
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
+      }
     },
     "wizard_of_wines": {
       "like": "barovia_village",
@@ -1147,7 +1264,24 @@
         },
         "ground_swap": {
           "village/grass": "wild/vineyard_earth"
-        }
+        },
+        "weather": [
+          "chimney_smoke",
+          "window_light",
+          {
+            "kind": "rain",
+            "amount": 220
+          },
+          {
+            "kind": "crows",
+            "amount": 7
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "bonegrinder": {
@@ -1242,7 +1376,26 @@
         },
         "surround": {
           "ground": "wild/heath"
-        }
+        },
+        "weather": [
+          "leaves",
+          "window_light",
+          {
+            "kind": "crows",
+            "amount": 8,
+            "radius": 6.0
+          },
+          {
+            "kind": "smoke",
+            "at": [
+              [
+                15.8,
+                2.2,
+                9.2
+              ]
+            ]
+          }
+        ]
       }
     },
     "argynvostholt": {
@@ -1353,7 +1506,8 @@
             "ambient": "moonlight",
             "ambient_energy": 0.5,
             "mist": "frost",
-            "mist_strength": 0.5
+            "mist_strength": 0.5,
+            "moon_colour": "moon_blue"
           }
         }
       }
@@ -1474,7 +1628,8 @@
             "ambient_energy": 0.45,
             "mist": "moss",
             "mist_strength": 0.55,
-            "fog": "bog_deep"
+            "fog": "bog_deep",
+            "moon_colour": "moon_blue"
           }
         }
       }
@@ -1583,7 +1738,8 @@
             "mist_strength": 0.4
           }
         }
-      }
+      },
+      "focus": 1.0
     },
     "blizzard": {
       "like": "high_snow",
@@ -1636,7 +1792,8 @@
             "mist_strength": 0.8
           }
         }
-      }
+      },
+      "focus": 1.3
     },
     "werewolf_den": {
       "like": "svalich_woods",
@@ -1707,7 +1864,8 @@
             "ambient": "night",
             "ambient_energy": 0.4,
             "mist": "slate",
-            "mist_strength": 0.45
+            "mist_strength": 0.45,
+            "moon_colour": "bone"
           }
         },
         "ground_swap": {
@@ -1876,6 +2034,19 @@
             "amount": 0.5
           }
         }
+      },
+      "focus": 1.15,
+      "modern": {
+        "times": {
+          "night": {
+            "moon_colour": "rose"
+          }
+        },
+        "flame_tint": {
+          "colour": "ember",
+          "mix": 0.3,
+          "energy": 1.1
+        }
       }
     },
     "indoors": {
@@ -1928,6 +2099,21 @@
             "amount": 0.25
           }
         }
+      },
+      "modern": {
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "eva_tent": {
@@ -1997,7 +2183,8 @@
             "amount": 0.25
           }
         }
-      }
+      },
+      "focus": 1.25
     },
     "cave": {
       "like": "crypt",
@@ -2083,8 +2270,24 @@
           "colour": "wick",
           "mix": 0.25,
           "energy": 1.0
-        }
-      }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "motes",
+            "indoors": true,
+            "amount": 30,
+            "core": "wick",
+            "rim": "ember"
+          }
+        ]
+      },
+      "focus": 1.2
     },
     "ravenloft_halls": {
       "like": "indoors",
@@ -2107,7 +2310,24 @@
             "amount": 0.3
           }
         }
-      }
+      },
+      "modern": {
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50
+          },
+          {
+            "kind": "motes",
+            "indoors": true,
+            "amount": 24,
+            "core": "bone",
+            "rim": "blood"
+          }
+        ]
+      },
+      "focus": 1.2
     },
     "ravenloft_crypt": {
       "like": "crypt",
@@ -2126,7 +2346,8 @@
             "amount": 0.35
           }
         }
-      }
+      },
+      "focus": 1.25
     },
     "death_house_crypt": {
       "like": "crypt",
@@ -2159,7 +2380,8 @@
           "mix": 0.4,
           "energy": 1.0
         }
-      }
+      },
+      "focus": 1.25
     },
     "haunted": {
       "like": "indoors",
@@ -2208,7 +2430,8 @@
           "mix": 0.5,
           "energy": 1.0
         }
-      }
+      },
+      "focus": 1.2
     },
     "ravenloft_chapel": {
       "like": "chapel",
@@ -2385,6 +2608,11 @@
           {
             "kind": "crows",
             "amount": 3
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
           }
         ]
       }
@@ -2975,7 +3203,8 @@
           "mix": 0.35,
           "energy": 1.1
         }
-      }
+      },
+      "focus": 1.25
     },
     "den_caves": {
       "like": "cave",
@@ -3201,6 +3430,11 @@
             "core": "leather",
             "rim": "rust",
             "amount": 50
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
           }
         ],
         "flame_tint": {
@@ -3230,7 +3464,20 @@
           "colour": "wick",
           "mix": 0.25,
           "energy": 1.2
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "winery_hall": {
@@ -3252,7 +3499,20 @@
           "colour": "rose",
           "mix": 0.25,
           "energy": 1.0
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "tallow_shop": {
@@ -3278,6 +3538,11 @@
             "core": "parchment",
             "rim": "bone",
             "amount": 70
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
           }
         ],
         "flame_tint": {
@@ -3338,7 +3603,20 @@
           "colour": "rose",
           "mix": 0.3,
           "energy": 0.85
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "stone_house": {
@@ -3363,7 +3641,20 @@
           "colour": "ivory",
           "mix": 0.35,
           "energy": 1.0
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "hermit_hut": {
@@ -3389,6 +3680,11 @@
             "core": "bone",
             "rim": "tan",
             "amount": 60
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
           }
         ],
         "flame_tint": {
@@ -3456,6 +3752,11 @@
             "rim": "parchment",
             "amount": 160,
             "size": 0.045
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
           }
         ],
         "flame_tint": {
@@ -3506,7 +3807,20 @@
           "colour": "rose",
           "mix": 0.3,
           "energy": 1.0
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "coffin_shop": {
@@ -3563,7 +3877,20 @@
           "colour": "ivory",
           "mix": 0.35,
           "energy": 1.0
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "cult_house": {
@@ -3608,7 +3935,20 @@
           "colour": "wick",
           "mix": 0.35,
           "energy": 1.15
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "wizard_study": {
@@ -3635,6 +3975,11 @@
             "core": "moonlight",
             "rim": "mist_blue",
             "amount": 60
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
           }
         ],
         "flame_tint": {
@@ -3664,7 +4009,20 @@
           "colour": "rose",
           "mix": 0.3,
           "energy": 1.0
-        }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "indoors": true,
+            "amount": 50,
+            "modern_only": true
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
+          }
+        ]
       }
     },
     "poor_chapel": {
@@ -3713,6 +4071,11 @@
             "core": "wick",
             "rim": "candle",
             "amount": 60
+          },
+          {
+            "kind": "moths",
+            "indoors": true,
+            "amount": 4
           }
         ],
         "flame_tint": {
@@ -3828,6 +4191,13 @@
             "core": "parchment",
             "rim": "flame",
             "amount": 90
+          },
+          {
+            "kind": "motes",
+            "indoors": true,
+            "amount": 30,
+            "core": "wick",
+            "rim": "ember"
           }
         ],
         "flame_tint": {
@@ -3835,7 +4205,8 @@
           "mix": 0.3,
           "energy": 1.1
         }
-      }
+      },
+      "focus": 1.2
     },
     "amber_vault": {
       "like": "amber_temple",
@@ -3862,6 +4233,13 @@
             "core": "wick",
             "rim": "flame",
             "amount": 90
+          },
+          {
+            "kind": "motes",
+            "indoors": true,
+            "amount": 24,
+            "core": "wick",
+            "rim": "rust"
           }
         ],
         "flame_tint": {
@@ -3869,7 +4247,8 @@
           "mix": 0.25,
           "energy": 1.0
         }
-      }
+      },
+      "focus": 1.2
     },
     "ravenloft_back_way": {
       "like": "ravenloft_halls",
@@ -4137,7 +4516,8 @@
             "amount": 0.3
           }
         }
-      }
+      },
+      "focus": 1.25
     }
   }
 }

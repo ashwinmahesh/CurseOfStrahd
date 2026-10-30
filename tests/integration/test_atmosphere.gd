@@ -709,8 +709,10 @@ func test_the_modern_glow_spreads_wide() -> void:
 	var v := _view("village_of_barovia")
 	var env := v.atmosphere.env
 	assert_true(env.glow_enabled, "glow on in Modern")
+	var wide := float(Look.hd2d_settings()["bloom_wide"])   # the game's HD-2D halos widen levels 4 and up
 	for level: int in Atmosphere.GLOW_LEVELS:
-		assert_true(is_equal_approx(env.get_glow_level(level), float(Atmosphere.GLOW_LEVELS[level])), "glow level %d" % level)
+		var want := float(Atmosphere.GLOW_LEVELS[level]) * (wide if level >= 4 else 1.0)
+		assert_true(is_equal_approx(env.get_glow_level(level), want), "glow level %d" % level)
 	assert_true(env.get_glow_level(4) > 0.0 and env.get_glow_level(5) > 0.0, "the wide levels are on")
 	assert_true(env.get_glow_level(5) < env.get_glow_level(4), "fainter as it widens")
 	v.queue_free()
