@@ -248,11 +248,20 @@ hit and fall (about 15 images each; they keep the flash and the flattened fall).
 it facing the target, `wait_for_strike()` waits for the hit frame, and the combat view shows the hit or miss then,
 with a short step toward the target. Without an attack sheet the old lunge plays. Walking is paced to the step time
 (`set_step_time`): legs keep a natural cadence of about a cycle (two steps) a second, with the stride as long as the
-pace makes it, from one square (townsfolk strolling at 0.7 s a square) to four (the party's quick pace); past four the
+pace makes it, from one square (townsfolk strolling at 0.56 s a square) to four (a foe's quick pace in a fight); past four the
 legs speed up rather than skate (owner 2026-10-06), below one they slow with the feet on the ground (owner 2026-10-08:
 townsfolk had been held to four squares a cycle, so their legs alternated far too slowly). A foot comes down on a
 walk's first and middle frames: the sprite sends `footfall` there, and the leader's footsteps play on it
 (`WorldSounds`), so they keep the legs' pace (owner 2026-10-12: two a square had been about four times too fast).
+
+The pace of a walk is set in one place, `WalkPace` (core, `world/exploration/walk_pace.gd`; owner 2026-10-30: "slow the
+heroes' walking pace by 25% and speed up enemies' by 15%"). It is how the walk looks, not the Speed stat: feet of movement,
+movement left and the AI's reach are untouched, so it is not a rules deviation. Exploring, the party and a lead take
+`HEROES` (0.75) on top of the townsfolk's `FASTER` (1.25), so the party's square is 0.28 s (sneaking 0.49 s) and a lead's
+0.45 s, and the village folk are the quicker ones. In a fight `CombatView.STEP_TIME` (0.37 s) stays the base: a hero or a
+guest walks a square in that over `HEROES` (0.49 s), an enemy over `FOES` (1.15, 0.32 s), anyone else (a neutral) at the
+base; `WalkPace.combat_scale(combatant)` gives the scale, and the Settings combat speed still multiplies the result. A push,
+a pull, a drag and the glide home of an undone move keep the base.
 
 **Lit by the scene (Improvement Ideas W6, the Modern finish).** `sprite_crisp.gdshader` (`lit`, set from
 `Look.modern()`) lights each figure by the lamps near it, the sun or moon and the sky, so a figure takes a lantern's

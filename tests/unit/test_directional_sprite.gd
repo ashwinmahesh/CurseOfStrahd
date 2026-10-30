@@ -326,7 +326,8 @@ func test_frames_are_shared_while_shown_and_freed_after() -> void:
 ## their rounds, the party exploring and sneaking, a fight's walk and the gray-box villager, for people and beasts alike.
 func test_the_walk_cycle_keeps_pace_with_the_feet() -> void:
 	var paces := {"townsfolk": NpcRoutes.STEP_TIME, "party": LocationView.STEP_TIME, "sneaking": LocationView.SNEAK_STEP_TIME,
-		"a fight": CombatView.STEP_TIME, "the gray-box villager": 1.0 / NpcWalker.SPEED}
+		"a fight": CombatView.STEP_TIME, "a hero in a fight": CombatView.STEP_TIME / WalkPace.HEROES,
+		"a foe in a fight": CombatView.STEP_TIME / WalkPace.FOES, "the gray-box villager": 1.0 / NpcWalker.SPEED}
 	for art: String in ["villager", "commoner", "mastiff", "goat", "ilse_varga"]:
 		var s := DirectionalSprite.create(DirectionalSprite.frames_for(art), 1.3)
 		var native := float(s.sprite_frames.get_frame_count(&"walk_s")) / s.sprite_frames.get_animation_speed(&"walk_s")
