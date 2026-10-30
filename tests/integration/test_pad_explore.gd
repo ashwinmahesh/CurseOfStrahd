@@ -186,7 +186,12 @@ func test_the_right_stick_turns_and_zooms_the_camera() -> void:
 	rig._look(0.1)
 	Input.action_release(&"look_right")
 	rig._look(0.1)
-	assert_eq(int(rig.get("_yaw_steps")), yaw + 1, "a flick turns it a quarter, once")
+	if rig.free_turn:
+		# A campaign that turns freely (data/campaign.json "camera") turns smoothly with the stick, not in quarter steps.
+		assert_eq(int(rig.get("_yaw_steps")), yaw, "a flick turns it freely, not by a quarter")
+		assert_true(float(rig.get("_free_yaw")) > 0.0, "a flick turns it freely, to the right")
+	else:
+		assert_eq(int(rig.get("_yaw_steps")), yaw + 1, "a flick turns it a quarter, once")
 	var d := rig.distance
 	Input.action_press(&"look_down", 1.0)
 	rig._look(0.2)
