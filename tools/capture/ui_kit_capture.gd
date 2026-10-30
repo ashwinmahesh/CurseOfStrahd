@@ -125,7 +125,7 @@ func _tarokka(tool: Node, out: String) -> void:
 	var dlg := DialogueUI.new()
 	var ids: Array[String] = ["seer", "swords_3", "mists"]
 	for i in ids.size():
-		var card := dlg.call("_tarokka_card", ids[i], ["tome", "symbol", "sword"][i]) as Control
+		var card := dlg.call("_reading_card", ids[i], Tarokka.SLOT_NAMES[["tome", "symbol", "sword"][i]]) as Control
 		row.add_child(card)
 		UiMotion.flip_in(card, 0.15 + 0.45 * i)
 	dlg.free()
