@@ -10,10 +10,10 @@
     "tilt": [30, 50]
   },
   "hd2d": {
-    "focus": 0.6,
+    "focus": 0.3,
     "focus_range": 3,
     "focus_falloff": 10,
-    "tilt_shift": 0.4,
+    "tilt_shift": 0.12,
     "tilt_band": 0.4,
     "focus_fight": 0.5,
     "focus_talk": 1.3,
